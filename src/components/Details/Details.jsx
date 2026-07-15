@@ -1,5 +1,5 @@
 import "./Details.css";
-import CertifiedCard from "../../assets/CertifiedCard.png";
+import CertifiedCard from "../../assets/Certifiedcard.png";
 import { useState } from "react";
 
 function Details() {
