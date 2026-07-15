@@ -35,6 +35,11 @@ function Login({
             );
 
             const data = await response.json();
+            if (data.success) {
+
+                alert(`AERODECK Demo OTP\n\n${data.demoOtp}`);
+
+            }
 
             if (!data.success) {
 
