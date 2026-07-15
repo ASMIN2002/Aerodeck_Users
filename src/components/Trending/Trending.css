@@ -1,0 +1,61 @@
+/* ===========================
+   TRENDING
+=========================== */
+
+.tr-section{
+
+    width:100%;
+
+    padding:10px 8px;
+
+    background:#ffffff;
+
+    box-sizing:border-box;
+
+}
+
+.tr-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+
+}
+
+.tr-title{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#111111;
+
+}
+
+.tr-slider{
+
+    display:flex;
+
+    gap:10px;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+    scroll-behavior:smooth;
+
+    padding-bottom:4px;
+
+}
+
+.tr-slider::-webkit-scrollbar{
+
+    display:none;
+
+}

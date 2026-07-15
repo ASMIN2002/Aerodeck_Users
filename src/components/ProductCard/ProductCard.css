@@ -1,0 +1,577 @@
+/* ===========================================================
+   PRODUCT CARD - AERODECK
+   Mobile First (240px → Desktop)
+   Premium Responsive Design
+=========================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.pc-card {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .25s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.05);
+}
+
+.pc-card:hover{
+    transform: translateY(-4px);
+    box-shadow:
+        0 14px 32px rgba(0,0,0,.12);
+}
+
+/* ===========================
+   TOP
+=========================== */
+
+.pc-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px;
+}
+
+.pc-status{
+    font-size:9px;
+    font-weight:700;
+    padding:3px 8px;
+    border-radius:999px;
+    white-space:nowrap;
+    letter-spacing:.3px;
+}
+
+.pc-status.available{
+    background:#d8ffe4;
+    color:#11883d;
+}
+
+.pc-status.unavailable{
+    background:#ffe1e1;
+    color:#d41919;
+}
+
+/* ===========================
+   LIKE
+=========================== */
+
+.pc-like{
+    display:flex;
+    align-items:center;
+    gap:3px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    background:#f7f7f7;
+    color:#666;
+    border-radius:999px;
+    padding:5px 8px;
+    transition:.25s;
+}
+
+.pc-like svg{
+    font-size:14px;
+}
+
+.pc-like:hover{
+    background:#ffe6eb;
+}
+
+.pc-like.active{
+    background:#ffebef;
+    color:#ff1e4d;
+}
+
+.pc-like-count{
+    font-size:9px;
+    font-weight:600;
+}
+
+/* ===========================
+   IMAGE
+=========================== */
+
+.pc-image-box{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:8px;
+}
+
+.pc-image{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:14px;
+    background:#f5f5f5;
+    transition:.35s;
+}
+
+.pc-card:hover .pc-image{
+    transform:scale(1.03);
+}
+
+/* ===========================
+   BODY
+=========================== */
+
+.pc-body{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    padding:0 8px 10px;
+}
+
+/* ===========================
+   HIGHLIGHT
+=========================== */
+
+.pc-highlight{
+    width:max-content;
+    max-width:100%;
+    background:linear-gradient(135deg,#6f5cff,#9f52ff);
+    color:#fff;
+    padding:3px 7px;
+    border-radius:999px;
+    font-size:8px;
+    font-weight:700;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* ===========================
+   NAME
+=========================== */
+
+.pc-name{
+    margin:0;
+    font-size:12px;
+    font-weight:700;
+    color:#222;
+    line-height:1.35;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    min-height:32px;
+}
+
+/* ===========================
+   RATING
+=========================== */
+
+.pc-rating-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    font-size:10px;
+    color:#666;
+    font-weight:600;
+}
+
+/* ===========================
+   PRICE
+=========================== */
+
+.pc-price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:6px;
+}
+
+.pc-demo-price{
+    font-size:10px;
+    color:#888;
+    text-decoration:line-through;
+}
+
+.pc-discount{
+    background:#eaf8ef;
+    color:#0f8a3f;
+    padding:2px 6px;
+    border-radius:999px;
+    font-size:8px;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.pc-final-price{
+    font-size:15px;
+    font-weight:800;
+    color:#111;
+}
+
+.pc-final-price span{
+    font-size:9px;
+    font-weight:500;
+    color:#888;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+.pc-footer{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 8px 10px;
+    margin-top:auto;
+}
+
+/* ===========================
+   CART BUTTON
+=========================== */
+
+.pc-cart-btn{
+    flex:1;
+    height:36px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    background:linear-gradient(135deg,#111,#343434);
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.pc-cart-btn svg{
+    font-size:15px;
+}
+
+.pc-cart-btn:hover{
+    transform:translateY(-2px);
+}
+
+.pc-cart-btn:disabled{
+    background:#d9d9d9;
+    color:#777;
+    cursor:not-allowed;
+}
+
+/* ===========================
+   SAVE
+=========================== */
+
+.pc-save{
+    width:38px;
+    height:38px;
+    border:none;
+    background:#f5f5f5;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:#666;
+    transition:.25s;
+}
+
+.pc-save svg{
+    font-size:15px;
+}
+
+.pc-save:hover{
+    background:#ece8ff;
+}
+
+.pc-save.active{
+    background:#6f5cff;
+    color:#fff;
+}
+
+.pc-save-count{
+    font-size:8px;
+    font-weight:600;
+}
+
+/* ===========================
+   QUANTITY
+=========================== */
+
+.pc-qty-box{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:36px;
+    background:#f7f7f7;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.pc-qty-btn{
+    width:34px;
+    height:100%;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:700;
+    color:#444;
+    transition:.25s;
+}
+
+.pc-qty-btn:hover{
+    background:#ececec;
+}
+
+.pc-qty{
+    font-size:13px;
+    font-weight:700;
+    color:#222;
+}
+
+/* ===========================================================
+   240px
+=========================================================== */
+
+@media (max-width:240px){
+
+    .pc-top{
+        padding:6px;
+    }
+
+    .pc-body{
+        padding:0 6px 8px;
+    }
+
+    .pc-footer{
+        padding:8px 6px;
+        gap:6px;
+    }
+
+    .pc-name{
+        font-size:11px;
+        min-height:30px;
+    }
+
+    .pc-final-price{
+        font-size:13px;
+    }
+
+    .pc-cart-btn{
+        font-size:9px;
+    }
+
+    .pc-save{
+        width:34px;
+        height:34px;
+    }
+
+}
+
+/* ===========================================================
+   320px
+=========================================================== */
+
+@media (min-width:320px){
+
+    .pc-name{
+        font-size:13px;
+    }
+
+    .pc-final-price{
+        font-size:16px;
+    }
+
+    .pc-cart-btn{
+        height:38px;
+    }
+
+}
+
+/* ===========================================================
+   375px
+=========================================================== */
+
+@media (min-width:375px){
+
+    .pc-top{
+        padding:10px;
+    }
+
+    .pc-body{
+        padding:0 10px 12px;
+    }
+
+    .pc-footer{
+        padding:10px;
+    }
+
+    .pc-name{
+        font-size:14px;
+    }
+
+    .pc-rating-row{
+        font-size:11px;
+    }
+
+}
+
+/* ===========================================================
+   480px
+=========================================================== */
+
+@media (min-width:480px){
+
+    .pc-name{
+        font-size:15px;
+    }
+
+    .pc-final-price{
+        font-size:18px;
+    }
+
+    .pc-cart-btn{
+        height:42px;
+        font-size:11px;
+    }
+
+}
+
+/* ===========================================================
+   TABLET
+=========================================================== */
+
+@media (min-width:768px){
+
+    .pc-card{
+        border-radius:22px;
+    }
+
+    .pc-top{
+        padding:14px;
+    }
+
+    .pc-body{
+        padding:0 14px 14px;
+        gap:8px;
+    }
+
+    .pc-footer{
+        padding:14px;
+        gap:10px;
+    }
+
+    .pc-name{
+        font-size:17px;
+        min-height:46px;
+    }
+
+    .pc-rating-row{
+        font-size:13px;
+    }
+
+    .pc-demo-price{
+        font-size:13px;
+    }
+
+    .pc-discount{
+        font-size:10px;
+    }
+
+    .pc-final-price{
+        font-size:22px;
+    }
+
+    .pc-final-price span{
+        font-size:11px;
+    }
+
+    .pc-cart-btn{
+        height:46px;
+        font-size:13px;
+    }
+
+    .pc-save{
+        width:46px;
+        height:46px;
+    }
+
+    .pc-save svg{
+        font-size:18px;
+    }
+
+    .pc-like{
+        padding:6px 10px;
+    }
+
+    .pc-like svg{
+        font-size:17px;
+    }
+
+    .pc-like-count{
+        font-size:11px;
+    }
+
+}
+
+/* ===========================================================
+   DESKTOP
+=========================================================== */
+
+@media (min-width:1024px){
+
+    .pc-card:hover{
+        transform:translateY(-8px);
+    }
+
+    .pc-name{
+        font-size:18px;
+    }
+
+    .pc-final-price{
+        font-size:24px;
+    }
+
+    .pc-cart-btn{
+        height:48px;
+        font-size:14px;
+    }
+
+    .pc-save{
+        width:48px;
+        height:48px;
+    }
+
+}
+
+/* ===========================================================
+   LARGE DESKTOP
+=========================================================== */
+
+@media (min-width:1440px){
+
+    .pc-name{
+        font-size:19px;
+    }
+
+    .pc-final-price{
+        font-size:26px;
+    }
+
+}

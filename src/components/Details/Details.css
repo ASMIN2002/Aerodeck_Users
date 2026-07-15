@@ -1,0 +1,130 @@
+.dt-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #fff;
+    overflow-y: auto;
+    padding-bottom: 100px;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+   
+}
+
+.dt-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: #fff;
+}
+
+.dt-back {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.dt-image-box {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dt-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.dt-images {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 12px;
+}
+
+.dt-thumb {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.dt-thumb.active {
+    border-color: #1976d2;
+}
+
+.dt-body {
+    padding: 16px;
+}
+
+.dt-highlight {
+    color: #0f9d58;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.dt-price {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.dt-demo {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.dt-off {
+    color: green;
+    font-weight: 700;
+}
+
+.dt-description {
+    margin-top: 16px;
+    line-height: 1.7;
+}
+
+.dt-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.dt-cart button {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+}
+
+.dt-buttons {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+
+.dt-buttons button {
+    flex: 1;
+    height: 48px;
+}
