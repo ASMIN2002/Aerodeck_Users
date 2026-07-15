@@ -1,0 +1,206 @@
+/* ===========================
+   PAGE
+=========================== */
+
+.ni-container{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    box-sizing:border-box;
+
+    background:#f8fafc;
+
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.ni-card{
+
+    width:100%;
+
+    max-width:420px;
+
+    background:#ffffff;
+
+    border-radius:22px;
+
+    padding:35px 24px;
+
+    text-align:center;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.08);
+
+    animation:niFade .35s ease;
+
+}
+
+/* ===========================
+   ICON
+=========================== */
+
+.ni-icon{
+
+    font-size:90px;
+
+    color:#2563eb;
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:18px;
+
+}
+
+/* ===========================
+   TITLE
+=========================== */
+
+.ni-title{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    color:#111827;
+
+}
+
+/* ===========================
+   TEXT
+=========================== */
+
+.ni-text{
+
+    margin:18px 0 30px;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+    color:#6b7280;
+
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.ni-btn{
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.ni-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.ni-btn:active{
+
+    transform:scale(.98);
+
+}
+
+/* ===========================
+   VERSION
+=========================== */
+
+.ni-version{
+
+    margin-top:22px;
+
+    font-size:13px;
+
+    color:#9ca3af;
+
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes niFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:480px){
+
+    .ni-card{
+
+        padding:28px 18px;
+
+    }
+
+    .ni-title{
+
+        font-size:24px;
+
+    }
+
+    .ni-icon{
+
+        font-size:78px;
+
+    }
+
+}

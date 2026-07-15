@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 
@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Login/Register";
+import NoInternet from "./components/NoInternet/NoInternet";
 
 function App() {
     const [page, setPage] = useState("splash");
@@ -15,8 +16,57 @@ function App() {
 
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    useEffect(() => {
+
+        function goOnline() {
+
+            setIsOnline(true);
+
+        }
+
+        function goOffline() {
+
+            setIsOnline(false);
+
+        }
+
+        window.addEventListener("online", goOnline);
+
+        window.addEventListener("offline", goOffline);
+
+        return () => {
+
+            window.removeEventListener("online", goOnline);
+
+            window.removeEventListener("offline", goOffline);
+
+        };
+
+    }, []);
+
+    if (!isOnline) {
+
+        return (
+
+            <NoInternet
+
+                onRetry={() => {
+
+                    setIsOnline(navigator.onLine);
+
+                }}
+
+            />
+
+        );
+
+    }
+
 
     return (
+
         <>
             {
                 page === "splash" &&
