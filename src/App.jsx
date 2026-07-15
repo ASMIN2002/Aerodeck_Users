@@ -8,6 +8,7 @@ import Otp from "./pages/Login/Otp";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Login/Register";
 import NoInternet from "./components/NoInternet/NoInternet";
+import { API } from "./services/api";
 
 function App() {
     const [page, setPage] = useState("splash");
@@ -16,45 +17,63 @@ function App() {
 
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-
+    const [isOnline, setIsOnline] = useState(true);
     useEffect(() => {
 
-        function goOnline() {
+        async function checkServer() {
 
-            setIsOnline(true);
+            try {
+
+                const response = await fetch(`${API}/health`);
+
+                if (response.ok) {
+
+                    setIsOnline(true);
+
+                } else {
+
+                    setIsOnline(false);
+
+                }
+
+            }
+
+            catch {
+
+                setIsOnline(false);
+
+            }
 
         }
 
-        function goOffline() {
+        checkServer();
 
-            setIsOnline(false);
+        const interval = setInterval(checkServer, 5000);
 
-        }
-
-        window.addEventListener("online", goOnline);
-
-        window.addEventListener("offline", goOffline);
-
-        return () => {
-
-            window.removeEventListener("online", goOnline);
-
-            window.removeEventListener("offline", goOffline);
-
-        };
+        return () => clearInterval(interval);
 
     }, []);
-
     if (!isOnline) {
 
         return (
 
             <NoInternet
 
-                onRetry={() => {
+                onRetry={async () => {
 
-                    setIsOnline(navigator.onLine);
+                    try {
+
+                        const response = await fetch(`${API}/health`);
+
+                        setIsOnline(response.ok);
+
+                    }
+
+                    catch {
+
+                        setIsOnline(false);
+
+                    }
 
                 }}
 
