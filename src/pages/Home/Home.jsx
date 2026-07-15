@@ -105,6 +105,7 @@ function Home({
                 cartCount={cartCount}
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
+                onLogout={handleLogout}
             />
             {
                 !isDetailsOpen &&

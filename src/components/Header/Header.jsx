@@ -13,7 +13,7 @@ function Header({
 
     isDetailsOpen,
     closeDetails,
-    
+
     onLogout
 
 }) {
@@ -243,9 +243,13 @@ function Header({
 
 
                 <button
-                    className="hd-logout-btn"
-                    type="button"
-                    onClick={onLogout}
+                    onClick={() => {
+
+                        console.log("Logout Clicked");
+
+                        onLogout();
+
+                    }}
                 >
                     Logout
                 </button>
