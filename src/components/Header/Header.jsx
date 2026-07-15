@@ -12,7 +12,9 @@ function Header({
     cartCount,
 
     isDetailsOpen,
-    closeDetails
+    closeDetails,
+    
+    onLogout
 
 }) {
 
@@ -236,6 +238,16 @@ function Header({
 
                     </span>
 
+                </button>
+
+
+
+                <button
+                    className="hd-logout-btn"
+                    type="button"
+                    onClick={onLogout}
+                >
+                    Logout
                 </button>
 
             </div>
