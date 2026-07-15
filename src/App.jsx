@@ -12,29 +12,26 @@ import { API } from "./services/api";
 
 function App() {
     const [page, setPage] = useState("splash");
-
     const [user, setUser] = useState(null);
-
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
+
     useEffect(() => {
+
+        let interval;
 
         async function checkServer() {
 
             try {
 
-                const response = await fetch(`${API}/health`);
+                const response = await fetch(`${API}/health`, {
 
-                if (response.ok) {
+                    cache: "no-store"
 
-                    setIsOnline(true);
+                });
 
-                } else {
-
-                    setIsOnline(false);
-
-                }
+                setIsOnline(response.ok);
 
             }
 
@@ -46,11 +43,35 @@ function App() {
 
         }
 
+        function goOnline() {
+
+            checkServer();
+
+        }
+
+        function goOffline() {
+
+            setIsOnline(false);
+
+        }
+
         checkServer();
 
-        const interval = setInterval(checkServer, 5000);
+        interval = setInterval(checkServer, 3000);
 
-        return () => clearInterval(interval);
+        window.addEventListener("online", goOnline);
+
+        window.addEventListener("offline", goOffline);
+
+        return () => {
+
+            clearInterval(interval);
+
+            window.removeEventListener("online", goOnline);
+
+            window.removeEventListener("offline", goOffline);
+
+        };
 
     }, []);
     if (!isOnline) {
@@ -59,21 +80,9 @@ function App() {
 
             <NoInternet
 
-                onRetry={async () => {
+                onRetry={() => {
 
-                    try {
-
-                        const response = await fetch(`${API}/health`);
-
-                        setIsOnline(response.ok);
-
-                    }
-
-                    catch {
-
-                        setIsOnline(false);
-
-                    }
+                    window.location.reload();
 
                 }}
 
