@@ -24,7 +24,7 @@ function GiftCard({
 
     onDecreaseQuantity = () => { },
 
-     onOpenDetails = () => {}
+    onOpenDetails = () => { }
 
 }) {
 
@@ -182,7 +182,7 @@ function GiftCard({
                             disabled
                         >
 
-                            Out Of Stock
+                            <span>Out Of Stock</span>
 
                         </button>
 
