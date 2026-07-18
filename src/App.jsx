@@ -31,11 +31,21 @@ function App() {
 
                 });
 
+
+                console.log("Status:", response.status);
+                console.log("OK:", response.ok);
+
+                alert("Status: " + response.status + " OK: " + response.ok);
+
                 setIsOnline(response.ok);
 
             }
 
-            catch {
+            catch (err) {
+
+                console.error("Health Check Error:", err);
+
+                alert("Health Check Error: " + err);
 
                 setIsOnline(false);
 
