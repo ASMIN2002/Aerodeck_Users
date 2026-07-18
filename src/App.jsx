@@ -31,12 +31,6 @@ function App() {
 
                 });
 
-
-                console.log("Status:", response.status);
-                console.log("OK:", response.ok);
-
-                alert("Status: " + response.status + " OK: " + response.ok);
-
                 setIsOnline(response.ok);
 
             }
