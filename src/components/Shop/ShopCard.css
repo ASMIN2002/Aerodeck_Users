@@ -1,311 +1,1006 @@
-/* ===========================
-   GIFT CARD
-=========================== */
+/* ==========================================================
+   PRODUCT CARD
+   PART 1
+   Root • Card • Top • Image • Body
+   Mobile First
+========================================================== */
 
-.gc-card {
+/*==============================
+RESET
+==============================*/
 
-    width: 100%;
-    background: #fff;
-    border-radius: 18px;
-    border: 1px solid #ececec;
-    overflow: hidden;
-    cursor: pointer;
-    transition: .25s;
-    box-sizing: border-box;
+*,
+*::before,
+*::after{
 
-}
-
-.gc-card:hover {
-
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(0,0,0,.08);
-
-}
-
-/* ===========================
-   TOP
-=========================== */
-
-.gc-top{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:10px 12px;
-
-}
-
-.gc-status{
-
-    font-size:11px;
-    font-weight:700;
-    padding:5px 10px;
-    border-radius:50px;
-
-}
-
-.gc-status.available{
-
-    background:#e9fff1;
-    color:#169a4c;
-
-}
-
-.gc-status.unavailable{
-
-    background:#ffeaea;
-    color:#d42d2d;
-
-}
-
-.gc-like{
-
-    border:none;
-    background:none;
-    display:flex;
-    align-items:center;
-    gap:5px;
-    font-size:18px;
-    cursor:pointer;
-    color:#555;
-
-}
-
-.gc-like.active{
-
-    color:#ff3b5b;
-
-}
-
-.gc-like-count{
-
-    font-size:12px;
-    font-weight:600;
-
-}
-
-/* ===========================
-   IMAGE
-=========================== */
-
-.gc-image-box{
-
-    width:100%;
-    aspect-ratio:1/1;
-    overflow:hidden;
-    padding:0 10px;
     box-sizing:border-box;
 
 }
 
+
+
+/*==============================
+ROOT
+==============================*/
+
+:root{
+
+    --pc-white:#ffffff;
+    --pc-bg:#fafafa;
+
+    --pc-text:#111111;
+    --pc-text-light:#6b7280;
+
+    --pc-border:#ececec;
+
+    --pc-success:#11883d;
+    --pc-success-bg:#d8ffe4;
+
+    --pc-danger:#d41919;
+    --pc-danger-bg:#ffe4e4;
+
+    --pc-like:#ff1e4d;
+    --pc-like-bg:#ffedf2;
+
+    --pc-highlight-start:#6f5cff;
+    --pc-highlight-end:#9754ff;
+
+    --pc-radius:18px;
+    --pc-radius-sm:12px;
+    --pc-radius-round:999px;
+
+    --pc-shadow-sm:
+        0 2px 8px rgba(0,0,0,.05);
+
+    --pc-shadow:
+        0 8px 20px rgba(0,0,0,.08);
+
+    --pc-shadow-lg:
+        0 18px 40px rgba(0,0,0,.12);
+
+    --pc-transition:
+        .25s ease;
+
+}
+
+
+
+/*==============================
+CARD
+==============================*/
+
+.gc-card{
+
+    position:relative;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    cursor:pointer;
+    background:var(--pc-white);
+
+    transition:
+        transform var(--pc-transition),
+        box-shadow var(--pc-transition),
+        border-color var(--pc-transition);
+
+}
+
+
+
+.gc-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#dddddd;
+
+    box-shadow:var(--pc-shadow);
+
+}
+
+
+
+/*==============================
+TOP
+==============================*/
+
+.gc-top{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
+
+    padding:10px;
+
+}
+
+
+
+/*==============================
+STATUS
+==============================*/
+
+.gc-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:24px;
+
+    padding:0 10px;
+
+    border-radius:var(--pc-radius-round);
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:.25px;
+
+    white-space:nowrap;
+
+}
+
+
+
+.gc-status.available{
+
+    background:var(--pc-success-bg);
+
+    color:var(--pc-success);
+
+}
+
+
+
+.gc-status.unavailable{
+
+    background:var(--pc-danger-bg);
+
+    color:var(--pc-danger);
+
+}
+
+
+
+/*==============================
+LIKE
+==============================*/
+
+.gc-like{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    min-width:34px;
+
+    min-height:34px;
+
+    padding:0 10px;
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    background:#f8f8f8;
+
+    color:#666;
+
+    border-radius:var(--pc-radius-round);
+
+    transition:var(--pc-transition);
+
+}
+
+
+
+.gc-like:hover{
+
+    background:#fff1f4;
+
+}
+
+
+
+.gc-like.active{
+
+    background:var(--pc-like-bg);
+
+    color:var(--pc-like);
+
+}
+
+
+
+.gc-like svg{
+
+    font-size:15px;
+
+    flex-shrink:0;
+
+}
+
+
+
+.gc-like-count{
+
+    font-size:10px;
+
+    font-weight:600;
+
+}
+
+
+
+/*==============================
+IMAGE BOX
+==============================*/
+
+.gc-image-box{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:10px;
+
+}
+
+
+
+/*==============================
+IMAGE
+==============================*/
+
 .gc-image{
 
     width:100%;
-    height:100%;
+
+    aspect-ratio:1/1;
+
+    display:block;
+
     object-fit:cover;
-    border-radius:14px;
+
+    background:var(--pc-bg);
+
+    border-radius:16px;
+
+    transition:
+        transform .35s ease;
+
+    will-change:transform;
 
 }
 
-/* ===========================
-   BODY
-=========================== */
+
+
+.gc-card:hover .gc-image{
+
+    transform:scale(1.05);
+
+}
+
+
+
+/*==============================
+BODY
+==============================*/
 
 .gc-body{
 
-    padding:12px;
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    padding:0 10px 12px;
 
 }
+
+
+
+/*==============================
+HIGHLIGHT
+==============================*/
 
 .gc-highlight{
 
-    display:inline-block;
-    background:#f3f3f3;
-    color:#444;
-    font-size:11px;
-    font-weight:600;
-    padding:4px 10px;
-    border-radius:50px;
-    margin-bottom:8px;
+    width:max-content;
+
+    max-width:100%;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    padding:4px 8px;
+
+    border-radius:var(--pc-radius-round);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pc-highlight-start),
+            var(--pc-highlight-end)
+        );
+
+    color:#fff;
+
+    font-size:10px;
+
+    font-weight:700;
 
 }
+
+
+
+/*==============================
+NAME
+==============================*/
 
 .gc-name{
 
     margin:0;
-    font-size:16px;
+
+    color:var(--pc-text);
+
+    font-size:14px;
+
     font-weight:700;
-    color:#222;
+
+    line-height:1.45;
+
+    display:-webkit-box;
+
+    -webkit-box-orient:vertical;
+
+    -webkit-line-clamp:2;
+
+    overflow:hidden;
 
 }
+
+
+
+/*==============================
+RATING
+==============================*/
 
 .gc-rating-row{
 
-    margin-top:8px;
-    font-size:13px;
-    color:#555;
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    color:var(--pc-text-light);
 
 }
+/* ==========================================================
+   PRODUCT CARD
+   PART 2
+   Price • Footer • Cart • Save • Quantity
+========================================================== */
+
+
+/*==============================
+PRICE ROW
+==============================*/
 
 .gc-price-row{
 
     display:flex;
+
     align-items:center;
+
+    justify-content:space-between;
+
     gap:8px;
-    margin-top:8px;
+
+    flex-wrap:wrap;
 
 }
 
-.gc-demo-price{
 
-    text-decoration:line-through;
-    color:#888;
-    font-size:14px;
+
+/*==============================
+LEFT PRICE
+==============================*/
+
+.gc-price-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
 
 }
 
-.gc-discount{
 
-    color:#0c9f46;
-    font-size:13px;
-    font-weight:700;
 
-}
+/*==============================
+FINAL PRICE
+==============================*/
 
 .gc-final-price{
 
-    margin-top:8px;
-    font-size:22px;
+    font-size:18px;
+
     font-weight:800;
-    color:#111;
+
+    color:var(--pc-text);
+
+    line-height:1;
 
 }
+
+
 
 .gc-final-price span{
 
-    font-size:13px;
-    color:#666;
+    font-size:10px;
+
     font-weight:500;
+
+    color:var(--pc-text-light);
 
 }
 
-/* ===========================
-   FOOTER
-=========================== */
+
+
+/*==============================
+DEMO PRICE
+==============================*/
+
+.gc-demo-price{
+
+    font-size:11px;
+
+    color:#8b8b8b;
+
+    text-decoration:line-through;
+
+}
+
+
+
+/*==============================
+DISCOUNT
+==============================*/
+
+.gc-discount{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:22px;
+
+    padding:0 8px;
+
+    border-radius:var(--pc-radius-round);
+
+    background:#e8f8ee;
+
+    color:var(--pc-success);
+
+    font-size:9px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+
+
+/*==============================
+FOOTER
+==============================*/
 
 .gc-footer{
 
     display:flex;
+
     align-items:center;
-    gap:10px;
-    padding:12px;
+
+    gap:8px;
 
 }
+
+
+
+/*==============================
+COMMON HEIGHT
+==============================*/
+
+.gc-cart-btn,
+
+.gc-save,
+
+.gc-qty-box{
+
+    height:30px;
+
+}
+
+
+
+/*==============================
+CART BUTTON
+==============================*/
 
 .gc-cart-btn{
 
     flex:1;
-    height:42px;
-    border:none;
-    border-radius:10px;
-    background:#111;
-    color:#fff;
+
     display:flex;
-    justify-content:center;
+
     align-items:center;
-    gap:8px;
-    font-size:14px;
-    font-weight:700;
+
+    justify-content:center;
+
+    gap:6px;
+
+    border:none;
+
     cursor:pointer;
 
+    border-radius:var(--pc-radius-sm);
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #111,
+
+            #353535
+
+        );
+
+    color:#ffffff;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    transition:var(--pc-transition);
+
 }
+
+
+
+.gc-cart-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--pc-shadow);
+
+}
+
+
+
+.gc-cart-btn:active{
+
+    transform:scale(.98);
+
+}
+
+
 
 .gc-cart-btn:disabled{
 
-    background:#c9c9c9;
+    background:#d7d7d7;
+
+    color:#777;
+
     cursor:not-allowed;
 
+    box-shadow:none;
+
 }
+
+
+
+.gc-cart-btn svg{
+
+    font-size:15px;
+
+    flex-shrink:0;
+
+}
+
+
+
+.gc-cart-btn span{
+
+    font-size:8px;
+
+}
+
+
+
+/*==============================
+SAVE
+==============================*/
 
 .gc-save{
 
-    width:42px;
-    height:42px;
-    border:none;
-    border-radius:10px;
-    background:#f5f5f5;
+    width:40px;
+
     display:flex;
-    justify-content:center;
+
+    flex-direction:column;
+
     align-items:center;
-    position:relative;
+
+    justify-content:center;
+
+    border:none;
+
     cursor:pointer;
-    font-size:18px;
+
+    background:#f7f7f7;
+
+    color:#666;
+
+    border-radius:var(--pc-radius-sm);
+
+    transition:var(--pc-transition);
 
 }
+
+
+
+.gc-save:hover{
+
+    background:#ece8ff;
+
+}
+
+
 
 .gc-save.active{
 
-    color:#ff9800;
+    background:#6f5cff;
+
+    color:#ffffff;
 
 }
+
+
+
+.gc-save svg{
+
+    font-size:16px;
+
+}
+
+
 
 .gc-save-count{
 
-    position:absolute;
-    top:-6px;
-    right:-5px;
-    background:#111;
-    color:#fff;
-    border-radius:50px;
-    font-size:10px;
-    padding:2px 5px;
+    font-size:8px;
+
+    font-weight:600;
 
 }
 
-/* ===========================
-   QUANTITY
-=========================== */
+
+
+/*==============================
+QUANTITY
+==============================*/
 
 .gc-qty-box{
 
     flex:1;
-    height:42px;
-    border:1px solid #ddd;
-    border-radius:10px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
+    background:#f7f7f7;
+
+    border-radius:var(--pc-radius-sm);
+
+    overflow:hidden;
+
 }
+
+
 
 .gc-qty-btn{
 
-    width:40px;
+    width:38px;
+
     height:100%;
+
     border:none;
-    background:none;
+
+    background:transparent;
+
     cursor:pointer;
-    font-size:20px;
+
+    color:#444;
+
+    font-size:18px;
+
     font-weight:700;
 
+    transition:var(--pc-transition);
+
 }
+
+
+
+.gc-qty-btn:hover{
+
+    background:#ececec;
+
+}
+
+
+
+.gc-qty-btn:active{
+
+    background:#dddddd;
+
+}
+
+
 
 .gc-qty{
 
-    font-size:15px;
+    min-width:24px;
+
+    text-align:center;
+
+    font-size:14px;
+
     font-weight:700;
+
+    color:var(--pc-text);
 
 }
 
-/* ===========================
-   MOBILE
-=========================== */
 
-@media (max-width:480px){
+
+/*==============================
+FOCUS
+==============================*/
+
+.gc-cart-btn:focus-visible,
+
+.gc-save:focus-visible,
+
+.gc-qty-btn:focus-visible,
+
+.gc-like:focus-visible{
+
+    outline:2px solid #111;
+
+    outline-offset:2px;
+
+}
+/* ==========================================================
+   PRODUCT CARD
+   PART 3
+   Responsive
+   Mobile First → Large Desktop
+==========================================================*/
+
+
+/*==============================
+240px
+==============================*/
+
+@media (max-width:240px){
+
+    .gc-top{
+
+        padding:8px;
+
+    }
+
+    .gc-image-box{
+
+        padding:8px;
+
+    }
+
+    .gc-body{
+
+        gap:6px;
+
+        padding:0 8px 10px;
+
+    }
+
+    .gc-footer{
+
+        gap:6px;
+
+    }
 
     .gc-name{
 
+        font-size:9px;
+
+    }
+
+    .gc-rating-row{
+
+        font-size:10px;
+
+    }
+
+    .gc-final-price{
+
+        font-size:15px;
+
+    }
+
+    .gc-demo-price{
+
+        font-size:10px;
+
+    }
+
+    .gc-discount{
+
+        font-size:8px;
+
+    }
+
+    .gc-cart-btn{
+
+        height:36px;
+
+        font-size:10px;
+
+        gap:5px;
+
+    }
+
+    .gc-cart-btn svg{
+
+        font-size:13px;
+
+    }
+
+    .gc-cart-btn span{
+
+        font-size:10px;
+
+    }
+
+    .gc-save{
+
+        width:36px;
+
+        height:36px;
+
+    }
+
+    .gc-save svg{
+
         font-size:14px;
+
+    }
+
+    .gc-qty-box{
+
+        height:36px;
+
+    }
+
+}
+
+
+
+/*==============================
+320px
+==============================*/
+
+@media (min-width:320px){
+
+    .gc-name{
+
+        font-size:10px;
+
+    }
+
+    .gc-final-price{
+
+        font-size:16px;
+
+    }
+
+}
+
+
+
+/*==============================
+375px
+==============================*/
+
+@media (min-width:375px){
+
+    .gc-top{
+
+        padding:10px;
+
+    }
+
+    .gc-image-box{
+
+        padding:10px;
+
+    }
+
+    .gc-body{
+
+        padding:0 10px 12px;
+
+    }
+    .gc-name{
+
+        font-size:14px;
+
+    }
+
+}
+
+
+
+/*==============================
+480px
+==============================*/
+
+@media (min-width:480px){
+
+    .gc-name{
+
+        font-size:15px;
 
     }
 
@@ -317,7 +1012,273 @@
 
     .gc-cart-btn{
 
+        font-size:12px;
+
+    }
+
+}
+
+
+
+/*==============================
+TABLET
+==============================*/
+
+@media (min-width:768px){
+
+    :root{
+
+        --pc-radius:20px;
+
+        --pc-radius-sm:14px;
+
+    }
+
+    .gc-card{
+
+        box-shadow:var(--pc-shadow);
+
+    }
+
+    .gc-top{
+
+        padding:14px;
+
+    }
+
+    .gc-image-box{
+
+        padding:14px;
+
+    }
+
+    .gc-body{
+
+        gap:10px;
+
+        padding:0 14px 16px;
+
+    }
+
+    .gc-footer{
+
+        gap:10px;
+
+    }
+
+    .gc-name{
+
+        font-size:17px;
+
+        min-height:48px;
+
+    }
+
+    .gc-highlight{
+
+        font-size:11px;
+
+        padding:5px 10px;
+
+    }
+
+    .gc-rating-row{
+
+        font-size:12px;
+
+    }
+
+    .gc-demo-price{
+
         font-size:13px;
+
+    }
+
+    .gc-discount{
+
+        font-size:10px;
+
+    }
+
+    .gc-final-price{
+
+        font-size:22px;
+
+    }
+
+    .gc-final-price span{
+
+        font-size:12px;
+
+    }
+
+    .gc-cart-btn,
+
+    .gc-save,
+
+    .gc-qty-box{
+
+        height:46px;
+
+    }
+
+    .gc-cart-btn{
+
+        font-size:13px;
+
+    }
+
+    .gc-cart-btn svg{
+
+        font-size:17px;
+
+    }
+
+    .gc-cart-btn span{
+
+        font-size:12px;
+
+    }
+
+    .gc-save{
+
+        width:46px;
+
+    }
+
+    .gc-save svg{
+
+        font-size:18px;
+
+    }
+
+    .gc-like{
+
+        min-width:38px;
+
+        min-height:38px;
+
+        padding:0 12px;
+
+    }
+
+    .gc-like svg{
+
+        font-size:17px;
+
+    }
+
+    .gc-like-count{
+
+        font-size:11px;
+
+    }
+
+    .gc-qty{
+
+        font-size:15px;
+
+    }
+
+}
+
+
+
+/*==============================
+DESKTOP
+==============================*/
+
+@media (min-width:1024px){
+
+    .gc-card:hover{
+
+        transform:translateY(-8px);
+
+        box-shadow:var(--pc-shadow-lg);
+
+    }
+
+    .gc-name{
+
+        font-size:18px;
+
+    }
+
+    .gc-final-price{
+
+        font-size:24px;
+
+    }
+
+    .gc-cart-btn,
+
+    .gc-save,
+
+    .gc-qty-box{
+
+        height:48px;
+
+    }
+
+    .gc-save{
+
+        width:48px;
+
+    }
+
+}
+
+
+
+/*==============================
+LARGE DESKTOP
+==============================*/
+
+@media (min-width:1440px){
+
+    .gc-name{
+
+        font-size:19px;
+
+    }
+
+    .gc-final-price{
+
+        font-size:26px;
+
+    }
+
+    .gc-rating-row{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+
+/*==============================
+4K
+==============================*/
+
+@media (min-width:1920px){
+
+    .gc-card{
+
+        max-width:420px;
+
+    }
+
+    .gc-name{
+
+        font-size:20px;
+
+    }
+
+    .gc-final-price{
+
+        font-size:28px;
 
     }
 
