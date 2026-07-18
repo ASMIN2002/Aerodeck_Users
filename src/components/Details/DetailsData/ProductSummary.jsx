@@ -1,0 +1,211 @@
+import "../DetailsDataStyle/ProductSummary.css";
+
+function ProductSummary({
+
+    product,
+
+    isLiked,
+    isSaved,
+    cartQuantity,
+
+    onLike,
+    onSave,
+
+    onIncreaseCart,
+    onDecreaseCart,
+
+    onBuyNow
+
+}) {
+
+    const name =
+        product?.product_name ||
+        product?.gift_name ||
+        product?.shop_name ||
+        product?.premium_name;
+
+    const rating =
+        product?.product_rating ||
+        product?.gift_rating ||
+        product?.shop_rating ||
+        product?.premium_rating ||
+        0;
+
+    const price =
+        product?.product_price ||
+        product?.gift_price ||
+        product?.shop_price ||
+        product?.premium_price;
+
+    const demoPrice =
+        product?.product_demo_price ||
+        product?.gift_demo_price ||
+        product?.shop_demo_price ||
+        product?.premium_demo_price;
+
+    const discount =
+        product?.product_discount_percentage ||
+        product?.gift_discount_percentage ||
+        product?.shop_discount_percentage ||
+        product?.premium_discount_percentage ||
+        0;
+
+    const likes =
+        product?.product_total_likes ||
+        product?.gift_total_likes ||
+        product?.shop_total_likes ||
+        product?.premium_total_likes ||
+        0;
+
+    const saves =
+        product?.product_total_saves ||
+        product?.gift_total_saves ||
+        product?.shop_total_saves ||
+        product?.premium_total_saves ||
+        0;
+
+    const status =
+        product?.product_status ??
+        product?.gift_status ??
+        product?.shop_status ??
+        product?.premium_status;
+
+    return (
+
+        <section className="ps-section">
+
+            <div className="ps-header">
+
+                <h2 className="ps-name">
+                    {name}
+                </h2>
+
+                <div className="ps-rating">
+
+                    ⭐ {rating}
+
+                </div>
+
+            </div>
+
+            <div className="ps-price-row">
+
+                <span className="ps-price">
+
+                    ₹{price}
+
+                </span>
+
+                {demoPrice && (
+
+                    <span className="ps-demo-price">
+
+                        ₹{demoPrice}
+
+                    </span>
+
+                )}
+
+                {discount > 0 && (
+
+                    <span className="ps-discount">
+
+                        {discount}% OFF
+
+                    </span>
+
+                )}
+
+            </div>
+
+            <div className="ps-count-row">
+
+                <span>
+
+                    ❤️ {likes}
+
+                </span>
+
+                <span>
+
+                    🔖 {saves}
+
+                </span>
+
+            </div>
+
+            <div className="ps-cart-row">
+
+                {cartQuantity > 0 ? (
+
+                    <div className="ps-qty">
+
+                        <button onClick={onDecreaseCart}>
+                            -
+                        </button>
+
+                        <span>
+                            {cartQuantity}
+                        </span>
+
+                        <button onClick={onIncreaseCart}>
+                            +
+                        </button>
+
+                    </div>
+
+                ) : (
+
+                    <button
+                        className="ps-cart-btn"
+                        onClick={onIncreaseCart}
+                    >
+                        🛒 Add To Cart
+                    </button>
+
+                )}
+
+            </div>
+
+            <div className="ps-delivery">
+
+                <div className="ps-stock">
+
+                    <span className="ps-stock-dot"></span>
+
+                    <span>
+
+                        {status ? "In Stock" : "Out of Stock"}
+
+                    </span>
+
+                </div>
+
+                <div className="ps-delivery-text">
+
+                    🚚 Delivery in 2-4 Days
+
+                </div>
+
+                <div className="ps-cod">
+
+                    💵 Cash on Delivery Available
+
+                </div>
+
+            </div>
+
+            <button
+                className="ps-buy-btn"
+                onClick={onBuyNow}
+            >
+                Buy Now
+            </button>
+
+        </section>
+
+    );
+
+}
+
+export default ProductSummary;

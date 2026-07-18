@@ -1,0 +1,582 @@
+/*=========================================================
+  PRODUCT SUMMARY
+  Mobile First
+=========================================================*/
+
+/*==============================
+SECTION
+==============================*/
+
+.ps-section{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+
+
+/*==============================
+HEADER
+==============================*/
+
+.ps-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+}
+
+
+
+.ps-name{
+
+    flex:1;
+
+    margin:0;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    line-height:1.35;
+
+    color:#111;
+
+}
+
+
+
+.ps-rating{
+
+    padding:6px 10px;
+
+    border-radius:999px;
+
+    background:#fff8e5;
+
+    color:#b7791f;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+
+
+/*==============================
+PRICE
+==============================*/
+
+.ps-price-row{
+
+    display:flex;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+
+
+.ps-price{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#111;
+
+}
+
+
+
+.ps-demo-price{
+
+    font-size:16px;
+
+    color:#888;
+
+    text-decoration:line-through;
+
+}
+
+
+
+.ps-discount{
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    background:#fff1f1;
+
+    color:#e53935;
+
+    font-size:11px;
+
+    font-weight:700;
+
+}
+
+
+
+/*==============================
+LIKE SAVE
+==============================*/
+
+.ps-count-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.ps-count-row span{
+
+    font-size:14px;
+
+    color:#555;
+
+    font-weight:600;
+
+}
+
+
+
+/*==============================
+CART
+==============================*/
+
+.ps-cart-row{
+
+    width:100%;
+
+}
+
+
+
+.ps-cart-btn{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#111;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+}
+
+
+
+.ps-cart-btn:hover{
+
+    background:#000;
+
+    transform:translateY(-2px);
+
+}
+
+
+
+.ps-cart-btn:active{
+
+    transform:scale(.98);
+
+}
+
+
+
+/*==============================
+QUANTITY
+==============================*/
+
+.ps-qty{
+
+    width:max-content;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:6px;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:999px;
+
+}
+
+
+
+.ps-qty button{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#111;
+
+    color:#fff;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+}
+
+
+
+.ps-qty button:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+
+.ps-qty span{
+
+    min-width:22px;
+
+    text-align:center;
+
+    font-size:16px;
+
+    font-weight:700;
+
+}
+
+
+
+/*==============================
+DELIVERY
+==============================*/
+
+.ps-delivery{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    padding:16px;
+
+    background:#fafafa;
+
+    border:1px solid #ececec;
+
+    border-radius:16px;
+
+}
+
+
+
+.ps-stock{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+
+.ps-stock-dot{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:#19b24a;
+
+}
+
+
+
+.ps-delivery-text,
+
+.ps-cod{
+
+    font-size:13px;
+
+    color:#555;
+
+}
+
+
+
+/*==============================
+BUY NOW
+==============================*/
+
+.ps-buy-btn{
+
+    width:100%;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#ff9800;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+}
+
+
+
+.ps-buy-btn:hover{
+
+    background:#fb8c00;
+
+    transform:translateY(-2px);
+
+}
+
+
+
+.ps-buy-btn:active{
+
+    transform:scale(.98);
+
+}
+
+
+
+/*==============================
+FOCUS
+==============================*/
+
+.ps-cart-btn:focus-visible,
+
+.ps-buy-btn:focus-visible,
+
+.ps-qty button:focus-visible{
+
+    outline:2px solid #111;
+
+    outline-offset:2px;
+
+}
+
+
+
+/*=========================================================
+  576px+
+=========================================================*/
+
+@media (min-width:576px){
+
+    .ps-name{
+
+        font-size:26px;
+
+    }
+
+    .ps-price{
+
+        font-size:34px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  768px+
+=========================================================*/
+
+@media (min-width:768px){
+
+    .ps-section{
+
+        gap:20px;
+
+    }
+
+    .ps-name{
+
+        font-size:30px;
+
+    }
+
+    .ps-price{
+
+        font-size:38px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  1024px+
+=========================================================*/
+
+@media (min-width:1024px){
+
+    .ps-section{
+
+        gap:24px;
+
+    }
+
+    .ps-name{
+
+        font-size:36px;
+
+    }
+
+    .ps-price{
+
+        font-size:44px;
+
+    }
+
+    .ps-buy-btn{
+
+        height:58px;
+
+        font-size:17px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  1440px+
+=========================================================*/
+
+@media (min-width:1440px){
+
+    .ps-name{
+
+        font-size:40px;
+
+    }
+
+    .ps-price{
+
+        font-size:48px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  1920px+
+=========================================================*/
+
+@media (min-width:1920px){
+
+    .ps-name{
+
+        font-size:44px;
+
+    }
+
+    .ps-price{
+
+        font-size:52px;
+
+    }
+
+    .ps-buy-btn{
+
+        height:62px;
+
+        font-size:18px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  REDUCED MOTION
+=========================================================*/
+
+@media (prefers-reduced-motion:reduce){
+
+    .ps-cart-btn,
+
+    .ps-buy-btn,
+
+    .ps-qty button{
+
+        transition:none;
+
+    }
+
+}

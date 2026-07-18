@@ -1,0 +1,291 @@
+/*=========================================================
+  RELATED PRODUCTS
+=========================================================*/
+
+.dt-related{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+
+
+/*==============================
+HEADER
+==============================*/
+
+.dt-section-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+}
+
+
+
+.dt-section-header h3{
+
+    margin:0;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:#111;
+
+}
+
+
+
+.dt-view-all{
+
+    border:none;
+
+    background:none;
+
+    color:#111;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+}
+
+
+
+.dt-view-all:hover{
+
+    opacity:.7;
+
+}
+
+
+
+/*==============================
+SCROLL
+==============================*/
+
+.dt-related-scroll{
+
+    display:flex;
+
+    gap:14px;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+    padding-bottom:4px;
+
+    scroll-behavior:smooth;
+
+    scrollbar-width:none;
+
+    -ms-overflow-style:none;
+
+}
+
+
+
+.dt-related-scroll::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+
+
+/*==============================
+CARD
+==============================*/
+
+.dt-related-card{
+
+    flex:0 0 150px;
+
+    background:#fff;
+
+    border:1px solid #ececec;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.05);
+
+}
+
+
+
+.dt-related-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 14px 30px rgba(0,0,0,.08);
+
+}
+
+
+
+/*==============================
+IMAGE
+==============================*/
+
+.dt-related-card img{
+
+    width:100%;
+
+    aspect-ratio:1/1;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+
+
+/*==============================
+TITLE
+==============================*/
+
+.dt-related-card h4{
+
+    margin:10px 10px 4px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#111;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+
+
+/*==============================
+PRICE
+==============================*/
+
+.dt-related-card p{
+
+    margin:0 10px 12px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#111;
+
+}
+
+
+
+/*=========================================================
+  TABLET
+=========================================================*/
+
+@media (min-width:768px){
+
+    .dt-related-card{
+
+        flex:0 0 170px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  DESKTOP
+=========================================================*/
+
+@media (min-width:1024px){
+
+    .dt-section-header h3{
+
+        font-size:22px;
+
+    }
+
+    .dt-related-card{
+
+        flex:0 0 190px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  LARGE SCREEN
+=========================================================*/
+
+@media (min-width:1440px){
+
+    .dt-related-card{
+
+        flex:0 0 210px;
+
+    }
+
+}
+
+
+
+@media (min-width:1920px){
+
+    .dt-related-card{
+
+        flex:0 0 230px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  REDUCED MOTION
+=========================================================*/
+
+@media (prefers-reduced-motion:reduce){
+
+    .dt-related-card{
+
+        transition:none;
+
+    }
+
+}

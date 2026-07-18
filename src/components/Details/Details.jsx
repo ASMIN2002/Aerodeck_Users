@@ -1,196 +1,739 @@
 import "./Details.css";
+import { API } from "../../services/api";
 import CertifiedCard from "../../assets/Certifiedcard.png";
-import { useState } from "react";
+import DetailsData from "./DetailsData/DetailsData";
+import {
+    FaHeart,
+    FaRegHeart,
+    FaBookmark,
+    FaRegBookmark
+} from "react-icons/fa";
+import { useEffect, useState } from "react";
 
-function Details() {
+function Details({ product, onBack, setCartCount }) {
+
+
+
+    const userId =
+        JSON.parse(localStorage.getItem("user"))?.user_id;
+
+    const [details, setDetails] = useState(null);
+    const [isLiked, setIsLiked] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+    const [cartQuantity, setCartQuantity] = useState(0);
+
+    console.log(details);
 
     const images = [
 
-        "https://placehold.co/800x800",
+        details?.product_image1 ||
+        details?.gift_image1 ||
+        details?.shop_image1 ||
+        details?.premium_image1,
 
-        "https://placehold.co/800x800",
+        details?.product_image2 ||
+        details?.gift_image2 ||
+        details?.shop_image2 ||
+        details?.premium_image2,
 
-        "https://placehold.co/800x800",
+        details?.product_image3 ||
+        details?.gift_image3 ||
+        details?.shop_image3 ||
+        details?.premium_image3,
 
-        "https://placehold.co/800x800",
+        details?.product_image4 ||
+        details?.gift_image4 ||
+        details?.shop_image4 ||
+        details?.premium_image4,
 
         CertifiedCard
 
-    ];
+    ].filter(Boolean);
 
-    const [selectedImage, setSelectedImage] = useState(images[0]);
+    const [selectedImage, setSelectedImage] = useState(
+        images[0] || CertifiedCard
+    );
+    useEffect(() => {
+
+        if (!details) return;
+
+        setSelectedImage(
+            details.product_image1 ||
+            details.gift_image1 ||
+            details.shop_image1 ||
+            details.premium_image1 ||
+            CertifiedCard
+        );
+
+    }, [details]);
+
+    useEffect(() => {
+
+        if (!product?.data) return;
+
+        const fetchDetails = async () => {
+
+            try {
+
+                let id = null;
+
+                switch (product.type) {
+
+                    case "card":
+                        id = product.data.product_id;
+                        break;
+
+                    case "gift":
+                        id = product.data.gift_id;
+                        break;
+
+                    case "shop":
+                        id = product.data.shop_id;
+                        break;
+
+                    case "premium":
+                        id = product.data.premium_id;
+                        break;
+
+                    default:
+                        return;
+
+                }
+
+                const response = await fetch(
+                    `${API}/api/user/details/${product.type}/${id}`
+                );
+
+                const result = await response.json();
+
+                if (result.success) {
+
+                    setDetails(result.data);
+
+                }
+
+            } catch (error) {
+
+                console.error("Details fetch error:", error);
+
+            }
+
+        };
+
+        fetchDetails();
+
+    }, [product]);
+
+    useEffect(() => {
+
+        if (!details || !userId) return;
+
+        const loadLikeStatus = async () => {
+
+            try {
+
+                const productId =
+                    details.product_id ||
+                    details.gift_id ||
+                    details.shop_id ||
+                    details.premium_id;
+
+                console.log("User ID:", userId);
+                console.log("Product ID:", productId);
+
+                const response = await fetch(
+                    `${API}/api/user/likes?user_id=${userId}`
+                );
+
+                const data = await response.json();
+
+                console.log("Likes:", data.data);
+                console.table(data.data);
+
+                data.data.forEach(item => {
+                    console.log(
+                        "DB Product:",
+                        item.product_id,
+                        "| Current:",
+                        productId,
+                        "| Equal:",
+                        String(item.product_id) === String(productId)
+                    );
+                });
+
+                if (data.success) {
+
+                    setIsLiked(
+
+                        data.data.some(
+                            item => String(item.product_id) === String(productId)
+                        )
+
+                    );
+
+                    console.log("Found:", found);
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        };
+
+        loadLikeStatus();
+
+    }, [details, userId]);
+
+    const handleLike = async () => {
+
+        if (!details) return;
+
+        const productId =
+            details.product_id ||
+            details.gift_id ||
+            details.shop_id ||
+            details.premium_id;
+
+        try {
+
+            if (isLiked) {
+
+                const response = await fetch(
+
+                    `${API}/api/user/likes/${productId}`,
+
+                    {
+                        method: "DELETE",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            user_id: userId
+                        })
+                    }
+
+                );
+
+                const data = await response.json();
+
+                if (!data.success) return;
+
+                setIsLiked(false);
+
+                setDetails(prev => ({
+
+                    ...prev,
+
+                    product_total_likes: data.totalLikes,
+
+                    gift_total_likes: data.totalLikes,
+
+                    shop_total_likes: data.totalLikes,
+
+                    premium_total_likes: data.totalLikes
+
+                }));
+
+            }
+
+            else {
+
+                const response = await fetch(
+
+                    `${API}/api/user/likes`,
+
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            user_id: userId,
+                            product_id: productId
+                        })
+                    }
+
+                );
+
+                const data = await response.json();
+
+                if (!data.success) return;
+
+                setIsLiked(true);
+
+                setDetails(prev => ({
+
+                    ...prev,
+
+                    product_total_likes: data.totalLikes,
+
+                    gift_total_likes: data.totalLikes,
+
+                    shop_total_likes: data.totalLikes,
+
+                    premium_total_likes: data.totalLikes
+
+                }));
+            }
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+
+    useEffect(() => {
+
+        if (!details || !userId) return;
+
+        const loadSaveStatus = async () => {
+
+            try {
+
+                const productId =
+                    details.product_id ||
+                    details.gift_id ||
+                    details.shop_id ||
+                    details.premium_id;
+
+                const response = await fetch(
+                    `${API}/api/user/wishlist?user_id=${userId}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setIsSaved(
+
+                        data.data.some(
+                            item => String(item.product_id) === String(productId)
+                        )
+
+                    );
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        };
+
+        loadSaveStatus();
+
+    }, [details, userId]);
+
+
+    const loadCartStatus = async () => {
+
+        try {
+
+            const productId =
+                details.product_id ||
+                details.gift_id ||
+                details.shop_id ||
+                details.premium_id;
+
+            const response = await fetch(
+                `${API}/api/user/cart?user_id=${userId}`
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                const item = data.data.find(
+                    x => String(x.product_id) === String(productId)
+                );
+
+                if (item) {
+
+                    setCartQuantity(item.quantity);
+
+                } else {
+
+                    setCartQuantity(0);
+
+                }
+
+            }
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+    useEffect(() => {
+
+        if (!details || !userId) return;
+
+        loadCartStatus();
+
+    }, [details, userId]);
+
+    const handleSave = async () => {
+
+        if (!details) return;
+
+        const productId =
+            details.product_id ||
+            details.gift_id ||
+            details.shop_id ||
+            details.premium_id;
+
+        try {
+
+            if (isSaved) {
+
+                const response = await fetch(
+
+                    `${API}/api/user/wishlist/${productId}`,
+
+                    {
+
+                        method: "DELETE",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            user_id: userId
+
+                        })
+
+                    }
+
+                );
+
+                const data = await response.json();
+
+                if (!data.success) return;
+
+                setIsSaved(false);
+
+                setDetails(prev => ({
+
+                    ...prev,
+
+                    product_total_saves: Math.max(
+
+                        (prev.product_total_saves || 0) - 1,
+
+                        0
+
+                    )
+
+                }));
+
+            }
+
+            else {
+
+                const response = await fetch(
+
+                    `${API}/api/user/wishlist`,
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            user_id: userId,
+
+                            product_id: productId
+
+                        })
+
+                    }
+
+                );
+
+                const data = await response.json();
+
+                if (!data.success) return;
+
+                setIsSaved(true);
+
+                setDetails(prev => ({
+
+                    ...prev,
+
+                    product_total_saves:
+                        (prev.product_total_saves || 0) + 1
+
+                }));
+
+            }
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+
+    const handleIncreaseCart = async () => {
+
+        const productId =
+            details.product_id ||
+            details.gift_id ||
+            details.shop_id ||
+            details.premium_id;
+
+        let quantity = cartQuantity;
+
+        if (quantity === 0) {
+
+            quantity = String(productId).startsWith("G") ||
+                String(productId).startsWith("S")
+                ? 1
+                : 50;
+
+            const response = await fetch(`${API}/api/user/cart`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    product_id: productId,
+                    quantity
+                })
+            });
+
+            const data = await response.json();
+
+            if (!data.success) return;
+
+        } else {
+
+            quantity++;
+
+            await fetch(`${API}/api/user/cart`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    product_id: productId,
+                    quantity
+                })
+            });
+
+        }
+
+        setCartQuantity(quantity);
+
+    };
+    const handleDecreaseCart = async () => {
+
+        if (cartQuantity === 0) return;
+
+        const productId =
+            details.product_id ||
+            details.gift_id ||
+            details.shop_id ||
+            details.premium_id;
+
+        let quantity = cartQuantity - 1;
+
+        const minQty =
+            String(productId).startsWith("G") ||
+                String(productId).startsWith("S")
+                ? 1
+                : 50;
+
+        if (quantity < minQty) {
+
+            await fetch(`${API}/api/user/cart/${productId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userId
+                })
+            });
+
+            setCartQuantity(0);
+
+        } else {
+
+            await fetch(`${API}/api/user/cart`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    product_id: productId,
+                    quantity
+                })
+            });
+
+            setCartQuantity(quantity);
+
+        }
+
+    };
+
+    const handleBuyNow = () => {
+        console.log("Buy Now");
+    };
 
     return (
 
         <div className="dt-page">
 
-            {/* Back */}
-
-            <div className="dt-header">
-
-                <button className="dt-back">
-
-                    ←
-
-                </button>
-
-                <h2>
-
-                    Product Details
-
-                </h2>
-
-            </div>
 
             {/* Main Image */}
 
-            <div className="dt-image-box">
+            <div className="dt-image-wrapper">
 
-                <img
+                <div className="dt-image-box">
 
-                    src={selectedImage}
+                    <img
 
-                    alt="Product"
+                        src={selectedImage}
 
-                    className="dt-main-image"
+                        alt={product?.product_name}
 
-                />
+                    />
+
+                </div>
+
+                <div className="dt-overlay">
+                    <button
+                        className="dt-back"
+                        onClick={onBack}
+                    >
+                        ←
+                    </button>
+                    <button
+                        className="dt-action-btn"
+                        onClick={handleLike}
+                    >
+
+                        {isLiked ? (
+                            <FaHeart style={{ color: "#ff2d55" }} />
+                        ) : (
+                            <FaRegHeart />
+                        )}
+
+                        <span>
+                            {
+                                details?.product_total_likes ??
+                                details?.gift_total_likes ??
+                                details?.shop_total_likes ??
+                                details?.premium_total_likes ??
+                                0
+                            }
+                        </span>
+
+                    </button>
+
+                    <button
+                        className="dt-action-btn"
+                        onClick={handleSave}
+                    >
+
+                        {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+
+                        <span>
+                            {
+                                details?.product_total_saves ??
+                                details?.gift_total_saves ??
+                                details?.shop_total_saves ??
+                                details?.premium_total_saves ??
+                                0
+                            }
+                        </span>
+
+                    </button>
+                </div>
+                <div className="dt-image-count">
+
+                    {images.indexOf(selectedImage) + 1} / {images.length}
+
+                </div>
 
             </div>
-
             {/* Thumbnails */}
 
             <div className="dt-images">
 
-                {
+                {images.map((image, index) => (
 
-                    images.map((img, index) => (
+                    <img
 
-                        <img
+                        key={index}
 
-                            key={index}
+                        src={image}
 
-                            src={img}
+                        alt={`Image ${index + 1}`}
 
-                            alt=""
+                        onClick={() => setSelectedImage(image)}
 
-                            className={`dt-thumb ${selectedImage === img ? "active" : ""}`}
+                        className={
+                            selectedImage === image
+                                ? "dt-thumb active"
+                                : "dt-thumb"
+                        }
 
-                            onClick={() => setSelectedImage(img)}
+                    />
 
-                        />
-
-                    ))
-
-                }
-
-            </div>
-
-            {/* Product */}
-
-            <div className="dt-body">
-
-                <div className="dt-highlight">
-
-                    Premium Collection
-
-                </div>
-
-                <h2>
-
-                    Wedding Invitation Card
-
-                </h2>
-
-                <div className="dt-rating">
-
-                    ⭐ 4.8
-
-                </div>
-
-                <div className="dt-price">
-
-                    <span className="dt-final">
-
-                        ₹950
-
-                    </span>
-
-                    <span className="dt-demo">
-
-                        ₹1200
-
-                    </span>
-
-                    <span className="dt-off">
-
-                        20% OFF
-
-                    </span>
-
-                </div>
-
-                <div className="dt-status">
-
-                    Available
-
-                </div>
-
-                <div className="dt-description">
-
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-
-                </div>
+                ))}
 
             </div>
+            <DetailsData
+                product={details}
+                isLiked={isLiked}
+                isSaved={isSaved}
+                cartQuantity={cartQuantity}
+                onLike={handleLike}
+                onSave={handleSave}
+                onIncreaseCart={handleIncreaseCart}
+                onDecreaseCart={handleDecreaseCart}
+                onBuyNow={handleBuyNow}
+            />
 
-            {/* Quantity */}
-
-            <div className="dt-cart">
-
-                <button>
-
-                    -
-
-                </button>
-
-                <span>
-
-                    50
-
-                </span>
-
-                <button>
-
-                    +
-
-                </button>
-
-            </div>
-
-            {/* Buttons */}
-
-            <div className="dt-buttons">
-
-                <button>
-
-                    ❤ Like
-
-                </button>
-
-                <button>
-
-                    🔖 Save
-
-                </button>
-
-                <button>
-
-                    🛒 Add To Cart
-
-                </button>
-
-            </div>
 
         </div>
 

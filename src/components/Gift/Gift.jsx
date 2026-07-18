@@ -3,7 +3,8 @@ import { API } from "../../services/api";
 import GiftCard from "./GiftCard";
 import Toast from "../Toast/Toast";
 import "./Gift.css";
-const userId = 7;
+const userId =
+    JSON.parse(localStorage.getItem("user"))?.user_id;
 
 function Gift({
 

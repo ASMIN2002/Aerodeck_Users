@@ -1,0 +1,360 @@
+/*=========================================================
+  FOOTER
+  Mobile First
+=========================================================*/
+
+
+/*==============================
+ROOT
+==============================*/
+
+.dt-footer{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    gap:14px;
+
+    padding:32px 20px;
+
+    background:#ffffff;
+
+    border:1px solid #ececec;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.05);
+
+}
+
+
+
+/*==============================
+LOGO
+==============================*/
+
+.dt-footer h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    color:#111;
+
+}
+
+
+
+/*==============================
+TAGLINE
+==============================*/
+
+.dt-footer p{
+
+    margin:0;
+
+    font-size:13px;
+
+    color:#666;
+
+    line-height:1.7;
+
+}
+
+
+
+/*==============================
+LINKS
+==============================*/
+
+.dt-footer-links{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+
+
+.dt-footer-links span{
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:#f8f8f8;
+
+    border:1px solid #ececec;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    color:#111;
+
+    cursor:pointer;
+
+    transition:
+        background .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+
+.dt-footer-links span:hover{
+
+    background:#111;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.12);
+
+}
+
+
+
+/*==============================
+EMAIL
+==============================*/
+
+.dt-footer-mail{
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#444;
+
+    word-break:break-word;
+
+}
+
+
+
+/*==============================
+VERSION
+==============================*/
+
+.dt-footer-version{
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    background:#f8f8f8;
+
+    border:1px solid #ececec;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    color:#666;
+
+}
+
+
+
+/*==============================
+COPYRIGHT
+==============================*/
+
+.dt-footer-copy{
+
+    font-size:12px;
+
+    color:#888;
+
+}
+
+
+
+/*=========================================================
+  576px+
+=========================================================*/
+
+@media (min-width:576px){
+
+    .dt-footer{
+
+        padding:36px 24px;
+
+    }
+
+    .dt-footer h2{
+
+        font-size:32px;
+
+    }
+
+    .dt-footer p{
+
+        font-size:14px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  768px+
+=========================================================*/
+
+@media (min-width:768px){
+
+    .dt-footer{
+
+        padding:42px 28px;
+
+        gap:16px;
+
+    }
+
+    .dt-footer-links{
+
+        gap:12px;
+
+    }
+
+    .dt-footer-links span{
+
+        padding:9px 18px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  1024px+
+=========================================================*/
+
+@media (min-width:1024px){
+
+    .dt-footer{
+
+        padding:48px 36px;
+
+    }
+
+    .dt-footer h2{
+
+        font-size:40px;
+
+    }
+
+    .dt-footer p{
+
+        font-size:15px;
+
+    }
+
+    .dt-footer-mail{
+
+        font-size:14px;
+
+    }
+
+    .dt-footer-version{
+
+        font-size:12px;
+
+    }
+
+    .dt-footer-copy{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  1440px+
+=========================================================*/
+
+@media (min-width:1440px){
+
+    .dt-footer{
+
+        padding:56px 40px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  1920px+
+=========================================================*/
+
+@media (min-width:1920px){
+
+    .dt-footer h2{
+
+        font-size:46px;
+
+    }
+
+    .dt-footer p{
+
+        font-size:16px;
+
+    }
+
+    .dt-footer-links span{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+
+/*=========================================================
+  REDUCED MOTION
+=========================================================*/
+
+@media (prefers-reduced-motion:reduce){
+
+    .dt-footer-links span{
+
+        transition:none;
+
+    }
+
+}

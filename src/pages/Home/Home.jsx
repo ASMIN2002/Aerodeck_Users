@@ -71,6 +71,7 @@ function Home({
     };
 
     const handleOpenDetails = (product, type) => {
+        console.log(type);
 
         setSelectedProduct({
 

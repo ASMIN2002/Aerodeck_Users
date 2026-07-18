@@ -1,0 +1,492 @@
+/*=========================================================
+  DESCRIPTION
+  Mobile First
+=========================================================*/
+
+/*==============================
+ROOT
+==============================*/
+
+:root{
+
+    --dt-radius:18px;
+    --dt-radius-sm:12px;
+
+    --dt-bg:#ffffff;
+    --dt-border:#ececec;
+
+    --dt-text:#111111;
+    --dt-text-light:#666666;
+
+    --dt-success:#14a44d;
+    --dt-danger:#ef4444;
+
+    --dt-off:#ff4d4f;
+
+    --dt-shadow:
+        0 8px 22px rgba(0,0,0,.06);
+
+    --dt-transition:.25s ease;
+
+}
+
+
+
+/*==============================
+BODY
+==============================*/
+
+.dt-body{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    background:var(--dt-bg);
+
+}
+
+
+
+/*==============================
+HIGHLIGHT
+==============================*/
+
+.dt-highlight{
+
+    width:max-content;
+
+    max-width:100%;
+
+    padding:5px 10px;
+
+    border-radius:999px;
+
+    background:#f7f7f7;
+
+    border:1px solid var(--dt-border);
+
+    font-size:10px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+
+
+/*==============================
+TITLE
+==============================*/
+
+.dt-body h2{
+
+    margin:0;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    line-height:1.35;
+
+    color:var(--dt-text);
+
+}
+
+
+
+/*==============================
+SUBTITLE
+==============================*/
+
+.dt-subtitle{
+
+    margin:0;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    color:var(--dt-text-light);
+
+}
+
+
+
+/*==============================
+RATING
+==============================*/
+
+.dt-rating{
+
+    display:flex;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+
+    font-size:12px;
+
+    color:#f4b400;
+
+}
+
+
+
+.dt-rating span{
+
+    color:var(--dt-text-light);
+
+    font-size:11px;
+
+    font-weight:500;
+
+}
+
+
+
+/*==============================
+PRICE
+==============================*/
+
+.dt-price{
+
+    display:flex;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+}
+
+
+
+.dt-final{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:var(--dt-text);
+
+}
+
+
+
+.dt-demo{
+
+    font-size:13px;
+
+    color:#999;
+
+    text-decoration:line-through;
+
+}
+
+
+
+.dt-off{
+
+    padding:3px 8px;
+
+    border-radius:999px;
+
+    background:#fff1f1;
+
+    color:var(--dt-off);
+
+    font-size:10px;
+
+    font-weight:700;
+
+}
+
+
+
+/*==============================
+STATUS
+==============================*/
+
+.dt-status{
+
+    width:max-content;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:#f8f8f8;
+
+    border:1px solid var(--dt-border);
+
+    font-size:11px;
+
+    font-weight:600;
+
+}
+
+
+
+/*==============================
+HEADING
+==============================*/
+
+.dt-body h3{
+
+    margin:8px 0 0;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:var(--dt-text);
+
+}
+
+
+
+/*==============================
+DESCRIPTION
+==============================*/
+
+.dt-description{
+
+    font-size:12px;
+
+    line-height:1.8;
+
+    color:#555;
+
+    white-space:pre-wrap;
+
+}
+
+
+
+/*==============================
+HOVER
+==============================*/
+
+.dt-highlight,
+.dt-status{
+
+    transition:var(--dt-transition);
+
+}
+
+
+
+.dt-highlight:hover,
+
+.dt-status:hover{
+
+    box-shadow:var(--dt-shadow);
+
+}
+
+
+
+/*==============================
+FOCUS
+==============================*/
+
+.dt-highlight:focus-visible,
+
+.dt-status:focus-visible{
+
+    outline:2px solid #111;
+
+    outline-offset:2px;
+
+}
+
+
+
+/*=========================================================
+  RESPONSIVE
+=========================================================*/
+
+@media (min-width:375px){
+
+    .dt-body{
+
+        gap:12px;
+
+    }
+
+}
+
+
+
+@media (min-width:576px){
+
+    .dt-body h2{
+
+        font-size:22px;
+
+    }
+
+    .dt-final{
+
+        font-size:26px;
+
+    }
+
+    .dt-description{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+
+@media (min-width:768px){
+
+    .dt-body{
+
+        gap:14px;
+
+    }
+
+    .dt-body h2{
+
+        font-size:26px;
+
+    }
+
+    .dt-subtitle{
+
+        font-size:13px;
+
+    }
+
+    .dt-rating{
+
+        font-size:13px;
+
+    }
+
+    .dt-rating span{
+
+        font-size:12px;
+
+    }
+
+    .dt-description{
+
+        font-size:14px;
+
+    }
+
+}
+
+
+
+@media (min-width:1024px){
+
+    .dt-body{
+
+        gap:16px;
+
+    }
+
+    .dt-body h2{
+
+        font-size:32px;
+
+    }
+
+    .dt-final{
+
+        font-size:34px;
+
+    }
+
+    .dt-demo{
+
+        font-size:16px;
+
+    }
+
+    .dt-off{
+
+        font-size:11px;
+
+        padding:5px 10px;
+
+    }
+
+    .dt-status{
+
+        font-size:12px;
+
+    }
+
+    .dt-body h3{
+
+        font-size:18px;
+
+    }
+
+    .dt-description{
+
+        font-size:15px;
+
+        line-height:1.9;
+
+    }
+
+}
+
+
+
+@media (min-width:1440px){
+
+    .dt-body h2{
+
+        font-size:36px;
+
+    }
+
+    .dt-final{
+
+        font-size:38px;
+
+    }
+
+}
+
+
+
+@media (min-width:1920px){
+
+    .dt-body h2{
+
+        font-size:40px;
+
+    }
+
+    .dt-final{
+
+        font-size:42px;
+
+    }
+
+    .dt-description{
+
+        font-size:16px;
+
+    }
+
+}

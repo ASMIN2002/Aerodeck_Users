@@ -1,0 +1,332 @@
+/*=========================================================
+  FEATURES
+  Mobile First
+=========================================================*/
+
+
+/*==============================
+ROOT
+==============================*/
+
+.dt-features{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:16px;
+
+}
+
+
+
+/*==============================
+TITLE
+==============================*/
+
+.dt-features h3{
+
+    margin:0;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#111;
+
+    text-align:left;
+
+}
+
+
+
+/*==============================
+GRID
+==============================*/
+
+.dt-feature-grid{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+
+    gap:12px;
+
+}
+
+
+
+/*==============================
+CARD
+==============================*/
+
+.dt-feature-card{
+
+    background:#ffffff;
+
+    border:1px solid #ececec;
+
+    border-radius:18px;
+
+    padding:18px 12px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    text-align:center;
+
+    cursor:default;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.05);
+
+}
+
+
+
+/*==============================
+ICON
+==============================*/
+
+.dt-feature-card{
+
+    font-size:32px;
+
+}
+
+
+
+.dt-feature-card span{
+
+    font-size:12px;
+
+    font-weight:600;
+
+    line-height:1.5;
+
+    color:#444;
+
+}
+
+
+
+/*==============================
+HOVER
+==============================*/
+
+.dt-feature-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#dcdcdc;
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.08);
+
+}
+
+
+
+.dt-feature-card:active{
+
+    transform:scale(.98);
+
+}
+
+
+
+/*==============================
+FOCUS
+==============================*/
+
+.dt-feature-card:focus-visible{
+
+    outline:2px solid #111;
+
+    outline-offset:3px;
+
+}
+
+
+
+/*==============================
+576px+
+==============================*/
+
+@media (min-width:576px){
+
+    .dt-features h3{
+
+        font-size:18px;
+
+    }
+
+    .dt-feature-card{
+
+        padding:20px 14px;
+
+        font-size:36px;
+
+    }
+
+    .dt-feature-card span{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+
+/*==============================
+768px+
+==============================*/
+
+@media (min-width:768px){
+
+    .dt-feature-grid{
+
+        grid-template-columns:repeat(4,minmax(0,1fr));
+
+    }
+
+    .dt-features h3{
+
+        font-size:20px;
+
+    }
+
+    .dt-feature-card{
+
+        border-radius:20px;
+
+        padding:22px 16px;
+
+    }
+
+}
+
+
+
+/*==============================
+1024px+
+==============================*/
+
+@media (min-width:1024px){
+
+    .dt-features{
+
+        gap:20px;
+
+    }
+
+    .dt-features h3{
+
+        font-size:22px;
+
+    }
+
+    .dt-feature-card{
+
+        padding:24px 18px;
+
+        font-size:40px;
+
+    }
+
+    .dt-feature-card span{
+
+        font-size:14px;
+
+    }
+
+}
+
+
+
+/*==============================
+1440px+
+==============================*/
+
+@media (min-width:1440px){
+
+    .dt-feature-grid{
+
+        gap:18px;
+
+    }
+
+    .dt-feature-card{
+
+        padding:28px 20px;
+
+        font-size:44px;
+
+    }
+
+}
+
+
+
+/*==============================
+1920px+
+==============================*/
+
+@media (min-width:1920px){
+
+    .dt-features h3{
+
+        font-size:24px;
+
+    }
+
+    .dt-feature-card{
+
+        padding:32px 24px;
+
+        font-size:48px;
+
+    }
+
+    .dt-feature-card span{
+
+        font-size:15px;
+
+    }
+
+}
+
+
+
+/*==============================
+REDUCED MOTION
+==============================*/
+
+@media (prefers-reduced-motion:reduce){
+
+    .dt-feature-card{
+
+        transition:none;
+
+    }
+
+}
