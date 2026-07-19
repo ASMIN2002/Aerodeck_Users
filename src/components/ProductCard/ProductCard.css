@@ -890,9 +890,9 @@ FOCUS
 
     .pc-cart-btn{
 
-        height:36px;
+        height:32px;
 
-        font-size:10px;
+        font-size:8px;
 
         gap:5px;
 
@@ -1109,7 +1109,7 @@ TABLET
 
     .pc-qty-box{
 
-        height:46px;
+        height:32px;
 
     }
 
@@ -1207,7 +1207,7 @@ DESKTOP
 
     .pc-qty-box{
 
-        height:48px;
+        height:32px;
 
     }
 
