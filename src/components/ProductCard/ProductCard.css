@@ -77,8 +77,7 @@ CARD
     flex-direction:column;
     overflow:hidden;
     cursor:pointer;
-    background:var(--pc-white);
-
+    border: none;
     transition:
         transform var(--pc-transition),
         box-shadow var(--pc-transition),
@@ -350,7 +349,7 @@ HIGHLIGHT
 
     color:#fff;
 
-    font-size:10px;
+    font-size:6px;
 
     font-weight:700;
 
@@ -598,8 +597,6 @@ CART BUTTON
 
     font-size:11px;
 
-    font-weight:700;
-
     transition:var(--pc-transition);
 
 }
@@ -640,7 +637,7 @@ CART BUTTON
 
 .pc-cart-btn svg{
 
-    font-size:15px;
+    font-size:10px;
 
     flex-shrink:0;
 
@@ -794,7 +791,7 @@ QUANTITY
 
     text-align:center;
 
-    font-size:14px;
+    font-size:11px;
 
     font-weight:700;
 
@@ -863,7 +860,7 @@ FOCUS
 
     .pc-name{
 
-        font-size:9px;
+        font-size:6px;
 
     }
 
@@ -945,13 +942,13 @@ FOCUS
 
     .pc-name{
 
-        font-size:10px;
+        font-size:8px;
 
     }
 
     .pc-final-price{
 
-        font-size:16px;
+        font-size:11px;
 
     }
 
@@ -1130,13 +1127,13 @@ TABLET
 
     .pc-cart-btn svg{
 
-        font-size:17px;
+        font-size:10px;
 
     }
 
     .pc-cart-btn span{
 
-        font-size:12px;
+        font-size:7px;
 
     }
 
@@ -1176,7 +1173,7 @@ TABLET
 
     .pc-qty{
 
-        font-size:15px;
+        font-size:11px;
 
     }
 
