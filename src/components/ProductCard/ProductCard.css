@@ -1031,12 +1031,6 @@ TABLET
 
     }
 
-    .pc-card{
-
-        box-shadow:var(--pc-shadow);
-
-    }
-
     .pc-top{
 
         padding:14px;
