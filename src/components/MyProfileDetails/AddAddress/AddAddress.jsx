@@ -1,8 +1,7 @@
 import { useState } from "react";
 import "./AddAddress.css";
 import { FiArrowLeft } from "react-icons/fi";
-import MapPicker from "../../../components/Map/MapPicker";
-
+import Toast from "../../../components/Toast/Toast";
 import { API } from "../../../services/api";
 
 function AddAddress({ setProfilePage }) {
@@ -24,9 +23,35 @@ function AddAddress({ setProfilePage }) {
     });
     const [areas, setAreas] = useState([]);
     const [loadingPin, setLoadingPin] = useState(false);
-    const [mapCenter, setMapCenter] = useState([20.2961, 85.8245]);
 
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success"
+    });
+
+    const showToast = (message, type = "success") => {
+
+        setToast({
+            show: true,
+            message,
+            type
+        });
+
+        setTimeout(() => {
+
+            setToast({
+                show: false,
+                message: "",
+                type
+            });
+
+        }, 3000);
+
+    };
     const fetchPincode = async (pin) => {
+
+
 
         if (pin.length !== 6) return;
 
@@ -39,6 +64,7 @@ function AddAddress({ setProfilePage }) {
             );
 
             const data = await response.json();
+            console.log(data.location);
 
             if (data.success) {
 
@@ -52,10 +78,8 @@ function AddAddress({ setProfilePage }) {
                 }));
 
                 setAreas(data.areas);
-                setMapCenter([
-                    data.location.latitude,
-                    data.location.longitude
-                ]);
+
+
 
             }
 
@@ -71,6 +95,51 @@ function AddAddress({ setProfilePage }) {
 
     };
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.full_name.trim()) {
+            showToast("Please enter Full Name.", "error");
+            return;
+        }
+
+        if (!formData.mobile_number.trim()) {
+            showToast("Please enter Mobile Number.", "error");
+            return;
+        }
+
+        if (!/^\d{10}$/.test(formData.mobile_number)) {
+            showToast("Please enter a valid 10-digit Mobile Number.", "error");
+            return;
+        }
+
+        if (!formData.pincode.trim()) {
+            showToast("Please enter PIN Code.", "error");
+            return;
+        }
+
+        if (!formData.state.trim()) {
+            showToast("Please enter a valid PIN Code.", "error");
+            return;
+        }
+
+        if (!formData.city.trim()) {
+            showToast("Please enter a valid PIN Code.", "error");
+            return;
+        }
+
+        if (!formData.area_street.trim()) {
+            showToast("Please select Area / Post Office.", "error");
+            return;
+        }
+
+        if (!formData.house_flat.trim()) {
+            showToast("Please enter House / Flat No.", "error");
+            return;
+        }
+
+        if (!formData.address_type.trim()) {
+            showToast("Please select Address Type.", "error");
+            return;
+        }
 
         e.preventDefault();
 
@@ -125,7 +194,6 @@ function AddAddress({ setProfilePage }) {
                 <h2>Add Address</h2>
 
             </div>
-            <MapPicker center={mapCenter} />
 
             <form
                 className="address-form"
@@ -309,10 +377,15 @@ function AddAddress({ setProfilePage }) {
                 </button>
 
             </form>
-
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+            />
         </div>
 
     );
+
 
 }
 
