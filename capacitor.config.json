@@ -1,5 +1,9 @@
 {
   "appId": "com.aerodeck.user",
   "appName": "AERODECK",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "url": "https://aerodeckuniqueusers.netlify.app/",
+    "cleartext": true
+  }
 }
