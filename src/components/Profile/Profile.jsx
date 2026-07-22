@@ -1,11 +1,15 @@
 import "./Profile.css";
 
-function Profile() {
-
-    const user = {
-        full_name: "ASMIN KULDEEP JENA",
-        mobile_number: "+91 9876543210",
-        profile_image: "https://i.pravatar.cc/300"
+function Profile({
+    user,
+    setUser,
+    setPage,
+    onLogout,
+    setProfilePage
+}) {
+    const demoUser = {
+        name: "Asmin Kuldeep Jena",
+        mobile: "9876543210"
     };
 
     return (
@@ -24,7 +28,9 @@ function Profile() {
 
                 <p>{user.mobile_number}</p>
 
-                <button className="edit-profile-btn">
+                <button className="edit-profile-btn" 
+                onClick={() => setProfilePage("editprofile")}
+                >
                     Edit Profile
                 </button>
 
@@ -32,54 +38,78 @@ function Profile() {
 
             <div className="profile-menu">
 
-                <div className="profile-item">
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("address")}
+                >
                     <span>📍</span>
                     <span>My Addresses</span>
                 </div>
 
-                <div className="profile-item">
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("wishlist")}
+                >
                     <span>❤️</span>
                     <span>Wishlist</span>
                 </div>
 
-                <div className="profile-item">
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("cart")}
+                >
                     <span>🛒</span>
                     <span>My Cart</span>
                 </div>
-
-                <div className="profile-item">
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("orders")}
+                >
                     <span>📦</span>
                     <span>My Orders</span>
                 </div>
-
-                <div className="profile-item">
-                    <span>💳</span>
-                    <span>Payments</span>
-                </div>
-
-                <div className="profile-item">
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("rewards")}
+                >
                     <span>🎁</span>
-                    <span>Rewards</span>
+                    <span>My Rewards</span>
+                </div>
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("payments")}
+                >
+                    <span>💳</span>
+                    <span>My Payments</span>
                 </div>
 
-                <div className="profile-item">
-                    <span>📞</span>
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("help")}
+                >
+                    <span>❓</span>
                     <span>Help & Support</span>
                 </div>
 
-                <div className="profile-item">
-                    <span>⚙️</span>
-                    <span>Settings</span>
-                </div>
-
-                <div className="profile-item">
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("about")}
+                >
                     <span>ℹ️</span>
                     <span>About AERODECK</span>
                 </div>
 
             </div>
 
-            <button className="logout-btn">
+            <button className="logout-btn"
+                onClick={() => {
+
+                    console.log("Logout Clicked");
+
+                    onLogout();
+
+                }}
+            >
                 Logout
             </button>
 

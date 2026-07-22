@@ -13,8 +13,16 @@ import Premium from "../../components/Premium/Premium";
 import Offer from "../../components/Offer/Offer";
 import BottomNav from "../../components/BottomNav/BottomNav";
 import Details from "../../components/Details/Details";
-import Orders from "../../components/Orders/Orders";
 import Profile from "../../components/Profile/Profile";
+import MyWishlist from "../../components/MyProfileDetails/MyWishlist/MyWishlist";
+import MyCart from "../../components/MyProfileDetails/MyCart/MyCart";
+import MyOrders from "../../components/MyProfileDetails/MyOrders/MyOrders";
+import MyRewards from "../../components/MyProfileDetails/MyRewards/MyRewards";
+import MyPayments from "../../components/MyProfileDetails/MyPayments/MyPayments";
+import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/HelpAndSupport";
+import AboutAerodeck from "../../components/MyProfileDetails/AboutAerodeck/AboutAerodeck";
+import EditProfile from "../../components/MyProfileDetails/EditProfile/EditProfile";
+import MyAddresses from "../../components/MyProfileDetails/MyAddress/MyAddresses";
 
 
 function Home({
@@ -44,9 +52,13 @@ function Home({
 
     });
 
+    const [profilePage, setProfilePage] = useState("profile");
+
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+
 
     useEffect(() => {
 
@@ -108,10 +120,11 @@ function Home({
                 cartCount={cartCount}
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
-                onLogout={handleLogout}
             />
             {
                 !isDetailsOpen &&
+                (selectedBottomTab === "Home" ||
+                    selectedBottomTab === "Premium") &&
                 <Address />
             }
 
@@ -208,21 +221,100 @@ function Home({
                 }
                 {
                     !isDetailsOpen &&
-                    selectedBottomTab === "Orders" &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "profile" &&
 
-                    <Orders
-                        setCartCount={setCartCount}
+                    <Profile
+                        user={user}
+                        setUser={setUser}
+                        setPage={setPage}
+                        onLogout={handleLogout}
+                        setProfilePage={setProfilePage}
+                    />
+
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "address" &&
+
+                    <MyAddresses
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "wishlist" &&
+
+                    <MyWishlist
+                        setProfilePage={setProfilePage}
                         onOpenDetails={handleOpenDetails}
                     />
                 }
                 {
                     !isDetailsOpen &&
                     selectedBottomTab === "Profile" &&
+                    profilePage === "cart" &&
 
-                    <Profile
-                        user={user}
-                        setUser={setUser}
-                        setPage={setPage}
+                    <MyCart
+                        setProfilePage={setProfilePage}
+                        onOpenDetails={handleOpenDetails}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "orders" &&
+
+                    <MyOrders
+                        setProfilePage={setProfilePage}
+                        onOpenDetails={handleOpenDetails}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "rewards" &&
+
+                    <MyRewards
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "payments" &&
+
+                    <MyPayments
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "help" &&
+
+                    <HelpAndSupport
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "about" &&
+
+                    <AboutAerodeck
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "editprofile" &&
+
+                    <EditProfile
+                        setProfilePage={setProfilePage}
                     />
                 }
 

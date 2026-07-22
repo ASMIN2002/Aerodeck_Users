@@ -1,0 +1,149 @@
+.mycart{
+    width:100%;
+    min-height:100vh;
+    padding:15px;
+    background:#f5f7fb;
+    box-sizing:border-box;
+}
+
+.cart-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.cart-back{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    cursor:pointer;
+    font-size:20px;
+    transition:.3s;
+}
+
+.cart-back:hover{
+    transform:scale(1.05);
+}
+
+.cart-header h2{
+    margin:0;
+    font-size:22px;
+    color:#222;
+}
+
+.cart-empty{
+    height:70vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.cart-empty h3{
+    margin:15px 0 5px;
+    font-size:22px;
+    color:#222;
+}
+
+.cart-empty p{
+    color:#777;
+    font-size:14px;
+}
+
+.cart-card{
+    display:flex;
+    gap:15px;
+    background:#fff;
+    border-radius:18px;
+    padding:15px;
+    margin-bottom:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.cart-card:hover{
+    transform:translateY(-2px);
+}
+
+.cart-card img{
+    width:100px;
+    height:100px;
+    border-radius:14px;
+    object-fit:cover;
+    flex-shrink:0;
+}
+
+.cart-info{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.cart-info h3{
+    margin:0;
+    font-size:17px;
+    color:#222;
+}
+
+.cart-info h4{
+    margin:8px 0;
+    color:#000;
+    font-size:18px;
+    font-weight:700;
+}
+
+.cart-info p{
+    margin:0;
+    color:#666;
+    font-size:14px;
+}
+
+.cart-info button{
+    margin-top:12px;
+    width:150px;
+    height:40px;
+    border:none;
+    border-radius:10px;
+    background:#111;
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.cart-info button:hover{
+    background:#000;
+}
+
+@media (min-width:768px){
+
+.mycart{
+    max-width:750px;
+    margin:auto;
+}
+
+.cart-card img{
+    width:120px;
+    height:120px;
+}
+
+.cart-info h3{
+    font-size:20px;
+}
+
+}
+
+@media (min-width:1200px){
+
+.mycart{
+    max-width:850px;
+}
+
+}

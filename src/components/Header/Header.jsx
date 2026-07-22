@@ -240,20 +240,6 @@ function Header({
 
                 </button>
 
-
-
-                <button
-                    onClick={() => {
-
-                        console.log("Logout Clicked");
-
-                        onLogout();
-
-                    }}
-                >
-                    Logout
-                </button>
-
             </div>
 
         </header>
