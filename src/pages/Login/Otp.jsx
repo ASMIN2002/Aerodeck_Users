@@ -78,6 +78,21 @@ function Otp({
                 JSON.stringify(data.user)
             );
 
+            localStorage.setItem(
+                "user_id",
+                data.user.user_id
+            );
+
+            localStorage.setItem(
+                "user_name",
+                data.user.full_name
+            );
+
+            localStorage.setItem(
+                "mobile_number",
+                data.user.mobile_number
+            );
+
             setPage("home");
 
         }

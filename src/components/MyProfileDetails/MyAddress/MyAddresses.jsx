@@ -1,35 +1,77 @@
 import "./MyAddresses.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
+import { API } from "../../../services/api";
 
 function MyAddresses({ setProfilePage }) {
 
-    const [addresses] = useState([
-        {
-            id: 1,
-            type: "Home",
-            name: "Asmin Kuldeep Jena",
-            mobile: "9876543210",
-            address: "Near Railway Station, Balasore, Odisha - 756001",
-            primary: true
-        },
-        {
-            id: 2,
-            type: "Office",
-            name: "Asmin Kuldeep Jena",
-            mobile: "9876543210",
-            address: "Industrial Area, Balasore, Odisha - 756001",
-            primary: false
+    const [addresses, setAddresses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const user_id = localStorage.getItem("user_id");
+    const [activeMenu, setActiveMenu] = useState(null);
+    const menuRef = useRef(null);
+
+    useEffect(() => {
+        fetchAddresses();
+    }, []);
+
+    const fetchAddresses = async () => {
+        try {
+
+            const response = await fetch(
+                `${API}/api/user/address/${user_id}`
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                setAddresses(data.data);
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+        } finally {
+
+            setLoading(false);
+
         }
-    ]);
-
-    const handleMenu = (id) => {
-
-        console.log("Menu :", id);
-
-        // Open Address Menu
-
     };
+    useEffect(() => {
+
+        const handleClickOutside = (event) => {
+
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target)
+            ) {
+                setActiveMenu(null);
+            }
+
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener(
+                "mousedown",
+                handleClickOutside
+            );
+        };
+
+    }, []);
+    const handleMenu = (id) => {
+        setActiveMenu(activeMenu === id ? null : id);
+    };
+
+    if (loading) {
+        return (
+            <div className="address-page">
+                Loading...
+            </div>
+        );
+    }
 
     return (
 
@@ -73,7 +115,7 @@ function MyAddresses({ setProfilePage }) {
 
                     <div
                         className="address-card"
-                        key={item.id}
+                        key={item.address_id}
                     >
 
                         <div className="address-top">
@@ -81,11 +123,11 @@ function MyAddresses({ setProfilePage }) {
                             <div>
 
                                 <h3>
-                                    {item.type}
+                                    {item.address_type}
                                 </h3>
 
                                 {
-                                    item.primary &&
+                                    item.is_primary === 1 &&
 
                                     <span className="primary-badge">
                                         PRIMARY
@@ -96,23 +138,51 @@ function MyAddresses({ setProfilePage }) {
 
                             <button
                                 className="menu-btn"
-                                onClick={() => handleMenu(item.id)}
+                                onClick={() => handleMenu(item.address_id)}
                             >
                                 ⋮
                             </button>
+                            {
+                                activeMenu === item.address_id && (
+
+                                    <div
+                                        className="address-menu"
+                                        ref={menuRef}
+                                    >
+
+                                        {
+                                            item.is_primary !== 1 && (
+                                                <button>
+                                                    Set as Primary
+                                                </button>
+                                            )
+                                        }
+
+                                        <button>
+                                            Edit Address
+                                        </button>
+
+                                        <button className="delete-btn">
+                                            Delete Address
+                                        </button>
+
+                                    </div>
+
+                                )
+                            }
 
                         </div>
 
                         <h4>
-                            {item.name}
+                            {item.full_name}
                         </h4>
 
                         <p>
-                            +91 {item.mobile}
+                            +91 {item.mobile_number}
                         </p>
 
                         <p>
-                            {item.address}
+                            {item.house_flat}, {item.area_street}, {item.landmark}, {item.city}, {item.state} - {item.pincode}
                         </p>
 
                     </div>
