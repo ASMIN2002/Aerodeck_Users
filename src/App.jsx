@@ -36,11 +36,6 @@ function App() {
             }
 
             catch (err) {
-
-                console.error("Health Check Error:", err);
-
-                alert("Health Check Error: " + err);
-
                 setIsOnline(false);
 
             }
