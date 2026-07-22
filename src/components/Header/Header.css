@@ -440,11 +440,10 @@
 
     border-radius:999px;
 
-    background:#01eaff;
+    background: linear-gradient(90deg, rgb(53, 4, 150), black);
 
-    color:#040303;
-
-    font-weight:700;
+    color:#ffffff;
+    font-size: 10px;
 
     white-space:nowrap;
 
