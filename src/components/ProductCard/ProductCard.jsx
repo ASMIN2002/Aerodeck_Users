@@ -97,17 +97,16 @@ function ProductCard({
 
             <div className="pc-image-box">
 
-                <img
+                <div className="pc-image-grid">
 
-                    src={product.product_image1}
+                    <img src={product.product_image1} alt="" className="pc-image" />
+                    <img src={product.product_image2} alt="" className="pc-image" />
 
-                    alt={product.product_name}
+                    <img src={product.product_image3} alt="" className="pc-image" />
 
-                    loading="lazy"
+                    <img src={product.product_image4} alt="" className="pc-image" />
 
-                    className="pc-image"
-
-                />
+                </div>
 
             </div>
 
