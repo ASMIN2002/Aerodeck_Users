@@ -38,6 +38,53 @@ function MyAddresses({ setProfilePage }) {
 
         }
     };
+    const handleSetPrimary = async (address_id) => {
+
+        try {
+
+            const response = await fetch(
+
+                `${API}/api/user/address/primary/${address_id}`,
+
+                {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        user_id
+                    })
+
+                }
+
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                setActiveMenu(null);
+
+                fetchAddresses();
+
+            } else {
+
+                alert(data.message);
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("Server Error");
+
+        }
+
+    };
     useEffect(() => {
 
         const handleClickOutside = (event) => {
@@ -152,13 +199,28 @@ function MyAddresses({ setProfilePage }) {
 
                                         {
                                             item.is_primary !== 1 && (
-                                                <button>
+                                                <button
+                                                    onClick={() => handleSetPrimary(item.address_id)}
+                                                >
                                                     Set as Primary
                                                 </button>
                                             )
                                         }
 
-                                        <button>
+                                        <button
+                                            onClick={() => {
+
+                                                localStorage.setItem(
+                                                    "editAddress",
+                                                    JSON.stringify(item)
+                                                );
+
+                                                setActiveMenu(null);
+
+                                                setProfilePage("editaddress");
+
+                                            }}
+                                        >
                                             Edit Address
                                         </button>
 

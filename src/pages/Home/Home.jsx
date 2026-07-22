@@ -24,6 +24,7 @@ import AboutAerodeck from "../../components/MyProfileDetails/AboutAerodeck/About
 import EditProfile from "../../components/MyProfileDetails/EditProfile/EditProfile";
 import MyAddresses from "../../components/MyProfileDetails/MyAddress/MyAddresses";
 import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress";
+import EditAddress from "../../components/MyProfileDetails/EditAddress/EditAddress";
 
 
 function Home({
@@ -324,6 +325,15 @@ function Home({
                     profilePage === "addaddress" &&
 
                     <AddAddress
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "editaddress" &&
+
+                    <EditAddress
                         setProfilePage={setProfilePage}
                     />
                 }

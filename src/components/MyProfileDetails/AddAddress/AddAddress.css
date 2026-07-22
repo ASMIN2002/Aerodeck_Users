@@ -1,123 +1,139 @@
-.add-address {
-    width: 100%;
-    min-height: 100%;
-    background: #f5f7fb;
-    padding: 16px;
-    box-sizing: border-box;
+.add-address{
+    width:100%;
+    min-height:100vh;
+    background:#f8fafc;
+    padding:20px 16px 40px;
+    box-sizing:border-box;
 }
 
-.add-address-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
+.add-address-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:24px;
 }
 
-.add-address-header h2 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #222;
+.back-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:#ffffff;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    cursor:pointer;
+    transition:.25s;
 }
 
-.back-btn {
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 50%;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
-    transition: .25s;
+.back-btn:hover{
+    transform:translateY(-2px);
 }
 
-.back-btn:hover {
-    transform: translateY(-2px);
+.add-address-header h2{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    color:#111827;
 }
 
-.address-form {
-    background: #fff;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,.08);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.address-form{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
 }
 
-.address-form input {
-    width: 100%;
-    padding: 14px 16px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    outline: none;
-    font-size: 15px;
-    transition: .25s;
-    box-sizing: border-box;
+.address-form input,
+.address-form select{
+    width:100%;
+    height:54px;
+    border:1px solid #dbe4ef;
+    border-radius:14px;
+    background:#fff;
+    padding:0 16px;
+    font-size:15px;
+    outline:none;
+    box-sizing:border-box;
+    transition:.25s;
 }
 
-.address-form input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+.address-form input:focus,
+.address-form select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
 }
 
-.address-type {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
+.address-form input[readonly]{
+    background:#f3f6fb;
+    color:#374151;
+    cursor:not-allowed;
 }
 
-.address-type label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #333;
-    cursor: pointer;
+.address-form select{
+    cursor:pointer;
 }
 
-.save-address-btn {
-    width: 100%;
-    height: 50px;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg,#2563eb,#4f46e5);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .25s;
+.address-type{
+    display:flex;
+    gap:12px;
+    margin-top:4px;
 }
 
-.save-address-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(37,99,235,.35);
+.address-type label{
+    flex:1;
+    height:48px;
+    border:1px solid #dbe4ef;
+    border-radius:12px;
+    background:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.25s;
 }
 
-@media (min-width:768px){
+.address-type label:hover{
+    border-color:#2563eb;
+}
+
+.address-type input{
+    width:18px;
+    height:18px;
+}
+
+.save-address-btn{
+    margin-top:12px;
+    height:56px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+    color:#fff;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+}
+
+.save-address-btn:hover{
+    transform:translateY(-2px);
+}
+
+.save-address-btn:active{
+    transform:scale(.98);
+}
+
+@media(min-width:768px){
 
     .add-address{
-        max-width:760px;
+        max-width:650px;
         margin:auto;
-        padding:24px;
-    }
-
-    .address-form{
-        padding:28px;
-    }
-
-}
-
-@media (min-width:1200px){
-
-    .add-address{
-        max-width:850px;
+        padding:30px;
     }
 
 }
