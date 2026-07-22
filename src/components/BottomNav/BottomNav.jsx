@@ -99,7 +99,23 @@ function BottomNav({
 
             </button>
 
-            <button className="bn-item">
+            <button
+
+                className={`bn-item ${selectedBottomTab === "Orders" ? "bn-active" : ""}`}
+
+                onClick={() => {
+
+                    if (isDetailsOpen) {
+
+                        closeDetails();
+
+                    }
+
+                    setSelectedBottomTab("Orders");
+
+                }}
+
+            >
 
                 <span className="bn-icon">
                     📦
@@ -111,7 +127,23 @@ function BottomNav({
 
             </button>
 
-            <button className="bn-item">
+            <button
+
+                className={`bn-item ${selectedBottomTab === "Profile" ? "bn-active" : ""}`}
+
+                onClick={() => {
+
+                    if (isDetailsOpen) {
+
+                        closeDetails();
+
+                    }
+
+                    setSelectedBottomTab("Profile");
+
+                }}
+
+            >
 
                 <span className="bn-icon">
                     👤

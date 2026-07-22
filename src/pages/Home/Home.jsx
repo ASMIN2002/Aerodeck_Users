@@ -13,6 +13,8 @@ import Premium from "../../components/Premium/Premium";
 import Offer from "../../components/Offer/Offer";
 import BottomNav from "../../components/BottomNav/BottomNav";
 import Details from "../../components/Details/Details";
+import Orders from "../../components/Orders/Orders";
+import Profile from "../../components/Profile/Profile";
 
 
 function Home({
@@ -203,6 +205,25 @@ function Home({
                     selectedBottomTab === "Offers" &&
 
                     <Offer />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Orders" &&
+
+                    <Orders
+                        setCartCount={setCartCount}
+                        onOpenDetails={handleOpenDetails}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+
+                    <Profile
+                        user={user}
+                        setUser={setUser}
+                        setPage={setPage}
+                    />
                 }
 
             </div>
