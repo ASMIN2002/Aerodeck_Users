@@ -1,4 +1,5 @@
 import "./Profile.css";
+import AerodeckDP from "../../assets/AerodeckDP.png";
 
 function Profile({
     user,
@@ -19,8 +20,8 @@ function Profile({
             <div className="profile-header">
 
                 <img
-                    src={user.profile_image}
-                    alt={user.full_name}
+                    src={user?.profile_image || AerodeckDP}
+                    alt="Profile"
                     className="profile-image"
                 />
 
@@ -28,8 +29,8 @@ function Profile({
 
                 <p>{user.mobile_number}</p>
 
-                <button className="edit-profile-btn" 
-                onClick={() => setProfilePage("editprofile")}
+                <button className="edit-profile-btn"
+                    onClick={() => setProfilePage("editprofile")}
                 >
                     Edit Profile
                 </button>

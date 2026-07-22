@@ -23,6 +23,7 @@ import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/Hel
 import AboutAerodeck from "../../components/MyProfileDetails/AboutAerodeck/AboutAerodeck";
 import EditProfile from "../../components/MyProfileDetails/EditProfile/EditProfile";
 import MyAddresses from "../../components/MyProfileDetails/MyAddress/MyAddresses";
+import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress";
 
 
 function Home({
@@ -314,6 +315,15 @@ function Home({
                     profilePage === "editprofile" &&
 
                     <EditProfile
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "addaddress" &&
+
+                    <AddAddress
                         setProfilePage={setProfilePage}
                     />
                 }

@@ -1,7 +1,8 @@
 import "./MyAddresses.css";
 import { useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
 
-function Address({ setProfilePage }) {
+function MyAddresses({ setProfilePage }) {
 
     const [addresses] = useState([
         {
@@ -22,25 +23,11 @@ function Address({ setProfilePage }) {
         }
     ]);
 
-    const handleBack = () => {
-
-        console.log("Back to Profile");
-
-        // setSelectedProfilePage("profile");
-
-    };
-
-    const handleAddAddress = () => {
-
-        console.log("Open Add Address Page");
-
-    };
-
     const handleMenu = (id) => {
 
         console.log("Menu :", id);
 
-        // Open Popup Menu
+        // Open Address Menu
 
     };
 
@@ -50,12 +37,11 @@ function Address({ setProfilePage }) {
 
             <div className="address-header">
 
-
                 <button
                     className="back-btn"
                     onClick={() => setProfilePage("profile")}
                 >
-                    ←
+                    <FiArrowLeft />
                 </button>
 
                 <h2>
@@ -65,7 +51,7 @@ function Address({ setProfilePage }) {
                 <button
                     className="add-btn"
                     disabled={addresses.length >= 4}
-                    onClick={handleAddAddress}
+                    onClick={() => setProfilePage("addaddress")}
                 >
                     + Add
                 </button>
@@ -73,7 +59,6 @@ function Address({ setProfilePage }) {
             </div>
 
             {
-
                 addresses.length === 0 &&
 
                 <div className="empty-address">
@@ -81,11 +66,9 @@ function Address({ setProfilePage }) {
                     No saved addresses
 
                 </div>
-
             }
 
             {
-
                 addresses.map((item) => (
 
                     <div
@@ -98,21 +81,15 @@ function Address({ setProfilePage }) {
                             <div>
 
                                 <h3>
-
                                     {item.type}
-
                                 </h3>
 
                                 {
-
                                     item.primary &&
 
                                     <span className="primary-badge">
-
                                         PRIMARY
-
                                     </span>
-
                                 }
 
                             </div>
@@ -127,27 +104,20 @@ function Address({ setProfilePage }) {
                         </div>
 
                         <h4>
-
                             {item.name}
-
                         </h4>
 
                         <p>
-
                             +91 {item.mobile}
-
                         </p>
 
                         <p>
-
                             {item.address}
-
                         </p>
 
                     </div>
 
                 ))
-
             }
 
         </div>
@@ -156,4 +126,4 @@ function Address({ setProfilePage }) {
 
 }
 
-export default Address;
+export default MyAddresses;
