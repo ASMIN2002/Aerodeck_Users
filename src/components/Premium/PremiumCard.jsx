@@ -1,76 +1,75 @@
 import "./PremiumCard.css";
-import { FiHeart, FiBookmark, FiShoppingCart } from "react-icons/fi";
+import { FiHeart, FiBookmark } from "react-icons/fi";
 import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
+import { FiShoppingCart } from "react-icons/fi";
 
-function PremiumCard({
+function ProductPremium({
 
-    premium,
+    product,
 
-    isSaved = false,
+    isSaved,
 
-    isLiked = false,
+    isLiked,
 
-    isAddedToCart = false,
+    isAddedToCart,
 
-    cartQuantity = 0,
+    cartQuantity,
 
-    onSave = () => { },
+    onSave,
 
-    onLike = () => { },
+    onLike,
 
-    onAddToCart = () => { },
+    onAddToCart,
 
-    onIncreaseQuantity = () => { },
+    onIncreaseQuantity,
 
-    onDecreaseQuantity = () => { },
+    onDecreaseQuantity,
 
     onOpenDetails = () => { }
 
 }) {
-    const handleCardClick = () => {
+
+    const handlePremiumClick = () => {
 
         onOpenDetails();
 
     };
-
     return (
 
         <div
-            className="gc-card"
-            onClick={handleCardClick}
+            className="pc-premium"
+            onClick={handlePremiumClick}
         >
 
-            <div className="gc-top">
+            <div className="pc-top">
 
                 <span
                     className={
-                        premium.premium_status
-                            ? "gc-status available"
-                            : "gc-status unavailable"
+                        product.premium_status
+                            ? "pc-status available"
+                            : "pc-status unavailable"
                     }
                 >
 
                     {
-
-                        premium.premium_status
+                        product.premium_status
 
                             ? "Available"
 
-                            : "Out Of Stock"
+                            : "Out of Stock"
 
                     }
 
                 </span>
-
                 <button
 
-                    className={`gc-like ${isLiked ? "active" : ""}`}
+                    className={`pc-like ${isLiked ? "active" : ""}`}
 
                     onClick={(e) => {
 
                         e.stopPropagation();
 
-                        onLike(premium.premium_id);
+                        onLike(product.premium_id);
 
                     }}
 
@@ -86,9 +85,9 @@ function PremiumCard({
 
                     }
 
-                    <span className="gc-like-count">
+                    <span className="pc-like-count">
 
-                        {premium.premium_total_likes}
+                        {product.premium_total_likes}
 
                     </span>
 
@@ -96,106 +95,102 @@ function PremiumCard({
 
             </div>
 
-            <div className="gc-image-box">
+            <div className="pc-image-box">
 
-                <img
+                <div className="pc-image-grid">
 
-                    src={premium.premium_image1}
+                    <img src={product.premium_image1} alt="" className="pc-image" />
+                    <img src={product.premium_image2} alt="" className="pc-image" />
 
-                    alt={premium.premium_name}
+                    <img src={product.premium_image3} alt="" className="pc-image" />
 
-                    loading="lazy"
+                    <img src={product.premium_image4} alt="" className="pc-image" />
 
-                    className="gc-image"
-
-                />
+                </div>
 
             </div>
 
-            <div className="gc-body">
+            <div className="pc-body">
 
                 {
-
-                    premium.premium_highlight_text && (
-
-                        <div className="gc-highlight">
-
-                            {premium.premium_highlight_text}
-
+                    product.premium_highlight_text && (
+                        <div className="pc-highlight">
+                            {product.premium_highlight_text}
                         </div>
-
                     )
-
                 }
 
-                <h3 className="gc-name">
+                <h3 className="pc-name">
 
-                    {premium.premium_name}
+                    {product.premium_name}
 
                 </h3>
 
-                <div className="gc-rating-row">
+                <div className="pc-rating-row">
 
                     <span>
 
-                        ⭐ {premium.premium_rating || "4.3"}
+                        ⭐ {product.premium_rating || "4.3"}
 
                     </span>
 
                 </div>
 
-                <div className="gc-price-row">
+                <div className="pc-price-row">
 
-                    <span className="gc-demo-price">
+                    <span className="pc-demo-price">
 
-                        ₹{premium.premium_demo_price}
+                        ₹{product.premium_demo_price}
 
                     </span>
 
-                    <span className="gc-discount">
+                    <span className="pc-discount">
 
-                        {premium.premium_discount_percentage}% OFF
+                        {product.premium_discount_percentage}% OFF
 
                     </span>
 
                 </div>
 
-                <div className="gc-final-price">
+                <div className="pc-final-price">
 
-                    ₹{premium.premium_price}
+                    ₹{product.premium_price}
 
-                    <span> / Piece</span>
+                    <span>
+
+                        {" "}
+
+                        / Piece
+
+                    </span>
 
                 </div>
 
             </div>
 
-            <div className="gc-footer">
+            <div className="pc-footer">
 
                 {
-
-                    !premium.premium_status ? (
+                    !product.premium_status ? (
 
                         <button
-                            className="gc-cart-btn"
+                            className="pc-cart-btn"
                             disabled
                         >
-
                             Out Of Stock
-
                         </button>
 
                     ) : !isAddedToCart ? (
 
                         <button
 
-                            className="gc-cart-btn"
+                            className="pc-cart-btn"
 
                             onClick={(e) => {
 
                                 e.stopPropagation();
 
-                                onAddToCart(premium.premium_id);
+                                onAddToCart(product.premium_id);
 
                             }}
 
@@ -210,15 +205,14 @@ function PremiumCard({
                     ) : (
 
                         <div
-                            className="gc-qty-box"
+                            className="pc-qty-box"
                             onClick={(e) => e.stopPropagation()}
                         >
-
                             <button
 
-                                className="gc-qty-btn"
+                                className="pc-qty-btn"
 
-                                onClick={() => onDecreaseQuantity(premium.premium_id)}
+                                onClick={() => onDecreaseQuantity(product.premium_id)}
 
                             >
 
@@ -226,7 +220,7 @@ function PremiumCard({
 
                             </button>
 
-                            <span className="gc-qty">
+                            <span className="pc-qty">
 
                                 {cartQuantity}
 
@@ -234,9 +228,9 @@ function PremiumCard({
 
                             <button
 
-                                className="gc-qty-btn"
+                                className="pc-qty-btn"
 
-                                onClick={() => onIncreaseQuantity(premium.premium_id)}
+                                onClick={() => onIncreaseQuantity(product.premium_id)}
 
                             >
 
@@ -247,18 +241,17 @@ function PremiumCard({
                         </div>
 
                     )
-
                 }
 
                 <button
 
-                    className={`gc-save ${isSaved ? "active" : ""}`}
+                    className={`pc-save ${isSaved ? "active" : ""}`}
 
                     onClick={(e) => {
 
                         e.stopPropagation();
 
-                        onSave(premium.premium_id);
+                        onSave(product.premium_id);
 
                     }}
 
@@ -274,9 +267,9 @@ function PremiumCard({
 
                     }
 
-                    <span className="gc-save-count">
+                    <span className="pc-save-count">
 
-                        {premium.premium_total_saves}
+                        {product.premium_total_saves}
 
                     </span>
 
@@ -290,4 +283,4 @@ function PremiumCard({
 
 }
 
-export default PremiumCard;
+export default ProductPremium;

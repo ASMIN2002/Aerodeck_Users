@@ -3,8 +3,7 @@ import "./Cards.css";
 import ProductCard from "../ProductCard/ProductCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
-const userId =
-    JSON.parse(localStorage.getItem("user"))?.user_id;
+
 
 function Cards({
 
@@ -13,6 +12,9 @@ function Cards({
     onOpenDetails
 
 }) {
+
+    const userId =
+        JSON.parse(localStorage.getItem("user"))?.user_id;
 
     const [products, setProducts] = useState([]);
     const [savedProducts, setSavedProducts] = useState(new Set());
@@ -685,7 +687,9 @@ function Cards({
 
             try {
 
-                const response = await fetch(`${API}/api/user/wishlist?user_id=7`);
+                const response = await fetch(
+                    `${API}/api/user/wishlist?user_id=${userId}`
+                );
 
                 const data = await response.json();
 
@@ -716,8 +720,9 @@ function Cards({
         async function loadLikes() {
 
             try {
-
-                const response = await fetch(`${API}/api/user/likes?user_id=7`);
+                const response = await fetch(
+                    `${API}/api/user/likes?user_id=${userId}`
+                );
 
                 const data = await response.json();
 
@@ -775,8 +780,8 @@ function Cards({
         loadLikes();
         loadCart();
 
-    }, []);
-
+    }, [userId]);
+    
     return (
 
 

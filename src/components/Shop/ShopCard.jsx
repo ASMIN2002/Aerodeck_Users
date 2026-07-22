@@ -1,78 +1,75 @@
 import "./ShopCard.css";
-import { FiHeart, FiBookmark, FiShoppingCart } from "react-icons/fi";
+import { FiHeart, FiBookmark } from "react-icons/fi";
 import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
+import { FiShoppingCart } from "react-icons/fi";
 
-function ShopCard({
+function ProductShop({
 
-    shop,
+    product,
 
-    isSaved = false,
+    isSaved,
 
-    isLiked = false,
+    isLiked,
 
-    isAddedToCart = false,
+    isAddedToCart,
 
-    cartQuantity = 0,
+    cartQuantity,
 
-    onSave = () => { },
+    onSave,
 
-    onLike = () => { },
+    onLike,
 
-    onAddToCart = () => { },
+    onAddToCart,
 
-    onIncreaseQuantity = () => { },
+    onIncreaseQuantity,
 
-    onDecreaseQuantity = () => { },
+    onDecreaseQuantity,
 
     onOpenDetails = () => { }
 
-
 }) {
 
-    const handleCardClick = () => {
+    const handleShopClick = () => {
 
         onOpenDetails();
 
     };
-
     return (
 
         <div
-            className="gc-card"
-            onClick={handleCardClick}
+            className="pc-shop"
+            onClick={handleShopClick}
         >
 
-            <div className="gc-top">
+            <div className="pc-top">
 
                 <span
                     className={
-                        shop.shop_status
-                            ? "gc-status available"
-                            : "gc-status unavailable"
+                        product.shop_status
+                            ? "pc-status available"
+                            : "pc-status unavailable"
                     }
                 >
 
                     {
-
-                        shop.shop_status
+                        product.shop_status
 
                             ? "Available"
 
-                            : "Out Of Stock"
+                            : "Out of Stock"
 
                     }
 
                 </span>
-
                 <button
 
-                    className={`gc-like ${isLiked ? "active" : ""}`}
+                    className={`pc-like ${isLiked ? "active" : ""}`}
 
                     onClick={(e) => {
 
                         e.stopPropagation();
 
-                        onLike(shop.shop_id);
+                        onLike(product.shop_id);
 
                     }}
 
@@ -88,9 +85,9 @@ function ShopCard({
 
                     }
 
-                    <span className="gc-like-count">
+                    <span className="pc-like-count">
 
-                        {shop.shop_total_likes}
+                        {product.shop_total_likes}
 
                     </span>
 
@@ -98,106 +95,102 @@ function ShopCard({
 
             </div>
 
-            <div className="gc-image-box">
+            <div className="pc-image-box">
 
-                <img
+                <div className="pc-image-grid">
 
-                    src={shop.shop_image1}
+                    <img src={product.shop_image1} alt="" className="pc-image" />
+                    <img src={product.shop_image2} alt="" className="pc-image" />
 
-                    alt={shop.shop_name}
+                    <img src={product.shop_image3} alt="" className="pc-image" />
 
-                    loading="lazy"
+                    <img src={product.shop_image4} alt="" className="pc-image" />
 
-                    className="gc-image"
-
-                />
+                </div>
 
             </div>
 
-            <div className="gc-body">
+            <div className="pc-body">
 
                 {
-
-                    shop.shop_highlight_text && (
-
-                        <div className="gc-highlight">
-
-                            {shop.shop_highlight_text}
-
+                    product.shop_highlight_text && (
+                        <div className="pc-highlight">
+                            {product.shop_highlight_text}
                         </div>
-
                     )
-
                 }
 
-                <h3 className="gc-name">
+                <h3 className="pc-name">
 
-                    {shop.shop_name}
+                    {product.shop_name}
 
                 </h3>
 
-                <div className="gc-rating-row">
+                <div className="pc-rating-row">
 
                     <span>
 
-                        ⭐ {shop.shop_rating || "4.3"}
+                        ⭐ {product.shop_rating || "4.3"}
 
                     </span>
 
                 </div>
 
-                <div className="gc-price-row">
+                <div className="pc-price-row">
 
-                    <span className="gc-demo-price">
+                    <span className="pc-demo-price">
 
-                        ₹{shop.shop_demo_price}
+                        ₹{product.shop_demo_price}
 
                     </span>
 
-                    <span className="gc-discount">
+                    <span className="pc-discount">
 
-                        {shop.shop_discount_percentage}% OFF
+                        {product.shop_discount_percentage}% OFF
 
                     </span>
 
                 </div>
 
-                <div className="gc-final-price">
+                <div className="pc-final-price">
 
-                    ₹{shop.shop_price}
+                    ₹{product.shop_price}
 
-                    <span> / Piece</span>
+                    <span>
+
+                        {" "}
+
+                        / Piece
+
+                    </span>
 
                 </div>
 
             </div>
 
-            <div className="gc-footer">
+            <div className="pc-footer">
 
                 {
-
-                    !shop.shop_status ? (
+                    !product.shop_status ? (
 
                         <button
-                            className="gc-cart-btn"
+                            className="pc-cart-btn"
                             disabled
                         >
-
                             Out Of Stock
-
                         </button>
 
                     ) : !isAddedToCart ? (
 
                         <button
 
-                            className="gc-cart-btn"
+                            className="pc-cart-btn"
 
                             onClick={(e) => {
 
                                 e.stopPropagation();
 
-                                onAddToCart(shop.shop_id);
+                                onAddToCart(product.shop_id);
 
                             }}
 
@@ -212,15 +205,14 @@ function ShopCard({
                     ) : (
 
                         <div
-                            className="gc-qty-box"
+                            className="pc-qty-box"
                             onClick={(e) => e.stopPropagation()}
                         >
-
                             <button
 
-                                className="gc-qty-btn"
+                                className="pc-qty-btn"
 
-                                onClick={() => onDecreaseQuantity(shop.shop_id)}
+                                onClick={() => onDecreaseQuantity(product.shop_id)}
 
                             >
 
@@ -228,7 +220,7 @@ function ShopCard({
 
                             </button>
 
-                            <span className="gc-qty">
+                            <span className="pc-qty">
 
                                 {cartQuantity}
 
@@ -236,9 +228,9 @@ function ShopCard({
 
                             <button
 
-                                className="gc-qty-btn"
+                                className="pc-qty-btn"
 
-                                onClick={() => onIncreaseQuantity(shop.shop_id)}
+                                onClick={() => onIncreaseQuantity(product.shop_id)}
 
                             >
 
@@ -249,18 +241,17 @@ function ShopCard({
                         </div>
 
                     )
-
                 }
 
                 <button
 
-                    className={`gc-save ${isSaved ? "active" : ""}`}
+                    className={`pc-save ${isSaved ? "active" : ""}`}
 
                     onClick={(e) => {
 
                         e.stopPropagation();
 
-                        onSave(shop.shop_id);
+                        onSave(product.shop_id);
 
                     }}
 
@@ -276,9 +267,9 @@ function ShopCard({
 
                     }
 
-                    <span className="gc-save-count">
+                    <span className="pc-save-count">
 
-                        {shop.shop_total_saves}
+                        {product.shop_total_saves}
 
                     </span>
 
@@ -292,4 +283,4 @@ function ShopCard({
 
 }
 
-export default ShopCard;
+export default ProductShop;

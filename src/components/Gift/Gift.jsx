@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { API } from "../../services/api";
-import GiftCard from "./GiftCard";
-import Toast from "../Toast/Toast";
 import "./Gift.css";
-const userId =
-    JSON.parse(localStorage.getItem("user"))?.user_id;
+import GiftCard from "../Gift/GiftCard";
+import Toast from "../Toast/Toast";
+import { API } from "../../services/api";
 
-function Gift({
+
+function Gifts({
 
     setCartCount,
 
@@ -14,20 +13,14 @@ function Gift({
 
 }) {
 
-    const [gifts, setGifts] = useState([]);
-    const [likedGifts, setLikedGifts] = useState(new Set());
-    const [savedGifts, setSavedGifts] = useState(new Set());
+    const userId =
+        JSON.parse(localStorage.getItem("user"))?.user_id;
+
+    const [gifts, setProducts] = useState([]);
+    const [savedProducts, setSavedProducts] = useState(new Set());
+    const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
-
-    const [toast, setToast] = useState({
-
-        show: false,
-
-        message: "",
-
-        type: "success"
-
-    });
+    const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
     const showToast = (message, type = "success") => {
 
@@ -57,154 +50,17 @@ function Gift({
 
     };
 
-    useEffect(() => {
-        loadGifts();
-        loadLikes();
-        loadWishlist();
-        loadCart();
+    const handleSave = async (productId) => {
 
-    }, []);
-
-    const loadGifts = async () => {
+        productId = String(productId);
 
         try {
 
-            const response = await fetch(`${API}/api/user/gifts`);
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setGifts(data.data);
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const loadLikes = async () => {
-
-        try {
-
-            const response = await fetch(
-
-                `${API}/api/user/likes?user_id=7`
-
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setLikedGifts(
-
-                    new Set(
-
-                        data.data.map(item => item.product_id)
-
-                    )
-
-                );
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const loadWishlist = async () => {
-
-        try {
-
-            const response = await fetch(
-
-                `${API}/api/user/wishlist?user_id=7`
-
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setSavedGifts(
-
-                    new Set(
-
-                        data.data.map(item => String(item.product_id))
-
-                    )
-
-                );
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const loadCart = async () => {
-
-        try {
-
-            const response = await fetch(
-
-                `${API}/api/user/cart?user_id=7`
-
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                const updatedCart = data.data.map(item => ({
-                    ...item,
-                    product_id: String(item.product_id)
-                }));
-
-                setCartProducts(updatedCart);
-
-                setCartCount(updatedCart.length);
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleLike = async (giftId) => {
-
-        try {
-
-            if (likedGifts.has(giftId)) {
+            if (savedProducts.has(productId)) {
 
                 const response = await fetch(
 
-                    `${API}/api/user/likes/${giftId}`,
+                    `${API}/api/user/wishlist/${productId}`,
 
                     {
 
@@ -230,171 +86,25 @@ function Gift({
 
                 if (!data.success) return;
 
-                const updatedLiked = new Set(likedGifts);
+                const updatedSaved = new Set(savedProducts);
 
-                updatedLiked.delete(giftId);
+                updatedSaved.delete(productId);
 
-                setLikedGifts(updatedLiked);
+                setSavedProducts(updatedSaved);
 
-                setGifts(prev =>
+                setProducts(prev =>
 
-                    prev.map(gift =>
+                    prev.map(product =>
 
-                        gift.gift_id === giftId
-
-                            ? {
-
-                                ...gift,
-
-                                gift_total_likes: Math.max(
-
-                                    (gift.gift_total_likes || 0) - 1,
-
-                                    0
-
-                                )
-
-                            }
-
-                            : gift
-
-                    )
-
-                );
-
-                showToast("Like Removed", "info");
-
-            }
-
-            else {
-
-                const response = await fetch(
-
-                    `${API}/api/user/likes`,
-
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type": "application/json"
-
-                        },
-
-                        body: JSON.stringify({
-
-                            user_id: userId,
-
-                            product_id: giftId
-
-                        })
-
-                    }
-
-                );
-
-                const data = await response.json();
-
-                if (!data.success) return;
-
-                const updatedLiked = new Set(likedGifts);
-
-                updatedLiked.add(giftId);
-
-                setLikedGifts(updatedLiked);
-
-                setGifts(prev =>
-
-                    prev.map(gift =>
-
-                        gift.gift_id === giftId
+                        String(product.gift_id) === String(productId)
 
                             ? {
 
-                                ...gift,
-
-                                gift_total_likes:
-
-                                    (gift.gift_total_likes || 0) + 1
-
-                            }
-
-                            : gift
-
-                    )
-
-                );
-
-                showToast("Gift Liked", "success");
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleSave = async (giftId) => {
-
-        giftId = String(giftId);
-
-        try {
-
-            if (savedGifts.has(giftId)) {
-
-                const response = await fetch(
-
-                    `${API}/api/user/wishlist/${giftId}`,
-
-                    {
-
-                        method: "DELETE",
-
-                        headers: {
-
-                            "Content-Type": "application/json"
-
-                        },
-
-                        body: JSON.stringify({
-
-                            user_id: userId
-
-                        })
-
-                    }
-
-                );
-
-                const data = await response.json();
-
-                if (!data.success) return;
-
-                const updatedSaved = new Set(savedGifts);
-
-                updatedSaved.delete(giftId);
-
-                setSavedGifts(updatedSaved);
-
-                setGifts(prev =>
-
-                    prev.map(gift =>
-
-                        String(gift.gift_id) === giftId
-
-                            ? {
-
-                                ...gift,
+                                ...product,
 
                                 gift_total_saves: Math.max(
 
-                                    (gift.gift_total_saves || 0) - 1,
+                                    (product.gift_total_saves || 0) - 1,
 
                                     0
 
@@ -402,7 +112,7 @@ function Gift({
 
                             }
 
-                            : gift
+                            : product
 
                     )
 
@@ -432,7 +142,7 @@ function Gift({
 
                             user_id: userId,
 
-                            product_id: giftId
+                            gift_id: productId
 
                         })
 
@@ -444,29 +154,29 @@ function Gift({
 
                 if (!data.success) return;
 
-                const updatedSaved = new Set(savedGifts);
+                const updatedSaved = new Set(savedProducts);
 
-                updatedSaved.add(giftId);
+                updatedSaved.add(productId);
 
-                setSavedGifts(updatedSaved);
+                setSavedProducts(updatedSaved);
 
-                setGifts(prev =>
+                setProducts(prev =>
 
-                    prev.map(gift =>
+                    prev.map(product =>
 
-                        String(gift.gift_id) === giftId
+                        String(product.gift_id) === String(productId)
 
                             ? {
 
-                                ...gift,
+                                ...product,
 
                                 gift_total_saves:
 
-                                    (gift.gift_total_saves || 0) + 1
+                                    (product.gift_total_saves || 0) + 1
 
                             }
 
-                            : gift
+                            : product
 
                     )
 
@@ -485,201 +195,16 @@ function Gift({
         }
 
     };
-
-    const handleAddToCart = async (giftId) => {
-
-        try {
-
-            giftId = String(giftId);
-
-            const exists = cartProducts.some(
-
-                item => String(item.product_id) === giftId
-
-            );
-
-            if (exists) {
-
-                showToast("Already In Cart", "info");
-
-                return;
-
-            }
-
-            const response = await fetch(
-
-                `${API}/api/user/cart`,
-
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type": "application/json"
-
-                    },
-
-                    body: JSON.stringify({
-
-                        user_id: userId,
-
-                        product_id: giftId,
-
-                        quantity: 1
-
-                    })
-
-                }
-
-            );
-
-            const data = await response.json();
-
-            if (!data.success) return;
-
-            const updatedCart = [
-
-                ...cartProducts,
-
-                {
-
-                    product_id: giftId,
-
-                    quantity: 1
-
-                }
-
-            ];
-
-            setCartProducts(updatedCart);
-
-            setCartCount(updatedCart.length);
-
-            showToast("Gift Added To Cart", "success");
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleIncreaseQuantity = async (giftId) => {
-
-        giftId = String(giftId);
+    const handleLike = async (productId) => {
+        productId = String(productId);
 
         try {
 
-            const cartItem = cartProducts.find(
-
-                item => String(item.product_id) === giftId
-
-            );
-
-            if (!cartItem) return;
-
-            const newQuantity = cartItem.quantity + 1;
-
-            const gift = gifts.find(
-
-                item => String(item.gift_id) === giftId
-
-            );
-
-            const response = await fetch(
-
-                `${API}/api/user/cart`,
-
-                {
-
-                    method: "PUT",
-
-                    headers: {
-
-                        "Content-Type": "application/json"
-
-                    },
-
-                    body: JSON.stringify({
-
-                        user_id: userId,
-
-                        product_id: giftId,
-
-                        quantity: newQuantity
-
-                    })
-
-                }
-
-            );
-
-            const data = await response.json();
-
-            if (!data.success) return;
-
-            setCartProducts(prev =>
-
-                prev.map(item =>
-
-                    String(item.product_id) === giftId
-
-                        ? {
-
-                            ...item,
-
-                            quantity: newQuantity
-
-                        }
-
-                        : item
-
-                )
-
-            );
-
-            showToast(
-
-                `Added 1 Gift\n${gift.gift_name}\nTotal Quantity : ${newQuantity}`,
-
-                "success"
-
-            );
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleDecreaseQuantity = async (giftId) => {
-
-        giftId = String(giftId);
-
-        try {
-
-            const cartItem = cartProducts.find(
-
-                item => String(item.product_id) === giftId
-
-            );
-
-            if (!cartItem) return;
-
-            // Minimum 1 pe Remove
-            if (cartItem.quantity <= 1) {
+            if (likedProducts.has(productId)) {
 
                 const response = await fetch(
 
-                    `${API}/api/user/cart/${giftId}`,
+                    `${API}/api/user/likes/${productId}`,
 
                     {
 
@@ -705,39 +230,215 @@ function Gift({
 
                 if (!data.success) return;
 
-                const gift = gifts.find(
+                const updatedLiked = new Set(likedProducts);
 
-                    item => String(item.gift_id) === giftId
+                updatedLiked.delete(productId);
+
+                setLikedProducts(updatedLiked);
+
+                setProducts(prev =>
+
+                    prev.map(product =>
+
+                        String(product.gift_id) === String(productId)
+
+                            ? {
+
+                                ...product,
+
+                                gift_total_likes: Math.max(
+
+                                    (product.gift_total_likes || 0) - 1,
+
+                                    0
+
+                                )
+
+                            }
+
+                            : product
+
+                    )
 
                 );
 
-                const updatedCart = cartProducts.filter(
+                showToast("Like Removed", "info");
 
-                    item => String(item.product_id) !== giftId
+            }
+
+            else {
+
+                const response = await fetch(
+
+                    `${API}/api/user/likes`,
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            user_id: userId,
+
+                            gift_id: productId
+
+                        })
+
+                    }
 
                 );
 
-                setCartProducts(updatedCart);
+                const data = await response.json();
 
-                setCartCount(updatedCart.length);
+                if (!data.success) return;
 
-                showToast(
+                const updatedLiked = new Set(likedProducts);
 
-                    `Removed From Cart\n${gift.gift_name}`,
+                updatedLiked.add(productId);
 
-                    "info"
+                setLikedProducts(updatedLiked);
+
+                setProducts(prev =>
+
+                    prev.map(product =>
+
+                        String(product.gift_id) === String(productId)
+
+                            ? {
+
+                                ...product,
+
+                                gift_total_likes:
+
+                                    (product.gift_total_likes || 0) + 1
+
+                            }
+
+                            : product
+
+                    )
 
                 );
+
+                showToast("Product Liked", "success");
+
+            }
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+
+    const handleAddToCart = async (productId) => {
+
+        try {
+
+            productId = String(productId);
+
+            const exists = cartProducts.some(
+
+                item => String(item.gift_id) === productId
+
+            );
+
+            if (exists) {
+
+                showToast("Already in Cart", "info");
 
                 return;
 
             }
 
-            const newQuantity = cartItem.quantity - 1;
+            const response = await fetch(
 
-            const gift = gifts.find(
+                `${API}/api/user/cart`,
 
-                item => String(item.gift_id) === giftId
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type": "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        user_id: userId,
+
+                        gift_id: productId,
+
+                        quantity: 50
+
+                    })
+
+                }
+
+            );
+
+            const data = await response.json();
+
+            if (!data.success) return;
+
+            const updatedCart = [
+
+                ...cartProducts,
+
+                {
+
+                    gift_id: productId,
+
+                    quantity: 50
+
+                }
+
+            ];
+
+            setCartProducts(updatedCart);
+
+            setCartCount(updatedCart.length);
+
+            showToast("Added To Cart", "success");
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+
+    const handleIncreaseQuantity = async (productId) => {
+
+        productId = String(productId);
+
+        try {
+
+            const cartItem = cartProducts.find(
+
+                item => String(item.gift_id) === String(productId)
+
+            );
+            if (!cartItem) return;
+
+            const newQuantity = cartItem.quantity + 1;
+            const product = gifts.find(
+
+                item => String(item.gift_id) === String(productId)
 
             );
 
@@ -759,7 +460,7 @@ function Gift({
 
                         user_id: userId,
 
-                        product_id: giftId,
+                        gift_id: productId,
 
                         quantity: newQuantity
 
@@ -777,7 +478,7 @@ function Gift({
 
                 prev.map(item =>
 
-                    String(item.product_id) === giftId
+                    String(item.gift_id) === String(productId)
 
                         ? {
 
@@ -795,7 +496,152 @@ function Gift({
 
             showToast(
 
-                `Removed 1 Gift\n${gift.gift_name}\nTotal Quantity : ${newQuantity}`,
+                `Added 1 Gift\n${product.gift_name}\nTotal Quantity : ${newQuantity}`,
+
+                "success"
+
+            );
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+    const handleDecreaseQuantity = async (productId) => {
+
+        productId = String(productId);
+
+        try {
+            const cartItem = cartProducts.find(
+
+                item => String(item.gift_id) === String(productId)
+
+            );
+
+            if (!cartItem) return;
+
+            // Minimum quantity pe remove from cart
+            if (cartItem.quantity <= 50) {
+
+                const response = await fetch(
+
+                    `${API}/api/user/cart/${productId}`,
+
+                    {
+
+                        method: "DELETE",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            user_id: userId
+
+                        })
+
+                    }
+
+                );
+
+                const data = await response.json();
+
+                if (!data.success) return;
+                const product = gifts.find(
+
+                    item => String(item.gift_id) === String(productId)
+
+                );
+
+                const updatedCart = cartProducts.filter(
+
+                    item => String(item.gift_id) !== String(productId)
+
+                );
+
+                setCartProducts(updatedCart);
+
+                setCartCount(updatedCart.length);
+
+                showToast(
+
+                    `Removed From Cart\n${product.gift_name}`,
+
+                    "info"
+
+                );
+
+                return;
+
+            }
+
+            const newQuantity = cartItem.quantity - 1;
+            const product = gifts.find(
+
+                item => String(item.gift_id) === String(productId)
+
+            );
+            const response = await fetch(
+
+                `${API}/api/user/cart`,
+
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type": "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        user_id: userId,
+
+                        gift_id: productId,
+
+                        quantity: newQuantity
+
+                    })
+
+                }
+
+            );
+
+            const data = await response.json();
+
+            if (!data.success) return;
+
+            setCartProducts(prev =>
+
+                prev.map(item =>
+
+                    String(item.gift_id) === String(productId)
+
+                        ? {
+
+                            ...item,
+
+                            quantity: newQuantity
+
+                        }
+
+                        : item
+
+                )
+
+            );
+            showToast(
+
+                `Removed 1 Gift\n${product.gift_name}\nTotal Quantity : ${newQuantity}`,
 
                 "info"
 
@@ -811,63 +657,181 @@ function Gift({
 
     };
 
+    useEffect(() => {
+
+        async function loadProducts() {
+
+            try {
+
+                const response = await fetch(`${API}/api/user/gifts`);
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setProducts(data.data);
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
+        async function loadWishlist() {
+
+            try {
+
+                const response = await fetch(
+                    `${API}/api/user/wishlist?user_id=${userId}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setSavedProducts(
+
+                        new Set(
+
+                            data.data.map(item => String(item.gift_id))
+
+                        )
+
+                    );
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
+        async function loadLikes() {
+
+            try {
+                const response = await fetch(
+                    `${API}/api/user/likes?user_id=${userId}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setLikedProducts(
+
+                        new Set(
+
+                            data.data.map(item => item.gift_id)
+
+                        )
+
+                    );
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+        async function loadCart() {
+
+            try {
+
+                const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
+
+                const data = await response.json();
+                console.log(data.data);
+
+                if (data.success) {
+
+                    setCartProducts(data.data);
+                    setCartCount(data.data.length);
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
+        loadProducts();
+        loadWishlist();
+        loadLikes();
+        loadCart();
+
+    }, [userId]);
+    
     return (
 
-        <div className="gf-page">
 
-            <section className="gf-section">
+        <section className="cds-section">
 
-                <div className="gf-grid">
+            <h2 className="cds-title">
 
-                    {
+                Gifts
 
-                        gifts.map((gift) => (
-                            <GiftCard
+            </h2>
 
-                                key={gift.gift_id}
+            <div className="cds-grid">
 
-                                gift={gift}
+                {
+                    gifts.map((product) => (
 
-                                isLiked={likedGifts.has(gift.gift_id)}
+                        <GiftCard
+                            key={product.gift_id}
+                            product={product}
+                            isSaved={savedProducts.has(String(product.gift_id))}
+                            isLiked={likedProducts.has(String(product.gift_id))}
+                            isAddedToCart={
+                                cartProducts.some(
 
-                                isSaved={savedGifts.has(String(gift.gift_id))}
+                                    item => String(item.gift_id) === String(product.gift_id)
 
-                                isAddedToCart={
-                                    cartProducts.some(
-                                        item => String(item.product_id) === String(gift.gift_id)
-                                    )
-                                }
+                                )
+                            }
+                            cartQuantity={
+                                cartProducts.find(
 
-                                cartQuantity={
-                                    cartProducts.find(
-                                        item => String(item.product_id) === String(gift.gift_id)
-                                    )?.quantity || 0
-                                }
+                                    item => String(item.gift_id) === String(product.gift_id)
 
-                                onLike={handleLike}
+                                )?.quantity || 0
+                            }
+                            onSave={handleSave}
+                            onLike={handleLike}
+                            onAddToCart={handleAddToCart}
+                            onIncreaseQuantity={handleIncreaseQuantity}
+                            onDecreaseQuantity={handleDecreaseQuantity}
 
-                                onSave={handleSave}
+                            onOpenDetails={() =>
+                                onOpenDetails(product, "gift")
+                            }
+                        />
 
-                                onAddToCart={handleAddToCart}
+                    ))
+                }
 
-                                onIncreaseQuantity={handleIncreaseQuantity}
-
-                                onDecreaseQuantity={handleDecreaseQuantity}
-
-                                onOpenDetails={() =>
-                                    onOpenDetails(gift, "gift")
-                                }
-
-                            />
-
-                        ))
-
-                    }
-
-                </div>
-
-            </section>
-
+            </div>
             <Toast
 
                 show={toast.show}
@@ -878,10 +842,10 @@ function Gift({
 
             />
 
-        </div>
+        </section>
 
     );
 
 }
 
-export default Gift;
+export default Gifts;

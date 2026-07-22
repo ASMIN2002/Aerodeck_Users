@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import "./Premium.css";
-import PremiumCard from "./PremiumCard";
+import PremiumCard from "../Premium/PremiumCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
-const userId =
-    JSON.parse(localStorage.getItem("user"))?.user_id;
 
-function Premium({
+
+function Premiums({
 
     setCartCount,
 
@@ -14,7 +13,10 @@ function Premium({
 
 }) {
 
-    const [premium, setProducts] = useState([]);
+    const userId =
+        JSON.parse(localStorage.getItem("user"))?.user_id;
+
+    const [premiums, setProducts] = useState([]);
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
@@ -48,17 +50,17 @@ function Premium({
 
     };
 
-    const handleSave = async (premiumId) => {
+    const handleSave = async (productId) => {
 
-        premiumId = String(premiumId);
+        productId = String(productId);
 
         try {
 
-            if (savedProducts.has(premiumId)) {
+            if (savedProducts.has(productId)) {
 
                 const response = await fetch(
 
-                    `${API}/api/user/wishlist/${premiumId}`,
+                    `${API}/api/user/wishlist/${productId}`,
 
                     {
 
@@ -86,23 +88,23 @@ function Premium({
 
                 const updatedSaved = new Set(savedProducts);
 
-                updatedSaved.delete(premiumId);
+                updatedSaved.delete(productId);
 
                 setSavedProducts(updatedSaved);
 
                 setProducts(prev =>
 
-                    prev.map(premium =>
+                    prev.map(product =>
 
-                        String(premium.premium_id) === String(premiumId)
+                        String(product.premium_id) === String(productId)
 
                             ? {
 
-                                ...premium,
+                                ...product,
 
                                 premium_total_saves: Math.max(
 
-                                    (premium.premium_total_saves || 0) - 1,
+                                    (product.premium_total_saves || 0) - 1,
 
                                     0
 
@@ -110,7 +112,7 @@ function Premium({
 
                             }
 
-                            : premium
+                            : product
 
                     )
 
@@ -140,7 +142,7 @@ function Premium({
 
                             user_id: userId,
 
-                            product_id: premiumId
+                            premium_id: productId
 
                         })
 
@@ -154,27 +156,27 @@ function Premium({
 
                 const updatedSaved = new Set(savedProducts);
 
-                updatedSaved.add(premiumId);
+                updatedSaved.add(productId);
 
                 setSavedProducts(updatedSaved);
 
                 setProducts(prev =>
 
-                    prev.map(premium =>
+                    prev.map(product =>
 
-                        String(premium.premium_id) === String(premiumId)
+                        String(product.premium_id) === String(productId)
 
                             ? {
 
-                                ...premium,
+                                ...product,
 
                                 premium_total_saves:
 
-                                    (premium.premium_total_saves || 0) + 1
+                                    (product.premium_total_saves || 0) + 1
 
                             }
 
-                            : premium
+                            : product
 
                     )
 
@@ -193,16 +195,16 @@ function Premium({
         }
 
     };
-    const handleLike = async (premiumId) => {
-        premiumId = String(premiumId);
+    const handleLike = async (productId) => {
+        productId = String(productId);
 
         try {
 
-            if (likedProducts.has(premiumId)) {
+            if (likedProducts.has(productId)) {
 
                 const response = await fetch(
 
-                    `${API}/api/user/likes/${premiumId}`,
+                    `${API}/api/user/likes/${productId}`,
 
                     {
 
@@ -230,23 +232,23 @@ function Premium({
 
                 const updatedLiked = new Set(likedProducts);
 
-                updatedLiked.delete(premiumId);
+                updatedLiked.delete(productId);
 
                 setLikedProducts(updatedLiked);
 
                 setProducts(prev =>
 
-                    prev.map(premium =>
+                    prev.map(product =>
 
-                        String(premium.premium_id) === String(premiumId)
+                        String(product.premium_id) === String(productId)
 
                             ? {
 
-                                ...premium,
+                                ...product,
 
                                 premium_total_likes: Math.max(
 
-                                    (premium.premium_total_likes || 0) - 1,
+                                    (product.premium_total_likes || 0) - 1,
 
                                     0
 
@@ -254,7 +256,7 @@ function Premium({
 
                             }
 
-                            : premium
+                            : product
 
                     )
 
@@ -284,7 +286,7 @@ function Premium({
 
                             user_id: userId,
 
-                            product_id: premiumId
+                            premium_id: productId
 
                         })
 
@@ -298,27 +300,27 @@ function Premium({
 
                 const updatedLiked = new Set(likedProducts);
 
-                updatedLiked.add(premiumId);
+                updatedLiked.add(productId);
 
                 setLikedProducts(updatedLiked);
 
                 setProducts(prev =>
 
-                    prev.map(premium =>
+                    prev.map(product =>
 
-                        String(premium.premium_id) === String(premiumId)
+                        String(product.premium_id) === String(productId)
 
                             ? {
 
-                                ...premium,
+                                ...product,
 
                                 premium_total_likes:
 
-                                    (premium.premium_total_likes || 0) + 1
+                                    (product.premium_total_likes || 0) + 1
 
                             }
 
-                            : premium
+                            : product
 
                     )
 
@@ -338,14 +340,16 @@ function Premium({
 
     };
 
-    const handleAddToCart = async (premiumId) => {
+    const handleAddToCart = async (productId) => {
 
         try {
 
-            premiumId = String(premiumId);
+            productId = String(productId);
 
             const exists = cartProducts.some(
-                item => String(item.product_id) === String(premiumId)
+
+                item => String(item.premium_id) === productId
+
             );
 
             if (exists) {
@@ -374,7 +378,7 @@ function Premium({
 
                         user_id: userId,
 
-                        product_id: premiumId,
+                        premium_id: productId,
 
                         quantity: 50
 
@@ -394,7 +398,7 @@ function Premium({
 
                 {
 
-                    product_id: premiumId,
+                    premium_id: productId,
 
                     quantity: 50
 
@@ -417,25 +421,24 @@ function Premium({
         }
 
     };
-    const handleIncreaseQuantity = async (premiumId) => {
 
-        premiumId = String(premiumId);
+    const handleIncreaseQuantity = async (productId) => {
+
+        productId = String(productId);
 
         try {
 
             const cartItem = cartProducts.find(
 
-                item => String(item.product_id) === String(premiumId)
+                item => String(item.premium_id) === String(productId)
 
             );
-
             if (!cartItem) return;
 
             const newQuantity = cartItem.quantity + 1;
+            const product = premiums.find(
 
-            const premiumItem = premium.find(
-
-                item => String(item.premium_id) === String(premiumId)
+                item => String(item.premium_id) === String(productId)
 
             );
 
@@ -457,7 +460,7 @@ function Premium({
 
                         user_id: userId,
 
-                        product_id: premiumId,
+                        premium_id: productId,
 
                         quantity: newQuantity
 
@@ -475,7 +478,7 @@ function Premium({
 
                 prev.map(item =>
 
-                    String(item.product_id) === String(premiumId)
+                    String(item.premium_id) === String(productId)
 
                         ? {
 
@@ -493,7 +496,7 @@ function Premium({
 
             showToast(
 
-                `Added 1 Card\n${premiumItem.premium_name}\nTotal Quantity : ${newQuantity}`,
+                `Added 1 Premium\n${product.premium_name}\nTotal Quantity : ${newQuantity}`,
 
                 "success"
 
@@ -508,15 +511,14 @@ function Premium({
         }
 
     };
-    const handleDecreaseQuantity = async (premiumId) => {
+    const handleDecreaseQuantity = async (productId) => {
 
-        premiumId = String(premiumId);
+        productId = String(productId);
 
         try {
-
             const cartItem = cartProducts.find(
 
-                item => String(item.product_id) === String(premiumId)
+                item => String(item.premium_id) === String(productId)
 
             );
 
@@ -527,7 +529,7 @@ function Premium({
 
                 const response = await fetch(
 
-                    `${API}/api/user/cart/${premiumId}`,
+                    `${API}/api/user/cart/${productId}`,
 
                     {
 
@@ -552,16 +554,15 @@ function Premium({
                 const data = await response.json();
 
                 if (!data.success) return;
+                const product = premiums.find(
 
-                const premiumItem = premium.find(
-
-                    item => String(item.premium_id) === String(premiumId)
+                    item => String(item.premium_id) === String(productId)
 
                 );
 
                 const updatedCart = cartProducts.filter(
 
-                    item => String(item.product_id) !== String(premiumId)
+                    item => String(item.premium_id) !== String(productId)
 
                 );
 
@@ -571,7 +572,7 @@ function Premium({
 
                 showToast(
 
-                    `Removed From Cart\n${premiumItem.premium_name}`,
+                    `Removed From Cart\n${product.premium_name}`,
 
                     "info"
 
@@ -582,13 +583,11 @@ function Premium({
             }
 
             const newQuantity = cartItem.quantity - 1;
+            const product = premiums.find(
 
-            const premiumItem = premium.find(
-
-                item => String(item.premium_id) === String(premiumId)
+                item => String(item.premium_id) === String(productId)
 
             );
-
             const response = await fetch(
 
                 `${API}/api/user/cart`,
@@ -607,7 +606,7 @@ function Premium({
 
                         user_id: userId,
 
-                        product_id: premiumId,
+                        premium_id: productId,
 
                         quantity: newQuantity
 
@@ -625,7 +624,7 @@ function Premium({
 
                 prev.map(item =>
 
-                    String(item.product_id) === String(premiumId)
+                    String(item.premium_id) === String(productId)
 
                         ? {
 
@@ -640,10 +639,9 @@ function Premium({
                 )
 
             );
-
             showToast(
 
-                `Removed 1 Card\n${premiumItem.premium_name}\nTotal Quantity : ${newQuantity}`,
+                `Removed 1 Premium\n${product.premium_name}\nTotal Quantity : ${newQuantity}`,
 
                 "info"
 
@@ -658,6 +656,7 @@ function Premium({
         }
 
     };
+
     useEffect(() => {
 
         async function loadProducts() {
@@ -688,7 +687,9 @@ function Premium({
 
             try {
 
-                const response = await fetch(`${API}/api/user/wishlist?user_id=7`);
+                const response = await fetch(
+                    `${API}/api/user/wishlist?user_id=${userId}`
+                );
 
                 const data = await response.json();
 
@@ -698,7 +699,7 @@ function Premium({
 
                         new Set(
 
-                            data.data.map(item => String(item.product_id))
+                            data.data.map(item => String(item.premium_id))
 
                         )
 
@@ -719,8 +720,9 @@ function Premium({
         async function loadLikes() {
 
             try {
-
-                const response = await fetch(`${API}/api/user/likes?user_id=7`);
+                const response = await fetch(
+                    `${API}/api/user/likes?user_id=${userId}`
+                );
 
                 const data = await response.json();
 
@@ -730,7 +732,7 @@ function Premium({
 
                         new Set(
 
-                            data.data.map(item => item.product_id)
+                            data.data.map(item => item.premium_id)
 
                         )
 
@@ -778,8 +780,8 @@ function Premium({
         loadLikes();
         loadCart();
 
-    }, []);
-
+    }, [userId]);
+    
     return (
 
 
@@ -787,51 +789,43 @@ function Premium({
 
             <h2 className="cds-title">
 
-                Premium
+                Premiums
 
             </h2>
 
             <div className="cds-grid">
 
                 {
-                    premium.map((premium) => (
+                    premiums.map((product) => (
 
                         <PremiumCard
-
-                            key={premium.premium_id}
-
-                            premium={premium}
-
-                            isLiked={likedProducts.has(String(premium.premium_id))}
-
-                            isSaved={savedProducts.has(String(premium.premium_id))}
-
+                            key={product.premium_id}
+                            product={product}
+                            isSaved={savedProducts.has(String(product.premium_id))}
+                            isLiked={likedProducts.has(String(product.premium_id))}
                             isAddedToCart={
                                 cartProducts.some(
-                                    item => String(item.product_id) === String(premium.premium_id)
+
+                                    item => String(item.premium_id) === String(product.premium_id)
+
                                 )
                             }
-
                             cartQuantity={
                                 cartProducts.find(
-                                    item => String(item.product_id) === String(premium.premium_id)
+
+                                    item => String(item.premium_id) === String(product.premium_id)
+
                                 )?.quantity || 0
                             }
-
-                            onLike={handleLike}
-
                             onSave={handleSave}
-
+                            onLike={handleLike}
                             onAddToCart={handleAddToCart}
-
                             onIncreaseQuantity={handleIncreaseQuantity}
-
                             onDecreaseQuantity={handleDecreaseQuantity}
 
                             onOpenDetails={() =>
-                                onOpenDetails(premium, "premium")
+                                onOpenDetails(product, "premium")
                             }
-
                         />
 
                     ))
@@ -854,4 +848,4 @@ function Premium({
 
 }
 
-export default Premium;
+export default Premiums;

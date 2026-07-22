@@ -1,77 +1,75 @@
 import "./GiftCard.css";
-import { FiHeart, FiBookmark, FiShoppingCart } from "react-icons/fi";
+import { FiHeart, FiBookmark } from "react-icons/fi";
 import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
+import { FiShoppingCart } from "react-icons/fi";
 
-function GiftCard({
+function ProductGift({
 
-    gift,
+    product,
 
-    isSaved = false,
+    isSaved,
 
-    isLiked = false,
+    isLiked,
 
-    isAddedToCart = false,
+    isAddedToCart,
 
-    cartQuantity = 0,
+    cartQuantity,
 
-    onSave = () => { },
+    onSave,
 
-    onLike = () => { },
+    onLike,
 
-    onAddToCart = () => { },
+    onAddToCart,
 
-    onIncreaseQuantity = () => { },
+    onIncreaseQuantity,
 
-    onDecreaseQuantity = () => { },
+    onDecreaseQuantity,
 
     onOpenDetails = () => { }
 
 }) {
 
-    const handleCardClick = () => {
+    const handleGiftClick = () => {
 
         onOpenDetails();
 
     };
-
     return (
 
         <div
-            className="gc-card"
-            onClick={handleCardClick}
+            className="pc-gift"
+            onClick={handleGiftClick}
         >
 
-            <div className="gc-top">
+            <div className="pc-top">
 
                 <span
                     className={
-                        gift.gift_status
-                            ? "gc-status available"
-                            : "gc-status unavailable"
+                        product.gift_status
+                            ? "pc-status available"
+                            : "pc-status unavailable"
                     }
                 >
 
                     {
-
-                        gift.gift_status
+                        product.gift_status
 
                             ? "Available"
 
-                            : "Out Of Stock"
+                            : "Out of Stock"
 
                     }
 
                 </span>
-
                 <button
 
-                    className={`gc-like ${isLiked ? "active" : ""}`}
+                    className={`pc-like ${isLiked ? "active" : ""}`}
 
                     onClick={(e) => {
 
                         e.stopPropagation();
 
-                        onLike(gift.gift_id);
+                        onLike(product.gift_id);
 
                     }}
 
@@ -87,9 +85,9 @@ function GiftCard({
 
                     }
 
-                    <span className="gc-like-count">
+                    <span className="pc-like-count">
 
-                        {gift.gift_total_likes}
+                        {product.gift_total_likes}
 
                     </span>
 
@@ -97,106 +95,102 @@ function GiftCard({
 
             </div>
 
-            <div className="gc-image-box">
+            <div className="pc-image-box">
 
-                <img
+                <div className="pc-image-grid">
 
-                    src={gift.gift_image1}
+                    <img src={product.gift_image1} alt="" className="pc-image" />
+                    <img src={product.gift_image2} alt="" className="pc-image" />
 
-                    alt={gift.gift_name}
+                    <img src={product.gift_image3} alt="" className="pc-image" />
 
-                    loading="lazy"
+                    <img src={product.gift_image4} alt="" className="pc-image" />
 
-                    className="gc-image"
-
-                />
+                </div>
 
             </div>
 
-            <div className="gc-body">
+            <div className="pc-body">
 
                 {
-
-                    gift.gift_highlight_text && (
-
-                        <div className="gc-highlight">
-
-                            {gift.gift_highlight_text}
-
+                    product.gift_highlight_text && (
+                        <div className="pc-highlight">
+                            {product.gift_highlight_text}
                         </div>
-
                     )
-
                 }
 
-                <h3 className="gc-name">
+                <h3 className="pc-name">
 
-                    {gift.gift_name}
+                    {product.gift_name}
 
                 </h3>
 
-                <div className="gc-rating-row">
+                <div className="pc-rating-row">
 
                     <span>
 
-                        ⭐ {gift.gift_rating || "4.3"}
+                        ⭐ {product.gift_rating || "4.3"}
 
                     </span>
 
                 </div>
 
-                <div className="gc-price-row">
+                <div className="pc-price-row">
 
-                    <span className="gc-demo-price">
+                    <span className="pc-demo-price">
 
-                        ₹{gift.gift_demo_price}
+                        ₹{product.gift_demo_price}
 
                     </span>
 
-                    <span className="gc-discount">
+                    <span className="pc-discount">
 
-                        {gift.gift_discount_percentage}% OFF
+                        {product.gift_discount_percentage}% OFF
 
                     </span>
 
                 </div>
 
-                <div className="gc-final-price">
+                <div className="pc-final-price">
 
-                    ₹{gift.gift_price}
+                    ₹{product.gift_price}
 
-                    <span> / Piece</span>
+                    <span>
+
+                        {" "}
+
+                        / Piece
+
+                    </span>
 
                 </div>
 
             </div>
 
-            <div className="gc-footer">
+            <div className="pc-footer">
 
                 {
-
-                    !gift.gift_status ? (
+                    !product.gift_status ? (
 
                         <button
-                            className="gc-cart-btn"
+                            className="pc-cart-btn"
                             disabled
                         >
-
-                            <span>Out Of Stock</span>
-
+                            Out Of Stock
                         </button>
 
                     ) : !isAddedToCart ? (
 
                         <button
 
-                            className="gc-cart-btn"
+                            className="pc-cart-btn"
 
                             onClick={(e) => {
 
                                 e.stopPropagation();
 
-                                onAddToCart(gift.gift_id);
+                                onAddToCart(product.gift_id);
 
                             }}
 
@@ -211,15 +205,14 @@ function GiftCard({
                     ) : (
 
                         <div
-                            className="gc-qty-box"
+                            className="pc-qty-box"
                             onClick={(e) => e.stopPropagation()}
                         >
-
                             <button
 
-                                className="gc-qty-btn"
+                                className="pc-qty-btn"
 
-                                onClick={() => onDecreaseQuantity(gift.gift_id)}
+                                onClick={() => onDecreaseQuantity(product.gift_id)}
 
                             >
 
@@ -227,7 +220,7 @@ function GiftCard({
 
                             </button>
 
-                            <span className="gc-qty">
+                            <span className="pc-qty">
 
                                 {cartQuantity}
 
@@ -235,9 +228,9 @@ function GiftCard({
 
                             <button
 
-                                className="gc-qty-btn"
+                                className="pc-qty-btn"
 
-                                onClick={() => onIncreaseQuantity(gift.gift_id)}
+                                onClick={() => onIncreaseQuantity(product.gift_id)}
 
                             >
 
@@ -248,18 +241,17 @@ function GiftCard({
                         </div>
 
                     )
-
                 }
 
                 <button
 
-                    className={`gc-save ${isSaved ? "active" : ""}`}
+                    className={`pc-save ${isSaved ? "active" : ""}`}
 
                     onClick={(e) => {
 
                         e.stopPropagation();
 
-                        onSave(gift.gift_id);
+                        onSave(product.gift_id);
 
                     }}
 
@@ -275,9 +267,9 @@ function GiftCard({
 
                     }
 
-                    <span className="gc-save-count">
+                    <span className="pc-save-count">
 
-                        {gift.gift_total_saves}
+                        {product.gift_total_saves}
 
                     </span>
 
@@ -291,4 +283,4 @@ function GiftCard({
 
 }
 
-export default GiftCard;
+export default ProductGift;

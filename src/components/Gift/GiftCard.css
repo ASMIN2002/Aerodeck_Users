@@ -1,7 +1,7 @@
 /* ==========================================================
    PRODUCT CARD
    PART 1
-   Root • Card • Top • Image • Body
+   Root • Gift • Top • Image • Body
    Mobile First
 ========================================================== */
 
@@ -69,7 +69,7 @@ ROOT
 CARD
 ==============================*/
 
-.gc-card{
+.gc-gift{
 
     position:relative;
     width:100%;
@@ -88,7 +88,7 @@ CARD
 
 
 
-.gc-card:hover{
+.gc-gift:hover{
 
     transform:translateY(-4px);
 
@@ -293,7 +293,7 @@ IMAGE
 
 
 
-.gc-card:hover .gc-image{
+.gc-gift:hover .gc-image{
 
     transform:scale(1.05);
 
@@ -1034,7 +1034,7 @@ TABLET
 
     }
 
-    .gc-card{
+    .gc-gift{
 
         box-shadow:var(--pc-shadow);
 
@@ -1190,7 +1190,7 @@ DESKTOP
 
 @media (min-width:1024px){
 
-    .gc-card:hover{
+    .gc-gift:hover{
 
         transform:translateY(-8px);
 
@@ -1264,7 +1264,7 @@ LARGE DESKTOP
 
 @media (min-width:1920px){
 
-    .gc-card{
+    .gc-gift{
 
         max-width:420px;
 

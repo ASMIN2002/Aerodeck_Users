@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { API } from "../../services/api";
-import ShopCard from "./ShopCard";
-import Toast from "../Toast/Toast";
 import "./Shop.css";
-const userId =
-    JSON.parse(localStorage.getItem("user"))?.user_id;
+import ShopCard from "../Shop/ShopCard";
+import Toast from "../Toast/Toast";
+import { API } from "../../services/api";
 
-function Shop({
+
+function Shops({
 
     setCartCount,
 
@@ -14,20 +13,14 @@ function Shop({
 
 }) {
 
-    const [shops, setShops] = useState([]);
-    const [likedShops, setLikedShops] = useState(new Set());
-    const [savedShops, setSavedShops] = useState(new Set());
+    const userId =
+        JSON.parse(localStorage.getItem("user"))?.user_id;
+
+    const [shops, setProducts] = useState([]);
+    const [savedProducts, setSavedProducts] = useState(new Set());
+    const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
-
-    const [toast, setToast] = useState({
-
-        show: false,
-
-        message: "",
-
-        type: "success"
-
-    });
+    const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
     const showToast = (message, type = "success") => {
 
@@ -57,156 +50,17 @@ function Shop({
 
     };
 
-    useEffect(() => {
-        loadShops();
-        loadLikes();
-        loadWishlist();
-        loadCart();
+    const handleSave = async (productId) => {
 
-    }, []);
-
-    const loadShops = async () => {
+        productId = String(productId);
 
         try {
 
-            const response = await fetch(`${API}/api/user/shop`);
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setShops(data.data);
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const loadLikes = async () => {
-
-        try {
-
-            const response = await fetch(
-
-                `${API}/api/user/likes?user_id=7`
-
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setLikedShops(
-
-                    new Set(
-
-                        data.data.map(item => String(item.product_id))
-
-                    )
-
-                );
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const loadWishlist = async () => {
-
-        try {
-
-            const response = await fetch(
-
-                `${API}/api/user/wishlist?user_id=7`
-
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setSavedShops(
-
-                    new Set(
-
-                        data.data.map(item => String(item.product_id))
-
-                    )
-
-                );
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const loadCart = async () => {
-
-        try {
-
-            const response = await fetch(
-
-                `${API}/api/user/cart?user_id=7`
-
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                const updatedCart = data.data.map(item => ({
-                    ...item,
-                    product_id: String(item.product_id)
-                }));
-
-                setCartProducts(updatedCart);
-
-                setCartCount(updatedCart.length);
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleLike = async (shopId) => {
-
-        shopId = String(shopId);
-
-        try {
-
-            if (likedShops.has(shopId)) {
+            if (savedProducts.has(productId)) {
 
                 const response = await fetch(
 
-                    `${API}/api/user/likes/${shopId}`,
+                    `${API}/api/user/wishlist/${productId}`,
 
                     {
 
@@ -232,171 +86,25 @@ function Shop({
 
                 if (!data.success) return;
 
-                const updatedLiked = new Set(likedShops);
+                const updatedSaved = new Set(savedProducts);
 
-                updatedLiked.delete(shopId);
+                updatedSaved.delete(productId);
 
-                setLikedShops(updatedLiked);
+                setSavedProducts(updatedSaved);
 
-                setShops(prev =>
+                setProducts(prev =>
 
-                    prev.map(shop =>
+                    prev.map(product =>
 
-                        String(shop.shop_id) === String(shopId)
-
-                            ? {
-
-                                ...shop,
-
-                                shop_total_likes: Math.max(
-
-                                    (shop.shop_total_likes || 0) - 1,
-
-                                    0
-
-                                )
-
-                            }
-
-                            : shop
-
-                    )
-
-                );
-
-                showToast("Like Removed", "info");
-
-            }
-
-            else {
-
-                const response = await fetch(
-
-                    `${API}/api/user/likes`,
-
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type": "application/json"
-
-                        },
-
-                        body: JSON.stringify({
-
-                            user_id: userId,
-
-                            product_id: shopId
-
-                        })
-
-                    }
-
-                );
-
-                const data = await response.json();
-
-                if (!data.success) return;
-
-                const updatedLiked = new Set(likedShops);
-
-                updatedLiked.add(shopId);
-
-                setLikedShops(updatedLiked);
-
-                setShops(prev =>
-
-                    prev.map(shop =>
-
-                        String(shop.shop_id) === String(shopId)
+                        String(product.shop_id) === String(productId)
 
                             ? {
 
-                                ...shop,
-
-                                shop_total_likes:
-
-                                    (shop.shop_total_likes || 0) + 1
-
-                            }
-
-                            : shop
-
-                    )
-
-                );
-
-                showToast("Shop Liked", "success");
-
-            }
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleSave = async (shopId) => {
-
-        shopId = String(shopId);
-
-        try {
-
-            if (savedShops.has(shopId)) {
-
-                const response = await fetch(
-
-                    `${API}/api/user/wishlist/${shopId}`,
-
-                    {
-
-                        method: "DELETE",
-
-                        headers: {
-
-                            "Content-Type": "application/json"
-
-                        },
-
-                        body: JSON.stringify({
-
-                            user_id: userId
-
-                        })
-
-                    }
-
-                );
-
-                const data = await response.json();
-
-                if (!data.success) return;
-
-                const updatedSaved = new Set(savedShops);
-
-                updatedSaved.delete(shopId);
-
-                setSavedShops(updatedSaved);
-
-                setShops(prev =>
-
-                    prev.map(shop =>
-
-                        String(shop.shop_id) === shopId
-
-                            ? {
-
-                                ...shop,
+                                ...product,
 
                                 shop_total_saves: Math.max(
 
-                                    (shop.shop_total_saves || 0) - 1,
+                                    (product.shop_total_saves || 0) - 1,
 
                                     0
 
@@ -404,7 +112,7 @@ function Shop({
 
                             }
 
-                            : shop
+                            : product
 
                     )
 
@@ -434,7 +142,7 @@ function Shop({
 
                             user_id: userId,
 
-                            product_id: shopId
+                            shop_id: productId
 
                         })
 
@@ -446,29 +154,29 @@ function Shop({
 
                 if (!data.success) return;
 
-                const updatedSaved = new Set(savedShops);
+                const updatedSaved = new Set(savedProducts);
 
-                updatedSaved.add(shopId);
+                updatedSaved.add(productId);
 
-                setSavedShops(updatedSaved);
+                setSavedProducts(updatedSaved);
 
-                setShops(prev =>
+                setProducts(prev =>
 
-                    prev.map(shop =>
+                    prev.map(product =>
 
-                        String(shop.shop_id) === shopId
+                        String(product.shop_id) === String(productId)
 
                             ? {
 
-                                ...shop,
+                                ...product,
 
                                 shop_total_saves:
 
-                                    (shop.shop_total_saves || 0) + 1
+                                    (product.shop_total_saves || 0) + 1
 
                             }
 
-                            : shop
+                            : product
 
                     )
 
@@ -487,201 +195,16 @@ function Shop({
         }
 
     };
-
-    const handleAddToCart = async (shopId) => {
-
-        try {
-
-            shopId = String(shopId);
-
-            const exists = cartProducts.some(
-
-                item => String(item.product_id) === shopId
-
-            );
-
-            if (exists) {
-
-                showToast("Already In Cart", "info");
-
-                return;
-
-            }
-
-            const response = await fetch(
-
-                `${API}/api/user/cart`,
-
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type": "application/json"
-
-                    },
-
-                    body: JSON.stringify({
-
-                        user_id: userId,
-
-                        product_id: shopId,
-
-                        quantity: 1
-
-                    })
-
-                }
-
-            );
-
-            const data = await response.json();
-
-            if (!data.success) return;
-
-            const updatedCart = [
-
-                ...cartProducts,
-
-                {
-
-                    product_id: shopId,
-
-                    quantity: 1
-
-                }
-
-            ];
-
-            setCartProducts(updatedCart);
-
-            setCartCount(updatedCart.length);
-
-            showToast("Shop Added To Cart", "success");
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleIncreaseQuantity = async (shopId) => {
-
-        shopId = String(shopId);
+    const handleLike = async (productId) => {
+        productId = String(productId);
 
         try {
 
-            const cartItem = cartProducts.find(
-
-                item => String(item.product_id) === shopId
-
-            );
-
-            if (!cartItem) return;
-
-            const newQuantity = cartItem.quantity + 1;
-
-            const shop = shops.find(
-
-                item => String(item.shop_id) === shopId
-
-            );
-
-            const response = await fetch(
-
-                `${API}/api/user/cart`,
-
-                {
-
-                    method: "PUT",
-
-                    headers: {
-
-                        "Content-Type": "application/json"
-
-                    },
-
-                    body: JSON.stringify({
-
-                        user_id: userId,
-
-                        product_id: shopId,
-
-                        quantity: newQuantity
-
-                    })
-
-                }
-
-            );
-
-            const data = await response.json();
-
-            if (!data.success) return;
-
-            setCartProducts(prev =>
-
-                prev.map(item =>
-
-                    String(item.product_id) === shopId
-
-                        ? {
-
-                            ...item,
-
-                            quantity: newQuantity
-
-                        }
-
-                        : item
-
-                )
-
-            );
-
-            showToast(
-
-                `Added 1 Shop\n${shop.shop_name}\nTotal Quantity : ${newQuantity}`,
-
-                "success"
-
-            );
-
-        }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
-    };
-
-    const handleDecreaseQuantity = async (shopId) => {
-
-        shopId = String(shopId);
-
-        try {
-
-            const cartItem = cartProducts.find(
-
-                item => String(item.product_id) === shopId
-
-            );
-
-            if (!cartItem) return;
-
-            // Minimum 1 pe Remove
-            if (cartItem.quantity <= 1) {
+            if (likedProducts.has(productId)) {
 
                 const response = await fetch(
 
-                    `${API}/api/user/cart/${shopId}`,
+                    `${API}/api/user/likes/${productId}`,
 
                     {
 
@@ -707,39 +230,215 @@ function Shop({
 
                 if (!data.success) return;
 
-                const shop = shops.find(
+                const updatedLiked = new Set(likedProducts);
 
-                    item => String(item.shop_id) === shopId
+                updatedLiked.delete(productId);
+
+                setLikedProducts(updatedLiked);
+
+                setProducts(prev =>
+
+                    prev.map(product =>
+
+                        String(product.shop_id) === String(productId)
+
+                            ? {
+
+                                ...product,
+
+                                shop_total_likes: Math.max(
+
+                                    (product.shop_total_likes || 0) - 1,
+
+                                    0
+
+                                )
+
+                            }
+
+                            : product
+
+                    )
 
                 );
 
-                const updatedCart = cartProducts.filter(
+                showToast("Like Removed", "info");
 
-                    item => String(item.product_id) !== shopId
+            }
+
+            else {
+
+                const response = await fetch(
+
+                    `${API}/api/user/likes`,
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            user_id: userId,
+
+                            shop_id: productId
+
+                        })
+
+                    }
 
                 );
 
-                setCartProducts(updatedCart);
+                const data = await response.json();
 
-                setCartCount(updatedCart.length);
+                if (!data.success) return;
 
-                showToast(
+                const updatedLiked = new Set(likedProducts);
 
-                    `Removed From Cart\n${shop.shop_name}`,
+                updatedLiked.add(productId);
 
-                    "info"
+                setLikedProducts(updatedLiked);
+
+                setProducts(prev =>
+
+                    prev.map(product =>
+
+                        String(product.shop_id) === String(productId)
+
+                            ? {
+
+                                ...product,
+
+                                shop_total_likes:
+
+                                    (product.shop_total_likes || 0) + 1
+
+                            }
+
+                            : product
+
+                    )
 
                 );
+
+                showToast("Product Liked", "success");
+
+            }
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+
+    const handleAddToCart = async (productId) => {
+
+        try {
+
+            productId = String(productId);
+
+            const exists = cartProducts.some(
+
+                item => String(item.shop_id) === productId
+
+            );
+
+            if (exists) {
+
+                showToast("Already in Cart", "info");
 
                 return;
 
             }
 
-            const newQuantity = cartItem.quantity - 1;
+            const response = await fetch(
 
-            const shop = shops.find(
+                `${API}/api/user/cart`,
 
-                item => String(item.shop_id) === shopId
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type": "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        user_id: userId,
+
+                        shop_id: productId,
+
+                        quantity: 50
+
+                    })
+
+                }
+
+            );
+
+            const data = await response.json();
+
+            if (!data.success) return;
+
+            const updatedCart = [
+
+                ...cartProducts,
+
+                {
+
+                    shop_id: productId,
+
+                    quantity: 50
+
+                }
+
+            ];
+
+            setCartProducts(updatedCart);
+
+            setCartCount(updatedCart.length);
+
+            showToast("Added To Cart", "success");
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+
+    const handleIncreaseQuantity = async (productId) => {
+
+        productId = String(productId);
+
+        try {
+
+            const cartItem = cartProducts.find(
+
+                item => String(item.shop_id) === String(productId)
+
+            );
+            if (!cartItem) return;
+
+            const newQuantity = cartItem.quantity + 1;
+            const product = shops.find(
+
+                item => String(item.shop_id) === String(productId)
 
             );
 
@@ -761,7 +460,7 @@ function Shop({
 
                         user_id: userId,
 
-                        product_id: shopId,
+                        shop_id: productId,
 
                         quantity: newQuantity
 
@@ -779,7 +478,7 @@ function Shop({
 
                 prev.map(item =>
 
-                    String(item.product_id) === shopId
+                    String(item.shop_id) === String(productId)
 
                         ? {
 
@@ -797,7 +496,152 @@ function Shop({
 
             showToast(
 
-                `Removed 1 Shop\n${shop.shop_name}\nTotal Quantity : ${newQuantity}`,
+                `Added 1 Shop\n${product.shop_name}\nTotal Quantity : ${newQuantity}`,
+
+                "success"
+
+            );
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+    const handleDecreaseQuantity = async (productId) => {
+
+        productId = String(productId);
+
+        try {
+            const cartItem = cartProducts.find(
+
+                item => String(item.shop_id) === String(productId)
+
+            );
+
+            if (!cartItem) return;
+
+            // Minimum quantity pe remove from cart
+            if (cartItem.quantity <= 50) {
+
+                const response = await fetch(
+
+                    `${API}/api/user/cart/${productId}`,
+
+                    {
+
+                        method: "DELETE",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            user_id: userId
+
+                        })
+
+                    }
+
+                );
+
+                const data = await response.json();
+
+                if (!data.success) return;
+                const product = shops.find(
+
+                    item => String(item.shop_id) === String(productId)
+
+                );
+
+                const updatedCart = cartProducts.filter(
+
+                    item => String(item.shop_id) !== String(productId)
+
+                );
+
+                setCartProducts(updatedCart);
+
+                setCartCount(updatedCart.length);
+
+                showToast(
+
+                    `Removed From Cart\n${product.shop_name}`,
+
+                    "info"
+
+                );
+
+                return;
+
+            }
+
+            const newQuantity = cartItem.quantity - 1;
+            const product = shops.find(
+
+                item => String(item.shop_id) === String(productId)
+
+            );
+            const response = await fetch(
+
+                `${API}/api/user/cart`,
+
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type": "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        user_id: userId,
+
+                        shop_id: productId,
+
+                        quantity: newQuantity
+
+                    })
+
+                }
+
+            );
+
+            const data = await response.json();
+
+            if (!data.success) return;
+
+            setCartProducts(prev =>
+
+                prev.map(item =>
+
+                    String(item.shop_id) === String(productId)
+
+                        ? {
+
+                            ...item,
+
+                            quantity: newQuantity
+
+                        }
+
+                        : item
+
+                )
+
+            );
+            showToast(
+
+                `Removed 1 Shop\n${product.shop_name}\nTotal Quantity : ${newQuantity}`,
 
                 "info"
 
@@ -813,63 +657,181 @@ function Shop({
 
     };
 
+    useEffect(() => {
+
+        async function loadProducts() {
+
+            try {
+
+                const response = await fetch(`${API}/api/user/shop`);
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setProducts(data.data);
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
+        async function loadWishlist() {
+
+            try {
+
+                const response = await fetch(
+                    `${API}/api/user/wishlist?user_id=${userId}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setSavedProducts(
+
+                        new Set(
+
+                            data.data.map(item => String(item.shop_id))
+
+                        )
+
+                    );
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
+        async function loadLikes() {
+
+            try {
+                const response = await fetch(
+                    `${API}/api/user/likes?user_id=${userId}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setLikedProducts(
+
+                        new Set(
+
+                            data.data.map(item => item.shop_id)
+
+                        )
+
+                    );
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+        async function loadCart() {
+
+            try {
+
+                const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
+
+                const data = await response.json();
+                console.log(data.data);
+
+                if (data.success) {
+
+                    setCartProducts(data.data);
+                    setCartCount(data.data.length);
+
+                }
+
+            }
+
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        }
+
+        loadProducts();
+        loadWishlist();
+        loadLikes();
+        loadCart();
+
+    }, [userId]);
+    
     return (
 
-        <div className="gf-page">
 
-            <section className="gf-section">
+        <section className="cds-section">
 
-                <div className="gf-grid">
+            <h2 className="cds-title">
 
-                    {
+                Shops
 
-                        shops.map((shop) => (
-                            <ShopCard
+            </h2>
 
-                                key={shop.shop_id}
+            <div className="cds-grid">
 
-                                shop={shop}
+                {
+                    shops.map((product) => (
 
-                                isLiked={likedShops.has(String(shop.shop_id))}
+                        <ShopCard
+                            key={product.shop_id}
+                            product={product}
+                            isSaved={savedProducts.has(String(product.shop_id))}
+                            isLiked={likedProducts.has(String(product.shop_id))}
+                            isAddedToCart={
+                                cartProducts.some(
 
-                                isSaved={savedShops.has(String(shop.shop_id))}
+                                    item => String(item.shop_id) === String(product.shop_id)
 
-                                isAddedToCart={
-                                    cartProducts.some(
-                                        item => String(item.product_id) === String(shop.shop_id)
-                                    )
-                                }
+                                )
+                            }
+                            cartQuantity={
+                                cartProducts.find(
 
-                                cartQuantity={
-                                    cartProducts.find(
-                                        item => String(item.product_id) === String(shop.shop_id)
-                                    )?.quantity || 0
-                                }
+                                    item => String(item.shop_id) === String(product.shop_id)
 
-                                onLike={handleLike}
+                                )?.quantity || 0
+                            }
+                            onSave={handleSave}
+                            onLike={handleLike}
+                            onAddToCart={handleAddToCart}
+                            onIncreaseQuantity={handleIncreaseQuantity}
+                            onDecreaseQuantity={handleDecreaseQuantity}
 
-                                onSave={handleSave}
+                            onOpenDetails={() =>
+                                onOpenDetails(product, "shop")
+                            }
+                        />
 
-                                onAddToCart={handleAddToCart}
+                    ))
+                }
 
-                                onIncreaseQuantity={handleIncreaseQuantity}
-
-                                onDecreaseQuantity={handleDecreaseQuantity}
-
-                                onOpenDetails={() =>
-                                    onOpenDetails(shop, "shop")
-                                }
-
-                            />
-
-                        ))
-
-                    }
-
-                </div>
-
-            </section>
-
+            </div>
             <Toast
 
                 show={toast.show}
@@ -880,10 +842,10 @@ function Shop({
 
             />
 
-        </div>
+        </section>
 
     );
 
 }
 
-export default Shop;
+export default Shops;
