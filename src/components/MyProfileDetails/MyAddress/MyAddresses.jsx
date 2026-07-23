@@ -85,6 +85,46 @@ function MyAddresses({ setProfilePage }) {
         }
 
     };
+    const handleDeleteAddress = async (address_id) => {
+
+        try {
+
+            const response = await fetch(
+                `${API}/api/user/address/${address_id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        user_id
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                setActiveMenu(null);
+
+                fetchAddresses();
+
+            } else {
+
+                alert(data.message);
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("Server Error");
+
+        }
+
+    };
     useEffect(() => {
 
         const handleClickOutside = (event) => {
@@ -224,9 +264,18 @@ function MyAddresses({ setProfilePage }) {
                                             Edit Address
                                         </button>
 
-                                        <button className="delete-btn">
-                                            Delete Address
-                                        </button>
+                                        {
+                                            item.is_primary !== 1 && (
+
+                                                <button
+                                                    className="delete-btn"
+                                                    onClick={() => handleDeleteAddress(item.address_id)}
+                                                >
+                                                    Delete Address
+                                                </button>
+
+                                            )
+                                        }
 
                                     </div>
 

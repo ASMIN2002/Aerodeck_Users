@@ -22,8 +22,6 @@ function Details({ product, onBack, setCartCount }) {
     const [isSaved, setIsSaved] = useState(false);
     const [cartQuantity, setCartQuantity] = useState(0);
 
-    console.log(details);
-
     const images = [
 
         details?.product_image1 ||
@@ -138,29 +136,14 @@ function Details({ product, onBack, setCartCount }) {
                     details.shop_id ||
                     details.premium_id;
 
-                console.log("User ID:", userId);
-                console.log("Product ID:", productId);
-
                 const response = await fetch(
                     `${API}/api/user/likes?user_id=${userId}`
                 );
 
                 const data = await response.json();
 
-                console.log("Likes:", data.data);
-                console.table(data.data);
-
-                data.data.forEach(item => {
-                    console.log(
-                        "DB Product:",
-                        item.product_id,
-                        "| Current:",
-                        productId,
-                        "| Equal:",
-                        String(item.product_id) === String(productId)
-                    );
-                });
-
+             
+              
                 if (data.success) {
 
                     setIsLiked(
@@ -171,7 +154,7 @@ function Details({ product, onBack, setCartCount }) {
 
                     );
 
-                    console.log("Found:", found);
+              
 
                 }
 

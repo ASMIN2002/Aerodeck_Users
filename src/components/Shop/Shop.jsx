@@ -142,7 +142,7 @@ function Shops({
 
                             user_id: userId,
 
-                            shop_id: productId
+                            product_id: productId
 
                         })
 
@@ -286,7 +286,7 @@ function Shops({
 
                             user_id: userId,
 
-                            shop_id: productId
+                            product_id: productId
 
                         })
 
@@ -348,7 +348,7 @@ function Shops({
 
             const exists = cartProducts.some(
 
-                item => String(item.shop_id) === productId
+                item => String(item.product_id) === String(productId)
 
             );
 
@@ -378,9 +378,9 @@ function Shops({
 
                         user_id: userId,
 
-                        shop_id: productId,
+                        product_id: productId,
 
-                        quantity: 50
+                        quantity: 1
 
                     })
 
@@ -398,9 +398,9 @@ function Shops({
 
                 {
 
-                    shop_id: productId,
+                    product_id: productId,
 
-                    quantity: 50
+                    quantity: 1
 
                 }
 
@@ -430,8 +430,7 @@ function Shops({
 
             const cartItem = cartProducts.find(
 
-                item => String(item.shop_id) === String(productId)
-
+                item => String(item.product_id) === String(productId)
             );
             if (!cartItem) return;
 
@@ -460,7 +459,7 @@ function Shops({
 
                         user_id: userId,
 
-                        shop_id: productId,
+                        product_id: productId,
 
                         quantity: newQuantity
 
@@ -475,10 +474,8 @@ function Shops({
             if (!data.success) return;
 
             setCartProducts(prev =>
-
                 prev.map(item =>
-
-                    String(item.shop_id) === String(productId)
+                    String(item.product_id) === String(productId)
 
                         ? {
 
@@ -517,15 +514,13 @@ function Shops({
 
         try {
             const cartItem = cartProducts.find(
-
-                item => String(item.shop_id) === String(productId)
-
+                item => String(item.product_id) === String(productId)
             );
 
             if (!cartItem) return;
 
             // Minimum quantity pe remove from cart
-            if (cartItem.quantity <= 50) {
+            if (cartItem.quantity <= 1) {
 
                 const response = await fetch(
 
@@ -555,15 +550,11 @@ function Shops({
 
                 if (!data.success) return;
                 const product = shops.find(
-
                     item => String(item.shop_id) === String(productId)
-
                 );
 
                 const updatedCart = cartProducts.filter(
-
-                    item => String(item.shop_id) !== String(productId)
-
+                    item => String(item.product_id) !== String(productId)
                 );
 
                 setCartProducts(updatedCart);
@@ -606,7 +597,7 @@ function Shops({
 
                         user_id: userId,
 
-                        shop_id: productId,
+                        product_id: productId,
 
                         quantity: newQuantity
 
@@ -619,25 +610,15 @@ function Shops({
             const data = await response.json();
 
             if (!data.success) return;
-
             setCartProducts(prev =>
-
                 prev.map(item =>
-
-                    String(item.shop_id) === String(productId)
-
+                    String(item.product_id) === String(productId)
                         ? {
-
                             ...item,
-
                             quantity: newQuantity
-
                         }
-
                         : item
-
                 )
-
             );
             showToast(
 
@@ -699,7 +680,7 @@ function Shops({
 
                         new Set(
 
-                            data.data.map(item => String(item.shop_id))
+                            data.data.map(item => String(item.product_id))
 
                         )
 
@@ -732,7 +713,7 @@ function Shops({
 
                         new Set(
 
-                            data.data.map(item => item.shop_id)
+                            data.data.map(item => item.product_id)
 
                         )
 
@@ -756,7 +737,7 @@ function Shops({
                 const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
 
                 const data = await response.json();
-                console.log(data.data);
+
 
                 if (data.success) {
 
@@ -781,7 +762,7 @@ function Shops({
         loadCart();
 
     }, [userId]);
-    
+
     return (
 
 
@@ -805,16 +786,13 @@ function Shops({
                             isLiked={likedProducts.has(String(product.shop_id))}
                             isAddedToCart={
                                 cartProducts.some(
-
-                                    item => String(item.shop_id) === String(product.shop_id)
-
+                                    item => String(item.product_id) === String(product.shop_id)
                                 )
                             }
+
                             cartQuantity={
                                 cartProducts.find(
-
-                                    item => String(item.shop_id) === String(product.shop_id)
-
+                                    item => String(item.product_id) === String(product.shop_id)
                                 )?.quantity || 0
                             }
                             onSave={handleSave}

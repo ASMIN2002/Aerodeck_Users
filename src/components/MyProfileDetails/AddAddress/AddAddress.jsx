@@ -6,8 +6,10 @@ import { API } from "../../../services/api";
 
 function AddAddress({ setProfilePage }) {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const [formData, setFormData] = useState({
-        user_id: 7,
+        user_id: user?.user_id || "",
         full_name: "",
         mobile_number: "",
         house_flat: "",

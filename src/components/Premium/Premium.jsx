@@ -142,7 +142,7 @@ function Premiums({
 
                             user_id: userId,
 
-                            premium_id: productId
+                            product_id: productId
 
                         })
 
@@ -286,7 +286,7 @@ function Premiums({
 
                             user_id: userId,
 
-                            premium_id: productId
+                            product_id: productId
 
                         })
 
@@ -348,7 +348,7 @@ function Premiums({
 
             const exists = cartProducts.some(
 
-                item => String(item.premium_id) === productId
+                item => String(item.product_id) === productId
 
             );
 
@@ -378,7 +378,7 @@ function Premiums({
 
                         user_id: userId,
 
-                        premium_id: productId,
+                        product_id: productId,
 
                         quantity: 50
 
@@ -398,7 +398,7 @@ function Premiums({
 
                 {
 
-                    premium_id: productId,
+                    product_id: productId,
 
                     quantity: 50
 
@@ -430,7 +430,7 @@ function Premiums({
 
             const cartItem = cartProducts.find(
 
-                item => String(item.premium_id) === String(productId)
+                item => String(item.product_id) === String(productId)
 
             );
             if (!cartItem) return;
@@ -460,7 +460,7 @@ function Premiums({
 
                         user_id: userId,
 
-                        premium_id: productId,
+                        product_id: productId,
 
                         quantity: newQuantity
 
@@ -478,7 +478,7 @@ function Premiums({
 
                 prev.map(item =>
 
-                    String(item.premium_id) === String(productId)
+                    String(item.product_id) === String(productId)
 
                         ? {
 
@@ -518,7 +518,7 @@ function Premiums({
         try {
             const cartItem = cartProducts.find(
 
-                item => String(item.premium_id) === String(productId)
+                item => String(item.product_id) === String(productId)
 
             );
 
@@ -562,7 +562,7 @@ function Premiums({
 
                 const updatedCart = cartProducts.filter(
 
-                    item => String(item.premium_id) !== String(productId)
+                    item => String(item.product_id) !== String(productId)
 
                 );
 
@@ -606,7 +606,7 @@ function Premiums({
 
                         user_id: userId,
 
-                        premium_id: productId,
+                        product_id: productId,
 
                         quantity: newQuantity
 
@@ -624,7 +624,7 @@ function Premiums({
 
                 prev.map(item =>
 
-                    String(item.premium_id) === String(productId)
+                    String(item.product_id) === String(productId)
 
                         ? {
 
@@ -699,7 +699,7 @@ function Premiums({
 
                         new Set(
 
-                            data.data.map(item => String(item.premium_id))
+                            data.data.map(item => String(item.product_id))
 
                         )
 
@@ -732,7 +732,7 @@ function Premiums({
 
                         new Set(
 
-                            data.data.map(item => item.premium_id)
+                            data.data.map(item => String(item.product_id))
 
                         )
 
@@ -756,8 +756,6 @@ function Premiums({
                 const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
 
                 const data = await response.json();
-                console.log(data.data);
-
                 if (data.success) {
 
                     setCartProducts(data.data);
@@ -806,14 +804,14 @@ function Premiums({
                             isAddedToCart={
                                 cartProducts.some(
 
-                                    item => String(item.premium_id) === String(product.premium_id)
+                                    item => String(item.product_id) === String(product.premium_id)
 
                                 )
                             }
                             cartQuantity={
                                 cartProducts.find(
 
-                                    item => String(item.premium_id) === String(product.premium_id)
+                                    item => String(item.product_id) === String(product.premium_id)
 
                                 )?.quantity || 0
                             }

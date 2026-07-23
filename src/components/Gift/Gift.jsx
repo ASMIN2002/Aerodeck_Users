@@ -142,7 +142,7 @@ function Gifts({
 
                             user_id: userId,
 
-                            gift_id: productId
+                            product_id: productId
 
                         })
 
@@ -196,6 +196,8 @@ function Gifts({
 
     };
     const handleLike = async (productId) => {
+
+         console.log("Gift Product ID:", productId);
         productId = String(productId);
 
         try {
@@ -218,7 +220,7 @@ function Gifts({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            user_id: userId,
 
                         })
 
@@ -286,7 +288,7 @@ function Gifts({
 
                             user_id: userId,
 
-                            gift_id: productId
+                            product_id: productId
 
                         })
 
@@ -348,7 +350,7 @@ function Gifts({
 
             const exists = cartProducts.some(
 
-                item => String(item.gift_id) === productId
+                item => String(item.product_id) === productId
 
             );
 
@@ -378,9 +380,9 @@ function Gifts({
 
                         user_id: userId,
 
-                        gift_id: productId,
+                        product_id: productId,
 
-                        quantity: 50
+                        quantity: 1
 
                     })
 
@@ -398,9 +400,9 @@ function Gifts({
 
                 {
 
-                    gift_id: productId,
+                    product_id: productId,
 
-                    quantity: 50
+                    quantity: 1
 
                 }
 
@@ -430,7 +432,7 @@ function Gifts({
 
             const cartItem = cartProducts.find(
 
-                item => String(item.gift_id) === String(productId)
+                item => String(item.product_id) === String(productId)
 
             );
             if (!cartItem) return;
@@ -460,7 +462,7 @@ function Gifts({
 
                         user_id: userId,
 
-                        gift_id: productId,
+                        product_id: productId,
 
                         quantity: newQuantity
 
@@ -478,7 +480,7 @@ function Gifts({
 
                 prev.map(item =>
 
-                    String(item.gift_id) === String(productId)
+                    String(item.product_id) === String(productId)
 
                         ? {
 
@@ -518,14 +520,14 @@ function Gifts({
         try {
             const cartItem = cartProducts.find(
 
-                item => String(item.gift_id) === String(productId)
+                item => String(item.product_id) === String(productId)
 
             );
 
             if (!cartItem) return;
 
             // Minimum quantity pe remove from cart
-            if (cartItem.quantity <= 50) {
+            if (cartItem.quantity <= 1) {
 
                 const response = await fetch(
 
@@ -562,7 +564,7 @@ function Gifts({
 
                 const updatedCart = cartProducts.filter(
 
-                    item => String(item.gift_id) !== String(productId)
+                    item => String(item.product_id) !== String(productId)
 
                 );
 
@@ -606,7 +608,7 @@ function Gifts({
 
                         user_id: userId,
 
-                        gift_id: productId,
+                        product_id: productId,
 
                         quantity: newQuantity
 
@@ -624,7 +626,7 @@ function Gifts({
 
                 prev.map(item =>
 
-                    String(item.gift_id) === String(productId)
+                    String(item.product_id) === String(productId)
 
                         ? {
 
@@ -699,7 +701,7 @@ function Gifts({
 
                         new Set(
 
-                            data.data.map(item => String(item.gift_id))
+                            data.data.map(item => String(item.product_id))
 
                         )
 
@@ -732,7 +734,7 @@ function Gifts({
 
                         new Set(
 
-                            data.data.map(item => item.gift_id)
+                            data.data.map(item => item.product_id)
 
                         )
 
@@ -806,14 +808,14 @@ function Gifts({
                             isAddedToCart={
                                 cartProducts.some(
 
-                                    item => String(item.gift_id) === String(product.gift_id)
+                                    item => String(item.product_id) === String(product.gift_id)
 
                                 )
                             }
                             cartQuantity={
                                 cartProducts.find(
 
-                                    item => String(item.gift_id) === String(product.gift_id)
+                                    item => String(item.product_id) === String(product.gift_id)
 
                                 )?.quantity || 0
                             }

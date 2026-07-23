@@ -99,12 +99,21 @@ function ProductPremium({
 
                 <div className="pc-image-grid">
 
-                    <img src={product.premium_image1} alt="" className="pc-image" />
-                    <img src={product.premium_image2} alt="" className="pc-image" />
+                    {product.premium_image1 && (
+                        <img src={product.premium_image1} alt="" className="pc-image" />
+                    )}
 
-                    <img src={product.premium_image3} alt="" className="pc-image" />
+                    {product.premium_image2 && (
+                        <img src={product.premium_image2} alt="" className="pc-image" />
+                    )}
 
-                    <img src={product.premium_image4} alt="" className="pc-image" />
+                    {product.premium_image3 && (
+                        <img src={product.premium_image3} alt="" className="pc-image" />
+                    )}
+
+                    {product.premium_image4 && (
+                        <img src={product.premium_image4} alt="" className="pc-image" />
+                    )}
 
                 </div>
 

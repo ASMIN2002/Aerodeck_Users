@@ -127,7 +127,10 @@ function Home({
                 !isDetailsOpen &&
                 (selectedBottomTab === "Home" ||
                     selectedBottomTab === "Premium") &&
-                <Address />
+                <Address
+                    setProfilePage={setProfilePage}
+                    setSelectedBottomTab={setSelectedBottomTab}
+                />
             }
 
             {
