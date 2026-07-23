@@ -122,6 +122,10 @@ function Home({
                 cartCount={cartCount}
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
+                onOpenCart={() => {
+                    setSelectedBottomTab("Profile");
+                    setProfilePage("cart");
+                }}
             />
             {
                 !isDetailsOpen &&

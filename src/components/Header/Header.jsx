@@ -14,7 +14,8 @@ function Header({
     isDetailsOpen,
     closeDetails,
 
-    onLogout
+    onLogout,
+    onOpenCart
 
 }) {
 
@@ -224,18 +225,16 @@ function Header({
             </div>
 
             <div className="hd-right">
-
                 <button
                     className="hd-cart-btn"
                     type="button"
+                    onClick={onOpenCart}
                 >
 
                     🛒
 
                     <span className="hd-cart-count">
-
                         {cartCount}
-
                     </span>
 
                 </button>
