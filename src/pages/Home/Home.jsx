@@ -112,21 +112,20 @@ function Home({
     return (
 
         <div className="home-container">
-
-            <Header
-                selectedMenu={selectedMenu}
-                setSelectedMenu={setSelectedMenu}
-                isMenuOpen={isMenuOpen}
-                setIsMenuOpen={setIsMenuOpen}
-                selectedBottomTab={selectedBottomTab}
-                cartCount={cartCount}
-                isDetailsOpen={isDetailsOpen}
-                closeDetails={handleCloseDetails}
-                onOpenCart={() => {
-                    setSelectedBottomTab("Profile");
-                    setProfilePage("cart");
-                }}
-            />
+                    <Header
+                        selectedMenu={selectedMenu}
+                        setSelectedMenu={setSelectedMenu}
+                        isMenuOpen={isMenuOpen}
+                        setIsMenuOpen={setIsMenuOpen}
+                        selectedBottomTab={selectedBottomTab}
+                        cartCount={cartCount}
+                        isDetailsOpen={isDetailsOpen}
+                        closeDetails={handleCloseDetails}
+                        onOpenCart={() => {
+                            setSelectedBottomTab("Profile");
+                            setProfilePage("cart");
+                        }}
+                    />
             {
                 !isDetailsOpen &&
                 (selectedBottomTab === "Home" ||

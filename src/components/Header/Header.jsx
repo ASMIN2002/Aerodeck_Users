@@ -15,10 +15,10 @@ function Header({
     closeDetails,
 
     onLogout,
-    onOpenCart
+    onOpenCart,
+    profilePage
 
 }) {
-
     const dropdownRef = useRef(null);
     const [version, setVersion] = useState("");
     useEffect(() => {
