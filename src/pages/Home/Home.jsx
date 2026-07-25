@@ -18,13 +18,17 @@ import MyWishlist from "../../components/MyProfileDetails/MyWishlist/MyWishlist"
 import MyCart from "../../components/MyProfileDetails/MyCart/MyCart";
 import MyOrders from "../../components/MyProfileDetails/MyOrders/MyOrders";
 import MyRewards from "../../components/MyProfileDetails/MyRewards/MyRewards";
-import MyPayments from "../../components/MyProfileDetails/MyPayments/MyPayments";
 import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/HelpAndSupport";
 import AboutAerodeck from "../../components/MyProfileDetails/AboutAerodeck/AboutAerodeck";
 import EditProfile from "../../components/MyProfileDetails/EditProfile/EditProfile";
 import MyAddresses from "../../components/MyProfileDetails/MyAddress/MyAddresses";
 import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress";
 import EditAddress from "../../components/MyProfileDetails/EditAddress/EditAddress";
+import ProductOrder from "../../components/MyProfileDetails/PlaceOrder/ProductOrder";
+import CardOrder from "../../components/MyProfileDetails/PlaceOrder/CardOrder";
+import ReviewInvoice from "../../components/MyProfileDetails/PlaceOrder/ReviewInvoice";
+import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
+import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
 
 
 function Home({
@@ -109,23 +113,30 @@ function Home({
 
     };
 
+    const [orderData, setOrderData] = useState({
+        items: [],
+        orderType: ""
+    });
+
+
+    const [selectedAddress, setSelectedAddress] = useState(null);
     return (
 
         <div className="home-container">
-                    <Header
-                        selectedMenu={selectedMenu}
-                        setSelectedMenu={setSelectedMenu}
-                        isMenuOpen={isMenuOpen}
-                        setIsMenuOpen={setIsMenuOpen}
-                        selectedBottomTab={selectedBottomTab}
-                        cartCount={cartCount}
-                        isDetailsOpen={isDetailsOpen}
-                        closeDetails={handleCloseDetails}
-                        onOpenCart={() => {
-                            setSelectedBottomTab("Profile");
-                            setProfilePage("cart");
-                        }}
-                    />
+            <Header
+                selectedMenu={selectedMenu}
+                setSelectedMenu={setSelectedMenu}
+                isMenuOpen={isMenuOpen}
+                setIsMenuOpen={setIsMenuOpen}
+                selectedBottomTab={selectedBottomTab}
+                cartCount={cartCount}
+                isDetailsOpen={isDetailsOpen}
+                closeDetails={handleCloseDetails}
+                onOpenCart={() => {
+                    setSelectedBottomTab("Profile");
+                    setProfilePage("cart");
+                }}
+            />
             {
                 !isDetailsOpen &&
                 (selectedBottomTab === "Home" ||
@@ -248,6 +259,8 @@ function Home({
 
                     <MyAddresses
                         setProfilePage={setProfilePage}
+                        selectedAddress={selectedAddress}
+                        setSelectedAddress={setSelectedAddress}
                     />
                 }
                 {
@@ -267,7 +280,29 @@ function Home({
 
                     <MyCart
                         setProfilePage={setProfilePage}
+                        setOrderData={setOrderData}
                         onOpenDetails={handleOpenDetails}
+                        setSelectedBottomTab={setSelectedBottomTab}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "productorder" &&
+
+                    <ProductOrder
+                        setProfilePage={setProfilePage}
+                        orderData={orderData}
+                        selectedAddress={selectedAddress}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "cardorder" &&
+                    <CardOrder
+                        setProfilePage={setProfilePage}
+                        orderData={orderData}
                     />
                 }
                 {
@@ -280,21 +315,35 @@ function Home({
                         onOpenDetails={handleOpenDetails}
                     />
                 }
+                {profilePage === "invoice-product" && (
+                    <ReviewInvoice
+                        setProfilePage={setProfilePage}
+                        backPage="productorder"
+                    />
+                )}
+
+                {profilePage === "invoice-card" && (
+                    <ReviewInvoice
+                        setProfilePage={setProfilePage}
+                        backPage="cardorder"
+                    />
+                )}
+                {profilePage === "payment" && (
+                    <Payment
+                        setProfilePage={setProfilePage}
+                    />
+                )}
+                {profilePage === "ordersuccess" && (
+                    <OrderSuccess
+                        setProfilePage={setProfilePage}
+                    />
+                )}
                 {
                     !isDetailsOpen &&
                     selectedBottomTab === "Profile" &&
                     profilePage === "rewards" &&
 
                     <MyRewards
-                        setProfilePage={setProfilePage}
-                    />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "payments" &&
-
-                    <MyPayments
                         setProfilePage={setProfilePage}
                     />
                 }

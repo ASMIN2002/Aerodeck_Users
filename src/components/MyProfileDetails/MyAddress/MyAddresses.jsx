@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { API } from "../../../services/api";
 
-function MyAddresses({ setProfilePage }) {
+function MyAddresses({
+    setProfilePage,
+    selectedAddress,
+    setSelectedAddress
+}) {
 
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -201,7 +205,8 @@ function MyAddresses({ setProfilePage }) {
                 addresses.map((item) => (
 
                     <div
-                        className="address-card"
+                        className={`address-card ${selectedAddress?.address_id === item.address_id ? "selected" : ""
+                            }`}
                         key={item.address_id}
                     >
 

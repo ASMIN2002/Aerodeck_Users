@@ -1,5 +1,6 @@
 import "./MyOrders.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { API } from "../../../services/api";
 
 function MyOrders({
 
@@ -8,30 +9,58 @@ function MyOrders({
     onOpenDetails
 
 }) {
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const [orders] = useState([
+    useEffect(() => {
 
-        {
-            id: 1,
-            name: "Luxury Wedding Invitation",
-            image: "https://via.placeholder.com/120",
-            price: 1499,
-            quantity: 2,
-            status: "Delivered",
-            orderDate: "18 Jul 2026"
-        },
+        const fetchOrders = async () => {
 
-        {
-            id: 2,
-            name: "Birthday Invitation Card",
-            image: "https://via.placeholder.com/120",
-            price: 499,
-            quantity: 1,
-            status: "Processing",
-            orderDate: "21 Jul 2026"
-        }
+            try {
 
-    ]);
+                const user_id = localStorage.getItem("user_id");
+
+                const response = await fetch(
+                    `${API}/api/user/orders?user_id=${user_id}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    setOrders(data.data);
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        };
+
+        fetchOrders();
+
+    }, []);
+
+    if (loading) {
+
+        return (
+
+            <div className="myorders">
+
+                Loading...
+
+            </div>
+
+        );
+
+    }
 
     return (
 
@@ -78,47 +107,46 @@ function MyOrders({
 
                     <div
                         className="order-card"
-                        key={order.id}
+                        key={order.order_id}
                     >
 
                         <img
-                            src={order.image}
-                            alt={order.name}
+                            src="https://via.placeholder.com/120"
+                            alt="Order"
                         />
 
                         <div className="order-info">
 
                             <h3>
 
-                                {order.name}
+                                Order #{order.order_number}
 
                             </h3>
 
                             <p>
 
-                                Order Date : {order.orderDate}
+                                Order Date : {new Date(order.created_at).toLocaleDateString()}
 
                             </p>
 
                             <p>
 
-                                Quantity : {order.quantity}
+                                Items : {order.total_items}
 
                             </p>
 
                             <h4>
 
-                                ₹ {order.price}
+                                ₹ {order.total_amount}
 
                             </h4>
 
                             <span
 
-                                className={`order-status ${order.status.toLowerCase()}`}
-
+                                className={`order-status ${order.order_status.toLowerCase()}`}
                             >
 
-                                {order.status}
+                                {order.order_status}
 
                             </span>
 

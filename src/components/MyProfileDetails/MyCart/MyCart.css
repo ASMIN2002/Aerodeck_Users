@@ -1,94 +1,71 @@
-.cart-page{
-    padding:20px;
+/* ===========================
+   Tabs
+=========================== */
+
+.mycart-tabs{
+    width:100%;
+    display:flex;
+    background:#f1f3f6;
+    border-radius:14px;
+    padding:4px;
+    margin:18px 0;
+    gap:4px;
 }
 
+.mycart-tabs button{
+    flex:1;
+    border:none;
+    background:transparent;
+    padding:14px;
+    font-size:15px;
+    font-weight:600;
+    color:#666;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.25s;
+}
 
-.cart-list{
+.mycart-tabs button.active{
+    background:#2563eb;
+    color:#fff;
+    box-shadow:0 4px 12px rgba(37,99,235,.25);
+}
+
+.mycart-tabs button:not(.active):hover{
+    background:#ffffff;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .mycart-tabs{
+        margin:15px 0;
+    }
+
+    .mycart-tabs button{
+        font-size:14px;
+        padding:13px;
+    }
+
+}
+.empty-cart{
     display:flex;
     flex-direction:column;
-    gap:15px;
-}
-
-
-.cart-card{
-
-    display:flex;
-    gap:15px;
-    background:#fff;
-    padding:12px;
-    border-radius:18px;
-    box-shadow:0 5px 20px #0001;
-
-}
-
-
-.cart-card img{
-
-    width:90px;
-    height:110px;
-    object-fit:cover;
-    border-radius:12px;
-
-}
-
-
-.cart-info h3{
-    margin:0;
-}
-
-
-.quantity{
-
-    display:flex;
+    justify-content:center;
     align-items:center;
-    gap:15px;
-    margin:10px 0;
-
+    min-height:50vh;
+    text-align:center;
 }
 
-
-.quantity button{
-
-    width:30px;
-    height:30px;
-    border:none;
-    border-radius:50%;
+.empty-cart h2{
+    font-size:24px;
+    font-weight:700;
+    color:#dc2626;
+    margin-bottom:10px;
 }
 
-
-.remove{
-
-    border:none;
-    background:#ff4444;
-    color:white;
-    padding:7px 15px;
-    border-radius:20px;
-
-}
-
-
-
-.cart-bottom{
-
-    position:fixed;
-    bottom:70px;
-    left:0;
-    width:100%;
-    padding:15px;
-    background:white;
-    display:flex;
-    justify-content:space-between;
-    box-shadow:0 -5px 20px #0002;
-
-}
-
-
-.cart-bottom button{
-
-    background:#000;
-    color:white;
-    border:none;
-    padding:12px 25px;
-    border-radius:25px;
-
+.empty-cart p{
+    font-size:15px;
+    color:#ef4444;
 }

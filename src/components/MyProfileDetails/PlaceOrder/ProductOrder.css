@@ -1,0 +1,215 @@
+.product-order-page{
+    width:100%;
+    min-height:100vh;
+    background:#f5f7fb;
+    padding:20px;
+    padding-bottom:120px;
+    box-sizing:border-box;
+}
+
+.card-order-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card-order-back{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:#0d6efd;
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.card-order-back:hover{
+    transform:scale(1.05);
+}
+
+.card-order-header h2{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    color:#222;
+}
+
+.order-section{
+    margin-bottom:22px;
+}
+
+.order-section h3{
+    margin-bottom:12px;
+    font-size:18px;
+    color:#222;
+}
+
+.address-card,
+.card-details-box,
+.price-box,
+.invoice-box{
+    background:#fff;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
+
+.address-card h4{
+    margin:0 0 8px;
+}
+
+.address-card p{
+    margin:4px 0;
+    color:#666;
+}
+
+.change-address-btn{
+    margin-top:15px;
+    border:none;
+    background:#0d6efd;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.premium-tag{
+    display:inline-block;
+    background:#fff4d6;
+    color:#b8860b;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    margin-bottom:12px;
+    font-weight:600;
+}
+
+.card-details-box h3{
+    margin:5px 0 18px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    font-size:15px;
+}
+
+.row:last-child{
+    border-bottom:none;
+}
+
+.grand-total{
+    font-size:20px;
+    color:#0d6efd;
+}
+
+.payment-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#fff;
+    border:2px solid #ddd;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:15px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.payment-card:hover{
+    border-color:#0d6efd;
+}
+
+.payment-card.selected{
+    border-color:#0d6efd;
+    background:#eef5ff;
+}
+
+.payment-card h4{
+    margin:0 0 6px;
+}
+
+.payment-card p{
+    margin:0;
+    color:#666;
+}
+
+.invoice-box h3{
+    margin-top:0;
+}
+
+.invoice-box p{
+    color:#666;
+    margin:10px 0 18px;
+}
+
+.invoice-btn{
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:12px;
+    background:#343a40;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.continue-payment-btn{
+    position:sticky;
+    bottom:15px;
+    width:100%;
+    height:56px;
+    border:none;
+    border-radius:16px;
+    background:#0d6efd;
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(13,110,253,.35);
+}
+
+.continue-payment-btn:hover{
+    background:#0b5ed7;
+}
+
+@media(max-width:768px){
+
+    .product-order-page{
+        padding:15px;
+        padding-bottom:110px;
+    }
+
+    .card-order-header h2{
+        font-size:20px;
+    }
+
+    .row{
+        font-size:14px;
+    }
+
+    .payment-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .continue-payment-btn{
+        font-size:16px;
+    }
+
+}
+.payment-card{
+    cursor:pointer;
+}
+
+.payment-card.selected{
+    border:2px solid #2563eb;
+    background:#eef4ff;
+}

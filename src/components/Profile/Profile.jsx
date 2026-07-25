@@ -76,13 +76,6 @@ function Profile({
                     <span>🎁</span>
                     <span>My Rewards</span>
                 </div>
-                <div
-                    className="profile-item"
-                    onClick={() => setProfilePage("payments")}
-                >
-                    <span>💳</span>
-                    <span>My Payments</span>
-                </div>
 
                 <div
                     className="profile-item"

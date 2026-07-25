@@ -1,195 +1,381 @@
-import { useEffect, useState } from "react";
-import { API } from "../../../services/api";
+import { useState, useEffect } from "react";
 // import "./MyCart.css";
+import Address from "../../Address/Address";
+import CartBilling from "./CartBilling";
+import CartCard from "./CartCard";
+import { API } from "../../../services/api";
 
-const MyCart = () => {
+function MyCart({
 
-    const [cartItems, setCartItems] = useState([]);
-    const [loading, setLoading] = useState(true);
+    setProfilePage,
+    setOrderData,
+    onOpenDetails,
+    setSelectedBottomTab
 
-    const user_id = localStorage.getItem("user_id");
+}) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const [activeTab, setActiveTab] = useState("products");
+    const [cart, setCart] = useState([]);
 
+    const products = cart.filter(item => {
 
-    useEffect(() => {
-        getCart();
-    }, []);
+        const id = String(item.product_id);
 
+        return id.startsWith("G") || id.startsWith("S");
 
+    });
 
-    const getCart = async () => {
+    const cards = cart.filter(item => {
+
+        const id = String(item.product_id);
+
+        return !id.startsWith("G") && !id.startsWith("S");
+
+    });
+    const fetchCart = async () => {
 
         try {
 
-            const response = await fetch(
-                `${API}/api/user/cart/${user_id}`
+            const res = await fetch(
+
+                `${API}/api/user/cart?user_id=${user.user_id}`
+
             );
 
-            const data = await response.json();
+            const data = await res.json();
 
-            if(data.success){
-                setCartItems(data.cart);
+            console.log(data);
+
+            if (data.success) {
+
+                setCart(data.data || []);
+
             }
 
+        }
 
-        } catch(error){
+        catch (err) {
 
-            console.log("Cart Error:", error);
-
-        } finally {
-
-            setLoading(false);
+            console.log(err);
 
         }
 
     };
+    const handleDelete = async (productId) => {
 
+        try {
 
+            await fetch(
 
-    const totalAmount = cartItems.reduce(
-        (total, item) =>
-            total + (item.product_price * item.quantity),
-        0
-    );
+                `${API}/api/user/cart/${productId}`,
 
+                {
 
+                    method: "DELETE",
 
-    if(loading){
+                    headers: {
 
-        return (
-            <div className="cart-loading">
-                Loading Cart...
-            </div>
-        )
+                        "Content-Type": "application/json"
 
-    }
+                    },
 
+                    body: JSON.stringify({
 
+                        user_id: user.user_id
+
+                    })
+
+                }
+
+            );
+
+            setCart(prev =>
+
+                prev.filter(
+
+                    item => item.product_id !== productId
+
+                )
+
+            );
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
+    const handleIncrease = async (item) => {
+
+        const newQuantity = item.quantity + 1;
+
+        const response = await fetch(`${API}/api/user/cart`, {
+
+            method: "PUT",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                user_id: user.user_id,
+
+                product_id: item.product_id,
+
+                quantity: newQuantity
+
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!data.success) return;
+
+        setCart(prev =>
+
+            prev.map(cartItem =>
+
+                cartItem.cart_id === item.cart_id
+
+                    ? {
+
+                        ...cartItem,
+
+                        quantity: newQuantity
+
+                    }
+
+                    : cartItem
+
+            )
+
+        );
+
+    };
+    const handleDecrease = async (item) => {
+
+        const minQty =
+
+            String(item.product_id).startsWith("G") ||
+
+                String(item.product_id).startsWith("S")
+
+                ? 1
+
+                : 50;
+
+        // Minimum pe delete
+        if (item.quantity <= minQty) {
+
+            await handleDelete(item.product_id);
+
+            return;
+
+        }
+
+        const newQuantity = item.quantity - 1;
+
+        const response = await fetch(`${API}/api/user/cart`, {
+
+            method: "PUT",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                user_id: user.user_id,
+
+                product_id: item.product_id,
+
+                quantity: newQuantity
+
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!data.success) return;
+
+        setCart(prev =>
+
+            prev.map(cartItem =>
+
+                cartItem.cart_id === item.cart_id
+
+                    ? {
+
+                        ...cartItem,
+
+                        quantity: newQuantity
+
+                    }
+
+                    : cartItem
+
+            )
+
+        );
+
+    };
+    const handlePlaceOrder = () => {
+        if (activeTab === "products") {
+
+            setOrderData({
+                items: products,
+                orderType: "products"
+            });
+
+            setProfilePage("productorder");
+
+        } else {
+
+            setOrderData({
+                items: cards,
+                orderType: "cards"
+            });
+
+            setProfilePage("cardorder");
+
+        }
+
+    };
+    useEffect(() => {
+
+        fetchCart();
+
+    }, []);
 
     return (
 
-        <div className="my-cart-page">
+        <div className="mycart-page">
 
+            <div className="mycart-topbar">
 
-            <h2>
-                My Cart
-            </h2>
+                <button
+                    className="mycart-back"
+                    onClick={() => setProfilePage("profile")}
+                >
+                    ←
+                </button>
 
+                <Address
+                    setProfilePage={setProfilePage}
+                    setSelectedBottomTab={setSelectedBottomTab}
+                />
+            </div>
+            <div className="mycart-tabs">
 
+                <button
 
-            {
-                cartItems.length === 0 ?
+                    className={activeTab === "products" ? "active" : ""}
 
-                (
-                    <div className="empty-cart">
-                        Your cart is empty
-                    </div>
-                )
+                    onClick={() => setActiveTab("products")}
 
+                >
 
-                :
+                    Products
 
-                (
+                </button>
 
-                    <>
+                <button
 
-                    <div className="cart-products">
+                    className={activeTab === "cards" ? "active" : ""}
 
+                    onClick={() => setActiveTab("cards")}
 
-                    {
-                        cartItems.map((item)=>(
+                >
 
+                    Cards
 
-                            <div 
-                            className="cart-product-card"
-                            key={item.cart_id}
-                            >
+                </button>
 
+            </div>
+            <div className="mycart-content">
 
-                                <img
-                                src={item.product_image1}
-                                alt={item.product_name}
-                                />
+                {activeTab === "products" ? (
 
+                    products.length > 0 ? (
 
-                                <div className="cart-product-info">
+                        products.map((item) => (
 
-
-                                    <h3>
-                                        {item.product_name}
-                                    </h3>
-
-
-                                    <p>
-                                        {item.product_category}
-                                    </p>
-
-
-                                    <h4>
-                                        ₹{item.product_price}
-                                    </h4>
-
-
-                                    <div className="quantity-box">
-
-                                        <button>
-                                            -
-                                        </button>
-
-
-                                        <span>
-                                            {item.quantity}
-                                        </span>
-
-
-                                        <button>
-                                            +
-                                        </button>
-
-                                    </div>
-
-
-                                </div>
-
-
-                            </div>
-
+                            <CartCard
+                                key={item.cart_id}
+                                item={item}
+                                onOpenDetails={onOpenDetails}
+                                onDelete={handleDelete}
+                                onIncrease={handleIncrease}
+                                onDecrease={handleDecrease}
+                            />
 
                         ))
-                    }
 
+                    ) : (
 
-                    </div>
+                        <div className="empty-cart">
 
+                            <h2>No Products in your cart</h2>
 
+                        </div>
 
-                    <div className="cart-summary">
+                    )
 
+                ) : (
 
-                        <h3>
-                            Total ₹{totalAmount}
-                        </h3>
+                    cards.length > 0 ? (
 
+                        cards.map((item) => (
 
-                        <button>
-                            Checkout
-                        </button>
+                            <CartCard
+                                key={item.cart_id}
+                                item={item}
+                                onOpenDetails={onOpenDetails}
+                                onDelete={handleDelete}
+                                onIncrease={handleIncrease}
+                                onDecrease={handleDecrease}
+                            />
 
+                        ))
 
-                    </div>
+                    ) : (
 
+                        <div className="empty-cart">
 
-                    </>
+                            <h2>No Cards in your cart</h2>
 
-                )
+                        </div>
 
-            }
+                    )
+
+                )}
+
+            </div>
+            {(
+                (activeTab === "products" && products.length > 0) ||
+                (activeTab === "cards" && cards.length > 0)
+            ) && (
+                    <CartBilling
+                        items={activeTab === "products" ? products : cards}
+                        onPlaceOrder={handlePlaceOrder}
+                    />
+                )}
 
 
         </div>
 
-    )
+    );
 
 }
-
 
 export default MyCart;
