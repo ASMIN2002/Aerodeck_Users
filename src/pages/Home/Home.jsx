@@ -29,6 +29,8 @@ import CardOrder from "../../components/MyProfileDetails/PlaceOrder/CardOrder";
 import ReviewInvoice from "../../components/MyProfileDetails/PlaceOrder/ReviewInvoice";
 import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
 import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
+import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
+import TrackOrder from "../../components/MyProfileDetails/PlaceOrder/OrderItem/TrackOrder";
 
 
 function Home({
@@ -120,6 +122,9 @@ function Home({
 
 
     const [selectedAddress, setSelectedAddress] = useState(null);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
+
     return (
 
         <div className="home-container">
@@ -312,20 +317,26 @@ function Home({
 
                     <MyOrders
                         setProfilePage={setProfilePage}
-                        onOpenDetails={handleOpenDetails}
+                        selectedOrder={selectedOrder}
+                        setSelectedOrder={setSelectedOrder}
                     />
                 }
+
+                {
+                    profilePage === "order-details" && (
+                        <OrderItemDetails
+                            order={selectedOrder}
+                            setProfilePage={setProfilePage}
+                            onOpenDetails={handleOpenDetails}
+                            setSelectedTrackingOrder={setSelectedTrackingOrder}
+                        />
+                    )
+                }
+
                 {profilePage === "invoice-product" && (
                     <ReviewInvoice
                         setProfilePage={setProfilePage}
                         backPage="productorder"
-                    />
-                )}
-
-                {profilePage === "invoice-card" && (
-                    <ReviewInvoice
-                        setProfilePage={setProfilePage}
-                        backPage="cardorder"
                     />
                 )}
                 {profilePage === "payment" && (

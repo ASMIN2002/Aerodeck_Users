@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import { API } from "../../../services/api";
 
 function MyOrders({
-
     setProfilePage,
-
-    onOpenDetails
-
-}) {
+    selectedOrder,
+    setSelectedOrder
+}){
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -110,10 +108,6 @@ function MyOrders({
                         key={order.order_id}
                     >
 
-                        <img
-                            src="https://via.placeholder.com/120"
-                            alt="Order"
-                        />
 
                         <div className="order-info">
 
@@ -140,6 +134,36 @@ function MyOrders({
                                 ₹ {order.total_amount}
 
                             </h4>
+                            <div className="order-address">
+
+                                <p className="address-type">
+                                    📍 {order.address_type}
+                                </p>
+
+                                <p>
+                                    {order.full_name}
+                                </p>
+
+                                <p>
+                                    {order.house_flat}
+                                </p>
+
+                                <p>
+                                    {order.area_street}
+                                </p>
+
+                                {
+                                    order.landmark &&
+                                    <p>
+                                        {order.landmark}
+                                    </p>
+                                }
+
+                                <p>
+                                    {order.city}, {order.state} - {order.pincode}
+                                </p>
+
+                            </div>
 
                             <span
 
@@ -151,15 +175,16 @@ function MyOrders({
                             </span>
 
                             <button
+                                onClick={() => {
 
-                                onClick={() => onOpenDetails(order, "orders")}
+                                    setSelectedOrder(order);
 
+                                    setProfilePage("order-details");
+
+                                }}
                             >
-
-                                View Product
-
+                                View Details
                             </button>
-
                         </div>
 
                     </div>
