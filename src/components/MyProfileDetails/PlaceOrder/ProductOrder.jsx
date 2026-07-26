@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./ProductOrder.css";
 import { API } from "../../../services/api";
-
 function ProductOrder({
     setProfilePage,
     orderData,
+    setOrderData,
     selectedAddress
 }) {
 
@@ -309,6 +309,30 @@ function ProductOrder({
 
                     if (paymentMethod === "UPI") {
 
+                        setOrderData({
+
+                            ...orderData,
+
+                            address_id: primaryAddress.address_id,
+
+                            payment_method: paymentMethod,
+
+                            items: products,
+
+                            total_items: products.length,
+
+                            subtotal,
+
+                            gst,
+
+                            platform_fee: platformFee,
+
+                            delivery_fee: 0,
+
+                            total_amount: upiTotal
+
+                        });
+
                         setProfilePage("payment");
 
                     } else {
@@ -335,7 +359,10 @@ function ProductOrder({
 
                                     payment_method: paymentMethod,
 
-                                    order_type: orderData.orderType.toUpperCase(),
+                                    order_type:
+                                        orderData.orderType === "products"
+                                            ? "PRODUCT"
+                                            : "CARD",
 
                                     items: products,
 

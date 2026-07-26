@@ -1,6 +1,9 @@
 import "./OrderItem.css";
 import TrackOrder from "./TrackOrder";
+import UploadImages from "./UploadImages";
+import Feedback from "./Feedback";
 import Rating from "./Rating";
+import HelpSupport from "./HelpSupport";
 
 function OrderItem({
     item,
@@ -50,6 +53,9 @@ function OrderItem({
             </div>
             <TrackOrder />
             <Rating />
+            <UploadImages />
+            <Feedback />
+            <HelpSupport />
             <button
                 className="view-product-btn"
                 onClick={() => {

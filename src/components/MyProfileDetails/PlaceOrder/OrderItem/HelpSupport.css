@@ -1,0 +1,48 @@
+.help-support{
+    margin-top:30px;
+    padding:20px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+}
+
+.help-support h3{
+    margin:0 0 8px;
+    font-size:20px;
+    font-weight:600;
+    color:#222;
+}
+
+.help-note{
+    margin:0 0 18px;
+    font-size:14px;
+    color:#666;
+    line-height:1.5;
+}
+
+.support-options{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.support-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#0b84ff;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.support-btn:hover{
+    background:#086fd6;
+}
+
+.support-btn:active{
+    transform:scale(.98);
+}

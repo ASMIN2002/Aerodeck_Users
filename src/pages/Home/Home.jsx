@@ -298,6 +298,7 @@ function Home({
                     <ProductOrder
                         setProfilePage={setProfilePage}
                         orderData={orderData}
+                        setOrderData={setOrderData}
                         selectedAddress={selectedAddress}
                     />
                 }
@@ -342,6 +343,7 @@ function Home({
                 {profilePage === "payment" && (
                     <Payment
                         setProfilePage={setProfilePage}
+                        orderData={orderData}
                     />
                 )}
                 {profilePage === "ordersuccess" && (

@@ -96,6 +96,72 @@ function AddAddress({ setProfilePage }) {
         }
 
     };
+
+    const handleCurrentLocation = () => {
+
+        if (!navigator.geolocation) {
+
+            showToast("Geolocation is not supported.", "error");
+            return;
+
+        }
+
+        navigator.geolocation.getCurrentPosition(
+
+            async ({ coords }) => {
+
+                try {
+
+                    const { latitude, longitude } = coords;
+
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+                    );
+
+                    const data = await response.json();
+
+                    const address = data.address || {};
+
+                    const pin = address.postcode || "";
+
+                    setFormData(prev => ({
+                        ...prev,
+                        latitude,
+                        longitude,
+                        pincode: pin,
+                        city: address.city || address.town || address.village || "",
+                        state: address.state || "",
+                        country: address.country || ""
+                    }));
+
+                    if (pin.length === 6) {
+                        fetchPincode(pin);
+                    }
+
+                    showToast("Current location detected.");
+
+                } catch {
+
+                    showToast("Unable to fetch location.", "error");
+
+                }
+
+            },
+
+            () => {
+
+                showToast("Location permission denied.", "error");
+
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000
+            }
+
+        );
+
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.full_name.trim()) {
@@ -192,6 +258,13 @@ function AddAddress({ setProfilePage }) {
                 >
                     <FiArrowLeft />
                 </button>
+                <button
+                    type="button"
+                    className="current-location-btn"
+                    onClick={handleCurrentLocation}
+                >
+                    📍 Set Current Location
+                </button>
 
                 <h2>Add Address</h2>
 
@@ -238,6 +311,26 @@ function AddAddress({ setProfilePage }) {
                         }))
                     }
                 />
+                <input
+                    type="text"
+                    placeholder="PIN Code"
+                    maxLength={6}
+                    value={formData.pincode}
+                    onChange={(e) => {
+
+                        const pin = e.target.value.replace(/\D/g, "");
+
+                        setFormData(prev => ({
+                            ...prev,
+                            pincode: pin
+                        }));
+
+                        if (pin.length === 6) {
+                            fetchPincode(pin);
+                        }
+
+                    }}
+                />
 
                 <select
                     value={formData.area_street}
@@ -278,6 +371,7 @@ function AddAddress({ setProfilePage }) {
                     }
                 />
 
+
                 <input
                     type="text"
                     placeholder="City"
@@ -299,26 +393,7 @@ function AddAddress({ setProfilePage }) {
                     readOnly
                 />
 
-                <input
-                    type="text"
-                    placeholder="PIN Code"
-                    maxLength={6}
-                    value={formData.pincode}
-                    onChange={(e) => {
 
-                        const pin = e.target.value.replace(/\D/g, "");
-
-                        setFormData(prev => ({
-                            ...prev,
-                            pincode: pin
-                        }));
-
-                        if (pin.length === 6) {
-                            fetchPincode(pin);
-                        }
-
-                    }}
-                />
                 <div className="address-type">
 
                     <label>

@@ -175,3 +175,125 @@
     }
 
 }
+/* ===========================
+   UPI Box
+=========================== */
+
+.upi-box{
+    margin-top:15px;
+    padding:16px;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    background:#fafafa;
+}
+
+.upi-box h4{
+    margin:0 0 10px;
+    font-size:15px;
+    color:#555;
+}
+
+.upi-id{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+.upi-id span{
+    font-size:16px;
+    font-weight:600;
+    color:#222;
+    word-break:break-all;
+}
+
+.upi-id button{
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.upi-id button:hover{
+    background:#1d4ed8;
+}
+
+/* ===========================
+   QR Box
+=========================== */
+
+.qr-box{
+    margin-top:15px;
+    padding:20px;
+    text-align:center;
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    background:#fafafa;
+}
+
+.qr-box img{
+    width:220px;
+    height:220px;
+    object-fit:contain;
+    margin-bottom:15px;
+}
+
+.qr-box p{
+    margin:0;
+    color:#666;
+    font-size:14px;
+}
+
+/* ===========================
+   Transaction Input
+=========================== */
+
+.payment-section input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    box-sizing:border-box;
+}
+
+.payment-section input:focus{
+    border-color:#2563eb;
+}
+
+.payment-section small{
+    display:block;
+    margin-top:10px;
+    color:#666;
+    line-height:1.5;
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:600px){
+
+    .upi-id{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .upi-id button{
+        width:100%;
+    }
+
+    .qr-box img{
+        width:180px;
+        height:180px;
+    }
+
+}
