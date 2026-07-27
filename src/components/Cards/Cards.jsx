@@ -787,12 +787,6 @@ function Cards({
 
         <section className="cds-section">
 
-            <h2 className="cds-title">
-
-                Cards
-
-            </h2>
-
             <div className="cds-grid">
 
                 {
