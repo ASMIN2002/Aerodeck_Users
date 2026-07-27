@@ -17,7 +17,6 @@ import Profile from "../../components/Profile/Profile";
 import MyWishlist from "../../components/MyProfileDetails/MyWishlist/MyWishlist";
 import MyCart from "../../components/MyProfileDetails/MyCart/MyCart";
 import MyOrders from "../../components/MyProfileDetails/MyOrders/MyOrders";
-import MyRewards from "../../components/MyProfileDetails/MyRewards/MyRewards";
 import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/HelpAndSupport";
 import AboutAerodeck from "../../components/MyProfileDetails/AboutAerodeck/AboutAerodeck";
 import EditProfile from "../../components/MyProfileDetails/EditProfile/EditProfile";
@@ -26,11 +25,11 @@ import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress"
 import EditAddress from "../../components/MyProfileDetails/EditAddress/EditAddress";
 import ProductOrder from "../../components/MyProfileDetails/PlaceOrder/ProductOrder";
 import CardOrder from "../../components/MyProfileDetails/PlaceOrder/CardOrder";
-import ReviewInvoice from "../../components/MyProfileDetails/PlaceOrder/ReviewInvoice";
 import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
 import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
 import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
 import TrackOrder from "../../components/MyProfileDetails/PlaceOrder/OrderItem/TrackOrder";
+import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/ItemInvoice";
 
 
 function Home({
@@ -124,6 +123,8 @@ function Home({
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
+
+    const [selectedInvoice, setSelectedInvoice] = useState(null);
 
     return (
 
@@ -309,6 +310,7 @@ function Home({
                     <CardOrder
                         setProfilePage={setProfilePage}
                         orderData={orderData}
+                        setOrderData={setOrderData}
                     />
                 }
                 {
@@ -330,16 +332,19 @@ function Home({
                             setProfilePage={setProfilePage}
                             onOpenDetails={handleOpenDetails}
                             setSelectedTrackingOrder={setSelectedTrackingOrder}
+                            setSelectedInvoice={setSelectedInvoice}
                         />
                     )
                 }
-
-                {profilePage === "invoice-product" && (
-                    <ReviewInvoice
-                        setProfilePage={setProfilePage}
-                        backPage="productorder"
-                    />
-                )}
+                {
+                    profilePage === "invoice" && (
+                        <ItemInvoice
+                            setProfilePage={setProfilePage}
+                            order_id={selectedInvoice?.order_id}
+                            product_id={selectedInvoice?.product_id}
+                        />
+                    )
+                }
                 {profilePage === "payment" && (
                     <Payment
                         setProfilePage={setProfilePage}
@@ -351,15 +356,6 @@ function Home({
                         setProfilePage={setProfilePage}
                     />
                 )}
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "rewards" &&
-
-                    <MyRewards
-                        setProfilePage={setProfilePage}
-                    />
-                }
                 {
                     !isDetailsOpen &&
                     selectedBottomTab === "Profile" &&

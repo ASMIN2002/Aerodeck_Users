@@ -79,15 +79,6 @@ function OrderSuccess({ setProfilePage }) {
 
             </button>
 
-            <button
-                className="home-btn"
-                onClick={() => setProfilePage("home")}
-            >
-
-                Continue Shopping
-
-            </button>
-
         </div>
 
     );

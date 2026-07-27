@@ -1,42 +1,117 @@
+import { useEffect, useState } from "react";
 import "./CardOrder.css";
+import { API } from "../../../services/api";
+function CardOrder({
+    setProfilePage,
+    orderData,
+    setOrderData,
+    selectedAddress
+}) {
 
-function CardOrder({ setProfilePage }) {
+    const products = orderData.items || [];
 
-    const cardName = "Premium Visiting Card";
-    const unitPrice = 2;
-    const quantity = 500;
-    const minimumOrder = 50;
+    const getPrice = (item) => {
 
-    const cardPrice = unitPrice * quantity;
-    const gst = +(cardPrice * 0.18).toFixed(2);
-    const platformFee = 29;
-    const delivery = 0;
+        return Number(
+            item.product_price ??
+            item.shop_price ??
+            item.gift_price ??
+            0
+        );
 
-    const grandTotal = cardPrice + gst + platformFee + delivery;
+    };
+    const getName = (item) => {
 
-    const upiAmount = (grandTotal * 0.80).toFixed(2);
-    const codAmount = (grandTotal * 0.20).toFixed(2);
+        return (
+            item.product_name ||
+            item.shop_name ||
+            item.gift_name ||
+            "Unknown Product"
+        );
+
+    };
+
+    const [paymentMethod, setPaymentMethod] = useState("UPI");
+
+    const subtotal = products.reduce((sum, item) => {
+
+        return sum + (getPrice(item) * item.quantity);
+
+    }, 0);
+
+    const gst = +(subtotal * 0.18).toFixed(2);
+
+    const platformFee = 2;
+
+    const codCharge = paymentMethod === "COD" ? 5 : 0;
+
+    const grandTotal =
+        subtotal +
+        gst +
+        platformFee +
+        codCharge;
+    const upiTotal = subtotal + gst + platformFee;
+
+    const [primaryAddress, setPrimaryAddress] = useState(null);
+
+    const [placingOrder, setPlacingOrder] = useState(false);
+
+    useEffect(() => {
+
+        const fetchPrimaryAddress = async () => {
+
+            try {
+
+                const user_id = localStorage.getItem("user_id");
+
+                const response = await fetch(
+                    `${API}/api/user/address/${user_id}`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    const primary = data.data.find(
+                        item => item.is_primary === 1
+                    );
+
+                    setPrimaryAddress(primary || null);
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
+        };
+
+        fetchPrimaryAddress();
+
+    }, []);
 
     return (
 
-        <div className="card-order-page">
+        <div className="product-order-page">
 
             {/* Header */}
 
-            <div className="card-order-header">
+            <div className="product-order-header">
 
                 <button
-                    className="card-order-back"
+                    className="product-order-back"
                     onClick={() => setProfilePage("cart")}
                 >
                     ←
                 </button>
 
-                <h2>Card Order</h2>
+                <h2>Product Order</h2>
 
             </div>
 
-            {/* Delivery Address */}
+            {/* Address */}
 
             <div className="order-section">
 
@@ -44,76 +119,102 @@ function CardOrder({ setProfilePage }) {
 
                 <div className="address-card">
 
-                    <h4>Asmin Kuldeep Jena</h4>
+                    {primaryAddress ? (
 
-                    <p>Near FM College</p>
+                        <>
 
-                    <p>Balasore, Odisha - 756001</p>
+                            <h4>{primaryAddress.full_name}</h4>
 
-                    <p>+91 9876543210</p>
+                            <p>+91 {primaryAddress.mobile_number}</p>
 
-                    <button className="change-address-btn">
+                            <p>
+                                {primaryAddress.house_flat},
+                                {" "}
+                                {primaryAddress.area_street},
+                                {" "}
+                                {primaryAddress.landmark},
+                                {" "}
+                                {primaryAddress.city},
+                                {" "}
+                                {primaryAddress.state}
+                                {" - "}
+                                {primaryAddress.pincode}
+                            </p>
 
+                        </>
+
+                    ) : (
+
+                        <p>No Primary Address Found</p>
+
+                    )}
+
+                    <button
+                        className="change-address-btn"
+                        onClick={() => setProfilePage("address")}
+                    >
                         Change Address
-
                     </button>
 
                 </div>
 
             </div>
 
-            {/* Card Details */}
+            {/* Ordered Products */}
 
             <div className="order-section">
 
-                <h3>💳 Card Details</h3>
+                <h3>🛍 Ordered Products</h3>
 
-                <div className="card-details-box">
+                <div className="product-list">
 
-                    <span className="premium-tag">
+                    {
 
-                        ★★★★★ Premium Quality
+                        products.length > 0 ? (
 
-                    </span>
+                            products.map((product) => (
 
-                    <h3>{cardName}</h3>
+                                <div
+                                    className="product-row"
+                                    key={product.product_id}
+                                >
 
-                    <div className="row">
+                                    <div className="product-info">
 
-                        <span>Unit Price</span>
+                                        <h4>
+                                            {getName(product)}
+                                        </h4>
 
-                        <span>₹{unitPrice} / Card</span>
+                                        <small>
+                                            Qty : {product.quantity}
+                                        </small>
 
-                    </div>
+                                    </div>
 
-                    <div className="row">
+                                    <div className="product-price">
 
-                        <span>Minimum Order</span>
+                                        ₹{(
+                                            getPrice(product) *
+                                            product.quantity
+                                        ).toFixed(2)}
 
-                        <span>{minimumOrder} Cards</span>
+                                    </div>
 
-                    </div>
+                                </div>
 
-                    <div className="row">
+                            ))
 
-                        <span>Ordered Quantity</span>
+                        ) : (
 
-                        <span>{quantity} Cards</span>
+                            <p>No Products Found.</p>
 
-                    </div>
+                        )
 
-                    <div className="row">
-
-                        <span>Total Card Price</span>
-
-                        <strong>₹{cardPrice}</strong>
-
-                    </div>
+                    }
 
                 </div>
 
             </div>
-
             {/* Price Details */}
 
             <div className="order-section">
@@ -123,35 +224,18 @@ function CardOrder({ setProfilePage }) {
                 <div className="price-box">
 
                     <div className="row">
-
-                        <span>Card Price</span>
-
-                        <span>₹{cardPrice}</span>
-
+                        <span>Items Total</span>
+                        <span>₹{subtotal.toFixed(2)}</span>
                     </div>
 
                     <div className="row">
-
                         <span>GST (18%)</span>
-
-                        <span>₹{gst}</span>
-
+                        <span>₹{gst.toFixed(2)}</span>
                     </div>
 
                     <div className="row">
-
                         <span>Platform Fee</span>
-
-                        <span>₹{platformFee}</span>
-
-                    </div>
-
-                    <div className="row">
-
-                        <span>Delivery</span>
-
-                        <span>FREE</span>
-
+                        <span>₹{platformFee.toFixed(2)}</span>
                     </div>
 
                     <hr />
@@ -160,79 +244,167 @@ function CardOrder({ setProfilePage }) {
 
                         <strong>Grand Total</strong>
 
-                        <strong>₹{grandTotal}</strong>
+                        <strong>₹{grandTotal.toFixed(2)}</strong>
 
                     </div>
 
                 </div>
 
             </div>
-
-            {/* Payment */}
+            {/* Payment Method */}
 
             <div className="order-section">
 
-                <h3>💳 Payment Method</h3>
+                <h3>💳 Choose Payment Method</h3>
 
-                <div className="payment-card selected">
-
-                    <div>
-
-                        <h4>🟢 UPI (Recommended)</h4>
-
-                        <p>Pay 80% Now</p>
-
-                    </div>
-
-                    <strong>₹{upiAmount}</strong>
-
-                </div>
-
-                <div className="payment-card">
-
-                    <div>
-
-                        <h4>🚚 Cash on Delivery</h4>
-
-                        <p>Pay Remaining 20%</p>
-
-                    </div>
-
-                    <strong>₹{codAmount}</strong>
-
-                </div>
-
-            </div>
-
-            {/* Invoice */}
-
-            <div className="invoice-box">
-
-                <h3>🧾 Invoice</h3>
-
-                <p>
-
-                    Please review your GST invoice before proceeding to payment.
-
-                </p>
-
-                <button
-                    className="invoice-btn"
-                    onClick={() => setProfilePage("invoice-card")}
+                <div
+                    className={`payment-card ${paymentMethod === "UPI" ? "selected" : ""}`}
+                    onClick={() => setPaymentMethod("UPI")}
                 >
 
-                    View Invoice
+                    <div>
 
-                </button>
+                        <h4>🟢 UPI (Mandatory)</h4>
+
+                        <p>Pay 80% Advance Payment</p>
+
+                        <small
+                            style={{
+                                display: "block",
+                                marginTop: "6px",
+                                color: "#666",
+                                fontSize: "12px"
+                            }}
+                        >
+                            Remaining 20% (₹{(grandTotal * 0.20).toFixed(2)}) will be collected at the time of delivery.
+                        </small>
+
+                        <strong>
+                            ₹{(grandTotal * 0.80).toFixed(2)}
+                        </strong>
+                    </div>
+
+                    <strong>
+
+                        ₹{upiTotal.toFixed(2)}
+
+                    </strong>
+
+                </div>
 
             </div>
 
             {/* Continue */}
 
-            <button className="continue-payment-btn" onClick={() => setProfilePage("payment")}>
+            <button
+                className="continue-payment-btn"
+                onClick={() => {
 
-                Continue Payment
+                    if (paymentMethod === "UPI") {
 
+                        setOrderData({
+                            ...orderData,
+
+                            orderType: "cards",
+
+                            address_id: primaryAddress.address_id,
+
+                            payment_method: "UPI",
+
+                            items: products,
+
+                            total_items: products.reduce(
+                                (sum, item) => sum + Number(item.quantity),
+                                0
+                            ),
+
+                            subtotal,
+
+                            gst,
+
+                            platform_fee: platformFee,
+
+                            delivery_fee: 0,
+
+                            full_amount: grandTotal,
+
+                            advance_amount: Number((grandTotal * 0.80).toFixed(2)),
+
+                            remaining_amount: Number((grandTotal * 0.20).toFixed(2)),
+
+                            total_amount: Number((grandTotal * 0.80).toFixed(2))
+                        });
+
+                        setProfilePage("payment");
+                        setProfilePage("payment");
+
+                    } else {
+
+                        setPlacingOrder(true);
+
+                        setTimeout(async () => {
+
+                            const user_id = Number(localStorage.getItem("user_id"));
+
+                            const response = await fetch(`${API}/api/user/orders/place-order`, {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    user_id,
+
+                                    address_id: primaryAddress.address_id,
+
+                                    payment_method: paymentMethod,
+
+                                    order_type:
+                                        orderData.orderType === "products"
+                                            ? "PRODUCT"
+                                            : "CARD",
+
+                                    items: products,
+
+                                    total_items: products.length,
+
+                                    subtotal,
+
+                                    gst,
+
+                                    platform_fee: platformFee,
+
+                                    delivery_fee: 0,
+
+                                    total_amount: grandTotal
+
+                                })
+
+                            });
+
+                            const data = await response.json();
+
+                            console.log(data);
+
+                            setPlacingOrder(false);
+
+                            if (data.success) {
+
+                                setProfilePage("ordersuccess");
+
+                            }
+
+                        }, 2000);
+
+                    }
+
+                }}
+            >
+
+               Proceed to 80% UPI Payment
             </button>
 
         </div>

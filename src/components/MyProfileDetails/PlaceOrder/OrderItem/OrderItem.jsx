@@ -4,12 +4,15 @@ import UploadImages from "./UploadImages";
 import Feedback from "./Feedback";
 import Rating from "./Rating";
 import HelpSupport from "./HelpSupport";
+import ItemInvoice from "./ItemInvoice";
 
 function OrderItem({
     item,
-    onOpenDetails
+    order_id,
+    onOpenDetails,
+    setProfilePage,
+    setSelectedInvoice
 }) {
-
     const images = [
         item.product_image1,
         item.product_image2,
@@ -56,6 +59,21 @@ function OrderItem({
             <UploadImages />
             <Feedback />
             <HelpSupport />
+            <button
+                className="invoice-btn"
+                onClick={() => {
+
+                    setSelectedInvoice({
+                        order_id,
+                        product_id: item.product_id
+                    });
+
+                    setProfilePage("invoice");
+
+                }}
+            >
+                📄 Invoice
+            </button>
             <button
                 className="view-product-btn"
                 onClick={() => {

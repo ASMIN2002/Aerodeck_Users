@@ -26,7 +26,10 @@ function Payment({
 
     const platformFee = 2;
 
-    const amount = subtotal + gst + platformFee;
+    const amount =
+        orderData?.orderType === "cards"
+            ? Number(orderData.total_amount)
+            : subtotal + gst + platformFee;
 
     const upiId = "aerodeck@upi";
 
@@ -135,7 +138,13 @@ function Payment({
 
                                     delivery_fee: orderData.delivery_fee,
 
-                                    total_amount: orderData.total_amount
+                                    full_amount: orderData.full_amount,
+
+                                    advance_amount: orderData.total_amount,
+
+                                    remaining_amount: orderData.remaining_amount,
+
+                                    total_amount: orderData.full_amount
 
                                 })
                             }
