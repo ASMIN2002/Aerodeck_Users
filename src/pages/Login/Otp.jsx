@@ -38,6 +38,8 @@ function Otp({
 
                     method: "POST",
 
+                    credentials: "include",
+
                     headers: {
 
                         "Content-Type": "application/json"
@@ -55,7 +57,6 @@ function Otp({
                 }
 
             );
-
             const data = await response.json();
 
             if (!data.success) {

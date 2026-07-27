@@ -2,45 +2,21 @@ import { useEffect } from "react";
 import "../../styles/Splash.css";
 
 function Splash({
-    setPage,
-    setUser
+    setPage
 }) {
-
     useEffect(() => {
 
         const timer = setTimeout(() => {
 
-            const token =
-                localStorage.getItem("token");
-
-            const user =
-                localStorage.getItem("user");
-
-            if (token && user) {
-
-                setUser(
-
-                    JSON.parse(user)
-
-                );
-
-                setPage("home");
-
-            }
-
-            else {
-
-                setPage("login");
-
-            }
+            sessionStorage.setItem("aerodeck_splash", "true");
+            setPage("startup");
 
         }, 3200);
 
         return () => clearTimeout(timer);
 
     }, [
-        setPage,
-        setUser
+        setPage
     ]);
     return (
 
@@ -49,7 +25,7 @@ function Splash({
             <div className="sp-content">
 
                 <div className="sp-logo">
-                    AD
+                   AD
                 </div>
 
                 <h1 className="sp-title">
@@ -59,6 +35,12 @@ function Splash({
                 <p className="sp-tagline">
                     Premium Cards & Gifts
                 </p>
+
+                <div className="sp-loader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
 
             </div>
 

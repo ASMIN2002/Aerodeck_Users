@@ -11,8 +11,10 @@ import NoInternet from "./components/NoInternet/NoInternet";
 import { API } from "./services/api";
 
 function App() {
+
     const [page, setPage] = useState("splash");
     const [user, setUser] = useState(null);
+    const [checkingSession, setCheckingSession] = useState(true);
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
@@ -61,7 +63,7 @@ function App() {
 
         checkServer();
 
-        interval = setInterval(checkServer, 3000);
+        interval = setInterval(checkServer, 30000);
 
         window.addEventListener("online", goOnline);
 
@@ -78,6 +80,50 @@ function App() {
         };
 
     }, []);
+
+    useEffect(() => {
+
+        async function restoreSession() {
+            if (page !== "startup") {
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `${API}/api/auth/session`,
+                    {
+                        credentials: "include"
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.success && data.authenticated) {
+
+                    setUser(data.user);
+                    setPage("home");
+                } else {
+
+                    setPage("login");
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+            } finally {
+
+                setCheckingSession(false);
+
+            }
+
+        }
+
+        restoreSession();
+
+    }, [page]);
     if (!isOnline) {
 
         return (
@@ -95,6 +141,11 @@ function App() {
         );
 
     }
+    if (checkingSession && page !== "splash") {
+
+        return null;
+
+    }
 
 
     return (
@@ -104,7 +155,6 @@ function App() {
                 page === "splash" &&
                 <Splash
                     setPage={setPage}
-                    setUser={setUser}
                 />
             }
 

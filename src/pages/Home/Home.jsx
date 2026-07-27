@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API } from "../../services/api";
 
 import "../../styles/Home.css";
 
@@ -79,12 +80,24 @@ function Home({
 
     }, [selectedBottomTab]);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+
+        try {
+
+            await fetch(`${API}/api/auth/logout`, {
+                method: "POST",
+                credentials: "include"
+            });
+
+        } catch (err) {
+
+            console.error(err);
+
+        }
 
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.removeItem("mobile_number");
-
         setUser(null);
 
         setPage("login");

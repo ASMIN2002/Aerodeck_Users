@@ -69,13 +69,6 @@ function Profile({
                     <span>📦</span>
                     <span>My Orders</span>
                 </div>
-                <div
-                    className="profile-item"
-                    onClick={() => setProfilePage("rewards")}
-                >
-                    <span>🎁</span>
-                    <span>My Rewards</span>
-                </div>
 
                 <div
                     className="profile-item"

@@ -1,394 +1,277 @@
-/* =====================================================
-   AERODECK LOGIN
-   MOBILE FIRST
-===================================================== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 .lg-container{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+background:
+radial-gradient(circle at top,#2563eb55 0%,transparent 35%),
+radial-gradient(circle at bottom,#1d4ed833 0%,transparent 35%),
+linear-gradient(180deg,#030712,#081321,#030712);
+overflow:hidden;
+position:relative;
+}
 
-    width:100%;
-    height:100dvh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:24px;
-
-    background:#ffffff;
-
-    overflow:hidden;
-
+.lg-container::before{
+content:"";
+position:absolute;
+width:320px;
+height:320px;
+border-radius:50%;
+background:#2563eb22;
+filter:blur(90px);
+animation:lgGlow 4s ease-in-out infinite alternate;
 }
 
 .lg-content{
-
-    width:100%;
-    max-width:360px;
-    height:100%;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-
+position:relative;
+z-index:2;
+width:100%;
+max-width:360px;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:32px 22px;
+border-radius:26px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+box-shadow:0 20px 45px rgba(0,0,0,.45);
 }
 
 .lg-brand{
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-
-    margin-bottom:56px;
-
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-bottom:28px;
 }
 
 .lg-logo{
-
-    width:76px;
-    height:76px;
-
-    border-radius:22px;
-
-    background:#111111;
-
-    color:#ffffff;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:28px;
-    font-weight:700;
-
-    letter-spacing:1px;
-
-    margin-bottom:20px;
-
+width:82px;
+height:82px;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:22px;
+background:linear-gradient(135deg,#60a5fa,#2563eb,#1d4ed8);
+color:#fff;
+font-size:28px;
+font-weight:700;
+letter-spacing:2px;
+box-shadow:
+0 0 18px rgba(37,99,235,.5),
+0 0 40px rgba(37,99,235,.25);
+animation:lgFloat 2.5s ease-in-out infinite;
 }
 
 .lg-subtitle{
-
-    font-size:15px;
-    font-weight:500;
-
-    color:#666666;
-
-    text-align:center;
-
-    line-height:1.6;
-
+margin-top:18px;
+font-size:13px;
+color:#d7e6ff;
+letter-spacing:1px;
 }
 
 .lg-form{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:22px;
-
+width:100%;
+display:flex;
+flex-direction:column;
 }
 
 .lg-label{
-
-    font-size:14px;
-    font-weight:600;
-
-    color:#222222;
-
+font-size:12px;
+color:#b8cfff;
+margin-bottom:8px;
+font-weight:500;
+letter-spacing:.5px;
 }
 
 .lg-phone-box{
-
-    width:100%;
-    height:58px;
-
-    display:flex;
-    align-items:center;
-
-    border:1.5px solid #E3E3E3;
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    transition:.25s;
-
+height:52px;
+display:flex;
+align-items:center;
+border-radius:15px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+overflow:hidden;
 }
 
 .lg-phone-box:focus-within{
-
-    border-color:#111111;
-
+border-color:#3b82f6;
+box-shadow:0 0 15px rgba(59,130,246,.25);
 }
 
 .lg-country{
-
-    width:70px;
-    height:100%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:15px;
-    font-weight:600;
-
-    color:#111111;
-
-    border-right:1px solid #EEEEEE;
-
+width:64px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:15px;
+font-weight:600;
+color:#fff;
+border-right:1px solid rgba(255,255,255,.08);
 }
 
 .lg-input{
-
-    flex:1;
-
-    height:100%;
-
-    padding:0 18px;
-
-    font-size:16px;
-
-    color:#111111;
-
-    background:transparent;
-
+flex:1;
+height:100%;
+padding:0 14px;
+border:none;
+outline:none;
+background:transparent;
+color:#fff;
+font-size:15px;
+font-weight:500;
 }
 
 .lg-input::placeholder{
-
-    color:#A5A5A5;
-
+color:#7f93b7;
 }
 
 .lg-btn{
-
-    width:100%;
-    height:58px;
-
-    border:none;
-
-    border-radius:18px;
-
-    background:#111111;
-
-    color:#ffffff;
-
-    font-size:16px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-.lg-btn:active{
-
-    transform:scale(.98);
-
-}
-
-.lg-footer{
-
-    margin-top:34px;
-
-    text-align:center;
-
-}
-
-.lg-footer p{
-
-    font-size:12px;
-
-    color:#888888;
-
-    line-height:1.7;
-
-}
-/* =====================================================
-   MICRO INTERACTIONS
-===================================================== */
-
-.lg-content{
-
-    animation:lgFadeUp .7s ease forwards;
-
-}
-
-.lg-logo{
-
-    animation:lgLogo .9s cubic-bezier(.18,.89,.32,1.28);
-
-}
-
-.lg-btn{
-
-    transition:
-        background .25s ease,
-        transform .18s ease,
-        box-shadow .25s ease;
-
-}
-
-.lg-phone-box{
-
-    transition:
-        border-color .25s ease,
-        box-shadow .25s ease;
-
-}
-
-.lg-phone-box:focus-within{
-
-    border-color:#111111;
-
-    box-shadow:
-        0 0 0 4px rgba(17,17,17,.06);
-
-}
-
-.lg-input{
-
-    caret-color:#111111;
-
-}
-
-/* =====================================================
-   TABLET
-===================================================== */
-
-@media (min-width:768px){
-
-.lg-container{
-
-    padding:40px;
-
-}
-
-.lg-content{
-
-    max-width:420px;
-
-}
-
-.lg-brand{
-
-    margin-bottom:64px;
-
-}
-
-.lg-logo{
-
-    width:88px;
-    height:88px;
-
-    font-size:34px;
-
-    border-radius:24px;
-
-}
-
-.lg-subtitle{
-
-    font-size:16px;
-
-}
-
-.lg-phone-box{
-
-    height:62px;
-
-}
-
-.lg-btn{
-
-    height:62px;
-
-}
-
-}
-
-/* =====================================================
-   DESKTOP
-===================================================== */
-
-@media (min-width:1024px){
-
-.lg-content{
-
-    max-width:440px;
-
-}
-
-.lg-logo{
-
-    width:94px;
-    height:94px;
-
-    font-size:36px;
-
-}
-
-.lg-phone-box:hover{
-
-    border-color:#111111;
-
+width:100%;
+height:52px;
+margin-top:22px;
+border:none;
+border-radius:15px;
+background:linear-gradient(135deg,#60a5fa,#2563eb,#1d4ed8);
+color:#fff;
+font-size:15px;
+font-weight:600;
+letter-spacing:.5px;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 10px 24px rgba(37,99,235,.35);
 }
 
 .lg-btn:hover{
-
-    background:#000000;
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 18px 35px rgba(0,0,0,.15);
-
+transform:translateY(-2px);
+box-shadow:0 16px 32px rgba(37,99,235,.45);
 }
 
+.lg-btn:active{
+transform:scale(.98);
 }
 
-/* =====================================================
-   ANIMATIONS
-===================================================== */
-
-@keyframes lgFadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(28px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+.lg-register{
+margin-top:22px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:6px;
+flex-wrap:wrap;
 }
 
-@keyframes lgLogo{
+.lg-register-text{
+font-size:12px;
+color:#9eb6df;
+}
 
-    0%{
+.lg-register-btn{
+background:none;
+border:none;
+color:#60a5fa;
+font-size:13px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
 
-        transform:scale(.55);
+.lg-register-btn:hover{
+color:#93c5fd;
+}
 
-        opacity:0;
+.lg-footer{
+margin-top:28px;
+text-align:center;
+}
 
-    }
+.lg-footer p{
+font-size:10px;
+line-height:1.6;
+color:#7f93b7;
+}
 
-    100%{
+@keyframes lgGlow{
+from{
+transform:scale(.9);
+opacity:.5;
+}
+to{
+transform:scale(1.15);
+opacity:1;
+}
+}
 
-        transform:scale(1);
+@keyframes lgFloat{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-8px);
+}
+}
 
-        opacity:1;
+@media(min-width:768px){
+.lg-content{
+max-width:400px;
+padding:36px 28px;
+}
+.lg-logo{
+width:90px;
+height:90px;
+font-size:30px;
+}
+.lg-subtitle{
+font-size:14px;
+}
+.lg-label{
+font-size:13px;
+}
+.lg-phone-box{
+height:56px;
+}
+.lg-country{
+font-size:16px;
+}
+.lg-input{
+font-size:16px;
+}
+.lg-btn{
+height:56px;
+font-size:16px;
+}
+.lg-register-text{
+font-size:13px;
+}
+.lg-register-btn{
+font-size:14px;
+}
+.lg-footer p{
+font-size:11px;
+}
+}
 
-    }
-
+@media(min-width:1200px){
+.lg-content{
+max-width:430px;
+padding:42px 34px;
+}
+.lg-logo{
+width:100px;
+height:100px;
+font-size:32px;
+}
+.lg-subtitle{
+font-size:15px;
+}
+.lg-btn{
+font-size:17px;
+}
 }

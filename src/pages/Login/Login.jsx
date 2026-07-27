@@ -17,6 +17,7 @@ function Login({
                 `${API}/api/auth/login`,
                 {
                     method: "POST",
+                    credentials: "include",
 
                     headers: {
 
