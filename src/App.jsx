@@ -84,10 +84,25 @@ function App() {
     useEffect(() => {
 
         async function restoreSession() {
+
             if (page !== "startup") {
                 return;
             }
 
+            // 1. Pehle localStorage check karo
+            const savedUser = localStorage.getItem("user");
+
+            if (savedUser) {
+
+                setUser(JSON.parse(savedUser));
+                setPage("home");
+                setCheckingSession(false);
+
+                return;
+
+            }
+
+            // 2. Agar localStorage me user nahi hai tab server session check karo
             try {
 
                 const response = await fetch(
@@ -99,10 +114,20 @@ function App() {
 
                 const data = await response.json();
 
+                console.log("Session Response:", data);
+
                 if (data.success && data.authenticated) {
 
                     setUser(data.user);
+
+                    // Future ke liye localStorage bhi update kar do
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(data.user)
+                    );
+
                     setPage("home");
+
                 } else {
 
                     setPage("login");
@@ -112,6 +137,8 @@ function App() {
             } catch (err) {
 
                 console.error(err);
+
+                setPage("login");
 
             } finally {
 
