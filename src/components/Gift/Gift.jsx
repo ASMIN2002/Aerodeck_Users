@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Gift.css";
 import GiftCard from "../Gift/GiftCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
@@ -788,12 +787,6 @@ function Gifts({
 
 
         <section className="cds-section">
-
-            <h2 className="cds-title">
-
-                Gifts
-
-            </h2>
 
             <div className="cds-grid">
 

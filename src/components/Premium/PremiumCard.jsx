@@ -1,4 +1,3 @@
-import "./PremiumCard.css";
 import { FiHeart, FiBookmark } from "react-icons/fi";
 import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";

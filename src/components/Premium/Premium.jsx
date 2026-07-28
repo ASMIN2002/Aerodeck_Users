@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Premium.css";
+// import "./Premium.css";
 import PremiumCard from "../Premium/PremiumCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Shop.css";
 import ShopCard from "../Shop/ShopCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
