@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
 import "./EditAddress.css";
 import { API } from "../../../services/api";
 
@@ -141,15 +142,22 @@ function EditAddress({ setProfilePage }) {
 
     return (
 
-        <div>
+        <div className="edit-address-page">
 
-            <button
-                onClick={() => setProfilePage("address")}
-            >
-                Back
-            </button>
+            <div className="edit-address-header">
 
-            <h2>Edit Address</h2>
+                <button
+                    className="back-btn"
+                    onClick={() => setProfilePage("address")}
+                >
+                    <FiArrowLeft />
+                </button>
+
+                <h2 className="page-title">
+                    Edit Address
+                </h2>
+
+            </div>
 
             <form
                 className="address-form"

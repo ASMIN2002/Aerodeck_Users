@@ -142,6 +142,17 @@ function MyWishlist({
                                 ₹ {item.price}
                             </h4>
 
+                        </div>
+
+                        <div className="wishlist-actions">
+
+                            <button
+                                className="wishlist-view"
+                                onClick={() => onOpenDetails(item.product_id)}
+                            >
+                                View
+                            </button>
+
                             <button
                                 className="wishlist-remove"
                                 onClick={() => handleRemove(item.product_id)}
@@ -154,7 +165,6 @@ function MyWishlist({
                     </div>
 
                 ))
-
             }
 
         </div>

@@ -262,6 +262,13 @@ function MyCart({
         <div className="mycart-page">
 
             <div className="mycart-topbar">
+                <Address
+                    setProfilePage={setProfilePage}
+                    setSelectedBottomTab={setSelectedBottomTab}
+                />
+            </div>
+            <div className="mycart-tabs">
+
 
                 <button
                     className="mycart-back"
@@ -269,13 +276,6 @@ function MyCart({
                 >
                     ←
                 </button>
-
-                <Address
-                    setProfilePage={setProfilePage}
-                    setSelectedBottomTab={setSelectedBottomTab}
-                />
-            </div>
-            <div className="mycart-tabs">
 
                 <button
 
