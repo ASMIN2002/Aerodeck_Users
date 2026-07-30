@@ -1,7 +1,10 @@
 import { useState } from "react";
 import "./MainEditSection.css";
 
-function MainEditSection() {
+function MainEditSection({
+    user,
+    setUser
+}) {
 
     const [editCalling, setEditCalling] = useState(false);
     const [otpCalling, setOtpCalling] = useState(false);
@@ -24,13 +27,23 @@ function MainEditSection() {
 
                 <div className="contact-box">
 
-                    <span>+91 9876543210</span>
+                    <span>
+                        {
+                            user?.calling_number
+                                ? `+91 ${user.calling_number}`
+                                : "Not Added"
+                        }
+                    </span>
 
                     <div className="contact-right">
 
-                        <span className="verified">
-                            Verified
-                        </span>
+                        {
+                            user?.calling_number && (
+                                <span className="verified">
+                                    Verified
+                                </span>
+                            )
+                        }
 
                         <button
                             onClick={() => {
@@ -38,7 +51,11 @@ function MainEditSection() {
                                 setOtpCalling(false);
                             }}
                         >
-                            Edit
+                            {
+                                user?.calling_number
+                                    ? "Edit"
+                                    : "Add"
+                            }
                         </button>
 
                     </div>
@@ -63,7 +80,7 @@ function MainEditSection() {
                             </button>
 
                             <button
-                                onClick={()=>{
+                                onClick={() => {
                                     setEditCalling(false);
                                     setOtpCalling(false);
                                 }}
@@ -104,21 +121,34 @@ function MainEditSection() {
 
                 <div className="contact-box">
 
-                    <span>+91 9876543210</span>
+                    <span>
+                        {
+                            user?.whatsapp_number
+                                ? `+91 ${user.whatsapp_number}`
+                                : "Not Added"
+                        }
+                    </span>
 
                     <div className="contact-right">
 
-                        <span className="verified">
-                            Verified
-                        </span>
-
+                        {
+                            user?.whatsapp_number && (
+                                <span className="verified">
+                                    Verified
+                                </span>
+                            )
+                        }
                         <button
-                            onClick={()=>{
+                            onClick={() => {
                                 setEditWhatsapp(!editWhatsapp);
                                 setOtpWhatsapp(false);
                             }}
                         >
-                            Edit
+                            {
+                                user?.whatsapp_number
+                                    ? "Edit"
+                                    : "Add"
+                            }
                         </button>
 
                     </div>
@@ -143,7 +173,7 @@ function MainEditSection() {
                             </button>
 
                             <button
-                                onClick={()=>{
+                                onClick={() => {
                                     setEditWhatsapp(false);
                                     setOtpWhatsapp(false);
                                 }}
@@ -184,21 +214,34 @@ function MainEditSection() {
 
                 <div className="contact-box">
 
-                    <span>demo@gmail.com</span>
+                    <span>
+                        {
+                            user?.email
+                                ? user.email
+                                : "Not Added"
+                        }
+                    </span>
 
                     <div className="contact-right">
-
-                        <span className="verified">
-                            Verified
-                        </span>
+                        {
+                            user?.email && (
+                                <span className="verified">
+                                    Verified
+                                </span>
+                            )
+                        }
 
                         <button
-                            onClick={()=>{
+                            onClick={() => {
                                 setEditEmail(!editEmail);
                                 setOtpEmail(false);
                             }}
                         >
-                            Edit
+                            {
+                                user?.email
+                                    ? "Edit"
+                                    : "Add"
+                            }
                         </button>
 
                     </div>
@@ -223,7 +266,7 @@ function MainEditSection() {
                             </button>
 
                             <button
-                                onClick={()=>{
+                                onClick={() => {
                                     setEditEmail(false);
                                     setOtpEmail(false);
                                 }}

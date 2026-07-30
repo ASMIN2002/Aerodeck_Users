@@ -116,3 +116,40 @@
     font-size: 14px;
     font-weight: 700;
 }
+.profile-change-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+    padding:12px 15px;
+    border-radius:12px;
+    background:#fafafa;
+    border:1px solid #ececec;
+}
+
+.profile-change-title{
+    font-size:14px;
+    font-weight:600;
+}
+
+.profile-change-count{
+    min-width:55px;
+    text-align:center;
+    padding:6px 12px;
+    border-radius:30px;
+    font-weight:700;
+    color:#fff;
+}
+
+.profile-change-count.green{
+    background:#16a34a;
+}
+
+.profile-change-count.red{
+    background:#dc2626;
+}
+
+.name-input-wrapper button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}

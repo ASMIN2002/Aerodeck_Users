@@ -1,10 +1,77 @@
 import "./MediumEditSection.css";
+import { useState, useEffect } from "react";
+import { API } from "../../../services/api";
 
-function MediumEditSection({ user }) {
+function MediumEditSection({ user, setUser }) {
+
+    const changesLeft = user?.profile_change_count ?? 2;
+
+    const [fullName, setFullName] = useState("");
+    useEffect(() => {
+        setFullName(user?.full_name || "");
+    }, [user]);
+    const handleSaveName = async () => {
+
+        try {
+
+            const response = await fetch(
+                `${API}/api/user/update-name`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token: localStorage.getItem("session_token"),
+                        full_name: fullName
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                setUser(data.user);
+                alert("Name updated successfully.");
+            } else {
+                alert(data.message);
+            }
+
+        } catch (err) {
+
+            console.error(err);
+            alert("Server Error");
+
+        }
+
+    };
 
     return (
 
         <div className="medium-edit-card">
+
+            {/* Profile Change Status */}
+
+            <div className="profile-change-box">
+
+                <span className="profile-change-title">
+                    Profile Changes Left
+                </span>
+
+                <span
+                    className={
+                        `profile-change-count ${changesLeft === 2
+                            ? "green"
+                            : changesLeft === 1
+                                ? "red"
+                                : "red"
+                        }`
+                    }
+                >
+                    {changesLeft}/2
+                </span>
+
+            </div>
 
             {/* Full Name */}
 
@@ -18,11 +85,15 @@ function MediumEditSection({ user }) {
 
                     <input
                         type="text"
-                        defaultValue={user?.full_name || ""}
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
                         placeholder="Enter your full name"
                     />
 
-                    <button>
+                    <button
+                        onClick={handleSaveName}
+                        disabled={changesLeft === 0}
+                    >
                         Save
                     </button>
 
