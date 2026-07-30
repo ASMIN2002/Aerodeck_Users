@@ -31,6 +31,7 @@ import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSucc
 import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
 import TrackOrder from "../../components/MyProfileDetails/PlaceOrder/OrderItem/TrackOrder";
 import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/ItemInvoice";
+import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfile";
 
 
 function Home({
@@ -85,8 +86,21 @@ function Home({
         try {
 
             await fetch(`${API}/api/auth/logout`, {
+
                 method: "POST",
-                credentials: "include"
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    session_token: localStorage.getItem("session_token")
+
+                })
+
             });
 
         } catch (err) {
@@ -95,15 +109,15 @@ function Home({
 
         }
 
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.removeItem("session_token");
+        localStorage.removeItem("user_id");
         localStorage.removeItem("mobile_number");
+
         setUser(null);
 
         setPage("login");
 
     };
-
     const handleOpenDetails = (product, type) => {
         console.log(type);
 
@@ -274,6 +288,16 @@ function Home({
                 {
                     !isDetailsOpen &&
                     selectedBottomTab === "Profile" &&
+                    profilePage === "viewprofile" &&
+
+                    <ViewProfile
+                        user={user}
+                        setProfilePage={setProfilePage}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
                     profilePage === "address" &&
 
                     <MyAddresses
@@ -393,6 +417,8 @@ function Home({
                     profilePage === "editprofile" &&
 
                     <EditProfile
+                        user={user}
+                        setUser={setUser}
                         setProfilePage={setProfilePage}
                     />
                 }

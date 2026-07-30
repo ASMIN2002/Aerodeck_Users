@@ -15,12 +15,11 @@ function Address({
 
         try {
 
-            const user = JSON.parse(localStorage.getItem("user"));
+            const sessionToken = localStorage.getItem("session_token");
 
             const response = await fetch(
-                `${API}/api/user/address/${user.user_id}`
+                `${API}/api/user/address?session_token=${sessionToken}`
             );
-
             const data = await response.json();
 
             if (data.success) {

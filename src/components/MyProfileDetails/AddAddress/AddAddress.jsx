@@ -6,10 +6,11 @@ import { API } from "../../../services/api";
 
 function AddAddress({ setProfilePage }) {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const sessionToken = localStorage.getItem("session_token");
 
     const [formData, setFormData] = useState({
-        user_id: user?.user_id || "",
+
+        session_token: sessionToken,
         full_name: "",
         mobile_number: "",
         house_flat: "",

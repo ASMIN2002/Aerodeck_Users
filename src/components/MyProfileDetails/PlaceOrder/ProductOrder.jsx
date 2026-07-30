@@ -62,10 +62,10 @@ function ProductOrder({
 
             try {
 
-                const user_id = localStorage.getItem("user_id");
+                const sessionToken = localStorage.getItem("session_token");
 
                 const response = await fetch(
-                    `${API}/api/user/address/${user_id}`
+                    `${API}/api/user/address?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -341,7 +341,7 @@ function ProductOrder({
 
                         setTimeout(async () => {
 
-                            const user_id = Number(localStorage.getItem("user_id"));
+                            const sessionToken = localStorage.getItem("session_token");
 
                             const response = await fetch(`${API}/api/user/orders/place-order`, {
 
@@ -353,7 +353,7 @@ function ProductOrder({
 
                                 body: JSON.stringify({
 
-                                    user_id,
+                                    session_token: sessionToken,
 
                                     address_id: primaryAddress.address_id,
 
@@ -379,7 +379,6 @@ function ProductOrder({
                                     total_amount: grandTotal
 
                                 })
-
                             });
 
                             const data = await response.json();

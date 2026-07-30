@@ -62,12 +62,11 @@ function CardOrder({
 
             try {
 
-                const user_id = localStorage.getItem("user_id");
+                const sessionToken = localStorage.getItem("session_token");
 
                 const response = await fetch(
-                    `${API}/api/user/address/${user_id}`
+                    `${API}/api/user/address?session_token=${sessionToken}`
                 );
-
                 const data = await response.json();
 
                 if (data.success) {
@@ -344,7 +343,7 @@ function CardOrder({
 
                         setTimeout(async () => {
 
-                            const user_id = Number(localStorage.getItem("user_id"));
+                            const sessionToken = localStorage.getItem("session_token");
 
                             const response = await fetch(`${API}/api/user/orders/place-order`, {
 
@@ -356,7 +355,7 @@ function CardOrder({
 
                                 body: JSON.stringify({
 
-                                    user_id,
+                                    session_token: sessionToken,
 
                                     address_id: primaryAddress.address_id,
 
@@ -404,7 +403,7 @@ function CardOrder({
                 }}
             >
 
-               Proceed to 80% UPI Payment
+                Proceed to 80% UPI Payment
             </button>
 
         </div>

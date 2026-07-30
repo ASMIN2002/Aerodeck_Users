@@ -11,7 +11,7 @@ function MyAddresses({
 
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
-    const user_id = localStorage.getItem("user_id");
+    const sessionToken = localStorage.getItem("session_token");
     const [activeMenu, setActiveMenu] = useState(null);
     const menuRef = useRef(null);
 
@@ -23,9 +23,8 @@ function MyAddresses({
         try {
 
             const response = await fetch(
-                `${API}/api/user/address/${user_id}`
+                `${API}/api/user/address?session_token=${sessionToken}`
             );
-
             const data = await response.json();
 
             if (data.success) {
@@ -59,7 +58,7 @@ function MyAddresses({
                     },
 
                     body: JSON.stringify({
-                        user_id
+                        session_token: sessionToken
                     })
 
                 }
@@ -101,7 +100,7 @@ function MyAddresses({
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        user_id
+                        session_token: sessionToken
                     })
                 }
             );

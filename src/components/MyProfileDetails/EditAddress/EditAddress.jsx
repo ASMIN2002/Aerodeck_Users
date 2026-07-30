@@ -5,11 +5,11 @@ import { API } from "../../../services/api";
 
 function EditAddress({ setProfilePage }) {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const sessionToken = localStorage.getItem("session_token");
 
     const [formData, setFormData] = useState({
         address_id: "",
-        user_id: user?.user_id || "",
+        session_token: sessionToken,
         full_name: "",
         mobile_number: "",
         house_flat: "",
@@ -81,7 +81,10 @@ function EditAddress({ setProfilePage }) {
 
             const data = JSON.parse(savedAddress);
 
-            setFormData(data);
+            setFormData({
+                ...data,
+                session_token: sessionToken
+            });
             fetchPincode(data.pincode);
 
         }

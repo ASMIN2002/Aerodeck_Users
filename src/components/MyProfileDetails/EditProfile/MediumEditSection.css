@@ -1,0 +1,118 @@
+/* ===========================
+   CARD
+=========================== */
+
+.medium-edit-card {
+
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    margin-top: -50px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===========================
+   FIELD
+=========================== */
+
+.medium-field {
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.medium-field label {
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+}
+
+/* ===========================
+   NAME
+=========================== */
+
+.name-input-wrapper {
+
+    display: flex;
+    overflow: hidden;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+
+    background: #fff;
+}
+
+.name-input-wrapper input {
+
+    flex: 1;
+
+    height: 35px;
+
+    border: none;
+    outline: none;
+
+    padding: 0 16px;
+
+    font-size: 15px;
+}
+
+.name-input-wrapper button {
+
+    width: 90px;
+
+    border: none;
+
+    background: #1565ff;
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.name-input-wrapper button:hover {
+
+    background: #0f52d9;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+.mobile-box {
+
+    height: 48px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+
+    background: #fafafa;
+
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-number {
+
+    font-size: 15px;
+    color: #222;
+    font-weight: 500;
+}
+
+.verified {
+
+    color: #14a44d;
+    font-size: 14px;
+    font-weight: 700;
+}

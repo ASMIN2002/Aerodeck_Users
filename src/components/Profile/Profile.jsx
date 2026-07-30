@@ -2,16 +2,17 @@ import "./Profile.css";
 import AerodeckDP from "../../assets/AerodeckDP.png";
 
 function Profile({
+
     user,
     setUser,
     setPage,
     onLogout,
     setProfilePage
 }) {
-    const demoUser = {
-        name: "Asmin Kuldeep Jena",
-        mobile: "9876543210"
-    };
+    console.log("PROFILE USER:", user);
+    const maskedMobile = user?.mobile_number
+        ? `******${user.mobile_number.slice(-4)}`
+        : "";
 
     return (
 
@@ -20,19 +21,26 @@ function Profile({
             <div className="profile-header">
 
                 <img
-                    src={user?.profile_image || AerodeckDP}
+                    src={user?.profile_image}
                     alt="Profile"
                     className="profile-image"
+                    onError={(e) => {
+                        if (e.target.src !== AerodeckDP) {
+                            e.target.onerror = null;
+                            e.target.src = AerodeckDP;
+                        }
+                    }}
                 />
 
                 <h2>{user.full_name}</h2>
 
-                <p>{user.mobile_number}</p>
+                <p>{maskedMobile}</p>
 
-                <button className="edit-profile-btn"
-                    onClick={() => setProfilePage("editprofile")}
+                <button
+                    className="edit-profile-btn"
+                    onClick={() => setProfilePage("viewprofile")}
                 >
-                    Edit Profile
+                    View Profile
                 </button>
 
             </div>

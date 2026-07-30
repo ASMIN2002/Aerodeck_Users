@@ -89,27 +89,40 @@ function App() {
                 return;
             }
 
-            // 1. Pehle localStorage check karo
-            const savedUser = localStorage.getItem("user");
-
-            if (savedUser) {
-
-                setUser(JSON.parse(savedUser));
-                setPage("home");
-                setCheckingSession(false);
-
-                return;
-
-            }
-
             // 2. Agar localStorage me user nahi hai tab server session check karo
             try {
 
+                const sessionToken = localStorage.getItem("session_token");
+
+                if (!sessionToken) {
+
+                    setPage("login");
+                    return;
+
+                }
+
                 const response = await fetch(
-                    `${API}/api/auth/session`,
+
+                    `${API}/api/auth/check-session`,
+
                     {
-                        credentials: "include"
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type": "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            session_token: sessionToken
+
+                        })
+
                     }
+
                 );
 
                 const data = await response.json();
@@ -120,15 +133,11 @@ function App() {
 
                     setUser(data.user);
 
-                    // Future ke liye localStorage bhi update kar do
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(data.user)
-                    );
-
                     setPage("home");
 
                 } else {
+
+                    localStorage.removeItem("session_token");
 
                     setPage("login");
 

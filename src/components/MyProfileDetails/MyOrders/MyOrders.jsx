@@ -6,7 +6,7 @@ function MyOrders({
     setProfilePage,
     selectedOrder,
     setSelectedOrder
-}){
+}) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -16,10 +16,10 @@ function MyOrders({
 
             try {
 
-                const user_id = localStorage.getItem("user_id");
+                const sessionToken = localStorage.getItem("session_token");
 
                 const response = await fetch(
-                    `${API}/api/user/orders?user_id=${user_id}`
+                    `${API}/api/user/orders?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();

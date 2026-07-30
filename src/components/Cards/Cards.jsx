@@ -74,7 +74,7 @@ function Cards({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -140,7 +140,7 @@ function Cards({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
@@ -218,10 +218,9 @@ function Cards({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
-
                     }
 
                 );
@@ -284,12 +283,11 @@ function Cards({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
                         })
-
                     }
 
                 );
@@ -376,7 +374,7 @@ function Cards({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -458,7 +456,7 @@ function Cards({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -543,7 +541,7 @@ function Cards({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -604,7 +602,7 @@ function Cards({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -657,6 +655,8 @@ function Cards({
 
     };
 
+
+    const sessionToken = localStorage.getItem("session_token");
     useEffect(() => {
 
         async function loadProducts() {
@@ -688,7 +688,7 @@ function Cards({
             try {
 
                 const response = await fetch(
-                    `${API}/api/user/wishlist?user_id=${userId}`
+                    `${API}/api/user/wishlist?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -721,7 +721,7 @@ function Cards({
 
             try {
                 const response = await fetch(
-                    `${API}/api/user/likes?user_id=${userId}`
+                    `${API}/api/user/likes?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -753,7 +753,7 @@ function Cards({
 
             try {
 
-                const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
+                const response = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`);
 
                 const data = await response.json();
                 console.log(data.data);
@@ -780,8 +780,8 @@ function Cards({
         loadLikes();
         loadCart();
 
-    }, [userId]);
-    
+    }, [sessionToken]);
+
     return (
 
 

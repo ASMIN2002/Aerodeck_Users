@@ -1,94 +1,30 @@
 import "./EditProfile.css";
-import { useState } from "react";
 
-function EditProfile({
+import TopEditSection from "./TopEditSection";
+import MediumEditSection from "./MediumEditSection";
+import MainEditSection from "./MainEditSection";
 
-    setProfilePage
-
-}) {
-
-    const [fullName, setFullName] = useState("John Doe");
-    const [mobile, setMobile] = useState("9876543210");
-    const [email, setEmail] = useState("john@example.com");
-
-    const handleSave = () => {
-
-        alert("Profile Updated Successfully");
-
-    };
+function EditProfile({ user, setUser, setProfilePage }) {
 
     return (
 
-        <div className="editprofile">
+        <div className="edit-profile">
 
-            <div className="edit-header">
+            <TopEditSection
+                user={user}
+                setUser={setUser}
+                setProfilePage={setProfilePage}
+            />
 
-                <button
-                    className="edit-back"
-                    onClick={() => setProfilePage("profile")}
-                >
-                    ←
-                </button>
+            <MediumEditSection
+                user={user}
+                setUser={setUser}
+            />
 
-                <h2>
-                    Edit Profile
-                </h2>
-
-            </div>
-
-            <div className="profile-image">
-
-                <img
-                    src="https://via.placeholder.com/120"
-                    alt="Profile"
-                />
-
-                <button>
-                    Change Photo
-                </button>
-
-            </div>
-
-            <div className="edit-form">
-
-                <label>
-                    Full Name
-                </label>
-
-                <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                />
-
-                <label>
-                    Mobile Number
-                </label>
-
-                <input
-                    type="text"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                />
-
-                <label>
-                    Email Address
-                </label>
-
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-
-                <button
-                    className="save-profile"
-                    onClick={handleSave}
-                >
-                    Save Changes
-                </button>
-
-            </div>
+            <MainEditSection
+                user={user}
+                setUser={setUser}
+            />
 
         </div>
 

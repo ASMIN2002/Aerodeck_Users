@@ -1,0 +1,140 @@
+/* ===========================
+   ATM CARD STYLE
+=========================== */
+
+.top-edit-card {
+    width: 100%;
+    max-width: 520px;
+    margin: 20px auto;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ATM Shine */
+
+.top-edit-card::before{
+    content:"";
+    position:absolute;
+    top:-60%;
+    left:-30%;
+    width:180px;
+    height:260px;
+    transform:rotate(30deg);
+    filter:blur(10px);
+}
+
+/* ========================= */
+
+.preview-section{
+    flex-shrink:0;
+}
+
+.preview-box{
+    width:150px;
+    height:200px;
+    border-radius:20px;
+
+    background:rgba(255,255,255,.08);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border:2px solid rgba(255,255,255,.15);
+
+    overflow:hidden;
+
+    box-shadow:
+        inset 0 0 12px rgba(255,255,255,.08),
+        0 10px 25px rgba(0,0,0,.25);
+}
+
+.preview-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* ========================= */
+
+.preview-actions{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background: none;
+}
+
+/* ========================= */
+
+.preview-actions button{
+    width:100%;
+    padding:8px;
+
+    border:none;
+    border-radius:12px;
+
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+/* Disabled Upload */
+
+.upload-btn{
+    background:#475569;
+    color:#cbd5e1;
+    cursor:not-allowed;
+}
+
+/* Change */
+
+.change-btn{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+    color:#fff;
+}
+
+.change-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(37,99,235,.35);
+}
+
+/* Remove */
+
+.remove-btn{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:#fff;
+}
+
+.remove-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(220,38,38,.35);
+}
+
+/* ========================= */
+
+@media(max-width:500px){
+
+    .top-edit-card{
+        padding:15px;
+        gap:14px;
+    }
+
+    .preview-box{
+        width:150px;
+        height:150px;
+        border-radius:16px;
+    }
+
+    .preview-actions button{
+        padding:7px;
+        font-size:8px;
+    }
+
+}

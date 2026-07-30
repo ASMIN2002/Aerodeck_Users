@@ -1,146 +1,843 @@
-.editprofile{
+.editprofile {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 10px 10px 90px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #f8fbff, #eef5ff);
+    animation: editProfileFade .35s ease;
+}
+
+/* ================= Header ================= */
+
+.edit-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(228, 236, 247, .9);
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
+}
+
+.edit-back {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00c6ff, #4d7cff);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: .25s;
+    box-shadow: 0 8px 18px rgba(77, 124, 255, .20);
+}
+
+.edit-back:hover {
+    transform: translateY(-2px);
+}
+
+.edit-back:active {
+    transform: scale(.95);
+}
+
+.edit-header h2 {
+    flex: 1;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    color: #1f2937;
+    letter-spacing: .3px;
+}
+
+/* ================= Profile ================= */
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.profile-image img {
+    width: 92px;
+    height: 92px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #fff;
+    box-shadow:
+        0 12px 28px rgba(15, 23, 42, .08),
+        0 0 0 2px #dbeafe;
+    transition: .3s;
+}
+
+.profile-image img:hover {
+    transform: scale(1.04);
+}
+
+.profile-image button {
+    margin-top: 12px;
+    height: 30px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00c6ff, #4d7cff);
+    color: #fff;
+    font-size: 7px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 8px 18px rgba(77, 124, 255, .18);
+}
+
+.profile-image button:hover {
+    transform: translateY(-2px);
+}
+
+.profile-image button:active {
+    transform: scale(.96);
+}
+
+/* ================= Animation ================= */
+
+@keyframes editProfileFade {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* ================= Mobile ================= */
+
+@media(max-width:480px) {
+
+    .editprofile {
+        padding: 8px 8px 82px;
+    }
+
+    .edit-header {
+        padding: 7px;
+        border-radius: 14px;
+        margin-bottom: 14px;
+    }
+
+    .edit-back {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .edit-header h2 {
+        font-size: 11px;
+    }
+
+    .profile-image img {
+        width: 86px;
+        height: 86px;
+    }
+
+    .profile-image button {
+        height: 28px;
+        padding: 0 14px;
+        font-size: 6.5px;
+        border-radius: 9px;
+    }
+
+}
+
+/* ================= Tablet ================= */
+
+@media(min-width:768px) {
+
+    .editprofile {
+        max-width: 760px;
+        margin: auto;
+        padding: 20px 20px 120px;
+    }
+
+    .edit-header {
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .edit-back {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    .edit-header h2 {
+        font-size: 20px;
+    }
+
+    .profile-image img {
+        width: 130px;
+        height: 130px;
+    }
+
+    .profile-image button {
+        height: 40px;
+        padding: 0 24px;
+        font-size: 11px;
+        border-radius: 12px;
+    }
+
+}
+
+/* ================= Desktop ================= */
+
+@media(min-width:1200px) {
+
+    .editprofile {
+        max-width: 900px;
+    }
+
+}
+
+/* ================= Form ================= */
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid #e7edf6;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
+}
+
+/* ================= Labels ================= */
+
+.edit-form label {
+    margin-bottom: -4px;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+/* ================= Inputs ================= */
+
+.edit-form input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #dbe6f3;
+    border-radius: 10px;
+    outline: none;
+    background: #f8fbff;
+    font-size: 8px;
+    font-weight: 600;
+    color: #1f2937;
+    transition: .25s;
+    box-sizing: border-box;
+}
+
+.edit-form input::placeholder {
+    font-size: 7px;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.edit-form input:focus {
+    background: #fff;
+    border-color: #4d7cff;
+    box-shadow: 0 0 0 3px rgba(77, 124, 255, .10);
+}
+
+/* ================= View Section ================= */
+
+.calling-view {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #f8fbff;
+    border: 1px solid #e3ebf6;
+    border-radius: 12px;
+}
+
+/* ================= Status ================= */
+
+.calling-status {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+
+.calling-status span:first-child {
+    font-size: 8px;
+    font-weight: 600;
+    color: #1f2937;
+    word-break: break-word;
+}
+
+.verified {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 6px;
+    font-weight: 700;
+}
+
+.pending {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #fef3c7;
+    color: #b45309;
+    font-size: 6px;
+    font-weight: 700;
+}
+
+/* ================= Edit Button ================= */
+
+.calling-view button {
+    width: 54px;
+    height: 26px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #00c6ff, #4d7cff);
+    color: #fff;
+    font-size: 6.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+    flex-shrink: 0;
+    box-shadow: 0 6px 14px rgba(77, 124, 255, .18);
+}
+
+.calling-view button:hover {
+    transform: translateY(-2px);
+}
+
+.calling-view button:active {
+    transform: scale(.95);
+}
+
+/* ================= Mobile ================= */
+
+@media(max-width:480px) {
+
+    .edit-form {
+        padding: 12px;
+        gap: 10px;
+        border-radius: 16px;
+    }
+
+    .edit-form label {
+        font-size: 6.5px;
+    }
+
+    .edit-form input {
+        height: 34px;
+        font-size: 7px;
+    }
+
+    .edit-form input::placeholder {
+        font-size: 6.5px;
+    }
+
+    .calling-view {
+        padding: 9px 10px;
+    }
+
+    .calling-status span:first-child {
+        font-size: 7px;
+    }
+
+    .verified,
+    .pending {
+        font-size: 5.8px;
+        padding: 2px 7px;
+    }
+
+    .calling-view button {
+        width: 50px;
+        height: 24px;
+        font-size: 6px;
+    }
+
+}
+
+/* ================= Tablet ================= */
+
+@media(min-width:768px) {
+
+    .edit-form {
+        padding: 22px;
+        gap: 18px;
+        border-radius: 22px;
+    }
+
+    .edit-form label {
+        font-size: 11px;
+    }
+
+    .edit-form input {
+        height: 48px;
+        font-size: 13px;
+        padding: 0 16px;
+    }
+
+    .edit-form input::placeholder {
+        font-size: 12px;
+    }
+
+    .calling-view {
+        padding: 14px 16px;
+    }
+
+    .calling-status span:first-child {
+        font-size: 13px;
+    }
+
+    .verified,
+    .pending {
+        font-size: 10px;
+        padding: 5px 12px;
+    }
+
+    .calling-view button {
+        width: 82px;
+        height: 36px;
+        font-size: 10px;
+        border-radius: 10px;
+    }
+
+}
+
+/* ================= Edit Mode ================= */
+
+.calling-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: #f8fbff;
+    border: 1px solid #e5edf7;
+    border-radius: 14px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+/* ================= OTP Input ================= */
+
+.calling-edit input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #dbe6f3;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 8px;
+    font-weight: 600;
+    color: #1f2937;
+    outline: none;
+    transition: .25s;
+    box-sizing: border-box;
+}
+
+.calling-edit input::placeholder {
+    font-size: 7px;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.calling-edit input:focus {
+    border-color: #4d7cff;
+    box-shadow: 0 0 0 3px rgba(77, 124, 255, .12);
+}
+
+/* ================= Buttons ================= */
+
+.calling-edit button {
+    height: 32px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    transition: .25s;
+}
+
+/* ================= Send OTP ================= */
+
+.calling-edit button:first-of-type {
+    background: linear-gradient(135deg, #00c6ff, #4d7cff);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(77, 124, 255, .20);
+}
+
+.calling-edit button:first-of-type:hover {
+    transform: translateY(-2px);
+}
+
+.calling-edit button:first-of-type:active {
+    transform: scale(.96);
+}
+
+/* ================= Verify OTP ================= */
+
+.calling-edit button:last-of-type {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(34, 197, 94, .20);
+}
+
+.calling-edit button:last-of-type:hover {
+    transform: translateY(-2px);
+}
+
+.calling-edit button:last-of-type:active {
+    transform: scale(.96);
+}
+
+/* ================= Disabled ================= */
+
+.calling-edit button:disabled {
+    background: #d8dee9;
+    color: #8b95a7;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ================= OTP Animation ================= */
+
+.calling-edit {
+    animation: otpFade .25s ease;
+}
+
+@keyframes otpFade {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* ================= Mobile ================= */
+
+@media(max-width:480px) {
+
+    .calling-edit {
+        padding: 10px;
+        gap: 8px;
+        border-radius: 12px;
+    }
+
+    .calling-edit input {
+        height: 34px;
+        font-size: 7px;
+        padding: 0 10px;
+    }
+
+    .calling-edit input::placeholder {
+        font-size: 6.5px;
+    }
+
+    .calling-edit button {
+        height: 30px;
+        font-size: 6.3px;
+        border-radius: 9px;
+    }
+
+}
+
+/* ================= Tablet ================= */
+
+@media(min-width:768px) {
+
+    .calling-edit {
+        padding: 18px;
+        gap: 14px;
+        border-radius: 18px;
+    }
+
+    .calling-edit input {
+        height: 48px;
+        padding: 0 16px;
+        font-size: 13px;
+    }
+
+    .calling-edit input::placeholder {
+        font-size: 12px;
+    }
+
+    .calling-edit button {
+        height: 42px;
+        font-size: 11px;
+        border-radius: 12px;
+    }
+
+}
+
+/* ================= Desktop ================= */
+
+@media(min-width:1200px) {
+
+    .calling-edit {
+        padding: 20px;
+    }
+
+    .calling-edit button {
+        height: 44px;
+    }
+
+}
+
+/* ================= Save Button ================= */
+
+.save-profile {
+    width: 100%;
+    height: 42px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow:
+        0 12px 24px rgba(37, 99, 235, .22),
+        0 4px 10px rgba(79, 70, 229, .12);
+}
+
+.save-profile:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 18px 30px rgba(37, 99, 235, .28),
+        0 6px 14px rgba(79, 70, 229, .18);
+}
+
+.save-profile:active {
+    transform: scale(.98);
+}
+
+.save-profile:disabled {
+    background: #d5dce8;
+    color: #8b96a8;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* ================= Smooth Scroll ================= */
+
+.editprofile {
+    scroll-behavior: smooth;
+}
+
+.editprofile::-webkit-scrollbar {
+    width: 5px;
+}
+
+.editprofile::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.editprofile::-webkit-scrollbar-thumb {
+    background: #c9d8ef;
+    border-radius: 20px;
+}
+
+.editprofile::-webkit-scrollbar-thumb:hover {
+    background: #9eb9e7;
+}
+
+/* ================= Card Hover ================= */
+
+.edit-form,
+.calling-view,
+.calling-edit {
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.edit-form:hover,
+.calling-view:hover,
+.calling-edit:hover {
+    border-color: #c8d9fb;
+    box-shadow:
+        0 12px 26px rgba(15, 23, 42, .06);
+}
+
+/* ================= Selection ================= */
+
+::selection {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* ================= Autofill ================= */
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #1f2937;
+}
+
+/* ================= Focus Visible ================= */
+
+button:focus-visible,
+input:focus-visible {
+    outline: none;
+}
+
+/* ================= Mobile ================= */
+
+@media(max-width:480px) {
+
+    .save-profile {
+        height: 38px;
+        margin-top: 8px;
+        border-radius: 10px;
+        font-size: 7px;
+        letter-spacing: .3px;
+    }
+
+    .editprofile::-webkit-scrollbar {
+        width: 3px;
+    }
+
+}
+
+/* ================= Tablet ================= */
+
+@media(min-width:768px) {
+
+    .save-profile {
+        height: 50px;
+        margin-top: 16px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+
+}
+
+/* ================= Desktop ================= */
+
+@media(min-width:1200px) {
+
+    .save-profile {
+        height: 54px;
+        font-size: 13px;
+        max-width: 320px;
+        margin: 24px auto 0;
+        display: block;
+    }
+
+    .edit-form {
+        padding: 28px;
+    }
+
+}
+/* ===========================
+   PROFILE PREVIEW CARD
+=========================== */
+
+.profile-preview-card{
     width:100%;
-    min-height:100vh;
-    padding:15px;
+    background:#ffffff;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid #e8e8e8;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.preview-image-box{
+    width:100%;
+    height:220px;
     background:#f5f7fb;
-    box-sizing:border-box;
-}
-
-.edit-header{
     display:flex;
+    justify-content:center;
     align-items:center;
-    gap:15px;
-    margin-bottom:25px;
+    overflow:hidden;
 }
 
-.edit-back{
-    width:42px;
-    height:42px;
-    border:none;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-    cursor:pointer;
-    font-size:20px;
-    transition:.3s;
-}
-
-.edit-back:hover{
-    transform:scale(1.05);
-}
-
-.edit-header h2{
-    margin:0;
-    font-size:22px;
-    font-weight:700;
-    color:#222;
-}
-
-.profile-image{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    margin-bottom:30px;
-}
-
-.profile-image img{
-    width:120px;
-    height:120px;
-    border-radius:50%;
+.preview-image{
+    width:100%;
+    height:100%;
     object-fit:cover;
-    border:4px solid #fff;
-    box-shadow:0 8px 24px rgba(0,0,0,.12);
-}
-
-.profile-image button{
-    margin-top:15px;
-    padding:10px 20px;
-    border:none;
-    border-radius:10px;
-    background:#111;
-    color:#fff;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.profile-image button:hover{
-    background:#000;
-}
-
-.edit-form{
-    background:#fff;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 8px 24px rgba(0,0,0,.08);
-}
-
-.edit-form label{
     display:block;
-    margin-bottom:8px;
-    color:#333;
-    font-size:14px;
-    font-weight:600;
 }
 
-.edit-form input{
-    width:100%;
-    height:48px;
-    padding:0 15px;
-    margin-bottom:18px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    outline:none;
-    font-size:15px;
-    box-sizing:border-box;
-    transition:.3s;
+.preview-actions{
+    display:flex;
+    gap:12px;
+    padding:15px;
+    background:#fff;
 }
 
-.edit-form input:focus{
-    border-color:#111;
-    box-shadow:0 0 0 3px rgba(0,0,0,.08);
-}
-
-.save-profile{
-    width:100%;
-    height:50px;
+.change-photo-btn,
+.delete-photo-btn{
+    flex:1;
+    height:46px;
     border:none;
     border-radius:12px;
-    background:#111;
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
+    font-size:14px;
+    font-weight:600;
     cursor:pointer;
-    transition:.3s;
+    transition:.25s;
 }
 
-.save-profile:hover{
-    background:#000;
+.change-photo-btn{
+    background:#0f62fe;
+    color:#fff;
 }
 
-@media (min-width:768px){
-
-.editprofile{
-    max-width:760px;
-    margin:auto;
+.change-photo-btn:hover{
+    background:#0047d4;
 }
 
-.profile-image img{
-    width:140px;
-    height:140px;
+.delete-photo-btn{
+    background:#ffe9e9;
+    color:#d10000;
 }
 
-.edit-form{
-    padding:30px;
-}
-
-}
-
-@media (min-width:1200px){
-
-.editprofile{
-    max-width:850px;
-}
-
+.delete-photo-btn:hover{
+    background:#ffd6d6;
 }

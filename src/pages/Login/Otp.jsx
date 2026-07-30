@@ -59,6 +59,7 @@ function Otp({
             );
             const data = await response.json();
 
+            console.log(data);
             if (!data.success) {
 
                 alert(data.message);
@@ -70,13 +71,8 @@ function Otp({
             setUser(data.user);
 
             localStorage.setItem(
-                "token",
-                data.token
-            );
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify(data.user)
+                "session_token",
+                data.session_token
             );
 
             localStorage.setItem(
@@ -85,15 +81,15 @@ function Otp({
             );
 
             localStorage.setItem(
-                "user_name",
-                data.user.full_name
-            );
-
-            localStorage.setItem(
                 "mobile_number",
                 data.user.mobile_number
             );
+            console.log("Saved Token:", data.session_token);
 
+            console.log(
+                "LocalStorage Token:",
+                localStorage.getItem("session_token")
+            );
             setPage("home");
 
         }

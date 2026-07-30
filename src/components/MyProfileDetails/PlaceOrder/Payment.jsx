@@ -115,7 +115,7 @@ function Payment({
                                     razorpay_payment_id: response.razorpay_payment_id,
                                     razorpay_signature: response.razorpay_signature,
 
-                                    user_id: Number(localStorage.getItem("user_id")),
+                                    session_token: localStorage.getItem("session_token"),
 
                                     address_id: orderData.address_id,
 
