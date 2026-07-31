@@ -2,7 +2,6 @@ import "./EditProfile.css";
 
 import TopEditSection from "./TopEditSection";
 import MediumEditSection from "./MediumEditSection";
-import MainEditSection from "./MainEditSection";
 
 function EditProfile({ user, setUser, setProfilePage }) {
 
@@ -21,10 +20,6 @@ function EditProfile({ user, setUser, setProfilePage }) {
                 setUser={setUser}
             />
 
-            <MainEditSection
-                user={user}
-                setUser={setUser}
-            />
 
         </div>
 

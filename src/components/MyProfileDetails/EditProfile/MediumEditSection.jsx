@@ -4,12 +4,12 @@ import { API } from "../../../services/api";
 
 function MediumEditSection({ user, setUser }) {
 
-    const changesLeft = user?.profile_change_count ?? 2;
-
     const [fullName, setFullName] = useState("");
+    
     useEffect(() => {
         setFullName(user?.full_name || "");
     }, [user]);
+
     const handleSaveName = async () => {
 
         try {
@@ -50,29 +50,6 @@ function MediumEditSection({ user, setUser }) {
 
         <div className="medium-edit-card">
 
-            {/* Profile Change Status */}
-
-            <div className="profile-change-box">
-
-                <span className="profile-change-title">
-                    Profile Changes Left
-                </span>
-
-                <span
-                    className={
-                        `profile-change-count ${changesLeft === 2
-                            ? "green"
-                            : changesLeft === 1
-                                ? "red"
-                                : "red"
-                        }`
-                    }
-                >
-                    {changesLeft}/2
-                </span>
-
-            </div>
-
             {/* Full Name */}
 
             <div className="medium-field">
@@ -92,7 +69,6 @@ function MediumEditSection({ user, setUser }) {
 
                     <button
                         onClick={handleSaveName}
-                        disabled={changesLeft === 0}
                     >
                         Save
                     </button>

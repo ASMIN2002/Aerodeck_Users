@@ -12,8 +12,7 @@ function Gifts({
 
 }) {
 
-    const userId =
-        JSON.parse(localStorage.getItem("user"))?.user_id;
+    const sessionToken = localStorage.getItem("session_token");
 
     const [gifts, setProducts] = useState([]);
     const [savedProducts, setSavedProducts] = useState(new Set());
@@ -73,7 +72,7 @@ function Gifts({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -139,7 +138,7 @@ function Gifts({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
@@ -196,7 +195,7 @@ function Gifts({
     };
     const handleLike = async (productId) => {
 
-         console.log("Gift Product ID:", productId);
+        console.log("Gift Product ID:", productId);
         productId = String(productId);
 
         try {
@@ -219,7 +218,7 @@ function Gifts({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                         })
 
@@ -285,7 +284,7 @@ function Gifts({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
@@ -377,7 +376,7 @@ function Gifts({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -459,7 +458,7 @@ function Gifts({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -544,7 +543,7 @@ function Gifts({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -605,7 +604,7 @@ function Gifts({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -689,7 +688,7 @@ function Gifts({
             try {
 
                 const response = await fetch(
-                    `${API}/api/user/wishlist?user_id=${userId}`
+                    `${API}/api/user/wishlist?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -722,7 +721,7 @@ function Gifts({
 
             try {
                 const response = await fetch(
-                    `${API}/api/user/likes?user_id=${userId}`
+                    `${API}/api/user/likes?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -754,7 +753,7 @@ function Gifts({
 
             try {
 
-                const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
+                const response = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`);
 
                 const data = await response.json();
                 console.log(data.data);
@@ -781,8 +780,8 @@ function Gifts({
         loadLikes();
         loadCart();
 
-    }, [userId]);
-    
+    }, [sessionToken]);
+
     return (
 
 

@@ -13,9 +13,7 @@ import { useEffect, useState } from "react";
 function Details({ product, onBack, setCartCount }) {
 
 
-
-    const userId =
-        JSON.parse(localStorage.getItem("user"))?.user_id;
+    const sessionToken = localStorage.getItem("session_token");
 
     const [details, setDetails] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
@@ -124,7 +122,7 @@ function Details({ product, onBack, setCartCount }) {
 
     useEffect(() => {
 
-        if (!details || !userId) return;
+        if (!details || !sessionToken) return;
 
         const loadLikeStatus = async () => {
 
@@ -137,13 +135,13 @@ function Details({ product, onBack, setCartCount }) {
                     details.premium_id;
 
                 const response = await fetch(
-                    `${API}/api/user/likes?user_id=${userId}`
+                    `${API}/api/user/likes?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
 
-             
-              
+
+
                 if (data.success) {
 
                     setIsLiked(
@@ -154,7 +152,7 @@ function Details({ product, onBack, setCartCount }) {
 
                     );
 
-              
+
 
                 }
 
@@ -170,7 +168,7 @@ function Details({ product, onBack, setCartCount }) {
 
         loadLikeStatus();
 
-    }, [details, userId]);
+    }, [details, sessionToken]);
 
     const handleLike = async () => {
 
@@ -198,7 +196,7 @@ function Details({ product, onBack, setCartCount }) {
                         },
 
                         body: JSON.stringify({
-                            user_id: userId
+                            session_token: sessionToken
                         })
                     }
 
@@ -240,7 +238,7 @@ function Details({ product, onBack, setCartCount }) {
                         },
 
                         body: JSON.stringify({
-                            user_id: userId,
+                            session_token: sessionToken,
                             product_id: productId
                         })
                     }
@@ -280,7 +278,7 @@ function Details({ product, onBack, setCartCount }) {
 
     useEffect(() => {
 
-        if (!details || !userId) return;
+        if (!details || !sessionToken) return;
 
         const loadSaveStatus = async () => {
 
@@ -293,7 +291,7 @@ function Details({ product, onBack, setCartCount }) {
                     details.premium_id;
 
                 const response = await fetch(
-                    `${API}/api/user/wishlist?user_id=${userId}`
+                    `${API}/api/user/wishlist?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -322,7 +320,7 @@ function Details({ product, onBack, setCartCount }) {
 
         loadSaveStatus();
 
-    }, [details, userId]);
+    }, [details, sessionToken]);
 
 
     const loadCartStatus = async () => {
@@ -336,7 +334,7 @@ function Details({ product, onBack, setCartCount }) {
                 details.premium_id;
 
             const response = await fetch(
-                `${API}/api/user/cart?user_id=${userId}`
+                `${API}/api/user/cart?session_token=${sessionToken}`
             );
 
             const data = await response.json();
@@ -370,11 +368,11 @@ function Details({ product, onBack, setCartCount }) {
     };
     useEffect(() => {
 
-        if (!details || !userId) return;
+        if (!details || !sessionToken) return;
 
         loadCartStatus();
 
-    }, [details, userId]);
+    }, [details, sessionToken]);
 
     const handleSave = async () => {
 
@@ -406,7 +404,7 @@ function Details({ product, onBack, setCartCount }) {
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -454,7 +452,7 @@ function Details({ product, onBack, setCartCount }) {
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
@@ -514,7 +512,7 @@ function Details({ product, onBack, setCartCount }) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: userId,
+                    session_token: sessionToken,
                     product_id: productId,
                     quantity
                 })
@@ -534,7 +532,7 @@ function Details({ product, onBack, setCartCount }) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: userId,
+                    session_token: sessionToken,
                     product_id: productId,
                     quantity
                 })
@@ -571,7 +569,7 @@ function Details({ product, onBack, setCartCount }) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: userId
+                    session_token: sessionToken
                 })
             });
 
@@ -585,7 +583,7 @@ function Details({ product, onBack, setCartCount }) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: userId,
+                    session_token: sessionToken,
                     product_id: productId,
                     quantity
                 })
@@ -707,6 +705,7 @@ function Details({ product, onBack, setCartCount }) {
             </div>
             <DetailsData
                 product={details}
+                productDetail={details?.productDetail}
                 isLiked={isLiked}
                 isSaved={isSaved}
                 cartQuantity={cartQuantity}

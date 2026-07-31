@@ -13,8 +13,7 @@ function Premiums({
 
 }) {
 
-    const userId =
-        JSON.parse(localStorage.getItem("user"))?.user_id;
+    const sessionToken = localStorage.getItem("session_token");
 
     const [premiums, setProducts] = useState([]);
     const [savedProducts, setSavedProducts] = useState(new Set());
@@ -74,7 +73,7 @@ function Premiums({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -140,7 +139,7 @@ function Premiums({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
@@ -218,8 +217,7 @@ function Premiums({
 
                         body: JSON.stringify({
 
-                            user_id: userId
-
+                            session_token: sessionToken
                         })
 
                     }
@@ -284,7 +282,7 @@ function Premiums({
 
                         body: JSON.stringify({
 
-                            user_id: userId,
+                            session_token: sessionToken,
 
                             product_id: productId
 
@@ -376,7 +374,7 @@ function Premiums({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -458,7 +456,7 @@ function Premiums({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -543,7 +541,7 @@ function Premiums({
 
                         body: JSON.stringify({
 
-                            user_id: userId
+                            session_token: sessionToken
 
                         })
 
@@ -604,7 +602,7 @@ function Premiums({
 
                     body: JSON.stringify({
 
-                        user_id: userId,
+                       session_token: sessionToken,
 
                         product_id: productId,
 
@@ -688,7 +686,7 @@ function Premiums({
             try {
 
                 const response = await fetch(
-                    `${API}/api/user/wishlist?user_id=${userId}`
+                    `${API}/api/user/wishlist?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -721,7 +719,7 @@ function Premiums({
 
             try {
                 const response = await fetch(
-                    `${API}/api/user/likes?user_id=${userId}`
+                    `${API}/api/user/likes?session_token=${sessionToken}`
                 );
 
                 const data = await response.json();
@@ -753,7 +751,7 @@ function Premiums({
 
             try {
 
-                const response = await fetch(`${API}/api/user/cart?user_id=${userId}`);
+                const response = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`);
 
                 const data = await response.json();
                 if (data.success) {
@@ -778,8 +776,8 @@ function Premiums({
         loadLikes();
         loadCart();
 
-    }, [userId]);
-    
+    }, [sessionToken]);
+
     return (
 
 

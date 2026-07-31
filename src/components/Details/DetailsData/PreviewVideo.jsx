@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import "../DetailsDataStyle/PreviewVideo.css";
 
-function PreviewVideo() {
+function PreviewVideo({ video_link }) {
 
     const videoRef = useRef(null);
     const [showPlay, setShowPlay] = useState(true);
 
     const playVideo = () => {
 
-        if (!videoRef.current) return;
+        if (!videoRef.current || !video_link) return;
 
         videoRef.current.currentTime = 0;
         videoRef.current.play();
@@ -38,42 +38,53 @@ function PreviewVideo() {
 
             <h3>Product Preview</h3>
 
-            <div className="dt-video-container">
+            {
+                !video_link ? (
 
-                <video
-                    ref={videoRef}
-                    className="dt-preview-video"
-                    playsInline
-                    preload="metadata"
-                    onEnded={handleVideoEnd}
-                >
+                    <div className="dt-no-preview">
+                        No Preview Available
+                    </div>
 
-                    <source
-                        src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-                        type="video/mp4"
-                    />
+                ) : (
 
-                </video>
+                    <div className="dt-video-container">
 
-                {
-                    showPlay &&
-                    <button
-                        className="dt-play-btn"
-                        onClick={playVideo}
-                    >
-                        ▶
-                    </button>
-                }
+                        <video
+                            ref={videoRef}
+                            className="dt-preview-video"
+                            playsInline
+                            preload="metadata"
+                            controls={false}
+                            onEnded={handleVideoEnd}
+                        >
 
-                <button
-                    className="dt-fullscreen-btn"
-                    onClick={openFullscreen}
-                >
-                    ⛶
-                </button>
+                            <source
+                                src={video_link}
+                                type="video/mp4"
+                            />
 
-            </div>
+                        </video>
 
+                        {showPlay && (
+                            <button
+                                className="dt-play-btn"
+                                onClick={playVideo}
+                            >
+                                ▶
+                            </button>
+                        )}
+
+                        <button
+                            className="dt-fullscreen-btn"
+                            onClick={openFullscreen}
+                        >
+                            ⛶
+                        </button>
+
+                    </div>
+
+                )
+            }
         </div>
 
     );

@@ -1,19 +1,17 @@
 import "../DetailsDataStyle/DetailsData.css";
 
-import Description from "./Description";
 import PreviewVideo from "./PreviewVideo";
 import Features from "./Features";
 import Information from "./Information";
 import Reviews from "./Reviews";
 import RelatedProducts from "./RelatedProducts";
 import WhyChoose from "./WhyChoose";
-import Footer from "./Footer";
 import ProductSummary from "./ProductSummary";
 
 function DetailsData({
 
     product,
-
+    productDetail,
     isLiked,
     isSaved,
     cartQuantity,
@@ -32,9 +30,7 @@ function DetailsData({
         <>
             <div className="dt-data">
                 <ProductSummary
-
                     product={product}
-
                     isLiked={isLiked}
                     isSaved={isSaved}
                     cartQuantity={cartQuantity}
@@ -48,14 +44,12 @@ function DetailsData({
                     onBuyNow={onBuyNow}
 
                 />
-                <Description product={product} />
-                <PreviewVideo />
+                <PreviewVideo video_link={productDetail?.video_link} />
                 <Features />
-                <Information />
+                <Information productDetail={productDetail} />
                 <Reviews />
                 <RelatedProducts />
                 <WhyChoose />
-                <Footer />
             </div>
         </>
     );

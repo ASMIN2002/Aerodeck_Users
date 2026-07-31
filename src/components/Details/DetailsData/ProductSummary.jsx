@@ -8,9 +8,6 @@ function ProductSummary({
     isSaved,
     cartQuantity,
 
-    onLike,
-    onSave,
-
     onIncreaseCart,
     onDecreaseCart,
 
@@ -50,19 +47,6 @@ function ProductSummary({
         product?.premium_discount_percentage ||
         0;
 
-    const likes =
-        product?.product_total_likes ||
-        product?.gift_total_likes ||
-        product?.shop_total_likes ||
-        product?.premium_total_likes ||
-        0;
-
-    const saves =
-        product?.product_total_saves ||
-        product?.gift_total_saves ||
-        product?.shop_total_saves ||
-        product?.premium_total_saves ||
-        0;
 
     const status =
         product?.product_status ??
@@ -118,22 +102,6 @@ function ProductSummary({
 
             </div>
 
-            <div className="ps-count-row">
-
-                <span>
-
-                    ❤️ {likes}
-
-                </span>
-
-                <span>
-
-                    🔖 {saves}
-
-                </span>
-
-            </div>
-
             <div className="ps-cart-row">
 
                 {cartQuantity > 0 ? (
@@ -164,34 +132,6 @@ function ProductSummary({
                     </button>
 
                 )}
-
-            </div>
-
-            <div className="ps-delivery">
-
-                <div className="ps-stock">
-
-                    <span className="ps-stock-dot"></span>
-
-                    <span>
-
-                        {status ? "In Stock" : "Out of Stock"}
-
-                    </span>
-
-                </div>
-
-                <div className="ps-delivery-text">
-
-                    🚚 Delivery in 2-4 Days
-
-                </div>
-
-                <div className="ps-cod">
-
-                    💵 Cash on Delivery Available
-
-                </div>
 
             </div>
 

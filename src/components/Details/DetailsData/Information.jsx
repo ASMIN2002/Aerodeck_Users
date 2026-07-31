@@ -1,6 +1,6 @@
 import "../DetailsDataStyle/Information.css";
 
-function Information() {
+function Information({ productDetail }) {
 
     return (
 
@@ -10,27 +10,36 @@ function Information() {
 
             <div className="dt-info-row">
                 <span>Category</span>
-                <span>Wedding Card</span>
+                <span>{productDetail?.category || "-"}</span>
             </div>
 
             <div className="dt-info-row">
                 <span>Material</span>
-                <span>Premium Paper</span>
+                <span>{productDetail?.material || "-"}</span>
             </div>
 
             <div className="dt-info-row">
                 <span>Size</span>
-                <span>7 x 5 Inches</span>
+                <span>{productDetail?.size || "-"}</span>
             </div>
 
             <div className="dt-info-row">
                 <span>Printing</span>
-                <span>HD Digital Print</span>
+                <span>{productDetail?.printing || "-"}</span>
             </div>
 
             <div className="dt-info-row">
                 <span>Delivery</span>
-                <span>3 - 5 Days</span>
+                <span>{productDetail?.delivery || "-"}</span>
+            </div>
+
+            <div className="dt-info-row">
+                <span>Return Policy</span>
+                <span>
+                    {productDetail?.return_days != null
+                        ? `${productDetail.return_days} Days`
+                        : "-"}
+                </span>
             </div>
 
         </div>

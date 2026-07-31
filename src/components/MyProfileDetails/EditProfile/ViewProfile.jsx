@@ -55,27 +55,6 @@ function ViewProfile({
                         </p>
                     </div>
 
-                    <div className="view-row">
-                        <span>Calling Number</span>
-                        <p className={!user?.calling_number ? "pending" : ""}>
-                            {user?.calling_number || "Pending"}
-                        </p>
-                    </div>
-
-                    <div className="view-row">
-                        <span>WhatsApp</span>
-                        <p className={!user?.whatsapp_number ? "pending" : ""}>
-                            {user?.whatsapp_number || "Pending"}
-                        </p>
-                    </div>
-
-                    <div className="view-row">
-                        <span>Email</span>
-                        <p className={!user?.email ? "pending" : ""}>
-                            {user?.email || "Pending"}
-                        </p>
-                    </div>
-
                 </div>
 
             </div>
