@@ -10,7 +10,7 @@ function MyWishlist({
     const [wishlist, setWishlist] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const sessionToken = localStorage.getItem("session_token");
 
     useEffect(() => {
         fetchWishlist();
@@ -21,7 +21,7 @@ function MyWishlist({
         try {
 
             const res = await fetch(
-                `${API}/api/user/wishlist?user_id=${user.user_id}`
+                `${API}/api/user/wishlist?session_token=${sessionToken}`
             );
 
             const data = await res.json();
@@ -57,7 +57,7 @@ function MyWishlist({
                 },
 
                 body: JSON.stringify({
-                    user_id: user.user_id
+                    session_token: sessionToken
                 })
 
             });

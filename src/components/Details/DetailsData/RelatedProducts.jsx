@@ -1,61 +1,77 @@
+import { useEffect, useState } from "react";
 import "../DetailsDataStyle/RelatedProducts.css";
+import { API } from "../../../services/api";
 
-function RelatedProducts() {
+function RelatedProducts({
+    product,
+    onOpenDetails,
+    onViewAll
+}) {
+    const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        fetch(`${API}/api/user/products`)
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    setProducts(res.data);
+                }
+            })
+            .catch(console.error);
+    }, []);
+    const filteredProducts = products
+        .filter(item => String(item.product_id) !== String(product?.product_id))
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 20);
     return (
 
         <div className="dt-related">
 
             <div className="dt-section-header">
 
-                <h3>Related Products</h3>
-
-                <button className="dt-view-all">
+                <h3>Products</h3>
+                <button
+                    className="dt-view-all"
+                    onClick={onViewAll}
+                >
                     View All
                 </button>
-
             </div>
+
 
             <div className="dt-related-scroll">
 
-                <div className="dt-related-card">
+                {filteredProducts.map((item) => (
 
-                    <img
-                        src="https://placehold.co/300x300"
-                        alt=""
-                    />
+                    <div
+                        key={item.product_id}
+                        className="dt-related-card"
+                        onClick={() =>
+                            onOpenDetails(
+                                { ...item },
+                                String(item.product_id).startsWith("G")
+                                    ? "gift"
+                                    : String(item.product_id).startsWith("S")
+                                        ? "shop"
+                                        : String(item.product_id).startsWith("P")
+                                            ? "premium"
+                                            : "card"
+                            )
+                        }
+                    >
 
-                    <h4>Wedding Card</h4>
+                        <img
+                            src={item.product_image1}
+                            alt={item.product_name}
+                        />
 
-                    <p>₹950</p>
+                        <h4>{item.product_name}</h4>
 
-                </div>
+                        <p>₹{item.product_price}</p>
 
-                <div className="dt-related-card">
+                    </div>
 
-                    <img
-                        src="https://placehold.co/300x300"
-                        alt=""
-                    />
-
-                    <h4>Birthday Card</h4>
-
-                    <p>₹650</p>
-
-                </div>
-
-                <div className="dt-related-card">
-
-                    <img
-                        src="https://placehold.co/300x300"
-                        alt=""
-                    />
-
-                    <h4>Gift Box</h4>
-
-                    <p>₹799</p>
-
-                </div>
+                ))}
 
             </div>
 

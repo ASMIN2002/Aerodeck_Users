@@ -9,7 +9,7 @@ function OrderItemDetails({
     onOpenDetails,
     setSelectedTrackingOrder,
     setSelectedInvoice
-}){
+}) {
 
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -74,13 +74,13 @@ function OrderItemDetails({
 
                 <div key={item.product_id}>
 
-                   <OrderItem
-    item={item}
-    order_id={order.order_id}
-    onOpenDetails={onOpenDetails}
-    setProfilePage={setProfilePage}
-    setSelectedInvoice={setSelectedInvoice}
-/>
+                    <OrderItem
+                        item={item}
+                        order_id={order.order_id}
+                        onOpenDetails={onOpenDetails}
+                        setProfilePage={setProfilePage}
+                        setSelectedInvoice={setSelectedInvoice}
+                    />
                 </div>
 
             ))}

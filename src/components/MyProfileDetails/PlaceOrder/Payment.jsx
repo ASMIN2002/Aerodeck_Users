@@ -99,8 +99,10 @@ function Payment({
 
                 order_id: data.order.id,
 
-                handler: async function (response) {
 
+
+                handler: async function (response) {
+                    
                     try {
                         const verifyResponse = await fetch(
                             `${API}/api/user/payment/verify`,
@@ -138,13 +140,17 @@ function Payment({
 
                                     delivery_fee: orderData.delivery_fee,
 
-                                    full_amount: orderData.full_amount,
+                                    total_amount: orderData.subtotal + orderData.gst + orderData.platform_fee + orderData.delivery_fee,
 
-                                    advance_amount: orderData.total_amount,
+                                    advance_amount:
+                                        orderData.orderType === "cards"
+                                            ? orderData.total_amount
+                                            : amount,
 
-                                    remaining_amount: orderData.remaining_amount,
-
-                                    total_amount: orderData.full_amount
+                                    remaining_amount:
+                                        orderData.orderType === "cards"
+                                            ? orderData.remaining_amount
+                                            : 0,
 
                                 })
                             }

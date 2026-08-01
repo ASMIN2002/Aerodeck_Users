@@ -54,11 +54,17 @@ function OrderItem({
                 <p><strong>Rating :</strong> ⭐ {item.product_rating}</p>
 
             </div>
-            <TrackOrder />
-            <Rating />
-            <UploadImages />
-            <Feedback />
-            <HelpSupport />
+            <TrackOrder
+                orderStatus={item.order_status}
+            />
+            {item.order_status === "DELIVERED" && (
+                <>
+                    <Rating />
+                    <UploadImages />
+                    <Feedback />
+                    <HelpSupport />
+                </>
+            )}
             <button
                 className="invoice-btn"
                 onClick={() => {

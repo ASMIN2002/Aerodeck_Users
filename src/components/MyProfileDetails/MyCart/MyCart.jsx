@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Address from "../../Address/Address";
 import CartBilling from "./CartBilling";
 import CartCard from "./CartCard";
+import CartTabs from "./CartTabs";
 import { API } from "../../../services/api";
 
 function MyCart({
@@ -13,7 +14,7 @@ function MyCart({
     setSelectedBottomTab
 
 }) {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const sessionToken = localStorage.getItem("session_token");
     const [activeTab, setActiveTab] = useState("products");
     const [cart, setCart] = useState([]);
 
@@ -38,8 +39,7 @@ function MyCart({
 
             const res = await fetch(
 
-                `${API}/api/user/cart?user_id=${user.user_id}`
-
+                `${API}/api/user/cart?session_token=${sessionToken}`
             );
 
             const data = await res.json();
@@ -81,7 +81,7 @@ function MyCart({
 
                     body: JSON.stringify({
 
-                        user_id: user.user_id
+                        session_token: sessionToken
 
                     })
 
@@ -124,7 +124,7 @@ function MyCart({
 
             body: JSON.stringify({
 
-                user_id: user.user_id,
+                session_token: sessionToken,
 
                 product_id: item.product_id,
 
@@ -194,7 +194,7 @@ function MyCart({
 
             body: JSON.stringify({
 
-                user_id: user.user_id,
+                session_token: sessionToken,
 
                 product_id: item.product_id,
 
@@ -255,7 +255,7 @@ function MyCart({
 
         fetchCart();
 
-    }, []);
+    }, [sessionToken]);
 
     return (
 
@@ -267,41 +267,12 @@ function MyCart({
                     setSelectedBottomTab={setSelectedBottomTab}
                 />
             </div>
-            <div className="mycart-tabs">
 
-
-                <button
-                    className="mycart-back"
-                    onClick={() => setProfilePage("profile")}
-                >
-                    ←
-                </button>
-
-                <button
-
-                    className={activeTab === "products" ? "active" : ""}
-
-                    onClick={() => setActiveTab("products")}
-
-                >
-
-                    Products
-
-                </button>
-
-                <button
-
-                    className={activeTab === "cards" ? "active" : ""}
-
-                    onClick={() => setActiveTab("cards")}
-
-                >
-
-                    Cards
-
-                </button>
-
-            </div>
+            <CartTabs
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                setProfilePage={setProfilePage}
+            />
             <div className="mycart-content">
 
                 {activeTab === "products" ? (

@@ -87,7 +87,7 @@
 
 .order-info h3{
     margin:0;
-    font-size:17px;
+    font-size:15px;
     color:#222;
 }
 
@@ -111,6 +111,7 @@
     font-size:12px;
     font-weight:700;
     margin:8px 0 12px;
+    color: blue;
 }
 
 .order-status.delivered{
@@ -180,7 +181,7 @@
 }
 
 .order-info h3{
-    font-size:20px;
+    font-size: 15px;
 }
 
 }

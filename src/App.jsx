@@ -126,9 +126,6 @@ function App() {
                 );
 
                 const data = await response.json();
-
-                console.log("Session Response:", data);
-
                 if (data.success && data.authenticated) {
 
                     setUser(data.user);
@@ -137,18 +134,19 @@ function App() {
 
                 } else {
 
-                    localStorage.removeItem("session_token");
+                    if (navigator.onLine) {
 
-                    setPage("login");
+                        localStorage.removeItem("session_token");
+
+                        setPage("login");
+
+                    }
 
                 }
 
             } catch (err) {
-
                 console.error(err);
-
-                setPage("login");
-
+                return;
             } finally {
 
                 setCheckingSession(false);
@@ -217,7 +215,6 @@ function App() {
                 page === "home" &&
                 <Home
                     user={user}
-                    setUser={setUser}
                     setPage={setPage}
                     cartCount={cartCount}
                     setCartCount={setCartCount}

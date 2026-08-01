@@ -1,90 +1,124 @@
-.cart-tabs{
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px;
-margin:8px;
-background:#fff;
-border:1px solid #e8edf6;
-border-radius:14px;
-box-shadow:0 8px 20px rgba(15,23,42,.05);
+/* =========================
+   CART TABS
+========================= */
+
+
+.cart-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    padding: 6px;
+
+    background: #f4f6fb;
+    border: 1px solid #e6e9f0;
+    border-radius: 16px;
+
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-.cart-tabs button{
-flex:1;
-height:34px;
-border:none;
-border-radius:10px;
-background:#f3f7fd;
-color:#64748b;
-font-size:9px;
-font-weight:700;
-cursor:pointer;
-transition:.25s;
-display:flex;
-align-items:center;
-justify-content:center;
+.cart-tabs button {
+    flex: 1;
+
+    height: 46px;
+
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    background: transparent;
+    color: #5d6475;
+
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .3px;
+
+    transition: all .25s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    user-select: none;
 }
 
-.cart-tabs button:hover{
-background:#e8f1ff;
+/* Hover */
+
+.cart-tabs button:hover {
+    background: rgba(255,255,255,.6);
+    color: #111827;
 }
 
-.cart-tabs button.active{
-background:linear-gradient(135deg,#00c6ff,#4d7cff);
-color:#fff;
-box-shadow:0 8px 18px rgba(77,124,255,.18);
+/* Active */
+
+.cart-tabs button.active {
+    background: linear-gradient(135deg,#2563eb,#3b82f6);
+    color: #fff;
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,.28),
+        inset 0 1px 0 rgba(255,255,255,.25);
+
+    transform: translateY(-1px);
 }
 
-.cart-tabs button:active{
-transform:scale(.97);
+/* Click */
+
+.cart-tabs button:active {
+    transform: scale(.98);
 }
 
-/* ---------- Mobile ---------- */
+/* Focus */
 
-@media(max-width:480px){
-
-.cart-tabs{
-margin:7px;
-padding:7px;
-gap:6px;
-border-radius:12px;
+.cart-tabs button:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
 }
 
-.cart-tabs button{
-height:32px;
-font-size:8px;
-border-radius:9px;
-}
+/* =========================
+   Tablet
+========================= */
 
-}
+@media (min-width:768px){
 
-/* ---------- Tablet ---------- */
+    .cart-tabs{
+        max-width:420px;
+        margin:auto;
+    }
 
-@media(min-width:768px){
-
-.cart-tabs{
-margin:14px;
-padding:12px;
-gap:12px;
-border-radius:18px;
-}
-
-.cart-tabs button{
-height:42px;
-font-size:14px;
-border-radius:12px;
-}
+    .cart-tabs button{
+        font-size:16px;
+    }
 
 }
 
-/* ---------- Desktop ---------- */
+/* =========================
+   Dark Mode
+========================= */
 
-@media(min-width:1200px){
+@media (prefers-color-scheme: dark){
 
-.cart-tabs{
-max-width:900px;
-margin:18px auto;
-}
+    .cart-tabs{
+        background:#1f2937;
+        border-color:#2f3b4d;
+    }
+
+    .cart-tabs button{
+        color:#cfd6df;
+    }
+
+    .cart-tabs button:hover{
+        background:#2b3645;
+        color:#fff;
+    }
+
+    .cart-tabs button.active{
+        background:linear-gradient(135deg,#3b82f6,#60a5fa);
+        color:#fff;
+    }
 
 }

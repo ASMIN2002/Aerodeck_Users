@@ -72,3 +72,43 @@
     }
 
 }
+.invoice-btn {
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all .25s ease;
+
+}
+
+.invoice-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.38);
+
+}
+
+.invoice-btn:active {
+
+    transform: scale(.98);
+
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+
+}
+
+.invoice-btn:focus-visible {
+
+    outline: 3px solid rgba(37, 99, 235, .25);
+
+    outline-offset: 3px;
+
+}

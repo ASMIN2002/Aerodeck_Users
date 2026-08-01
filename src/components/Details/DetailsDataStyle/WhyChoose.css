@@ -70,7 +70,7 @@ CARD
 
     border-radius:20px;
 
-    padding:18px 16px;
+    padding:7px 16px;
 
     display:flex;
 
@@ -127,7 +127,7 @@ ICON
 
     justify-content:center;
 
-    font-size:26px;
+    font-size:16px;
 
     flex-shrink:0;
 
@@ -143,7 +143,7 @@ TITLE
 
     margin:0;
 
-    font-size:15px;
+    font-size: 10px;
 
     font-weight:700;
 
@@ -163,7 +163,7 @@ DESCRIPTION
 
     margin:0;
 
-    font-size:12px;
+    font-size:9px;
 
     line-height:1.7;
 
@@ -209,7 +209,7 @@ FOCUS
 
         height:56px;
 
-        font-size:28px;
+        font-size:16px;
 
     }
 

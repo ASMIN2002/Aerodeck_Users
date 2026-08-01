@@ -10,9 +10,13 @@ import {
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-function Details({ product, onBack, setCartCount }) {
-
-
+function Details({
+    product,
+    onBack,
+    setCartCount,
+    onOpenDetails,
+    onViewAll
+}) {
     const sessionToken = localStorage.getItem("session_token");
 
     const [details, setDetails] = useState(null);
@@ -66,7 +70,10 @@ function Details({ product, onBack, setCartCount }) {
     useEffect(() => {
 
         if (!product?.data) return;
-
+        document.querySelector(".home-content")?.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
         const fetchDetails = async () => {
 
             try {
@@ -714,8 +721,9 @@ function Details({ product, onBack, setCartCount }) {
                 onIncreaseCart={handleIncreaseCart}
                 onDecreaseCart={handleDecreaseCart}
                 onBuyNow={handleBuyNow}
+                onOpenDetails={onOpenDetails}
+                onViewAll={onViewAll}
             />
-
 
         </div>
 

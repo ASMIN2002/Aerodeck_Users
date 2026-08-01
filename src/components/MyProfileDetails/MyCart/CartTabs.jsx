@@ -3,7 +3,8 @@ import "./CartTabs.css";
 function CartTabs({
 
     activeTab,
-    setActiveTab
+    setActiveTab,
+    setProfilePage
 
 }) {
 
@@ -12,27 +13,24 @@ function CartTabs({
         <div className="cart-tabs">
 
             <button
-
-                className={activeTab === "products" ? "active" : ""}
-
-                onClick={() => setActiveTab("products")}
-
+                className="mycart-back"
+                onClick={() => setProfilePage("profile")}
             >
-
-                Products
-
+                ← Back
             </button>
 
             <button
-
-                className={activeTab === "cards" ? "active" : ""}
-
-                onClick={() => setActiveTab("cards")}
-
+                className={activeTab === "products" ? "active" : ""}
+                onClick={() => setActiveTab("products")}
             >
+                Products
+            </button>
 
+            <button
+                className={activeTab === "cards" ? "active" : ""}
+                onClick={() => setActiveTab("cards")}
+            >
                 Cards
-
             </button>
 
         </div>

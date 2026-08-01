@@ -3,15 +3,12 @@ import "./BottomNav.css";
 function BottomNav({
 
     selectedBottomTab,
-
     setSelectedBottomTab,
-
     isDetailsOpen,
-
-    closeDetails
+    closeDetails,
+    setProfilePage
 
 }) {
-
     return (
 
         <nav className="bn-nav">
@@ -26,7 +23,7 @@ function BottomNav({
                         closeDetails();
 
                     }
-
+                    setProfilePage("profile");   // <-- Add this
                     setSelectedBottomTab("Home");
 
                 }}
@@ -54,7 +51,7 @@ function BottomNav({
                         closeDetails();
 
                     }
-
+                    setProfilePage("profile");   // <-- Add this
                     setSelectedBottomTab("Premium");
 
                 }}
@@ -82,7 +79,7 @@ function BottomNav({
                         closeDetails();
 
                     }
-
+                    setProfilePage("profile");   // <-- Add this
                     setSelectedBottomTab("Offers");
 
                 }}

@@ -8,54 +8,6 @@ overflow:hidden;
 }
 
 
-/* ---------------- Back ---------------- */
-
-.mycart-back{
-width:32px;
-height:32px;
-border:none;
-border-radius:10px;
-background:linear-gradient(135deg,#00c6ff,#4d7cff);
-color:#fff;
-font-size:14px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-flex-shrink:0;
-transition:.25s;
-box-shadow:0 8px 18px rgba(77,124,255,.18);
-}
-
-.mycart-back:hover{
-transform:translateY(-2px);
-}
-
-.mycart-back:active{
-transform:scale(.95);
-}
-
-/* ---------------- Tab Buttons ---------------- */
-
-.mycart-tabs button:not(.mycart-back){
-flex:1;
-height:34px;
-border:none;
-border-radius:10px;
-background:#edf3fb;
-font-size:9px;
-font-weight:700;
-color:#64748b;
-cursor:pointer;
-transition:.25s;
-}
-
-.mycart-tabs button.active{
-background:linear-gradient(135deg,#00c6ff,#4d7cff);
-color:#fff;
-box-shadow:0 8px 18px rgba(77,124,255,.18);
-}
 
 /* ---------------- Address ---------------- */
 
@@ -107,17 +59,6 @@ padding:7px;
 gap:6px;
 }
 
-.mycart-back{
-width:30px;
-height:30px;
-font-size:13px;
-}
-
-.mycart-tabs button:not(.mycart-back){
-height:32px;
-font-size:8px;
-border-radius:9px;
-}
 
 .mycart-content{
 padding:7px;
@@ -132,19 +73,6 @@ padding:7px;
 .mycart-page{
 max-width:760px;
 margin:auto;
-}
-
-
-.mycart-back{
-width:42px;
-height:42px;
-font-size:18px;
-}
-
-.mycart-tabs button:not(.mycart-back){
-height:42px;
-font-size:14px;
-border-radius:12px;
 }
 
 .mycart-content{

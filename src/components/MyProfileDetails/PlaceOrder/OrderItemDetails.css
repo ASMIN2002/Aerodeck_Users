@@ -35,3 +35,6 @@
 .order-summary h4{
     margin-top:10px;
 }
+.order-details-header h2{
+    color: red;
+}

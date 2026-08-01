@@ -135,13 +135,6 @@ function ProductSummary({
 
             </div>
 
-            <button
-                className="ps-buy-btn"
-                onClick={onBuyNow}
-            >
-                Buy Now
-            </button>
-
         </section>
 
     );

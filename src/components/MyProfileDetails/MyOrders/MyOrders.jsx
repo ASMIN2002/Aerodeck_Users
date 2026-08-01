@@ -134,36 +134,7 @@ function MyOrders({
                                 ₹ {order.total_amount}
 
                             </h4>
-                            <div className="order-address">
-
-                                <p className="address-type">
-                                    📍 {order.address_type}
-                                </p>
-
-                                <p>
-                                    {order.full_name}
-                                </p>
-
-                                <p>
-                                    {order.house_flat}
-                                </p>
-
-                                <p>
-                                    {order.area_street}
-                                </p>
-
-                                {
-                                    order.landmark &&
-                                    <p>
-                                        {order.landmark}
-                                    </p>
-                                }
-
-                                <p>
-                                    {order.city}, {order.state} - {order.pincode}
-                                </p>
-
-                            </div>
+                          
 
                             <span
 

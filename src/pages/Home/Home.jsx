@@ -55,12 +55,7 @@ function Home({
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const [selectedBottomTab, setSelectedBottomTab] = useState(() => {
-
-        return localStorage.getItem("selectedBottomTab") || "Home";
-
-    });
-
+    const [selectedBottomTab, setSelectedBottomTab] = useState("Home");
     const [profilePage, setProfilePage] = useState("profile");
 
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -110,16 +105,12 @@ function Home({
         }
 
         localStorage.removeItem("session_token");
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("mobile_number");
-
-        setUser(null);
 
         setPage("login");
 
     };
     const handleOpenDetails = (product, type) => {
-        console.log(type);
+
 
         setSelectedProduct({
 
@@ -150,9 +141,7 @@ function Home({
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
-
     const [selectedInvoice, setSelectedInvoice] = useState(null);
-
     return (
 
         <div className="home-container">
@@ -204,6 +193,8 @@ function Home({
                         product={selectedProduct}
                         onBack={handleCloseDetails}
                         setCartCount={setCartCount}
+                        onOpenDetails={handleOpenDetails}
+                        onViewAll={handleCloseDetails}
                     />
                 }
 
@@ -277,6 +268,7 @@ function Home({
                     profilePage === "profile" &&
 
                     <Profile
+                        key={profilePage + "-" + (user?.user_id || "")}
                         user={user}
                         setUser={setUser}
                         setPage={setPage}
@@ -444,15 +436,11 @@ function Home({
             </div>
 
             <BottomNav
-
                 selectedBottomTab={selectedBottomTab}
-
                 setSelectedBottomTab={setSelectedBottomTab}
-
                 isDetailsOpen={isDetailsOpen}
-
                 closeDetails={handleCloseDetails}
-
+                setProfilePage={setProfilePage}
             />
 
         </div>

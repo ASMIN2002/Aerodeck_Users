@@ -386,8 +386,6 @@ function CardOrder({
 
                             const data = await response.json();
 
-                            console.log(data);
-
                             setPlacingOrder(false);
 
                             if (data.success) {

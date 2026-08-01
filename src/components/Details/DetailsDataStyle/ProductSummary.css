@@ -97,7 +97,7 @@ PRICE
 
 .ps-price{
 
-    font-size:30px;
+    font-size:20px;
 
     font-weight:700;
 
@@ -228,20 +228,14 @@ QUANTITY
 ==============================*/
 
 .ps-qty{
-
-    width:max-content;
-
+    width:100%;
     display:flex;
-
     align-items:center;
-
     gap:18px;
-
     padding:6px;
-
     border:1px solid #e5e5e5;
-
     border-radius:999px;
+    justify-content: space-between;
 
 }
 
@@ -249,9 +243,9 @@ QUANTITY
 
 .ps-qty button{
 
-    width:38px;
+    width:32px;
 
-    height:38px;
+    height:32px;
 
     border:none;
 

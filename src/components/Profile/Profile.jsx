@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import "./Profile.css";
 import AerodeckDP from "../../assets/AerodeckDP.png";
+import { API } from "../../services/api";
 
 function Profile({
 
@@ -9,30 +11,64 @@ function Profile({
     onLogout,
     setProfilePage
 }) {
-    console.log("PROFILE USER:", user);
-    const maskedMobile = user?.mobile_number
-        ? `******${user.mobile_number.slice(-4)}`
+    const [profile, setProfile] = useState(null);
+
+    const maskedMobile = profile?.mobile_number
+        ? `******${profile.mobile_number.slice(-4)}`
         : "";
+
+    useEffect(() => {
+
+        async function loadProfile() {
+
+            try {
+
+                const response = await fetch(
+                    `${API}/api/user/profile`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            session_token: localStorage.getItem("session_token")
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+                    setProfile(data.user);
+                }
+
+            } catch (err) {
+                console.error(err);
+            }
+
+        }
+
+        loadProfile();
+
+    }, []);
 
     return (
 
         <div className="profile">
 
             <div className="profile-header">
-
                 <img
-                    src={user?.profile_image}
+                    src={profile?.profile_image || AerodeckDP}
                     alt="Profile"
                     className="profile-image"
                     onError={(e) => {
-                        if (e.target.src !== AerodeckDP) {
-                            e.target.onerror = null;
-                            e.target.src = AerodeckDP;
-                        }
+                        e.target.onerror = null;
+                        e.target.src = AerodeckDP;
                     }}
                 />
 
-                <h2>{user.full_name}</h2>
+
+                <h2>{profile?.full_name}</h2>
 
                 <p>{maskedMobile}</p>
 

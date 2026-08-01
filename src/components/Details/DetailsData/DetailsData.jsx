@@ -22,7 +22,8 @@ function DetailsData({
     onIncreaseCart,
     onDecreaseCart,
 
-    onBuyNow
+    onOpenDetails,
+    onViewAll
 
 }) {
 
@@ -41,14 +42,16 @@ function DetailsData({
                     onIncreaseCart={onIncreaseCart}
                     onDecreaseCart={onDecreaseCart}
 
-                    onBuyNow={onBuyNow}
-
                 />
                 <PreviewVideo video_link={productDetail?.video_link} />
                 <Features />
                 <Information productDetail={productDetail} />
                 <Reviews />
-                <RelatedProducts />
+                <RelatedProducts
+                    product={product}
+                    onOpenDetails={onOpenDetails}
+                    onViewAll={onViewAll}
+                />
                 <WhyChoose />
             </div>
         </>
