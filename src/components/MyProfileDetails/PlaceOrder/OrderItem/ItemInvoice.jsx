@@ -188,12 +188,7 @@ function ItemInvoice({
                 {/* Header */}
 
                 <div className="invoice-top">
-
                     <h1>AERODECK</h1>
-
-                    <p>Premium Gifts • Shop • Cards</p>
-
-                    <h2>TAX INVOICE / RETAIL INVOICE</h2>
                 </div>
 
                 {/* Invoice Information */}
@@ -216,46 +211,6 @@ function ItemInvoice({
                             <strong>Order Date :</strong>
                             <span>{invoice.order_date}</span>
                         </p>
-
-                        <p>
-                            <strong>Invoice Date :</strong>
-                            <span>{invoice.invoice_date}</span>
-                        </p>
-
-                        <p>
-                            <strong>Delivery Date :</strong>
-                            <span>{invoice.delivery_date}</span>
-                        </p>
-
-                    </div>
-
-                    <div className="info-right">
-
-                        <p>
-                            <strong>Order Status :</strong>
-
-                            <span className={`status status-${(invoice.order_status || "").toLowerCase()}`}>
-                                {invoice.order_status}
-                            </span>
-
-                        </p>
-
-                        <p>
-                            <strong>Payment Status :</strong>
-
-                            <span className={`status status-${(invoice.payment_status || "").toLowerCase()}`}>
-                                {invoice.payment_status}
-                            </span>
-
-                        </p>
-
-                        <p>
-                            <strong>Payment Method :</strong>
-
-                            <span>{invoice.payment_method}</span>
-
-                        </p>
-
                     </div>
 
                 </div>

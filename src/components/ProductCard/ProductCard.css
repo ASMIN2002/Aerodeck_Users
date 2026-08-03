@@ -354,6 +354,7 @@
     cursor: pointer;
     transition: .25s;
     flex-shrink: 0;
+    border-radius: 8px;
 }
 
 .pc-qty-btn:hover {

@@ -74,7 +74,7 @@ function MyOrders({
                 </button>
 
                 <h2>
-                    My Orders
+                    MY ORDERS
                 </h2>
 
             </div>
@@ -111,16 +111,16 @@ function MyOrders({
 
                         <div className="order-info">
 
-                            <h3>
-
-                                Order #{order.order_number}
-
-                            </h3>
-
+                            <div className="top-order-number">
+                                <h3>
+                                    Order #{order.order_number}
+                                </h3>
+                                <span className="order-count">
+                                    {order.available_items}/{order.total_items}
+                                </span>
+                            </div>
                             <p>
-
                                 Order Date : {new Date(order.created_at).toLocaleDateString()}
-
                             </p>
 
                             <p>
@@ -129,22 +129,25 @@ function MyOrders({
 
                             </p>
 
-                            <h4>
+                            <div className="myOrder-price-status">
 
-                                ₹ {order.total_amount}
+                                <h4>
 
-                            </h4>
-                          
+                                    ₹ {order.total_amount}
 
-                            <span
+                                </h4>
 
-                                className={`order-status ${order.order_status.toLowerCase()}`}
-                            >
 
-                                {order.order_status}
+                                <span
 
-                            </span>
+                                    className={`order-status ${order.order_status.toLowerCase()}`}
+                                >
 
+                                    {order.order_status}
+
+                                </span>
+
+                            </div>
                             <button
                                 onClick={() => {
 

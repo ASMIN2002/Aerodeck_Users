@@ -10,10 +10,10 @@
 }
 
 .order-details-header button{
-    width:40px;
-    height:40px;
+    width:30px;
+    height:30px;
     border:none;
-    border-radius:50%;
+    border-radius:20%;
     cursor:pointer;
 }
 
@@ -36,5 +36,8 @@
     margin-top:10px;
 }
 .order-details-header h2{
-    color: red;
+    background: linear-gradient(135deg, #00f7ff, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
 }

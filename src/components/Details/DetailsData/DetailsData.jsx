@@ -9,22 +9,17 @@ import WhyChoose from "./WhyChoose";
 import ProductSummary from "./ProductSummary";
 
 function DetailsData({
-
     product,
     productDetail,
     isLiked,
     isSaved,
     cartQuantity,
-
     onLike,
     onSave,
-
     onIncreaseCart,
     onDecreaseCart,
-
     onOpenDetails,
     onViewAll
-
 }) {
 
     return (
@@ -43,15 +38,15 @@ function DetailsData({
                     onDecreaseCart={onDecreaseCart}
 
                 />
-                <PreviewVideo video_link={productDetail?.video_link} />
-                <Features />
                 <Information productDetail={productDetail} />
-                <Reviews />
                 <RelatedProducts
                     product={product}
                     onOpenDetails={onOpenDetails}
                     onViewAll={onViewAll}
                 />
+                <PreviewVideo video_link={productDetail?.video_link} />
+                <Reviews />
+                <Features />
                 <WhyChoose />
             </div>
         </>

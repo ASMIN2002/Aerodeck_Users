@@ -6,9 +6,9 @@
 .cart-tabs {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 
-    width: 100%;
+    width: 80%;
     padding: 6px;
 
     background: #f4f6fb;
@@ -17,32 +17,25 @@
 
     box-sizing: border-box;
     overflow: hidden;
+    margin: auto;
 }
 
 .cart-tabs button {
     flex: 1;
-
-    height: 46px;
-
+    height: 35px;
     border: none;
     outline: none;
     cursor: pointer;
-
-    border-radius: 12px;
-
+    border-radius: 10px;
     background: transparent;
     color: #5d6475;
 
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: .3px;
-
+    font-size: 11px;
+    letter-spacing: 1.3px;
     transition: all .25s ease;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     user-select: none;
 }
 

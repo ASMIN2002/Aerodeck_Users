@@ -49,46 +49,12 @@ ROW
 ==============================*/
 
 .dt-info-row{
-
     width:100%;
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
     gap:16px;
-
-    padding:14px 16px;
-
-    background:#ffffff;
-
-    border:1px solid #ececec;
-
-    border-radius:14px;
-
-    transition:
-        border-color .25s ease,
-        box-shadow .25s ease,
-        transform .25s ease;
-
 }
-
-
-
-.dt-info-row:hover{
-
-    border-color:#dddddd;
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 10px 24px rgba(0,0,0,.06);
-
-}
-
-
 
 /*==============================
 LEFT TEXT

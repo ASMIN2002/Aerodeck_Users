@@ -5,10 +5,10 @@ import AerodeckDP from "../../../assets/AerodeckDP.png";
 
 
 function TopEditSection({
-    user,
-    setUser,
+    profile,
+    setProfile,
     setProfilePage
-}) {
+}){
 
     const fileInputRef = useRef(null);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -44,7 +44,7 @@ function TopEditSection({
                 return;
             }
 
-            setUser(data.user);
+            setProfile(data.user);
           
             setSelectedImage(null);
 
@@ -57,48 +57,6 @@ function TopEditSection({
             console.error(err);
 
             alert("Upload failed.");
-
-        }
-
-    };
-
-    const handleRemove = async () => {
-
-        try {
-
-            const res = await fetch(
-                `${API}/api/upload/remove-user-profile`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        session_token: localStorage.getItem("session_token")
-                    })
-                }
-            );
-
-            const data = await res.json();
-
-            if (!data.success) {
-                alert(data.message);
-                return;
-            }
-
-            setUser(data.user);
-
-            setSelectedImage(null);
-
-            if (fileInputRef.current) {
-                fileInputRef.current.value = "";
-            }
-
-            alert("Profile image removed.");
-
-        } catch (err) {
-
-            console.error(err);
 
         }
 
@@ -132,12 +90,6 @@ function TopEditSection({
                 >
                     Change
                 </button>
-                <button
-                    className="remove-btn"
-                    onClick={handleRemove}
-                >
-                    Remove DP
-                </button>
 
             </div>
             {/* Preview */}
@@ -150,7 +102,7 @@ function TopEditSection({
                         src={
                             selectedImage
                                 ? URL.createObjectURL(selectedImage)
-                                : (user?.profile_image)
+                                : (profile?.profile_image)
                         }
                         alt="Preview"
                         className="preview-image"

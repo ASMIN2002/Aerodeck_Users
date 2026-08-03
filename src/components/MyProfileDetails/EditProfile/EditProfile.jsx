@@ -3,21 +3,25 @@ import "./EditProfile.css";
 import TopEditSection from "./TopEditSection";
 import MediumEditSection from "./MediumEditSection";
 
-function EditProfile({ user, setUser, setProfilePage }) {
+function EditProfile({
+    profile,
+    setProfile,
+    setProfilePage
+}) {
 
     return (
 
         <div className="edit-profile">
 
             <TopEditSection
-                user={user}
-                setUser={setUser}
+                profile={profile}
+                setProfile={setProfile}
                 setProfilePage={setProfilePage}
             />
 
             <MediumEditSection
-                user={user}
-                setUser={setUser}
+                profile={profile}
+                setProfile={setProfile}
             />
 
 

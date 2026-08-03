@@ -136,8 +136,6 @@ function App() {
 
                     if (navigator.onLine) {
 
-                        localStorage.removeItem("session_token");
-
                         setPage("login");
 
                     }

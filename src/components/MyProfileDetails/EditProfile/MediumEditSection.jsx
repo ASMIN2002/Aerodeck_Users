@@ -2,13 +2,13 @@ import "./MediumEditSection.css";
 import { useState, useEffect } from "react";
 import { API } from "../../../services/api";
 
-function MediumEditSection({ user, setUser }) {
+function MediumEditSection({ profile, setProfile }) {
 
     const [fullName, setFullName] = useState("");
-    
+
     useEffect(() => {
-        setFullName(user?.full_name || "");
-    }, [user]);
+        setFullName(profile?.full_name || "");
+    }, [profile]);
 
     const handleSaveName = async () => {
 
@@ -31,7 +31,7 @@ function MediumEditSection({ user, setUser }) {
             const data = await response.json();
 
             if (data.success) {
-                setUser(data.user);
+                setProfile(data.user);
                 alert("Name updated successfully.");
             } else {
                 alert(data.message);
@@ -89,7 +89,7 @@ function MediumEditSection({ user, setUser }) {
                 <div className="mobile-box">
 
                     <span className="mobile-number">
-                        +91 {user?.mobile_number}
+                        +91 {profile?.mobile_number}
                     </span>
 
                     <span className="verified">

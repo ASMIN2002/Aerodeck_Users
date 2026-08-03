@@ -142,6 +142,27 @@ function Home({
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
     const [selectedInvoice, setSelectedInvoice] = useState(null);
+
+    const [profile, setProfile] = useState(null);
+    useEffect(() => {
+        async function loadProfile() {
+            const response = await fetch(`${API}/api/user/profile`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    session_token: localStorage.getItem("session_token")
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                setProfile(data.user);
+            }
+        }
+        loadProfile();
+    }, []);
+
     return (
 
         <div className="home-container">
@@ -269,8 +290,8 @@ function Home({
 
                     <Profile
                         key={profilePage + "-" + (user?.user_id || "")}
-                        user={user}
-                        setUser={setUser}
+                        profile={profile}
+                        setProfile={setProfile}
                         setPage={setPage}
                         onLogout={handleLogout}
                         setProfilePage={setProfilePage}
@@ -283,7 +304,7 @@ function Home({
                     profilePage === "viewprofile" &&
 
                     <ViewProfile
-                        user={user}
+                        profile={profile}
                         setProfilePage={setProfilePage}
                     />
                 }
@@ -353,8 +374,7 @@ function Home({
                         setSelectedOrder={setSelectedOrder}
                     />
                 }
-
-                {
+                {!isDetailsOpen &&
                     profilePage === "order-details" && (
                         <OrderItemDetails
                             order={selectedOrder}
@@ -363,8 +383,7 @@ function Home({
                             setSelectedTrackingOrder={setSelectedTrackingOrder}
                             setSelectedInvoice={setSelectedInvoice}
                         />
-                    )
-                }
+                    )}
                 {
                     profilePage === "invoice" && (
                         <ItemInvoice
@@ -409,8 +428,8 @@ function Home({
                     profilePage === "editprofile" &&
 
                     <EditProfile
-                        user={user}
-                        setUser={setUser}
+                        profile={profile}
+                        setProfile={setProfile}
                         setProfilePage={setProfilePage}
                     />
                 }

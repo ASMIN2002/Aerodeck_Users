@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import "./MyCart.css";
+import "./MyCart.css";
 import Address from "../../Address/Address";
 import CartBilling from "./CartBilling";
 import CartCard from "./CartCard";
@@ -293,21 +293,13 @@ function MyCart({
                         ))
 
                     ) : (
-
                         <div className="empty-cart">
-
                             <h2>No Products in your cart</h2>
-
                         </div>
-
                     )
-
                 ) : (
-
                     cards.length > 0 ? (
-
                         cards.map((item) => (
-
                             <CartCard
                                 key={item.cart_id}
                                 item={item}
@@ -322,15 +314,12 @@ function MyCart({
                     ) : (
 
                         <div className="empty-cart">
-
-                            <h2>No Cards in your cart</h2>
-
+                            <h2>
+                                No Cards in your cart
+                            </h2>
                         </div>
-
                     )
-
                 )}
-
             </div>
             {(
                 (activeTab === "products" && products.length > 0) ||
@@ -341,8 +330,6 @@ function MyCart({
                         onPlaceOrder={handlePlaceOrder}
                     />
                 )}
-
-
         </div>
 
     );

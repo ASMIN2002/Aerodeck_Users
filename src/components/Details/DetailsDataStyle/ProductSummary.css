@@ -8,15 +8,11 @@ SECTION
 ==============================*/
 
 .ps-section{
-
     width:100%;
-
     display:flex;
-
     flex-direction:column;
-
     gap:18px;
-
+    margin-top: -15px;
 }
 
 
@@ -45,7 +41,7 @@ HEADER
 
     margin:0;
 
-    font-size:22px;
+    font-size:15px;
 
     font-weight:700;
 
@@ -96,13 +92,9 @@ PRICE
 
 
 .ps-price{
-
-    font-size:20px;
-
+    font-size:17px;
     font-weight:700;
-
     color:#111;
-
 }
 
 
@@ -183,7 +175,7 @@ CART
 
     width:100%;
 
-    height:50px;
+    height:42px;
 
     border:none;
 
@@ -193,10 +185,7 @@ CART
 
     color:#fff;
 
-    font-size:15px;
-
-    font-weight:600;
-
+    font-size:13px;
     cursor:pointer;
 
     transition:.25s ease;

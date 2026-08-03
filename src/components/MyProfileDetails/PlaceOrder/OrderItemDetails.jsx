@@ -63,10 +63,10 @@ function OrderItemDetails({
             <div className="order-details-header">
 
                 <button onClick={() => setProfilePage("orders")}>
-                    ← Back
+                    ←
                 </button>
 
-                <h2>Order Details</h2>
+                <h2>ORDER DETAILS</h2>
 
             </div>
 
@@ -76,6 +76,7 @@ function OrderItemDetails({
 
                     <OrderItem
                         item={item}
+                        order={order}
                         order_id={order.order_id}
                         onOpenDetails={onOpenDetails}
                         setProfilePage={setProfilePage}
