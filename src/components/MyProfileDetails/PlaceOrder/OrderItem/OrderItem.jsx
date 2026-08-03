@@ -213,7 +213,9 @@ function OrderItem({
             />
             {item.order_status === "DELIVERED" && (
                 <>
-                    <Rating />
+                    <Rating
+                        product_id={item.product_id}
+                    />
                     <UploadImages />
                     <Feedback />
                     <HelpSupport />
