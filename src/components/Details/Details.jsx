@@ -2,6 +2,7 @@ import "./Details.css";
 import { API } from "../../services/api";
 import CertifiedCard from "../../assets/Certifiedcard.png";
 import DetailsData from "./DetailsData/DetailsData";
+
 import {
     FaHeart,
     FaRegHeart,
@@ -11,11 +12,14 @@ import {
 import { useEffect, useState } from "react";
 
 function Details({
+
     product,
     onBack,
     setCartCount,
     onOpenDetails,
-    onViewAll
+    onViewAll,
+    onViewAllMedia
+
 }) {
     const sessionToken = localStorage.getItem("session_token");
 
@@ -602,10 +606,6 @@ function Details({
 
     };
 
-    const handleBuyNow = () => {
-        console.log("Buy Now");
-    };
-
     return (
 
         <div className="dt-page">
@@ -720,9 +720,9 @@ function Details({
                 onSave={handleSave}
                 onIncreaseCart={handleIncreaseCart}
                 onDecreaseCart={handleDecreaseCart}
-                onBuyNow={handleBuyNow}
                 onOpenDetails={onOpenDetails}
                 onViewAll={onViewAll}
+                onViewAllMedia={onViewAllMedia}
             />
 
         </div>

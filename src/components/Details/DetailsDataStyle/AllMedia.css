@@ -1,0 +1,203 @@
+.all-media{
+
+    width:100%;
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:#fff;
+
+}
+
+.all-media-header{
+
+    position:sticky;
+
+    top:0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px 16px;
+
+    background:#fff;
+
+    border-bottom:1px solid #ececec;
+
+    z-index:10;
+
+}
+
+.all-media-back{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f5f5f5;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+}
+
+.all-media-header h2{
+
+    margin:0;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.all-media-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+
+    padding:16px;
+
+}
+
+.all-media-card{
+
+    background:#fff;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    border:1px solid #ececec;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+}
+
+.all-media-image{
+
+    width:100%;
+
+    aspect-ratio:1;
+
+    object-fit:cover;
+
+    display:block;
+
+    cursor:pointer;
+
+}
+@media (min-width:768px){
+
+    .all-media-grid{
+
+        grid-template-columns:repeat(4,1fr);
+
+    }
+
+}
+
+@media (min-width:1200px){
+
+    .all-media-grid{
+
+        grid-template-columns:repeat(6,1fr);
+
+    }
+
+}
+.media-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px;
+
+}
+
+.media-user-image{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+
+}
+
+.media-user-info{
+
+    flex:1;
+
+}
+
+.media-user-info h4{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#222;
+
+}
+
+.media-user-info span{
+
+    display:block;
+
+    margin-top:2px;
+
+    font-size:12px;
+
+    color:#777;
+
+}
+
+.media-rating{
+
+    display:flex;
+
+    gap:2px;
+
+}
+
+.media-star{
+
+    font-size:13px;
+
+}
+
+.media-star.filled{
+
+    color:#FFC107;
+
+}
+
+.media-star.empty{
+
+    color:#d5d5d5;
+
+}

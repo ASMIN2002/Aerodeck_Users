@@ -4,11 +4,15 @@ import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
 
-function Gifts({
+function Gift({
 
     setCartCount,
 
-    onOpenDetails
+    onOpenDetails,
+
+    search,
+
+    filter
 
 }) {
 
@@ -782,6 +786,73 @@ function Gifts({
 
     }, [sessionToken]);
 
+    const filteredGifts = gifts.filter((gift) => {
+
+        const keyword = search.toLowerCase();
+
+        const matchesSearch =
+
+            !search ||
+
+            gift.gift_name?.toLowerCase().includes(keyword) ||
+
+            gift.gift_description?.toLowerCase().includes(keyword);
+
+        return matchesSearch;
+
+    });
+
+    let finalGifts = [...filteredGifts];
+    if (filter.sort === "low") {
+
+        finalGifts.sort(
+
+            (a, b) =>
+
+                Number(a.gift_price) -
+
+                Number(b.gift_price)
+
+        );
+
+    }
+
+    if (filter.sort === "high") {
+
+        finalGifts.sort(
+
+            (a, b) =>
+
+                Number(b.gift_price) -
+
+                Number(a.gift_price)
+
+        );
+
+    }
+    if (filter.rating > 0) {
+
+        finalGifts = finalGifts.filter(
+
+            gift =>
+
+                Number(gift.gift_rating) >= filter.rating
+
+        );
+
+    }
+    if (filter.availableOnly) {
+
+        finalGifts = finalGifts.filter(
+
+            gift =>
+
+                Number(gift.gift_status) === 1
+
+        );
+
+    }
+
     return (
 
 
@@ -790,7 +861,7 @@ function Gifts({
             <div className="cds-grid">
 
                 {
-                    gifts.map((product) => (
+                    finalGifts.map((product) => (
 
                         <GiftCard
                             key={product.gift_id}
@@ -842,4 +913,4 @@ function Gifts({
 
 }
 
-export default Gifts;
+export default Gift;

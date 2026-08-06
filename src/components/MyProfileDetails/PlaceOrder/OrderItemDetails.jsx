@@ -14,33 +14,35 @@ function OrderItemDetails({
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchItems = async () => {
 
-        const fetchItems = async () => {
+        try {
 
-            try {
+            const response = await fetch(
+                `${API}/api/user/orders/${order.order_id}`
+            );
 
-                const response = await fetch(
-                    `${API}/api/user/orders/${order.order_id}`
-                );
+            const data = await response.json();
 
-                const data = await response.json();
+            if (data.success) {
 
-                if (data.success) {
-                    setItems(data.data);
-                }
-
-            } catch (error) {
-
-                console.error(error);
-
-            } finally {
-
-                setLoading(false);
+                setItems(data.data);
 
             }
 
-        };
+        } catch (error) {
+
+            console.error(error);
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    };
+
+    useEffect(() => {
 
         fetchItems();
 
@@ -81,12 +83,12 @@ function OrderItemDetails({
                         onOpenDetails={onOpenDetails}
                         setProfilePage={setProfilePage}
                         setSelectedInvoice={setSelectedInvoice}
+                        fetchItems={fetchItems}
                     />
+
                 </div>
 
             ))}
-
-
 
         </div>
 

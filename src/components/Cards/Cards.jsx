@@ -4,12 +4,17 @@ import ProductCard from "../ProductCard/ProductCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
-
 function Cards({
 
     setCartCount,
 
-    onOpenDetails
+    onOpenDetails,
+
+    search,
+
+    filter,
+
+    setCategories
 
 }) {
 
@@ -668,8 +673,19 @@ function Cards({
                 const data = await response.json();
 
                 if (data.success) {
-
                     setProducts(data.data);
+
+                    setCategories([
+
+                        "All",
+
+                        ...new Set(
+
+                            data.data.map(item => item.product_category)
+
+                        )
+
+                    ]);
 
                 }
 
@@ -782,6 +798,93 @@ function Cards({
 
     }, [sessionToken]);
 
+    const categories = [
+
+        "All",
+
+        ...new Set(
+
+            products.map(item => item.product_category)
+
+        )
+
+    ];
+
+    const filteredProducts = products.filter((product) => {
+
+        const keyword = search.toLowerCase();
+
+        const matchesSearch =
+
+            !search ||
+
+            product.product_name?.toLowerCase().includes(keyword) ||
+
+            product.product_category?.toLowerCase().includes(keyword) ||
+
+            product.product_description?.toLowerCase().includes(keyword);
+
+        const matchesCategory =
+
+            filter.category === "All" ||
+
+            product.product_category === filter.category;
+
+        return matchesSearch && matchesCategory;
+
+    });
+    let finalProducts = [...filteredProducts];
+    if (filter.rating > 0) {
+
+        finalProducts = finalProducts.filter(
+
+            product =>
+
+                Number(product.product_rating) >= filter.rating
+
+        );
+
+    }
+    if (filter.availableOnly) {
+
+        finalProducts = finalProducts.filter(
+
+            product =>
+
+                Number(product.product_status) === 1
+
+        );
+
+    }
+
+    if (filter.sort === "low") {
+
+        finalProducts.sort(
+
+            (a, b) =>
+
+                Number(a.product_price) -
+
+                Number(b.product_price)
+
+        );
+
+    }
+
+    if (filter.sort === "high") {
+
+        finalProducts.sort(
+
+            (a, b) =>
+
+                Number(b.product_price) -
+
+                Number(a.product_price)
+
+        );
+
+    }
+
     return (
 
 
@@ -790,7 +893,7 @@ function Cards({
             <div className="cds-grid">
 
                 {
-                    products.map((product) => (
+                    finalProducts.map((product) => (
 
                         <ProductCard
                             key={product.product_id}

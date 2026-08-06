@@ -5,11 +5,15 @@ import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
 
-function Premiums({
+function Premium({
 
     setCartCount,
 
-    onOpenDetails
+    onOpenDetails,
+
+    search,
+
+    filter
 
 }) {
 
@@ -602,7 +606,7 @@ function Premiums({
 
                     body: JSON.stringify({
 
-                       session_token: sessionToken,
+                        session_token: sessionToken,
 
                         product_id: productId,
 
@@ -778,21 +782,91 @@ function Premiums({
 
     }, [sessionToken]);
 
+    const filteredPremiums = premiums.filter((premium) => {
+
+        const keyword = search.toLowerCase();
+
+        const matchesSearch =
+
+            !search ||
+
+            premium.premium_name?.toLowerCase().includes(keyword) ||
+
+            premium.premium_category?.toLowerCase().includes(keyword) ||
+
+            premium.premium_description?.toLowerCase().includes(keyword);
+
+        const matchesCategory =
+
+            filter.category === "All" ||
+
+            premium.premium_category === filter.category;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    let finalPremiums = [...filteredPremiums];
+    if (filter.sort === "low") {
+
+        finalPremiums.sort(
+
+            (a, b) =>
+
+                Number(a.premium_price) -
+
+                Number(b.premium_price)
+
+        );
+
+    }
+
+    if (filter.sort === "high") {
+
+        finalPremiums.sort(
+
+            (a, b) =>
+
+                Number(b.premium_price) -
+
+                Number(a.premium_price)
+
+        );
+
+    }
+
+    if (filter.rating > 0) {
+
+        finalPremiums = finalPremiums.filter(
+
+            premium =>
+
+                Number(premium.premium_rating) >= filter.rating
+
+        );
+
+    }
+
+    if (filter.availableOnly) {
+
+        finalPremiums = finalPremiums.filter(
+
+            premium =>
+
+                Number(premium.premium_status) === 1
+
+        );
+
+    }
+
     return (
 
 
         <section className="cds-section">
-
-            <h2 className="cds-title">
-
-                Premiums
-
-            </h2>
-
             <div className="cds-grid">
 
                 {
-                    premiums.map((product) => (
+                    finalPremiums.map((product) => (
 
                         <PremiumCard
                             key={product.premium_id}
@@ -844,4 +918,4 @@ function Premiums({
 
 }
 
-export default Premiums;
+export default Premium;

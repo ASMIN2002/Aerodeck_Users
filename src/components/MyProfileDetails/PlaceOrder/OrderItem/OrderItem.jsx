@@ -3,19 +3,23 @@ import { useState, useRef, useEffect } from "react";
 import { API } from "../../../../services/api";
 import TrackOrder from "./TrackOrder";
 import UploadImages from "./UploadImages";
-import Feedback from "./Feedback";
 import Rating from "./Rating";
 import HelpSupport from "./HelpSupport";
 import ItemInvoice from "./ItemInvoice";
 
 function OrderItem({
+
     item,
     order,
     order_id,
     onOpenDetails,
     setProfilePage,
-    setSelectedInvoice
+    setSelectedInvoice,
+    fetchItems
+
 }) {
+
+    const session_token = localStorage.getItem("session_token");
 
     const [cancelStatus, setCancelStatus] = useState(
         item.cancel_status || "CANCEL"
@@ -24,6 +28,11 @@ function OrderItem({
     const [cancelReason, setCancelReason] = useState("");
     const cancelBoxRef = useRef(null);
     const [orderStatus, setOrderStatus] = useState(item.order_status);
+    const [isReturned, setIsReturned] = useState(
+        !!item.return_status
+    );
+    const [reviewImages, setReviewImages] = useState([]);
+    const [returned, setReturned] = useState(false);
 
     const images = [
         item.product_image1,
@@ -164,6 +173,7 @@ function OrderItem({
 
         <div className="order-item-card">
 
+
             <div className="order-item-images">
 
                 {images.map((image, index) => (
@@ -192,13 +202,18 @@ function OrderItem({
                 <div className="smallinfo2">
                     <p><strong>Price :</strong> ₹ {item.product_price}</p>
                     <p>
-                        <strong>Cancel Till :</strong>{" "}
-                        {new Date(item.cancel_date).toLocaleString("en-IN", {
+                        <strong>
+                            {isReturned ? "Requested Date :" : "Cancel Till :"}
+                        </strong>{" "}
+
+                        {new Date(
+                            isReturned
+                                ? item.return_request_date
+                                : item.cancel_date
+                        ).toLocaleDateString("en-IN", {
                             day: "2-digit",
                             month: "short",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit"
+                            year: "numeric"
                         })}
                     </p>
                 </div>
@@ -210,16 +225,35 @@ function OrderItem({
                         ? "CANCELLED"
                         : item.order_status
                 }
+                returnStatus={isReturned ? "REQUESTED" : null}
             />
             {item.order_status === "DELIVERED" && (
                 <>
-                    <Rating
-                        product_id={item.product_id}
-                    />
-                    <UploadImages />
-                    <Feedback />
-                    <HelpSupport />
-                    <ItemInvoice />
+                    {
+                        !isReturned && (
+                            <>
+                                <Rating
+                                    product_id={item.product_id}
+                                />
+
+                                <UploadImages
+                                    reviewImages={reviewImages}
+                                    setReviewImages={setReviewImages}
+                                    session_token={session_token}
+                                    product_id={item.product_id}
+                                />
+
+                                <HelpSupport
+                                    item={item}
+                                    order={order}
+                                    onReturnSuccess={() => {
+                                        setIsReturned(true);
+
+                                    }}
+                                />
+                            </>
+                        )
+                    }
                 </>
             )}
             <div className="order-item-actions">
@@ -233,14 +267,18 @@ function OrderItem({
                                 ? "gift"
                                 : item.product_id.startsWith("S")
                                     ? "shop"
-                                    : "card";
+                                    : item.product_id.startsWith("P")
+                                        ? "premium"
+                                        : "card";
 
                         const data =
                             type === "gift"
                                 ? { gift_id: item.product_id }
                                 : type === "shop"
                                     ? { shop_id: item.product_id }
-                                    : { product_id: item.product_id };
+                                    : type === "premium"
+                                        ? { premium_id: item.product_id }
+                                        : { product_id: item.product_id };
 
                         onOpenDetails(data, type);
 
@@ -249,86 +287,67 @@ function OrderItem({
                     View Product
                 </button>
 
-                <div className="down-btn2">
+                {
+                    !isReturned && (
 
-                    {
-                        cancelStatus === "REQUESTED" ? (
+                        <div className="down-btn2">
 
-                            <div className="cancel-order-btn requested">
-                                Requested
-                            </div>
+                            {
+                                cancelStatus === "REQUESTED" ? (
 
-                        ) : cancelStatus === "CANCELLED" ? (
+                                    <div className="cancel-order-btn requested">
+                                        Requested
+                                    </div>
 
-                            <div className="cancel-order-btn cancelled">
-                                Canceled
-                            </div>
+                                ) : cancelStatus === "CANCELLED" ? (
 
-                        ) : isCancelTimeout ? (
+                                    <div className="cancel-order-btn cancelled">
+                                        Canceled
+                                    </div>
 
-                            <div className="cancel-order-btn timeout">
-                                Cancel Timeout
-                            </div>
+                                ) : isCancelTimeout ? (
 
-                        ) : (
+                                    <div className="cancel-order-btn timeout">
+                                        Cancel Timeout
+                                    </div>
 
-                            !showCancelBox &&
-                            !isCancelTimeout && (
+                                ) : (
 
-                                <button
-                                    className="cancel-order-btn cancel"
-                                    onClick={() => setShowCancelBox(true)}
-                                >
-                                    Cancel Order
-                                </button>
+                                    !showCancelBox &&
+                                    !isCancelTimeout && (
 
-                            )
+                                        <button
+                                            className="cancel-order-btn cancel"
+                                            onClick={() => setShowCancelBox(true)}
+                                        >
+                                            Cancel Order
+                                        </button>
 
-                        )
-                    }
+                                    )
 
-                    {
-                        showCancelBox && cancelStatus !== "REQUESTED" && (
+                                )
+                            }
 
-                            <div
-                                className="cancel-box"
-                                ref={cancelBoxRef}
-                            >
+                            {
+                                showCancelBox &&
+                                cancelStatus !== "REQUESTED" && (
 
-                                <p className="cancel-title">
-                                    Why are you cancelling this order?
-                                </p>
+                                    <div
+                                        className="cancel-box"
+                                        ref={cancelBoxRef}
+                                    >
 
-                                <select
-                                    className="cancel-select"
-                                    value={cancelReason}
-                                    onChange={(e) => setCancelReason(e.target.value)}
-                                >
+                                        {/* Existing popup code */}
 
-                                    <option value="">Select Reason</option>
-                                    <option value="Ordered by mistake">Ordered by mistake</option>
-                                    <option value="Found a better price">Found a better price</option>
-                                    <option value="Changed my mind">Changed my mind</option>
-                                    <option value="Delivery is taking too long">Delivery is taking too long</option>
-                                    <option value="Wrong product selected">Wrong product selected</option>
-                                    <option value="No longer needed">No longer needed</option>
-                                    <option value="Other">Other</option>
+                                    </div>
 
-                                </select>
+                                )
+                            }
 
-                                <button
-                                    className="confirm-cancel-btn"
-                                    onClick={handleCancelOrder}
-                                >
-                                    Confirm Cancel
-                                </button>
+                        </div>
 
-                            </div>
-
-                        )
-                    }
-
-                </div>
+                    )
+                }
 
             </div>
         </div>

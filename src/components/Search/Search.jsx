@@ -5,7 +5,17 @@ import Filter from "../Filter/Filter";
 
 function Search({
 
-    selectedMenu
+    selectedMenu,
+
+    search,
+
+    setSearch,
+
+    filter,
+
+    setFilter,
+
+    categories
 
 }) {
 
@@ -57,6 +67,12 @@ function Search({
                     type="text"
                     className="sr-input"
                     placeholder={`Search ${selectedMenu}...`}
+                    value={search}
+                    onChange={(e) =>
+
+                        setSearch(e.target.value)
+
+                    }
                 />
 
             </div>
@@ -79,8 +95,13 @@ function Search({
 
                     selectedMenu={selectedMenu}
 
-                />
+                    filter={filter}
 
+                    setFilter={setFilter}
+
+                    categories={categories}
+
+                />
             }
 
         </div>

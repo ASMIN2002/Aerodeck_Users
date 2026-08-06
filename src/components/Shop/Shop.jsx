@@ -3,12 +3,15 @@ import ShopCard from "../Shop/ShopCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
-
-function Shops({
+function Shop({
 
     setCartCount,
 
-    onOpenDetails
+    onOpenDetails,
+
+    search,
+
+    filter
 
 }) {
 
@@ -760,21 +763,83 @@ function Shops({
 
     }, [sessionToken]);
 
+    const filteredShops = shops.filter((shop) => {
+
+        const keyword = search.toLowerCase();
+
+        const matchesSearch =
+
+            !search ||
+
+            shop.shop_name?.toLowerCase().includes(keyword) ||
+
+            shop.shop_description?.toLowerCase().includes(keyword);
+
+        return matchesSearch;
+
+    });
+
+    let finalShops = [...filteredShops];
+    if (filter.sort === "low") {
+
+        finalShops.sort(
+
+            (a, b) =>
+
+                Number(a.shop_price) -
+
+                Number(b.shop_price)
+
+        );
+
+    }
+
+    if (filter.sort === "high") {
+
+        finalShops.sort(
+
+            (a, b) =>
+
+                Number(b.shop_price) -
+
+                Number(a.shop_price)
+
+        );
+
+    }
+
+    if (filter.rating > 0) {
+
+        finalShops = finalShops.filter(
+
+            shop =>
+
+                Number(shop.shop_rating) >= filter.rating
+
+        );
+
+    }
+
+    if (filter.availableOnly) {
+
+        finalShops = finalShops.filter(
+
+            shop =>
+
+                Number(shop.shop_status) === 1
+
+        );
+
+    }
+
     return (
 
 
         <section className="cds-section">
-
-            <h2 className="cds-title">
-
-                Shops
-
-            </h2>
-
             <div className="cds-grid">
 
                 {
-                    shops.map((product) => (
+                    finalShops.map((product) => (
 
                         <ShopCard
                             key={product.shop_id}
@@ -823,4 +888,4 @@ function Shops({
 
 }
 
-export default Shops;
+export default Shop;

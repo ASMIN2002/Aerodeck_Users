@@ -303,3 +303,12 @@ TEXT
     }
 
 }
+.dt-review-avatar-img{
+
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    object-fit:cover;
+    flex-shrink:0;
+
+}

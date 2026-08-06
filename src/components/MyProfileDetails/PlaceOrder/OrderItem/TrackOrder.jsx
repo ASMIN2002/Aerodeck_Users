@@ -1,7 +1,10 @@
 import "./TrackOrder.css";
-
 function TrackOrder({
-    orderStatus
+
+    orderStatus,
+
+    returnStatus
+
 }) {
 
     const steps = [
@@ -15,16 +18,36 @@ function TrackOrder({
     const currentStep = steps.indexOf(orderStatus);
     const isCancelled = orderStatus === "CANCELLED";
 
+    const returnSteps = [
+        "REQUESTED",
+        "CONFIRMED",
+        "PICKUP",
+        "REFUNDED"
+    ];
+
+    const returnCurrentStep =
+        returnSteps.indexOf(returnStatus);
+
     return (
 
         <div className="track-order">
 
             <h3 className="track-title">
+
                 {
+
                     isCancelled
+
                         ? "❌ Order Cancelled"
-                        : `🚚 Track Order - ${orderStatus}`
+
+                        : returnStatus
+
+                            ? `🔄 Return Tracking - ${returnStatus}`
+
+                            : `🚚 Track Order - ${orderStatus}`
+
                 }
+
             </h3>
 
             {
@@ -52,54 +75,97 @@ function TrackOrder({
 
                     </div>
 
+                ) : returnStatus ? (
+
+                    <>
+
+
+                        <div className="track-line">
+
+                            <div
+                                className={`track-step ${returnCurrentStep >= 0 ? "completed" : ""
+                                    }`}
+                            >
+
+                                <div className="track-circle"></div>
+
+                                <span>REQUESTED</span>
+
+                            </div>
+
+                            <div
+                                className={`track-step ${returnCurrentStep >= 1 ? "completed" : ""
+                                    }`}
+                            >
+
+                                <div className="track-circle"></div>
+
+                                <span>CONFIRMED</span>
+
+                            </div>
+
+                            <div
+                                className={`track-step ${returnCurrentStep >= 2 ? "completed" : ""
+                                    }`}
+                            >
+
+                                <div className="track-circle"></div>
+
+                                <span>PICKUP</span>
+
+                            </div>
+
+                            <div
+                                className={`track-step ${returnCurrentStep >= 3 ? "completed" : ""
+                                    }`}
+                            >
+
+                                <div className="track-circle"></div>
+
+                                <span>REFUND</span>
+
+                            </div>
+
+                        </div>
+
+                    </>
+
                 ) : (
-
                     <div className="track-line">
-
                         <div
                             className={`track-step ${currentStep >= 0 ? "completed" : ""}`}
                         >
                             <div className="track-circle"></div>
                             <span>PLACED</span>
                         </div>
-
                         <div
                             className={`track-step ${currentStep >= 1 ? "completed" : ""}`}
                         >
                             <div className="track-circle"></div>
                             <span>PACKED</span>
                         </div>
-
                         <div
                             className={`track-step ${currentStep >= 2 ? "completed" : ""}`}
                         >
                             <div className="track-circle"></div>
                             <span>SHIPPED</span>
                         </div>
-
                         <div
                             className={`track-step ${currentStep >= 3 ? "completed" : ""}`}
                         >
                             <div className="track-circle"></div>
                             <span>OOD</span>
                         </div>
-
                         <div
                             className={`track-step ${currentStep >= 4 ? "completed" : ""}`}
                         >
                             <div className="track-circle"></div>
                             <span>DELIVERED</span>
                         </div>
-
                     </div>
-
                 )
             }
-
         </div>
-
     );
-
 }
-
 export default TrackOrder;

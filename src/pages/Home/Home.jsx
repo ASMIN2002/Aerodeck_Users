@@ -32,6 +32,8 @@ import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/Order
 import TrackOrder from "../../components/MyProfileDetails/PlaceOrder/OrderItem/TrackOrder";
 import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/ItemInvoice";
 import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfile";
+import AllReview from "../../components/Details/DetailsData/AllReview";
+import AllMedia from "../../components/Details/DetailsData/AllMedia";
 
 
 function Home({
@@ -52,15 +54,27 @@ function Home({
         return localStorage.getItem("selectedMenu") || "Cards";
 
     });
+    const [search, setSearch] = useState("");
+
+    const [filter, setFilter] = useState({
+
+        category: "All",
+
+        sort: "",
+
+        rating: 0,
+
+        availableOnly: false
+
+    });
+    const [categories, setCategories] = useState([]);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     const [selectedBottomTab, setSelectedBottomTab] = useState("Home");
     const [profilePage, setProfilePage] = useState("profile");
-
     const [selectedProduct, setSelectedProduct] = useState(null);
-
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const [detailsPage, setDetailsPage] = useState("details");
 
 
 
@@ -111,6 +125,19 @@ function Home({
     };
     const handleOpenDetails = (product, type) => {
 
+        const handleOpenDetails = (product, type) => {
+
+            setDetailsPage("details");
+
+            setSelectedProduct({
+                type,
+                data: product
+            });
+
+            setIsDetailsOpen(true);
+
+        };
+
 
         setSelectedProduct({
 
@@ -125,6 +152,8 @@ function Home({
     };
 
     const handleCloseDetails = () => {
+
+        setDetailsPage("details");
 
         setSelectedProduct(null);
 
@@ -198,26 +227,74 @@ function Home({
                     selectedBottomTab === "Premium") &&
 
                 <Search
+
                     selectedMenu={
                         selectedBottomTab === "Home"
                             ? selectedMenu
                             : "Premium"
                     }
+
+                    search={search}
+
+                    setSearch={setSearch}
+
+                    filter={filter}
+
+                    setFilter={setFilter}
+
+                    categories={categories}
+
                 />
             }
 
             <div className="home-content">
-                {
-                    isDetailsOpen &&
 
-                    <Details
-                        product={selectedProduct}
-                        onBack={handleCloseDetails}
-                        setCartCount={setCartCount}
-                        onOpenDetails={handleOpenDetails}
-                        onViewAll={handleCloseDetails}
-                    />
+                {
+
+                    isDetailsOpen && (
+
+                        detailsPage === "details" ? (
+
+                            <Details
+                                product={selectedProduct}
+                                onBack={handleCloseDetails}
+                                setCartCount={setCartCount}
+                                onOpenDetails={handleOpenDetails}
+                                onViewAll={() => setDetailsPage("allreview")}
+                                onViewAllMedia={() => setDetailsPage("allmedia")}
+                            />
+
+                        ) : detailsPage === "allreview" ? (
+
+                            <AllReview
+                                setDetailsPage={setDetailsPage}
+                                product_id={
+                                    selectedProduct?.data?.product_id ||
+                                    selectedProduct?.data?.gift_id ||
+                                    selectedProduct?.data?.shop_id ||
+                                    selectedProduct?.data?.premium_id
+                                }
+                            />
+
+                        ) : (
+
+                            <AllMedia
+                                onBack={() => setDetailsPage("details")}
+                                product_id={
+                                    selectedProduct?.data?.product_id ||
+                                    selectedProduct?.data?.gift_id ||
+                                    selectedProduct?.data?.shop_id ||
+                                    selectedProduct?.data?.premium_id
+                                }
+                            />
+
+                        )
+
+                    )
+
                 }
+
+
 
                 {
                     !isDetailsOpen &&
@@ -238,6 +315,9 @@ function Home({
                                 <Cards
                                     setCartCount={setCartCount}
                                     onOpenDetails={handleOpenDetails}
+                                    search={search}
+                                    filter={filter}
+                                    setCategories={setCategories}
                                 />
 
                             </>
@@ -251,6 +331,8 @@ function Home({
                             <Gift
                                 setCartCount={setCartCount}
                                 onOpenDetails={handleOpenDetails}
+                                search={search}
+                                filter={filter}
                             />
 
                         }
@@ -260,6 +342,8 @@ function Home({
                             <Shop
                                 setCartCount={setCartCount}
                                 onOpenDetails={handleOpenDetails}
+                                search={search}
+                                filter={filter}
                             />
                         }
 
@@ -274,6 +358,8 @@ function Home({
                     <Premium
                         setCartCount={setCartCount}
                         onOpenDetails={handleOpenDetails}
+                        search={search}
+                        filter={filter}
                     />
 
                 }
