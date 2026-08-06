@@ -96,18 +96,9 @@ function ProductCard({
             </div>
 
             <div className="pc-image-box">
-
                 <div className="pc-image-grid">
-
                     <img src={product.product_image1} alt="" className="pc-image" />
-                    <img src={product.product_image2} alt="" className="pc-image" />
-
-                    <img src={product.product_image3} alt="" className="pc-image" />
-
-                    <img src={product.product_image4} alt="" className="pc-image" />
-
                 </div>
-
             </div>
 
             <div className="pc-body">

@@ -497,15 +497,6 @@ function Gift({
                 )
 
             );
-
-            showToast(
-
-                `Added 1 Gift\n${product.gift_name}\nTotal Quantity : ${newQuantity}`,
-
-                "success"
-
-            );
-
         }
 
         catch (err) {
@@ -527,8 +518,6 @@ function Gift({
             );
 
             if (!cartItem) return;
-
-            // Minimum quantity pe remove from cart
             if (cartItem.quantity <= 1) {
 
                 const response = await fetch(
@@ -574,13 +563,6 @@ function Gift({
 
                 setCartCount(updatedCart.length);
 
-                showToast(
-
-                    `Removed From Cart\n${product.gift_name}`,
-
-                    "info"
-
-                );
 
                 return;
 
@@ -643,14 +625,6 @@ function Gift({
                 )
 
             );
-            showToast(
-
-                `Removed 1 Gift\n${product.gift_name}\nTotal Quantity : ${newQuantity}`,
-
-                "info"
-
-            );
-
         }
 
         catch (err) {

@@ -497,14 +497,6 @@ function Cards({
 
             );
 
-            showToast(
-
-                `Added 1 Card\n${product.product_name}\nTotal Quantity : ${newQuantity}`,
-
-                "success"
-
-            );
-
         }
 
         catch (err) {
@@ -573,14 +565,6 @@ function Cards({
 
                 setCartCount(updatedCart.length);
 
-                showToast(
-
-                    `Removed From Cart\n${product.product_name}`,
-
-                    "info"
-
-                );
-
                 return;
 
             }
@@ -642,14 +626,6 @@ function Cards({
                 )
 
             );
-            showToast(
-
-                `Removed 1 Card\n${product.product_name}\nTotal Quantity : ${newQuantity}`,
-
-                "info"
-
-            );
-
         }
 
         catch (err) {

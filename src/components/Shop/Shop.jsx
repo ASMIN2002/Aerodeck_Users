@@ -490,15 +490,6 @@ function Shop({
                 )
 
             );
-
-            showToast(
-
-                `Added 1 Shop\n${product.shop_name}\nTotal Quantity : ${newQuantity}`,
-
-                "success"
-
-            );
-
         }
 
         catch (err) {
@@ -560,16 +551,7 @@ function Shop({
                 setCartProducts(updatedCart);
 
                 setCartCount(updatedCart.length);
-
-                showToast(
-
-                    `Removed From Cart\n${product.shop_name}`,
-
-                    "info"
-
-                );
-
-                return;
+              return;
 
             }
 
@@ -620,14 +602,6 @@ function Shop({
                         : item
                 )
             );
-            showToast(
-
-                `Removed 1 Shop\n${product.shop_name}\nTotal Quantity : ${newQuantity}`,
-
-                "info"
-
-            );
-
         }
 
         catch (err) {

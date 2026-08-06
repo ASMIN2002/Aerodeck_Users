@@ -24,6 +24,7 @@ font-size:9px;
 font-weight:500;
 color:#222;
 transition:.2s;
+box-shadow: 0 0 3px black;
 }
 
 .sr-input::placeholder{

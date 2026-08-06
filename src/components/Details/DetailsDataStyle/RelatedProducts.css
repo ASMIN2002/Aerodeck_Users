@@ -10,8 +10,6 @@
 
     flex-direction:column;
 
-    gap:16px;
-
 }
 
 
@@ -34,11 +32,11 @@ HEADER
 
 
 
-.dt-section-header h3{
+.dt-section-header h2{
 
     margin:0;
 
-    font-size:14px;
+    font-size:13px;
 
     font-weight:700;
 
@@ -84,7 +82,7 @@ SCROLL
 
     display:flex;
 
-    gap:14px;
+    gap:10px;
 
     overflow-x:auto;
 
@@ -232,7 +230,7 @@ PRICE
 
 @media (min-width:1024px){
 
-    .dt-section-header h3{
+    .dt-section-header h2{
 
         font-size:22px;
 

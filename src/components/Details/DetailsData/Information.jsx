@@ -5,9 +5,6 @@ function Information({ productDetail }) {
     return (
 
         <div className="dt-information">
-
-            <h3>Product Information</h3>
-
             <div className="dt-info-row">
                 <span>Category</span>
                 <span>{productDetail?.category || "-"}</span>

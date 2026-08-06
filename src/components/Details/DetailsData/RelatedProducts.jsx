@@ -29,7 +29,7 @@ function RelatedProducts({
 
             <div className="dt-section-header">
 
-                <h3>Related Products</h3>
+                <h2>Products</h2>
                 <button
                     className="dt-view-all"
                     onClick={onViewAll}

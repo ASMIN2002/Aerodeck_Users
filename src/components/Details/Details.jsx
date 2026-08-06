@@ -552,6 +552,15 @@ function Details({
         }
 
         setCartQuantity(quantity);
+        const response = await fetch(
+            `${API}/api/user/cart?session_token=${sessionToken}`
+        );
+
+        const data = await response.json();
+
+        if (data.success && setCartCount) {
+            setCartCount(data.data.length);
+        }
 
     };
     const handleDecreaseCart = async () => {
@@ -573,7 +582,6 @@ function Details({
                 : 50;
 
         if (quantity < minQty) {
-
             await fetch(`${API}/api/user/cart/${productId}`, {
                 method: "DELETE",
                 headers: {
@@ -583,6 +591,15 @@ function Details({
                     session_token: sessionToken
                 })
             });
+            const response = await fetch(
+                `${API}/api/user/cart?session_token=${sessionToken}`
+            );
+
+            const data = await response.json();
+
+            if (data.success && setCartCount) {
+                setCartCount(data.data.length);
+            }
 
             setCartQuantity(0);
 
@@ -601,6 +618,15 @@ function Details({
             });
 
             setCartQuantity(quantity);
+            const response = await fetch(
+                `${API}/api/user/cart?session_token=${sessionToken}`
+            );
+
+            const data = await response.json();
+
+            if (data.success && setCartCount) {
+                setCartCount(data.data.length);
+            }
 
         }
 

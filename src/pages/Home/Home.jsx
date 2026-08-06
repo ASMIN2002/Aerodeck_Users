@@ -6,7 +6,6 @@ import "../../styles/Home.css";
 import Header from "../../components/Header/Header";
 import Address from "../../components/Address/Address";
 import Search from "../../components/Search/Search";
-import Trending from "../../components/Trending/Trending";
 import Cards from "../../components/Cards/Cards";
 import Gift from "../../components/Gift/Gift";
 import Shop from "../../components/Shop/Shop";
@@ -309,9 +308,6 @@ function Home({
                             selectedMenu === "Cards" &&
 
                             <>
-
-                                <Trending />
-
                                 <Cards
                                     setCartCount={setCartCount}
                                     onOpenDetails={handleOpenDetails}

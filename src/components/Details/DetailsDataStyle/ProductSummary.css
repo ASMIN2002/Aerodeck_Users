@@ -92,7 +92,7 @@ PRICE
 
 
 .ps-price{
-    font-size:17px;
+    font-size:13px;
     font-weight:700;
     color:#111;
 }
@@ -173,9 +173,9 @@ CART
 
 .ps-cart-btn{
 
-    width:100%;
+    width:68%;
 
-    height:42px;
+    height:40px;
 
     border:none;
 
@@ -217,7 +217,7 @@ QUANTITY
 ==============================*/
 
 .ps-qty{
-    width:100%;
+    width:68%;
     display:flex;
     align-items:center;
     gap:18px;

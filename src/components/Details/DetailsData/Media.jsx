@@ -59,9 +59,7 @@ function Media({
             <div className="dt-section-header">
 
                 <h3>
-
-                    Customer Media
-
+                    Product Images
                 </h3>
 
                 <button

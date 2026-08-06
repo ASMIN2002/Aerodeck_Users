@@ -36,7 +36,7 @@ function ProductShop({
     return (
 
         <div
-            className="pc-shop"
+            className="pc-card"
             onClick={handleShopClick}
         >
 
@@ -97,14 +97,7 @@ function ProductShop({
             <div className="pc-image-box">
 
                 <div className="pc-image-grid">
-
                     <img src={product.shop_image1} alt="" className="pc-image" />
-                    <img src={product.shop_image2} alt="" className="pc-image" />
-
-                    <img src={product.shop_image3} alt="" className="pc-image" />
-
-                    <img src={product.shop_image4} alt="" className="pc-image" />
-
                 </div>
 
             </div>

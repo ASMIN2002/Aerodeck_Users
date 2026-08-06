@@ -495,15 +495,6 @@ function Premium({
                 )
 
             );
-
-            showToast(
-
-                `Added 1 Premium\n${product.premium_name}\nTotal Quantity : ${newQuantity}`,
-
-                "success"
-
-            );
-
         }
 
         catch (err) {
@@ -571,15 +562,6 @@ function Premium({
                 setCartProducts(updatedCart);
 
                 setCartCount(updatedCart.length);
-
-                showToast(
-
-                    `Removed From Cart\n${product.premium_name}`,
-
-                    "info"
-
-                );
-
                 return;
 
             }
@@ -641,14 +623,6 @@ function Premium({
                 )
 
             );
-            showToast(
-
-                `Removed 1 Premium\n${product.premium_name}\nTotal Quantity : ${newQuantity}`,
-
-                "info"
-
-            );
-
         }
 
         catch (err) {

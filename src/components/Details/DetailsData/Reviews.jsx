@@ -40,7 +40,7 @@ function Reviews({
 
             <div className="dt-section-header">
 
-                <h3>Customer Reviews</h3>
+                <h4>Customer Reviews</h4>
 
                 <button
                     className="dt-view-all"

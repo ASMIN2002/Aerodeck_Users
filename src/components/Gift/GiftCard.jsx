@@ -36,7 +36,7 @@ function ProductGift({
     return (
 
         <div
-            className="pc-gift"
+            className="pc-card"
             onClick={handleGiftClick}
         >
 
@@ -97,14 +97,7 @@ function ProductGift({
             <div className="pc-image-box">
 
                 <div className="pc-image-grid">
-
                     <img src={product.gift_image1} alt="" className="pc-image" />
-                    <img src={product.gift_image2} alt="" className="pc-image" />
-
-                    <img src={product.gift_image3} alt="" className="pc-image" />
-
-                    <img src={product.gift_image4} alt="" className="pc-image" />
-
                 </div>
 
             </div>

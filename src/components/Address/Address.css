@@ -17,6 +17,7 @@ background:#f8f9fb;
 cursor:pointer;
 transition:.2s;
 overflow:hidden;
+box-shadow: 0 0 3px black;
 }
 
 .ad-button:hover{

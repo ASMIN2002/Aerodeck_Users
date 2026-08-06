@@ -11,7 +11,7 @@ function Splash({
             sessionStorage.setItem("aerodeck_splash", "true");
             setPage("startup");
 
-        }, 3200);
+        }, 4000);
 
         return () => clearTimeout(timer);
 
@@ -21,11 +21,31 @@ function Splash({
     return (
 
         <div className="sp-container">
+            <div className="sp-bg1"></div>
+            <div className="sp-bg2"></div>
+            <div className="sp-bg3"></div>
+
+            <div className="sp-grid"></div>
+
+            <div className="sp-particles">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div className="sp-light"></div>
 
             <div className="sp-content">
 
                 <div className="sp-logo">
-                   AD
+                    AD
                 </div>
 
                 <h1 className="sp-title">
