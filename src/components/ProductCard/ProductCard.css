@@ -126,7 +126,7 @@
 =========================== */
 
 .pc-body {
-    padding: 4px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
 }
@@ -458,4 +458,12 @@
         justify-content: space-between;
     }
 
+    .pc-demo-price {
+        font-size: 5px;
+    }
+
+    .pc-discount {
+        font-size: 4px;
+
+    }
 }
