@@ -7,7 +7,7 @@ background:#f8f9fb;
 .cds-grid{
 display:grid;
 grid-template-columns:repeat(3,minmax(0,1fr));
-gap:2px;
+gap:6px;
 align-items:start;
 }
 .pc-card{
