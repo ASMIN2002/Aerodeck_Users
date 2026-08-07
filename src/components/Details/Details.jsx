@@ -28,6 +28,10 @@ function Details({
     const [isSaved, setIsSaved] = useState(false);
     const [cartQuantity, setCartQuantity] = useState(0);
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState(0);
+    const [touchEnd, setTouchEnd] = useState(0);
+
     const images = [
 
         details?.product_image1 ||
@@ -68,6 +72,8 @@ function Details({
             details.premium_image1 ||
             CertifiedCard
         );
+
+        setCurrentIndex(0);
 
     }, [details]);
 
@@ -641,18 +647,50 @@ function Details({
 
             <div className="dt-image-wrapper">
 
-                <div className="dt-image-box">
+                <div
+                    className="dt-image-box"
+
+                    onTouchStart={(e) => {
+                        setTouchStart(e.targetTouches[0].clientX);
+                    }}
+
+                    onTouchMove={(e) => {
+                        setTouchEnd(e.targetTouches[0].clientX);
+                    }}
+
+                    onTouchEnd={() => {
+
+                        const distance = touchStart - touchEnd;
+
+                        if (Math.abs(distance) < 50) return;
+
+                        if (distance > 0) {
+
+                            if (currentIndex < images.length - 1) {
+                                const next = currentIndex + 1;
+                                setCurrentIndex(next);
+                                setSelectedImage(images[next]);
+                            }
+
+                        } else {
+
+                            if (currentIndex > 0) {
+                                const prev = currentIndex - 1;
+                                setCurrentIndex(prev);
+                                setSelectedImage(images[prev]);
+                            }
+
+                        }
+
+                    }}
+                >
 
                     <img
-
                         src={selectedImage}
-
                         alt={product?.product_name}
-
                     />
 
                 </div>
-
                 <div className="dt-overlay">
                     <button
                         className="dt-back"
@@ -723,8 +761,10 @@ function Details({
 
                         alt={`Image ${index + 1}`}
 
-                        onClick={() => setSelectedImage(image)}
-
+                        onClick={() => {
+                            setSelectedImage(image);
+                            setCurrentIndex(index);
+                        }}
                         className={
                             selectedImage === image
                                 ? "dt-thumb active"
