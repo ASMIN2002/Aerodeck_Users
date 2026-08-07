@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./CardOrder.css";
 import { API } from "../../../services/api";
 function CardOrder({
     setProfilePage,
@@ -106,7 +105,7 @@ function CardOrder({
                     ←
                 </button>
 
-                <h2>Product Order</h2>
+                <h2>Cards Order</h2>
 
             </div>
 
@@ -270,9 +269,9 @@ function CardOrder({
                         <small
                             style={{
                                 display: "block",
-                                marginTop: "6px",
-                                color: "#666",
-                                fontSize: "12px"
+                                marginTop: "4px",
+                                color: "black",
+                                fontSize: "8px"
                             }}
                         >
                             Remaining 20% (₹{(grandTotal * 0.20).toFixed(2)}) will be collected at the time of delivery.
@@ -282,13 +281,6 @@ function CardOrder({
                             ₹{(grandTotal * 0.80).toFixed(2)}
                         </strong>
                     </div>
-
-                    <strong>
-
-                        ₹{upiTotal.toFixed(2)}
-
-                    </strong>
-
                 </div>
 
             </div>

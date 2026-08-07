@@ -234,6 +234,7 @@ function OrderItem({
                             <>
                                 <Rating
                                     product_id={item.product_id}
+                                    order_item_id={item.order_item_id}
                                 />
 
                                 <UploadImages
@@ -241,8 +242,9 @@ function OrderItem({
                                     setReviewImages={setReviewImages}
                                     session_token={session_token}
                                     product_id={item.product_id}
+                                    order_item_id={item.order_item_id}
                                 />
-
+                                
                                 <HelpSupport
                                     item={item}
                                     order={order}

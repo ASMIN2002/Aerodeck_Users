@@ -2,7 +2,13 @@ import "./Rating.css";
 import { useEffect, useState } from "react";
 import { API } from "../../../../services/api";
 
-function Rating({ product_id }) {
+function Rating({
+
+    product_id,
+
+    order_item_id
+
+}) {
 
     const [rating, setRating] = useState(0);
     const [message, setMessage] = useState("");
@@ -27,7 +33,7 @@ function Rating({ product_id }) {
 
             const response = await fetch(
 
-                `${API}/api/user/review/${product_id}?session_token=${sessionToken}`
+                `${API}/api/user/review/${order_item_id}?session_token=${sessionToken}`
 
             );
 
@@ -87,6 +93,8 @@ function Rating({ product_id }) {
                     body: JSON.stringify({
 
                         session_token: sessionToken,
+
+                        order_item_id,
 
                         product_id,
 

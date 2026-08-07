@@ -25,9 +25,6 @@ function MyWishlist({
             );
 
             const data = await res.json();
-
-            console.log(data.data);
-
             if (data.success) {
                 setWishlist(data.data || []);
             }
@@ -118,29 +115,71 @@ function MyWishlist({
 
                     <div
                         className="wishlist-card"
-                        key={item.product_id}
+                        key={
+                            item.product_id ||
+                            item.gift_id ||
+                            item.shop_id ||
+                            item.premium_id
+                        }
                     >
 
                         <img
-                            src={item.image}
-                            alt={item.name}
+                            src={
+                                item.product_image1 ||
+                                item.gift_image1 ||
+                                item.shop_image1 ||
+                                item.premium_image1
+                            }
+                            alt={
+                                item.product_name ||
+                                item.gift_name ||
+                                item.shop_name ||
+                                item.premium_name
+                            }
                         />
 
                         <div className="wishlist-info">
 
-                            <h3>{item.name}</h3>
+                            <h3>{
+                                item.product_name ||
+                                item.gift_name ||
+                                item.shop_name ||
+                                item.premium_name
+                            }</h3>
 
                             <p>
-                                ⭐ {item.rating}
+                                ⭐ {
+                                    item.product_rating ||
+                                    item.gift_rating ||
+                                    item.shop_rating ||
+                                    item.premium_rating
+                                }
                             </p>
+                            <div className="detwish">
 
-                            <p className="wishlist-stats">
-                                ❤️ {item.likes} &nbsp;&nbsp; 🔖 {item.saves}
-                            </p>
+                                <p className="wishlist-stats">
+                                    ❤️ {
+                                        item.product_total_likes ||
+                                        item.gift_total_likes ||
+                                        item.shop_total_likes ||
+                                        item.premium_total_likes
+                                    } &nbsp;&nbsp; 🔖{
+                                        item.product_total_saves ||
+                                        item.gift_total_saves ||
+                                        item.shop_total_saves ||
+                                        item.premium_total_saves
+                                    }
+                                </p>
 
-                            <h4>
-                                ₹ {item.price}
-                            </h4>
+                                <h4>
+                                    ₹ {
+                                        item.product_price ||
+                                        item.gift_price ||
+                                        item.shop_price ||
+                                        item.premium_price
+                                    }
+                                </h4>
+                            </div>
 
                         </div>
 
@@ -148,14 +187,21 @@ function MyWishlist({
 
                             <button
                                 className="wishlist-view"
-                                onClick={() => onOpenDetails(item.product_id)}
+                                onClick={() => onOpenDetails(item, item.type)}
                             >
                                 View
                             </button>
 
                             <button
                                 className="wishlist-remove"
-                                onClick={() => handleRemove(item.product_id)}
+                                onClick={() =>
+                                    handleRemove(
+                                        item.product_id ||
+                                        item.gift_id ||
+                                        item.shop_id ||
+                                        item.premium_id
+                                    )
+                                }
                             >
                                 Remove
                             </button>

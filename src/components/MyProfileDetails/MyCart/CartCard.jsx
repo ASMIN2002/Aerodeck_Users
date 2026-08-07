@@ -89,71 +89,74 @@ function CartCard({
                     ₹ {demoPrice}
 
                 </p>
+                <div className="cartdipri">
+                    <p>
 
-                <p>
+                        Discount :
+                        {discount}%
 
-                    Discount :
-                    {discount}%
+                    </p>
 
-                </p>
+                    <h2>
 
-                <h2>
+                        ₹ {price}
 
-                    ₹ {price}
-
-                </h2>
-                <div className="cart-quantity">
-
-                    <button
-
-                        onClick={() => onDecrease(item)}
-
-                    >
-
-                        -
-
-                    </button>
-
-                    <span>
-
-                        {item.quantity}
-
-                    </span>
-
-                    <button
-
-                        onClick={() => onIncrease(item)}
-
-                    >
-
-                        +
-
-                    </button>
-
+                    </h2>
                 </div>
+                <div className="qtyviewcart">
+                    <div className="cart-quantity">
 
-                <button
+                        <button
 
-                    className="view-product-btn"
+                            onClick={() => onDecrease(item)}
 
-                    onClick={() =>
-                        onOpenDetails(
-                            item,
-                            String(item.product_id).startsWith("G")
-                                ? "gift"
-                                : String(item.product_id).startsWith("S")
-                                    ? "shop"
-                                    : String(item.product_id).startsWith("P")
-                                        ? "premium"
-                                        : "card"
-                        )
-                    }
+                        >
 
-                >
+                            -
 
-                    View Product
+                        </button>
 
-                </button>
+                        <span>
+
+                            {item.quantity}
+
+                        </span>
+
+                        <button
+
+                            onClick={() => onIncrease(item)}
+
+                        >
+
+                            +
+
+                        </button>
+
+                    </div>
+
+                    <button
+
+                        className="view-product-btn"
+
+                        onClick={() =>
+                            onOpenDetails(
+                                item,
+                                String(item.product_id).startsWith("G")
+                                    ? "gift"
+                                    : String(item.product_id).startsWith("S")
+                                        ? "shop"
+                                        : String(item.product_id).startsWith("P")
+                                            ? "premium"
+                                            : "card"
+                            )
+                        }
+
+                    >
+
+                        View Product
+
+                    </button>
+                </div>
 
             </div>
 

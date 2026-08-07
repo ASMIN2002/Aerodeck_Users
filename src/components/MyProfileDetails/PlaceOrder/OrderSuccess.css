@@ -1,180 +1,447 @@
-/* ===========================
-   Order Success Page
-=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 .order-success-page {
-    min-height: 100vh;
-    background: #f8f9fc;
+    position: relative;
+    width: 100%;
+    min-height: 100dvh;
+    padding: 24px 18px;
+    background: linear-gradient(180deg, #f7f9fc, #eef4ff);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 25px;
-    box-sizing: border-box;
-    text-align: center;
+    overflow: hidden;
 }
 
-/* ===========================
-   Success Circle
-=========================== */
+.success-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.success-bg span {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: .18;
+    animation: float 10s linear infinite;
+}
+
+.success-bg span:nth-child(1) {
+    width: 160px;
+    height: 160px;
+    background: #4f8cff;
+    top: -60px;
+    left: -40px;
+}
+
+.success-bg span:nth-child(2) {
+    width: 130px;
+    height: 130px;
+    background: #00d084;
+    top: 18%;
+    right: -45px;
+    animation-duration: 13s;
+}
+
+.success-bg span:nth-child(3) {
+    width: 90px;
+    height: 90px;
+    background: #ffd54f;
+    bottom: 20%;
+    left: -20px;
+    animation-duration: 11s;
+}
+
+.success-bg span:nth-child(4) {
+    width: 120px;
+    height: 120px;
+    background: #7c4dff;
+    bottom: -50px;
+    right: 15%;
+    animation-duration: 14s;
+}
+
+.success-bg span:nth-child(5) {
+    width: 60px;
+    height: 60px;
+    background: #26c6da;
+    top: 45%;
+    left: 12%;
+    animation-duration: 9s;
+}
+
+.success-bg span:nth-child(6) {
+    width: 70px;
+    height: 70px;
+    background: #ff6b6b;
+    top: 60%;
+    right: 10%;
+    animation-duration: 12s;
+}
 
 .success-circle {
+    position: relative;
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #fff;
-    font-size: 60px;
-    font-weight: bold;
+    background: linear-gradient(135deg, #16c784, #0ea765);
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: pop .5s ease;
-    box-shadow: 0 10px 30px rgba(34, 197, 94, .35);
+    font-size: 54px;
+    font-weight: 800;
+    color: #fff;
+    box-shadow: 0 15px 40px rgba(22, 199, 132, .28);
+    animation: pop .7s ease;
 }
 
-/* ===========================
-   Heading
-=========================== */
+.success-circle::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border: 2px solid rgba(22, 199, 132, .25);
+    border-radius: 50%;
+    animation: ring 2.5s infinite;
+}
 
 .order-success-page h1 {
-    margin-top: 25px;
-    font-size: 30px;
-    color: #222;
+    margin-top: 26px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #1f2937;
+    text-align: center;
+    line-height: 1.3;
 }
 
-.order-success-page p {
+.order-success-page>p {
     margin-top: 10px;
-    color: #666;
-    font-size: 16px;
-    margin-bottom: 30px;
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    line-height: 1.7;
+    max-width: 320px;
 }
-
-/* ===========================
-   Details Card
-=========================== */
-
-.order-success-card {
-    width: 100%;
-    max-width: 450px;
-    background: #fff;
-    border-radius: 18px;
-    padding: 22px;
-    box-shadow: 0 5px 18px rgba(0,0,0,.08);
-    margin-bottom: 30px;
-}
-
-.success-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.success-row:last-child {
-    border-bottom: none;
-}
-
-.success-row span {
-    color: #666;
-}
-
-.success-row strong {
-    color: #222;
-}
-
-.paid {
-    color: #16a34a;
-}
-
-/* ===========================
-   Buttons
-=========================== */
-
-.success-btn,
-.home-btn {
-    width: 100%;
-    max-width: 450px;
-    padding: 15px;
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .25s;
-}
-
-.success-btn {
-    background: #2563eb;
-    color: #fff;
-    margin-bottom: 15px;
-}
-
-.success-btn:hover {
-    background: #1d4ed8;
-}
-
-.home-btn {
-    background: #fff;
-    color: #2563eb;
-    border: 2px solid #2563eb;
-}
-
-.home-btn:hover {
-    background: #2563eb;
-    color: #fff;
-}
-
-/* ===========================
-   Animation
-=========================== */
 
 @keyframes pop {
-
     0% {
-        transform: scale(0);
+        transform: scale(.2) rotate(-25deg);
         opacity: 0;
     }
 
     70% {
-        transform: scale(1.1);
+        transform: scale(1.08);
     }
 
     100% {
         transform: scale(1);
         opacity: 1;
     }
-
 }
 
-/* ===========================
-   Mobile
-=========================== */
+@keyframes ring {
+    0% {
+        transform: scale(1);
+        opacity: .7;
+    }
 
-@media (max-width: 600px) {
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
 
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-25px) rotate(180deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(360deg);
+    }
+}
+
+@media(min-width:480px) {
     .order-success-page {
-        padding: 20px;
+        padding: 30px 24px;
     }
 
     .success-circle {
-        width: 90px;
-        height: 90px;
-        font-size: 48px;
+        width: 120px;
+        height: 120px;
+        font-size: 58px;
     }
 
     .order-success-page h1 {
-        font-size: 24px;
+        font-size: 32px;
     }
 
-    .order-success-page p {
+    .order-success-page>p {
+        font-size: 15px;
+    }
+}
+
+@media(min-width:768px) {
+    .order-success-page {
+        max-width: 760px;
+        margin: auto;
+    }
+
+    .success-circle {
+        width: 135px;
+        height: 135px;
+        font-size: 64px;
+    }
+
+    .order-success-page h1 {
+        font-size: 36px;
+    }
+
+    .order-success-page>p {
+        max-width: 420px;
+        font-size: 16px;
+    }
+}
+
+.order-success-card {
+    width: 100%;
+    max-width: 380px;
+    margin-top: 28px;
+    padding: 18px;
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid #e8edf5;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+    animation: cardShow .7s ease .25s both;
+}
+
+.success-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.success-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.success-row span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.success-row strong {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1f2937;
+    text-align: right;
+    word-break: break-word;
+}
+
+.paid {
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #dcfce7;
+    color: #16a34a !important;
+    font-size: 12px !important;
+    letter-spacing: .4px;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, .15);
+}
+
+.success-action {
+    width: 100%;
+    max-width: 380px;
+    margin-top: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeUp .8s ease .45s both;
+}
+
+@keyframes cardShow {
+    0% {
+        opacity: 0;
+        transform: translateY(35px) scale(.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(min-width:480px) {
+    .order-success-card {
+        max-width: 420px;
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .success-row {
+        padding: 16px 0;
+    }
+
+    .success-row span {
         font-size: 14px;
     }
 
-    .success-btn,
-    .home-btn {
+    .success-row strong {
         font-size: 15px;
     }
 
+    .paid {
+        font-size: 13px !important;
+        padding: 6px 14px;
+    }
+
+    .success-action {
+        max-width: 420px;
+    }
+}
+
+@media(min-width:768px) {
+    .order-success-card {
+        max-width: 500px;
+        padding: 26px;
+    }
+
+    .success-row span {
+        font-size: 15px;
+    }
+
+    .success-row strong {
+        font-size: 16px;
+    }
+
+    .success-action {
+        max-width: 500px;
+    }
+}
+
+.success-btn,
+.back-profile-btn {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.success-btn {
+    background: linear-gradient(135deg, #2563eb, #1565ff);
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, .25);
+}
+
+.success-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #0f56dd);
+}
+
+.success-btn:active {
+    transform: scale(.98);
+}
+
+.back-profile-btn {
+    background: #fff;
+    color: #374151;
+    border: 1px solid #dbe3ee;
+}
+
+.back-profile-btn:hover {
+    background: #f8fafc;
+    border-color: #cfd8e5;
+}
+
+.back-profile-btn:active {
+    transform: scale(.98);
+}
+
+.success-btn,
+.back-profile-btn {
+    animation: buttonShow .8s ease .6s both;
+}
+
+.order-success-page::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    left: -120px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37, 99, 235, .12), transparent 70%);
+    pointer-events: none;
+}
+
+.order-success-page::after {
+    content: "";
+    position: absolute;
+    right: -120px;
+    bottom: -120px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(22, 199, 132, .12), transparent 70%);
+    pointer-events: none;
+}
+
+@keyframes buttonShow {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(min-width:480px) {
+
+    .success-btn,
+    .back-profile-btn {
+        height: 54px;
+        font-size: 16px;
+        border-radius: 15px;
+    }
+}
+
+@media(min-width:768px) {
+
+    .success-btn,
+    .back-profile-btn {
+        height: 56px;
+        font-size: 17px;
+        border-radius: 16px;
+    }
 }

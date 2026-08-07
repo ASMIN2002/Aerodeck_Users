@@ -8,15 +8,20 @@ function OrderSuccess({ setProfilePage }) {
 
         <div className="order-success-page">
 
-            {/* Success Icon */}
+            <div className="success-bg">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
 
             <div className="success-circle">
 
                 ✓
 
             </div>
-
-            {/* Heading */}
 
             <h1>
 
@@ -27,10 +32,10 @@ function OrderSuccess({ setProfilePage }) {
             <p>
 
                 Thank you for shopping with AERODECK.
+                <br />
+                Your order has been received successfully.
 
             </p>
-
-            {/* Order Details */}
 
             <div className="order-success-card">
 
@@ -68,16 +73,27 @@ function OrderSuccess({ setProfilePage }) {
 
             </div>
 
-            {/* Buttons */}
+            <div className="success-action">
 
-            <button
-                className="success-btn"
-                onClick={() => setProfilePage("orders")}
-            >
+                <button
+                    className="success-btn"
+                    onClick={() => setProfilePage("orders")}
+                >
 
-                View My Orders
+                    View My Orders
 
-            </button>
+                </button>
+
+                <button
+                    className="back-profile-btn"
+                    onClick={() => setProfilePage("profile")}
+                >
+
+                    ← Back to Profile
+
+                </button>
+
+            </div>
 
         </div>
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./AllReview.css";
+import "../DetailsDataStyle/AllReview.css";
 import { API } from "../../../services/api";
 
 function AllReview({
@@ -32,7 +32,6 @@ function AllReview({
         }
         loadReviews();
     }, [product_id]);
-
     return (
 
         <div className="allreview-page">

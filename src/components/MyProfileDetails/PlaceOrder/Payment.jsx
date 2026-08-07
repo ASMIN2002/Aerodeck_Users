@@ -102,7 +102,7 @@ function Payment({
 
 
                 handler: async function (response) {
-                    
+
                     try {
                         const verifyResponse = await fetch(
                             `${API}/api/user/payment/verify`,
@@ -225,11 +225,10 @@ function Payment({
 
                 <button
                     className="payment-back"
-                    onClick={() => setProfilePage("invoice-product")}
+                    onClick={() => setProfilePage("cart")}
                 >
                     ←
                 </button>
-
                 <h2>UPI Payment</h2>
 
             </div>
@@ -241,102 +240,6 @@ function Payment({
                 <p>Total Amount</p>
 
                 <h1>₹{amount}</h1>
-
-            </div>
-
-            {/* Payment Method */}
-
-            <div className="payment-section">
-
-                <h3>Choose Payment Option</h3>
-
-                <label className="payment-option">
-
-                    <input
-                        type="radio"
-                        checked={paymentType === "upi"}
-                        onChange={() => setPaymentType("upi")}
-                    />
-
-                    <span>Pay via UPI ID</span>
-
-                </label>
-
-                {
-
-                    paymentType === "upi" && (
-
-                        <div className="upi-box">
-
-                            <h4>UPI ID</h4>
-
-                            <div className="upi-id">
-
-                                <span>{upiId}</span>
-
-                                <button onClick={copyUpiId}>
-                                    Copy
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    )
-
-                }
-
-                <label className="payment-option">
-
-                    <input
-                        type="radio"
-                        checked={paymentType === "qr"}
-                        onChange={() => setPaymentType("qr")}
-                    />
-
-                    <span>Scan QR Code</span>
-
-                </label>
-
-                {
-
-                    paymentType === "qr" && (
-
-                        <div className="qr-box">
-
-                            <img
-                                src="/qr-demo.png"
-                                alt="QR Code"
-                            />
-
-                            <p>
-                                Scan this QR using any UPI app.
-                            </p>
-
-                        </div>
-
-                    )
-
-                }
-
-            </div>
-
-            {/* Transaction */}
-
-            <div className="payment-section">
-
-                <h3>Transaction ID / UTR</h3>
-
-                <input
-                    type="text"
-                    placeholder="Enter Transaction ID"
-                    value={utr}
-                    onChange={(e) => setUtr(e.target.value)}
-                />
-
-                <small>
-                    Enter the UTR number after completing the payment.
-                </small>
 
             </div>
 

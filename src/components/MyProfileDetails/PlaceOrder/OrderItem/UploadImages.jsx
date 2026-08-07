@@ -6,10 +6,11 @@ import { API } from "../../../../services/api";
 function UploadImages({
 
     reviewImages = [],
-    setReviewImages = () => { },
+    setReviewImages = () => {},
 
     session_token,
-    product_id
+    product_id,
+    order_item_id
 
 }) {
     const [uploading, setUploading] = useState(false);
@@ -29,7 +30,7 @@ function UploadImages({
 
                 const response = await fetch(
 
-                    `${API}/api/user/review/my-images/${product_id}?session_token=${session_token}`
+                   `${API}/api/user/review/my-images/${order_item_id}?session_token=${session_token}`
 
                 );
 
@@ -77,6 +78,7 @@ function UploadImages({
         formData.append("image", file);
         formData.append("session_token", session_token);
         formData.append("product_id", product_id);
+        formData.append("order_item_id", order_item_id);
 
         const response = await fetch(
 

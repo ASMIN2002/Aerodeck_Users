@@ -108,7 +108,7 @@ function AllMedia({
 
                 <h2>
 
-                    Customer Media
+                    Review Images
 
                 </h2>
 
@@ -124,61 +124,6 @@ function AllMedia({
                             className="all-media-card"
                             key={image.media_id}
                         >
-
-                            <div className="media-user">
-
-                                <img
-                                    src={image.profile_image}
-                                    alt={image.full_name}
-                                    className="media-user-image"
-                                />
-
-                                <div className="media-user-info">
-
-                                    <h4>
-
-                                        {image.full_name}
-
-                                    </h4>
-
-                                    <span>
-
-                                        {getTimeAgo(image.upload_date)}
-
-                                    </span>
-
-                                </div>
-
-                                <div className="media-rating">
-
-                                    {
-
-                                        [...Array(5)].map((_, starIndex) => (
-
-                                            starIndex < image.rating ? (
-
-                                                <FaStar
-                                                    key={starIndex}
-                                                    className="media-star filled"
-                                                />
-
-                                            ) : (
-
-                                                <FaRegStar
-                                                    key={starIndex}
-                                                    className="media-star empty"
-                                                />
-
-                                            )
-
-                                        ))
-
-                                    }
-
-                                </div>
-
-                            </div>
-
                             <img
                                 src={image.image_url}
                                 alt="Customer Media"

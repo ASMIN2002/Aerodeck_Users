@@ -1,502 +1,212 @@
-.cart-card{
-position:relative;
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px;
-margin-bottom:10px;
-background:#fff;
-border:1px solid #e8edf6;
-border-radius:16px;
-box-shadow:0 8px 22px rgba(15,23,42,.05);
-transition:.25s;
-overflow:hidden;
-}
-
-.cart-card:hover{
-transform:translateY(-2px);
-box-shadow:0 14px 28px rgba(15,23,42,.08);
-border-color:#cfe0ff;
-}
-
-.cart-card::before{
-content:"";
-position:absolute;
-left:0;
-top:0;
-width:4px;
-height:100%;
-background:linear-gradient(180deg,#00d4ff,#4d7cff);
-}
-
-/* ---------------- Image ---------------- */
-
-.cart-image{
-width:88px;
-height:88px;
-object-fit:cover;
-border-radius:14px;
-border:1px solid #e8edf6;
-background:#f7f9fc;
-flex-shrink:0;
-cursor:pointer;
-transition:.3s;
-}
-
-.cart-card:hover .cart-image{
-transform:scale(1.03);
-}
-
-/* ---------------- Delete ---------------- */
-
-.delete-cart-btn{
-position:absolute;
-top:8px;
-right:8px;
-width:28px;
-height:28px;
-border:none;
-border-radius:8px;
-background:#fff0f1;
-color:#ff4b5c;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-transition:.25s;
-box-shadow:0 4px 10px rgba(0,0,0,.05);
-}
-
-.delete-cart-btn:hover{
-background:#ff4b5c;
-color:#fff;
-}
-
-.delete-cart-btn:active{
-transform:scale(.94);
-}
-
-/* ---------------- Details ---------------- */
-
-.cart-details{
-flex:1;
-display:flex;
-flex-direction:column;
-justify-content:center;
-min-width:0;
-padding-right:30px;
-}
-
-.cart-details h3{
-margin:0 0 4px;
-font-size:10px;
-font-weight:700;
-color:#1f2937;
-line-height:1.4;
-display:-webkit-box;
--webkit-line-clamp:2;
--webkit-box-orient:vertical;
-overflow:hidden;
-}
-
-.cart-details p{
-margin:2px 0;
-font-size:7px;
-font-weight:500;
-color:#64748b;
-line-height:1.4;
-}
-
-.cart-details h2{
-margin:5px 0 6px;
-font-size:12px;
-font-weight:700;
-color:#2563eb;
-}
-
-/* ---------------- Responsive ---------------- */
-
-@media(max-width:480px){
-
-.cart-card{
-padding:8px;
-gap:8px;
-border-radius:14px;
-}
-
-.cart-image{
-width:82px;
-height:82px;
-border-radius:12px;
-}
-
-.cart-details h3{
-font-size:9px;
-}
-
-.cart-details p{
-font-size:6.8px;
-}
-
-.cart-details h2{
-font-size:11px;
-}
-
-.delete-cart-btn{
-width:26px;
-height:26px;
-font-size:11px;
-}
-
-}
-
-@media(min-width:768px){
-
-.cart-card{
-padding:14px;
-gap:14px;
-border-radius:20px;
-}
-
-.cart-image{
-width:110px;
-height:110px;
-}
-
-.cart-details h3{
-font-size:16px;
-}
-
-.cart-details p{
-font-size:12px;
-}
-
-.cart-details h2{
-font-size:20px;
-}
-
-.delete-cart-btn{
-width:36px;
-height:36px;
-font-size:15px;
-}
-
-}
-/* ---------------- Quantity ---------------- */
-
-.cart-quantity{
-display:flex;
-align-items:center;
-gap:8px;
-margin-top:6px;
-margin-bottom:8px;
-}
-
-.cart-quantity button{
-width:24px;
-height:24px;
-border:none;
-border-radius:7px;
-background:linear-gradient(135deg,#00c6ff,#4d7cff);
-color:#fff;
-font-size:12px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-transition:.25s;
-box-shadow:0 5px 12px rgba(77,124,255,.18);
-}
-
-.cart-quantity button:hover{
-transform:translateY(-1px);
-box-shadow:0 8px 16px rgba(77,124,255,.25);
-}
-
-.cart-quantity button:active{
-transform:scale(.94);
-}
-
-.cart-quantity span{
-min-width:26px;
-text-align:center;
-font-size:9px;
-font-weight:700;
-color:#1f2937;
-}
-
-/* ---------------- View Product ---------------- */
-
-.view-product-btn{
-margin-top:auto;
-width:100%;
-height:28px;
-border:none;
-border-radius:9px;
-background:linear-gradient(135deg,#00c6ff,#4d7cff);
-color:#fff;
-font-size:7.2px;
-font-weight:700;
-letter-spacing:.2px;
-cursor:pointer;
-transition:.25s;
-box-shadow:0 6px 14px rgba(77,124,255,.18);
-}
-
-.view-product-btn:hover{
-transform:translateY(-1px);
-box-shadow:0 10px 18px rgba(77,124,255,.28);
-}
-
-.view-product-btn:active{
-transform:scale(.97);
-}
-
-/* ---------------- Mobile ---------------- */
-
-@media(max-width:480px){
-
-.cart-quantity{
-gap:6px;
-margin-top:5px;
-margin-bottom:7px;
-}
-
-.cart-quantity button{
-width:22px;
-height:22px;
-font-size:11px;
-border-radius:6px;
-}
-
-.cart-quantity span{
-min-width:24px;
-font-size:8px;
-}
-
-.view-product-btn{
-height:26px;
-font-size:6.8px;
-border-radius:8px;
-}
-
-}
-
-/* ---------------- Tablet ---------------- */
-
-@media(min-width:768px){
-
-.cart-quantity{
-gap:12px;
-margin-top:10px;
-margin-bottom:12px;
-}
-
-.cart-quantity button{
-width:34px;
-height:34px;
-font-size:16px;
-border-radius:10px;
-}
-
-.cart-quantity span{
-min-width:36px;
-font-size:14px;
-}
-
-.view-product-btn{
-height:38px;
-font-size:11px;
-border-radius:11px;
-}
-
-}
-/* ---------------- Smooth Transition ---------------- */
-
-.cart-card,
-.cart-image,
-.delete-cart-btn,
-.view-product-btn,
-.cart-quantity button{
-transition:
-transform .25s ease,
-box-shadow .25s ease,
-background .25s ease,
-border-color .25s ease;
-}
-
-/* ---------------- Entry Animation ---------------- */
-
-@keyframes cartCardFade{
-
-from{
-opacity:0;
-transform:translateY(12px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-.cart-card{
-animation:cartCardFade .35s ease;
-}
-
-/* ---------------- Image ---------------- */
-
-.cart-card:hover .cart-image{
-transform:scale(1.05);
-}
-
-/* ---------------- Product Name ---------------- */
-
-.cart-details h3{
-transition:color .25s;
-cursor:default;
-}
-
-.cart-card:hover .cart-details h3{
-color:#2563eb;
-}
-
-/* ---------------- Price ---------------- */
-
-.cart-details h2{
-display:inline-flex;
-align-items:center;
-padding:3px 10px;
-width:max-content;
-border-radius:20px;
-background:#eff6ff;
-}
-
-/* ---------------- Quantity ---------------- */
-
-.cart-quantity span{
-padding:0 4px;
-user-select:none;
-}
-
-/* ---------------- Focus ---------------- */
-
-.cart-quantity button:focus,
-.delete-cart-btn:focus,
-.view-product-btn:focus{
-outline:none;
-}
-
-/* ---------------- Scroll ---------------- */
-
-.cart-card *{
--webkit-tap-highlight-color:transparent;
+* {
+    box-sizing: border-box;
+}
+
+.cart-card {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    padding: 7px;
+    background: #fff;
+    border: 1px solid #000000;
+    border-radius: 16px;
+    box-shadow: 0 0 2.5px blue;
+    width: 95%;
+    margin: auto;
+    margin-top: 7px;
+}
+
+.cart-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #f3f5f8;
+}
+
+.delete-cart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 10px;
+    background: #fff2f2;
+    color: #ef4444;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .25s;
 }
 
-/* ---------------- Desktop ---------------- */
+.delete-cart-btn:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.cart-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
 
-@media(min-width:1200px){
+.cart-details h3 {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cart-details p {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 3px;
+}
+
+.cart-details h2 {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1565ff;
+}
 
-.cart-card{
-padding:16px;
-gap:16px;
-border-radius:22px;
+.cart-quantity {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 12px;
+    width: 46%;
+}
+
+.cart-quantity button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 10px;
+    background: #1565ff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.cart-quantity button:hover {
+    background: #0f56dd;
 }
 
-.cart-image{
-width:120px;
-height:120px;
-border-radius:18px;
+.cart-quantity button:active {
+    transform: scale(.95);
 }
 
-.cart-details h3{
-font-size:18px;
+.cart-quantity span {
+    min-width: 30px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
 }
 
-.cart-details p{
-font-size:13px;
+.view-product-btn {
+    width: 34%;
+    height: 27px;
+    border: none;
+    border-radius: 12px;
+    background: #1565ff;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
 }
 
-.cart-details h2{
-font-size:22px;
+.view-product-btn:hover {
+    background: #0f56dd;
 }
 
-.cart-quantity button{
-width:38px;
-height:38px;
-font-size:18px;
+.view-product-btn:active {
+    transform: scale(.98);
 }
 
-.cart-quantity span{
-font-size:15px;
+.cartdipri {
+    display: flex;
+    justify-content: space-between;
 }
 
-.view-product-btn{
-height:40px;
-font-size:12px;
+.qtyviewcart {
+    display: flex;
+    justify-content: space-between;
+    margin-left: -57px;
+    margin-bottom: -13px;
 }
 
-}
-
-/* ---------------- Small Phones ---------------- */
+@media(min-width:480px) {
+    .cart-card {
+        padding: 14px;
+        gap: 14px;
+    }
 
-@media(max-width:340px){
-
-.cart-card{
-padding:7px;
-gap:7px;
-}
+    .cart-image {
+        width: 110px;
+        height: 110px;
+    }
 
-.cart-image{
-width:74px;
-height:74px;
-border-radius:10px;
-}
+    .cart-details h3 {
+        font-size: 16px;
+    }
 
-.cart-details{
-padding-right:26px;
-}
+    .cart-details p {
+        font-size: 13px;
+    }
 
-.cart-details h3{
-font-size:8px;
-}
+    .cart-details h2 {
+        font-size: 21px;
+    }
 
-.cart-details p{
-font-size:6px;
+    .view-product-btn {
+        height: 42px;
+        font-size: 14px;
+    }
 }
 
-.cart-details h2{
-font-size:9px;
-padding:2px 8px;
-}
+@media(min-width:768px) {
+    .cart-card {
+        padding: 18px;
+        gap: 18px;
+    }
 
-.cart-quantity{
-gap:5px;
-}
+    .cart-image {
+        width: 130px;
+        height: 130px;
+        border-radius: 14px;
+    }
 
-.cart-quantity button{
-width:20px;
-height:20px;
-font-size:10px;
-}
+    .cart-details h3 {
+        font-size: 18px;
+    }
 
-.cart-quantity span{
-min-width:20px;
-font-size:7px;
-}
+    .cart-details p {
+        font-size: 14px;
+    }
 
-.view-product-btn{
-height:24px;
-font-size:6px;
-border-radius:7px;
-}
+    .cart-details h2 {
+        font-size: 24px;
+    }
 
-.delete-cart-btn{
-width:22px;
-height:22px;
-font-size:9px;
-}
+    .cart-quantity button {
+        width: 36px;
+        height: 36px;
+    }
 
+    .view-product-btn {
+        width: 180px;
+    }
 }
