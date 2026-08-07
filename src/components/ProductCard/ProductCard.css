@@ -34,6 +34,7 @@
     font-size: 3px;
     padding: 1px;
     border-radius: 3px;
+    display: none;
 }
 
 .pc-status.available {
@@ -126,9 +127,10 @@
 =========================== */
 
 .pc-body {
-    padding: 6px;
+    padding: 4px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .pc-highlight {
@@ -451,19 +453,5 @@
 
     .pc-name {
         font-size: 10px;
-    }
-
-    .pc-price-row {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .pc-demo-price {
-        font-size: 5px;
-    }
-
-    .pc-discount {
-        font-size: 4px;
-
     }
 }
