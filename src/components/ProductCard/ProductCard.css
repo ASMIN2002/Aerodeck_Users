@@ -445,3 +445,11 @@
     }
 
 }
+
+@media (min-width:360px){
+
+    .pc-name{
+        font-size:1rem;
+    }
+
+}
