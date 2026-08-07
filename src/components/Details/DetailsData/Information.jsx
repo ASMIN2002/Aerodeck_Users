@@ -27,7 +27,7 @@ function Information({ productDetail }) {
 
             <div className="dt-info-row">
                 <span>Delivery</span>
-                <span>{productDetail?.delivery || "-"}</span>
+                <span>{productDetail?.delivery || "-"} Days</span>
             </div>
 
             <div className="dt-info-row">

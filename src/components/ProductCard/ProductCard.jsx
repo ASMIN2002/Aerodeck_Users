@@ -42,25 +42,6 @@ function ProductCard({
         >
 
             <div className="pc-top">
-
-                <span
-                    className={
-                        product.product_status
-                            ? "pc-status available"
-                            : "pc-status unavailable"
-                    }
-                >
-
-                    {
-                        product.product_status
-
-                            ? "Available"
-
-                            : "Out of Stock"
-
-                    }
-
-                </span>
                 <button
 
                     className={`pc-like ${isLiked ? "active" : ""}`}
@@ -102,14 +83,38 @@ function ProductCard({
             </div>
 
             <div className="pc-body">
+                <div className="cardrathigh">
+                    {
+                        product.product_highlight_text && (
+                            <div className="pc-highlight">
+                                {product.product_highlight_text}
+                            </div>
+                        )
+                    }
+                    <div className="pc-rating-row">
 
-                {
-                    product.product_highlight_text && (
-                        <div className="pc-highlight">
-                            {product.product_highlight_text}
+                        <span>
+
+                            ⭐ {product.product_rating || "4.3"}
+
+                        </span>
+                        <div className="pc-final-price">
+
+                            ₹{product.product_price}
+
+                            <span>
+
+                                {" "}
+
+                                / Piece
+
+                            </span>
+
                         </div>
-                    )
-                }
+
+                    </div>
+                </div>
+
 
                 <h3 className="pc-name">
 
@@ -117,15 +122,7 @@ function ProductCard({
 
                 </h3>
 
-                <div className="pc-rating-row">
 
-                    <span>
-
-                        ⭐ {product.product_rating || "4.3"}
-
-                    </span>
-
-                </div>
 
                 <div className="pc-price-row">
 
@@ -140,18 +137,22 @@ function ProductCard({
                         {product.product_discount_percentage}% OFF
 
                     </span>
+                    <span
+                        className={
+                            product.product_status
+                                ? "pc-status available"
+                                : "pc-status unavailable"
+                        }
+                    >
 
-                </div>
+                        {
+                            product.product_status
 
-                <div className="pc-final-price">
+                                ? "Available"
 
-                    ₹{product.product_price}
+                                : "Out of Stock"
 
-                    <span>
-
-                        {" "}
-
-                        / Piece
+                        }
 
                     </span>
 
@@ -186,9 +187,6 @@ function ProductCard({
                             }}
 
                         >
-
-                            <FiShoppingCart />
-
                             <span>Add To Cart</span>
 
                         </button>
