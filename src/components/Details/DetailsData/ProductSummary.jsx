@@ -1,4 +1,5 @@
 import "../DetailsDataStyle/ProductSummary.css";
+import { useState } from "react";
 
 function ProductSummary({
 
@@ -14,12 +15,20 @@ function ProductSummary({
     onBuyNow
 
 }) {
+    const [showMore, setShowMore] = useState(false);
+
 
     const name =
         product?.product_name ||
         product?.gift_name ||
         product?.shop_name ||
         product?.premium_name;
+
+    const description =
+        product?.product_description ||
+        product?.gift_description ||
+        product?.shop_description ||
+        product?.premium_description;
 
     const rating =
         product?.product_rating ||
@@ -54,53 +63,72 @@ function ProductSummary({
         product?.shop_status ??
         product?.premium_status;
 
+    const [expanded, setExpanded] = useState(false);
+    const LIMIT = 120;
+    const isLong = (description?.length || 0) > LIMIT;
+
     return (
 
         <section className="ps-section">
+            <div className="tobbardet">
+                <div className="ps-price-row">
 
-            <div className="ps-header">
+                    <div className="pridisc">
+                        {demoPrice && (
 
-                <h2 className="ps-name">
-                    {name}
-                </h2>
+                            <span className="ps-demo-price">
 
+                                ₹{demoPrice}
+
+                            </span>
+
+                        )}
+
+                        {discount > 0 && (
+
+                            <span className="ps-discount">
+
+                                {discount}% OFF
+
+                            </span>
+
+                        )}
+                    </div>
+                    <span className="ps-price">
+
+                        ₹{price}
+
+                    </span>
+
+                </div>
                 <div className="ps-rating">
 
                     ⭐ {rating}
 
                 </div>
 
-            </div>
-
-            <div className="ps-price-row">
-
-                <span className="ps-price">
-
-                    ₹{price}
-
-                </span>
-
-                {demoPrice && (
-
-                    <span className="ps-demo-price">
-
-                        ₹{demoPrice}
-
-                    </span>
-
-                )}
-
-                {discount > 0 && (
-
-                    <span className="ps-discount">
-
-                        {discount}% OFF
-
-                    </span>
-
-                )}
 
             </div>
+
+            <div className="ps-header">
+                <h2 className="ps-name">
+                    {name}
+                </h2>
+            </div>
+            <h2 className="ps-desc">
+                {expanded || !isLong
+                    ? description
+                    : description.slice(0, LIMIT)}
+
+                {isLong && (
+                    <span
+                        className="ps-more"
+                        onClick={() => setExpanded(!expanded)}
+                    >
+                        {expanded ? " Less" : "... More"}
+                    </span>
+                )}
+            </h2>
 
             <div className="ps-cart-row">
 
