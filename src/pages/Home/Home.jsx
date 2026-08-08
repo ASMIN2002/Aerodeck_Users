@@ -206,6 +206,9 @@ function Home({
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
                 onOpenCart={() => {
+                    setIsDetailsOpen(false);
+                    setSelectedProduct(null);
+                    setDetailsPage("details");
                     setSelectedBottomTab("Profile");
                     setProfilePage("cart");
                 }}

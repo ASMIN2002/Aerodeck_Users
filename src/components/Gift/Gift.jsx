@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import GiftCard from "../Gift/GiftCard";
 import GiftHome from "./GiftHome";
 import GiftCategory from "./GiftCategory";
+import AllGifts from "./AllGifts";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
@@ -23,6 +24,7 @@ function Gift({
     const [gifts, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [categories, setCategories] = useState([]);
+    const [allGiftsPage, setAllGiftsPage] = useState(false);
 
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
@@ -849,8 +851,30 @@ function Gift({
     return (
         <>
             {
+                allGiftsPage ? (
 
-                giftCategoryPage ? (
+                    <AllGifts
+                        gifts={finalGifts}
+
+                        onBack={() => {
+                            setAllGiftsPage(false);
+                        }}
+
+                        onOpenDetails={onOpenDetails}
+
+                        onSave={handleSave}
+                        onLike={handleLike}
+                        onAddToCart={handleAddToCart}
+
+                        onIncreaseQuantity={handleIncreaseQuantity}
+                        onDecreaseQuantity={handleDecreaseQuantity}
+
+                        savedProducts={savedProducts}
+                        likedProducts={likedProducts}
+                        cartProducts={cartProducts}
+                    />
+
+                ) : giftCategoryPage ? (
 
                     <GiftCategory
 
@@ -891,9 +915,13 @@ function Gift({
                 ) : (
 
                     <GiftHome
+
                         user={user}
+
                         categories={categories}
+
                         gifts={gifts}
+
                         onCategoryClick={(category) => {
 
                             setSelectedCategory(category);
@@ -904,10 +932,39 @@ function Gift({
 
                         }}
 
+                        onOpenDetails={onOpenDetails}
+
+                        onSave={handleSave}
+
+                        onLike={handleLike}
+
+                        onAddToCart={handleAddToCart}
+
+                        onIncreaseQuantity={handleIncreaseQuantity}
+
+                        onDecreaseQuantity={handleDecreaseQuantity}
+
+                        savedProducts={savedProducts}
+
+                        likedProducts={likedProducts}
+
+                        cartProducts={cartProducts}
+
+                        onOpenAllGifts={() => {
+
+                            setGiftCategoryPage(false);
+
+                            setSelectedGiftCategory(null);
+
+                            setSelectedCategory(null);
+
+                            setAllGiftsPage(true);
+
+                        }}
+
                     />
 
                 )
-
             }
 
         </>

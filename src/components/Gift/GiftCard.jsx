@@ -111,13 +111,6 @@ function ProductGift({
                         </div>
                     )
                 }
-
-                <h3 className="pc-name">
-
-                    {product.gift_name}
-
-                </h3>
-
                 <div className="pc-rating-row">
 
                     <span>
@@ -125,8 +118,29 @@ function ProductGift({
                         ⭐ {product.gift_rating || "4.3"}
 
                     </span>
+                    <div className="pc-final-price">
+
+                        ₹{product.gift_price}
+
+                        <span>
+
+                            {" "}
+
+                            / Piece
+
+                        </span>
+
+                    </div>
 
                 </div>
+
+                <h3 className="pc-name">
+
+                    {product.gift_name}
+
+                </h3>
+
+
 
                 <div className="pc-price-row">
 
@@ -144,19 +158,7 @@ function ProductGift({
 
                 </div>
 
-                <div className="pc-final-price">
 
-                    ₹{product.gift_price}
-
-                    <span>
-
-                        {" "}
-
-                        / Piece
-
-                    </span>
-
-                </div>
 
             </div>
 

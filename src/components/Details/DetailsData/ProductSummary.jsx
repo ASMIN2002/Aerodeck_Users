@@ -56,6 +56,9 @@ function ProductSummary({
         product?.premium_discount_percentage ||
         0;
 
+    const totalPrice =
+        Number(price || 0) * Number(cartQuantity || 0);
+
 
     const status =
         product?.product_status ??
@@ -130,37 +133,56 @@ function ProductSummary({
                 )}
             </h2>
 
-            <div className="ps-cart-row">
+            <div className="downcartbuy">
+                <div className="ps-cart-row">
 
-                {cartQuantity > 0 ? (
+                    {cartQuantity > 0 ? (
 
-                    <div className="ps-qty">
+                        <div className="ps-qty">
 
-                        <button onClick={onDecreaseCart}>
-                            -
+                            <button onClick={onDecreaseCart}>
+                                -
+                            </button>
+
+                            <span>
+                                {cartQuantity}
+                            </span>
+
+                            <button onClick={onIncreaseCart}>
+                                +
+                            </button>
+
+                        </div>
+
+                    ) : (
+
+                        <button
+                            className="ps-cart-btn"
+                            onClick={onIncreaseCart}
+                        >
+                            🛒 Add To Cart
                         </button>
 
-                        <span>
-                            {cartQuantity}
-                        </span>
+                    )}
 
-                        <button onClick={onIncreaseCart}>
-                            +
+                </div>
+                <div className="ps-buy-now">
+                    <div className="ps-buy-now">
+
+                        <button
+                            className="ps-cart-btn"
+                            onClick={onBuyNow}
+                        >
+                            Buy at&nbsp;
+
+                            <span className="ps-total-price">
+                                ₹{Number(
+                                    cartQuantity > 0 ? totalPrice : price
+                                ).toLocaleString("en-IN")}
+                            </span>
                         </button>
-
                     </div>
-
-                ) : (
-
-                    <button
-                        className="ps-cart-btn"
-                        onClick={onIncreaseCart}
-                    >
-                        🛒 Add To Cart
-                    </button>
-
-                )}
-
+                </div>
             </div>
 
         </section>

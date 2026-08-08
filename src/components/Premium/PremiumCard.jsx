@@ -114,13 +114,6 @@ function ProductPremium({
                         </div>
                     )
                 }
-
-                <h3 className="pc-name">
-
-                    {product.premium_name}
-
-                </h3>
-
                 <div className="pc-rating-row">
 
                     <span>
@@ -128,8 +121,29 @@ function ProductPremium({
                         ⭐ {product.premium_rating || "4.3"}
 
                     </span>
+                    <div className="pc-final-price">
+
+                        ₹{product.premium_price}
+
+                        <span>
+
+                            {" "}
+
+                            / Piece
+
+                        </span>
+
+                    </div>
 
                 </div>
+
+                <h3 className="pc-name">
+
+                    {product.premium_name}
+
+                </h3>
+
+
 
                 <div className="pc-price-row">
 
@@ -142,20 +156,6 @@ function ProductPremium({
                     <span className="pc-discount">
 
                         {product.premium_discount_percentage}% OFF
-
-                    </span>
-
-                </div>
-
-                <div className="pc-final-price">
-
-                    ₹{product.premium_price}
-
-                    <span>
-
-                        {" "}
-
-                        / Piece
 
                     </span>
 

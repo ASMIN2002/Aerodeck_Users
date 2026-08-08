@@ -6,7 +6,9 @@ function GiftHome({
     user,
     categories,
     gifts,
-    onCategoryClick
+    onCategoryClick,
+    onOpenDetails,
+    onOpenAllGifts
 
 }) {
 
@@ -54,7 +56,7 @@ function GiftHome({
                                         {categoryGift?.gift_name || category}
                                     </span>
                                     <strong>
-                                       View {categoryGift?.gift_category}
+                                        View {categoryGift?.gift_category}
                                     </strong>
 
                                 </button>
@@ -73,16 +75,67 @@ function GiftHome({
 
                 <div className="gift-section-title">
 
-                    <h3>
-                        Suggested Gifts
-                    </h3>
+                    <h4>
+                        Suggested For You
+                    </h4>
+
+                    <button
+                        type="button"
+                        onClick={onOpenAllGifts}
+                        className="gift-all-button"
+                    >
+                        All →
+                    </button>
 
                 </div>
 
 
-                <div className="gift-suggested-placeholder">
+                <div className="gift-suggested-scroll">
+                    <div className="gift-suggested-grid">
 
-                    Suggested products will appear here.
+                        {
+                            gifts.slice(0, 20).map((gift) => (
+
+                                <div
+                                    className="gift-suggested-card"
+                                    key={gift.gift_id}
+                                    onClick={() => onOpenDetails(gift, "gift")}
+                                >
+                                    <div className="gift-suggested-image">
+
+                                        <img
+                                            src={gift.gift_image1}
+                                            alt={gift.gift_name}
+                                        />
+
+                                    </div>
+
+                                    <div className="gift-suggested-info">
+
+                                        <span className="gift-suggested-name">
+                                            {gift.gift_name}
+                                        </span>
+
+                                        <div className="gift-suggested-price">
+
+                                            <del>
+                                                ₹{gift.gift_demo_price}
+                                            </del>
+
+                                            <strong>
+                                                ₹{gift.gift_price}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            ))
+                        }
+
+                    </div>
 
                 </div>
 

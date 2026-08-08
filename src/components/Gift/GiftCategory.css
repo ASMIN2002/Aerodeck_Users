@@ -1,0 +1,105 @@
+/* =========================================
+   GIFT CATEGORY PAGE
+========================================= */
+
+.gift-category-page {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 10px 10px 30px;
+
+    overflow-x: hidden;
+
+    background: #f8fafc;
+}
+
+
+/* =========================================
+   CATEGORY HEADER
+========================================= */
+
+.gift-category-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 8px 0;
+}
+
+
+/* Back Button */
+
+.gift-category-header button {
+    align-items: center;
+    height: 29px;
+    padding: 0 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 10px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.gift-category-header button:active {
+    transform: scale(0.95);
+}
+
+
+/* Category Name */
+
+.gift-category-header h2 {
+    min-width: 0;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    background: linear-gradient(90deg,
+            #0800ff,
+            #000000,
+            #000000,
+            #ee3102);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   PRODUCTS SECTION
+========================================= */
+
+.gift-category-page .cds-section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+}
+
+
+/* =========================================
+   PRODUCT GRID
+========================================= */
+
+.gift-category-page .cds-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    box-sizing: border-box;
+}

@@ -111,13 +111,6 @@ function ProductShop({
                         </div>
                     )
                 }
-
-                <h3 className="pc-name">
-
-                    {product.shop_name}
-
-                </h3>
-
                 <div className="pc-rating-row">
 
                     <span>
@@ -126,7 +119,29 @@ function ProductShop({
 
                     </span>
 
+                    <div className="pc-final-price">
+
+                        ₹{product.shop_price}
+
+                        <span>
+
+                            {" "}
+
+                            / Piece
+
+                        </span>
+
+                    </div>
+
                 </div>
+
+
+                <h3 className="pc-name">
+
+                    {product.shop_name}
+
+                </h3>
+
 
                 <div className="pc-price-row">
 
@@ -143,21 +158,6 @@ function ProductShop({
                     </span>
 
                 </div>
-
-                <div className="pc-final-price">
-
-                    ₹{product.shop_price}
-
-                    <span>
-
-                        {" "}
-
-                        / Piece
-
-                    </span>
-
-                </div>
-
             </div>
 
             <div className="pc-footer">

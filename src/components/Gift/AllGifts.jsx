@@ -1,14 +1,16 @@
 import GiftCard from "./GiftCard";
-import "./GiftCategory.css";
 
-function GiftCategory({
-    category,
+function AllGifts({
+
     gifts,
+
     onBack,
     onOpenDetails,
+
     onSave,
     onLike,
     onAddToCart,
+
     onIncreaseQuantity,
     onDecreaseQuantity,
 
@@ -18,15 +20,16 @@ function GiftCategory({
 
 }) {
 
-    const categoryGifts = gifts.filter(
-
-        gift => gift.gift_category === category
-
-    );
-
     return (
 
-        <section className="cds-section">
+        <section
+            className="all-gifts-page"
+            style={{
+                padding: "0px 12px 30px",
+                boxSizing: "border-box"
+            }}
+        >
+
             <div className="gift-category-header">
 
                 <button
@@ -37,34 +40,38 @@ function GiftCategory({
                 </button>
 
                 <h2>
-                    {category}
+                    All Gifts
                 </h2>
 
             </div>
 
+
+            {/* All Gifts */}
+
             <div className="cds-grid">
 
                 {
-
-                    categoryGifts.map((product) => (
+                    gifts.map((gift) => (
 
                         <GiftCard
-                            key={product.gift_id}
-                            product={product}
+
+                            key={gift.gift_id}
+
+                            product={gift}
 
                             isSaved={savedProducts.has(
-                                String(product.gift_id)
+                                String(gift.gift_id)
                             )}
 
                             isLiked={likedProducts.has(
-                                String(product.gift_id)
+                                String(gift.gift_id)
                             )}
 
                             isAddedToCart={
                                 cartProducts.some(
                                     item =>
                                         String(item.product_id) ===
-                                        String(product.gift_id)
+                                        String(gift.gift_id)
                                 )
                             }
 
@@ -72,12 +79,14 @@ function GiftCategory({
                                 cartProducts.find(
                                     item =>
                                         String(item.product_id) ===
-                                        String(product.gift_id)
+                                        String(gift.gift_id)
                                 )?.quantity || 0
                             }
 
                             onSave={onSave}
+
                             onLike={onLike}
+
                             onAddToCart={onAddToCart}
 
                             onIncreaseQuantity={
@@ -89,12 +98,12 @@ function GiftCategory({
                             }
 
                             onOpenDetails={() =>
-                                onOpenDetails(product, "gift")
+                                onOpenDetails(gift, "gift")
                             }
+
                         />
 
                     ))
-
                 }
 
             </div>
@@ -105,4 +114,4 @@ function GiftCategory({
 
 }
 
-export default GiftCategory;
+export default AllGifts;
