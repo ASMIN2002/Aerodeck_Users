@@ -18,7 +18,7 @@ function GiftHome({
                 <div className="gift-section-title">
 
                     <h3>
-                        {user?.full_name?.split(" ")[0]}, still you are looking for this
+                        {user?.full_name?.split(" ")[0]}, still you are looking for this ?
                     </h3>
 
                 </div>

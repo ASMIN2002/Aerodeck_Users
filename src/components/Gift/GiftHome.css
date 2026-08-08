@@ -23,21 +23,15 @@
 }
 
 .gift-section-title h3 {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    color: #1e293b;
+    color: #f5f5f6;
     margin: 10px;
 }
 
 /* --- Category Section & Scroll Row --- */
 .gift-category-section {
-    /* width: 100%; */
-    background: linear-gradient(to bottom,
-            #05c1ff 0%,
-            #00f63a 28%,
-            #05196f 50%,
-            #00bbff 72%,
-            #000000 100%);
+    background: linear-gradient(to bottom, #10130e 0%, #00f63a 28%, #efeff2 50%, #d0dbd3 72%, #7fdfcc 100%);
     border-radius: 10px;
 
 }
@@ -47,24 +41,16 @@
     gap: 9px;
     overflow-x: auto;
     padding-bottom: 8px;
-    scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
     margin: 1px 7px;
-    
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .gift-category-scroll::-webkit-scrollbar {
-    height: 6px;
+    display: none;
 }
 
-.gift-category-scroll::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.gift-category-scroll::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1;
-    border-radius: 9999px;
-}
 
 /* --- Category Box / Card --- */
 .gift-category-box {
@@ -73,13 +59,14 @@
     flex-direction: column;
     align-items: center;
     background: #ffffff;
-    border: 1px solid #ef190a;
-    border-radius: 12px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-align: center;
-    width: 36%;
+    width: 26%;
     padding: 2px;
+    box-shadow: 0 0 1px rgb(0, 0, 0);
+    border: 1px solid black;
 }
 
 .gift-category-box:hover {
@@ -96,7 +83,7 @@
 .gift-category-icon {
     width: 100%;
     height: 90px;
-    border-radius: 15px;
+    border-radius: 7px;
     overflow: hidden;
     background-color: #f1f5f9;
     margin-bottom: 4px;
@@ -120,7 +107,7 @@
 
 /* --- Category Text Details --- */
 .gift-category-box span {
-    font-size: 10px;
+    font-size: 8px;
     color: #334155;
     margin-bottom: 1px;
     overflow: hidden;
@@ -130,7 +117,7 @@
 }
 
 .gift-category-box strong {
-    font-size: 10px;
+    font-size: 7px;
     font-weight: 600;
     color: #000000;
     text-align: left;
