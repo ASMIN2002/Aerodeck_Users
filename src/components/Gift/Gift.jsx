@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import GiftCard from "../Gift/GiftCard";
+import GiftHome from "./GiftHome";
+import GiftCategory from "./GiftCategory";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
-
 function Gift({
-
+    user,
     setCartCount,
-
     onOpenDetails,
-
     search,
-
-    filter
+    filter,
+    giftCategoryPage,
+    setGiftCategoryPage,
+    selectedGiftCategory,
+    setSelectedGiftCategory
 
 }) {
 
     const sessionToken = localStorage.getItem("session_token");
 
     const [gifts, setProducts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [categories, setCategories] = useState([]);
+
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
@@ -649,6 +654,20 @@ function Gift({
 
                     setProducts(data.data);
 
+                    setCategories([
+
+                        ...new Set(
+
+                            data.data
+
+                                .map(item => item.gift_category)
+
+                                .filter(Boolean)
+
+                        )
+
+                    ]);
+
                 }
 
             }
@@ -828,63 +847,71 @@ function Gift({
     }
 
     return (
+        <>
+            {
 
+                giftCategoryPage ? (
 
-        <section className="cds-section">
+                    <GiftCategory
 
-            <div className="cds-grid">
+                        category={selectedGiftCategory}
 
-                {
-                    finalGifts.map((product) => (
+                        gifts={finalGifts}
 
-                        <GiftCard
-                            key={product.gift_id}
-                            product={product}
-                            isSaved={savedProducts.has(String(product.gift_id))}
-                            isLiked={likedProducts.has(String(product.gift_id))}
-                            isAddedToCart={
-                                cartProducts.some(
+                        onBack={() => {
 
-                                    item => String(item.product_id) === String(product.gift_id)
+                            setSelectedCategory(null);
 
-                                )
-                            }
-                            cartQuantity={
-                                cartProducts.find(
+                            setSelectedGiftCategory(null);
 
-                                    item => String(item.product_id) === String(product.gift_id)
+                            setGiftCategoryPage(false);
 
-                                )?.quantity || 0
-                            }
-                            onSave={handleSave}
-                            onLike={handleLike}
-                            onAddToCart={handleAddToCart}
-                            onIncreaseQuantity={handleIncreaseQuantity}
-                            onDecreaseQuantity={handleDecreaseQuantity}
+                        }}
 
-                            onOpenDetails={() =>
-                                onOpenDetails(product, "gift")
-                            }
-                        />
+                        onOpenDetails={onOpenDetails}
 
-                    ))
-                }
+                        onSave={handleSave}
 
-            </div>
-            <Toast
+                        onLike={handleLike}
 
-                show={toast.show}
+                        onAddToCart={handleAddToCart}
 
-                message={toast.message}
+                        onIncreaseQuantity={handleIncreaseQuantity}
 
-                type={toast.type}
+                        onDecreaseQuantity={handleDecreaseQuantity}
 
-            />
+                        savedProducts={savedProducts}
 
-        </section>
+                        likedProducts={likedProducts}
 
+                        cartProducts={cartProducts}
+
+                    />
+
+                ) : (
+
+                    <GiftHome
+                        user={user}
+                        categories={categories}
+                        gifts={gifts}
+                        onCategoryClick={(category) => {
+
+                            setSelectedCategory(category);
+
+                            setSelectedGiftCategory(category);
+
+                            setGiftCategoryPage(true);
+
+                        }}
+
+                    />
+
+                )
+
+            }
+
+        </>
     );
-
 }
 
 export default Gift;

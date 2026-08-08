@@ -73,6 +73,8 @@ function Home({
     const [profilePage, setProfilePage] = useState("profile");
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const [giftCategoryPage, setGiftCategoryPage] = useState(false);
+    const [selectedGiftCategory, setSelectedGiftCategory] = useState(null);
     const [detailsPage, setDetailsPage] = useState("details");
 
 
@@ -325,10 +327,15 @@ function Home({
                             selectedMenu === "Gifts" &&
 
                             <Gift
+                                user={user}
                                 setCartCount={setCartCount}
                                 onOpenDetails={handleOpenDetails}
                                 search={search}
                                 filter={filter}
+                                giftCategoryPage={giftCategoryPage}
+                                setGiftCategoryPage={setGiftCategoryPage}
+                                selectedGiftCategory={selectedGiftCategory}
+                                setSelectedGiftCategory={setSelectedGiftCategory}
                             />
 
                         }
