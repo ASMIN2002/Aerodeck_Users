@@ -12,15 +12,15 @@ import {
 import { useEffect, useState } from "react";
 
 function Details({
-
     product,
     onBack,
     setCartCount,
     onOpenDetails,
     onViewAll,
-    onViewAllMedia
-
+    onViewAllMedia,
+    onBuyNow
 }) {
+
     const sessionToken = localStorage.getItem("session_token");
 
     const [details, setDetails] = useState(null);
@@ -637,7 +637,44 @@ function Details({
         }
 
     };
+    const handleBuyNow = () => {
 
+        if (!details) return;
+
+        const productId =
+            details.product_id ||
+            details.gift_id ||
+            details.shop_id ||
+            details.premium_id;
+
+        const id = String(productId);
+
+        // Same classification as MyCart
+        const isProduct =
+            id.startsWith("G") ||
+            id.startsWith("S");
+
+        // Detail page par cart me quantity hai
+        // to wahi quantity use hogi.
+        // Cart me nahi hai to default quantity.
+        const quantity =
+            cartQuantity > 0
+                ? cartQuantity
+                : isProduct
+                    ? 1
+                    : 50;
+
+        const buyNowItem = {
+            ...details,
+            product_id: productId,
+            quantity: quantity
+        };
+
+        onBuyNow(
+            buyNowItem,
+            isProduct ? "products" : "cards"
+        );
+    };
     return (
 
         <div className="dt-page">
@@ -786,6 +823,7 @@ function Details({
                 onSave={handleSave}
                 onIncreaseCart={handleIncreaseCart}
                 onDecreaseCart={handleDecreaseCart}
+                onBuyNow={handleBuyNow}
                 onOpenDetails={onOpenDetails}
                 onViewAll={onViewAll}
                 onViewAllMedia={onViewAllMedia}

@@ -5,7 +5,9 @@ function ProductOrder({
     setProfilePage,
     orderData,
     setOrderData,
-    selectedAddress
+    selectedAddress,
+    buyNowFromDetails,
+    onBackToDetails
 }) {
 
     const products = orderData.items || [];
@@ -102,7 +104,13 @@ function ProductOrder({
 
                 <button
                     className="product-order-back"
-                    onClick={() => setProfilePage("cart")}
+                    onClick={() => {
+                        if (buyNowFromDetails) {
+                            onBackToDetails();
+                        } else {
+                            setProfilePage("cart");
+                        }
+                    }}
                 >
                     ←
                 </button>

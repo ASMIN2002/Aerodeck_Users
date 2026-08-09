@@ -126,26 +126,17 @@ function Home({
     };
     const handleOpenDetails = (product, type) => {
 
-        const handleOpenDetails = (product, type) => {
+        setDetailsBackPage({
+            selectedBottomTab,
+            profilePage,
+            selectedMenu
+        });
 
-            setDetailsPage("details");
-
-            setSelectedProduct({
-                type,
-                data: product
-            });
-
-            setIsDetailsOpen(true);
-
-        };
-
+        setDetailsPage("details");
 
         setSelectedProduct({
-
             type,
-
             data: product
-
         });
 
         setIsDetailsOpen(true);
@@ -160,14 +151,30 @@ function Home({
 
         setIsDetailsOpen(false);
 
+        if (detailsBackPage) {
+
+            setSelectedBottomTab(
+                detailsBackPage.selectedBottomTab
+            );
+
+            setProfilePage(
+                detailsBackPage.profilePage
+            );
+
+            setSelectedMenu(
+                detailsBackPage.selectedMenu
+            );
+
+        }
+
     };
 
     const [orderData, setOrderData] = useState({
         items: [],
         orderType: ""
     });
-
-
+    const [buyNowFromDetails, setBuyNowFromDetails] = useState(false);
+    const [detailsBackPage, setDetailsBackPage] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
@@ -261,11 +268,40 @@ function Home({
 
                             <Details
                                 product={selectedProduct}
+
                                 onBack={handleCloseDetails}
+
                                 setCartCount={setCartCount}
+
                                 onOpenDetails={handleOpenDetails}
+
                                 onViewAll={() => setDetailsPage("allreview")}
+
                                 onViewAllMedia={() => setDetailsPage("allmedia")}
+
+                                onBuyNow={(buyNowItem, orderType) => {
+
+
+                                    setBuyNowFromDetails(true);
+
+                                    setOrderData({
+                                        items: [buyNowItem],
+                                        orderType: orderType
+                                    });
+
+                                    setIsDetailsOpen(false);
+
+                                    setSelectedProduct(null);
+
+                                    setSelectedBottomTab("Profile");
+
+                                    setProfilePage(
+                                        orderType === "products"
+                                            ? "productorder"
+                                            : "cardorder"
+                                    );
+
+                                }}
                             />
 
                         ) : detailsPage === "allreview" ? (
@@ -429,6 +465,7 @@ function Home({
                     <MyCart
                         setProfilePage={setProfilePage}
                         setOrderData={setOrderData}
+                        setBuyNowFromDetails={setBuyNowFromDetails}
                         onOpenDetails={handleOpenDetails}
                         setSelectedBottomTab={setSelectedBottomTab}
                     />
@@ -443,6 +480,14 @@ function Home({
                         orderData={orderData}
                         setOrderData={setOrderData}
                         selectedAddress={selectedAddress}
+
+                        buyNowFromDetails={buyNowFromDetails}
+
+                        onBackToDetails={() => {
+                            setBuyNowFromDetails(false);
+                            setIsDetailsOpen(true);
+                            setDetailsPage("details");
+                        }}
                     />
                 }
                 {
@@ -453,6 +498,16 @@ function Home({
                         setProfilePage={setProfilePage}
                         orderData={orderData}
                         setOrderData={setOrderData}
+
+                        buyNowFromDetails={buyNowFromDetails}
+
+                        onBackToDetails={() => {
+                            setBuyNowFromDetails(false);
+
+                            setIsDetailsOpen(true);
+
+                            setDetailsPage("details");
+                        }}
                     />
                 }
                 {

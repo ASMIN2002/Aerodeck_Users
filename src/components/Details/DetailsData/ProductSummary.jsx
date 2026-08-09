@@ -177,7 +177,9 @@ function ProductSummary({
 
                             <span className="ps-total-price">
                                 ₹{Number(
-                                    cartQuantity > 0 ? totalPrice : price
+                                    cartQuantity > 0
+                                        ? totalPrice
+                                        : price
                                 ).toLocaleString("en-IN")}
                             </span>
                         </button>

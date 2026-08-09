@@ -7,12 +7,11 @@ import CartTabs from "./CartTabs";
 import { API } from "../../../services/api";
 
 function MyCart({
-
     setProfilePage,
     setOrderData,
+    setBuyNowFromDetails,
     onOpenDetails,
     setSelectedBottomTab
-
 }) {
     const sessionToken = localStorage.getItem("session_token");
     const [activeTab, setActiveTab] = useState("products");
@@ -230,6 +229,7 @@ function MyCart({
 
     };
     const handlePlaceOrder = () => {
+        setBuyNowFromDetails(false);
         if (activeTab === "products") {
 
             setOrderData({

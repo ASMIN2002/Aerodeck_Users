@@ -19,6 +19,7 @@ function DetailsData({
     onSave,
     onIncreaseCart,
     onDecreaseCart,
+    onBuyNow,
     onOpenDetails,
     onViewAll,
     onViewAllMedia
@@ -31,13 +32,9 @@ function DetailsData({
                     isLiked={isLiked}
                     isSaved={isSaved}
                     cartQuantity={cartQuantity}
-
-                    onLike={onLike}
-                    onSave={onSave}
-
                     onIncreaseCart={onIncreaseCart}
                     onDecreaseCart={onDecreaseCart}
-
+                    onBuyNow={onBuyNow}
                 />
                 <Information productDetail={productDetail} />
                 <RelatedProducts
