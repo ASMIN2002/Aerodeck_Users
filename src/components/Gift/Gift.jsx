@@ -892,7 +892,6 @@ function Gift({
     }, [search, gifts]);
 
     const isSearching = search.trim().length > 0;
-
     return (
         <>
             {
