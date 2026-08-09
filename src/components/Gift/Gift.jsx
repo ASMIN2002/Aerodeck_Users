@@ -15,22 +15,20 @@ function Gift({
     giftCategoryPage,
     setGiftCategoryPage,
     selectedGiftCategory,
-    setSelectedGiftCategory
+    setSelectedGiftCategory,
+    setSuggestionData
 
 }) {
-
     const sessionToken = localStorage.getItem("session_token");
-
     const [gifts, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [categories, setCategories] = useState([]);
     const [allGiftsPage, setAllGiftsPage] = useState(false);
-
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
-
+    const [searchSuggestions, setSearchSuggestions] = useState([]);
     const showToast = (message, type = "success") => {
 
         setToast({
@@ -656,18 +654,14 @@ function Gift({
 
                     setProducts(data.data);
 
+                    setSuggestionData(data.data);
+
                     setCategories([
-
                         ...new Set(
-
                             data.data
-
                                 .map(item => item.gift_category)
-
                                 .filter(Boolean)
-
                         )
-
                     ]);
 
                 }
@@ -786,12 +780,10 @@ function Gift({
         const keyword = search.toLowerCase();
 
         const matchesSearch =
-
             !search ||
-
             gift.gift_name?.toLowerCase().includes(keyword) ||
-
-            gift.gift_description?.toLowerCase().includes(keyword);
+            gift.gift_description?.toLowerCase().includes(keyword) ||
+            gift.gift_category?.toLowerCase().includes(keyword);
 
         return matchesSearch;
 
@@ -848,6 +840,59 @@ function Gift({
 
     }
 
+    useEffect(() => {
+
+        if (!search.trim()) {
+            setSearchSuggestions([]);
+            return;
+        }
+
+        const keyword = search.toLowerCase().trim();
+
+        const names = gifts
+            .filter(gift =>
+                gift.gift_name?.toLowerCase().includes(keyword)
+            )
+            .map(gift => ({
+                type: "gift",
+                value: gift.gift_name
+            }));
+
+        const categories = [
+            ...new Set(
+                gifts
+                    .filter(gift =>
+                        gift.gift_category
+                            ?.toLowerCase()
+                            .includes(keyword)
+                    )
+                    .map(gift => gift.gift_category)
+            )
+        ].map(category => ({
+            type: "category",
+            value: category
+        }));
+
+        const combined = [
+            ...names,
+            ...categories
+        ];
+
+        const unique = combined.filter(
+            (item, index, self) =>
+                index === self.findIndex(
+                    x =>
+                        x.value.toLowerCase() ===
+                        item.value.toLowerCase()
+                )
+        );
+
+        setSearchSuggestions(unique.slice(0, 6));
+
+    }, [search, gifts]);
+
+    const isSearching = search.trim().length > 0;
+
     return (
         <>
             {
@@ -901,16 +946,78 @@ function Gift({
                         onAddToCart={handleAddToCart}
 
                         onIncreaseQuantity={handleIncreaseQuantity}
-
                         onDecreaseQuantity={handleDecreaseQuantity}
 
                         savedProducts={savedProducts}
-
                         likedProducts={likedProducts}
-
                         cartProducts={cartProducts}
 
                     />
+
+                ) : isSearching ? (
+
+                    <section className="gift-search-results">
+
+                        <div className="cds-grid">
+
+                            {
+                                finalGifts.map((gift) => (
+
+                                    <GiftCard
+                                        key={gift.gift_id}
+
+                                        product={gift}
+
+                                        isSaved={savedProducts.has(
+                                            String(gift.gift_id)
+                                        )}
+
+                                        isLiked={likedProducts.has(
+                                            String(gift.gift_id)
+                                        )}
+
+                                        isAddedToCart={
+                                            cartProducts.some(
+                                                item =>
+                                                    String(item.product_id) ===
+                                                    String(gift.gift_id)
+                                            )
+                                        }
+
+                                        cartQuantity={
+                                            cartProducts.find(
+                                                item =>
+                                                    String(item.product_id) ===
+                                                    String(gift.gift_id)
+                                            )?.quantity || 0
+                                        }
+
+                                        onSave={handleSave}
+
+                                        onLike={handleLike}
+
+                                        onAddToCart={handleAddToCart}
+
+                                        onIncreaseQuantity={
+                                            handleIncreaseQuantity
+                                        }
+
+                                        onDecreaseQuantity={
+                                            handleDecreaseQuantity
+                                        }
+
+                                        onOpenDetails={() =>
+                                            onOpenDetails(gift, "gift")
+                                        }
+
+                                    />
+
+                                ))
+                            }
+
+                        </div>
+
+                    </section>
 
                 ) : (
 

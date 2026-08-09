@@ -1,22 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import ShopCard from "../Shop/ShopCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
+import ShopHome from "./ShopHome";
+import AllShops from "./AllShops";
+import ShopCategory from "./ShopCategory";
 
 function Shop({
-
+    user,
     setCartCount,
-
     onOpenDetails,
-
     search,
-
-    filter
-
+    filter,
+    shopCategoryPage,
+    setShopCategoryPage,
+    selectedShopCategory,
+    setSelectedShopCategory
 }) {
 
     const sessionToken = localStorage.getItem("session_token");
+
     const [shops, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [allShopsPage, setAllShopsPage] = useState(false);
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
@@ -551,7 +557,7 @@ function Shop({
                 setCartProducts(updatedCart);
 
                 setCartCount(updatedCart.length);
-              return;
+                return;
 
             }
 
@@ -621,10 +627,17 @@ function Shop({
                 const response = await fetch(`${API}/api/user/shop`);
 
                 const data = await response.json();
-
                 if (data.success) {
 
                     setProducts(data.data);
+
+                    setCategories([
+                        ...new Set(
+                            data.data
+                                .map(item => item.shop_category)
+                                .filter(Boolean)
+                        )
+                    ]);
 
                 }
 
@@ -671,6 +684,7 @@ function Shop({
             }
 
         }
+
 
         async function loadLikes() {
 
@@ -805,59 +819,216 @@ function Shop({
         );
 
     }
+    const [activeOfferIndex, setActiveOfferIndex] = useState(0);
+
+    const suggestedShops = useMemo(() => {
+
+        const good = shops.filter(
+            shop => Number(shop.shop_rating || 0) > 3.5
+        );
+
+        const medium = shops.filter(
+            shop => {
+                const rating = Number(shop.shop_rating || 0);
+                return rating > 1 && rating <= 3.5;
+            }
+        );
+
+        const veryLow = shops.filter(
+            shop => Number(shop.shop_rating || 0) <= 1
+        );
+
+        const shuffle = (array) =>
+            [...array].sort(() => Math.random() - 0.5);
+
+        const selected = [
+            ...shuffle(good).slice(0, 15),
+            ...shuffle(medium).slice(0, 2),
+            ...shuffle(veryLow).slice(0, 3)
+        ];
+
+        return shuffle(selected);
+
+    }, [shops]);
+
+    const topLikedShops = useMemo(() => {
+
+        return [...shops]
+            .sort(
+                (a, b) =>
+                    Number(b.shop_total_likes || 0) -
+                    Number(a.shop_total_likes || 0)
+            )
+            .slice(0, 16);
+
+    }, [shops]);
+    const offerShops = useMemo(() => {
+
+        const eligible = shops.filter(shop =>
+            /up\s*to.*\d+%.*off/i.test(
+                shop.shop_highlight_text || ""
+            )
+        );
+
+        return [...eligible]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 5);
+
+    }, [shops]);
+    const offerScrollRef = useRef(null);
+
+    useEffect(() => {
+
+        if (offerShops.length <= 1) return;
+
+        const timer = setInterval(() => {
+
+            const container = offerScrollRef.current;
+
+            if (!container) return;
+
+            const nextPosition =
+                container.scrollLeft + container.clientWidth;
+
+            if (
+                nextPosition >=
+                container.scrollWidth - container.clientWidth
+            ) {
+
+                container.scrollTo({
+                    left: 0,
+                    behavior: "smooth"
+                });
+
+            } else {
+
+                container.scrollTo({
+                    left: nextPosition,
+                    behavior: "smooth"
+                });
+
+            }
+
+        }, 3000);
+
+        return () => clearInterval(timer);
+
+    }, [offerShops]);
+    const randomShops = useMemo(() => {
+
+        return [...shops]
+            .sort(() => Math.random() - 0.5);
+
+    }, [shops]);
 
     return (
+        <>
 
+            {
+                allShopsPage ? (
 
-        <section className="cds-section">
-            <div className="cds-grid">
+                    <AllShops
+                        shops={finalShops}
 
-                {
-                    finalShops.map((product) => (
+                        onBack={() => {
+                            setAllShopsPage(false);
+                        }}
 
-                        <ShopCard
-                            key={product.shop_id}
-                            product={product}
-                            isSaved={savedProducts.has(String(product.shop_id))}
-                            isLiked={likedProducts.has(String(product.shop_id))}
-                            isAddedToCart={
-                                cartProducts.some(
-                                    item => String(item.product_id) === String(product.shop_id)
-                                )
-                            }
+                        onOpenDetails={onOpenDetails}
 
-                            cartQuantity={
-                                cartProducts.find(
-                                    item => String(item.product_id) === String(product.shop_id)
-                                )?.quantity || 0
-                            }
-                            onSave={handleSave}
-                            onLike={handleLike}
-                            onAddToCart={handleAddToCart}
-                            onIncreaseQuantity={handleIncreaseQuantity}
-                            onDecreaseQuantity={handleDecreaseQuantity}
+                        onSave={handleSave}
+                        onLike={handleLike}
+                        onAddToCart={handleAddToCart}
 
-                            onOpenDetails={() =>
-                                onOpenDetails(product, "shop")
-                            }
-                        />
+                        onIncreaseQuantity={handleIncreaseQuantity}
+                        onDecreaseQuantity={handleDecreaseQuantity}
 
-                    ))
-                }
+                        savedProducts={savedProducts}
+                        likedProducts={likedProducts}
+                        cartProducts={cartProducts}
+                    />
 
-            </div>
+                ) : shopCategoryPage ? (
+
+                    <ShopCategory
+
+                        category={selectedShopCategory}
+
+                        shops={finalShops}
+
+                        onBack={() => {
+
+                            setSelectedShopCategory(null);
+
+                            setShopCategoryPage(false);
+
+                        }}
+
+                        onOpenDetails={onOpenDetails}
+
+                        onSave={handleSave}
+                        onLike={handleLike}
+                        onAddToCart={handleAddToCart}
+
+                        onIncreaseQuantity={handleIncreaseQuantity}
+                        onDecreaseQuantity={handleDecreaseQuantity}
+                        savedProducts={savedProducts}
+                        likedProducts={likedProducts}
+                        cartProducts={cartProducts}
+
+                    />
+
+                ) : (
+
+                    <ShopHome
+
+                        user={user}
+
+                        categories={categories}
+
+                        shops={shops}
+
+                        onCategoryClick={(category) => {
+
+                            setSelectedShopCategory(category);
+
+                            setShopCategoryPage(true);
+
+                        }}
+
+                        onOpenDetails={onOpenDetails}
+
+                        onSave={handleSave}
+                        onLike={handleLike}
+                        onAddToCart={handleAddToCart}
+
+                        onIncreaseQuantity={handleIncreaseQuantity}
+                        onDecreaseQuantity={handleDecreaseQuantity}
+
+                        savedProducts={savedProducts}
+                        likedProducts={likedProducts}
+                        cartProducts={cartProducts}
+
+                        onOpenAllShops={() => {
+
+                            setShopCategoryPage(false);
+                            setSelectedShopCategory(null);
+                            setAllShopsPage(true);
+
+                        }}
+
+                    />
+
+                )
+            }
+
             <Toast
-
                 show={toast.show}
-
                 message={toast.message}
-
                 type={toast.type}
-
             />
 
-        </section>
-
+        </>
     );
 
 }

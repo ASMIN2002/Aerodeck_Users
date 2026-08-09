@@ -76,8 +76,14 @@ function Home({
     const [giftCategoryPage, setGiftCategoryPage] = useState(false);
     const [selectedGiftCategory, setSelectedGiftCategory] = useState(null);
     const [detailsPage, setDetailsPage] = useState("details");
+    const [shopCategoryPage, setShopCategoryPage] = useState(false);
+    const [selectedShopCategory, setSelectedShopCategory] = useState(null);
 
 
+    const [cardSuggestionsData, setCardSuggestionsData] = useState([]);
+    const [giftSuggestionsData, setGiftSuggestionsData] = useState([]);
+    const [shopSuggestionsData, setShopSuggestionsData] = useState([]);
+    const [premiumSuggestionsData, setPremiumSuggestionsData] = useState([]);
 
     useEffect(() => {
 
@@ -244,16 +250,17 @@ function Home({
                             ? selectedMenu
                             : "Premium"
                     }
-
                     search={search}
-
                     setSearch={setSearch}
-
                     filter={filter}
-
                     setFilter={setFilter}
-
                     categories={categories}
+
+                    cards={cardSuggestionsData}
+                    gifts={giftSuggestionsData}
+                    shops={shopSuggestionsData}
+                    premiums={premiumSuggestionsData}
+                
 
                 />
             }
@@ -375,6 +382,7 @@ function Home({
                                 setGiftCategoryPage={setGiftCategoryPage}
                                 selectedGiftCategory={selectedGiftCategory}
                                 setSelectedGiftCategory={setSelectedGiftCategory}
+                                setSuggestionData={setGiftSuggestionsData}
                             />
 
                         }
@@ -382,10 +390,15 @@ function Home({
                         {
                             selectedMenu === "Shop" &&
                             <Shop
+                                user={user}
                                 setCartCount={setCartCount}
                                 onOpenDetails={handleOpenDetails}
                                 search={search}
                                 filter={filter}
+                                shopCategoryPage={shopCategoryPage}
+                                setShopCategoryPage={setShopCategoryPage}
+                                selectedShopCategory={selectedShopCategory}
+                                setSelectedShopCategory={setSelectedShopCategory}
                             />
                         }
 
