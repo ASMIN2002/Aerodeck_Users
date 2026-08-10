@@ -2,72 +2,76 @@
   REVIEWS
 =========================================================*/
 
-.dt-reviews{
+.dt-reviews {
 
-    width:100%;
+    width: 100%;
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 }
 
-
+.dt-review-top img {
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 2px black;
+}
 
 /*==============================
 HEADER
 ==============================*/
 
-.dt-section-header{
+.dts-section-header {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:space-between;
-
-    gap:12px;
-
-}
-
-
-
-.dt-section-header h4{
-
-    margin:0;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    color:#111;
+    justify-content: space-between;
+    margin-bottom: 5px;
 
 }
 
 
 
-.dt-view-all{
+.dts-section-header h4 {
 
-    border:none;
+    margin: 0;
 
-    background:transparent;
+    font-size: 10px;
 
-    color:#111;
+    font-weight: 700;
 
-    font-size:13px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s ease;
+    color: #111;
 
 }
 
 
 
-.dt-view-all:hover{
+.dt-view-all {
 
-    opacity:.7;
+    border: none;
+
+    background: transparent;
+
+    color: #0418f3;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
+}
+
+
+
+.dt-view-all:hover {
+
+    opacity: .7;
 
 }
 
@@ -77,31 +81,31 @@ HEADER
 SCROLL
 ==============================*/
 
-.dt-review-scroll{
+.dt-review-scroll {
 
-    display:flex;
+    display: flex;
 
-    gap:14px;
+    gap: 14px;
 
-    overflow-x:auto;
+    overflow-x: auto;
 
-    overflow-y:hidden;
+    overflow-y: hidden;
 
-    padding-bottom:4px;
+    padding-bottom: 4px;
 
-    scroll-behavior:smooth;
+    scroll-behavior: smooth;
 
-    scrollbar-width:none;
+    scrollbar-width: none;
 
-    -ms-overflow-style:none;
+    -ms-overflow-style: none;
 
 }
 
 
 
-.dt-review-scroll::-webkit-scrollbar{
+.dt-review-scroll::-webkit-scrollbar {
 
-    display:none;
+    display: none;
 
 }
 
@@ -111,19 +115,19 @@ SCROLL
 CARD
 ==============================*/
 
-.dt-review-card{
+.dt-review-card {
 
-    flex:0 0 260px;
+    flex: 0 0 260px;
 
-    background:#fff;
+    background: #fff;
 
-    border:1px solid #ececec;
+    border: 1px solid #ececec;
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    padding:9px;
+    padding: 9px;
 
-    box-shadow:0 0 3px black;
+    box-shadow: 0 0 3px black;
 
     transition:
 
@@ -135,13 +139,13 @@ CARD
 
 
 
-.dt-review-card:hover{
+.dt-review-card:hover {
 
-    transform:translateY(-4px);
+    transform: translateY(-4px);
 
     box-shadow:
 
-        0 14px 30px rgba(0,0,0,.08);
+        0 14px 30px rgba(0, 0, 0, .08);
 
 }
 
@@ -151,15 +155,15 @@ CARD
 TOP
 ==============================*/
 
-.dt-review-top{
+.dt-review-top {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:12px;
+    gap: 12px;
 
-    margin-bottom:12px;
+    margin-bottom: 2px;
 
 }
 
@@ -169,29 +173,29 @@ TOP
 AVATAR
 ==============================*/
 
-.dt-review-avatar{
+.dt-review-avatar {
 
-    width:42px;
+    width: 20px;
 
-    height:42px;
+    height: 20px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#111;
+    background: #111;
 
-    color:#fff;
+    color: #fff;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    font-size:16px;
+    font-size: 8px;
 
-    font-weight:700;
+    font-weight: 700;
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
 }
 
@@ -201,106 +205,35 @@ AVATAR
 NAME
 ==============================*/
 
-.dt-review-top h4{
+.dt-review-top h4 {
 
-    margin:0;
+    margin: 0;
 
-    font-size:9px;
+    font-size: 9px;
 
-    font-weight:700;
+    font-weight: 700;
 
-    color:#111;
-
-}
-
-
-
-.dt-review-top span{
-
-    display:block;
-
-    margin-top:4px;
-
-    font-size:9px;
+    color: #111;
 
 }
 
 
 
-/*==============================
-TEXT
-==============================*/
+.dt-review-top span {
 
-.dt-review-card p{
+    display: block;
 
-    margin:0;
+    margin-top: 4px;
 
-    color:#666;
-
-    font-size:13px;
-}
-
-
-
-/*=========================================================
-  TABLET
-=========================================================*/
-
-@media (min-width:768px){
-
-    .dt-review-card{
-
-        flex:0 0 300px;
-
-    }
+    font-size: 9px;
 
 }
 
+.dt-review-card p {
 
+    margin: 0;
 
-/*=========================================================
-  DESKTOP
-=========================================================*/
+    color: #666;
 
-@media (min-width:1024px){
-
-    .dt-section-header h4{
-
-        font-size:22px;
-
-    }
-
-    .dt-review-card{
-
-        flex:0 0 340px;
-
-        padding:20px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  LARGE SCREEN
-=========================================================*/
-
-@media (min-width:1920px){
-
-    .dt-review-card{
-
-        flex:0 0 380px;
-
-    }
-
-}
-.dt-review-avatar-img{
-
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    object-fit:cover;
-    flex-shrink:0;
-
+    font-size: 10px;
 }

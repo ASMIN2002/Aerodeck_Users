@@ -15,7 +15,8 @@ function Shop({
     shopCategoryPage,
     setShopCategoryPage,
     selectedShopCategory,
-    setSelectedShopCategory
+    setSelectedShopCategory,
+    setSuggestionData
 }) {
 
     const sessionToken = localStorage.getItem("session_token");
@@ -630,6 +631,7 @@ function Shop({
                 if (data.success) {
 
                     setProducts(data.data);
+                    setSuggestionData(data.data);
 
                     setCategories([
                         ...new Set(
@@ -756,12 +758,10 @@ function Shop({
         const keyword = search.toLowerCase();
 
         const matchesSearch =
-
             !search ||
-
             shop.shop_name?.toLowerCase().includes(keyword) ||
-
-            shop.shop_description?.toLowerCase().includes(keyword);
+            shop.shop_description?.toLowerCase().includes(keyword) ||
+            shop.shop_category?.toLowerCase().includes(keyword);
 
         return matchesSearch;
 
@@ -819,6 +819,61 @@ function Shop({
         );
 
     }
+    const [searchSuggestions, setSearchSuggestions] = useState([]);
+
+    useEffect(() => {
+
+        if (!search.trim()) {
+            setSearchSuggestions([]);
+            return;
+        }
+
+        const keyword = search.toLowerCase().trim();
+
+        const names = shops
+            .filter(shop =>
+                shop.shop_name?.toLowerCase().includes(keyword)
+            )
+            .map(shop => ({
+                type: "shop",
+                value: shop.shop_name
+            }));
+
+        const categories = [
+            ...new Set(
+                shops
+                    .filter(shop =>
+                        shop.shop_category
+                            ?.toLowerCase()
+                            .includes(keyword)
+                    )
+                    .map(shop => shop.shop_category)
+                    .filter(Boolean)
+            )
+        ].map(category => ({
+            type: "category",
+            value: category
+        }));
+
+        const combined = [
+            ...names,
+            ...categories
+        ];
+
+        const unique = combined.filter(
+            (item, index, self) =>
+                index === self.findIndex(
+                    x =>
+                        x.value.toLowerCase() ===
+                        item.value.toLowerCase()
+                )
+        );
+
+        setSearchSuggestions(
+            unique.slice(0, 6)
+        );
+
+    }, [search, shops]);
     const [activeOfferIndex, setActiveOfferIndex] = useState(0);
 
     const suggestedShops = useMemo(() => {
@@ -921,6 +976,8 @@ function Shop({
 
     }, [shops]);
 
+    const isSearching = search.trim().length > 0;
+
     return (
         <>
 
@@ -972,11 +1029,82 @@ function Shop({
 
                         onIncreaseQuantity={handleIncreaseQuantity}
                         onDecreaseQuantity={handleDecreaseQuantity}
+
                         savedProducts={savedProducts}
                         likedProducts={likedProducts}
                         cartProducts={cartProducts}
 
                     />
+
+                ) : isSearching ? (
+
+                    <section className="shop-search-results">
+
+                        <div className="cds-grid">
+
+                            {
+                                finalShops.map((shop) => (
+
+                                    <ShopCard
+
+                                        key={shop.shop_id}
+
+                                        product={shop}
+
+                                        isSaved={
+                                            savedProducts.has(
+                                                String(shop.shop_id)
+                                            )
+                                        }
+
+                                        isLiked={
+                                            likedProducts.has(
+                                                String(shop.shop_id)
+                                            )
+                                        }
+
+                                        isAddedToCart={
+                                            cartProducts.some(
+                                                item =>
+                                                    String(item.product_id) ===
+                                                    String(shop.shop_id)
+                                            )
+                                        }
+
+                                        cartQuantity={
+                                            cartProducts.find(
+                                                item =>
+                                                    String(item.product_id) ===
+                                                    String(shop.shop_id)
+                                            )?.quantity || 0
+                                        }
+
+                                        onSave={handleSave}
+
+                                        onLike={handleLike}
+
+                                        onAddToCart={handleAddToCart}
+
+                                        onIncreaseQuantity={
+                                            handleIncreaseQuantity
+                                        }
+
+                                        onDecreaseQuantity={
+                                            handleDecreaseQuantity
+                                        }
+
+                                        onOpenDetails={() =>
+                                            onOpenDetails(shop, "shop")
+                                        }
+
+                                    />
+
+                                ))
+                            }
+
+                        </div>
+
+                    </section>
 
                 ) : (
 

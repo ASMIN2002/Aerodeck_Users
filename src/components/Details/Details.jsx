@@ -2,6 +2,7 @@ import "./Details.css";
 import { API } from "../../services/api";
 import CertifiedCard from "../../assets/Certifiedcard.png";
 import DetailsData from "./DetailsData/DetailsData";
+import { FaShareAlt } from "react-icons/fa";
 
 import {
     FaHeart,
@@ -648,15 +649,9 @@ function Details({
             details.premium_id;
 
         const id = String(productId);
-
-        // Same classification as MyCart
         const isProduct =
             id.startsWith("G") ||
             id.startsWith("S");
-
-        // Detail page par cart me quantity hai
-        // to wahi quantity use hogi.
-        // Cart me nahi hai to default quantity.
         const quantity =
             cartQuantity > 0
                 ? cartQuantity
@@ -675,13 +670,25 @@ function Details({
             isProduct ? "products" : "cards"
         );
     };
+    const handleShare = async () => {
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: details?.product_name || "AERODECK",
+                    text: details?.product_name || "Check this out on AERODECK",
+                    url: window.location.href
+                });
+            } else {
+                await navigator.clipboard.writeText(window.location.href);
+                alert("Link copied!");
+            }
+        } catch (error) {
+            console.log("Share cancelled");
+        }
+    };
     return (
 
         <div className="dt-page">
-
-
-            {/* Main Image */}
-
             <div className="dt-image-wrapper">
 
                 <div
@@ -775,6 +782,12 @@ function Details({
                             }
                         </span>
 
+                    </button>
+                    <button
+                        className="dt-action-btn"
+                    onClick={handleShare}
+                    >
+                        <FaShareAlt />
                     </button>
                 </div>
                 <div className="dt-image-count">

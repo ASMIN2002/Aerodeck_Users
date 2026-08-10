@@ -37,11 +37,7 @@ function DetailsData({
                     onBuyNow={onBuyNow}
                 />
                 <Information productDetail={productDetail} />
-                <RelatedProducts
-                    product={product}
-                    onOpenDetails={onOpenDetails}
-                    onViewAll={onViewAll}
-                />
+
                 <PreviewVideo video_link={productDetail?.video_link} />
                 <Reviews
                     onViewAll={onViewAll}
@@ -64,6 +60,11 @@ function DetailsData({
                 />
                 <Features />
                 <WhyChoose />
+                <RelatedProducts
+                    product={product}
+                    onOpenDetails={onOpenDetails}
+                    onViewAll={onViewAll}
+                />
             </div>
         </>
     );

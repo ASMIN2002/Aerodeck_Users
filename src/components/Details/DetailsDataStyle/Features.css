@@ -32,7 +32,7 @@ TITLE
 
     margin:0;
 
-    font-size:13px;
+    font-size:10px;
 
     font-weight:700;
 
@@ -67,37 +67,21 @@ CARD
 ==============================*/
 
 .dt-feature-card{
-
     background:#ffffff;
-
     border:1px solid #ececec;
-
     border-radius:18px;
-
-    padding:18px 12px;
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
     justify-content:center;
-
-    gap:10px;
-
     text-align:center;
-
     cursor:default;
-
     transition:
         transform .25s ease,
         border-color .25s ease,
         box-shadow .25s ease;
-
     box-shadow:
         0 0 3px black;
-
 }
 
 
@@ -116,7 +100,7 @@ ICON
 
 .dt-feature-card span{
 
-    font-size:12px;
+    font-size:8px;
 
     font-weight:600;
 

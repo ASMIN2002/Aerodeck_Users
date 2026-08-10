@@ -39,34 +39,3 @@
    line-height: 1.5;
 }
 
-@media(min-width:480px) {
-   .mycart-content {
-      padding: 14px 14px 120px;
-   }
-   .empty-cart h2 {
-      font-size: 16px;
-   }
-}
-
-@media(min-width:768px) {
-   .mycart-page {
-      max-width: 760px;
-      margin: 0 auto;
-      background: #fff;
-      box-shadow: 0 0 30px rgba(0, 0, 0, .08);
-   }
-
-   .mycart-content {
-      padding: 18px 18px 130px;
-   }
-}
-
-@media(min-width:1200px) {
-   .mycart-page {
-      max-width: 900px;
-   }
-
-   .mycart-content {
-      padding: 20px 20px 140px;
-   }
-}

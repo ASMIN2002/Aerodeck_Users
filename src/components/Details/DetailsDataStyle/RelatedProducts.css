@@ -36,7 +36,7 @@ HEADER
 
     margin:0;
 
-    font-size:13px;
+    font-size:10px;
 
     font-weight:700;
 
@@ -44,33 +44,6 @@ HEADER
 
 }
 
-
-
-.dt-view-all{
-
-    border:none;
-
-    background:none;
-
-    color:#111;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s ease;
-
-}
-
-
-
-.dt-view-all:hover{
-
-    opacity:.7;
-
-}
 
 
 

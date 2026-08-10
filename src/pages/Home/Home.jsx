@@ -399,6 +399,7 @@ function Home({
                                 setShopCategoryPage={setShopCategoryPage}
                                 selectedShopCategory={selectedShopCategory}
                                 setSelectedShopCategory={setSelectedShopCategory}
+                                setSuggestionData={setShopSuggestionsData}
                             />
                         }
 

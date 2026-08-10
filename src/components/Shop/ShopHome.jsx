@@ -304,14 +304,6 @@ function ShopHome({
                         Suggested For You
                     </h4>
 
-                    <button
-                        type="button"
-                        onClick={onOpenAllShops}
-                        className="shop-all-button"
-                    >
-                        →
-                    </button>
-
                 </div>
 
 

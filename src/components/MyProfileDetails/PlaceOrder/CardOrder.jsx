@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { RiDiscountPercentLine } from "react-icons/ri";
 import { API } from "../../../services/api";
 function CardOrder({
     setProfilePage,
@@ -50,10 +51,9 @@ function CardOrder({
         platformFee +
         codCharge;
     const upiTotal = subtotal + gst + platformFee;
-
     const [primaryAddress, setPrimaryAddress] = useState(null);
-
     const [placingOrder, setPlacingOrder] = useState(false);
+    const [addressError, setAddressError] = useState("");
 
     useEffect(() => {
 
@@ -89,13 +89,26 @@ function CardOrder({
         fetchPrimaryAddress();
 
     }, []);
+    const totalSavings = products.reduce((total, product) => {
 
+        const demoPrice = Number(
+            product.product_demo_price ??
+            product.shop_demo_price ??
+            product.gift_demo_price ??
+            product.premium_demo_price ??
+            0
+        );
+
+        const price = getPrice(product);
+
+        const saving = (demoPrice - price) * product.quantity;
+
+        return total + saving;
+
+    }, 0);
     return (
 
         <div className="product-order-page">
-
-            {/* Header */}
-
             <div className="product-order-header">
 
                 <button
@@ -114,52 +127,51 @@ function CardOrder({
                 <h2>Cards Order</h2>
 
             </div>
-
-            {/* Address */}
-
             <div className="order-section">
 
-                <h3>📍 Delivery Address</h3>
+                <h3>Deliver To:</h3>
 
-                <div className="address-card">
+                <div className="address-card-card">
 
                     {primaryAddress ? (
 
                         <>
-
-                            <h4>{primaryAddress.full_name}</h4>
-
-                            <p>+91 {primaryAddress.mobile_number}</p>
-
-                            <p>
-                                {primaryAddress.house_flat},
-                                {" "}
-                                {primaryAddress.area_street},
-                                {" "}
-                                {primaryAddress.landmark},
-                                {" "}
-                                {primaryAddress.city},
-                                {" "}
-                                {primaryAddress.state}
-                                {" - "}
-                                {primaryAddress.pincode}
-                            </p>
-
+                            <div className="addplacepro">
+                                <div>
+                                    <div className="nameadtype">
+                                        <h4>{primaryAddress.full_name}</h4>
+                                        <span>{primaryAddress.address_type}</span>
+                                    </div>
+                                    <p>
+                                        {primaryAddress.house_flat},
+                                        {" "}
+                                        {primaryAddress.area_street},
+                                        {" "}
+                                        {primaryAddress.city},
+                                        {" "}
+                                        {primaryAddress.pincode}
+                                    </p>
+                                    <p>{primaryAddress.mobile_number}</p>
+                                </div>
+                                <button
+                                    className="change-address-btn"
+                                    onClick={() => setProfilePage("address")}
+                                >
+                                    Change
+                                </button>
+                            </div>
                         </>
 
                     ) : (
 
-                        <p>No Primary Address Found</p>
+                        <button
+                            className="add-address-btn"
+                            onClick={() => setProfilePage("address")}
+                        >
+                            + Add Address
+                        </button>
 
                     )}
-
-                    <button
-                        className="change-address-btn"
-                        onClick={() => setProfilePage("address")}
-                    >
-                        Change Address
-                    </button>
-
                 </div>
 
             </div>
@@ -167,8 +179,6 @@ function CardOrder({
             {/* Ordered Products */}
 
             <div className="order-section">
-
-                <h3>🛍 Ordered Products</h3>
 
                 <div className="product-list">
 
@@ -182,6 +192,17 @@ function CardOrder({
                                     className="product-row"
                                     key={product.product_id}
                                 >
+
+                                    <img
+                                        src={
+                                            product.product_image1 ||
+                                            product.gift_image1 ||
+                                            product.shop_image1 ||
+                                            product.premium_image1
+                                        }
+                                        alt={getName(product)}
+                                        className="order-product-image"
+                                    />
 
                                     <div className="product-info">
 
@@ -201,6 +222,19 @@ function CardOrder({
                                             getPrice(product) *
                                             product.quantity
                                         ).toFixed(2)}
+
+                                        <small>
+                                            ₹{(
+                                                (Number(
+                                                    product.product_demo_price ??
+                                                    product.shop_demo_price ??
+                                                    product.gift_demo_price ??
+                                                    product.premium_demo_price ??
+                                                    0
+                                                ) - getPrice(product)) *
+                                                product.quantity
+                                            ).toFixed(2)} Save
+                                        </small>
 
                                     </div>
 
@@ -228,7 +262,7 @@ function CardOrder({
                 <div className="price-box">
 
                     <div className="row">
-                        <span>Items Total</span>
+                        <span>Total MRP</span>
                         <span>₹{subtotal.toFixed(2)}</span>
                     </div>
 
@@ -250,6 +284,10 @@ function CardOrder({
 
                         <strong>₹{grandTotal.toFixed(2)}</strong>
 
+                    </div>
+                    <div className="total-savings">
+                        <RiDiscountPercentLine />
+                       You will save ₹{totalSavings.toFixed(2)} on this order!
                     </div>
 
                 </div>
@@ -291,11 +329,28 @@ function CardOrder({
 
             </div>
 
-            {/* Continue */}
+            {addressError && (
+                <p className="address-error">
+                    {addressError}
+                </p>
+            )}
 
             <button
                 className="continue-payment-btn"
                 onClick={() => {
+
+                    if (!primaryAddress) {
+
+                        setAddressError("Please select the address.");
+
+                        setTimeout(() => {
+                            setAddressError("");
+                        }, 3000);
+
+                        return;
+                    }
+
+                    setAddressError("");
 
                     if (paymentMethod === "UPI") {
 

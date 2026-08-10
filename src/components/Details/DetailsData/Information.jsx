@@ -1,6 +1,16 @@
 import "../DetailsDataStyle/Information.css";
 
 function Information({ productDetail }) {
+    const getDeliveryDate = (days) => {
+        if (!days) return "-";
+        const date = new Date();
+        date.setDate(date.getDate() + Number(days));
+        return date.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    };
 
     return (
 
@@ -26,8 +36,11 @@ function Information({ productDetail }) {
             </div>
 
             <div className="dt-info-row">
-                <span>Delivery</span>
-                <span>{productDetail?.delivery || "-"} Days</span>
+                <span>Delivery On</span>
+
+                <span className="delidate">
+                   {getDeliveryDate(productDetail?.delivery)}
+                </span>
             </div>
 
             <div className="dt-info-row">

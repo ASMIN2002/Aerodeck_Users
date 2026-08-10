@@ -326,7 +326,7 @@
 
     grid-auto-flow: column;
 
-    grid-auto-columns: 145px;
+    grid-auto-columns: 122px;
 
     gap: 10px;
 
@@ -335,17 +335,12 @@
 
 
 .shop-liked-card {
-    width: 153px;
-
+    width: 124px;
     background: #ffffff;
-
     border: 1px solid #e2e8f0;
     border-radius: 10px;
-
     overflow: hidden;
-
     cursor: pointer;
-
     transition: transform 0.18s ease;
 }
 
@@ -465,14 +460,14 @@
     display: grid;
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
-    grid-auto-columns: 145px;
+    grid-auto-columns: 115px;
     gap: 10px;
     width: max-content;
 }
 
 
 .shop-value-card {
-    width: 145px;
+    width: 120px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
@@ -526,6 +521,7 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-align: center;
 }
 
 .shop-offer-carousel-section {
@@ -700,7 +696,7 @@
 }
 
 .shop-value-deals-section {
-    background: linear-gradient(to bottom, #037dff 0%, #ffffff 28%, #20c4a0 50%, #d0dbd3 72%, #2b19df 100%);
+    background: linear-gradient(to bottom, #89b8eb 0%, #2ee2bb 28%, #acc420 50%, #d0dbd3 72%, #040504 100%);
     padding: 5px;
     border-radius: 8px;
 }
@@ -735,7 +731,7 @@
 
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
-    grid-auto-columns: 110px;
+    grid-auto-columns: 94px;
 
     gap: 10px;
 
@@ -755,13 +751,13 @@
 .shop-finest-deal-image {
     position: relative;
 
-    width: 100%;
+    width: 85%;
     height: 115px;
 
     overflow: hidden;
     border-radius: 9px;
-
-    background: #f1f5f9;
+    border: 1px solid white;
+    box-shadow: 0 0 1px white;
 }
 
 .shop-finest-deal-image img {
@@ -794,19 +790,13 @@
 
 .shop-finest-deal-name {
     display: block;
-
     margin-top: 5px;
-
     width: 100%;
-
     color: #0f172a;
-
-    font-size: 10px;
-    font-weight: 700;
-
+    font-size: 9px;
     line-height: 1.25;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-left: 5px;
 }

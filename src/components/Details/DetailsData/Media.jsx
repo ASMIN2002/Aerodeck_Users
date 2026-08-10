@@ -51,7 +51,9 @@ function Media({
     ]);
 
     const visibleImages = images.slice(0, 5);
+
     const remainingImages = images.length - 5;
+
     return (
 
         <div className="dt-media">
@@ -77,9 +79,27 @@ function Media({
 
                 images.length === 0 ? (
 
-                    <div className="dt-no-media">
+                    <div className="dt-media-scroll">
 
-                        No customer media available.
+                        <div className="dt-media-card dt-no-media-card">
+
+                            <div className="dt-no-media-icon">
+                                📷
+                            </div>
+
+                            <div className="dt-no-media-content">
+
+                                <h4>
+                                    No Customer Images Yet
+                                </h4>
+
+                                <p>
+                                    Be the first customer to share an image of this product.
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -87,9 +107,7 @@ function Media({
 
                     <div className="dt-media-scroll">
 
-
                         {
-
 
                             visibleImages.map((image, index) => (
 
@@ -103,6 +121,7 @@ function Media({
                                         alt="Customer Media"
                                         className="dt-media-image"
                                     />
+
                                     {
 
                                         index === 4 && remainingImages > 0 && (

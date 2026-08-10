@@ -38,9 +38,9 @@ function Reviews({
 
         <div className="dt-reviews">
 
-            <div className="dt-section-header">
+            <div className="dts-section-header">
 
-                <h4>Customer Reviews</h4>
+                <h4>Ratings and Reviews</h4>
 
                 <button
                     className="dt-view-all"

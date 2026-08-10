@@ -2,17 +2,11 @@ import "./CartCard.css";
 import { FaTrash } from "react-icons/fa";
 
 function CartCard({
-
     item,
-
     onOpenDetails,
-
     onDelete,
-
     onIncrease,
-
     onDecrease
-
 }) {
 
     const image =
@@ -50,6 +44,29 @@ function CartCard({
         item.premium_price ||
         item.shop_price;
 
+    const getDeliveryDate = (days) => {
+
+        if (!days) return "-";
+
+        const date = new Date();
+
+        date.setDate(
+            date.getDate() + Number(days)
+        );
+
+        const day = date.toLocaleDateString("en-IN", {
+            weekday: "short"
+        }).toUpperCase();
+
+        const formattedDate = date.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+
+        return `${formattedDate}, ${day}`;
+    };
+
     return (
 
         <div className="cart-card">
@@ -78,31 +95,24 @@ function CartCard({
             <div className="cart-details">
 
                 <h3>
-
                     {name}
-
                 </h3>
-
-                <p>
-
-                    Demo Price :
-                    ₹ {demoPrice}
-
-                </p>
                 <div className="cartdipri">
-                    <p>
-
-                        Discount :
-                        {discount}%
-
+                    <p className="cart-discount">
+                        ↓ {discount}%
                     </p>
-
+                    <p className="cart-demo-price">
+                        ₹ {demoPrice}
+                    </p>
                     <h2>
-
                         ₹ {price}
-
                     </h2>
                 </div>
+
+
+                <p className="cart-delivery-date">
+                    Delivery by : {getDeliveryDate(item.delivery)}
+                </p>
                 <div className="qtyviewcart">
                     <div className="cart-quantity">
 

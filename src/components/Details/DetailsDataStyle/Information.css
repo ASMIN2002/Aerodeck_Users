@@ -43,11 +43,6 @@ TITLE
 }
 
 
-
-/*==============================
-ROW
-==============================*/
-
 .dt-info-row{
     width:100%;
     display:flex;
@@ -56,9 +51,6 @@ ROW
     gap:16px;
 }
 
-/*==============================
-LEFT TEXT
-==============================*/
 
 .dt-info-row span:first-child{
 
@@ -77,15 +69,9 @@ RIGHT TEXT
 ==============================*/
 
 .dt-info-row span:last-child{
-
-    color:#111;
-
     font-size:13px;
-
-    font-weight:700;
-
+    font-weight:bold;
     text-align:right;
-
 }
 
 
@@ -102,164 +88,7 @@ FOCUS
 
 
 
-/*=========================================================
-  576px+
-=========================================================*/
-
-@media (min-width:576px){
-
-    .dt-information h3{
-
-        font-size:18px;
-
-    }
-
-    .dt-info-row{
-
-        padding:15px 18px;
-
-    }
-
-    .dt-info-row span{
-
-        font-size:14px;
-
-    }
-
+.delidate{
+    color: green;
 }
 
-
-
-/*=========================================================
-  768px+
-=========================================================*/
-
-@media (min-width:768px){
-
-    .dt-information{
-
-        gap:18px;
-
-    }
-
-    .dt-information h3{
-
-        font-size:20px;
-
-    }
-
-    .dt-info-row{
-
-        border-radius:16px;
-
-        padding:16px 20px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1024px+
-=========================================================*/
-
-@media (min-width:1024px){
-
-    .dt-information{
-
-        gap:20px;
-
-    }
-
-    .dt-information h3{
-
-        font-size:22px;
-
-    }
-
-    .dt-info-row{
-
-        padding:18px 22px;
-
-    }
-
-    .dt-info-row span:first-child{
-
-        font-size:15px;
-
-    }
-
-    .dt-info-row span:last-child{
-
-        font-size:15px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1440px+
-=========================================================*/
-
-@media (min-width:1440px){
-
-    .dt-info-row{
-
-        padding:20px 24px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1920px+
-=========================================================*/
-
-@media (min-width:1920px){
-
-    .dt-information h3{
-
-        font-size:24px;
-
-    }
-
-    .dt-info-row{
-
-        padding:22px 26px;
-
-    }
-
-    .dt-info-row span:first-child{
-
-        font-size:16px;
-
-    }
-
-    .dt-info-row span:last-child{
-
-        font-size:16px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  REDUCED MOTION
-=========================================================*/
-
-@media (prefers-reduced-motion:reduce){
-
-    .dt-info-row{
-
-        transition:none;
-
-    }
-
-}

@@ -36,7 +36,7 @@ HEADER
 .ps-name {
     flex: 1;
     margin: 0;
-    font-size: 15px;
+    font-size: 11px;
     font-weight: 700;
     line-height: 1.35;
     color: #111;
@@ -518,7 +518,7 @@ FOCUS
 
 .ps-desc {
     margin: 0;
-    font-size: 14px;
+    font-size: 11px;
     line-height: 1.6;
     font-weight: 400;
     color: #444;

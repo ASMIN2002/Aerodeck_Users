@@ -8,51 +8,46 @@
 ROOT
 ==============================*/
 
-.dt-why{
+.dt-why {
 
-    width:100%;
+    width: 100%;
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
     gap: 5px;
 
 }
 
 
+.detwhy {
+    display: flex;
+    justify-content: space-between;
+}
 
-/*==============================
-TITLE
-==============================*/
+.dt-why h3 {
 
-.dt-why h3{
+    margin: 0;
 
-    margin:0;
+    font-size: 10px;
 
-    font-size:13px;
+    font-weight: 700;
 
-    font-weight:700;
-
-    color:#111;
+    color: #111;
 
 }
 
 
+.dt-why-grid {
 
-/*==============================
-GRID
-==============================*/
+    width: 100%;
 
-.dt-why-grid{
+    display: grid;
 
-    width:100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    display:grid;
-
-    grid-template-columns:repeat(2,minmax(0,1fr));
-
-    gap:14px;
+    gap: 14px;
 
 }
 
@@ -62,74 +57,50 @@ GRID
 CARD
 ==============================*/
 
-.dt-why-card{
+.dt-why-card {
 
-    background:#ffffff;
+    background: #ffffff;
 
-    border:1px solid #ececec;
+    border: 1px solid #ececec;
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    padding:7px 16px;
+    padding: 4px 8px;
 
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-start;
-
-    gap:5px;
-
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     transition:
         transform .25s ease,
         border-color .25s ease,
         box-shadow .25s ease;
-
     box-shadow:
-        0 0 3px black;
+        0 0 2px black;
 
 }
 
 
+.dt-why-icon {
 
-.dt-why-card:hover{
+    width: 20px;
 
-    transform:translateY(-5px);
+    height: 20px;
 
-    border-color:#dddddd;
+    border-radius: 16px;
 
-    box-shadow:
-        0 14px 30px rgba(0,0,0,.08);
+    background: #f8f8f8;
 
-}
+    border: 1px solid #ececec;
 
+    display: flex;
 
+    align-items: center;
 
-/*==============================
-ICON
-==============================*/
+    justify-content: center;
 
-.dt-why-icon{
+    font-size: 9px;
 
-    width:40px;
-
-    height:40px;
-
-    border-radius:16px;
-
-    background:#f8f8f8;
-
-    border:1px solid #ececec;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:13px;
-
-    flex-shrink:0;
+    flex-shrink: 0;
 
 }
 
@@ -139,250 +110,10 @@ ICON
 TITLE
 ==============================*/
 
-.dt-why-card h4{
-
-    margin:0;
-
-    font-size: 10px;
-
-    font-weight:700;
-
-    color:#111;
-
-    line-height:1.4;
-
-}
-
-
-
-/*==============================
-DESCRIPTION
-==============================*/
-
-.dt-why-card p{
-
-    margin:0;
-
-    font-size:8px;
-
-    line-height:1.7;
-
-    color:#666;
-
-}
-
-
-
-/*==============================
-FOCUS
-==============================*/
-
-.dt-why-card:focus-within{
-
-    border-color:#111;
-
-}
-
-
-
-/*=========================================================
-  576px+
-=========================================================*/
-
-@media (min-width:576px){
-
-    .dt-why h3{
-
-        font-size:20px;
-
-    }
-
-    .dt-why-card{
-
-        padding:20px;
-
-    }
-
-    .dt-why-icon{
-
-        width:56px;
-
-        height:56px;
-
-        font-size:16px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  768px+
-=========================================================*/
-
-@media (min-width:768px){
-
-    .dt-why-grid{
-
-        grid-template-columns:repeat(4,minmax(0,1fr));
-
-    }
-
-    .dt-why-card{
-
-        min-height:220px;
-
-    }
-
-    .dt-why-card h4{
-
-        font-size:16px;
-
-    }
-
-    .dt-why-card p{
-
-        font-size:13px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1024px+
-=========================================================*/
-
-@media (min-width:1024px){
-
-    .dt-why{
-
-        gap:22px;
-
-    }
-
-    .dt-why h3{
-
-        font-size:24px;
-
-    }
-
-    .dt-why-grid{
-
-        gap:18px;
-
-    }
-
-    .dt-why-card{
-
-        padding:24px;
-
-        border-radius:22px;
-
-        min-height:240px;
-
-    }
-
-    .dt-why-icon{
-
-        width:64px;
-
-        height:64px;
-
-        font-size:32px;
-
-        border-radius:18px;
-
-    }
-
-    .dt-why-card h4{
-
-        font-size:18px;
-
-    }
-
-    .dt-why-card p{
-
-        font-size:14px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1440px+
-=========================================================*/
-
-@media (min-width:1440px){
-
-    .dt-why-card{
-
-        padding:28px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1920px+
-=========================================================*/
-
-@media (min-width:1920px){
-
-    .dt-why h3{
-
-        font-size:28px;
-
-    }
-
-    .dt-why-card{
-
-        min-height:260px;
-
-    }
-
-    .dt-why-icon{
-
-        width:72px;
-
-        height:72px;
-
-        font-size:36px;
-
-    }
-
-    .dt-why-card h4{
-
-        font-size:20px;
-
-    }
-
-    .dt-why-card p{
-
-        font-size:15px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  REDUCED MOTION
-=========================================================*/
-
-@media (prefers-reduced-motion:reduce){
-
-    .dt-why-card{
-
-        transition:none;
-
-    }
-
+.dt-why-card h4 {
+    margin: auto;
+    font-size: 8px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.4;
 }

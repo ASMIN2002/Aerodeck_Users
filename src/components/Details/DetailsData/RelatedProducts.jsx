@@ -28,14 +28,7 @@ function RelatedProducts({
         <div className="dt-related">
 
             <div className="dt-section-header">
-
-                <h2>Products</h2>
-                <button
-                    className="dt-view-all"
-                    onClick={onViewAll}
-                >
-                    View All
-                </button>
+                <h2>Related Products</h2>
             </div>
 
 
