@@ -36,7 +36,7 @@ function ProductOrder({
 
     };
 
-    const [paymentMethod, setPaymentMethod] = useState("UPI");
+    const [paymentMethod, setPaymentMethod] = useState("COD");
 
     const subtotal = products.reduce((sum, item) => {
 
@@ -317,7 +317,7 @@ function ProductOrder({
 
             <div className="order-section">
 
-                <h3>💳 Choose Payment Method</h3>
+                {/* <h3>💳 Choose Payment Method</h3>
 
                 <div
                     className={`payment-card ${paymentMethod === "UPI" ? "selected" : ""}`}
@@ -338,7 +338,7 @@ function ProductOrder({
 
                     </strong>
 
-                </div>
+                </div> */}
 
                 <div
                     className={`payment-card ${paymentMethod === "COD" ? "selected" : ""}`}
@@ -349,13 +349,13 @@ function ProductOrder({
 
                         <h4>🚚 Cash On Delivery</h4>
 
-                        <p>₹5 COD Charge</p>
+                        <p>₹0 COD Charge</p>
 
                     </div>
 
                     <strong>
 
-                        ₹{(upiTotal + 5).toFixed(2)}
+                        ₹{(upiTotal + 0).toFixed(2)}
 
                     </strong>
 

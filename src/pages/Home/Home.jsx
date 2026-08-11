@@ -33,6 +33,7 @@ import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/
 import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfile";
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
+import UserChat from "../../components/UserChat/UserChat";
 
 
 function Home({
@@ -225,6 +226,13 @@ function Home({
                     setSelectedBottomTab("Profile");
                     setProfilePage("cart");
                 }}
+                onOpenChat={() => {
+                    setIsDetailsOpen(false);
+                    setSelectedProduct(null);
+                    setDetailsPage("details");
+                    setSelectedBottomTab("Profile");
+                    setProfilePage("userchat");
+                }}
             />
             {
                 !isDetailsOpen &&
@@ -260,7 +268,7 @@ function Home({
                     gifts={giftSuggestionsData}
                     shops={shopSuggestionsData}
                     premiums={premiumSuggestionsData}
-                
+
 
                 />
             }
@@ -482,6 +490,16 @@ function Home({
                         setBuyNowFromDetails={setBuyNowFromDetails}
                         onOpenDetails={handleOpenDetails}
                         setSelectedBottomTab={setSelectedBottomTab}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "userchat" &&
+                    <UserChat
+                        setProfilePage={setProfilePage}
+                        setSelectedBottomTab={setSelectedBottomTab}
+                        orderData={orderData}
                     />
                 }
                 {

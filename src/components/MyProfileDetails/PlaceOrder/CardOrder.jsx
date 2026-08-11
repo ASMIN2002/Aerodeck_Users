@@ -287,174 +287,19 @@ function CardOrder({
                     </div>
                     <div className="total-savings">
                         <RiDiscountPercentLine />
-                       You will save ₹{totalSavings.toFixed(2)} on this order!
+                        You will save ₹{totalSavings.toFixed(2)} on this order!
                     </div>
 
                 </div>
 
             </div>
-            {/* Payment Method */}
-
-            <div className="order-section">
-
-                <h3>💳 Choose Payment Method</h3>
-
-                <div
-                    className={`payment-card ${paymentMethod === "UPI" ? "selected" : ""}`}
-                    onClick={() => setPaymentMethod("UPI")}
-                >
-
-                    <div>
-
-                        <h4>🟢 UPI (Mandatory)</h4>
-
-                        <p>Pay 80% Advance Payment</p>
-
-                        <small
-                            style={{
-                                display: "block",
-                                marginTop: "4px",
-                                color: "black",
-                                fontSize: "8px"
-                            }}
-                        >
-                            Remaining 20% (₹{(grandTotal * 0.20).toFixed(2)}) will be collected at the time of delivery.
-                        </small>
-
-                        <strong>
-                            ₹{(grandTotal * 0.80).toFixed(2)}
-                        </strong>
-                    </div>
-                </div>
-
-            </div>
-
-            {addressError && (
-                <p className="address-error">
-                    {addressError}
-                </p>
-            )}
-
             <button
                 className="continue-payment-btn"
                 onClick={() => {
-
-                    if (!primaryAddress) {
-
-                        setAddressError("Please select the address.");
-
-                        setTimeout(() => {
-                            setAddressError("");
-                        }, 3000);
-
-                        return;
-                    }
-
-                    setAddressError("");
-
-                    if (paymentMethod === "UPI") {
-
-                        setOrderData({
-                            ...orderData,
-
-                            orderType: "cards",
-
-                            address_id: primaryAddress.address_id,
-
-                            payment_method: "UPI",
-
-                            items: products,
-
-                            total_items: products.reduce(
-                                (sum, item) => sum + Number(item.quantity),
-                                0
-                            ),
-
-                            subtotal,
-
-                            gst,
-
-                            platform_fee: platformFee,
-
-                            delivery_fee: 0,
-
-                            full_amount: grandTotal,
-
-                            advance_amount: Number((grandTotal * 0.80).toFixed(2)),
-
-                            remaining_amount: Number((grandTotal * 0.20).toFixed(2)),
-
-                            total_amount: Number((grandTotal * 0.80).toFixed(2))
-                        });
-
-                        setProfilePage("payment");
-                        setProfilePage("payment");
-
-                    } else {
-
-                        setPlacingOrder(true);
-
-                        setTimeout(async () => {
-
-                            const sessionToken = localStorage.getItem("session_token");
-
-                            const response = await fetch(`${API}/api/user/orders/place-order`, {
-
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-
-                                body: JSON.stringify({
-
-                                    session_token: sessionToken,
-
-                                    address_id: primaryAddress.address_id,
-
-                                    payment_method: paymentMethod,
-
-                                    order_type:
-                                        orderData.orderType === "products"
-                                            ? "PRODUCT"
-                                            : "CARD",
-
-                                    items: products,
-
-                                    total_items: products.length,
-
-                                    subtotal,
-
-                                    gst,
-
-                                    platform_fee: platformFee,
-
-                                    delivery_fee: 0,
-
-                                    total_amount: grandTotal
-
-                                })
-
-                            });
-
-                            const data = await response.json();
-
-                            setPlacingOrder(false);
-
-                            if (data.success) {
-
-                                setProfilePage("ordersuccess");
-
-                            }
-
-                        }, 2000);
-
-                    }
-
+                    setProfilePage("userchat");
                 }}
             >
-
-                Proceed to 80% UPI Payment
+                Place Order
             </button>
 
         </div>

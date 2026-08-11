@@ -13,6 +13,7 @@ function Header({
     closeDetails,
     onLogout,
     onOpenCart,
+    onOpenChat,
     profilePage
 
 }) {
@@ -149,6 +150,14 @@ function Header({
                         {cartCount}
                     </span>
                 </button>
+                <button
+                    className="hd-cart-btn"
+                    type="button"
+                onClick={onOpenChat}
+                >
+                    💬
+                </button>
+
             </div>
 
         </header>

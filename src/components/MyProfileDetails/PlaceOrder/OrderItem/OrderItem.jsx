@@ -147,16 +147,7 @@ function OrderItem({
 
             if (data.success) {
 
-                if (item.payment_status === "PENDING") {
-
-                    setCancelStatus("CANCELLED");
-                    setOrderStatus("CANCELLED");
-
-                } else {
-
-                    setCancelStatus("REQUESTED");
-
-                }
+                setCancelStatus("REQUESTED");
 
                 setShowCancelBox(false);
 
@@ -176,49 +167,71 @@ function OrderItem({
 
             <div className="order-item-images">
 
-                {images.map((image, index) => (
+                <div>
+                    {images[0] && (
+                        <img
+                            src={images[0]}
+                            alt={item.product_name}
+                            className="order-item-image"
+                        />
+                    )}
+                </div>
+                <div className="numtot">
+                    <div className="numtot1">
+                        <p><strong>Number :</strong> #{item.product_id}#</p>
+                        <p>
+                            <strong>MRP :</strong> {item.total_price}
+                        </p>
+                    </div>
+                    <div className="numtot2">
+                        <h3>{item.product_name}</h3>
+                        <p><strong>Qty :</strong> {item.quantity}</p>
+                    </div>
+                    <div className="numtot3">
+                        <p>
+                            <strong>Order :</strong>{" "}
+                            {new Date(order.created_at)
+                                .toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric"
+                                })
+                                .toUpperCase()
+                                .replace(/ /g, "-")}
+                        </p>
+                        <p
+                            className={
+                                !isReturned && new Date(item.cancel_date) < new Date()
+                                    ? "cancel-timeout-date"
+                                    : ""
+                            }
+                        >
+                            <strong>
+                                {
+                                    isReturned
+                                        ? "Requested Date :"
+                                        : new Date(item.cancel_date) < new Date()
+                                            ? "Cancel Timeout :"
+                                            : "Cancel Till :"
+                                }
+                            </strong>{" "}
 
-                    <img
-                        key={index}
-                        src={image}
-                        alt={`${item.product_name} ${index + 1}`}
-                        className="order-item-image"
-                    />
-
-                ))}
-
+                            {new Date(
+                                isReturned
+                                    ? item.return_request_date
+                                    : item.cancel_date
+                            ).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric"
+                            })
+                                .toUpperCase()
+                                .replace(/ /g, "-")}
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div className="order-item-info">
-
-                <h3>{item.product_name}</h3>
-                <div className="smallinfo1">
-                    <p><strong>Product ID :</strong> {item.product_id}</p>
-                    <p>
-                        <strong>Order Date :</strong>{" "}
-                        {new Date(order.created_at).toLocaleDateString()}
-                    </p>
-                </div>
-                <div className="smallinfo2">
-                    <p><strong>Price :</strong> ₹ {item.product_price}</p>
-                    <p>
-                        <strong>
-                            {isReturned ? "Requested Date :" : "Cancel Till :"}
-                        </strong>{" "}
-
-                        {new Date(
-                            isReturned
-                                ? item.return_request_date
-                                : item.cancel_date
-                        ).toLocaleDateString("en-IN", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric"
-                        })}
-                    </p>
-                </div>
-
-            </div>
             <TrackOrder
                 orderStatus={
                     cancelStatus === "CANCELLED"
@@ -226,6 +239,9 @@ function OrderItem({
                         : item.order_status
                 }
                 returnStatus={isReturned ? "REQUESTED" : null}
+                paymentStatus={order.payment_status}
+                orderId={order_id}
+                cancelStatus={cancelStatus}
             />
             {item.order_status === "DELIVERED" && (
                 <>
@@ -244,7 +260,7 @@ function OrderItem({
                                     product_id={item.product_id}
                                     order_item_id={item.order_item_id}
                                 />
-                                
+
                                 <HelpSupport
                                     item={item}
                                     order={order}
@@ -333,19 +349,56 @@ function OrderItem({
                             {
                                 showCancelBox &&
                                 cancelStatus !== "REQUESTED" && (
-
                                     <div
                                         className="cancel-box"
                                         ref={cancelBoxRef}
                                     >
 
-                                        {/* Existing popup code */}
+                                        <h4 className="cancel-title">
+                                            Why do you want to cancel?
+                                        </h4>
+
+                                        <select
+                                            className="cancel-select"
+                                            value={cancelReason}
+                                            onChange={(e) => setCancelReason(e.target.value)}
+                                        >
+                                            <option value="">
+                                                Select a reason
+                                            </option>
+
+                                            <option value="Changed my mind">
+                                                Changed my mind
+                                            </option>
+
+                                            <option value="Ordered by mistake">
+                                                Ordered by mistake
+                                            </option>
+
+                                            <option value="Found a better option">
+                                                Found a better option
+                                            </option>
+
+                                            <option value="Product no longer required">
+                                                Product no longer required
+                                            </option>
+
+                                            <option value="Other">
+                                                Other
+                                            </option>
+                                        </select>
+
+                                        <button
+                                            className="confirm-cancel-btn"
+                                            disabled={!cancelReason}
+                                            onClick={handleCancelOrder}
+                                        >
+                                            Cancel Order
+                                        </button>
 
                                     </div>
-
                                 )
                             }
-
                         </div>
 
                     )

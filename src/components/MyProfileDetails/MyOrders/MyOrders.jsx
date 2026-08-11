@@ -100,71 +100,56 @@ function MyOrders({
             }
 
             {
+                [...orders]
+                    .sort(
+                        (a, b) =>
+                            new Date(b.created_at) - new Date(a.created_at)
+                    )
+                    .map((order) => (
 
-                orders.map((order) => (
+                        <div
+                            className="order-card"
+                            key={order.order_id}
+                            onClick={() => {
+                                setSelectedOrder(order);
+                                setProfilePage("order-details");
+                            }}
+                        >
 
-                    <div
-                        className="order-card"
-                        key={order.order_id}
-                    >
+                            <div className="order-info">
 
-
-                        <div className="order-info">
-
-                            <div className="top-order-number">
-                                <h3>
-                                    Order #{order.order_number}
-                                </h3>
-                                <span className="order-count">
-                                    {order.available_items}/{order.total_items}
-                                </span>
-                            </div>
-                            <p>
-                                Order Date : {new Date(order.created_at).toLocaleDateString()}
-                            </p>
-
-                            <p>
-
-                                Items : {order.total_items}
-
-                            </p>
-
-                            <div className="myOrder-price-status">
-
-                                <h4>
-
-                                    ₹ {order.total_amount}
-
-                                </h4>
+                                <div className="top-order-number">
+                                    <h3>
+                                        Order #{order.order_number}
+                                    </h3>
+                                    <p>
+                                        Items : {order.total_items}
+                                    </p>
+                                </div>
 
 
-                                <span
+                                <div className="myOrder-price-status">
 
-                                    className={`order-status ${order.order_status.toLowerCase()}`}
-                                >
+                                    <h4>
+                                        ₹ {order.total_amount}
+                                    </h4>
 
-                                    {order.order_status}
+                                    <span
+                                        className={`order-status ${order.order_status.toLowerCase()}`}
+                                    >
+                                        {order.order_status}
+                                    </span>
 
-                                </span>
+                                </div>
 
                             </div>
-                            <button
-                                onClick={() => {
+                            <div className="order-card-arrow">
+                                &gt;
+                            </div>
 
-                                    setSelectedOrder(order);
-
-                                    setProfilePage("order-details");
-
-                                }}
-                            >
-                                View Details
-                            </button>
                         </div>
 
-                    </div>
-
-                ))
-
+                    ))
             }
 
         </div>

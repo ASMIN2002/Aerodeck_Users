@@ -77,7 +77,7 @@ function BottomNav({
                 </span>
 
                 <span className="bn-text">
-                    Offers
+                    Member
                 </span>
             </button>
 

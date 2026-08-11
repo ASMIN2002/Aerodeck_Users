@@ -10,18 +10,18 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 7px;
 }
 
 .orders-back {
-    width: 42px;
-    height: 42px;
+    width: 20px;
+    height: 20px;
     border: none;
     border-radius: 50%;
     background: #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
     cursor: pointer;
-    font-size: 20px;
+    font-size: 11px;
     transition: .3s;
 }
 
@@ -31,9 +31,10 @@
 
 .orders-header h2 {
     background: linear-gradient(135deg, #ff0800, #000000);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 20px;
+    font-size: 13px;
 }
 
 .orders-empty {
@@ -59,8 +60,8 @@
 .order-card {
     display: flex;
     gap: 15px;
-    padding: 15px;
-    margin-bottom: 16px;
+    padding: 7px;
+    margin-bottom: 10px;
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
@@ -87,19 +88,19 @@
 
 .order-info h3 {
     margin: 0;
-    font-size: 15px;
+    font-size: 11px;
     color: #222;
 }
 
 .order-info p {
     color: #666;
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .order-info h4 {
     margin: 4px 0;
     color: #000;
-    font-size: 18px;
+    font-size: 11px;
     font-weight: 700;
 }
 
@@ -107,7 +108,7 @@
     width: max-content;
     padding: 5px 12px;
     border-radius: 30px;
-    font-size: 12px;
+    font-size: 8px;
     font-weight: 700;
     color: blue;
 }
@@ -147,49 +148,6 @@
 .order-info button:hover {
     background: #000;
 }
-
-@media (max-width:500px) {
-
-    .order-card {
-        flex-direction: column;
-    }
-
-    .order-card img {
-        width: 100%;
-        height: 180px;
-    }
-
-    .order-info button {
-        width: 100%;
-    }
-
-}
-
-@media (min-width:768px) {
-
-    .myorders {
-        max-width: 760px;
-        margin: auto;
-    }
-
-    .order-card img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .order-info h3 {
-        font-size: 15px;
-    }
-
-}
-
-@media (min-width:1200px) {
-
-    .myorders {
-        max-width: 850px;
-    }
-
-}
 .myOrder-price-status{
     display: flex;
     justify-content: space-between;
@@ -197,4 +155,7 @@
 .top-order-number{
     display: flex;
     justify-content: space-between;
+}
+.order-card-arrow{
+    margin: auto;
 }
