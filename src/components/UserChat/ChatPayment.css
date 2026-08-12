@@ -1,0 +1,78 @@
+/* ================================
+   CHAT PAYMENT BOX
+================================ */
+
+.user-chat-payment-box {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.user-chat-payment-box .user-chat-system-message {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Payment Buttons */
+
+.user-chat-payment-btn {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 9px;
+    padding: 10px 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #111827;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.user-chat-payment-btn:hover {
+    opacity: 0.9;
+}
+
+.user-chat-payment-btn:active {
+    transform: scale(0.98);
+}
+
+/* Cancel */
+
+.user-chat-payment-box .user-chat-cancel-btn {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 10px;
+    padding: 10px 14px;
+
+    border: 1px solid #dc2626;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #dc2626;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.user-chat-payment-box .user-chat-cancel-btn:hover {
+    background: #fef2f2;
+}
+
+.user-chat-payment-box .user-chat-cancel-btn:active {
+    transform: scale(0.98);
+}

@@ -17,7 +17,8 @@ function ChatForm({
     onCancelOrder,
     cancelled,
     onCancelBack,
-    onConfirmCancel
+    onConfirmCancel,
+    isEditing
 }) {
 
     const isComplete =
@@ -100,20 +101,38 @@ function ChatForm({
                     placeholder="Any other details"
                 />
             </div>
-
-            <button
-                className="user-chat-confirm-btn"
-                disabled={!isComplete}
-                onClick={onSubmit}
-            >
-                Confirm Details
-            </button>
-            <button
-                className="user-chat-cancel-btn"
-                onClick={onCancelOrder}
-            >
-                Cancel Order
-            </button>
+            {isEditing ? (
+                <button
+                    className="user-chat-confirm-btn"
+                    disabled={!isComplete}
+                    onClick={onSubmit}
+                >
+                    Update Details
+                </button>
+            ) : (
+                <button
+                    className="user-chat-confirm-btn"
+                    disabled={!isComplete}
+                    onClick={onSubmit}
+                >
+                    Confirm Details
+                </button>
+            )}
+            {isEditing ? (
+                <button
+                    className="user-chat-cancel-btn"
+                    onClick={onCancelBack}
+                >
+                    Cancel
+                </button>
+            ) : (
+                <button
+                    className="user-chat-cancel-btn"
+                    onClick={onCancelOrder}
+                >
+                    Cancel Order
+                </button>
+            )}
             {cancelled && (
                 <div className="user-chat-cancel-confirm">
 

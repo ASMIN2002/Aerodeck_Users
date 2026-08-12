@@ -4,10 +4,11 @@ import { API } from "../../services/api";
 import ChatInfo from "./ChatInfo";
 import ChatConfirm from "./ChatConfirm";
 import ChatForm from "./ChatForm";
+import ChatPayment from "./ChatPayment";
 
 
 
-function UserChat({ orderData }) {
+function UserChat({ orderData, setProfilePage }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [chatHistory, setChatHistory] = useState([]);
     const [chatMessages, setChatMessages] = useState([]);
@@ -22,6 +23,8 @@ function UserChat({ orderData }) {
     const [address, setAddress] = useState("");
     const [additionalDetails, setAdditionalDetails] = useState("");
     const [showCardDetails, setShowCardDetails] = useState(false);
+    const [isEditingDetails, setIsEditingDetails] = useState(false);
+    const [showOrderChoices, setShowOrderChoices] = useState(false);
 
 
     useEffect(() => {
@@ -105,13 +108,75 @@ function UserChat({ orderData }) {
 
         }
     };
+    const confirmCancelOrder = async () => {
+
+        try {
+
+            const sessionToken =
+                localStorage.getItem("session_token");
+
+            if (!sessionToken) {
+                alert("Session expired.");
+                return;
+            }
+
+            if (!productId) {
+                alert("Product not found.");
+                return;
+            }
+
+            const response = await fetch(
+                `${API}/api/user/chat/cancel`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token: sessionToken,
+                        product_id: productId
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!data.success) {
+                alert(data.message || "Unable to cancel order.");
+                return;
+            }
+
+            setChatMessages([]);
+            setChatId(null);
+            setProductId(null);
+            setShowChatForm(false);
+            setShowCardDetails(false);
+            setShowOrderChoices(false);
+            setCancelled(false);
+
+            setChatHistory((prev) =>
+                prev.filter(
+                    (chat) => chat.product_id !== productId
+                )
+            );
+
+        } catch (err) {
+
+            console.error(err);
+            alert("Unable to cancel order.");
+
+        }
+    };
     return (
         <div className="user-chat-page">
 
             <div className="user-chat-header">
 
-                <button className="user-chat-back">
-                    ←
+                <button
+                    className="mycart-back"
+                    onClick={() => setProfilePage("profile")}
+                >
+                    ← Back
                 </button>
 
                 <h2>
@@ -178,14 +243,35 @@ function UserChat({ orderData }) {
 
                                                     setChatMessages(data.data || []);
 
-                                                    const hasFormMessage = data.data?.some(
+                                                    const hasOrderReady = data.data?.some(
                                                         (msg) =>
                                                             msg.sender === "system" &&
-                                                            msg.message ===
-                                                            "Please provide the required details for your card."
+                                                            msg.message === "Order Ready"
                                                     );
 
-                                                    setShowChatForm(hasFormMessage);
+                                                    setShowOrderChoices(!!hasOrderReady);
+                                                    setShowOrderChoices(hasOrderReady);
+
+                                                    const detailsResponse = await fetch(
+                                                        `${API}/api/user/chat/details/check?session_token=${sessionToken}&product_id=${chat.product_id}`
+                                                    );
+
+                                                    const detailsData = await detailsResponse.json();
+                                                    if (detailsData.success && detailsData.exists) {
+                                                        const details = detailsData.data;
+                                                        setBrideName(details.bride_name || "");
+                                                        setGroomName(details.groom_name || "");
+                                                        setFatherName(details.father_name || "");
+                                                        setMotherName(details.mother_name || "");
+                                                        setAddress(details.address || "");
+                                                        setAdditionalDetails(details.additional_details || "");
+                                                        setShowChatForm(false);
+                                                        setShowCardDetails(true);
+                                                    } else {
+                                                        setShowCardDetails(false);
+                                                        setShowChatForm(true);
+                                                    }
+
 
                                                 } else {
 
@@ -231,32 +317,34 @@ function UserChat({ orderData }) {
 
                 <div className="user-chat-history-messages">
 
-                    {chatMessages.map((msg) => (
+                    {chatMessages
+                        .filter((msg) => msg.message !== "Order Ready")
+                        .map((msg) => (
 
-                        <div
-                            key={msg.message_id}
-                            className={
-                                msg.sender === "user"
-                                    ? "user-chat-history-user-message"
-                                    : "user-chat-history-system-message"
-                            }
-                        >
+                            <div
+                                key={msg.message_id}
+                                className={
+                                    msg.sender === "user"
+                                        ? "user-chat-history-user-message"
+                                        : "user-chat-history-system-message"
+                                }
+                            >
 
-                            {msg.image_url && (
-                                <img
-                                    src={msg.image_url}
-                                    alt="Chat"
-                                    className="user-chat-history-image"
-                                />
-                            )}
+                                {msg.image_url && (
+                                    <img
+                                        src={msg.image_url}
+                                        alt="Chat"
+                                        className="user-chat-history-image"
+                                    />
+                                )}
 
-                            <div className="user-chat-history-message-text">
-                                {msg.message}
+                                <div className="user-chat-history-message-text">
+                                    {msg.message}
+                                </div>
+
                             </div>
 
-                        </div>
-
-                    ))}
+                        ))}
 
                 </div>
 
@@ -521,13 +609,48 @@ function UserChat({ orderData }) {
                             const sessionToken =
                                 localStorage.getItem("session_token");
 
+
+
                             if (!sessionToken) {
                                 alert("Session expired.");
                                 return;
                             }
 
+                            if (isEditingDetails) {
 
+                                const response = await fetch(
+                                    `${API}/api/user/chat/details`,
+                                    {
+                                        method: "PUT",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            session_token: sessionToken,
+                                            product_id: productId,
+                                            bride_name: brideName,
+                                            groom_name: groomName,
+                                            father_name: fatherName,
+                                            mother_name: motherName,
+                                            address: address,
+                                            additional_details: additionalDetails
+                                        })
+                                    }
+                                );
 
+                                const data = await response.json();
+
+                                if (!data.success) {
+                                    alert(data.message || "Unable to update details.");
+                                    return;
+                                }
+
+                                setIsEditingDetails(false);
+                                setShowChatForm(false);
+                                setShowCardDetails(true);
+
+                                return;
+                            }
                             const response = await fetch(
                                 `${API}/api/user/chat/details`,
                                 {
@@ -557,8 +680,6 @@ function UserChat({ orderData }) {
                                 alert(data.message || "Unable to save details.");
                                 return;
                             }
-
-                            // Form Submitted message screen par turant dikhane ke liye
                             const messageResponse = await fetch(
                                 `${API}/api/user/chat/${chatId}/messages?session_token=${sessionToken}`
                             );
@@ -570,11 +691,12 @@ function UserChat({ orderData }) {
                             }
 
                             setShowChatForm(false);
+                            setShowCardDetails(true);
 
                         } catch (err) {
 
-                            console.error(err);
-                            alert("Unable to save details.");
+                            console.error("UPDATE DETAILS ERROR:", err);
+                            alert(err.message || "Unable to save details.");
 
                         }
 
@@ -585,6 +707,17 @@ function UserChat({ orderData }) {
                     cancelled={cancelled}
 
                     onCancelBack={() => {
+
+                        if (isEditingDetails) {
+
+                            setIsEditingDetails(false);
+                            setShowChatForm(false);
+                            setShowCardDetails(true);
+                            setCancelled(false);
+
+                            return;
+                        }
+
                         setCancelled(false);
                     }}
 
@@ -649,7 +782,157 @@ function UserChat({ orderData }) {
                         }
 
                     }}
+                    isEditing={isEditingDetails}
+
                 />
+            )}
+            {showCardDetails && (
+                <div className="user-chat-saved-details">
+
+                    <div className="user-chat-system-message">
+                        Card Details
+                    </div>
+
+                    <div className="user-chat-detail-row">
+                        <strong>Bride Name:</strong>
+                        <span>{brideName}</span>
+                    </div>
+
+                    <div className="user-chat-detail-row">
+                        <strong>Groom Name:</strong>
+                        <span>{groomName}</span>
+                    </div>
+
+                    <div className="user-chat-detail-row">
+                        <strong>Father's Name:</strong>
+                        <span>{fatherName}</span>
+                    </div>
+
+                    <div className="user-chat-detail-row">
+                        <strong>Mother's Name:</strong>
+                        <span>{motherName}</span>
+                    </div>
+
+                    <div className="user-chat-detail-row">
+                        <strong>Address:</strong>
+                        <span>{address}</span>
+                    </div>
+
+                    <div className="user-chat-detail-row">
+                        <strong>Additional Details:</strong>
+                        <span>{additionalDetails || "—"}</span>
+                    </div>
+
+                    {!showOrderChoices && (
+                        <>
+                            <button
+                                className="user-chat-edit-btn"
+                                onClick={() => {
+                                    setIsEditingDetails(true);
+                                    setShowCardDetails(false);
+                                    setShowChatForm(true);
+                                }}
+                            >
+                                Edit
+                            </button>
+
+                            <div className="user-chat-action-buttons">
+
+                                <button
+                                    className="user-chat-confirm-btn"
+                                    onClick={async () => {
+
+                                        const saved = await addChatMessage({
+                                            sender: "system",
+                                            message: "Order Ready",
+                                            image_url: null
+                                        });
+
+                                        if (!saved) {
+                                            alert("Unable to save order status.");
+                                            return;
+                                        }
+
+                                        setShowOrderChoices(true);
+
+                                        const sessionToken =
+                                            localStorage.getItem("session_token");
+
+                                        const response = await fetch(
+                                            `${API}/api/user/chat/${chatId}/messages?session_token=${sessionToken}`
+                                        );
+
+                                        const data = await response.json();
+
+                                        if (data.success) {
+                                            setChatMessages(data.data || []);
+                                        }
+
+                                    }}
+                                >
+                                    Ready to Order
+                                </button>
+
+                                <button
+                                    className="user-chat-cancel-btn"
+                                    onClick={() => {
+                                        setCancelled(true);
+                                    }}
+                                >
+                                    Cancel Order
+                                </button>
+
+                            </div>
+                        </>
+                    )}
+
+                    {showOrderChoices && (
+                        <>
+                            <div className="user-chat-system-message">
+                                Order Ready
+                            </div>
+
+                            <ChatPayment
+                                chatId={chatId}
+                                sessionToken={localStorage.getItem("session_token")}
+                                productId={productId}
+                                orderId={orderData?.order_id}
+
+                                totalPrice={
+                                    Number(
+                                        orderData?.items?.[0]?.product_price ||
+                                        orderData?.items?.[0]?.card_price ||
+                                        0
+                                    ) *
+                                    Number(orderData?.items?.[0]?.quantity || 1)
+                                }
+                                quantity={Number(orderData?.items?.[0]?.quantity || 1)}
+                                onPay80={() => {
+                                    console.log("Pay 80%");
+                                }}
+
+                                onPayFull={() => {
+                                    console.log("Pay Full Amount");
+                                }}
+
+                                onSeeDemo={() => {
+                                    console.log("See Demo");
+                                }}
+
+                                onCancelOrder={() => {
+                                    setCancelled(true);
+                                }}
+                                onCancel={() => {
+                                    setCancelled(true);
+                                }}
+
+                                onConfirmCancel={confirmCancelOrder}
+
+                            />
+                        </>
+                    )}
+
+                </div>
             )}
 
         </div>
