@@ -113,11 +113,6 @@ function HelpSupport({
         <div className="help-support">
 
             <h3>Help & Support</h3>
-
-            <p className="help-note">
-                Need assistance? Our support team is here to help you with your order, payments, delivery, returns, or any other queries.
-            </p>
-
             <div className="support-options">
 
                 <button className="support-btn">

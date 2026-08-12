@@ -26,12 +26,12 @@ function CartTabs({
                 Products
             </button>
 
-            <button
+            {/* <button
                 className={activeTab === "cards" ? "active" : ""}
                 onClick={() => setActiveTab("cards")}
             >
                 Cards
-            </button>
+            </button> */}
 
         </div>
 

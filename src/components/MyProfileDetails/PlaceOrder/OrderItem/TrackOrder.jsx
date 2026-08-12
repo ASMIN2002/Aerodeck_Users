@@ -34,10 +34,8 @@ function TrackOrder({
     const returnCurrentStep =
         returnSteps.indexOf(returnStatus);
 
-    /*
-        PENDING = COD / no payment received
-        Anything other than PENDING = payment received / partial paid
-    */
+    console.log("RETURN STATUS FROM DB:", returnStatus);
+    console.log("RETURN CURRENT STEP:", returnCurrentStep);
     const hasRefund =
         paymentStatus &&
         paymentStatus.toUpperCase() !== "PENDING";

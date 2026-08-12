@@ -77,7 +77,7 @@ function Header({
 
                                 isMenuOpen &&
                                 <div className="hd-dropdown">
-                                    <button
+                                    {/* <button
                                         className="hd-dropdown-item"
                                         onClick={() => {
                                             if (isDetailsOpen) {
@@ -88,7 +88,7 @@ function Header({
                                         }}
                                     >
                                         Cards
-                                    </button>
+                                    </button> */}
 
                                     <button
                                         className="hd-dropdown-item"
@@ -129,7 +129,7 @@ function Header({
 
             <div className="hd-center">
                 <h1 className="hd-logo">
-                    AERODECK
+                    HEEPIT
                 </h1>
 
                 <div className="hd-version-row">
@@ -151,7 +151,7 @@ function Header({
                     </span>
                 </button>
                 <button
-                    className="hd-cart-btn"
+                    className="hd-chat-btn"
                     type="button"
                 onClick={onOpenChat}
                 >

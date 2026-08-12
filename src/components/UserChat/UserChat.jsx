@@ -896,7 +896,6 @@ function UserChat({ orderData, setProfilePage }) {
                                 chatId={chatId}
                                 sessionToken={localStorage.getItem("session_token")}
                                 productId={productId}
-                                orderId={orderData?.order_id}
 
                                 totalPrice={
                                     Number(

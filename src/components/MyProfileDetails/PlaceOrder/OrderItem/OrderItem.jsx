@@ -238,7 +238,7 @@ function OrderItem({
                         ? "CANCELLED"
                         : item.order_status
                 }
-                returnStatus={isReturned ? "REQUESTED" : null}
+                returnStatus={isReturned ? item.return_status : null}
                 paymentStatus={order.payment_status}
                 orderId={order_id}
                 cancelStatus={cancelStatus}

@@ -52,7 +52,8 @@ function ChatPayment({
                             (
                                 msg.message === "80% Payment" ||
                                 msg.message === "100% Payment" ||
-                                msg.message === "See Demo"
+                                msg.message === "See Demo" ||
+                                msg.message === "PROCESSING"
                             )
                     );
 
@@ -70,6 +71,11 @@ function ChatPayment({
 
                 if (paymentMessage.message === "See Demo") {
                     setPaymentSelected("demo");
+                }
+
+                if (paymentMessage.message === "PROCESSING") {
+                    setPaymentProcessing(true);
+                    setPaymentDone(true);
                 }
 
             } catch (err) {
@@ -223,9 +229,75 @@ function ChatPayment({
                                         setPaymentScreenshot(null);
                                         setPaymentName("");
                                         setPaymentNumber("");
+                                        await fetch(
+                                            `${API}/api/user/chat/${chatId}/message`,
+                                            {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+                                                body: JSON.stringify({
+                                                    session_token: sessionToken,
+                                                    sender: "system",
+                                                    message: "PROCESSING",
+                                                    image_url: null
+                                                })
+                                            }
+                                        );
+                                        const orderResponse = await fetch(
+                                            `${API}/api/upload/processing-order`,
+                                            {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+                                                body: JSON.stringify({
+                                                    user_id: null,
+                                                    product_id: productId,
+                                                    quantity: quantity,
+                                                    subtotal: Number(totalPrice),
+                                                    discount: 0,
+                                                    gst: Number(totalPrice) * 0.18,
+                                                    platform_fee: 0,
+                                                    delivery_fee: 0,
+                                                    total_amount: Number(totalPrice) * 1.18,
+                                                    advance_amount:
+                                                        paymentSelected === "80"
+                                                            ? Number(totalPrice) * 0.80
+                                                            : Number(totalPrice),
+                                                    remaining_amount:
+                                                        paymentSelected === "80"
+                                                            ? Number(totalPrice) * 0.20
+                                                            : 0,
+                                                    payment_method: "UPI",
+                                                    address_id: null,
+                                                    items: [
+                                                        {
+                                                            product_id: productId,
+                                                            product_type: "CARD",
+                                                            product_name: "Card",
+                                                            product_image: null,
+                                                            unit_price:
+                                                                Number(totalPrice) /
+                                                                Number(quantity || 1),
+                                                            quantity: Number(quantity || 1),
+                                                            total_price: Number(totalPrice)
+                                                        }
+                                                    ]
+                                                })
+                                            }
+                                        );
 
+                                        const orderData = await orderResponse.json();
+
+                                        if (!orderData.success) {
+                                            alert(
+                                                orderData.message ||
+                                                "Unable to create processing order."
+                                            );
+                                            return;
+                                        }
                                         setPaymentProcessing(true);
-                                        alert("Payment details submitted successfully.");
 
                                     } catch (err) {
 
