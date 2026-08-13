@@ -60,6 +60,15 @@ function ProductSummary({
         Number(price || 0) * Number(cartQuantity || 0);
 
 
+    const isShopOrGift =
+        !!(
+            product?.shop_name ||
+            product?.gift_name ||
+            product?.shop_description ||
+            product?.gift_description
+        );
+
+
     const status =
         product?.product_status ??
         product?.gift_status ??
@@ -69,6 +78,27 @@ function ProductSummary({
     const [expanded, setExpanded] = useState(false);
     const LIMIT = 120;
     const isLong = (description?.length || 0) > LIMIT;
+
+    const whatsappNumber = "918984031948";
+
+    const handleOrderNow = () => {
+        const productId =
+            product?.product_id ||
+            product?.gift_id ||
+            product?.premium_id ||
+            product?.shop_id;
+
+        const message =
+            `Product ID: ${productId}\n` +
+            `Product Name: ${name}\n` +
+            `Price per unit: ₹${Number(price || 0).toLocaleString("en-IN")}\n\n` +
+            `Press Send to know more.`;
+
+        const whatsappUrl =
+            `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+        window.open(whatsappUrl, "_blank");
+    };
 
     return (
 
@@ -134,57 +164,77 @@ function ProductSummary({
             </h2>
 
             <div className="downcartbuy">
-                <div className="ps-cart-row">
 
-                    {cartQuantity > 0 ? (
+                {isShopOrGift ? (
+                    <>
+                        <div className="ps-cart-row">
 
-                        <div className="ps-qty">
+                            {cartQuantity > 0 ? (
 
-                            <button onClick={onDecreaseCart}>
-                                -
-                            </button>
+                                <div className="ps-qty">
 
-                            <span>
-                                {cartQuantity}
-                            </span>
+                                    <button onClick={onDecreaseCart}>
+                                        -
+                                    </button>
 
-                            <button onClick={onIncreaseCart}>
-                                +
-                            </button>
+                                    <span>
+                                        {cartQuantity}
+                                    </span>
+
+                                    <button onClick={onIncreaseCart}>
+                                        +
+                                    </button>
+
+                                </div>
+
+                            ) : (
+
+                                <button
+                                    className="ps-cart-btn"
+                                    onClick={onIncreaseCart}
+                                >
+                                    🛒 Add To Cart
+                                </button>
+
+                            )}
 
                         </div>
 
-                    ) : (
+                        <div className="ps-buy-now">
 
-                        <button
-                            className="ps-cart-btn"
-                            onClick={onIncreaseCart}
-                        >
-                            🛒 Add To Cart
-                        </button>
+                            <button
+                                className="ps-cart-btn"
+                                onClick={onBuyNow}
+                            >
+                                Buy at&nbsp;
 
-                    )}
+                                <span className="ps-total-price">
+                                    ₹{Number(
+                                        cartQuantity > 0
+                                            ? totalPrice
+                                            : price
+                                    ).toLocaleString("en-IN")}
+                                </span>
 
-                </div>
-                <div className="ps-buy-now">
+                            </button>
+
+                        </div>
+                    </>
+                ) : (
+
                     <div className="ps-buy-now">
 
                         <button
                             className="ps-cart-btn"
-                            onClick={onBuyNow}
+                            onClick={handleOrderNow}
                         >
-                            Buy at&nbsp;
-
-                            <span className="ps-total-price">
-                                ₹{Number(
-                                    cartQuantity > 0
-                                        ? totalPrice
-                                        : price
-                                ).toLocaleString("en-IN")}
-                            </span>
+                            ORDER NOW
                         </button>
+
                     </div>
-                </div>
+
+                )}
+
             </div>
 
         </section>

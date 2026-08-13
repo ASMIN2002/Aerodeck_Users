@@ -28,23 +28,8 @@ function BottomNav({
                     Home
                 </span>
             </button>
+
             <button
-                className={`bn-item ${selectedBottomTab === "Offers" ? "bn-active" : ""}`}
-                style={{
-                    opacity: 0.45,
-                    filter: "grayscale(100%)"
-                }}
-            >
-                <span className="bn-icon">
-                    🎁
-                </span>
-
-                <span className="bn-text">
-                    PREMIUM
-                </span>
-            </button>
-
-            {/* <button
                 className={`bn-item ${selectedBottomTab === "Premium" ? "bn-active" : ""}`}
                 onClick={() => {
                     if (isDetailsOpen) {
@@ -60,7 +45,7 @@ function BottomNav({
                 <span className="bn-text">
                     Premium
                 </span>
-            </button> */}
+            </button>
 
             {/* <button
                 className={`bn-item ${selectedBottomTab === "Offers" ? "bn-active" : ""}`}

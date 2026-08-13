@@ -102,9 +102,6 @@
     cursor: pointer;
     max-width: 95px;
 }
-.hd-chat-btn{
-    display: none;
-}
 .hd-category-text {
     overflow: hidden;
     text-overflow: ellipsis;

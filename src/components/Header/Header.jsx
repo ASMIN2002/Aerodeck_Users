@@ -77,7 +77,7 @@ function Header({
 
                                 isMenuOpen &&
                                 <div className="hd-dropdown">
-                                    {/* <button
+                                    <button
                                         className="hd-dropdown-item"
                                         onClick={() => {
                                             if (isDetailsOpen) {
@@ -88,7 +88,7 @@ function Header({
                                         }}
                                     >
                                         Cards
-                                    </button> */}
+                                    </button>
 
                                     <button
                                         className="hd-dropdown-item"
@@ -149,13 +149,6 @@ function Header({
                     <span className="hd-cart-count">
                         {cartCount}
                     </span>
-                </button>
-                <button
-                    className="hd-chat-btn"
-                    type="button"
-                onClick={onOpenChat}
-                >
-                    💬
                 </button>
 
             </div>
