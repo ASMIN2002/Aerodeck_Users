@@ -1,8 +1,8 @@
 import "../DetailsDataStyle/ProductSummary.css";
+import { API } from "../../../services/api";
 import { useState } from "react";
 
 function ProductSummary({
-
     product,
 
     isLiked,
@@ -80,24 +80,57 @@ function ProductSummary({
     const isLong = (description?.length || 0) > LIMIT;
 
     const whatsappNumber = "918984031948";
+    const sessionToken = localStorage.getItem("session_token");
 
-    const handleOrderNow = () => {
+    const handleOrderNow = async () => {
+
         const productId =
             product?.product_id ||
             product?.gift_id ||
             product?.premium_id ||
             product?.shop_id;
 
-        const message =
-            `Product ID: ${productId}\n` +
-            `Product Name: ${name}\n` +
-            `Price per unit: ₹${Number(price || 0).toLocaleString("en-IN")}\n\n` +
-            `Press Send to know more.`;
+        if (!sessionToken || !productId) {
+            return;
+        }
 
-        const whatsappUrl =
-            `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        try {
 
-        window.open(whatsappUrl, "_blank");
+            const response = await fetch(
+                `${API}/api/user/whatsapp-order-data`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token: sessionToken,
+                        product_id: productId
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!data.success) {
+                return;
+            }
+
+            const message =
+                `USER = #${data.user_id}HEEPITUSER\n` +
+                `PRODUCT = #${data.product_id}HEEPITPRODUCT\n\n` +
+                `Just press Send to know more.`;
+
+            const whatsappUrl =
+                `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+            window.open(whatsappUrl, "_blank");
+
+        } catch (error) {
+
+            console.error("WhatsApp order error:", error);
+
+        }
     };
 
     return (
