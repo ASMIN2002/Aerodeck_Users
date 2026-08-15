@@ -1,7 +1,3 @@
-/* ===========================
-   PRODUCT CARD
-=========================== */
-
 .pc-card {
     position: relative;
     display: flex;
@@ -15,7 +11,7 @@
     overflow: hidden;
     cursor: pointer;
     transition: .25s ease;
-    box-shadow: 0 0 1px rgb(25, 0, 255);
+    box-shadow: 0 0 2px rgb(247, 247, 247);
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }

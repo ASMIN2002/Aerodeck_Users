@@ -169,15 +169,6 @@ function Search({
 
                     }}
                 />
-                <button
-                    type="button"
-                    className="sr-search-btn"
-                    onClick={() => {
-                        setSearchSuggestions([]);
-                    }}
-                >
-                    🔍
-                </button>
 
             </div>
             {

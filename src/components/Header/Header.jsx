@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import HEEPITLOGO from "../../assets/HEEPITLOGO.png";
 import { API } from "../../services/api";
 import "./Header.css";
 
@@ -87,7 +88,7 @@ function Header({
                                             setIsMenuOpen(false);
                                         }}
                                     >
-                                        Cards
+                                        CARDS
                                     </button>
 
                                     <button
@@ -100,7 +101,7 @@ function Header({
                                             setIsMenuOpen(false);
                                         }}
                                     >
-                                        Gifts
+                                        GIFTS
                                     </button>
 
                                     <button
@@ -113,7 +114,7 @@ function Header({
                                             setIsMenuOpen(false);
                                         }}
                                     >
-                                        Shop
+                                        SHOP
                                     </button>
 
                                 </div>

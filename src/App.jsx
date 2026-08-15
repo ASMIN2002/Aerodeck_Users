@@ -12,6 +12,7 @@ import { API } from "./services/api";
 
 function App() {
 
+    // const [page, setPage] = useState("startup");
     const [page, setPage] = useState("splash");
     const [user, setUser] = useState(null);
     const [checkingSession, setCheckingSession] = useState(true);

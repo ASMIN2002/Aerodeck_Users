@@ -1,20 +1,13 @@
 .fl-dropdown {
-
     position: absolute;
-
     top: 100%;
-
     right: 0;
-
     margin-top: 10px;
-
-    width: 280px;
-
+    width: 170px;
     max-height: 420px;
-
     overflow-y: auto;
 
-    background: #fff;
+    background: #a7c4c7;
 
     border-radius: 18px;
 
@@ -27,13 +20,15 @@
     z-index: 9999;
 
     display: flex;
-
     flex-direction: column;
-
-    gap: 10px;
-
+    gap: 7px;
     animation: filterPopup .25s ease;
+}
 
+.fl-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    text-shadow: 0 0 0.5px black;
 }
 
 .fl-dropdown::-webkit-scrollbar {
@@ -54,17 +49,14 @@
 
     width: 100%;
 
-    border: none;
-
-    background: #f6f7fb;
-
-    padding: 12px 16px;
+    border: 1px solid black;
+    padding: 6px 16px;
 
     border-radius: 12px;
 
     text-align: left;
 
-    font-size: 14px;
+    font-size: 10px;
 
     font-weight: 600;
 
@@ -111,18 +103,3 @@
     }
 
 }
-
-@media(max-width:768px) {
-
-    .fl-dropdown {
-
-        width: 250px;
-
-        right: 0;
-
-    }
-
-}
-
-
-
