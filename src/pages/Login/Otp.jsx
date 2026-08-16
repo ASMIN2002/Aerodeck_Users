@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Preferences } from "@capacitor/preferences";
 import "../../styles/Otp.css";
 import { API } from "../../services/api";
 
@@ -7,7 +8,7 @@ function Otp({
     setUser,
     setLoginUser,
     authMode
-}){
+}) {
     const [otp, setOtp] = useState("");
 
     const mobileNumber =
@@ -58,7 +59,7 @@ function Otp({
 
             );
             const data = await response.json();
-        
+
             console.log(data);
             if (!data.success) {
 
@@ -69,11 +70,10 @@ function Otp({
             }
 
             setUser(data.user);
-         
-            localStorage.setItem(
-                "session_token",
-                data.session_token
-            );
+            await Preferences.set({
+                key: "session_token",
+                value: data.session_token
+            });
 
             setPage("home");
 

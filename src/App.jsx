@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import Loading from "./components/Loading/Loading";
+import { Preferences } from "@capacitor/preferences";
 import Splash from "./pages/Splash/Splash";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
@@ -117,8 +118,9 @@ function App() {
             setShowLoading(true);
             try {
 
-                const sessionToken = localStorage.getItem("session_token");
-
+                const { value: sessionToken } = await Preferences.get({
+                    key: "session_token"
+                });
                 if (!sessionToken) {
 
                     setPage("login");
