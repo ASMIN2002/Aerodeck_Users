@@ -4,9 +4,9 @@ import { API } from "../../services/api";
 
 function Address({
     setProfilePage,
-    setSelectedBottomTab
+    setSelectedBottomTab,
+    navigateWithLoading
 }) {
-
     const [primaryAddress, setPrimaryAddress] = useState(null);
     useEffect(() => {
         fetchPrimaryAddress();
@@ -47,8 +47,18 @@ function Address({
                 className="ad-button"
                 type="button"
                 onClick={() => {
-                    setSelectedBottomTab("Profile");
-                    setProfilePage("address");
+
+                    navigateWithLoading(
+                        () => {
+
+                            setSelectedBottomTab("Profile");
+                            setProfilePage("address");
+
+                        },
+                        "Loading Addresses...",
+                        1000
+                    );
+
                 }}
             >
                 <span className="ad-icon">

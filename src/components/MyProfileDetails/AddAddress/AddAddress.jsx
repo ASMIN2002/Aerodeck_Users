@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./AddAddress.css";
 import { FiArrowLeft } from "react-icons/fi";
 import Toast from "../../../components/Toast/Toast";
+import Loading from "../../../components/Loading/Loading";
 import { API } from "../../../services/api";
 
 function AddAddress({ setProfilePage }) {
@@ -26,6 +27,8 @@ function AddAddress({ setProfilePage }) {
     });
     const [areas, setAreas] = useState([]);
     const [loadingPin, setLoadingPin] = useState(false);
+    const [loadingLocation, setLoadingLocation] = useState(false);
+    const [savingAddress, setSavingAddress] = useState(false);
 
     const [toast, setToast] = useState({
         show: false,
@@ -100,7 +103,11 @@ function AddAddress({ setProfilePage }) {
 
     const handleCurrentLocation = () => {
 
+        setLoadingLocation(true);
+
         if (!navigator.geolocation) {
+
+            setLoadingLocation(false);
 
             showToast("Geolocation is not supported.", "error");
             return;
@@ -140,8 +147,11 @@ function AddAddress({ setProfilePage }) {
                     }
 
                     showToast("Current location detected.");
+                    setLoadingLocation(false);
 
                 } catch {
+
+                    setLoadingLocation(false);
 
                     showToast("Unable to fetch location.", "error");
 
@@ -150,6 +160,8 @@ function AddAddress({ setProfilePage }) {
             },
 
             () => {
+
+                setLoadingLocation(false);
 
                 showToast("Location permission denied.", "error");
 
@@ -213,6 +225,7 @@ function AddAddress({ setProfilePage }) {
         e.preventDefault();
 
         try {
+            setSavingAddress(true);
 
             const response = await fetch(
                 `${API}/api/user/address`,
@@ -226,22 +239,25 @@ function AddAddress({ setProfilePage }) {
             );
 
             const data = await response.json();
-
             if (data.success) {
-
-                alert("Address Added Successfully");
-
-                console.log(data);
-
+                setSavingAddress(false);
+                setProfilePage("address");
+                return;
             } else {
-
-                alert(data.message);
-
+                setSavingAddress(false);
+                showToast(data.message, "error");
             }
 
         } catch (error) {
 
+            setSavingAddress(false);
+
             console.error(error);
+
+            showToast(
+                "Unable to save address.",
+                "error"
+            );
 
         }
 
@@ -249,218 +265,238 @@ function AddAddress({ setProfilePage }) {
 
     return (
 
-        <div className="add-address">
-
-            <div className="add-address-header">
-
-                <button
-                    className="back-btn"
-                    onClick={() => setProfilePage("address")}
-                >
-                    <FiArrowLeft />
-                </button>
-                <button
-                    type="button"
-                    className="current-location-btn"
-                    onClick={handleCurrentLocation}
-                >
-                    📍 Set Current Location
-                </button>
-
-                <h2>Add Address</h2>
-
-            </div>
-
-            <form
-                className="address-form"
-                onSubmit={handleSubmit}
-            >
-
-                <input
-                    type="text"
-                    placeholder="Full Name"
-                    value={formData.full_name}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            full_name: e.target.value
-                        }))
-                    }
-                />
-
-                <input
-                    type="tel"
-                    placeholder="Mobile Number"
-                    maxLength={10}
-                    value={formData.mobile_number}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            mobile_number: e.target.value.replace(/\D/g, "")
-                        }))
-                    }
-                />
-
-                <input
-                    type="text"
-                    placeholder="House / Flat / Building"
-                    value={formData.house_flat}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            house_flat: e.target.value
-                        }))
-                    }
-                />
-                <input
-                    type="text"
-                    placeholder="PIN Code"
-                    maxLength={6}
-                    value={formData.pincode}
-                    onChange={(e) => {
-
-                        const pin = e.target.value.replace(/\D/g, "");
-
-                        setFormData(prev => ({
-                            ...prev,
-                            pincode: pin
-                        }));
-
-                        if (pin.length === 6) {
-                            fetchPincode(pin);
-                        }
-
-                    }}
-                />
-
-                <select
-                    value={formData.area_street}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            area_street: e.target.value
-                        }))
-                    }
-                >
-
-                    <option value="">
-                        Select Area
-                    </option>
-
-                    {areas.map((area, index) => (
-
-                        <option
-                            key={index}
-                            value={area}
-                        >
-                            {area}
-                        </option>
-
-                    ))}
-
-                </select>
-
-                <input
-                    type="text"
-                    placeholder="Landmark (Optional)"
-                    value={formData.landmark}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            landmark: e.target.value
-                        }))
-                    }
-                />
+        <>
+            {
+                loadingLocation && (
+                    <Loading
+                        manual={true}
+                        text="Detecting Location..."
+                    />
+                )
+            }
+            {
+                savingAddress && (
+                    <Loading
+                        manual={true}
+                        text="Saving Address..."
+                    />
+                )
+            }
 
 
-                <input
-                    type="text"
-                    placeholder="City"
-                    value={formData.city}
-                    readOnly
-                />
+            <div className="add-address">
 
-                <input
-                    type="text"
-                    placeholder="State"
-                    value={formData.state}
-                    readOnly
-                />
+                <div className="add-address-header">
 
-                <input
-                    type="text"
-                    placeholder="Country"
-                    value={formData.country}
-                    readOnly
-                />
+                    <button
+                        className="back-btn"
+                        onClick={() => setProfilePage("address")}
+                    >
+                        <FiArrowLeft />
+                    </button>
+                    <button
+                        type="button"
+                        className="current-location-btn"
+                        onClick={handleCurrentLocation}
+                    >
+                        📍 Set Current Location
+                    </button>
 
-
-                <div className="address-type">
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="type"
-                            value="Home"
-                            checked={formData.address_type === "Home"}
-                            onChange={(e) =>
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address_type: e.target.value
-                                }))
-                            }
-                        />
-                        🏠 Home
-                    </label>
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="type"
-                            value="Work"
-                            checked={formData.address_type === "Work"}
-                            onChange={(e) =>
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address_type: e.target.value
-                                }))
-                            }
-                        />
-                        🏢 Work
-                    </label>
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="type"
-                            value="Other"
-                            checked={formData.address_type === "Other"}
-                            onChange={(e) =>
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address_type: e.target.value
-                                }))
-                            }
-                        />
-                        📍 Other
-                    </label>
+                    <h2>Add Address</h2>
 
                 </div>
 
-                <button
-                    type="submit"
-                    className="save-address-btn"
+                <form
+                    className="address-form"
+                    onSubmit={handleSubmit}
                 >
-                    Save Address
-                </button>
 
-            </form>
-            <Toast
-                show={toast.show}
-                message={toast.message}
-                type={toast.type}
-            />
-        </div>
+                    <input
+                        type="text"
+                        placeholder="Full Name"
+                        value={formData.full_name}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                full_name: e.target.value
+                            }))
+                        }
+                    />
+
+                    <input
+                        type="tel"
+                        placeholder="Mobile Number"
+                        maxLength={10}
+                        value={formData.mobile_number}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                mobile_number: e.target.value.replace(/\D/g, "")
+                            }))
+                        }
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="House / Flat / Building"
+                        value={formData.house_flat}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                house_flat: e.target.value
+                            }))
+                        }
+                    />
+                    <input
+                        type="text"
+                        placeholder="PIN Code"
+                        maxLength={6}
+                        value={formData.pincode}
+                        onChange={(e) => {
+
+                            const pin = e.target.value.replace(/\D/g, "");
+
+                            setFormData(prev => ({
+                                ...prev,
+                                pincode: pin
+                            }));
+
+                            if (pin.length === 6) {
+                                fetchPincode(pin);
+                            }
+
+                        }}
+                    />
+
+                    <select
+                        value={formData.area_street}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                area_street: e.target.value
+                            }))
+                        }
+                    >
+
+                        <option value="">
+                            Select Area
+                        </option>
+
+                        {areas.map((area, index) => (
+
+                            <option
+                                key={index}
+                                value={area}
+                            >
+                                {area}
+                            </option>
+
+                        ))}
+
+                    </select>
+
+                    <input
+                        type="text"
+                        placeholder="Landmark (Optional)"
+                        value={formData.landmark}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                landmark: e.target.value
+                            }))
+                        }
+                    />
+
+
+                    <input
+                        type="text"
+                        placeholder="City"
+                        value={formData.city}
+                        readOnly
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="State"
+                        value={formData.state}
+                        readOnly
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Country"
+                        value={formData.country}
+                        readOnly
+                    />
+
+
+                    <div className="address-type">
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="type"
+                                value="Home"
+                                checked={formData.address_type === "Home"}
+                                onChange={(e) =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        address_type: e.target.value
+                                    }))
+                                }
+                            />
+                            🏠 Home
+                        </label>
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="type"
+                                value="Work"
+                                checked={formData.address_type === "Work"}
+                                onChange={(e) =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        address_type: e.target.value
+                                    }))
+                                }
+                            />
+                            🏢 Work
+                        </label>
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="type"
+                                value="Other"
+                                checked={formData.address_type === "Other"}
+                                onChange={(e) =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        address_type: e.target.value
+                                    }))
+                                }
+                            />
+                            📍 Other
+                        </label>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="save-address-btn"
+                    >
+                        Save Address
+                    </button>
+
+                </form>
+                <Toast
+                    show={toast.show}
+                    message={toast.message}
+                    type={toast.type}
+                />
+            </div>
+        </>
 
     );
 

@@ -1,15 +1,18 @@
 import "./MyAddresses.css";
 import { useEffect, useRef, useState } from "react";
+import Loading from "../../../components/Loading/Loading";
 import { FiArrowLeft } from "react-icons/fi";
 import { API } from "../../../services/api";
 
 function MyAddresses({
     setProfilePage,
     selectedAddress,
-    setSelectedAddress
+    setSelectedAddress,
+    navigateWithLoading
 }) {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [settingPrimary, setSettingPrimary] = useState(false);
     const sessionToken = localStorage.getItem("session_token");
     const [activeMenu, setActiveMenu] = useState(null);
     const menuRef = useRef(null);
@@ -30,6 +33,7 @@ function MyAddresses({
         }
     };
     const handleSetPrimary = async (address_id) => {
+        setSettingPrimary(true);
         try {
             const response = await fetch(
                 `${API}/api/user/address/primary/${address_id}`,
@@ -47,11 +51,14 @@ function MyAddresses({
             const data = await response.json();
             if (data.success) {
                 setActiveMenu(null);
-                fetchAddresses();
+                await fetchAddresses();
+                setSettingPrimary(false);
             } else {
+                setSettingPrimary(false);
                 alert(data.message);
             }
         } catch (err) {
+            setSettingPrimary(false);
             console.error(err);
             alert("Server Error");
         }
@@ -110,117 +117,155 @@ function MyAddresses({
         );
     }
     return (
-        <div className="address-page">
-            <div className="address-header">
-                <button
-                    className="back-btn"
-                    onClick={() => setProfilePage("profile")}
-                >
-                    <FiArrowLeft />
-                </button>
-                <h2>
-                    My Addresses
-                </h2>
-                <button
-                    className="add-btn"
-                    disabled={addresses.length >= 4}
-                    onClick={() => setProfilePage("addaddress")}
-                >
-                    + Add
-                </button>
-            </div>
+
+        <>
+
             {
-                addresses.length === 0 &&
-                <div className="empty-address">
-                    No saved addresses
-                </div>
+                settingPrimary && (
+                    <Loading
+                        manual={true}
+                        text="Setting Primary Address..."
+                    />
+                )
             }
-            {
-                addresses.map((item) => (
-                    <div
-                        className={`address-card ${selectedAddress?.address_id === item.address_id ? "selected" : ""
-                            }`}
-                        key={item.address_id}
+
+            <div className="address-page">
+                <div className="address-header">
+                    <button
+                        className="back-btn"
+                        onClick={() => setProfilePage("profile")}
                     >
-                        <div className="address-top">
-                            <div>
-                                <h3>
-                                    {item.address_type}
-                                </h3>
+                        <FiArrowLeft />
+                    </button>
+                    <div>
+                        <h2>
+                            My Addresses
+                        </h2>
+                        {
+                            addresses.length >= 4 && (
+                                <p>
+                                    Maximum 4 addresses are allowed
+                                </p>
+                            )
+                        }
+                    </div>
+                    <button
+                        className="add-btn"
+                        disabled={addresses.length >= 4}
+                        onClick={() => {
+
+                            navigateWithLoading(
+                                () => {
+                                    setProfilePage("addaddress");
+                                },
+                                "Loading...",
+                                500
+                            );
+
+                        }}
+                    >
+                        + Add
+                    </button>
+                </div>
+                {
+                    addresses.length === 0 &&
+                    <div className="empty-address">
+                        No saved addresses
+                    </div>
+                }
+                {
+                    addresses.map((item) => (
+                        <div
+                            className={`address-card ${selectedAddress?.address_id === item.address_id ? "selected" : ""
+                                }`}
+                            key={item.address_id}
+                        >
+                            <div className="address-top">
+                                <div>
+                                    <h3>
+                                        {item.address_type}
+                                    </h3>
+                                    {
+                                        item.is_primary === 1 &&
+                                        <span className="primary-badge">
+                                            PRIMARY
+                                        </span>
+                                    }
+                                </div>
+                                <button
+                                    className="menu-btn"
+                                    onClick={() => handleMenu(item.address_id)}
+                                >
+                                    ⋮
+                                </button>
                                 {
-                                    item.is_primary === 1 &&
-                                    <span className="primary-badge">
-                                        PRIMARY
-                                    </span>
+                                    activeMenu === item.address_id && (
+                                        <div
+                                            className="address-menu"
+                                            ref={menuRef}
+                                        >
+                                            {
+                                                item.is_primary !== 1 && (
+                                                    <button
+                                                        onClick={() => handleSetPrimary(item.address_id)}
+                                                    >
+                                                        Set as Primary
+                                                    </button>
+                                                )
+                                            }
+                                            <button
+                                                onClick={() => {
+
+                                                    localStorage.setItem(
+                                                        "editAddress",
+                                                        JSON.stringify(item)
+                                                    );
+
+                                                    setActiveMenu(null);
+
+                                                    navigateWithLoading(
+                                                        () => {
+                                                            setProfilePage("editaddress");
+                                                        },
+                                                        "Loading Edit Address...",
+                                                        500
+                                                    );
+
+                                                }}
+                                            >
+                                                Edit Address
+                                            </button>
+                                            {
+                                                item.is_primary !== 1 && (
+                                                    <button
+                                                        className="delete-btn"
+                                                        onClick={() => handleDeleteAddress(item.address_id)}
+                                                    >
+                                                        Delete Address
+                                                    </button>
+
+                                                )
+                                            }
+                                        </div>
+                                    )
                                 }
                             </div>
-                            <button
-                                className="menu-btn"
-                                onClick={() => handleMenu(item.address_id)}
-                            >
-                                ⋮
-                            </button>
-                            {
-                                activeMenu === item.address_id && (
-                                    <div
-                                        className="address-menu"
-                                        ref={menuRef}
-                                    >
-                                        {
-                                            item.is_primary !== 1 && (
-                                                <button
-                                                    onClick={() => handleSetPrimary(item.address_id)}
-                                                >
-                                                    Set as Primary
-                                                </button>
-                                            )
-                                        }
-                                        <button
-                                            onClick={() => {
-
-                                                localStorage.setItem(
-                                                    "editAddress",
-                                                    JSON.stringify(item)
-                                                );
-
-                                                setActiveMenu(null);
-
-                                                setProfilePage("editaddress");
-
-                                            }}
-                                        >
-                                            Edit Address
-                                        </button>
-                                        {
-                                            item.is_primary !== 1 && (
-                                                <button
-                                                    className="delete-btn"
-                                                    onClick={() => handleDeleteAddress(item.address_id)}
-                                                >
-                                                    Delete Address
-                                                </button>
-
-                                            )
-                                        }
-                                    </div>
-                                )
-                            }
-                        </div>
-                        <div className="namnum">
-                            <h4>
-                                {item.full_name}
-                            </h4>
+                            <div className="namnum">
+                                <h4>
+                                    {item.full_name}
+                                </h4>
+                                <p>
+                                    +91 {item.mobile_number}
+                                </p>
+                            </div>
                             <p>
-                                +91 {item.mobile_number}
+                                {item.house_flat}, {item.area_street}, {item.landmark}, {item.city}, {item.state} - {item.pincode}
                             </p>
                         </div>
-                        <p>
-                            {item.house_flat}, {item.area_street}, {item.landmark}, {item.city}, {item.state} - {item.pincode}
-                        </p>
-                    </div>
-                ))
-            }
-        </div>
+                    ))
+                }
+            </div>
+        </>
     );
 }
 export default MyAddresses;

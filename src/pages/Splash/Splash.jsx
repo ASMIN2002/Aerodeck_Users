@@ -5,15 +5,15 @@ function Splash({
     setPage
 }) {
     useEffect(() => {
-        // const timer = setTimeout(() => {
-
-        //     sessionStorage.setItem("aerodeck_splash", "true");
-        //     setPage("startup");
-
-        // }, 4000);
         const timer = setTimeout(() => {
+
+            sessionStorage.setItem("aerodeck_splash", "true");
             setPage("startup");
-        }, 5000);
+
+        }, 4000);
+        // const timer = setTimeout(() => {
+        //     setPage("startup");
+        // }, 5000);
         return () => clearTimeout(timer);
     }, [
         setPage

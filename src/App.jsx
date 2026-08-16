@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 
+import Loading from "./components/Loading/Loading";
 import Splash from "./pages/Splash/Splash";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
@@ -12,13 +13,37 @@ import { API } from "./services/api";
 
 function App() {
 
-    // const [page, setPage] = useState("startup");
-    const [page, setPage] = useState("splash");
+    const [page, setPage] = useState("startup");
+    // const [page, setPage] = useState("splash");
+    const [showLoading, setShowLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState("Loading HEEPIT...");
+    const [loadingDuration, setLoadingDuration] = useState(3000);
     const [user, setUser] = useState(null);
     const [checkingSession, setCheckingSession] = useState(true);
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
+    const navigateWithLoading = (
+        action,
+        text = "Loading HEEPIT...",
+        duration = 3000
+    ) => {
+
+        setLoadingText(text);
+        setLoadingDuration(duration);
+        setShowLoading(true);
+
+        setTimeout(() => {
+
+            if (typeof action === "function") {
+
+                action();
+
+            }
+
+        }, duration);
+
+    };
 
     useEffect(() => {
 
@@ -89,8 +114,7 @@ function App() {
             if (page !== "startup") {
                 return;
             }
-
-            // 2. Agar localStorage me user nahi hai tab server session check karo
+            setShowLoading(true);
             try {
 
                 const sessionToken = localStorage.getItem("session_token");
@@ -149,6 +173,7 @@ function App() {
             } finally {
 
                 setCheckingSession(false);
+                setShowLoading(false);
 
             }
 
@@ -185,6 +210,15 @@ function App() {
 
         <>
             {
+                showLoading && (
+                    <Loading
+                        duration={loadingDuration}
+                        text={loadingText}
+                        onComplete={() => setShowLoading(false)}
+                    />
+                )
+            }
+            {
                 page === "splash" &&
                 <Splash
                     setPage={setPage}
@@ -215,6 +249,7 @@ function App() {
                 <Home
                     user={user}
                     setPage={setPage}
+                    navigateWithLoading={navigateWithLoading}
                     cartCount={cartCount}
                     setCartCount={setCartCount}
                 />

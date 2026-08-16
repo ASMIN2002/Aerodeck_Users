@@ -34,19 +34,13 @@ import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfi
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
 
-
 function Home({
-
     user,
-
     setUser,
-
     setPage,
-
+    navigateWithLoading,
     cartCount,
-
     setCartCount
-
 }) {
     const [selectedMenu, setSelectedMenu] = useState(() => {
 
@@ -225,7 +219,7 @@ function Home({
                     setSelectedBottomTab("Profile");
                     setProfilePage("cart");
                 }}
-              
+
             />
             {
                 !isDetailsOpen &&
@@ -234,6 +228,7 @@ function Home({
                 <Address
                     setProfilePage={setProfilePage}
                     setSelectedBottomTab={setSelectedBottomTab}
+                    navigateWithLoading={navigateWithLoading}
                 />
             }
 
@@ -460,6 +455,7 @@ function Home({
                         setProfilePage={setProfilePage}
                         selectedAddress={selectedAddress}
                         setSelectedAddress={setSelectedAddress}
+                        navigateWithLoading={navigateWithLoading}
                     />
                 }
                 {

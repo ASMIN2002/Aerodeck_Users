@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import "./Premium.css";
+import Loading from "../../components/Loading/Loading";
 import PremiumCard from "../Premium/PremiumCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
@@ -24,6 +24,7 @@ function Premium({
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+    const [showLoading, setShowLoading] = useState(true);
 
     const showToast = (message, type = "success") => {
 
@@ -837,6 +838,15 @@ function Premium({
 
 
         <section className="cds-section">
+            {
+                showLoading && (
+                    <Loading
+                        duration={500}
+                        text="Loading Premium Cards..."
+                        onComplete={() => setShowLoading(false)}
+                    />
+                )
+            }
             <div className="cds-grid">
 
                 {

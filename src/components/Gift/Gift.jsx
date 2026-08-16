@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loading from "../../components/Loading/Loading";
 import GiftCard from "../Gift/GiftCard";
 import GiftHome from "./GiftHome";
 import GiftCategory from "./GiftCategory";
@@ -29,6 +30,7 @@ function Gift({
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
     const [searchSuggestions, setSearchSuggestions] = useState([]);
+    const [showLoading, setShowLoading] = useState(true);
     const showToast = (message, type = "success") => {
 
         setToast({
@@ -894,6 +896,15 @@ function Gift({
     const isSearching = search.trim().length > 0;
     return (
         <>
+            {
+                showLoading && (
+                    <Loading
+                        duration={500}
+                        text="Loading Gifts..."
+                        onComplete={() => setShowLoading(false)}
+                    />
+                )
+            }
             {
                 allGiftsPage ? (
 

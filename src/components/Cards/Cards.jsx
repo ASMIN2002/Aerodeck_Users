@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Cards.css";
 import ProductCard from "../ProductCard/ProductCard";
 import Toast from "../Toast/Toast";
+import Loading from "../../components/Loading/Loading";
 import { API } from "../../services/api";
 
 function Cards({
@@ -26,6 +27,7 @@ function Cards({
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+    const [showLoading, setShowLoading] = useState(true);
 
     const showToast = (message, type = "success") => {
 
@@ -865,6 +867,15 @@ function Cards({
 
 
         <section className="cds-section">
+            {
+                showLoading && (
+                    <Loading
+                        duration={500}
+                        text="Loading Cards..."
+                        onComplete={() => setShowLoading(false)}
+                    />
+                )
+            }
 
             <div className="cds-grid">
 

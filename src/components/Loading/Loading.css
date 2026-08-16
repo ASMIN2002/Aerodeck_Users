@@ -1,0 +1,162 @@
+.hp-loading-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.35);
+
+    backdrop-filter: blur(8px);
+
+    -webkit-backdrop-filter: blur(8px);
+
+    pointer-events: all;
+
+    animation: hpLoadingFadeIn 0.2s ease;
+
+}
+
+.hp-loading-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    padding: 25px 32px;
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.72);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.12);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+}
+
+.hp-loading-spinner {
+
+    position: relative;
+
+    width: 48px;
+
+    height: 48px;
+
+    animation: hpLoadingRotate 1s linear infinite;
+
+}
+
+.hp-loading-spinner span {
+
+    position: absolute;
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #111;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform-origin: 0 0;
+
+}
+
+.hp-loading-spinner span:nth-child(1) {
+    transform: rotate(0deg) translate(19px);
+    opacity: 1;
+}
+
+.hp-loading-spinner span:nth-child(2) {
+    transform: rotate(45deg) translate(19px);
+    opacity: 0.85;
+}
+
+.hp-loading-spinner span:nth-child(3) {
+    transform: rotate(90deg) translate(19px);
+    opacity: 0.7;
+}
+
+.hp-loading-spinner span:nth-child(4) {
+    transform: rotate(135deg) translate(19px);
+    opacity: 0.55;
+}
+
+.hp-loading-spinner span:nth-child(5) {
+    transform: rotate(180deg) translate(19px);
+    opacity: 0.4;
+}
+
+.hp-loading-spinner span:nth-child(6) {
+    transform: rotate(225deg) translate(19px);
+    opacity: 0.3;
+}
+
+.hp-loading-spinner span:nth-child(7) {
+    transform: rotate(270deg) translate(19px);
+    opacity: 0.2;
+}
+
+.hp-loading-spinner span:nth-child(8) {
+    transform: rotate(315deg) translate(19px);
+    opacity: 0.1;
+}
+
+.hp-loading-text {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    color: #111;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+}
+
+@keyframes hpLoadingRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@keyframes hpLoadingFadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}

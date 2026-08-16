@@ -4,14 +4,13 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: rgb(217 193 223);
+    background: #F1F2F3;
 }
 
 .home-content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-bottom: 70px;
     box-sizing: border-box;
 
 }

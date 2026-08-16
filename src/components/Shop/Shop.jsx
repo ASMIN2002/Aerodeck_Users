@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
+import Loading from "../../components/Loading/Loading";
 import ShopCard from "../Shop/ShopCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
@@ -28,6 +29,7 @@ function Shop({
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+    const [showLoading, setShowLoading] = useState(true);
 
     const showToast = (message, type = "success") => {
 
@@ -979,7 +981,15 @@ function Shop({
     const isSearching = search.trim().length > 0;
 
     return (
-        <>
+        <>{
+            showLoading && (
+                <Loading
+                    duration={500}
+                    text="Loading Shop Items..."
+                    onComplete={() => setShowLoading(false)}
+                />
+            )
+        }
 
             {
                 allShopsPage ? (
