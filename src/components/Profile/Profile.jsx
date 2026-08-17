@@ -60,7 +60,7 @@ function Profile({
                 <img
                     src={profile?.profile_image || AerodeckDP}
                     alt="Profile"
-                    className="profile-image"
+                    className="profile-image1"
                     onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = AerodeckDP;

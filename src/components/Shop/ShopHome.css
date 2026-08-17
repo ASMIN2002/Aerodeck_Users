@@ -38,7 +38,7 @@
 
 .shop-category-scroll {
     display: flex;
-    gap: 9px;
+    gap: 4px;
     overflow-x: auto;
     padding-bottom: 8px;
     margin: 1px 7px;
@@ -106,15 +106,23 @@
 }
 
 /* --- Category Text Details --- */
+
 .shop-category-box span {
     font-size: 8px;
     color: #334155;
     margin-bottom: 1px;
+
+    display: block;
+    width: 70px;
+    max-width: 70px;
+
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
+
     text-align: left;
-    width: 85%;
 }
+
 
 .shop-category-box strong {
     font-size: 7px;
@@ -170,6 +178,7 @@
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
     width: max-content;
+    grid-auto-columns: 98px;
 }
 
 
@@ -730,7 +739,7 @@
 
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
-    grid-auto-columns: 94px;
+    grid-auto-columns: 88px;
 
     gap: 10px;
 
@@ -790,7 +799,7 @@
 .shop-finest-deal-name {
     display: block;
     margin-top: 5px;
-    width: 100%;
+    width: 75%;
     color: #0f172a;
     font-size: 9px;
     line-height: 1.25;

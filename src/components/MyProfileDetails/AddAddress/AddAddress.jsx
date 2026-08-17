@@ -27,8 +27,10 @@ function AddAddress({ setProfilePage }) {
     });
     const [areas, setAreas] = useState([]);
     const [loadingPin, setLoadingPin] = useState(false);
+    const [deliveryAvailable, setDeliveryAvailable] = useState(true);
     const [loadingLocation, setLoadingLocation] = useState(false);
     const [savingAddress, setSavingAddress] = useState(false);
+
 
     const [toast, setToast] = useState({
         show: false,
@@ -74,6 +76,8 @@ function AddAddress({ setProfilePage }) {
 
             if (data.success) {
 
+                setDeliveryAvailable(true);
+
                 setFormData(prev => ({
                     ...prev,
                     pincode: pin,
@@ -85,10 +89,26 @@ function AddAddress({ setProfilePage }) {
 
                 setAreas(data.areas);
 
+            } else {
 
+                setDeliveryAvailable(false);
+
+                setAreas([]);
+
+                setFormData(prev => ({
+                    ...prev,
+                    city: "",
+                    state: "",
+                    country: "",
+                    area_street: ""
+                }));
+
+                showToast(
+                    data.message || "Delivery only available inside Balasore.",
+                    "error"
+                );
 
             }
-
         } catch (error) {
 
             console.error(error);
@@ -196,6 +216,15 @@ function AddAddress({ setProfilePage }) {
             showToast("Please enter PIN Code.", "error");
             return;
         }
+        if (!deliveryAvailable) {
+
+            showToast(
+                "Delivery only available inside Balasore.",
+                "error"
+            );
+
+            return;
+        }
 
         if (!formData.state.trim()) {
             showToast("Please enter a valid PIN Code.", "error");
@@ -240,9 +269,16 @@ function AddAddress({ setProfilePage }) {
 
             const data = await response.json();
             if (data.success) {
+
                 setSavingAddress(false);
+
+                sessionStorage.setItem(
+                    "addressSuccessMessage",
+                    "Address added successfully."
+                );
+
                 setProfilePage("address");
-                return;
+
             } else {
                 setSavingAddress(false);
                 showToast(data.message, "error");

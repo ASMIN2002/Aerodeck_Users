@@ -6,20 +6,15 @@ function BottomNav({
     setSelectedBottomTab,
     isDetailsOpen,
     closeDetails,
-    setProfilePage
+    setProfilePage,
+    navigateWithLoading
 
 }) {
     return (
         <nav className="bn-nav">
             <button
                 className={`bn-item ${selectedBottomTab === "Home" ? "bn-active" : ""}`}
-                onClick={() => {
-                    if (isDetailsOpen) {
-                        closeDetails();
-                    }
-                    setProfilePage("profile");
-                    setSelectedBottomTab("Home");
-                }}
+                onClick={() => { if (isDetailsOpen) { closeDetails(); } setProfilePage("profile"); setSelectedBottomTab("Home"); }}
             >
                 <span className="bn-icon">
                     🏠
@@ -84,10 +79,19 @@ function BottomNav({
             <button
                 className={`bn-item ${selectedBottomTab === "Profile" ? "bn-active" : ""}`}
                 onClick={() => {
+
                     if (isDetailsOpen) {
                         closeDetails();
                     }
-                    setSelectedBottomTab("Profile");
+
+                    navigateWithLoading(
+                        () => {
+                            setSelectedBottomTab("Profile");
+                        },
+                        "Loading Profile...",
+                        500
+                    );
+
                 }}
             >
                 <span className="bn-icon">

@@ -24,7 +24,7 @@ function ShopCategory({
 
         <section className="cds-section">
 
-            <div className="shop-category-header">
+            <div className="gift-category-header">
 
                 <button
                     type="button"

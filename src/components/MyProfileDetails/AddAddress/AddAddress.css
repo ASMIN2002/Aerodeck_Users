@@ -1,434 +1,343 @@
-.add-address{
-width:100%;
-min-height:100dvh;
-padding:8px 8px 82px;
-background:linear-gradient(180deg,#f8fbff,#eef4ff);
-box-sizing:border-box;
-animation:addFade .35s ease;
+.add-address {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 8px 8px 82px;
+    background: linear-gradient(180deg, #f8fbff, #eef4ff);
+    box-sizing: border-box;
+    animation: addFade .35s ease;
 }
 
-.add-address-header{
-position:sticky;
-top:0;
-z-index:100;
-display:flex;
-align-items:center;
-gap:6px;
-margin-bottom:10px;
-padding:8px;
-background:rgba(255,255,255,.92);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-border:1px solid rgba(230,236,245,.85);
-border-radius:14px;
-box-shadow:0 8px 22px rgba(15,23,42,.06);
+.add-address-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(230, 236, 245, .85);
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .06);
 }
 
-.back-btn{
-width:30px;
-height:30px;
-border:none;
-border-radius:9px;
-background:linear-gradient(135deg,#00d7ff,#4d7cff);
-display:flex;
-align-items:center;
-justify-content:center;
-color:#fff;
-cursor:pointer;
-transition:.25s;
-box-shadow:0 5px 14px rgba(77,124,255,.22);
-flex-shrink:0;
+.back-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #00d7ff, #4d7cff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 5px 14px rgba(77, 124, 255, .22);
+    flex-shrink: 0;
 }
 
-.back-btn svg{
-font-size:13px;
+.back-btn svg {
+    font-size: 13px;
 }
 
-.back-btn:active{
-transform:scale(.95);
+.back-btn:active {
+    transform: scale(.95);
 }
 
-.add-address-header h2{
-flex:1;
-margin:0;
-text-align:center;
-font-size:12px;
-font-weight:700;
-letter-spacing:.3px;
-color:#1f2937;
+.add-address-header h2 {
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: #1f2937;
 }
 
-.address-form{
-display:flex;
-flex-direction:column;
-gap:6px;
-padding:10px;
-background:#fff;
-border:1px solid rgba(228,234,244,.9);
-border-radius:16px;
-box-shadow:
-0 10px 24px rgba(15,23,42,.06),
-inset 0 1px 0 rgba(255,255,255,.9);
+.address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid rgba(228, 234, 244, .9);
+    border-radius: 16px;
+    box-shadow:
+        0 10px 24px rgba(15, 23, 42, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
 }
 
 .address-form input,
-.address-form select{
-width:100%;
-height:30px;
-padding:0 9px;
-border:1px solid #dbe4f1;
-border-radius:9px;
-background:#fbfcff;
-outline:none;
-font-size:8px;
-font-weight:600;
-color:#1f2937;
-transition:.25s;
-box-sizing:border-box;
+.address-form select {
+    width: 100%;
+    height: 30px;
+    padding: 0 9px;
+    border: 1px solid #dbe4f1;
+    border-radius: 9px;
+    background: #fbfcff;
+    outline: none;
+    font-size: 8px;
+    font-weight: 600;
+    color: #1f2937;
+    transition: .25s;
+    box-sizing: border-box;
 }
 
-.address-form input::placeholder{
-font-size:7px;
-font-weight:500;
-color:#98a3b3;
+.address-form input::placeholder {
+    font-size: 7px;
+    font-weight: 500;
+    color: #98a3b3;
 }
 
 .address-form input:focus,
-.address-form select:focus{
-border-color:#00d7ff;
-background:#fff;
-box-shadow:0 0 0 3px rgba(0,215,255,.12);
+.address-form select:focus {
+    border-color: #00d7ff;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 215, 255, .12);
 }
 
-.address-form input[readonly]{
-background:#f3f6fb;
-color:#667085;
-font-weight:600;
+.address-form input[readonly] {
+    background: #f3f6fb;
+    color: #667085;
+    font-weight: 600;
 }
 
-@keyframes addFade{
+@keyframes addFade {
 
-from{
-opacity:0;
-transform:translateY(10px);
-}
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-@media(min-width:768px){
-
-.add-address{
-max-width:760px;
-margin:auto;
-padding:22px 20px 110px;
-}
-
-.add-address-header{
-padding:14px;
-border-radius:18px;
-}
-
-.back-btn{
-width:40px;
-height:40px;
-}
-
-.back-btn svg{
-font-size:18px;
-}
-
-.add-address-header h2{
-font-size:20px;
-}
-
-.address-form{
-padding:18px;
-gap:10px;
-}
-
-.address-form input,
-.address-form select{
-height:42px;
-font-size:12px;
-padding:0 14px;
-}
-
-.address-form input::placeholder{
-font-size:11px;
-}
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
 }
-.current-location-btn{
-height:30px;
-padding:0 10px;
-border:none;
-border-radius:9px;
-background:linear-gradient(135deg,#22c55e,#16a34a);
-display:flex;
-align-items:center;
-justify-content:center;
-gap:5px;
-color:#fff;
-font-size:8px;
-font-weight:700;
-cursor:pointer;
-white-space:nowrap;
-transition:.25s;
-box-shadow:0 6px 16px rgba(34,197,94,.22);
-flex-shrink:0;
+
+
+
+.current-location-btn {
+    height: 30px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: .25s;
+    box-shadow: 0 6px 16px rgba(34, 197, 94, .22);
+    flex-shrink: 0;
 }
 
-.current-location-btn:hover{
-transform:translateY(-1px);
-box-shadow:0 10px 20px rgba(34,197,94,.28);
+.current-location-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(34, 197, 94, .28);
 }
 
-.current-location-btn:active{
-transform:scale(.96);
+.current-location-btn:active {
+    transform: scale(.96);
 }
 
-.address-type{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:6px;
-margin-top:4px;
+.address-type {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 4px;
 }
 
-.address-type label{
-position:relative;
-height:46px;
-display:flex;
-align-items:center;
-justify-content:center;
-border:1px solid #dbe4f1;
-border-radius:10px;
-background:#fbfcff;
-font-size:8px;
-font-weight:700;
-color:#64748b;
-cursor:pointer;
-transition:.25s;
-overflow:hidden;
-user-select:none;
+.address-type label {
+    position: relative;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dbe4f1;
+    border-radius: 10px;
+    background: #fbfcff;
+    font-size: 8px;
+    font-weight: 700;
+    color: #64748b;
+    cursor: pointer;
+    transition: .25s;
+    overflow: hidden;
+    user-select: none;
 }
 
-.address-type label::before{
-content:"";
-position:absolute;
-inset:0;
-opacity:0;
-transition:.25s;
-z-index:0;
-}
-.address-form select option{
-background:#ffffff;
-color:#1f2937;
-font-size:12px;
-font-weight:600;
-padding:8px;
+.address-type label::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: .25s;
+    z-index: 0;
 }
 
-.address-type label span{
-position:relative;
-z-index:2;
+.address-form select option {
+    background: #ffffff;
+    color: #1f2937;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px;
 }
 
-.address-type input{
-position:absolute;
-opacity:0;
-pointer-events:none;
+.address-type label span {
+    position: relative;
+    z-index: 2;
 }
 
-.address-type label:has(input:checked){
-border-color:transparent;
-color:#fff;
-box-shadow:
-0 8px 18px rgba(77,124,255,.22),
-0 0 10px rgba(0,215,255,.15);
+.address-type input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.address-type label:has(input:checked)::before{
-opacity:1;
+.address-type label:has(input:checked) {
+    border-color: transparent;
+    color: #fff;
+    box-shadow:
+        0 8px 18px rgba(77, 124, 255, .22),
+        0 0 10px rgba(0, 215, 255, .15);
+}
+
+.address-type label:has(input:checked)::before {
+    opacity: 1;
 }
 
 .address-type label:has(input:checked),
-.address-type label:has(input:checked) *{
-color:#fff !important;
+.address-type label:has(input:checked) * {
+    color: #fff !important;
 }
 
-.address-type label:hover{
-border-color:#00d7ff;
-transform:translateY(-2px);
+.address-type label:hover {
+    border-color: #00d7ff;
+    transform: translateY(-2px);
 }
 
-.save-address-btn{
-width:100%;
-height:32px;
-margin-top:8px;
-border:none;
-border-radius:10px;
-background:linear-gradient(135deg,#00d7ff,#4d7cff,#6d5dfc);
-background-size:220% 220%;
-color:#fff;
-font-size:8px;
-font-weight:700;
-letter-spacing:.4px;
-cursor:pointer;
-transition:.3s;
-animation:saveGradient 4s linear infinite;
-box-shadow:0 10px 24px rgba(77,124,255,.25);
+.save-address-btn {
+    width: 100%;
+    height: 32px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00d7ff, #4d7cff, #6d5dfc);
+    background-size: 220% 220%;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    cursor: pointer;
+    transition: .3s;
+    animation: saveGradient 4s linear infinite;
+    box-shadow: 0 10px 24px rgba(77, 124, 255, .25);
 }
 
-.save-address-btn:hover{
-transform:translateY(-2px);
-box-shadow:0 14px 28px rgba(77,124,255,.32);
+.save-address-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(77, 124, 255, .32);
 }
 
-.save-address-btn:active{
-transform:scale(.98);
+.save-address-btn:active {
+    transform: scale(.98);
 }
 
-@keyframes saveGradient{
+@keyframes saveGradient {
 
-0%{
-background-position:0% 50%;
-}
+    0% {
+        background-position: 0% 50%;
+    }
 
-50%{
-background-position:100% 50%;
-}
+    50% {
+        background-position: 100% 50%;
+    }
 
-100%{
-background-position:0% 50%;
-}
-
-}
-
-@media(max-width:480px){
-
-.current-location-btn{
-height:28px;
-padding:0 8px;
-font-size:7px;
-border-radius:8px;
-}
-
-.address-type{
-gap:5px;
-}
-
-.address-type label{
-height:42px;
-font-size:7px;
-border-radius:9px;
-}
-
-.save-address-btn{
-height:30px;
-font-size:8px;
-border-radius:9px;
-}
+    100% {
+        background-position: 0% 50%;
+    }
 
 }
 
-@media(min-width:768px){
 
-.current-location-btn{
-height:40px;
-padding:0 18px;
-font-size:12px;
-border-radius:12px;
-}
 
-.address-type{
-gap:10px;
-}
-
-.address-type label{
-height:60px;
-font-size:12px;
-border-radius:14px;
-}
-
-.save-address-btn{
-height:44px;
-font-size:13px;
-border-radius:14px;
-}
-
-}
 .address-form input::-webkit-outer-spin-button,
-.address-form input::-webkit-inner-spin-button{
--webkit-appearance:none;
-margin:0;
+.address-form input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .address-form input[type="number"],
-.address-form input[type="tel"]{
-appearance:textfield;
--moz-appearance:textfield;
+.address-form input[type="tel"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-.address-form select{
-appearance:none;
--webkit-appearance:none;
--moz-appearance:none;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23728096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-background-repeat:no-repeat;
-background-position:right 8px center;
-padding-right:28px;
-cursor:pointer;
+.address-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23728096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 28px;
+    cursor: pointer;
 }
 
 .address-form input:hover,
-.address-form select:hover{
-border-color:#7dd3fc;
+.address-form select:hover {
+    border-color: #7dd3fc;
 }
 
 .address-form input:disabled,
-.address-form select:disabled{
-background:#f3f6fb;
-color:#94a3b8;
-cursor:not-allowed;
-opacity:.8;
+.address-form select:disabled {
+    background: #f3f6fb;
+    color: #94a3b8;
+    cursor: not-allowed;
+    opacity: .8;
 }
 
-.address-form input[readonly]{
-background:#eef4fb;
-font-weight:600;
-color:#64748b;
+.address-form input[readonly] {
+    background: #eef4fb;
+    font-weight: 600;
+    color: #64748b;
 }
 
-.address-form *{
-box-sizing:border-box;
+.address-form * {
+    box-sizing: border-box;
 }
 
-.add-address{
-scrollbar-width:none;
+.add-address {
+    scrollbar-width: none;
 }
 
-.add-address::-webkit-scrollbar{
-display:none;
+.add-address::-webkit-scrollbar {
+    display: none;
 }
 
-.address-form{
-scrollbar-width:none;
+.address-form {
+    scrollbar-width: none;
 }
 
-.address-form::-webkit-scrollbar{
-display:none;
+.address-form::-webkit-scrollbar {
+    display: none;
 }
 
 .address-form input:-webkit-autofill,
-.address-form select:-webkit-autofill{
--webkit-box-shadow:0 0 0 1000px #fbfcff inset;
--webkit-text-fill-color:#1f2937;
-transition:background-color 9999s ease-in-out 0s;
+.address-form select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fbfcff inset;
+    -webkit-text-fill-color: #1f2937;
+    transition: background-color 9999s ease-in-out 0s;
 }
 
 .address-form input,
@@ -436,18 +345,18 @@ transition:background-color 9999s ease-in-out 0s;
 .current-location-btn,
 .save-address-btn,
 .back-btn,
-.address-type label{
--webkit-tap-highlight-color:transparent;
+.address-type label {
+    -webkit-tap-highlight-color: transparent;
 }
 
-.address-form input::selection{
-background:#7dd3fc;
-color:#fff;
+.address-form input::selection {
+    background: #7dd3fc;
+    color: #fff;
 }
 
-.address-form input:focus::placeholder{
-opacity:.45;
-transition:.2s;
+.address-form input:focus::placeholder {
+    opacity: .45;
+    transition: .2s;
 }
 
 .current-location-btn,
@@ -455,8 +364,6 @@ transition:.2s;
 .back-btn,
 .address-type label,
 .address-form input,
-.address-form select{
-will-change:transform;
+.address-form select {
+    will-change: transform;
 }
-
-

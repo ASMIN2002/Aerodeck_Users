@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import Loading from "./components/Loading/Loading";
-import { Preferences } from "@capacitor/preferences";
 import Splash from "./pages/Splash/Splash";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
@@ -24,27 +23,27 @@ function App() {
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
-    const navigateWithLoading = (
-        action,
-        text = "Loading HEEPIT...",
-        duration = 3000
-    ) => {
+   const navigateWithLoading = (
+    action,
+    text = "Loading HEEPIT...",
+    duration = 3000
+) => {
 
-        setLoadingText(text);
-        setLoadingDuration(duration);
-        setShowLoading(true);
+    setLoadingText(text);
+    setLoadingDuration(duration);
+    setShowLoading(true);
 
-        setTimeout(() => {
+    setTimeout(() => {
 
-            if (typeof action === "function") {
+        if (typeof action === "function") {
 
-                action();
+            action();
 
-            }
+        }
 
-        }, duration);
+    }, duration);
 
-    };
+};
 
     useEffect(() => {
 
@@ -118,9 +117,8 @@ function App() {
             setShowLoading(true);
             try {
 
-                const { value: sessionToken } = await Preferences.get({
-                    key: "session_token"
-                });
+                const sessionToken = localStorage.getItem("session_token");
+
                 if (!sessionToken) {
 
                     setPage("login");

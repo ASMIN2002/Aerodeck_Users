@@ -12,11 +12,38 @@ function MyAddresses({
 }) {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [successMessage, setSuccessMessage] = useState("");
     const [settingPrimary, setSettingPrimary] = useState(false);
     const sessionToken = localStorage.getItem("session_token");
     const [activeMenu, setActiveMenu] = useState(null);
+    const [deleteAddressId, setDeleteAddressId] = useState(null);
+    const [deletingAddress, setDeletingAddress] = useState(false);
     const menuRef = useRef(null);
-    useEffect(() => { fetchAddresses(); }, []);
+
+
+    useEffect(() => {
+
+        fetchAddresses();
+
+        const message = sessionStorage.getItem(
+            "addressSuccessMessage"
+        );
+
+        if (message) {
+
+            setSuccessMessage(message);
+
+            sessionStorage.removeItem(
+                "addressSuccessMessage"
+            );
+
+            setTimeout(() => {
+                setSuccessMessage("");
+            }, 3000);
+
+        }
+
+    }, []);
     const fetchAddresses = async () => {
         try {
             const response = await fetch(
@@ -64,6 +91,8 @@ function MyAddresses({
         }
     };
     const handleDeleteAddress = async (address_id) => {
+        setDeleteAddressId(null);
+        setDeletingAddress(true);
         try {
             const response = await fetch(
                 `${API}/api/user/address/${address_id}`,
@@ -80,11 +109,14 @@ function MyAddresses({
             const data = await response.json();
             if (data.success) {
                 setActiveMenu(null);
-                fetchAddresses();
+                await fetchAddresses();
+                setDeletingAddress(false);
             } else {
+                setDeletingAddress(false);
                 alert(data.message);
             }
         } catch (err) {
+            setDeletingAddress(false);
             console.error(err);
             alert("Server Error");
         }
@@ -128,8 +160,23 @@ function MyAddresses({
                     />
                 )
             }
+            {
+                deletingAddress && (
+                    <Loading
+                        manual={true}
+                        text="Deleting Address..."
+                    />
+                )
+            }
 
             <div className="address-page">
+                {
+                    successMessage && (
+                        <div className="address-success-message">
+                            {successMessage}
+                        </div>
+                    )
+                }
                 <div className="address-header">
                     <button
                         className="back-btn"
@@ -239,11 +286,15 @@ function MyAddresses({
                                                 item.is_primary !== 1 && (
                                                     <button
                                                         className="delete-btn"
-                                                        onClick={() => handleDeleteAddress(item.address_id)}
+                                                        onClick={() => {
+
+                                                            setDeleteAddressId(item.address_id);
+                                                            setActiveMenu(null);
+
+                                                        }}
                                                     >
                                                         Delete Address
                                                     </button>
-
                                                 )
                                             }
                                         </div>
@@ -265,6 +316,60 @@ function MyAddresses({
                     ))
                 }
             </div>
+            {
+                deleteAddressId && (
+
+                    <div
+                        className="delete-confirm-overlay"
+                        onClick={() => {
+                            setDeleteAddressId(null);
+                        }}
+                    >
+
+                        <div
+                            className="delete-confirm-box"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                        >
+
+                            <h3>
+                                Want to delete this address?
+                            </h3>
+
+                            <p>
+                                This action cannot be undone.
+                            </p>
+
+                            <div className="delete-confirm-actions">
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setDeleteAddressId(null);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="confirm-delete-btn"
+                                    onClick={() => {
+                                        handleDeleteAddress(deleteAddressId);
+                                    }}
+                                >
+                                    Delete
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                )
+            }
         </>
     );
 }

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Preferences } from "@capacitor/preferences";
 import "../../styles/Otp.css";
 import { API } from "../../services/api";
 
@@ -70,10 +69,11 @@ function Otp({
             }
 
             setUser(data.user);
-            await Preferences.set({
-                key: "session_token",
-                value: data.session_token
-            });
+
+            localStorage.setItem(
+                "session_token",
+                data.session_token
+            );
 
             setPage("home");
 

@@ -618,6 +618,7 @@ function Home({
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
                 setProfilePage={setProfilePage}
+                navigateWithLoading={navigateWithLoading}
             />
 
         </div>

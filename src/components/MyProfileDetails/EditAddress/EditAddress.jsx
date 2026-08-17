@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import "./EditAddress.css";
 import { API } from "../../../services/api";
+import Loading from "../../../components/Loading/Loading";
 
 function EditAddress({ setProfilePage }) {
 
@@ -26,6 +27,7 @@ function EditAddress({ setProfilePage }) {
 
     const [areas, setAreas] = useState([]);
     const [loadingPin, setLoadingPin] = useState(false);
+    const [savingAddress, setSavingAddress] = useState(false);
 
     const fetchPincode = async (pin) => {
 
@@ -51,8 +53,8 @@ function EditAddress({ setProfilePage }) {
                     pincode: pin,
                     city: data.location.city,
                     state: data.location.state,
-                    country: data.location.country,
-                    area_street: ""
+                    country: data.location.country
+                    // area_street: ""
                 }));
 
                 setAreas(data.areas);
@@ -95,6 +97,8 @@ function EditAddress({ setProfilePage }) {
 
         e.preventDefault();
 
+        setSavingAddress(true);
+
         try {
 
             const response = await fetch(
@@ -119,19 +123,28 @@ function EditAddress({ setProfilePage }) {
 
             if (data.success) {
 
-                alert("Address Updated Successfully");
+                setSavingAddress(false);
 
                 localStorage.removeItem("editAddress");
+
+                sessionStorage.setItem(
+                    "addressSuccessMessage",
+                    "Address updated successfully."
+                );
 
                 setProfilePage("address");
 
             } else {
+
+                setSavingAddress(false);
 
                 alert(data.message);
 
             }
 
         } catch (error) {
+
+            setSavingAddress(false);
 
             console.error(error);
 
@@ -146,6 +159,14 @@ function EditAddress({ setProfilePage }) {
     return (
 
         <div className="edit-address-page">
+            {
+                savingAddress && (
+                    <Loading
+                        manual={true}
+                        text="Updating Address..."
+                    />
+                )
+            }
 
             <div className="edit-address-header">
 
@@ -233,6 +254,27 @@ function EditAddress({ setProfilePage }) {
                         }))
                     }
                 />
+                <input
+                    type="text"
+                    placeholder="PIN Code"
+                    maxLength={6}
+                    value={formData.pincode || ""}
+                    onChange={(e) => {
+
+                        const pin = e.target.value.replace(/\D/g, "");
+
+                        setFormData(prev => ({
+                            ...prev,
+                            pincode: pin
+                        }));
+
+                        if (pin.length === 6) {
+                            fetchPincode(pin);
+                        }
+
+                    }}
+                    readOnly
+                />
 
                 <input
                     type="text"
@@ -253,27 +295,6 @@ function EditAddress({ setProfilePage }) {
                     placeholder="Country"
                     value={formData.country || ""}
                     readOnly
-                />
-
-                <input
-                    type="text"
-                    placeholder="PIN Code"
-                    maxLength={6}
-                    value={formData.pincode || ""}
-                    onChange={(e) => {
-
-                        const pin = e.target.value.replace(/\D/g, "");
-
-                        setFormData(prev => ({
-                            ...prev,
-                            pincode: pin
-                        }));
-
-                        if (pin.length === 6) {
-                            fetchPincode(pin);
-                        }
-
-                    }}
                 />
 
                 <div className="address-type">
