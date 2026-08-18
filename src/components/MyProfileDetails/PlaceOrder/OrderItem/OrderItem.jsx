@@ -53,7 +53,7 @@ function OrderItem({
 
                 const response = await fetch(
 
-                    `${API}/api/user/orders/cancel-status?order_id=${order_id}&product_id=${item.product_id}`
+                    `${API}/api/user/orders/cancel-status?order_item_id=${item.order_item_id}`
 
                 );
 
@@ -75,7 +75,7 @@ function OrderItem({
 
         loadCancelStatus();
 
-    }, [order_id, item.product_id]);
+    }, [item.order_item_id]);
     useEffect(() => {
 
         function handleOutsideClick(e) {
@@ -120,9 +120,7 @@ function OrderItem({
                     },
 
                     body: JSON.stringify({
-
-                        order_id,
-
+                        order_item_id: item.order_item_id,
                         product_id: item.product_id,
 
                         user_id: order.user_id,

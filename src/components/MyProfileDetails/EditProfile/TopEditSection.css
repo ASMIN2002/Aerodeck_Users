@@ -1,245 +1,358 @@
-/* ================================
-   PROFILE UPLOAD SCREEN
-================================ */
-
-.profile-upload-screen {
-    position: fixed;
-    inset: 0;
-
-    z-index: 99999;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        radial-gradient(circle at center,
-            rgba(0, 242, 254, 0.08),
-            transparent 45%),
-        rgba(3, 6, 11, 0.97);
-
-    backdrop-filter: blur(14px);
-
-    pointer-events: all;
-}
-
-
-/* Upload box */
-
-.profile-upload-box {
-    width: min(360px, calc(100% - 32px));
-
-    padding: 30px 24px;
-
-    text-align: center;
-
-    border: 1px solid transparent;
-    border-radius: 24px;
-
-    background:
-        linear-gradient(#0a0e16,
-            #080b12) padding-box,
-
-        linear-gradient(135deg,
-            #02f2fe,
-            #5908e6) border-box;
-
-    box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.6),
-        0 0 35px rgba(0, 242, 254, 0.10);
-}
-
-
-/* Icon */
-
-.profile-upload-icon {
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(0, 242, 254, 0.35);
-
-    background: rgba(0, 242, 254, 0.07);
-
-    color: #02f2fe;
-
-    font-size: 27px;
-    font-weight: 700;
-
-    box-shadow:
-        0 0 25px rgba(0, 242, 254, 0.12);
-}
-
-
-/* Heading */
-
-.profile-upload-box h2 {
-    margin: 0;
-
-    font-size: 20px;
-    font-weight: 700;
-
-    background:
-        linear-gradient(90deg,
-            #ffffff,
-            #02f2fe,
-            #8b5cff);
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-
-/* Text */
-
-.profile-upload-box p {
-    margin: 8px 0 22px;
-
-    color: rgba(255, 255, 255, 0.5);
-
-    font-size: 13px;
-}
-
-.profile-upload-progress {
-    width: 100%;
-    height: 9px;
-    overflow: hidden;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-
-.preview-section-pro {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 25px 0;
+.top-edit-card {
+    position: relative;
+    width: 90%;
     box-sizing: border-box;
+    border-radius: 22px;
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    margin: 10px auto;
 }
 
-.preview-box-pro {
-    width: 180px;
-    height: 180px;
+
+/* =========================================================
+   TOP GLOW
+========================================================= */
+
+.top-edit-card::before {
+    content: "";
+    position: absolute;
+
+    top: -120px;
+    left: 50%;
+
+    width: 260px;
+    height: 260px;
+
+    transform: translateX(-50%);
+
+    background: rgba(0, 242, 255, 0.12);
+
+    filter: blur(70px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.mypropreview-section-pro {
+    position: relative;
+    z-index: 1;
 
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    overflow: hidden;
-
-    border-radius: 50%;
-
-    border: 4px solid transparent;
-
-    background:
-        linear-gradient(#080b11, #080b11) padding-box,
-        linear-gradient(135deg,
-            #000000,
-            #02f2fe,
-            #5908e6,
-            #02f2fe) border-box;
-
-    box-shadow:
-        0 0 25px rgba(0, 242, 254, 0.16),
-        0 0 45px rgba(89, 8, 230, 0.10);
+    margin: 8px 0 22px;
 }
 
-.preview-image-pro {
+.mypropreview-box-pro {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+}
+
+.mypropreview-image-pro {
     width: 100%;
     height: 100%;
-
     display: block;
 
     object-fit: cover;
+    object-position: center;
 
-    /* image ke andar zoom */
-    transform: scale(1.12);
+    transform: scale(1.15);
+    transform-origin: center;
 }
 
-.profile-upload-progress-fill {
-    height: 100%;
 
-    border-radius: inherit;
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.preview-actions {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: none;
+}
+
+.preview-actions button {
+    position: relative;
+    min-height: 35px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: black;
+    border: 1px solid black;
+}
+
+.preview-actions button:not(:disabled):active {
+    transform: scale(0.96);
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+.myproedit-back {
+    color: #d9faff;
 
     background:
-        linear-gradient(90deg,
-            #02f2fe,
-            #5908e6);
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(0, 242, 255, 0.04));
 
     box-shadow:
-        0 0 15px rgba(0, 242, 254, 0.45);
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
 
-    transition: width 0.15s ease;
+.myproedit-back:not(:disabled):hover {
+    border-color: rgba(0, 242, 255, 0.55);
+
+    box-shadow:
+        0 0 18px rgba(0, 242, 255, 0.12);
 }
 
 
-/* Percentage */
+/* =========================================================
+   UPLOAD
+========================================================= */
 
-.profile-upload-percent {
-    margin-top: 12px;
+.myproupload-btn {
+    color: #001014;
 
-    font-size: 13px;
-    font-weight: 700;
+    background:
+        linear-gradient(135deg,
+            #00f2ff,
+            #00c8ff);
 
-    color: #02f2fe;
+    border: none !important;
+
+    box-shadow:
+        0 8px 22px rgba(0, 242, 255, 0.20);
 }
+
+
+.myprochange-btn:not(:disabled):hover {
+    border-color: rgba(0, 242, 255, 0.65);
+
+    box-shadow:
+        0 0 20px rgba(0, 242, 255, 0.14);
+}
+
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.preview-actions button:disabled {
+    opacity: 0.38;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   UPLOAD SUCCESS TOAST
+========================================================= */
+
 .profile-upload-success {
     position: fixed;
 
-    top: 15px;
+    top: 18px;
     left: 50%;
 
     transform: translateX(-50%);
 
     z-index: 100000;
 
-    width: min(420px, calc(100% - 24px));
+    width: max-content;
+    max-width: calc(100% - 30px);
 
-    padding: 13px 16px;
+    padding: 12px 18px;
 
-    box-sizing: border-box;
+    border-radius: 13px;
 
-    border: 1px solid rgba(0, 242, 254, 0.4);
-    border-radius: 12px;
+    background:
+        linear-gradient(135deg,
+            rgba(0, 255, 170, 0.15),
+            rgba(0, 242, 255, 0.08));
 
-    background: rgba(7, 14, 22, 0.96);
+    border: 1px solid rgba(0, 255, 170, 0.45);
 
-    color: #02f2fe;
+    color: #66ffd0;
 
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
 
     text-align: center;
-    letter-spacing: 0.4px;
+
+    backdrop-filter: blur(16px);
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(0, 242, 254, 0.12);
+        0 10px 35px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(0, 255, 170, 0.12);
 
-    backdrop-filter: blur(12px);
-
-    animation: uploadSuccessIn 0.3s ease;
+    animation:
+        successIn 0.35s ease forwards;
 }
 
-@keyframes uploadSuccessIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -15px);
-    }
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
+/* =========================================================
+   FULL UPLOAD SCREEN
+========================================================= */
+
+.profile-upload-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(circle at center,
+            rgba(0, 242, 255, 0.10),
+            rgba(0, 0, 0, 0.92) 65%);
+
+    backdrop-filter: blur(14px);
+}
+
+
+/* =========================================================
+   UPLOAD BOX
+========================================================= */
+
+.profile-upload-box {
+    width: min(100%, 360px);
+
+    padding: 28px 22px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(145deg,
+            rgba(10, 23, 31, 0.97),
+            rgba(3, 8, 12, 0.98));
+
+    border: 1px solid rgba(0, 242, 255, 0.25);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(0, 242, 255, 0.08);
+
+    animation: uploadBoxIn 0.3s ease;
+}
+
+
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+
+.profile-upload-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 28px;
+    font-weight: 900;
+
+    color: #00f2ff;
+
+    background:
+        rgba(0, 242, 255, 0.08);
+
+    border: 1px solid rgba(0, 242, 255, 0.35);
+
+    box-shadow:
+        0 0 25px rgba(0, 242, 255, 0.12);
+
+    animation: uploadIconPulse 1.4s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   UPLOAD TEXT
+========================================================= */
+
+.profile-upload-box h2 {
+    margin: 0;
+
+    color: #f4fdff;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
+}
+
+.profile-upload-box p {
+    margin: 8px 0 22px;
+
+    color: #7e9ca5;
+
+    font-size: 13px;
+}
+
+.profile-upload-progress {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-upload-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background:
+        linear-gradient(90deg,
+            #006eff,
+            #00f2ff,
+            #00ffd5);
+    box-shadow:
+        0 0 15px rgba(0, 242, 255, 0.5);
+}
+
+
+.profile-upload-percent {
+    margin-top: 12px;
+    color: #00f2ff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }

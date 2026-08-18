@@ -12,9 +12,12 @@ function Profile({
     setProfilePage,
     navigateWithLoading
 }) {
+
     const [profile, setProfile] = useState(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
     const [version, setVersion] = useState("");
+    const [rewardStatus, setRewardStatus] = useState(null);
+
     useEffect(() => {
         async function loadVersion() {
             try {
@@ -58,6 +61,17 @@ function Profile({
 
                 if (data.success) {
                     setProfile(data.user);
+                }
+                const sessionToken = localStorage.getItem("session_token");
+
+                const rewardResponse = await fetch(
+                    `${API}/api/user/rewards?session_token=${encodeURIComponent(sessionToken)}`
+                );
+                const rewardData = await rewardResponse.json();
+                if (rewardData.success && rewardData.reward) {
+                    setRewardStatus(
+                        Number(rewardData.reward.reward_status || 0)
+                    );
                 }
 
             } catch (err) {
@@ -152,6 +166,18 @@ function Profile({
                     <span>📦</span>
                     <span>My Orders</span>
                 </div>
+                <div
+                    className="profile-item reward-profile-item"
+                    onClick={() => setProfilePage("reward")}
+                >
+                    <span>🎁</span>
+
+                    <span>Rewards</span>
+
+                    {rewardStatus === 1 && (
+                        <span className="reward-notification-dot"></span>
+                    )}
+                </div>
 
                 <div
                     className="profile-item"
@@ -160,13 +186,20 @@ function Profile({
                     <span>❓</span>
                     <span>Help & Support</span>
                 </div>
+                <div
+                    className="profile-item"
+                    onClick={() => setProfilePage("terms")}
+                >
+                    <span>📄</span>
+                    <span>Terms and Conditions</span>
+                </div>
 
                 <div
                     className="profile-item"
                     onClick={() => setProfilePage("about")}
                 >
                     <span>ℹ️</span>
-                    <span>About AERODECK</span>
+                    <span>About HEEPIT</span>
                 </div>
 
             </div>

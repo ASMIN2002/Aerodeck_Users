@@ -16,6 +16,7 @@ function TopEditSection({
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [uploadAction, setUploadAction] = useState("");
 
     const handleImageChange = (e) => {
 
@@ -26,7 +27,78 @@ function TopEditSection({
         setSelectedImage(file);
     };
 
+    const handleRemoveProfilePicture = async () => {
 
+        if (!profile?.profile_image || uploading) return;
+
+        setUploading(true);
+        setUploadAction("remove");
+        setUploadProgress(0);
+        try {
+
+            const response = await fetch(
+                `${API}/api/upload/remove-user-profile`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token: localStorage.getItem("session_token")
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!data.success) {
+
+                setUploading(false);
+                setUploadProgress(0);
+                setUploadAction("");
+
+                alert(
+                    data.message ||
+                    "Profile picture deletion failed."
+                );
+
+                return;
+            }
+
+            // Loading screen complete
+            setUploadProgress(100);
+
+            setTimeout(() => {
+
+                // Update profile
+                setProfile(data.user);
+
+                setUploading(false);
+                setUploadProgress(0);
+
+                setUploadSuccess("removed");
+                // Hide message after 3 seconds
+                setTimeout(() => {
+
+                    setUploadSuccess(false);
+
+                }, 3000);
+
+            }, 500);
+
+        } catch (err) {
+
+            console.error(
+                "REMOVE PROFILE PICTURE ERROR:",
+                err
+            );
+
+            setUploading(false);
+            setUploadProgress(0);
+
+            alert("Profile picture deletion failed.");
+        }
+    };
     const handleUpload = () => {
 
         if (!selectedImage || uploading) return;
@@ -34,6 +106,8 @@ function TopEditSection({
         setUploading(true);
         setUploadProgress(0);
         setUploadSuccess(false);
+        setUploadAction("upload");
+
 
         const formData = new FormData();
 
@@ -153,7 +227,10 @@ function TopEditSection({
 
             {uploadSuccess && (
                 <div className="profile-upload-success">
-                    ✓ PROFILE PICTURE UPLOADED SUCCESSFULLY
+                    {uploadSuccess === "removed"
+                        ? "✓ PROFILE PICTURE REMOVED SUCCESSFULLY"
+                        : "✓ PROFILE PICTURE UPLOADED SUCCESSFULLY"
+                    }
                 </div>
             )}
             {uploading && (
@@ -167,7 +244,10 @@ function TopEditSection({
                         </div>
 
                         <h2>
-                            Uploading Profile Picture
+                            {uploadAction === "remove"
+                                ? "Removing Profile Picture"
+                                : "Uploading Profile Picture"
+                            }
                         </h2>
 
                         <p>
@@ -205,7 +285,7 @@ function TopEditSection({
             <div className="preview-actions">
 
                 <button
-                    className="mycart-back"
+                    className="myproedit-back"
                     disabled={uploading}
                     onClick={() => {
                         navigateWithLoading(
@@ -222,7 +302,7 @@ function TopEditSection({
 
 
                 <button
-                    className="upload-btn"
+                    className="myproupload-btn"
                     disabled={!selectedImage || uploading}
                     onClick={handleUpload}
                 >
@@ -231,11 +311,18 @@ function TopEditSection({
 
 
                 <button
-                    className="change-btn"
+                    className="myprochange-btn"
                     disabled={uploading}
                     onClick={() => fileInputRef.current.click()}
                 >
                     Change
+                </button>
+                <button
+                    className="myproremove-btn"
+                    disabled={!profile?.profile_image || uploading}
+                    onClick={handleRemoveProfilePicture}
+                >
+                    Remove DP
                 </button>
 
             </div>
@@ -245,8 +332,8 @@ function TopEditSection({
                 IMAGE PREVIEW
             ========================= */}
 
-            <div className="preview-section-pro">
-                <div className="preview-box-pro">
+            <div className="mypropreview-section-pro">
+                <div className="mypropreview-box-pro">
                     <img
                         src={
                             selectedImage
@@ -254,7 +341,7 @@ function TopEditSection({
                                 : profile?.profile_image || NODP
                         }
                         alt="Preview"
-                        className="preview-image-pro"
+                        className="mypropreview-image-pro"
                     />
 
                 </div>

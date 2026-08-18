@@ -24,6 +24,7 @@ function EditProfile({
             <MediumEditSection
                 profile={profile}
                 setProfile={setProfile}
+                navigateWithLoading={navigateWithLoading}
             />
 
 

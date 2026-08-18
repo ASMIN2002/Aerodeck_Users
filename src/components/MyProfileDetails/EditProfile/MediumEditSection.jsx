@@ -2,96 +2,36 @@ import "./MediumEditSection.css";
 import { useState, useEffect } from "react";
 import { API } from "../../../services/api";
 
-function MediumEditSection({ profile, setProfile }) {
+function MediumEditSection({
+    profile,
+    setProfile,
+    navigateWithLoading
+}) {
 
     const [fullName, setFullName] = useState("");
-
-    // Email states
+    const [originalName, setOriginalName] = useState("");
     const [email, setEmail] = useState("");
     const [emailInput, setEmailInput] = useState("");
     const [otp, setOtp] = useState("");
-
     const [showEmailBox, setShowEmailBox] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
-
     const [sendingOtp, setSendingOtp] = useState(false);
     const [verifyingOtp, setVerifyingOtp] = useState(false);
-
     const [message, setMessage] = useState("");
     const [messageType, setMessageType] = useState("");
-
-    useEffect(() => {
-
-        setFullName(profile?.full_name || "");
-        setEmail(profile?.email || "");
-
-    }, [profile]);
-
-
-    // ===============================
-    // SAVE NAME
-    // ===============================
-
-    const handleSaveName = async () => {
-
-        try {
-
-            const response = await fetch(
-                `${API}/api/user/update-name`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        session_token: localStorage.getItem("session_token"),
-                        full_name: fullName
-                    })
-                }
-            );
-
-            const data = await response.json();
-
-            if (data.success) {
-
-                setProfile(data.user);
-
-                alert("Name updated successfully.");
-
-            } else {
-
-                alert(data.message);
-
-            }
-
-        } catch (err) {
-
-            console.error(err);
-            alert("Server Error");
-
-        }
-
-    };
-
-
-    // ===============================
-    // SEND EMAIL OTP
-    // ===============================
-
     const handleSendEmailOtp = async () => {
-
-        if (!emailInput.trim()) {
-
+        const cleanEmail = emailInput.trim().toLowerCase();
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(cleanEmail)) {
             setMessage("Please enter a valid email address.");
             setMessageType("error");
-
             return;
         }
-
         setSendingOtp(true);
-
+        setMessage("");
+        setMessageType("");
         try {
-
             const response = await fetch(
                 `${API}/api/user/send-email-otp`,
                 {
@@ -103,25 +43,31 @@ function MediumEditSection({ profile, setProfile }) {
                         session_token:
                             localStorage.getItem("session_token"),
 
-                        email: emailInput.trim()
+                        email: cleanEmail
                     })
                 }
             );
-
             const data = await response.json();
-
             if (data.success) {
-
-                setOtpSent(true);
-
-                setMessage("OTP sent successfully.");
-                setMessageType("success");
-
+                navigateWithLoading(
+                    () => {
+                        setOtpSent(true);
+                        setMessage("OTP sent successfully.");
+                        setMessageType("success");
+                        setTimeout(() => {
+                            setMessage("");
+                            setMessageType("");
+                        }, 3000);
+                    },
+                    "Sending OTP...",
+                    500
+                );
             } else {
-
-                setMessage(data.message || "Failed to send OTP.");
+                setMessage(
+                    data.message ||
+                    "Failed to send OTP."
+                );
                 setMessageType("error");
-
             }
 
         } catch (err) {
@@ -134,9 +80,106 @@ function MediumEditSection({ profile, setProfile }) {
         } finally {
 
             setSendingOtp(false);
+        }
+    };
 
+    useEffect(() => {
+
+        const name = profile?.full_name || "";
+
+        setFullName(name);
+        setOriginalName(name);
+        setEmail(profile?.email || "");
+
+    }, [profile]);
+
+    const handleSaveName = async () => {
+
+        const cleanName = fullName.trim();
+
+
+
+        if (!cleanName) {
+            setMessage("Please enter your name.");
+            setMessageType("error");
+            return;
+        }
+        if (!/^[A-Za-z ]+$/.test(cleanName)) {
+            setMessage("Name can contain letters only.");
+            setMessageType("error");
+            return;
+        }
+        if (cleanName.length < 3) {
+            setMessage("Name must be at least 3 letters.");
+            setMessageType("error");
+            return;
         }
 
+        // Name unchanged
+        if (cleanName === originalName.trim()) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `${API}/api/user/update-name`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token:
+                            localStorage.getItem("session_token"),
+                        full_name: cleanName
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                navigateWithLoading(
+                    () => {
+
+                        setProfile(data.user);
+
+                        setFullName(data.user.full_name);
+                        setOriginalName(data.user.full_name);
+
+                        setMessage("Name updated successfully.");
+                        setMessageType("success");
+
+                        setTimeout(() => {
+                            setMessage("");
+                            setMessageType("");
+                        }, 3000);
+
+                    },
+                    "Updating Name...",
+                    500
+                );
+
+            } else {
+
+                setMessage(
+                    data.message || "Failed to update name."
+                );
+
+                setMessageType("error");
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+            setMessage("Server Error.");
+            setMessageType("error");
+
+        }
     };
 
 
@@ -180,21 +223,31 @@ function MediumEditSection({ profile, setProfile }) {
             );
 
             const data = await response.json();
-
             if (data.success) {
 
-                setProfile(data.user);
+                navigateWithLoading(
+                    () => {
 
-                setEmail(data.user.email);
+                        setProfile(data.user);
+                        setEmail(data.user.email);
+                        setEmailInput("");
+                        setOtp("");
 
-                setEmailInput("");
-                setOtp("");
+                        setShowEmailBox(false);
+                        setOtpSent(false);
 
-                setShowEmailBox(false);
-                setOtpSent(false);
+                        setMessage("OTP verified successfully.");
+                        setMessageType("success");
 
-                setMessage("Email verified successfully.");
-                setMessageType("success");
+                        setTimeout(() => {
+                            setMessage("");
+                            setMessageType("");
+                        }, 3000);
+
+                    },
+                    "Verifying OTP...",
+                    500
+                );
 
             } else {
 
@@ -223,11 +276,6 @@ function MediumEditSection({ profile, setProfile }) {
 
         <div className="medium-edit-card">
 
-
-            {/* =========================
-                TOP MESSAGE
-            ========================= */}
-
             {message && (
 
                 <div
@@ -254,17 +302,28 @@ function MediumEditSection({ profile, setProfile }) {
                     <input
                         type="text"
                         value={fullName}
-                        onChange={(e) =>
-                            setFullName(e.target.value)
-                        }
+                        onChange={(e) => {
+                            const value = e.target.value;
+
+                            if (/^[A-Za-z ]*$/.test(value)) {
+                                setFullName(value);
+                            }
+                        }}
                         placeholder="Enter your full name"
                     />
 
-                    <button
-                        onClick={handleSaveName}
-                    >
-                        Save
-                    </button>
+                    {fullName.trim() !== originalName.trim() && (
+                        <button
+                            className="save-name-btn"
+                            onClick={handleSaveName}
+                            disabled={
+                                !fullName.trim() ||
+                                fullName.trim().length < 3
+                            }
+                        >
+                            Save
+                        </button>
+                    )}
 
                 </div>
 
@@ -278,7 +337,7 @@ function MediumEditSection({ profile, setProfile }) {
             <div className="medium-field">
 
                 <label>
-                    Login Mobile Number
+                    Mobile Number
                 </label>
 
                 <div className="mobile-box">
@@ -292,7 +351,6 @@ function MediumEditSection({ profile, setProfile }) {
                     </span>
 
                 </div>
-
             </div>
 
 
@@ -306,8 +364,6 @@ function MediumEditSection({ profile, setProfile }) {
                     Email Address
                 </label>
 
-
-                {/* EMAIL ALREADY VERIFIED */}
 
                 {profile?.email &&
                     Number(profile?.is_email_verified) === 1 ? (
@@ -375,20 +431,15 @@ function MediumEditSection({ profile, setProfile }) {
                                         }
                                     />
 
-                                    <button
-                                        className="send-otp-btn"
-                                        onClick={
-                                            handleSendEmailOtp
-                                        }
-                                        disabled={
-                                            sendingOtp ||
-                                            verifyingOtp
-                                        }
-                                    >
-                                        {sendingOtp
-                                            ? "Sending..."
-                                            : "SEND OTP"}
-                                    </button>
+                                    {!sendingOtp && !otpSent && (
+                                        <button
+                                            className="send-otp-btn"
+                                            onClick={handleSendEmailOtp}
+                                            disabled={verifyingOtp}
+                                        >
+                                            SEND OTP
+                                        </button>
+                                    )}
 
                                 </div>
 
@@ -429,9 +480,7 @@ function MediumEditSection({ profile, setProfile }) {
                                                 verifyingOtp
                                             }
                                         >
-                                            {verifyingOtp
-                                                ? "VERIFYING..."
-                                                : "VERIFY"}
+                                            VERIFY
                                         </button>
 
                                     </div>
@@ -447,33 +496,6 @@ function MediumEditSection({ profile, setProfile }) {
                 )}
 
             </div>
-
-
-            {/* =========================
-                VERIFYING OVERLAY
-            ========================= */}
-
-            {verifyingOtp && (
-
-                <div className="email-verifying-overlay">
-
-                    <div className="email-verifying-box">
-
-                        <div className="email-spinner"></div>
-
-                        <h3>
-                            Verifying Email
-                        </h3>
-
-                        <p>
-                            Please wait...
-                        </p>
-
-                    </div>
-
-                </div>
-
-            )}
 
         </div>
 

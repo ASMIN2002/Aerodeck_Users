@@ -1,155 +1,565 @@
-/* ===========================
-   CARD
-=========================== */
+/* =========================================================
+   MEDIUM EDIT SECTION — AERODECK PREMIUM
+========================================================= */
 
 .medium-edit-card {
+    position: relative;
 
-    width: 100%;
-    max-width: 520px;
-    margin: auto;
-    margin-top: -50px;
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 90%;
+    box-sizing: border-box;
+
+    margin: 16px auto;
+    padding: 20px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(0, 242, 255, 0.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #08131b,
+            #03070b 70%
+        );
+
+    border: 1px solid rgba(0, 242, 255, 0.20);
+
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* ===========================
+
+/* Top ambient glow */
+
+.medium-edit-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -100px;
+    right: -80px;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    background: rgba(0, 242, 255, 0.10);
+
+    filter: blur(70px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
    FIELD
-=========================== */
+========================================================= */
 
 .medium-field {
+    position: relative;
+    z-index: 2;
 
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.medium-field:last-child {
+    margin-bottom: 0;
 }
 
 .medium-field label {
+    display: block;
 
-    font-size: 14px;
-    font-weight: 600;
-    color: #666;
+    margin-bottom: 9px;
+
+    color: #b9dce4;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 }
 
-/* ===========================
-   NAME
-=========================== */
+
+/* =========================================================
+   FULL NAME
+========================================================= */
 
 .name-input-wrapper {
-
     display: flex;
-    overflow: hidden;
+    gap: 8px;
 
-    border: 1px solid #dcdcdc;
-    border-radius: 12px;
-
-    background: #fff;
+    width: 100%;
 }
 
 .name-input-wrapper input {
-
-    flex: 1;
-
-    height: 35px;
-
-    border: none;
+      flex: 1;
+    min-width: 0;
+    height: 38px;
+    padding: 0 13px;
+    box-sizing: border-box;
+    color: #f1fcff;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(0, 242, 255, 0.16);
+    border-radius: 12px;
     outline: none;
-
-    padding: 0 16px;
-
-    font-size: 15px;
+    font-size: 9px;
 }
 
-.name-input-wrapper button {
+.name-input-wrapper input::placeholder,
+.email-input-row input::placeholder,
+.otp-verification-row input::placeholder {
+    color: #607b84;
+}
 
-    width: 90px;
+.name-input-wrapper input:focus,
+.email-input-row input:focus,
+.otp-verification-row input:focus {
+    background: rgba(0, 242, 255, 0.045);
 
+    border-color: rgba(0, 242, 255, 0.65);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 242, 255, 0.07),
+        0 0 20px rgba(0, 242, 255, 0.08);
+}
+
+
+/* =========================================================
+   COMMON BUTTON
+========================================================= */
+
+.name-input-wrapper button,
+.email-add-btn,
+.send-otp-btn,
+.verify-email-btn {
     border: none;
 
-    background: #1565ff;
-    color: #fff;
+    border-radius: 11px;
 
-    font-size: 14px;
-    font-weight: 600;
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
 
     cursor: pointer;
 
-    transition: .25s;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
+}
+
+.name-input-wrapper button:not(:disabled):active,
+.email-add-btn:not(:disabled):active,
+.send-otp-btn:not(:disabled):active,
+.verify-email-btn:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   SAVE NAME
+========================================================= */
+
+.name-input-wrapper button {
+    min-width: 58px;
+
+    padding: 0 14px;
+
+    color: #001114;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f2ff,
+            #00c8ff
+        );
+
+    box-shadow:
+        0 7px 20px rgba(0, 242, 255, 0.18);
 }
 
 .name-input-wrapper button:hover {
-
-    background: #0f52d9;
+    box-shadow:
+        0 8px 28px rgba(0, 242, 255, 0.32);
 }
 
-/* ===========================
-   MOBILE
-=========================== */
+
+/* =========================================================
+   MOBILE VERIFIED BOX
+========================================================= */
 
 .mobile-box {
-
-    height: 48px;
-
-    border: 1px solid #dcdcdc;
-    border-radius: 12px;
-
-    background: #fafafa;
-
-    padding: 0 16px;
-
+    min-height: 40px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 9px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(0, 242, 255, 0.055), rgba(0, 100, 255, 0.035));
+    border: 1px solid rgba(0, 242, 255, 0.14);
 }
 
 .mobile-number {
+    min-width: 0;
 
-    font-size: 15px;
-    color: #222;
-    font-weight: 500;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #e8faff;
+
+    font-size: 10px;
+    font-weight: 650;
 }
 
 .verified {
+    flex-shrink: 0;
 
-    color: #14a44d;
-    font-size: 14px;
-    font-weight: 700;
-}
-.profile-change-box{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-    padding:12px 15px;
-    border-radius:12px;
-    background:#fafafa;
-    border:1px solid #ececec;
-}
+    padding: 5px 8px;
 
-.profile-change-title{
-    font-size:14px;
-    font-weight:600;
+    border-radius: 20px;
+
+    color: #64ffd0;
+
+    background: rgba(0, 255, 170, 0.07);
+
+    border: 1px solid rgba(0, 255, 170, 0.25);
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
 }
 
-.profile-change-count{
-    min-width:55px;
-    text-align:center;
-    padding:6px 12px;
-    border-radius:30px;
-    font-weight:700;
-    color:#fff;
+
+/* =========================================================
+   EMAIL NOT SET
+========================================================= */
+
+.email-add-box {
+    min-height: 46px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 7px 8px 7px 13px;
+
+    box-sizing: border-box;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-.profile-change-count.green{
-    background:#16a34a;
+.email-not-set {
+    color: #728b93;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
 }
 
-.profile-change-count.red{
-    background:#dc2626;
+.email-add-btn {
+    min-width: 58px;
+
+    height: 34px;
+
+    padding: 0 13px;
+
+    color: #001114;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f2ff,
+            #00aaff
+        );
+
+    box-shadow:
+        0 5px 18px rgba(0, 242, 255, 0.18);
 }
 
-.name-input-wrapper button:disabled{
-    opacity:.6;
-    cursor:not-allowed;
+.email-add-btn:hover {
+    box-shadow:
+        0 7px 25px rgba(0, 242, 255, 0.32);
 }
+
+
+/* =========================================================
+   EMAIL VERIFICATION BOX
+========================================================= */
+
+.email-verification-box {
+    padding: 13px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 242, 255, 0.045),
+            rgba(0, 80, 150, 0.025)
+        );
+
+    border: 1px solid rgba(0, 242, 255, 0.13);
+}
+
+
+/* =========================================================
+   EMAIL INPUT
+========================================================= */
+
+.email-input-row {
+    display: flex;
+
+    gap: 8px;
+
+    width: 100%;
+}
+
+.email-input-row input {
+    flex: 1;
+    min-width: 0;
+
+    height: 45px;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    color: #f2fcff;
+
+    background: rgba(0, 0, 0, 0.20);
+
+    border: 1px solid rgba(0, 242, 255, 0.16);
+
+    border-radius: 11px;
+
+    outline: none;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SEND OTP
+========================================================= */
+
+.send-otp-btn {
+    min-width: 88px;
+
+    padding: 0 12px;
+
+    color: #001114;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f2ff,
+            #008cff
+        );
+
+    box-shadow:
+        0 6px 20px rgba(0, 160, 255, 0.20);
+}
+
+.send-otp-btn:hover {
+    box-shadow:
+        0 8px 27px rgba(0, 200, 255, 0.34);
+}
+
+
+/* =========================================================
+   OTP ROW
+========================================================= */
+
+.otp-verification-row {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.otp-verification-row input {
+    flex: 1;
+    min-width: 0;
+
+    height: 45px;
+
+    padding: 0 13px;
+
+    box-sizing: border-box;
+
+    color: #00f2ff;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    border: 1px solid rgba(0, 242, 255, 0.22);
+
+    border-radius: 11px;
+
+    outline: none;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    text-align: center;
+}
+
+.verify-email-btn {
+    min-width: 82px;
+
+    padding: 0 12px;
+
+    color: #001114;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00ffd0,
+            #00c8ff
+        );
+
+    box-shadow:
+        0 6px 20px rgba(0, 255, 200, 0.18);
+}
+
+.verify-email-btn:hover {
+    box-shadow:
+        0 8px 28px rgba(0, 255, 200, 0.32);
+}
+
+
+/* =========================================================
+   DISABLED BUTTONS
+========================================================= */
+
+.name-input-wrapper button:disabled,
+.email-add-btn:disabled,
+.send-otp-btn:disabled,
+.verify-email-btn:disabled {
+    opacity: 0.38;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   MESSAGE / TOAST
+========================================================= */
+
+.email-message {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 100000;
+
+    width: max-content;
+    max-width: calc(100% - 28px);
+
+    padding: 12px 18px;
+
+    box-sizing: border-box;
+
+    border-radius: 13px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-align: center;
+
+    letter-spacing: 0.2px;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.45);
+
+    animation: mediumToastIn 0.3s ease;
+}
+
+
+/* Success */
+
+.email-message.success {
+    color: #65ffd1;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 255, 170, 0.14),
+            rgba(0, 242, 255, 0.07)
+        );
+
+    border: 1px solid rgba(0, 255, 170, 0.38);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.45),
+        0 0 25px rgba(0, 255, 170, 0.10);
+}
+
+
+/* Error */
+
+.email-message.error {
+    color: #ff8c8c;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 60, 60, 0.14),
+            rgba(255, 0, 80, 0.06)
+        );
+
+    border: 1px solid rgba(255, 70, 70, 0.38);
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes mediumToastIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -15px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translate(-50%, 0);
+    }
+}
+
+

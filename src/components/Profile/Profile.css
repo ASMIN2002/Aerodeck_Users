@@ -98,14 +98,11 @@
    ========================================================= */
 
 .profile-menu {
-    display: flex;
-    flex-direction: column;
-
-    gap: 9px;
-
-    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 28px;
 }
-
 
 /* =========================================================
    PROFILE ITEM
@@ -134,7 +131,7 @@
     justify-content: center;
     width: 30px;
     height: 30px;
-    margin-right: 12px;
+    margin-right: 6px;
     border-radius: 9px;
     background: #4a4049;
     font-size: 12px;
@@ -145,11 +142,9 @@
 /* text */
 
 .profile-item span:last-child {
-    font-size: 11px;
+    font-size: 8px;
     font-weight: bold;
     color: #334155;
-    letter-spacing: 1px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 
@@ -157,18 +152,12 @@
 
 .profile-item::after {
     content: "›";
-
     position: absolute;
-    right: 16px;
-
-    font-size: 22px;
+    right: 10px;
+    font-size: 20px;
     font-weight: 300;
-
     color: #94a3b8;
-
-    transition:
-        transform 0.2s ease,
-        color 0.2s ease;
+    margin-top: -4px;
 }
 
 
@@ -212,4 +201,42 @@
     letter-spacing: 1px;
     color: #1e2857;
     text-transform: uppercase;
+}
+
+.reward-profile-item {
+    position: relative;
+}
+
+.reward-notification-dot {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #ffd700;
+
+    box-shadow:
+        0 0 6px #ffd700,
+        0 0 14px rgba(255, 215, 0, 0.8);
+
+    animation: rewardPulse 1.5s infinite;
+}
+
+@keyframes rewardPulse {
+
+    0%,
+    100% {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-50%) scale(1.35);
+        opacity: 0.65;
+    }
 }
