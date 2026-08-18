@@ -8,7 +8,7 @@
     justify-content: space-between;
     height: 43px;
     padding: 0 8px;
-    background: #202124;
+    background: #285e85;
     border-bottom: 1px solid #ececec;
     box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
 }
@@ -66,6 +66,7 @@
     color: #ffffff;
     line-height: 1;
     margin-top: 2px;
+    letter-spacing: 1px;
 }
 
 

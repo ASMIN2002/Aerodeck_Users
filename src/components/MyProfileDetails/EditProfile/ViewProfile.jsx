@@ -1,41 +1,62 @@
 import "./ViewProfile.css";
-import AerodeckDP from "../../../assets/AerodeckDP.png";
+import NODP from "../../../assets/NODP.png";
 
 function ViewProfile({
     profile,
-    setProfilePage
+    setProfilePage,
+    navigateWithLoading
 }) {
+    function formatJoinedDate(date) {
+        if (!date) return "NOT SET";
+        const d = new Date(date);
+        if (isNaN(d.getTime())) return "NOT SET";
+        return d
+            .toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            })
+            .toUpperCase();
+    }
     return (
 
         <div className="viewprofile">
 
-            <div className="view-header">
-
-                <button
-                    className="view-back"
-                    onClick={() => setProfilePage("profile")}
-                >
-                    ←
-                </button>
-
-                <h2>
-                    My Profile
-                </h2>
-
-            </div>
-
             <div className="view-card">
 
-                <img
-                    src={profile?.profile_image}
-                    alt="Profile"
-                    className="view-image"
-                />
-
-                <h3>
-                    {profile?.full_name || "profile"}
-                </h3>
-
+                <div className="headback">
+                    <div className="leftheadback">
+                        <button
+                            className="view-back"
+                            onClick={() => {
+                                navigateWithLoading(
+                                    () => {
+                                        setProfilePage("profile");
+                                    },
+                                    "Loading Profile...",
+                                    10
+                                );
+                            }}
+                        >
+                            ←
+                        </button>
+                        <div className="view-row1">
+                            <span>User</span>
+                            <p>
+                                {profile?.user_id
+                                    ? `#63717847${String(profile.user_id).padStart(4, "0")}USER`
+                                    : "NOT SET"}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="view-image-wrapperdet">
+                        <img
+                            src={profile?.profile_image || NODP}
+                            alt="Profile"
+                            className="view-image"
+                        />
+                    </div>
+                </div>
                 <div className="view-info">
 
                     <div className="view-row">
@@ -43,12 +64,24 @@ function ViewProfile({
                         <p>{profile?.full_name || "-"}</p>
                     </div>
 
+
                     <div className="view-row">
                         <span>Mobile</span>
                         <p>
-                            {profile?.mobile_number
-                                ? `******${profile.mobile_number.slice(-4)}`
-                                : "-"}
+                            {profile?.mobile_number || "-"}
+                        </p>
+                    </div>
+
+                    <div className="view-row">
+                        <span>Email</span>
+                        <p className={profile?.email ? "email-set" : "email-not-set"}>
+                            {profile?.email || "NOT SET"}
+                        </p>
+                    </div>
+                    <div className="view-row">
+                        <span>Joined</span>
+                        <p>
+                            {formatJoinedDate(profile?.created_at)}
                         </p>
                     </div>
 
@@ -60,7 +93,15 @@ function ViewProfile({
 
                 <button
                     className="edit-btn"
-                    onClick={() => setProfilePage("editprofile")}
+                    onClick={() => {
+                        navigateWithLoading(
+                            () => {
+                                setProfilePage("editprofile");
+                            },
+                            "Loading Edit Profile...",
+                            500
+                        );
+                    }}
                 >
                     Edit Profile
                 </button>

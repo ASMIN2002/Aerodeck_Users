@@ -89,7 +89,7 @@ function BottomNav({
                             setSelectedBottomTab("Profile");
                         },
                         "Loading Profile...",
-                        500
+                        10
                     );
 
                 }}

@@ -6,7 +6,8 @@ import MediumEditSection from "./MediumEditSection";
 function EditProfile({
     profile,
     setProfile,
-    setProfilePage
+    setProfilePage,
+    navigateWithLoading
 }) {
 
     return (
@@ -17,6 +18,7 @@ function EditProfile({
                 profile={profile}
                 setProfile={setProfile}
                 setProfilePage={setProfilePage}
+                navigateWithLoading={navigateWithLoading}
             />
 
             <MediumEditSection

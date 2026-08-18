@@ -1,65 +1,149 @@
 import "./TopEditSection.css";
 import { useRef, useState } from "react";
 import { API } from "../../../services/api";
-import AerodeckDP from "../../../assets/AerodeckDP.png";
-
+import NODP from "../../../assets/NODP.png";
 
 function TopEditSection({
     profile,
     setProfile,
-    setProfilePage
-}){
+    setProfilePage,
+    navigateWithLoading
+}) {
 
     const fileInputRef = useRef(null);
+
     const [selectedImage, setSelectedImage] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploadSuccess, setUploadSuccess] = useState(false);
 
     const handleImageChange = (e) => {
+
         const file = e.target.files[0];
+
         if (!file) return;
+
         setSelectedImage(file);
     };
 
-    const handleUpload = async () => {
 
-        if (!selectedImage) return;
+    const handleUpload = () => {
 
-        try {
+        if (!selectedImage || uploading) return;
 
-            const formData = new FormData();
+        setUploading(true);
+        setUploadProgress(0);
+        setUploadSuccess(false);
 
-            formData.append("image", selectedImage);
-            formData.append(
-                "session_token",
-                localStorage.getItem("session_token")
-            );
-            const res = await fetch(`${API}/api/upload/user-profile`, {
-                method: "POST",
-                body: formData
-            });
+        const formData = new FormData();
 
-            const data = await res.json();
+        formData.append("image", selectedImage);
+        formData.append(
+            "session_token",
+            localStorage.getItem("session_token")
+        );
 
-            if (!data.success) {
-                alert(data.message);
-                return;
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(
+            "POST",
+            `${API}/api/upload/user-profile`
+        );
+
+        // Fixed 5-second progress
+        let progress = 0;
+
+        const progressTimer = setInterval(() => {
+
+            progress += 30;
+
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(progressTimer);
             }
 
-            setProfile(data.user);
-          
-            setSelectedImage(null);
+            setUploadProgress(progress);
 
-            fileInputRef.current.value = "";
+        }, 1000);
 
-            alert("Profile updated successfully.");
 
-        } catch (err) {
+        xhr.onload = () => {
 
-            console.error(err);
+            try {
+
+                const data = JSON.parse(xhr.responseText);
+
+                if (!data.success) {
+
+                    clearInterval(progressTimer);
+
+                    setUploading(false);
+                    setUploadProgress(0);
+
+                    alert(data.message || "Upload failed.");
+
+                    return;
+                }
+
+
+                // Update profile
+                setProfile(data.user);
+
+                setSelectedImage(null);
+
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
+
+                setTimeout(() => {
+
+                    setUploadProgress(100);
+
+                    setTimeout(() => {
+
+                        setUploading(false);
+
+                        // Show success message
+                        setUploadSuccess(true);
+
+                        // Hide success message after 3 seconds
+                        setTimeout(() => {
+                            setUploadSuccess(false);
+                        }, 3000);
+
+                    }, 400);
+
+                }, 100);
+
+
+            } catch (err) {
+
+                clearInterval(progressTimer);
+
+                console.error(err);
+
+                setUploading(false);
+                setUploadProgress(0);
+
+                alert("Upload failed.");
+
+            }
+        };
+
+
+        xhr.onerror = () => {
+
+            clearInterval(progressTimer);
+
+            setUploading(false);
+            setUploadProgress(0);
 
             alert("Upload failed.");
 
-        }
+        };
 
+
+        xhr.send(formData);
     };
 
     return (
@@ -67,62 +151,127 @@ function TopEditSection({
         <div className="top-edit-card">
 
 
-            {/* Actions */}
+            {uploadSuccess && (
+                <div className="profile-upload-success">
+                    ✓ PROFILE PICTURE UPLOADED SUCCESSFULLY
+                </div>
+            )}
+            {uploading && (
+
+                <div className="profile-upload-screen">
+
+                    <div className="profile-upload-box">
+
+                        <div className="profile-upload-icon">
+                            ↑
+                        </div>
+
+                        <h2>
+                            Uploading Profile Picture
+                        </h2>
+
+                        <p>
+                            Please wait...
+                        </p>
+
+
+                        <div className="profile-upload-progress">
+
+                            <div
+                                className="profile-upload-progress-fill"
+                                style={{
+                                    width: `${uploadProgress}%`
+                                }}
+                            />
+
+                        </div>
+
+
+                        <div className="profile-upload-percent">
+                            {uploadProgress}%
+                        </div>
+
+                    </div>
+
+                </div>
+
+            )}
+
+
+            {/* =========================
+                ACTIONS
+            ========================= */}
 
             <div className="preview-actions">
+
                 <button
                     className="mycart-back"
-                    onClick={() => setProfilePage("viewprofile")}
+                    disabled={uploading}
+                    onClick={() => {
+                        navigateWithLoading(
+                            () => {
+                                setProfilePage("viewprofile");
+                            },
+                            "Loading Profile...",
+                            500
+                        );
+                    }}
                 >
                     ← Go Back
                 </button>
 
+
                 <button
                     className="upload-btn"
-                    disabled={!selectedImage}
+                    disabled={!selectedImage || uploading}
                     onClick={handleUpload}
                 >
                     Upload
                 </button>
+
+
                 <button
                     className="change-btn"
+                    disabled={uploading}
                     onClick={() => fileInputRef.current.click()}
                 >
                     Change
                 </button>
 
             </div>
-            {/* Preview */}
 
-            <div className="preview-section">
 
-                <div className="preview-box">
+            {/* =========================
+                IMAGE PREVIEW
+            ========================= */}
 
+            <div className="preview-section-pro">
+                <div className="preview-box-pro">
                     <img
                         src={
                             selectedImage
                                 ? URL.createObjectURL(selectedImage)
-                                : (profile?.profile_image)
+                                : profile?.profile_image || NODP
                         }
                         alt="Preview"
-                        className="preview-image"
+                        className="preview-image-pro"
                     />
 
                 </div>
-
             </div>
+
+
             <input
                 type="file"
                 ref={fileInputRef}
                 accept="image/*"
                 style={{ display: "none" }}
                 onChange={handleImageChange}
+                disabled={uploading}
             />
 
         </div>
-
     );
-
 }
 
 export default TopEditSection;

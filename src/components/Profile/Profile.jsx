@@ -1,17 +1,35 @@
 import { useEffect, useState } from "react";
 import "./Profile.css";
-import AerodeckDP from "../../assets/AerodeckDP.png";
+import NODP from "../../assets/NODP.png";
+import Loading from "../../components/Loading/Loading";
 import { API } from "../../services/api";
 
 function Profile({
-
     user,
     setUser,
     setPage,
     onLogout,
-    setProfilePage
+    setProfilePage,
+    navigateWithLoading
 }) {
     const [profile, setProfile] = useState(null);
+    const [loadingProfile, setLoadingProfile] = useState(false);
+    const [version, setVersion] = useState("");
+    useEffect(() => {
+        async function loadVersion() {
+            try {
+                const response = await fetch(`${API}/app-version`);
+                const data = await response.json();
+
+                if (data.success) {
+                    setVersion(data.data.version);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        loadVersion();
+    }, []);
 
     const maskedMobile = profile?.mobile_number
         ? `******${profile.mobile_number.slice(-4)}`
@@ -51,33 +69,54 @@ function Profile({
         loadProfile();
 
     }, []);
-
+    if (!profile) {
+        return (
+            <Loading
+                manual={true}
+                text="Loading Profile..."
+            />
+        );
+    }
     return (
 
         <div className="profile">
-
+            {loadingProfile && (
+                <div className="profile-loading">
+                    <div className="profile-loader"></div>
+                    <p>Loading Profile...</p>
+                </div>
+            )}
             <div className="profile-header">
-                <img
-                    src={profile?.profile_image || AerodeckDP}
-                    alt="Profile"
-                    className="profile-image1"
-                    onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = AerodeckDP;
-                    }}
-                />
+                <div className="prohead1">
+                    <img
+                        src={profile?.profile_image || NODP}
+                        alt="Profile"
+                        className="profile-image1"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = empty;
+                        }}
+                    />
+                </div>
 
-
-                <h2>{profile?.full_name}</h2>
-
-                <p>{maskedMobile}</p>
-
-                <button
-                    className="edit-profile-btn"
-                    onClick={() => setProfilePage("viewprofile")}
-                >
-                    View Profile
-                </button>
+                <div className="prohead2">
+                    <h2>{profile?.full_name}</h2>
+                    <p>{maskedMobile}</p>
+                    <button
+                        className="edit-profile-btn-pro"
+                        onClick={() => {
+                            navigateWithLoading(
+                                () => {
+                                    setProfilePage("viewprofile");
+                                },
+                                "Loading Profile Details...",
+                                500
+                            );
+                        }}
+                    >
+                        View Profile
+                    </button>
+                </div>
 
             </div>
 
@@ -145,7 +184,7 @@ function Profile({
             </button>
 
             <p className="profile-version">
-                AERODECK v1.0.0
+                HEEPIT {version}
             </p>
 
         </div>

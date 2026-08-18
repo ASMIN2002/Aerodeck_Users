@@ -1,154 +1,298 @@
 .viewprofile {
     width: 100%;
-    min-height: 100vh;
-    background: #f5f7fb;
-    padding: 16px;
+    min-height: 100%;
+    padding: 0px 10px;
+    color: #ffffff;
     box-sizing: border-box;
 }
 
-.view-header {
+.headback {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
+    justify-content: space-between;
 }
 
 .view-back {
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 12px;
-    background: #ffffff;
-    font-size: 22px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 13px;
+    background: rgb(50 207 211);
+    color: #000000;
+    font-size: 15px;
+    line-height: 1;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    transition: .25s;
 }
 
-.view-back:hover {
-    transform: scale(1.05);
-}
 
-.view-header h2 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #222;
-}
+/* ================================
+   PROFILE CARD
+================================ */
 
 .view-card {
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 24px 18px;
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 20px auto;
+    padding: 30px 18px 20px;
+    box-sizing: border-box;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    border: 1px solid transparent;
+    border-radius: 25px;
+    background: linear-gradient(90deg, rgb(24, 37, 37), black);
+    overflow: hidden;
+}
+
+.view-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -100px;
+    left: 50%;
+
+    width: 220px;
+    height: 220px;
+
+    transform: translateX(-50%);
+
+    background: #02f2fe;
+
+    opacity: 0.055;
+
+    filter: blur(70px);
+
+    pointer-events: none;
+}
+
+
+.view-image-wrapperdet {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid transparent;
+    background: linear-gradient(#080b11, #080b11) padding-box, linear-gradient(135deg, #000000, #02f2fe, #5908e6, #02f2fe) border-box;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.18), 0 0 45px rgba(89, 8, 230, 0.10);
 }
 
 .view-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
     object-fit: cover;
-    border: 4px solid #fff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+
+    /* ONLY IMAGE ZOOM */
+    transform: scale(1.18);
 }
+
+
+
+/* ================================
+   NAME
+================================ */
 
 .view-card h3 {
-    margin: 15px 0 22px;
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 22px;
+
     font-size: 22px;
-    font-weight: 700;
-    color: #222;
+    font-weight: 750;
+
+    letter-spacing: 0.3px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 18px rgba(0, 242, 254, 0.08);
 }
+
+
+/* ================================
+   INFORMATION
+================================ */
 
 .view-info {
+    width: 100%;
+
     display: flex;
     flex-direction: column;
-    gap: 14px;
-}
 
-.view-row {
-    background: #f8f9fc;
-    border-radius: 14px;
-    padding: 12px 15px;
+    gap: 9px;
+
     text-align: left;
 }
 
-.view-row span {
-    display: block;
-    font-size: 12px;
-    color: #7b7b7b;
-    margin-bottom: 4px;
-    font-weight: 600;
+
+/* ================================
+   INFO ROW
+================================ */
+
+.view-row {
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 10px 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid white;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.018));
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
 }
+
+.view-row1 {
+    min-height: 40px;
+    padding: 6px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018));
+    margin: 10px 0px;
+}
+
+.leftheadback {
+    width: 60%;
+}
+
+.view-row span {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255);
+    letter-spacing: 0.4px;
+}
+
+
+/* value */
 
 .view-row p {
+    min-width: 0;
     margin: 0;
-    font-size: 16px;
-    color: #222;
+    text-align: right;
+    font-size: 10px;
     font-weight: 600;
-    word-break: break-word;
+    color: #ffffff;
+    overflow-wrap: anywhere;
 }
+
+.view-row1 span {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.48);
+    letter-spacing: 0.4px;
+    text-align: left;
+}
+
+
+/* value */
+
+.view-row1 p {
+    margin: 0;
+    font-size: 8px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ================================
+   USER ID
+================================ */
+
+.view-row:nth-child(2) p {
+    font-family: "Courier New", monospace;
+
+    font-size: 11.5px;
+    letter-spacing: 0.3px;
+
+    color: #02f2fe;
+
+    text-shadow:
+        0 0 12px rgba(0, 242, 254, 0.22);
+}
+
+
+/* NOT SET */
+
+.view-row p:empty {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+/* ================================
+   ACTIONS
+================================ */
 
 .view-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 28px;
+    width: 100%;
+    max-width: 520px;
+
+    margin: 18px auto 0;
 }
 
-.edit-btn,
-.delete-btn {
-    width: 100%;
-    height: 52px;
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .25s;
-}
+
+/* ================================
+   EDIT BUTTON
+================================ */
 
 .edit-btn {
-    background: #2563eb;
-    color: #fff;
+    width: 100%;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #28b1e2, #4f05a3);
+    color: #fbf9f9;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25), 0 0 18px rgba(0, 242, 254, 0.05);
 }
 
 .edit-btn:hover {
-    background: #1d4ed8;
+    background:
+        linear-gradient(135deg,
+            rgba(0, 242, 254, 0.12),
+            rgba(89, 8, 230, 0.12)) padding-box,
+
+        linear-gradient(90deg,
+            #02f2fe,
+            #5908e6) border-box;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.32),
+        0 0 25px rgba(0, 242, 254, 0.12);
 }
 
-.delete-btn {
-    background: #ef4444;
-    color: #fff;
+.edit-btn:active {
+    transform: scale(0.97);
 }
 
-.delete-btn:hover {
-    background: #dc2626;
+.email-not-set {
+    color: #f5c903 !important;
 }
 
-.pending {
-    color: #e53935 !important;
-    font-weight: 700;
-}
-
-/* Tablet */
-
-@media (min-width:768px) {
-
-    .viewprofile {
-        max-width: 600px;
-        margin: auto;
-        padding: 24px;
-    }
-
-}
-
-/* Desktop */
-
-@media (min-width:1200px) {
-
-    .viewprofile {
-        max-width: 650px;
-    }
-
+.email-set {
+    color: #02f2fe !important;
 }

@@ -1,140 +1,245 @@
-/* ===========================
-   ATM CARD STYLE
-=========================== */
+/* ================================
+   PROFILE UPLOAD SCREEN
+================================ */
 
-.top-edit-card {
-    width: 100%;
-    max-width: 520px;
-    margin: 20px auto;
-    padding: 18px;
+.profile-upload-screen {
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
     display: flex;
     align-items: center;
-    gap: 18px;
-    overflow: hidden;
-    position: relative;
+    justify-content: center;
+
+    background:
+        radial-gradient(circle at center,
+            rgba(0, 242, 254, 0.08),
+            transparent 45%),
+        rgba(3, 6, 11, 0.97);
+
+    backdrop-filter: blur(14px);
+
+    pointer-events: all;
 }
 
-/* ATM Shine */
 
-.top-edit-card::before{
-    content:"";
-    position:absolute;
-    top:-60%;
-    left:-30%;
-    width:180px;
-    height:260px;
-    transform:rotate(30deg);
-    filter:blur(10px);
-}
+/* Upload box */
 
-/* ========================= */
+.profile-upload-box {
+    width: min(360px, calc(100% - 32px));
 
-.preview-section{
-    flex-shrink:0;
-}
+    padding: 30px 24px;
 
-.preview-box{
-    width:150px;
-    height:200px;
-    border-radius:20px;
+    text-align: center;
 
-    background:rgba(255,255,255,.08);
+    border: 1px solid transparent;
+    border-radius: 24px;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    background:
+        linear-gradient(#0a0e16,
+            #080b12) padding-box,
 
-    border:2px solid rgba(255,255,255,.15);
-
-    overflow:hidden;
+        linear-gradient(135deg,
+            #02f2fe,
+            #5908e6) border-box;
 
     box-shadow:
-        inset 0 0 12px rgba(255,255,255,.08),
-        0 10px 25px rgba(0,0,0,.25);
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        0 0 35px rgba(0, 242, 254, 0.10);
 }
 
-.preview-image{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+
+/* Icon */
+
+.profile-upload-icon {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(0, 242, 254, 0.35);
+
+    background: rgba(0, 242, 254, 0.07);
+
+    color: #02f2fe;
+
+    font-size: 27px;
+    font-weight: 700;
+
+    box-shadow:
+        0 0 25px rgba(0, 242, 254, 0.12);
 }
 
-/* ========================= */
 
-.preview-actions{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    background: none;
+/* Heading */
+
+.profile-upload-box h2 {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    background:
+        linear-gradient(90deg,
+            #ffffff,
+            #02f2fe,
+            #8b5cff);
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* ========================= */
 
-.preview-actions button{
-    width:100%;
-    padding:8px;
+/* Text */
 
-    border:none;
-    border-radius:12px;
+.profile-upload-box p {
+    margin: 8px 0 22px;
 
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
+    color: rgba(255, 255, 255, 0.5);
 
-    transition:.25s;
+    font-size: 13px;
 }
 
-/* Disabled Upload */
-
-.upload-btn{
-    background:#475569;
-    color:#cbd5e1;
-    cursor:not-allowed;
+.profile-upload-progress {
+    width: 100%;
+    height: 9px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Change */
 
-.change-btn{
-    background:linear-gradient(135deg,#3b82f6,#2563eb);
-    color:#fff;
+.preview-section-pro {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px 0;
+    box-sizing: border-box;
 }
 
-.change-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(37,99,235,.35);
+.preview-box-pro {
+    width: 180px;
+    height: 180px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    border: 4px solid transparent;
+
+    background:
+        linear-gradient(#080b11, #080b11) padding-box,
+        linear-gradient(135deg,
+            #000000,
+            #02f2fe,
+            #5908e6,
+            #02f2fe) border-box;
+
+    box-shadow:
+        0 0 25px rgba(0, 242, 254, 0.16),
+        0 0 45px rgba(89, 8, 230, 0.10);
 }
 
-/* Remove */
+.preview-image-pro {
+    width: 100%;
+    height: 100%;
 
-.remove-btn{
-    background:linear-gradient(135deg,#ef4444,#dc2626);
-    color:#fff;
+    display: block;
+
+    object-fit: cover;
+
+    /* image ke andar zoom */
+    transform: scale(1.12);
 }
 
-.remove-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(220,38,38,.35);
+.profile-upload-progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(90deg,
+            #02f2fe,
+            #5908e6);
+
+    box-shadow:
+        0 0 15px rgba(0, 242, 254, 0.45);
+
+    transition: width 0.15s ease;
 }
 
-/* ========================= */
 
-@media(max-width:500px){
+/* Percentage */
 
-    .top-edit-card{
-        padding:15px;
-        gap:14px;
+.profile-upload-percent {
+    margin-top: 12px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #02f2fe;
+}
+.profile-upload-success {
+    position: fixed;
+
+    top: 15px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 100000;
+
+    width: min(420px, calc(100% - 24px));
+
+    padding: 13px 16px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    border-radius: 12px;
+
+    background: rgba(7, 14, 22, 0.96);
+
+    color: #02f2fe;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-align: center;
+    letter-spacing: 0.4px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 242, 254, 0.12);
+
+    backdrop-filter: blur(12px);
+
+    animation: uploadSuccessIn 0.3s ease;
+}
+
+@keyframes uploadSuccessIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -15px);
     }
 
-    .preview-box{
-        width:150px;
-        height:150px;
-        border-radius:16px;
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
     }
-
-    .preview-actions button{
-        padding:7px;
-        font-size:8px;
-    }
-
 }

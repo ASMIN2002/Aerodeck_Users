@@ -433,6 +433,7 @@ function Home({
                         setPage={setPage}
                         onLogout={handleLogout}
                         setProfilePage={setProfilePage}
+                        navigateWithLoading={navigateWithLoading}
                     />
 
                 }
@@ -444,6 +445,7 @@ function Home({
                     <ViewProfile
                         profile={profile}
                         setProfilePage={setProfilePage}
+                        navigateWithLoading={navigateWithLoading}
                     />
                 }
                 {
@@ -589,6 +591,7 @@ function Home({
                         profile={profile}
                         setProfile={setProfile}
                         setProfilePage={setProfilePage}
+                        navigateWithLoading={navigateWithLoading}
                     />
                 }
                 {

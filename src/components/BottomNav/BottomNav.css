@@ -18,7 +18,7 @@
 
 .bn-item {
     flex: 1;
-    height: 35px;
+    height: 28px;
     border: none;
     outline: none;
     background: transparent;
@@ -35,7 +35,7 @@
 }
 
 .bn-icon {
-    font-size: 15px;
+    font-size: 10px;
     line-height: 1;
     transition: .25s;
 }
