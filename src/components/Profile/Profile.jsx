@@ -16,7 +16,7 @@ function Profile({
     const [profile, setProfile] = useState(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
     const [version, setVersion] = useState("");
-    const [rewardStatus, setRewardStatus] = useState(null);
+    const [showLogoutBox, setShowLogoutBox] = useState(false);
 
     useEffect(() => {
         async function loadVersion() {
@@ -62,17 +62,6 @@ function Profile({
                 if (data.success) {
                     setProfile(data.user);
                 }
-                const sessionToken = localStorage.getItem("session_token");
-
-                const rewardResponse = await fetch(
-                    `${API}/api/user/rewards?session_token=${encodeURIComponent(sessionToken)}`
-                );
-                const rewardData = await rewardResponse.json();
-                if (rewardData.success && rewardData.reward) {
-                    setRewardStatus(
-                        Number(rewardData.reward.reward_status || 0)
-                    );
-                }
 
             } catch (err) {
                 console.error(err);
@@ -83,6 +72,16 @@ function Profile({
         loadProfile();
 
     }, []);
+    const handleProfileNavigation = (page, text = "Loading...") => {
+        navigateWithLoading(
+            () => {
+                setProfilePage(page);
+            },
+            text,
+            500
+        );
+    };
+
     if (!profile) {
         return (
             <Loading
@@ -138,7 +137,9 @@ function Profile({
 
                 <div
                     className="profile-item"
-                    onClick={() => setProfilePage("address")}
+                    onClick={() =>
+                        handleProfileNavigation("address", "Loading Addresses...")
+                    }
                 >
                     <span>📍</span>
                     <span>My Addresses</span>
@@ -146,71 +147,74 @@ function Profile({
 
                 <div
                     className="profile-item"
-                    onClick={() => setProfilePage("wishlist")}
+                    onClick={() =>
+                        handleProfileNavigation("wishlist", "Loading Wishlist...")
+                    }
                 >
                     <span>❤️</span>
                     <span>Wishlist</span>
                 </div>
-
                 <div
                     className="profile-item"
-                    onClick={() => setProfilePage("cart")}
+                    onClick={() =>
+                        handleProfileNavigation("cart", "Loading Cart...")
+                    }
                 >
                     <span>🛒</span>
                     <span>My Cart</span>
                 </div>
                 <div
                     className="profile-item"
-                    onClick={() => setProfilePage("orders")}
+                    onClick={() =>
+                        handleProfileNavigation("orders", "Loading Orders...")
+                    }
                 >
                     <span>📦</span>
                     <span>My Orders</span>
                 </div>
-                <div
-                    className="profile-item reward-profile-item"
-                    onClick={() => setProfilePage("reward")}
-                >
-                    <span>🎁</span>
-
-                    <span>Rewards</span>
-
-                    {rewardStatus === 1 && (
-                        <span className="reward-notification-dot"></span>
-                    )}
-                </div>
 
                 <div
                     className="profile-item"
-                    onClick={() => setProfilePage("help")}
+                    onClick={() =>
+                        handleProfileNavigation("help", "Loading Help & Support...")
+                    }
                 >
                     <span>❓</span>
                     <span>Help & Support</span>
                 </div>
+
                 <div
                     className="profile-item"
-                    onClick={() => setProfilePage("terms")}
+                    onClick={() =>
+                        handleProfileNavigation("about", "Loading About HEEPIT...")
+                    }
+                >
+                    <span>ℹ️</span>
+                    <span>About HEEPIT</span>
+                </div>
+                <div
+                    className="profile-item"
+                    onClick={() =>
+                        handleProfileNavigation("terms", "Loading Terms & Conditions...")
+                    }
                 >
                     <span>📄</span>
                     <span>Terms and Conditions</span>
                 </div>
 
-                <div
-                    className="profile-item"
-                    onClick={() => setProfilePage("about")}
-                >
-                    <span>ℹ️</span>
-                    <span>About HEEPIT</span>
-                </div>
 
             </div>
 
-            <button className="logout-btn"
+            <button
+                className="logout-btn"
                 onClick={() => {
-
-                    console.log("Logout Clicked");
-
-                    onLogout();
-
+                    navigateWithLoading(
+                        () => {
+                            setShowLogoutBox(true);
+                        },
+                        "Preparing Logout...",
+                        500
+                    );
                 }}
             >
                 Logout
@@ -219,7 +223,36 @@ function Profile({
             <p className="profile-version">
                 HEEPIT {version}
             </p>
+            {showLogoutBox && (
+                <div className="logout-overlay">
+                    <div className="logout-message-box">
+                        <h3>Logout</h3>
 
+                        <p>Do you want to logout?</p>
+
+                        <div className="logout-box-buttons">
+                            <button
+                                className="logout-cancel-btn"
+                                onClick={() => {
+                                    setShowLogoutBox(false);
+                                }}
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                className="logout-confirm-btn"
+                                onClick={() => {
+                                    setShowLogoutBox(false);
+                                    onLogout();
+                                }}
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
 
     );

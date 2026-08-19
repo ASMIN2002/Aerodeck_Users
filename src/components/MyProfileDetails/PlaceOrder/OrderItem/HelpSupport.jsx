@@ -3,13 +3,11 @@ import { API } from "../../../../services/api";
 import "./HelpSupport.css";
 
 function HelpSupport({
-
     item,
-
     order,
-
-    onReturnSuccess
-
+    onReturnSuccess,
+    setProfilePage,
+    navigateWithLoading
 }) {
 
     const [showReturnBox, setShowReturnBox] = useState(false);
@@ -70,8 +68,18 @@ function HelpSupport({
 
             const data = await res.json();
             if (data.success) {
+
                 onReturnSuccess();
+
                 setShowReturnBox(false);
+
+                navigateWithLoading(
+                    () => {
+                        setProfilePage("orders");
+                    },
+                    "Loading My Orders...",
+                    500
+                );
             }
         }
 
@@ -114,10 +122,6 @@ function HelpSupport({
 
             <h3>Help & Support</h3>
             <div className="support-options">
-
-                <button className="support-btn">
-                    Chat Support
-                </button>
 
                 {
                     !item.return_date ? (

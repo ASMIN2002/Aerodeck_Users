@@ -295,13 +295,10 @@ function Details({
     };
 
     useEffect(() => {
-
         if (!details || !sessionToken) return;
 
         const loadSaveStatus = async () => {
-
             try {
-
                 const productId =
                     details.product_id ||
                     details.gift_id ||
@@ -309,37 +306,36 @@ function Details({
                     details.premium_id;
 
                 const response = await fetch(
-                    `${API}/api/user/wishlist?session_token=${sessionToken}`
+                    `${API}/api/user/wishlist?session_token=${encodeURIComponent(sessionToken)}`
                 );
 
                 const data = await response.json();
 
-                if (data.success) {
-
-                    setIsSaved(
-
-                        data.data.some(
-                            item => String(item.product_id) === String(productId)
-                        )
-
-                    );
-
+                if (!response.ok || !data.success) {
+                    console.error("Wishlist status error:", data);
+                    return;
                 }
 
+                const alreadySaved = data.data.some(item => {
+                    const savedId =
+                        item.product_id ||
+                        item.gift_id ||
+                        item.shop_id ||
+                        item.premium_id;
+
+                    return String(savedId) === String(productId);
+                });
+
+                setIsSaved(alreadySaved);
+
+            } catch (err) {
+                console.error("Load save status error:", err);
             }
-
-            catch (err) {
-
-                console.log(err);
-
-            }
-
         };
 
         loadSaveStatus();
 
     }, [details, sessionToken]);
-
 
     const loadCartStatus = async () => {
 
@@ -391,10 +387,8 @@ function Details({
         loadCartStatus();
 
     }, [details, sessionToken]);
-
     const handleSave = async () => {
-
-        if (!details) return;
+        if (!details || !sessionToken) return;
 
         const productId =
             details.product_id ||
@@ -402,111 +396,132 @@ function Details({
             details.shop_id ||
             details.premium_id;
 
+        if (!productId) return;
+
         try {
+
+            // =========================
+            // UNSAVE
+            // =========================
 
             if (isSaved) {
 
                 const response = await fetch(
-
-                    `${API}/api/user/wishlist/${productId}`,
-
+                    `${API}/api/user/wishlist/${encodeURIComponent(productId)}`,
                     {
-
                         method: "DELETE",
-
                         headers: {
-
                             "Content-Type": "application/json"
-
                         },
-
                         body: JSON.stringify({
-
                             session_token: sessionToken
-
                         })
-
                     }
-
                 );
 
                 const data = await response.json();
 
-                if (!data.success) return;
+                if (!response.ok || !data.success) {
+                    console.error("Unsave failed:", data);
+                    return;
+                }
 
                 setIsSaved(false);
 
-                setDetails(prev => ({
+                setDetails(prev => {
+                    const next = { ...prev };
 
-                    ...prev,
-
-                    product_total_saves: Math.max(
-
-                        (prev.product_total_saves || 0) - 1,
-
-                        0
-
-                    )
-
-                }));
-
-            }
-
-            else {
-
-                const response = await fetch(
-
-                    `${API}/api/user/wishlist`,
-
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type": "application/json"
-
-                        },
-
-                        body: JSON.stringify({
-
-                            session_token: sessionToken,
-
-                            product_id: productId
-
-                        })
-
+                    if (productId === prev.product_id) {
+                        next.product_total_saves = Math.max(
+                            Number(prev.product_total_saves || 0) - 1,
+                            0
+                        );
                     }
 
-                );
+                    if (productId === prev.gift_id) {
+                        next.gift_total_saves = Math.max(
+                            Number(prev.gift_total_saves || 0) - 1,
+                            0
+                        );
+                    }
 
-                const data = await response.json();
+                    if (productId === prev.shop_id) {
+                        next.shop_total_saves = Math.max(
+                            Number(prev.shop_total_saves || 0) - 1,
+                            0
+                        );
+                    }
 
-                if (!data.success) return;
+                    if (productId === prev.premium_id) {
+                        next.premium_total_saves = Math.max(
+                            Number(prev.premium_total_saves || 0) - 1,
+                            0
+                        );
+                    }
 
-                setIsSaved(true);
+                    return next;
+                });
 
-                setDetails(prev => ({
-
-                    ...prev,
-
-                    product_total_saves:
-                        (prev.product_total_saves || 0) + 1
-
-                }));
-
+                return;
             }
 
+            // =========================
+            // SAVE
+            // =========================
+
+            const response = await fetch(
+                `${API}/api/user/wishlist`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token: sessionToken,
+                        product_id: productId
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                console.error("Save failed:", data);
+                return;
+            }
+
+            setIsSaved(true);
+
+            setDetails(prev => {
+                const next = { ...prev };
+
+                if (productId === prev.product_id) {
+                    next.product_total_saves =
+                        Number(prev.product_total_saves || 0) + 1;
+                }
+
+                if (productId === prev.gift_id) {
+                    next.gift_total_saves =
+                        Number(prev.gift_total_saves || 0) + 1;
+                }
+
+                if (productId === prev.shop_id) {
+                    next.shop_total_saves =
+                        Number(prev.shop_total_saves || 0) + 1;
+                }
+
+                if (productId === prev.premium_id) {
+                    next.premium_total_saves =
+                        Number(prev.premium_total_saves || 0) + 1;
+                }
+
+                return next;
+            });
+
+        } catch (err) {
+            console.error("Save/Unsave error:", err);
         }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
     };
-
     const handleIncreaseCart = async () => {
 
         const productId =
@@ -785,7 +800,7 @@ function Details({
                     </button>
                     <button
                         className="dt-action-btn"
-                    onClick={handleShare}
+                        onClick={handleShare}
                     >
                         <FaShareAlt />
                     </button>

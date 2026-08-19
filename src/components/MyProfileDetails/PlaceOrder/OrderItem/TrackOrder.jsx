@@ -28,14 +28,12 @@ function TrackOrder({
         "REQUESTED",
         "CONFIRMED",
         "PICKUP",
-        "REFUNDED"
+        "REFUND"
     ];
 
     const returnCurrentStep =
         returnSteps.indexOf(returnStatus);
 
-    console.log("RETURN STATUS FROM DB:", returnStatus);
-    console.log("RETURN CURRENT STEP:", returnCurrentStep);
     const hasRefund =
         paymentStatus &&
         paymentStatus.toUpperCase() !== "PENDING";
@@ -224,7 +222,7 @@ function TrackOrder({
 
                             <span>REQUESTED</span>
 
-                            <small>11-AUG-2026</small>
+                            {/* <small>11-AUG-2026</small> */}
                         </div>
 
 
@@ -238,7 +236,7 @@ function TrackOrder({
 
                             <span>CONFIRMED</span>
 
-                            <small>12-AUG-2026</small>
+                            {/* <small>12-AUG-2026</small> */}
                         </div>
 
 
@@ -252,7 +250,7 @@ function TrackOrder({
 
                             <span>PICKUP</span>
 
-                            <small>13-AUG-2026</small>
+                            {/* <small>13-AUG-2026</small> */}
                         </div>
 
 
@@ -266,7 +264,7 @@ function TrackOrder({
 
                             <span>REFUND</span>
 
-                            <small>14-AUG-2026</small>
+                            {/* <small>14-AUG-2026</small> */}
                         </div>
 
                     </div>
@@ -287,11 +285,16 @@ function TrackOrder({
                             style={{
                                 "--progress":
                                     currentStep === 0
-                                        ? "10%"
-                                        : `${(
-                                            currentStep /
-                                            (steps.length - 1)
-                                        ) * 100}%`
+                                        ? "0%"
+                                        : currentStep === 1
+                                            ? "30%"
+                                            : currentStep === 2
+                                                ? "50%"
+                                                : currentStep === 3
+                                                    ? "75%"
+                                                    : currentStep === 4
+                                                        ? "100%"
+                                                        : "0%"
                             }}
                         ></div>
 

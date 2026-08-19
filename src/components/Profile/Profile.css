@@ -240,3 +240,80 @@
         opacity: 0.65;
     }
 }
+
+.logout-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(5px);
+
+    padding: 20px;
+}
+
+.logout-message-box {
+    width: min(90%, 360px);
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px 20px;
+
+    text-align: center;
+
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+
+    animation: logoutBoxIn 0.2s ease-out;
+}
+
+.logout-message-box h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: #111;
+}
+
+.logout-message-box p {
+    margin: 0 0 22px;
+    font-size: 14px;
+    color: #666;
+}
+
+.logout-box-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.logout-box-buttons button {
+    flex: 1;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.logout-cancel-btn {
+    background: #f1f1f1;
+    color: #333;
+}
+
+.logout-confirm-btn {
+    background: #e53935;
+    color: #fff;
+}
+
+@keyframes logoutBoxIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

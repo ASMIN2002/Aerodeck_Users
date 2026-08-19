@@ -15,7 +15,8 @@ function OrderItem({
     onOpenDetails,
     setProfilePage,
     setSelectedInvoice,
-    fetchItems
+    fetchItems,
+    navigateWithLoading
 
 }) {
 
@@ -226,6 +227,31 @@ function OrderItem({
                                 .toUpperCase()
                                 .replace(/ /g, "-")}
                         </p>
+
+                        {item.order_status === "DELIVERED" && item.return_date && (
+                            <p
+                                className={
+                                    new Date(item.return_date) < new Date()
+                                        ? "return-timeout-date"
+                                        : ""
+                                }
+                            >
+                                <strong>
+                                    {new Date(item.return_date) < new Date()
+                                        ? "Return Timeout :"
+                                        : "Return Until :"}
+                                </strong>{" "}
+
+                                {new Date(item.return_date)
+                                    .toLocaleDateString("en-GB", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    })
+                                    .toUpperCase()
+                                    .replace(/ /g, "-")}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -264,8 +290,9 @@ function OrderItem({
                                     order={order}
                                     onReturnSuccess={() => {
                                         setIsReturned(true);
-
                                     }}
+                                    setProfilePage={setProfilePage}
+                                    navigateWithLoading={navigateWithLoading}
                                 />
                             </>
                         )

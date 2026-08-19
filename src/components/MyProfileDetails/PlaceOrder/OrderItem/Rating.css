@@ -1,15 +1,11 @@
 .order-rating{
-    margin-top:20px;
-    padding:20px;
+    padding:10px;
 }
 
 .order-rating h3{
-
-    margin:0 0 18px;
-    font-size:18px;
+    font-size:11px;
     font-weight:700;
     color:#222;
-
 }
 
 .rating-stars{
@@ -17,13 +13,12 @@
     display:flex;
     justify-content:center;
     gap:10px;
-    margin-bottom:18px;
 
 }
 
 .rating-stars span{
 
-    font-size:34px;
+    font-size:20px;
     color:#d8d8d8;
     cursor:pointer;
     transition:.2s;
@@ -109,8 +104,8 @@
 
 .submitted-review{
 
-    margin-top:18px;
-    padding:14px;
+    margin-top: 5px;
+    padding:10px;
     border-radius:12px;
     background:#f8f9fb;
     border:1px solid #e5e5e5;
@@ -121,7 +116,7 @@
 
     margin:0 0 8px;
     color:#1877f2;
-    font-size:16px;
+    font-size:11px;
 
 }
 
@@ -131,21 +126,5 @@
     color:#444;
     line-height:1.6;
     word-break:break-word;
-
-}
-
-@media (max-width:480px){
-
-    .order-rating{
-
-        padding:15px;
-
-    }
-
-    .rating-stars span{
-
-        font-size:30px;
-
-    }
 
 }

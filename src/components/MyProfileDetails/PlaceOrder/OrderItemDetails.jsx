@@ -8,7 +8,8 @@ function OrderItemDetails({
     setProfilePage,
     onOpenDetails,
     setSelectedTrackingOrder,
-    setSelectedInvoice
+    setSelectedInvoice,
+    navigateWithLoading
 }) {
 
     const [items, setItems] = useState([]);
@@ -84,6 +85,7 @@ function OrderItemDetails({
                         setProfilePage={setProfilePage}
                         setSelectedInvoice={setSelectedInvoice}
                         fetchItems={fetchItems}
+                        navigateWithLoading={navigateWithLoading}
                     />
 
                 </div>

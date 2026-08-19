@@ -5,7 +5,8 @@ import { API } from "../../../services/api";
 function MyOrders({
     setProfilePage,
     selectedOrder,
-    setSelectedOrder
+    setSelectedOrder,
+    navigateWithLoading
 }) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,18 +17,17 @@ function MyOrders({
 
             try {
 
-                const sessionToken = localStorage.getItem("session_token");
+                const sessionToken =
+                    localStorage.getItem("session_token");
 
                 const response = await fetch(
-                    `${API}/api/user/orders?session_token=${sessionToken}`
+                    `${API}/api/user/orders?session_token=${encodeURIComponent(sessionToken)}`
                 );
 
                 const data = await response.json();
 
                 if (data.success) {
-
                     setOrders(data.data);
-
                 }
 
             } catch (error) {
@@ -49,13 +49,9 @@ function MyOrders({
     if (loading) {
 
         return (
-
             <div className="myorders">
-
                 Loading...
-
             </div>
-
         );
 
     }
@@ -68,7 +64,10 @@ function MyOrders({
 
                 <button
                     className="orders-back"
-                    onClick={() => setProfilePage("profile")}
+                    onClick={() => {
+
+                        setProfilePage("profile");
+                    }}
                 >
                     ←
                 </button>
@@ -79,9 +78,8 @@ function MyOrders({
 
             </div>
 
-            {
 
-                orders.length === 0 &&
+            {orders.length === 0 && (
 
                 <div className="orders-empty">
 
@@ -97,60 +95,74 @@ function MyOrders({
 
                 </div>
 
-            }
-
-            {
-                [...orders]
-                    .sort(
-                        (a, b) =>
-                            new Date(b.created_at) - new Date(a.created_at)
-                    )
-                    .map((order) => (
-
-                        <div
-                            className="order-card"
-                            key={order.order_id}
-                            onClick={() => {
-                                setSelectedOrder(order);
-                                setProfilePage("order-details");
-                            }}
-                        >
-
-                            <div className="order-info">
-
-                                <div className="top-order-number">
-                                    <h3>
-                                        Order #{order.order_number}
-                                    </h3>
-                                    <p>
-                                        Items : {order.total_items}
-                                    </p>
-                                </div>
+            )}
 
 
-                                <div className="myOrder-price-status">
+            {[...orders]
+                .sort(
+                    (a, b) =>
+                        new Date(b.created_at) -
+                        new Date(a.created_at)
+                )
+                .map((order) => (
 
-                                    <h4>
-                                        ₹ {order.total_amount}
-                                    </h4>
+                    <div
+                        className="order-card"
+                        key={order.order_id}
+                        onClick={() => {
 
-                                    <span
-                                        className={`order-status ${order.order_status.toLowerCase()}`}
-                                    >
-                                        {order.order_status}
-                                    </span>
+                            setSelectedOrder(order);
 
-                                </div>
+                            navigateWithLoading(
+                                () => {
+                                    setProfilePage("order-details");
+                                },
+                                "Loading Order Details...",
+                                500
+                            );
+
+                        }}
+                    >
+
+                        <div className="order-info">
+
+                            <div className="top-order-number">
+
+                                <h3>
+                                    Order #{order.order_number}
+                                </h3>
+
+                                <p>
+                                    Items : {order.total_items}
+                                </p>
 
                             </div>
-                            <div className="order-card-arrow">
-                                &gt;
+
+
+                            <div className="myOrder-price-status">
+
+                                <h4>
+                                    ₹ {order.total_amount}
+                                </h4>
+
+                                <span
+                                    className={`order-status ${order.order_status.toLowerCase()}`}
+                                >
+                                    {order.order_status}
+                                </span>
+
                             </div>
 
                         </div>
 
-                    ))
-            }
+
+                        <div className="order-card-arrow">
+                            &gt;
+                        </div>
+
+                    </div>
+
+                ))}
 
         </div>
 

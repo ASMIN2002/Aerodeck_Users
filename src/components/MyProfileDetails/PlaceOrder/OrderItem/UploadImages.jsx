@@ -6,7 +6,7 @@ import { API } from "../../../../services/api";
 function UploadImages({
 
     reviewImages = [],
-    setReviewImages = () => {},
+    setReviewImages = () => { },
 
     session_token,
     product_id,
@@ -19,6 +19,7 @@ function UploadImages({
     const [showPreview, setShowPreview] = useState(false);
     const [showDeleteBox, setShowDeleteBox] = useState(false);
     const [deleteImage, setDeleteImage] = useState(null);
+    const [uploadMessage, setUploadMessage] = useState("");
 
     useEffect(() => {
 
@@ -30,7 +31,7 @@ function UploadImages({
 
                 const response = await fetch(
 
-                   `${API}/api/user/review/my-images/${order_item_id}?session_token=${session_token}`
+                    `${API}/api/user/review/my-images/${order_item_id}?session_token=${session_token}`
 
                 );
 
@@ -110,7 +111,11 @@ function UploadImages({
 
             setReviewImages(updated);
 
-            alert("Image uploaded successfully.");
+            setUploadMessage("✓ Image uploaded successfully.");
+
+            setTimeout(() => {
+                setUploadMessage("");
+            }, 3000);
 
         }
         setUploading(false);
@@ -121,6 +126,12 @@ function UploadImages({
 
 
         <div className="upload-images">
+
+            {uploadMessage && (
+                <div className="upload-success-toast">
+                    {uploadMessage}
+                </div>
+            )}
             {
                 uploading && (
 

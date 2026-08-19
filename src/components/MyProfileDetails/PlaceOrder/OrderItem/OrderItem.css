@@ -216,3 +216,11 @@
 .cancel-timeout-date strong {
     color: #ef0000;
 }
+
+.return-timeout-date {
+    color: red;
+}
+
+.return-timeout-date strong {
+    color: red;
+}

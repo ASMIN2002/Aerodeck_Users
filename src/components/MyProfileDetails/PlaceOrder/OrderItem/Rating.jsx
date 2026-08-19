@@ -1,5 +1,6 @@
 import "./Rating.css";
 import { useEffect, useState } from "react";
+import Loading from "../../../../components/Loading/Loading";
 import { API } from "../../../../services/api";
 
 function Rating({
@@ -13,9 +14,9 @@ function Rating({
     const [rating, setRating] = useState(0);
     const [message, setMessage] = useState("");
     const [rated, setRated] = useState(false);
-
     const [loading, setLoading] = useState(true);
-
+    const [submitting, setSubmitting] = useState(false);
+    const [submitMessage, setSubmitMessage] = useState("");
     const [toast, setToast] = useState(false);
 
     useEffect(() => {
@@ -64,12 +65,10 @@ function Rating({
     const handleSubmit = async () => {
 
         if (rating === 0) {
-
-            alert("Please select rating.");
-
             return;
-
         }
+
+        setSubmitting(true);
 
         try {
 
@@ -77,74 +76,63 @@ function Rating({
                 localStorage.getItem("session_token");
 
             const response = await fetch(
-
                 `${API}/api/user/review`,
-
                 {
-
                     method: "POST",
-
                     headers: {
-
                         "Content-Type": "application/json"
-
                     },
-
                     body: JSON.stringify({
-
                         session_token: sessionToken,
-
                         order_item_id,
-
                         product_id,
-
                         rating,
-
                         review_message: message
-
                     })
-
                 }
-
             );
 
             const data = await response.json();
 
             if (data.success) {
-
-                setRated(true);
-
-                setToast(true);
+                setSubmitMessage("✓ Review submitted successfully");
 
                 setTimeout(() => {
-
-                    setToast(false);
-
-                }, 3000);
-
-            } else {
-
-                alert(data.message);
-
+                    setSubmitMessage("");
+                }, 2000);
             }
 
         } catch (err) {
 
             console.error(err);
 
+        } finally {
+
+            setSubmitting(false);
+
         }
-
     };
-
     if (loading) {
 
         return null;
 
     }
-
+    if (submitting) {
+        return (
+            <Loading
+                manual={true}
+                text="Submitting Review..."
+            />
+        );
+    }
     return (
 
         <div className="order-rating">
+            {submitMessage && (
+                <div className="review-toast">
+                    {submitMessage}
+                </div>
+            )}
 
             <h3>
 

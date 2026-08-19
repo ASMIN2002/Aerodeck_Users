@@ -33,7 +33,6 @@ import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/
 import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfile";
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
-import Reward from "../../components/MyProfileDetails/Reward/Reward";
 import Terms from "../../components/MyProfileDetails/Terms/Terms";
 
 function Home({
@@ -534,6 +533,7 @@ function Home({
                         setProfilePage={setProfilePage}
                         selectedOrder={selectedOrder}
                         setSelectedOrder={setSelectedOrder}
+                        navigateWithLoading={navigateWithLoading}
                     />
                 }
                 {!isDetailsOpen &&
@@ -544,6 +544,7 @@ function Home({
                             onOpenDetails={handleOpenDetails}
                             setSelectedTrackingOrder={setSelectedTrackingOrder}
                             setSelectedInvoice={setSelectedInvoice}
+                            navigateWithLoading={navigateWithLoading}
                         />
                     )}
                 {
@@ -581,15 +582,6 @@ function Home({
                     profilePage === "about" &&
 
                     <AboutAerodeck
-                        setProfilePage={setProfilePage}
-                    />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "reward" &&
-
-                    <Reward
                         setProfilePage={setProfilePage}
                     />
                 }

@@ -31,6 +31,7 @@ function DetailsData({
                     product={product}
                     isLiked={isLiked}
                     isSaved={isSaved}
+                    onSave={onSave}
                     cartQuantity={cartQuantity}
                     onIncreaseCart={onIncreaseCart}
                     onDecreaseCart={onDecreaseCart}
