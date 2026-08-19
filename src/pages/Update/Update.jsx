@@ -29,7 +29,7 @@ function Update({ onCancel, onUpdate }) {
                     <button
                         className="update-confirm"
                         onClick={() => {
-                            window.location.href = "https://heepit.netlify.app/appstore";
+                            window.location.href = "https://heepit.netlify.app/app-update";
                         }}
                     >
                         Update

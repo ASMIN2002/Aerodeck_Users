@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">AERODECK</string>
-    <string name="title_activity_main">AERODECK</string>
-    <string name="package_name">com.aerodeck.user</string>
-    <string name="custom_url_scheme">com.aerodeck.user</string>
+    <string name="app_name">HEEPIT</string>
+    <string name="title_activity_main">HEEPIT</string>
+    <string name="package_name">com.heepit.user</string>
+    <string name="custom_url_scheme">com.heepit.user</string>
 </resources>

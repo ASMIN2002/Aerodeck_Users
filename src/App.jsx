@@ -87,27 +87,33 @@ function App() {
             try {
 
                 const response = await fetch(`${API}/health`, {
-
+                    method: "GET",
                     cache: "no-store"
-
                 });
 
-                setIsOnline(response.ok);
+                const data = await response.json();
 
-            }
+                console.log("HEEPIT Health:", response.status, data);
 
-            catch (err) {
+                if (response.ok && data.success === true) {
 
-                console.error("Health Check Error:", err);
+                    setIsOnline(true);
 
-                alert("Health Check Error: " + err);
+                } else {
+
+                    setIsOnline(false);
+
+                }
+
+            } catch (err) {
+
+                console.error("HEEPIT Health Check Error:", err);
 
                 setIsOnline(false);
 
             }
 
         }
-
         function goOnline() {
 
             checkServer();

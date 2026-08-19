@@ -1,4 +1,4 @@
-package com.aerodeck.user;
+package com.heepit.user;
 
 import com.getcapacitor.BridgeActivity;
 
