@@ -9,12 +9,13 @@ import Otp from "./pages/Login/Otp";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Login/Register";
 import NoInternet from "./components/NoInternet/NoInternet";
+import Update from "./pages/Update/Update";
 import { API } from "./services/api";
 
 function App() {
 
-    const [page, setPage] = useState("startup");
-    // const [page, setPage] = useState("splash");
+    // const [page, setPage] = useState("startup");
+    const [page, setPage] = useState("splash");
     const [showLoading, setShowLoading] = useState(false);
     const [loadingText, setLoadingText] = useState("Loading HEEPIT...");
     const [loadingDuration, setLoadingDuration] = useState(3000);
@@ -23,27 +24,59 @@ function App() {
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
-   const navigateWithLoading = (
-    action,
-    text = "Loading HEEPIT...",
-    duration = 3000
-) => {
+    const [updateRequired, setUpdateRequired] = useState(false);
+    const navigateWithLoading = (
+        action,
+        text = "Loading HEEPIT...",
+        duration = 3000
+    ) => {
 
-    setLoadingText(text);
-    setLoadingDuration(duration);
-    setShowLoading(true);
+        setLoadingText(text);
+        setLoadingDuration(duration);
+        setShowLoading(true);
 
-    setTimeout(() => {
+        setTimeout(() => {
 
-        if (typeof action === "function") {
+            if (typeof action === "function") {
 
-            action();
+                action();
+
+            }
+
+        }, duration);
+
+    };
+    useEffect(() => {
+
+        async function checkForUpdate() {
+
+            if (!user?.user_id || page !== "home") {
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `${API}/user/check-update/${user.user_id}`
+                );
+
+                const data = await response.json();
+
+                if (data.success && data.update_available) {
+                    setUpdateRequired(true);
+                }
+
+            } catch (err) {
+
+                console.error("Update Check Error:", err);
+
+            }
 
         }
 
-    }, duration);
+        checkForUpdate();
 
-};
+    }, [user, page]);
 
     useEffect(() => {
 
@@ -252,6 +285,18 @@ function App() {
                     navigateWithLoading={navigateWithLoading}
                     cartCount={cartCount}
                     setCartCount={setCartCount}
+                />
+            }
+            {
+                page === "home" && updateRequired &&
+                <Update
+                    onCancel={() => {
+                        setUpdateRequired(false);
+                    }}
+                    onUpdate={() => {
+                        setUpdateRequired(false);
+                        setPage("appstore");
+                    }}
                 />
             }
             {

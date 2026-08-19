@@ -15,8 +15,8 @@ function Header({
     onLogout,
     onOpenCart,
     onOpenChat,
-    profilePage
-
+    profilePage,
+    userId
 }) {
     const dropdownRef = useRef(null);
     const [version, setVersion] = useState("");
@@ -24,17 +24,24 @@ function Header({
     useEffect(() => {
         async function loadVersion() {
             try {
-                const response = await fetch(`${API}/app-version`);
+                const response = await fetch(
+                    `${API}/user/app-version/${userId}`
+                );
+
                 const data = await response.json();
+
                 if (data.success) {
-                    setVersion(data.data.version);
+                    setVersion(data.version);
                 }
             } catch (err) {
                 console.log(err);
             }
         }
-        loadVersion();
-    }, []);
+
+        if (userId) {
+            loadVersion();
+        }
+    }, [userId]);
 
 
     useEffect(() => {

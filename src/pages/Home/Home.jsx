@@ -213,6 +213,7 @@ function Home({
                 cartCount={cartCount}
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
+                userId={user?.user_id}
                 onOpenCart={() => {
                     setIsDetailsOpen(false);
                     setSelectedProduct(null);
@@ -220,7 +221,6 @@ function Home({
                     setSelectedBottomTab("Profile");
                     setProfilePage("cart");
                 }}
-
             />
             {
                 !isDetailsOpen &&
