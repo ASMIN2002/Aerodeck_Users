@@ -296,6 +296,7 @@ function App() {
             {
                 page === "home" && updateRequired &&
                 <Update
+                    user={user}
                     onCancel={() => {
                         setUpdateRequired(false);
                     }}

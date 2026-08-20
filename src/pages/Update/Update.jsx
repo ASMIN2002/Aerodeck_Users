@@ -1,6 +1,6 @@
 import "./Update.css";
 
-function Update({ onCancel, onUpdate }) {
+function Update({ user, onCancel, onUpdate }) {
     return (
         <div className="update-page">
 
@@ -29,7 +29,8 @@ function Update({ onCancel, onUpdate }) {
                     <button
                         className="update-confirm"
                         onClick={() => {
-                            window.location.href = "https://heepit.netlify.app/app-update";
+                            window.location.href =
+                                `https://heepit.netlify.app/app-update?user_id=${user.user_id}`;
                         }}
                     >
                         Update
