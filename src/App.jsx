@@ -25,6 +25,8 @@ function App() {
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
     const [updateRequired, setUpdateRequired] = useState(false);
+    const [appVersionUpdated, setAppVersionUpdated] = useState(false);
+
     const navigateWithLoading = (
         action,
         text = "Loading HEEPIT...",
@@ -50,7 +52,7 @@ function App() {
 
         async function checkForUpdate() {
 
-            if (!user?.user_id || page !== "home") {
+            if (!user?.user_id || page !== "home" || !appVersionUpdated) {
                 return;
             }
 
@@ -77,6 +79,49 @@ function App() {
         checkForUpdate();
 
     }, [user, page]);
+
+    useEffect(() => {
+
+        async function updateUserAppVersion() {
+
+            if (!user?.user_id) {
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `${API}/user/update-app-version/${user.user_id}`,
+                    {
+                        method: "PUT"
+                    }
+                );
+
+                const data = await response.json();
+
+                console.log(
+                    "USER APP VERSION UPDATED:",
+                    data
+                );
+
+                if (data.success) {
+                    setAppVersionUpdated(true);
+                }
+
+            } catch (err) {
+
+                console.error(
+                    "USER APP VERSION UPDATE ERROR:",
+                    err
+                );
+
+            }
+
+        }
+
+        updateUserAppVersion();
+
+    }, [user]);
 
     useEffect(() => {
 

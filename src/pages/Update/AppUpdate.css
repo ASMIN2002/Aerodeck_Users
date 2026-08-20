@@ -1,0 +1,330 @@
+/* ================================
+   HEEPIT APP UPDATE
+================================ */
+
+.app-update-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+}
+
+
+/* ================================
+   CONTENT
+================================ */
+
+.app-update-content {
+    width: 100%;
+    max-width: 420px;
+
+    text-align: center;
+}
+
+
+/* ================================
+   APP ICON
+================================ */
+
+.app-update-icon {
+    width: 76px;
+    height: 76px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    font-size: 34px;
+    font-weight: 800;
+
+    background: #111111;
+    color: #ffffff;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ================================
+   TITLE
+================================ */
+
+.app-update-content h1 {
+    margin: 0;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    color: #111111;
+}
+
+
+/* ================================
+   UPDATE TITLE
+================================ */
+
+.app-update-content h2 {
+    margin: 12px 0 8px;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #111111;
+}
+
+
+/* ================================
+   DESCRIPTION
+================================ */
+
+.app-update-content p {
+    margin: 0 auto 30px;
+
+    max-width: 330px;
+
+    font-size: 15px;
+    line-height: 1.6;
+
+    color: #666666;
+}
+
+
+/* ================================
+   UPDATE BUTTON
+================================ */
+
+.app-update-button {
+    width: 100%;
+
+    min-height: 54px;
+
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #111111;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.app-update-button:active {
+    transform: scale(0.98);
+}
+
+.app-update-button:hover {
+    opacity: 0.92;
+}
+
+
+/* ================================
+   PROGRESS SECTION
+================================ */
+
+.app-update-progress {
+    width: 100%;
+
+    margin-top: 10px;
+
+    text-align: center;
+}
+
+
+/* ================================
+   PERCENTAGE
+================================ */
+
+.app-update-percent {
+    margin-bottom: 18px;
+
+    font-size: 38px;
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    color: #111111;
+}
+
+
+/* ================================
+   PROGRESS BAR
+================================ */
+
+.app-update-progress-bar {
+    width: 100%;
+    height: 10px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: #e9e9e9;
+}
+
+
+/* ================================
+   PROGRESS FILL
+================================ */
+
+.app-update-progress-fill {
+    height: 100%;
+
+    border-radius: 999px;
+
+    background: #111111;
+
+    transition: width 0.35s ease;
+}
+
+
+/* ================================
+   DOWNLOAD SIZE
+================================ */
+
+.app-update-size {
+    margin-top: 16px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #333333;
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+.app-update-status {
+    margin-top: 8px;
+
+    font-size: 13px;
+
+    color: #777777;
+}
+
+
+/* ================================
+   ERROR
+================================ */
+
+.app-update-error {
+    margin-top: 20px;
+
+    padding: 12px 14px;
+
+    border-radius: 12px;
+
+    background: #fff1f1;
+    color: #d32f2f;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ================================
+   SMALL PHONES
+================================ */
+
+@media (max-width: 360px) {
+
+    .app-update-page {
+        padding: 18px;
+    }
+
+    .app-update-icon {
+        width: 68px;
+        height: 68px;
+
+        border-radius: 20px;
+
+        font-size: 30px;
+    }
+
+    .app-update-content h1 {
+        font-size: 24px;
+    }
+
+    .app-update-content h2 {
+        font-size: 20px;
+    }
+
+    .app-update-percent {
+        font-size: 34px;
+    }
+
+}
+
+
+/* ================================
+   DARK MODE
+================================ */
+
+@media (prefers-color-scheme: dark) {
+
+    .app-update-page {
+        background: #0f0f0f;
+    }
+
+    .app-update-icon {
+        background: #ffffff;
+        color: #111111;
+    }
+
+    .app-update-content h1,
+    .app-update-content h2,
+    .app-update-percent {
+        color: #ffffff;
+    }
+
+    .app-update-content p {
+        color: #a8a8a8;
+    }
+
+    .app-update-button {
+        background: #ffffff;
+        color: #111111;
+    }
+
+    .app-update-progress-bar {
+        background: #2b2b2b;
+    }
+
+    .app-update-progress-fill {
+        background: #ffffff;
+    }
+
+    .app-update-size {
+        color: #dddddd;
+    }
+
+    .app-update-status {
+        color: #888888;
+    }
+
+}
