@@ -28,10 +28,7 @@ function Update({ user, onCancel, onUpdate }) {
 
                     <button
                         className="update-confirm"
-                        onClick={() => {
-                            window.location.href =
-                                `https://heepit.netlify.app/app-update?user_id=${user.user_id}`;
-                        }}
+                        onClick={onUpdate}
                     >
                         Update
                     </button>

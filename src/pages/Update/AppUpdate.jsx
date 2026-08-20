@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "./AppUpdate.css";
+import { Capacitor, registerPlugin } from "@capacitor/core";
+
+const AppUpdater = registerPlugin("AppUpdater");
 
 function AppUpdate({ user }) {
 
@@ -10,9 +13,14 @@ function AppUpdate({ user }) {
     const [error, setError] = useState("");
 
     useEffect(() => {
+        const updater = AppUpdater;
 
-        const updater =
-            window.Capacitor?.Plugins?.AppUpdater;
+        console.log("PLATFORM:", Capacitor.getPlatform());
+        console.log(
+            "NATIVE APP:",
+            Capacitor.isNativePlatform()
+        );
+        console.log("APP UPDATER:", updater);
 
         if (!updater) {
             console.error("HEEPIT native updater not available.");
@@ -103,10 +111,7 @@ function AppUpdate({ user }) {
 
             return;
         }
-
-        const updater =
-            window.Capacitor?.Plugins?.AppUpdater;
-
+        const updater = AppUpdater;
         if (!updater) {
 
             setError(
@@ -116,8 +121,7 @@ function AppUpdate({ user }) {
             return;
         }
 
-        const apkUrl =
-            "https://heepit.netlify.app/app-debug.apk";
+        const apkUrl = "https://heepit.netlify.app/app-debug.apk";
 
         try {
 

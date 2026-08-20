@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home";
 import Register from "./pages/Login/Register";
 import NoInternet from "./components/NoInternet/NoInternet";
 import Update from "./pages/Update/Update";
+import AppUpdate from "./pages/Update/AppUpdate";
 import { API } from "./services/api";
 
 function App() {
@@ -25,7 +26,6 @@ function App() {
     const [cartCount, setCartCount] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
     const [updateRequired, setUpdateRequired] = useState(false);
-    const [appVersionUpdated, setAppVersionUpdated] = useState(false);
 
     const navigateWithLoading = (
         action,
@@ -52,76 +52,64 @@ function App() {
 
         async function checkForUpdate() {
 
-            if (!user?.user_id || page !== "home" || !appVersionUpdated) {
+            if (!user?.user_id || page !== "home") {
                 return;
             }
 
             try {
 
-                const response = await fetch(
-                    `${API}/user/check-update/${user.user_id}`
+                const url =
+                    `${API}/user/check-update/${user.user_id}`;
+
+                console.log("UPDATE CHECK URL:", url);
+
+                const response = await fetch(url);
+
+                console.log(
+                    "UPDATE CHECK STATUS:",
+                    response.status
                 );
 
                 const data = await response.json();
 
-                if (data.success && data.update_available) {
+                console.log(
+                    "UPDATE CHECK RESPONSE:",
+                    data
+                );
+
+                if (
+                    data.success &&
+                    data.update_available === true
+                ) {
+
+                    console.log(
+                        "🔥 UPDATE AVAILABLE"
+                    );
+
                     setUpdateRequired(true);
+
+                } else {
+
+                    console.log(
+                        "✅ NO UPDATE REQUIRED"
+                    );
+
+                    setUpdateRequired(false);
                 }
 
             } catch (err) {
 
-                console.error("Update Check Error:", err);
-
+                console.error(
+                    "UPDATE CHECK ERROR:",
+                    err
+                );
             }
-
         }
 
         checkForUpdate();
 
     }, [user, page]);
 
-    useEffect(() => {
-
-        async function updateUserAppVersion() {
-
-            if (!user?.user_id) {
-                return;
-            }
-
-            try {
-
-                const response = await fetch(
-                    `${API}/user/update-app-version/${user.user_id}`,
-                    {
-                        method: "PUT"
-                    }
-                );
-
-                const data = await response.json();
-
-                console.log(
-                    "USER APP VERSION UPDATED:",
-                    data
-                );
-
-                if (data.success) {
-                    setAppVersionUpdated(true);
-                }
-
-            } catch (err) {
-
-                console.error(
-                    "USER APP VERSION UPDATE ERROR:",
-                    err
-                );
-
-            }
-
-        }
-
-        updateUserAppVersion();
-
-    }, [user]);
 
     useEffect(() => {
 
@@ -347,9 +335,13 @@ function App() {
                     }}
                     onUpdate={() => {
                         setUpdateRequired(false);
-                        setPage("appstore");
+                        setPage("appupdate");
                     }}
                 />
+            }
+            {
+                page === "appupdate" &&
+                <AppUpdate user={user} />
             }
             {
                 page === "register" &&
