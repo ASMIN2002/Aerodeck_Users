@@ -124,13 +124,15 @@ function AppUpdate({ user }) {
         const apkUrl = "https://heepit.netlify.app/app-debug.apk";
 
         try {
-
             setError("");
             setProgress(0);
             setDownloadedMB(0);
             setTotalMB(0);
             setDownloading(true);
-
+            localStorage.setItem(
+                "heepit_update_pending",
+                "true"
+            );
             await updater.update({
                 url: apkUrl
             });

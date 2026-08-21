@@ -183,7 +183,7 @@ function App() {
 
         async function restoreSession() {
 
-            if (page !== "startup") {
+            if (page !== "splash") {
                 return;
             }
             setShowLoading(true);
@@ -226,6 +226,52 @@ function App() {
                 if (data.success && data.authenticated) {
 
                     setUser(data.user);
+
+                    const updatePending =
+                        localStorage.getItem("heepit_update_pending");
+
+                    if (updatePending === "true") {
+
+                        try {
+
+                            const versionResponse = await fetch(
+                                `${API}/user/update-app-version/${data.user.user_id}`,
+                                {
+                                    method: "PUT",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    }
+                                }
+                            );
+
+                            const versionData =
+                                await versionResponse.json();
+
+                            console.log(
+                                "POST UPDATE VERSION:",
+                                versionData
+                            );
+
+                            if (
+                                versionResponse.ok &&
+                                versionData.success
+                            ) {
+
+                                localStorage.removeItem(
+                                    "heepit_update_pending"
+                                );
+
+                            }
+
+                        } catch (versionError) {
+
+                            console.error(
+                                "POST UPDATE VERSION ERROR:",
+                                versionError
+                            );
+
+                        }
+                    }
 
                     setPage("home");
 

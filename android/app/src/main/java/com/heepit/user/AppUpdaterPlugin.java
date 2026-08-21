@@ -1,24 +1,37 @@
 package com.heepit.user;
 
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
-
-import androidx.core.content.FileProvider;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-
+import androidx.core.content.FileProvider;
 import java.io.File;
 
 @CapacitorPlugin(name = "AppUpdater")
 public class AppUpdaterPlugin extends Plugin {
+
+    private long downloadId = -1;
+
+    private BroadcastReceiver downloadReceiver;
+
+    private Handler progressHandler;
+
+    private Runnable progressRunnable;
+
+    private boolean downloadFinished = false;
 
     @PluginMethod
     public void update(PluginCall call) {
@@ -30,50 +43,39 @@ public class AppUpdaterPlugin extends Plugin {
             return;
         }
 
+        if (!apkUrl.startsWith("http://")
+                && !apkUrl.startsWith("https://")) {
+
+            call.reject(
+                    "APK can only be downloaded from HTTP/HTTPS URLs: "
+                            + apkUrl
+            );
+            return;
+        }
+
         Context context = getContext();
 
         try {
 
-            DownloadManager manager =
-                    (DownloadManager) context.getSystemService(
-                            Context.DOWNLOAD_SERVICE
-                    );
+            cleanupReceiver();
 
-            if (manager == null) {
-                call.reject("DownloadManager unavailable");
-                return;
-            }
+            downloadFinished = false;
 
-            /*
-             * Remove previous downloaded update.
-             */
-            File oldApk = new File(
-                    context.getExternalFilesDir(
-                            Environment.DIRECTORY_DOWNLOADS
-                    ),
-                    "heepit-update.apk"
-            );
+            DownloadManager downloadManager =
+                    (DownloadManager)
+                            context.getSystemService(
+                                    Context.DOWNLOAD_SERVICE
+                            );
 
-            if (oldApk.exists()) {
-                oldApk.delete();
-            }
+            Uri apkUri = Uri.parse(apkUrl);
 
-            /*
-             * Download request.
-             */
             DownloadManager.Request request =
-                    new DownloadManager.Request(
-                            Uri.parse(apkUrl)
-                    );
+                    new DownloadManager.Request(apkUri);
 
             request.setTitle("HEEPIT Update");
 
             request.setDescription(
                     "Downloading latest HEEPIT update..."
-            );
-
-            request.setMimeType(
-                    "application/vnd.android.package-archive"
             );
 
             request.setNotificationVisibility(
@@ -87,329 +89,447 @@ public class AppUpdaterPlugin extends Plugin {
                     "heepit-update.apk"
             );
 
-            /*
-             * Start download.
-             */
-            long downloadId =
-                    manager.enqueue(request);
+            downloadId =
+                    downloadManager.enqueue(request);
+
+            registerDownloadReceiver();
+
+            startProgressMonitoring();
 
             JSObject result = new JSObject();
 
-            result.put("success", true);
-            result.put("download_id", downloadId);
+            result.put(
+                    "downloadId",
+                    downloadId
+            );
 
             call.resolve(result);
 
-            /*
-             * Monitor download in background.
-             */
-            new Thread(() -> {
-
-                boolean running = true;
-
-                while (running) {
-
-                    DownloadManager.Query query =
-                            new DownloadManager.Query();
-
-                    query.setFilterById(downloadId);
-
-                    try (
-                            Cursor cursor =
-                                    manager.query(query)
-                    ) {
-
-                        if (
-                                cursor == null ||
-                                !cursor.moveToFirst()
-                        ) {
-                            Thread.sleep(500);
-                            continue;
-                        }
-
-                        int status =
-                                cursor.getInt(
-                                        cursor.getColumnIndexOrThrow(
-                                                DownloadManager
-                                                        .COLUMN_STATUS
-                                        )
-                                );
-
-                        long downloaded =
-                                cursor.getLong(
-                                        cursor.getColumnIndexOrThrow(
-                                                DownloadManager
-                                                        .COLUMN_BYTES_DOWNLOADED_SO_FAR
-                                        )
-                                );
-
-                        long total =
-                                cursor.getLong(
-                                        cursor.getColumnIndexOrThrow(
-                                                DownloadManager
-                                                        .COLUMN_TOTAL_SIZE_BYTES
-                                        )
-                                );
-
-                        int progress = 0;
-
-                        if (total > 0) {
-
-                            progress =
-                                    (int) (
-                                            downloaded * 100L
-                                                    / total
-                                    );
-
-                        }
-
-                        /*
-                         * Send progress to React.
-                         */
-                        JSObject progressData =
-                                new JSObject();
-
-                        progressData.put(
-                                "progress",
-                                progress
-                        );
-
-                        progressData.put(
-                                "downloaded",
-                                downloaded
-                        );
-
-                        progressData.put(
-                                "total",
-                                total
-                        );
-
-                        notifyListeners(
-                                "downloadProgress",
-                                progressData
-                        );
-
-                        /*
-                         * DOWNLOAD COMPLETE
-                         */
-                        if (
-                                status ==
-                                        DownloadManager
-                                                .STATUS_SUCCESSFUL
-                        ) {
-
-                            JSObject complete =
-                                    new JSObject();
-
-                            complete.put(
-                                    "success",
-                                    true
-                            );
-
-                            complete.put(
-                                    "progress",
-                                    100
-                            );
-
-                            complete.put(
-                                    "downloaded",
-                                    downloaded
-                            );
-
-                            complete.put(
-                                    "total",
-                                    total
-                            );
-
-                            notifyListeners(
-                                    "downloadComplete",
-                                    complete
-                            );
-
-                            /*
-                             * Get APK URI.
-                             */
-                            int uriIndex =
-                                    cursor.getColumnIndexOrThrow(
-                                            DownloadManager
-                                                    .COLUMN_LOCAL_URI
-                                    );
-
-                            String localUri =
-                                    cursor.getString(uriIndex);
-
-                            if (
-                                    localUri == null ||
-                                    localUri.isEmpty()
-                            ) {
-
-                                notifyUpdateError(
-                                        "Downloaded APK URI missing"
-                                );
-
-                                running = false;
-                                continue;
-                            }
-
-                            Uri apkUri =
-                                    Uri.parse(localUri);
-
-                            /*
-                             * Convert file:// into
-                             * secure content:// URI.
-                             */
-                            if (
-                                    "file".equalsIgnoreCase(
-                                            apkUri.getScheme()
-                                    )
-                            ) {
-
-                                String path =
-                                        apkUri.getPath();
-
-                                if (
-                                        path == null ||
-                                        path.isEmpty()
-                                ) {
-
-                                    notifyUpdateError(
-                                            "APK file path missing"
-                                    );
-
-                                    running = false;
-                                    continue;
-                                }
-
-                                File apkFile =
-                                        new File(path);
-
-                                apkUri =
-                                        FileProvider.getUriForFile(
-                                                context,
-                                                context.getPackageName()
-                                                        + ".fileprovider",
-                                                apkFile
-                                        );
-                            }
-
-                            /*
-                             * Open Android installer.
-                             */
-                            Intent installIntent =
-                                    new Intent(
-                                            Intent.ACTION_VIEW
-                                    );
-
-                            installIntent.setDataAndType(
-                                    apkUri,
-                                    "application/vnd.android.package-archive"
-                            );
-
-                            installIntent.addFlags(
-                                    Intent.FLAG_ACTIVITY_NEW_TASK
-                            );
-
-                            installIntent.addFlags(
-                                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-                            );
-
-                            installIntent.addFlags(
-                                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                            );
-
-                            context.startActivity(
-                                    installIntent
-                            );
-
-                            running = false;
-                        }
-
-                        /*
-                         * DOWNLOAD FAILED
-                         */
-                        else if (
-                                status ==
-                                        DownloadManager
-                                                .STATUS_FAILED
-                        ) {
-
-                            int reason =
-                                    cursor.getInt(
-                                            cursor.getColumnIndexOrThrow(
-                                                    DownloadManager
-                                                            .COLUMN_REASON
-                                            )
-                                    );
-
-                            notifyUpdateError(
-                                    "APK download failed. Reason: "
-                                            + reason
-                            );
-
-                            running = false;
-                        }
-
-                    } catch (Exception e) {
-
-                        notifyUpdateError(
-                                e.getMessage() != null
-                                        ? e.getMessage()
-                                        : "Unknown updater error"
-                        );
-
-                        running = false;
-                    }
-
-                    if (running) {
-
-                        try {
-
-                            Thread.sleep(500);
-
-                        } catch (
-                                InterruptedException e
-                        ) {
-
-                            Thread.currentThread().interrupt();
-
-                            running = false;
-                        }
-                    }
-                }
-
-            }).start();
-
         } catch (Exception e) {
 
+            cleanupReceiver();
+
             call.reject(
-                    "Updater error: "
-                            + (
-                            e.getMessage() != null
-                                    ? e.getMessage()
-                                    : "Unknown error"
-                    )
+                    "Unable to download update: "
+                            + e.getMessage()
             );
         }
     }
 
-    private void notifyUpdateError(String message) {
+
+    private void registerDownloadReceiver() {
+
+        downloadReceiver =
+                new BroadcastReceiver() {
+
+                    @Override
+                    public void onReceive(
+                            Context context,
+                            Intent intent
+                    ) {
+
+                        long id =
+                                intent.getLongExtra(
+                                        DownloadManager
+                                                .EXTRA_DOWNLOAD_ID,
+                                        -1
+                                );
+
+                        if (id != downloadId) {
+                            return;
+                        }
+
+                        checkDownloadStatus(context);
+                    }
+                };
+
+        IntentFilter filter =
+                new IntentFilter(
+                        DownloadManager
+                                .ACTION_DOWNLOAD_COMPLETE
+                );
+
+        if (Build.VERSION.SDK_INT >= 33) {
+
+            getContext().registerReceiver(
+                    downloadReceiver,
+                    filter,
+                    Context.RECEIVER_NOT_EXPORTED
+            );
+
+        } else {
+
+            getContext().registerReceiver(
+                    downloadReceiver,
+                    filter
+            );
+        }
+    }
+
+    private void startProgressMonitoring() {
+
+        progressHandler =
+                new Handler(
+                        Looper.getMainLooper()
+                );
+
+        progressRunnable =
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        if (downloadFinished) {
+                            return;
+                        }
+
+                        checkDownloadStatus(
+                                getContext()
+                        );
+
+                        if (!downloadFinished) {
+
+                            progressHandler.postDelayed(
+                                    this,
+                                    300
+                            );
+                        }
+                    }
+                };
+
+        progressHandler.post(
+                progressRunnable
+        );
+    }
+
+    private void checkDownloadStatus(
+            Context context
+    ) {
+
+        if (downloadId == -1
+                || downloadFinished) {
+            return;
+        }
+
+        DownloadManager manager =
+                (DownloadManager)
+                        context.getSystemService(
+                                Context.DOWNLOAD_SERVICE
+                        );
+
+        Cursor cursor = null;
+
+        try {
+
+            cursor =
+                    manager.query(
+                            new DownloadManager
+                                    .Query()
+                                    .setFilterById(downloadId)
+                    );
+
+            if (cursor == null
+                    || !cursor.moveToFirst()) {
+                return;
+            }
+
+            int status =
+                    cursor.getInt(
+                            cursor.getColumnIndexOrThrow(
+                                    DownloadManager
+                                            .COLUMN_STATUS
+                            )
+                    );
+
+            if (status ==
+                    DownloadManager
+                            .STATUS_RUNNING) {
+
+                long downloaded =
+                        cursor.getLong(
+                                cursor.getColumnIndexOrThrow(
+                                        DownloadManager
+                                                .COLUMN_BYTES_DOWNLOADED_SO_FAR
+                                )
+                        );
+
+                long total =
+                        cursor.getLong(
+                                cursor.getColumnIndexOrThrow(
+                                        DownloadManager
+                                                .COLUMN_TOTAL_SIZE_BYTES
+                                )
+                        );
+
+                int progress = 0;
+
+                if (total > 0) {
+
+                    progress =
+                            (int)
+                                    ((downloaded * 100L)
+                                            / total);
+                }
+
+                sendProgress(
+                        progress,
+                        downloaded,
+                        total
+                );
+
+            } else if (status ==
+                    DownloadManager
+                            .STATUS_SUCCESSFUL) {
+
+                if (downloadFinished) {
+                    return;
+                }
+
+                downloadFinished = true;
+
+                stopProgressMonitoring();
+
+                String localUri =
+                        cursor.getString(
+                                cursor.getColumnIndexOrThrow(
+                                        DownloadManager
+                                                .COLUMN_LOCAL_URI
+                                )
+                        );
+
+                sendProgress(
+                        100,
+                        cursor.getLong(
+                                cursor.getColumnIndexOrThrow(
+                                        DownloadManager
+                                                .COLUMN_BYTES_DOWNLOADED_SO_FAR
+                                )
+                        ),
+                        cursor.getLong(
+                                cursor.getColumnIndexOrThrow(
+                                        DownloadManager
+                                                .COLUMN_TOTAL_SIZE_BYTES
+                                )
+                        )
+                );
+
+                notifyListeners(
+                        "downloadComplete",
+                        new JSObject()
+                );
+
+                cleanupReceiver();
+
+                installApk(
+                        context,
+                        Uri.parse(localUri)
+                );
+
+            } else if (status ==
+                    DownloadManager
+                            .STATUS_FAILED) {
+
+                if (downloadFinished) {
+                    return;
+                }
+
+                downloadFinished = true;
+
+                stopProgressMonitoring();
+
+                int reason =
+                        cursor.getInt(
+                                cursor.getColumnIndexOrThrow(
+                                        DownloadManager
+                                                .COLUMN_REASON
+                                )
+                        );
+
+                cleanupReceiver();
+
+                JSObject error =
+                        new JSObject();
+
+                error.put(
+                        "message",
+                        "APK download failed. Reason: "
+                                + reason
+                );
+
+                notifyListeners(
+                        "downloadError",
+                        error
+                );
+            }
+
+        } catch (Exception e) {
+
+            JSObject error =
+                    new JSObject();
+
+            error.put(
+                    "message",
+                    "Download status error: "
+                            + e.getMessage()
+            );
+
+            notifyListeners(
+                    "downloadError",
+                    error
+            );
+
+        } finally {
+
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+private void installApk(
+        Context context,
+        Uri apkUri
+) {
+
+    try {
+
+        android.util.Log.d(
+                "HEEPIT_UPDATE",
+                "INSTALL_STARTED"
+        );
+
+        File apkFile = new File(
+                apkUri.getPath()
+        );
+
+        Uri contentUri =
+                FileProvider.getUriForFile(
+                        context,
+                        context.getPackageName()
+                                + ".fileprovider",
+                        apkFile
+                );
+
+        Intent installIntent =
+                new Intent(
+                        Intent.ACTION_VIEW
+                );
+
+        installIntent.setDataAndType(
+                contentUri,
+                "application/vnd.android.package-archive"
+        );
+
+        installIntent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        );
+
+        installIntent.addFlags(
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+        );
+
+        context.startActivity(
+                installIntent
+        );
+
+        android.util.Log.d(
+                "HEEPIT_UPDATE",
+                "INSTALLER_OPENED"
+        );
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        android.util.Log.e(
+                "HEEPIT_UPDATE",
+                "INSTALL_ERROR: "
+                        + e.getMessage()
+        );
 
         JSObject error =
                 new JSObject();
 
         error.put(
-                "success",
-                false
-        );
-
-        error.put(
                 "message",
-                message
+                "Unable to start APK installer: "
+                        + e.getMessage()
         );
 
         notifyListeners(
                 "downloadError",
                 error
         );
+    }
+}
+    private void sendProgress(
+            int progress,
+            long downloaded,
+            long total
+    ) {
+
+        JSObject data =
+                new JSObject();
+
+        data.put(
+                "progress",
+                progress
+        );
+
+        data.put(
+                "downloaded",
+                downloaded
+        );
+
+        data.put(
+                "total",
+                total
+        );
+
+        notifyListeners(
+                "downloadProgress",
+                data
+        );
+    }
+
+    private void stopProgressMonitoring() {
+
+        if (progressHandler != null
+                && progressRunnable != null) {
+
+            progressHandler.removeCallbacks(
+                    progressRunnable
+            );
+        }
+
+        progressHandler = null;
+        progressRunnable = null;
+    }
+
+    private void cleanupReceiver() {
+
+        stopProgressMonitoring();
+
+        if (downloadReceiver != null) {
+
+            try {
+
+                getContext().unregisterReceiver(
+                        downloadReceiver
+                );
+
+            } catch (Exception ignored) {
+            }
+
+            downloadReceiver = null;
+        }
+    }
+
+    @Override
+    protected void handleOnDestroy() {
+
+        cleanupReceiver();
+
+        super.handleOnDestroy();
     }
 }

@@ -43,120 +43,99 @@ function Header({
         }
     }, [userId]);
 
-
+    // App open hote hi SHOP selected
     useEffect(() => {
-        function handleClickOutside(event) {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target)
-            ) {
-                setIsMenuOpen(false);
-            }
+        if (!selectedMenu) {
+            setSelectedMenu("Shop");
         }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [setIsMenuOpen]);
+    }, [selectedMenu, setSelectedMenu]);
 
+    const handleTabClick = (menu) => {
+        if (isDetailsOpen) {
+            closeDetails();
+        }
+
+        setSelectedMenu(menu);
+        setIsMenuOpen(false);
+    };
+
+    const handleRefresh = () => {
+        window.location.reload();
+    };
 
     return (
-        <header className="hd-header">
-            <div
-                className="hd-left"
-                ref={dropdownRef}
-            >
-                {
-                    selectedBottomTab === "Home" ? (
-                        <>
-                            <button
-                                className="hd-category-btn"
-                                type="button"
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            >
-                                <span className="hd-category-text">
-                                    {selectedMenu}
-                                </span>
-                                <span className="hd-category-arrow">
-                                    {isMenuOpen ? "▲" : "▼"}
-                                </span>
-                            </button>
-                            {
+        <header className="hd-header" ref={dropdownRef}>
 
-                                isMenuOpen &&
-                                <div className="hd-dropdown">
-                                    <button
-                                        className="hd-dropdown-item"
-                                        onClick={() => {
-                                            if (isDetailsOpen) {
-                                                closeDetails();
-                                            }
-                                            setSelectedMenu("Cards");
-                                            setIsMenuOpen(false);
-                                        }}
-                                    >
-                                        CARDS
-                                    </button>
+            {/* TOP ROW */}
+            <div className="hd-top-row">
 
-                                    <button
-                                        className="hd-dropdown-item"
-                                        onClick={() => {
-                                            if (isDetailsOpen) {
-                                                closeDetails();
-                                            }
-                                            setSelectedMenu("Gifts");
-                                            setIsMenuOpen(false);
-                                        }}
-                                    >
-                                        GIFTS
-                                    </button>
+                
+                <div className="hd-center">
+                    <div className="hd-brand-name">
+                        HEEPIT
+                    </div>
 
-                                    <button
-                                        className="hd-dropdown-item"
-                                        onClick={() => {
-                                            if (isDetailsOpen) {
-                                                closeDetails();
-                                            }
-                                            setSelectedMenu("Shop");
-                                            setIsMenuOpen(false);
-                                        }}
-                                    >
-                                        SHOP
-                                    </button>
-
-                                </div>
-                            }
-                        </>
-                    ) : (
-                        <div className="hd-page-title">
-                            {selectedBottomTab}
-                        </div>
-                    )
-                }
-            </div>
-
-            <div className="hd-center">
-                <h1 className="hd-logo">
-                    HEEPIT
-                </h1>
-
-                <div className="hd-version-row">
-                    <span className="hd-version">
-                        Version {version}
-                    </span>
+                    <div className="hd-version">
+                        {version ? version : "27.03.01"}
+                    </div>
                 </div>
+
+                {/* RIGHT - REFRESH */}
+                <div className="hd-right">
+
+                    <button
+                        className="hd-refresh-btn"
+                        type="button"
+                        onClick={handleRefresh}
+                        aria-label="Refresh"
+                    >
+                        ↻
+                    </button>
+
+                </div>
+
             </div>
 
-            <div className="hd-right">
+            {/* TABS */}
+            <div className="hd-tabs">
+
+                {/* PRODUCTS */}
                 <button
-                    className="hd-cart-btn"
                     type="button"
-                    onClick={onOpenCart}
+                    className={`hd-tab ${
+                        selectedMenu === "Shop"
+                            ? "hd-tab-active"
+                            : ""
+                    }`}
+                    onClick={() => handleTabClick("Shop")}
                 >
-                    🛒
-                    <span className="hd-cart-count">
-                        {cartCount}
-                    </span>
+                    Products
+                </button>
+
+                {/* GIFTS */}
+                <button
+                    type="button"
+                    className={`hd-tab ${
+                        selectedMenu === "Gifts"
+                            ? "hd-tab-active"
+                            : ""
+                    }`}
+                    onClick={() => handleTabClick("Gifts")}
+                >
+                    Gifts
+                </button>
+
+                {/* CARDS */}
+                <button
+                    type="button"
+                    className={`hd-tab ${
+                        selectedMenu === "Cards"
+                            ? "hd-tab-active"
+                            : ""
+                    }`}
+                    onClick={() => handleTabClick("Cards")}
+                >
+                    Cards
                 </button>
 
             </div>
