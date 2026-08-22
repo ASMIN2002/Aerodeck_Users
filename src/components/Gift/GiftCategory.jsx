@@ -4,6 +4,8 @@ import "./GiftCategory.css";
 function GiftCategory({
     category,
     gifts,
+    categories = [],
+    onCategoryChange,
     onBack,
     onOpenDetails,
     onSave,
@@ -15,18 +17,17 @@ function GiftCategory({
     savedProducts,
     likedProducts,
     cartProducts
-
 }) {
 
     const categoryGifts = gifts.filter(
-
         gift => gift.gift_category === category
-
     );
-
+    
     return (
 
         <section className="cds-section">
+
+            {/* CURRENT CATEGORY */}
             <div className="gift-category-header">
 
                 <button
@@ -42,67 +43,63 @@ function GiftCategory({
 
             </div>
 
+
+            {/* GIFTS */}
             <div className="cds-grid">
 
-                {
+                {categoryGifts.map((product) => (
 
-                    categoryGifts.map((product) => (
+                    <GiftCard
+                        key={product.gift_id}
+                        product={product}
 
-                        <GiftCard
-                            key={product.gift_id}
-                            product={product}
+                        isSaved={savedProducts.has(
+                            String(product.gift_id)
+                        )}
 
-                            isSaved={savedProducts.has(
-                                String(product.gift_id)
-                            )}
+                        isLiked={likedProducts.has(
+                            String(product.gift_id)
+                        )}
 
-                            isLiked={likedProducts.has(
-                                String(product.gift_id)
-                            )}
+                        isAddedToCart={
+                            cartProducts.some(
+                                item =>
+                                    String(item.product_id) ===
+                                    String(product.gift_id)
+                            )
+                        }
 
-                            isAddedToCart={
-                                cartProducts.some(
-                                    item =>
-                                        String(item.product_id) ===
-                                        String(product.gift_id)
-                                )
-                            }
+                        cartQuantity={
+                            cartProducts.find(
+                                item =>
+                                    String(item.product_id) ===
+                                    String(product.gift_id)
+                            )?.quantity || 0
+                        }
 
-                            cartQuantity={
-                                cartProducts.find(
-                                    item =>
-                                        String(item.product_id) ===
-                                        String(product.gift_id)
-                                )?.quantity || 0
-                            }
+                        onSave={onSave}
+                        onLike={onLike}
+                        onAddToCart={onAddToCart}
 
-                            onSave={onSave}
-                            onLike={onLike}
-                            onAddToCart={onAddToCart}
+                        onIncreaseQuantity={
+                            onIncreaseQuantity
+                        }
 
-                            onIncreaseQuantity={
-                                onIncreaseQuantity
-                            }
+                        onDecreaseQuantity={
+                            onDecreaseQuantity
+                        }
 
-                            onDecreaseQuantity={
-                                onDecreaseQuantity
-                            }
+                        onOpenDetails={() =>
+                            onOpenDetails(product, "gift")
+                        }
+                    />
 
-                            onOpenDetails={() =>
-                                onOpenDetails(product, "gift")
-                            }
-                        />
-
-                    ))
-
-                }
+                ))}
 
             </div>
 
         </section>
-
     );
-
 }
 
 export default GiftCategory;

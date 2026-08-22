@@ -24,8 +24,9 @@
 .shop-section-title h3 {
     font-size: 11px;
     font-weight: 700;
-    color: #000000;
+    color: rgb(243, 245, 245);
     margin: 2px;
+    letter-spacing: 1px;
 }
 
 /* --- Category Section & Scroll Row --- */
@@ -38,7 +39,6 @@
     display: flex;
     gap: 4px;
     overflow-x: auto;
-    padding-bottom: 8px;
     margin: 1px 7px;
 
     scrollbar-width: none;
@@ -56,21 +56,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-align: center;
     width: 26%;
     padding: 2px;
-    box-shadow: 0 0 2px rgb(0, 0, 0);
-    border: 1px solid rgb(0, 0, 0);
+    background: none;
+    border: none;
 }
 
 .shop-category-box:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-    border-color: #cbd5e1;
 }
 
 .shop-category-box:active {
@@ -79,24 +77,25 @@
 
 /* --- Category Icon / Image --- */
 .shop-category-icon {
-    width: 100%;
-    height: 90px;
-    border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border-radius: 15px;
     overflow: hidden;
-    background-color: #f1f5f9;
-    margin-bottom: 4px;
+    background: none;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #f1f5f9;
+    border: none;
+    box-shadow: 0 0 4px white;
 }
 
 .shop-category-icon img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: scale(1.30);
     transition: transform 0.3s ease;
-    margin: 1px;
 }
 
 .shop-category-box:hover .shop-category-icon img {
@@ -106,19 +105,17 @@
 /* --- Category Text Details --- */
 
 .shop-category-box span {
-    font-size: 8px;
-    color: #334155;
+    font-size: 10px;
+    color: #00ff07;
     margin-bottom: 1px;
-
     display: block;
     width: 70px;
     max-width: 70px;
-
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-
-    text-align: left;
+    text-align: center;
+    font-weight: bold;
 }
 
 
@@ -128,6 +125,13 @@
     color: #000000;
     text-align: left;
     width: 85%;
+}
+
+.viewALL {
+    padding: 3px;
+    background: none;
+    border: none;
+    color: aqua;
 }
 
 /* --- Suggested & Offer Placeholders --- */
@@ -266,8 +270,9 @@
 .shop-section-title h4 {
     font-size: 12px;
     font-weight: bold;
-    color: #000000;
+    color: #ffffff;
     margin: 4px;
+    letter-spacing: 1px;
 }
 
 .shop-all-button {
@@ -569,18 +574,6 @@
     cursor: grabbing;
 }
 
-.shop-offer-slide {
-    position: relative;
-    flex: 0 0 100%;
-    width: 100%;
-    aspect-ratio: 16 / 7;
-    overflow: hidden;
-    border-radius: 14px;
-    background: #f1f5f9;
-    scroll-snap-align: start;
-    cursor: pointer;
-}
-
 .shop-offer-slide img {
     width: 100%;
     height: 100%;
@@ -707,12 +700,16 @@
     border-radius: 8px;
 }
 
+.shop-suggested-section{
+    padding: 7px;
+}
+
 /* =========================================
    FINEST DEALS
 ========================================= */
 
 .shop-finest-deals-section {
-    background: linear-gradient(to bottom, #6aff03 0%, #c7c7c7 28%, #60857d 50%, #ba8cc6 72%, #a0a0a0 100%);
+    background: none;
     padding: 3px;
     border-radius: 8px;
 }
@@ -725,7 +722,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 
-    padding: 3px 2px 8px;
+    padding: 3px 2px 0px;
 }
 
 .shop-finest-deals-scroll::-webkit-scrollbar {
@@ -733,14 +730,8 @@
 }
 
 .shop-finest-deals-grid {
-    display: grid;
-
-    grid-template-rows: repeat(2, auto);
-    grid-auto-flow: column;
-    grid-auto-columns: 88px;
-
-    gap: 10px;
-
+    display: flex;
+    gap: 8px;
     width: max-content;
 }
 
@@ -757,9 +748,8 @@
 .shop-finest-deal-image {
     position: relative;
 
-    width: 85%;
+    width: 100%;
     height: 115px;
-
     overflow: hidden;
     border-radius: 9px;
     border: 1px solid white;

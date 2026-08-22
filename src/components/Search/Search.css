@@ -4,7 +4,6 @@
     align-items: center;
     gap: 5px;
     padding: 4px 8px;
-    background: transparent;
 }
 
 .sr-search-box {
@@ -21,7 +20,7 @@
     background: transparent;
     font-size: 9px;
     font-weight: 500;
-    color: #000000;
+    color: #f1efef;
     transition: .2s;
     box-shadow: 0 0 3px black;
 
@@ -31,7 +30,7 @@
 
 .sr-input::placeholder {
     font-size: 9px;
-    color: #424549;
+    color: #afb2b7;
     font-weight: bold;
     letter-spacing: 0.5px;
 }
@@ -45,12 +44,12 @@
     justify-content: center;
     border: none;
     border-radius: 8px;
-    color: #010101;
+    color: #ffffff;
     font-size: 18px;
     cursor: pointer;
     transition: .2s;
     flex-shrink: 0;
-    background: rgb(233, 227, 217);
+    background: #0e34b8;
 }
 
 .sr-filter-btn:hover {

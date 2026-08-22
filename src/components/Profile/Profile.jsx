@@ -19,21 +19,34 @@ function Profile({
     const [showLogoutBox, setShowLogoutBox] = useState(false);
 
     useEffect(() => {
+
         async function loadVersion() {
+
             try {
-                const response = await fetch(`${API}/app-version`);
+
+                if (!user?.user_id) {
+                    console.log("NO USER ID:", user);
+                    return;
+                }
+
+                const response = await fetch(
+                    `${API}/user/app-version/${user.user_id}`
+                );
                 const data = await response.json();
 
                 if (data.success) {
-                    setVersion(data.data.version);
+                    setVersion(data.version);
                 }
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        loadVersion();
-    }, []);
 
+            } catch (err) {
+                console.error("VERSION ERROR:", err);
+            }
+
+        }
+
+        loadVersion();
+
+    }, [user]);
     const maskedMobile = profile?.mobile_number
         ? `******${profile.mobile_number.slice(-4)}`
         : "";
@@ -154,7 +167,7 @@ function Profile({
                     <span>❤️</span>
                     <span>Wishlist</span>
                 </div>
-                <div
+                {/* <div
                     className="profile-item"
                     onClick={() =>
                         handleProfileNavigation("cart", "Loading Cart...")
@@ -162,7 +175,7 @@ function Profile({
                 >
                     <span>🛒</span>
                     <span>My Cart</span>
-                </div>
+                </div> */}
                 <div
                     className="profile-item"
                     onClick={() =>

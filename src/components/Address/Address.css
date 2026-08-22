@@ -1,5 +1,6 @@
 .ad-container {
     padding: 4px 8px;
+    border: none;
 }
 
 .ad-button {
@@ -9,11 +10,12 @@
     align-items: center;
     gap: 5px;
     padding: 11px 8px;
-    background: none;
+    background: rgb(55, 0, 63);
     cursor: pointer;
     transition: .2s;
     overflow: hidden;
-    border: none;
+    border: 1px solid rgb(98, 0, 125);
+    border-radius: 10px;
 }
 
 
@@ -27,7 +29,7 @@
     flex: 1;
     font-size: 9px;
     font-weight: 600;
-    color: #000000;
+    color: #fffdfd;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -35,7 +37,7 @@
 }
 
 .ad-no-address {
-    color: #000000;
+    color: #fefdfd;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -44,6 +46,6 @@
     flex-shrink: 0;
     font-size: 16px;
     font-weight: 700;
-    color: #000000;
+    color: #f6f3f3;
     line-height: 1;
 }

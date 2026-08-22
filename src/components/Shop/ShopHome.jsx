@@ -10,7 +10,8 @@ function ShopHome({
     shops,
     onCategoryClick,
     onOpenDetails,
-    onOpenAllShops
+    onOpenAllShops,
+    onOpenAllShopCategories
 
 }) {
     const [activeOfferIndex, setActiveOfferIndex] = useState(0);
@@ -58,7 +59,7 @@ function ShopHome({
     const offerShops = useMemo(() => {
 
         const eligible = shops.filter(shop =>
-            /up\s*to.*\d+%.*off/i.test(
+            /\d+(?:\.\d+)?\s*%\s*off/i.test(
                 shop.shop_highlight_text || ""
             )
         );
@@ -163,9 +164,9 @@ function ShopHome({
                                         {shop.shop_name}
                                     </div>
 
-                                    {percent && (
+                                    {highlight && (
                                         <div className="shop-offer-percent">
-                                            Up to {percent}% OFF
+                                            {highlight}
                                         </div>
                                     )}
 
@@ -202,6 +203,54 @@ function ShopHome({
                 <div className="shop-section-title">
 
                     <h3>
+                        Top Categories
+                    </h3>
+
+                    <button
+                        type="button" className="viewALL"
+                        onClick={onOpenAllShopCategories}
+                    >
+                        View All
+                    </button>
+
+                </div>
+
+
+                <div className="shop-category-scroll">
+
+                    {categories.map((item) => (
+
+                        <button
+                            key={item.catid}
+                            className="shop-category-box"
+                            onClick={() => onCategoryClick(item.category)}
+                        >
+
+                            <div className="shop-category-icon">
+
+                                <img
+                                    src={item.image}
+                                    alt={item.category}
+                                />
+
+                            </div>
+
+                            <span>
+                                {item.category}
+                            </span>
+
+                        </button>
+
+                    ))}
+                </div>
+
+            </section>
+            <section className="shop-finest-deals-section">
+
+
+                <div className="shop-section-title">
+
+                    <h3>
                         {user?.full_name
                             ?.split(" ")[0]
                             ?.toLowerCase()
@@ -210,57 +259,6 @@ function ShopHome({
                     </h3>
 
                 </div>
-
-
-                <div className="shop-category-scroll">
-
-                    {
-                        categories.map((category) => {
-
-                            const categoryShop = shops.find(
-                                shop => shop.shop_category === category
-                            );
-
-                            return (
-
-                                <button
-                                    key={category}
-                                    className="shop-category-box"
-                                    onClick={() => onCategoryClick(category)}
-                                >
-
-                                    <div className="shop-category-icon">
-
-                                        <img
-                                            src={categoryShop?.shop_image1}
-                                            alt={categoryShop?.shop_name || category}
-                                        />
-
-                                    </div>
-
-                                    <span>
-                                        {categoryShop?.shop_name || category}
-                                    </span>
-                                    <strong>
-                                        View {categoryShop?.shop_category}
-                                    </strong>
-
-                                </button>
-
-                            );
-
-                        })
-                    }
-
-                </div>
-
-            </section>
-            <section className="shop-finest-deals-section">
-
-                <div className="shop-section-title">
-                    <h4>Finest Deals</h4>
-                </div>
-
                 <div className="shop-finest-deals-scroll">
                     <div className="shop-finest-deals-grid">
 

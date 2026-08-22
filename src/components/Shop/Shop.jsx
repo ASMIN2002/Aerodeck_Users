@@ -6,6 +6,7 @@ import { API } from "../../services/api";
 import ShopHome from "./ShopHome";
 import AllShops from "./AllShops";
 import ShopCategory from "./ShopCategory";
+import ALLShopCategories from "./ALLShopCategories";
 
 function Shop({
     user,
@@ -28,7 +29,9 @@ function Shop({
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
+    const [allShopCategoriesPage, setAllShopCategoriesPage] = useState(false);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+
     const [showLoading, setShowLoading] = useState(true);
 
     const showToast = (message, type = "success") => {
@@ -623,6 +626,35 @@ function Shop({
 
     useEffect(() => {
 
+        async function loadCategories() {
+            try {
+                const response = await fetch(
+                    `${API}/api/category`
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log("ALL CATEGORY DATA:", data.data);
+
+                    const shopCategories = data.data.filter(
+                        item =>
+                            item &&
+                            item.catid &&
+                            item.category &&
+                            String(item.catname).toUpperCase() === "SHOP"
+                    );
+                    console.log("SHOP CATEGORIES:", shopCategories);
+                    setCategories(shopCategories);
+                }
+
+            } catch (err) {
+
+                console.log(err);
+
+            }
+        }
+
         async function loadProducts() {
 
             try {
@@ -634,15 +666,6 @@ function Shop({
 
                     setProducts(data.data);
                     setSuggestionData(data.data);
-
-                    setCategories([
-                        ...new Set(
-                            data.data
-                                .map(item => item.shop_category)
-                                .filter(Boolean)
-                        )
-                    ]);
-
                 }
 
             }
@@ -748,6 +771,7 @@ function Shop({
 
         }
 
+        loadCategories();
         loadProducts();
         loadWishlist();
         loadLikes();
@@ -992,7 +1016,29 @@ function Shop({
         }
 
             {
-                allShopsPage ? (
+                allShopCategoriesPage ? (
+
+                    <ALLShopCategories
+
+                        categories={categories}
+
+                        onBack={() => {
+                            setAllShopCategoriesPage(false);
+                        }}
+
+                        onCategoryClick={(category) => {
+
+                            setSelectedShopCategory(category);
+
+                            setAllShopCategoriesPage(false);
+
+                            setShopCategoryPage(true);
+
+                        }}
+
+                    />
+
+                ) : allShopsPage ? (
 
                     <AllShops
                         shops={finalShops}
@@ -1132,6 +1178,9 @@ function Shop({
 
                             setShopCategoryPage(true);
 
+                        }}
+                        onOpenAllShopCategories={() => {
+                            setAllShopCategoriesPage(true);
                         }}
 
                         onOpenDetails={onOpenDetails}

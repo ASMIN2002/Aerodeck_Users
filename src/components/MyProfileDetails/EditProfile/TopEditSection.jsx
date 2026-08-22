@@ -70,9 +70,11 @@ function TopEditSection({
 
             setTimeout(() => {
 
-                // Update profile
-                setProfile(data.user);
 
+                setProfile(data.user);
+                window.dispatchEvent(
+                    new Event("profileImageUpdated")
+                );
                 setUploading(false);
                 setUploadProgress(0);
 
@@ -162,7 +164,9 @@ function TopEditSection({
 
                 // Update profile
                 setProfile(data.user);
-
+                window.dispatchEvent(
+                    new Event("profileImageUpdated")
+                );
                 setSelectedImage(null);
 
                 if (fileInputRef.current) {

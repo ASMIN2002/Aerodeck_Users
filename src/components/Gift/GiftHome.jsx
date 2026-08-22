@@ -10,7 +10,8 @@ function GiftHome({
     gifts,
     onCategoryClick,
     onOpenDetails,
-    onOpenAllGifts
+    onOpenAllGifts,
+    onOpenAllGiftCategories
 
 }) {
     const [activeOfferIndex, setActiveOfferIndex] = useState(0);
@@ -120,48 +121,44 @@ function GiftHome({
                         {user?.full_name?.split(" ")[0]}, still you are looking for this ?
                     </h3>
 
+                    <button
+                        type="button"
+                        onClick={onOpenAllGiftCategories}
+                    >
+                        View All
+                    </button>
+
                 </div>
 
 
                 <div className="gift-category-scroll">
 
-                    {
-                        categories.map((category) => {
+                    {categories.map((item) => (
 
-                            const categoryGift = gifts.find(
-                                gift => gift.gift_category === category
-                            );
+                        <button
+                            key={item.catid}
+                            className="gift-category-box"
+                            onClick={() =>
+                                onCategoryClick(item.category)
+                            }
+                        >
 
-                            return (
+                            <div className="gift-category-icon">
 
-                                <button
-                                    key={category}
-                                    className="gift-category-box"
-                                    onClick={() => onCategoryClick(category)}
-                                >
+                                <img
+                                    src={item.image}
+                                    alt={item.category}
+                                />
 
-                                    <div className="gift-category-icon">
+                            </div>
 
-                                        <img
-                                            src={categoryGift?.gift_image1}
-                                            alt={categoryGift?.gift_name || category}
-                                        />
+                            <span>
+                                {item.category}
+                            </span>
 
-                                    </div>
+                        </button>
 
-                                    <span>
-                                        {categoryGift?.gift_name || category}
-                                    </span>
-                                    <strong>
-                                        View {categoryGift?.gift_category}
-                                    </strong>
-
-                                </button>
-
-                            );
-
-                        })
-                    }
+                    ))}
 
                 </div>
 

@@ -4,7 +4,6 @@ import { API } from "../../services/api";
 import "../../styles/Home.css";
 
 import Header from "../../components/Header/Header";
-import Address from "../../components/Address/Address";
 import Search from "../../components/Search/Search";
 import Cards from "../../components/Cards/Cards";
 import Gift from "../../components/Gift/Gift";
@@ -64,7 +63,7 @@ function Home({
     const [categories, setCategories] = useState([]);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [selectedBottomTab, setSelectedBottomTab] = useState("Home");
+    const [selectedBottomTab, setSelectedBottomTab] = useState("Premium");
     const [profilePage, setProfilePage] = useState("profile");
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -79,6 +78,7 @@ function Home({
     const [giftSuggestionsData, setGiftSuggestionsData] = useState([]);
     const [shopSuggestionsData, setShopSuggestionsData] = useState([]);
     const [premiumSuggestionsData, setPremiumSuggestionsData] = useState([]);
+    const [profileImageRefresh, setProfileImageRefresh] = useState(0);
 
     useEffect(() => {
 
@@ -204,35 +204,30 @@ function Home({
     return (
 
         <div className="home-container">
-            <Header
-                selectedMenu={selectedMenu}
-                setSelectedMenu={setSelectedMenu}
-                isMenuOpen={isMenuOpen}
-                setIsMenuOpen={setIsMenuOpen}
-                selectedBottomTab={selectedBottomTab}
-                cartCount={cartCount}
-                isDetailsOpen={isDetailsOpen}
-                closeDetails={handleCloseDetails}
-                userId={user?.user_id}
-                onOpenCart={() => {
-                    setIsDetailsOpen(false);
-                    setSelectedProduct(null);
-                    setDetailsPage("details");
-                    setSelectedBottomTab("Profile");
-                    setProfilePage("cart");
-                }}
-            />
             {
-                !isDetailsOpen &&
-                (selectedBottomTab === "Home" ||
-                    selectedBottomTab === "Premium") &&
-                <Address
-                    setProfilePage={setProfilePage}
+                selectedBottomTab !== "Profile" &&
+
+                <Header
+                    selectedMenu={selectedMenu}
+                    setSelectedMenu={setSelectedMenu}
+                    isMenuOpen={isMenuOpen}
                     setSelectedBottomTab={setSelectedBottomTab}
-                    navigateWithLoading={navigateWithLoading}
+                    setIsMenuOpen={setIsMenuOpen}
+                    selectedBottomTab={selectedBottomTab}
+                    cartCount={cartCount}
+                    isDetailsOpen={isDetailsOpen}
+                    closeDetails={handleCloseDetails}
+                    userId={user?.user_id}
+                    onOpenCart={() => {
+                        setIsDetailsOpen(false);
+                        setSelectedProduct(null);
+                        setDetailsPage("details");
+                        setSelectedBottomTab("Profile");
+                        setProfilePage("cart");
+                    }}
                 />
             }
-
+           
             {
                 !isDetailsOpen &&
 
@@ -429,6 +424,7 @@ function Home({
 
                     <Profile
                         key={profilePage + "-" + (user?.user_id || "")}
+                        user={user}
                         profile={profile}
                         setProfile={setProfile}
                         setPage={setPage}
@@ -473,7 +469,7 @@ function Home({
                 }
                 {
                     !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
+                    selectedBottomTab === "Cart" &&
                     profilePage === "cart" &&
 
                     <MyCart
@@ -628,8 +624,11 @@ function Home({
             </div>
 
             <BottomNav
+                user={user}
+                profileImageRefresh={profileImageRefresh}
                 selectedBottomTab={selectedBottomTab}
                 setSelectedBottomTab={setSelectedBottomTab}
+                setSelectedMenu={setSelectedMenu}
                 isDetailsOpen={isDetailsOpen}
                 closeDetails={handleCloseDetails}
                 setProfilePage={setProfilePage}

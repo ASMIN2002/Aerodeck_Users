@@ -4,6 +4,7 @@ import GiftCard from "../Gift/GiftCard";
 import GiftHome from "./GiftHome";
 import GiftCategory from "./GiftCategory";
 import AllGifts from "./AllGifts";
+import ALLGiftCategories from "./ALLGiftCategories";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
@@ -29,6 +30,8 @@ function Gift({
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+    const [allGiftCategoriesPage, setAllGiftCategoriesPage] =
+        useState(false);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [showLoading, setShowLoading] = useState(true);
     const showToast = (message, type = "success") => {
@@ -642,8 +645,28 @@ function Gift({
 
     };
 
+
     useEffect(() => {
 
+        async function loadCategories() {
+            try {
+                const response = await fetch(
+                    `${API}/api/category`
+                );
+                const data = await response.json();
+
+                if (data.success) {
+                    const giftCategories = data.data.filter(
+                        item =>
+                            String(item.catname).toUpperCase() === "GIFT"
+                    );
+
+                    setCategories(giftCategories);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
         async function loadProducts() {
 
             try {
@@ -657,15 +680,6 @@ function Gift({
                     setProducts(data.data);
 
                     setSuggestionData(data.data);
-
-                    setCategories([
-                        ...new Set(
-                            data.data
-                                .map(item => item.gift_category)
-                                .filter(Boolean)
-                        )
-                    ]);
-
                 }
 
             }
@@ -771,10 +785,10 @@ function Gift({
         }
 
         loadProducts();
+        loadCategories();
         loadWishlist();
         loadLikes();
         loadCart();
-
     }, [sessionToken]);
 
     const filteredGifts = gifts.filter((gift) => {
@@ -906,7 +920,29 @@ function Gift({
                 )
             }
             {
-                allGiftsPage ? (
+                allGiftCategoriesPage ? (
+
+                    <ALLGiftCategories
+
+                        categories={categories}
+
+                        onBack={() => {
+                            setAllGiftCategoriesPage(false);
+                        }}
+
+                        onCategoryClick={(category) => {
+
+                            setSelectedGiftCategory(category);
+
+                            setAllGiftCategoriesPage(false);
+
+                            setGiftCategoryPage(true);
+
+                        }}
+
+                    />
+
+                ) : allGiftsPage ? (
 
                     <AllGifts
                         gifts={finalGifts}
@@ -932,27 +968,24 @@ function Gift({
                 ) : giftCategoryPage ? (
 
                     <GiftCategory
-
                         category={selectedGiftCategory}
-
                         gifts={finalGifts}
+                        categories={categories}
+
+                        onCategoryChange={(category) => {
+                            setSelectedGiftCategory(category);
+                        }}
 
                         onBack={() => {
-
                             setSelectedCategory(null);
-
                             setSelectedGiftCategory(null);
-
                             setGiftCategoryPage(false);
-
                         }}
 
                         onOpenDetails={onOpenDetails}
 
                         onSave={handleSave}
-
                         onLike={handleLike}
-
                         onAddToCart={handleAddToCart}
 
                         onIncreaseQuantity={handleIncreaseQuantity}
@@ -961,7 +994,6 @@ function Gift({
                         savedProducts={savedProducts}
                         likedProducts={likedProducts}
                         cartProducts={cartProducts}
-
                     />
 
                 ) : isSearching ? (
@@ -1041,12 +1073,13 @@ function Gift({
 
                         onCategoryClick={(category) => {
 
-                            setSelectedCategory(category);
-
                             setSelectedGiftCategory(category);
 
                             setGiftCategoryPage(true);
 
+                        }}
+                        onOpenAllGiftCategories={() => {
+                            setAllGiftCategoriesPage(true);
                         }}
 
                         onOpenDetails={onOpenDetails}
