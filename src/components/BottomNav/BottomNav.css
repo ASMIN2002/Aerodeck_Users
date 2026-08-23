@@ -29,6 +29,7 @@
     color: #7d8795;
     transition: .25s;
     -webkit-tap-highlight-color: transparent;
+    padding: 2px;
 }
 
 .bn-icon {

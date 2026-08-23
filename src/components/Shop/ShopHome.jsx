@@ -255,7 +255,7 @@ function ShopHome({
                             ?.split(" ")[0]
                             ?.toLowerCase()
                             .replace(/^./, char => char.toUpperCase())
-                        }, still you are looking for this ?
+                        }, Best products for you
                     </h3>
 
                 </div>
@@ -305,6 +305,13 @@ function ShopHome({
                     <h4>
                         Suggested For You
                     </h4>
+                    <button
+                        type="button"
+                        onClick={onOpenAllShops}
+                        className="gift-all-button"
+                    >
+                        →
+                    </button>
 
                 </div>
 
@@ -473,20 +480,27 @@ function ShopHome({
                 </div>
             </section>
 
-            <div className="shop-random-products">
-                {randomShops.map((shop) => (
+            <section>
 
-                    <ShopCard
-                        key={shop.shop_id}
-                        product={shop}
-                        onOpenDetails={() =>
-                            onOpenDetails(shop, "shop")
-                        }
-                    />
+                <div className="rendomhead">
+                    <h3>Related Products</h3>
+                </div>
+                <div className="shop-random-products">
 
-                ))}
+                    {randomShops.map((shop) => (
 
-            </div>
+                        <ShopCard
+                            key={shop.shop_id}
+                            product={shop}
+                            onOpenDetails={() =>
+                                onOpenDetails(shop, "shop")
+                            }
+                        />
+
+                    ))}
+
+                </div>
+            </section>
         </div>
 
     );

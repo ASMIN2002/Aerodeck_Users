@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { API } from "../../services/api";
 
 import "../../styles/Home.css";
 
 import Header from "../../components/Header/Header";
+import HeaderBack from "../../components/Header/HeaderBack";
 import Search from "../../components/Search/Search";
 import Cards from "../../components/Cards/Cards";
 import Gift from "../../components/Gift/Gift";
@@ -42,11 +43,26 @@ function Home({
     cartCount,
     setCartCount
 }) {
+
     const [selectedMenu, setSelectedMenu] = useState(() => {
-
-        return localStorage.getItem("selectedMenu") || "Cards";
-
+        return localStorage.getItem("selectedMenu") || "Shop";
     });
+
+    const [selectedBottomTab, setSelectedBottomTab] = useState(() => {
+        const savedTab = localStorage.getItem("selectedBottomTab");
+
+        if (
+            savedTab === "Premium" ||
+            savedTab === "Offers" ||
+            savedTab === "Cart" ||
+            savedTab === "Profile"
+        ) {
+            return savedTab;
+        }
+
+        return null;
+    });
+
     const [search, setSearch] = useState("");
 
     const [filter, setFilter] = useState({
@@ -63,7 +79,6 @@ function Home({
     const [categories, setCategories] = useState([]);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [selectedBottomTab, setSelectedBottomTab] = useState("Premium");
     const [profilePage, setProfilePage] = useState("profile");
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -87,9 +102,12 @@ function Home({
     }, [selectedMenu]);
 
     useEffect(() => {
+        if (selectedBottomTab === null) {
+            localStorage.removeItem("selectedBottomTab");
+            return;
+        }
 
         localStorage.setItem("selectedBottomTab", selectedBottomTab);
-
     }, [selectedBottomTab]);
 
     const handleLogout = async () => {
@@ -144,6 +162,7 @@ function Home({
 
     };
 
+
     const handleCloseDetails = () => {
 
         setDetailsPage("details");
@@ -180,7 +199,201 @@ function Home({
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
     const [selectedInvoice, setSelectedInvoice] = useState(null);
+    const [allShopCategoriesPage, setAllShopCategoriesPage] = useState(false);
+    const [allGiftCategoriesPage, setAllGiftCategoriesPage] = useState(false);
+    const [allShopsPage, setAllShopsPage] = useState(false);
+    const [allGiftsPage, setAllGiftsPage] = useState(false);
 
+    const isHandlingBackRef = useRef(false);
+    useEffect(() => {
+
+        const handleBrowserBack = (event) => {
+
+            window.history.pushState(
+                null,
+                "",
+                window.location.href
+            );
+
+            if (isHandlingBackRef.current) {
+                return;
+            }
+
+            isHandlingBackRef.current = true;
+
+            // 1. Details → previous page
+            if (isDetailsOpen) {
+                handleCloseDetails();
+                isHandlingBackRef.current = false;
+                return;
+            }
+
+            if (allShopCategoriesPage) {
+                setAllShopCategoriesPage(false);
+                isHandlingBackRef.current = false;
+                return;
+            }
+            // Shop → All Shops → Shop main
+            if (allShopsPage) {
+                setAllShopsPage(false);
+                isHandlingBackRef.current = false;
+                return;
+            }
+            // 2. Shop Category → Shop main
+            if (shopCategoryPage) {
+                setShopCategoryPage(false);
+                setSelectedShopCategory(null);
+                isHandlingBackRef.current = false;
+                return;
+            }
+
+            if (allGiftCategoriesPage) {
+                setAllGiftCategoriesPage(false);
+                isHandlingBackRef.current = false;
+                return;
+            }
+            // Gifts → All Gifts → Gifts main
+            if (allGiftsPage) {
+                setAllGiftsPage(false);
+                isHandlingBackRef.current = false;
+                return;
+            }
+
+            // 3. Gift Category → Gifts main
+            if (giftCategoryPage) {
+                setGiftCategoryPage(false);
+                setSelectedGiftCategory(null);
+                isHandlingBackRef.current = false;
+                return;
+            }
+            // 3. Cart → Profile
+            if (selectedBottomTab === "Cart") {
+                setSelectedBottomTab("Profile");
+                setProfilePage("profile");
+                isHandlingBackRef.current = false;
+                return;
+            }
+
+            // 4. Profile sub-page → Profile main
+            if (
+                selectedBottomTab === "Profile" &&
+                profilePage !== "profile"
+            ) {
+                setProfilePage("profile");
+                isHandlingBackRef.current = false;
+                return;
+            }
+
+            // 5. Main page → app ke bahar nahi jaane do
+            isHandlingBackRef.current = false;
+        };
+
+        window.history.pushState(
+            null,
+            "",
+            window.location.href
+        );
+
+        window.addEventListener(
+            "popstate",
+            handleBrowserBack
+        );
+
+        return () => {
+            window.removeEventListener(
+                "popstate",
+                handleBrowserBack
+            );
+        };
+
+    }, [
+        isDetailsOpen,
+        allShopCategoriesPage,
+        allShopsPage,
+        shopCategoryPage,
+        allGiftCategoriesPage,
+        allGiftsPage,
+        giftCategoryPage,
+        selectedBottomTab,
+        profilePage,
+        detailsBackPage
+    ]);
+    const handleAppBack = () => {
+
+        // Details
+        if (isDetailsOpen) {
+            handleCloseDetails();
+            return;
+        }
+
+        // Shop → All Categories → Shop
+        if (allShopCategoriesPage) {
+            setAllShopCategoriesPage(false);
+            return;
+        }
+
+        // Shop → All Shops → Shop
+        if (allShopsPage) {
+            setAllShopsPage(false);
+            return;
+        }
+
+        // Shop → Category → Shop
+        if (shopCategoryPage) {
+            setShopCategoryPage(false);
+            setSelectedShopCategory(null);
+            return;
+        }
+
+        // Gifts → All Categories → Gifts
+        if (allGiftCategoriesPage) {
+            setAllGiftCategoriesPage(false);
+            return;
+        }
+
+        // Gifts → All Gifts → Gifts
+        if (allGiftsPage) {
+            setAllGiftsPage(false);
+            return;
+        }
+
+        // Gifts → Category → Gifts
+        if (giftCategoryPage) {
+            setGiftCategoryPage(false);
+            setSelectedGiftCategory(null);
+            return;
+        }
+
+        // Cart → Profile
+        if (selectedBottomTab === "Cart") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("profile");
+            return;
+        }
+
+        // Profile internal page → Profile
+        if (
+            selectedBottomTab === "Profile" &&
+            profilePage !== "profile"
+        ) {
+            setProfilePage("profile");
+            return;
+        }
+    };
+    const showMainHeader =
+        !isDetailsOpen &&
+        (
+            (
+                selectedBottomTab === null &&
+                (
+                    selectedMenu === "Shop" ||
+                    selectedMenu === "Cards" ||
+                    selectedMenu === "Gifts"
+                )
+            ) ||
+            selectedBottomTab === "Premium" ||
+            selectedBottomTab === "Offers"
+        );
     const [profile, setProfile] = useState(null);
     useEffect(() => {
         async function loadProfile() {
@@ -205,40 +418,45 @@ function Home({
 
         <div className="home-container">
             {
-                selectedBottomTab !== "Profile" &&
-
-                <Header
-                    selectedMenu={selectedMenu}
-                    setSelectedMenu={setSelectedMenu}
-                    isMenuOpen={isMenuOpen}
-                    setSelectedBottomTab={setSelectedBottomTab}
-                    setIsMenuOpen={setIsMenuOpen}
-                    selectedBottomTab={selectedBottomTab}
-                    cartCount={cartCount}
-                    isDetailsOpen={isDetailsOpen}
-                    closeDetails={handleCloseDetails}
-                    userId={user?.user_id}
-                    onOpenCart={() => {
-                        setIsDetailsOpen(false);
-                        setSelectedProduct(null);
-                        setDetailsPage("details");
-                        setSelectedBottomTab("Profile");
-                        setProfilePage("cart");
-                    }}
-                />
+                showMainHeader ? (
+                    <Header
+                        selectedMenu={selectedMenu}
+                        setSelectedMenu={setSelectedMenu}
+                        isMenuOpen={isMenuOpen}
+                        setSelectedBottomTab={setSelectedBottomTab}
+                        setIsMenuOpen={setIsMenuOpen}
+                        selectedBottomTab={selectedBottomTab}
+                        cartCount={cartCount}
+                        isDetailsOpen={isDetailsOpen}
+                        closeDetails={handleCloseDetails}
+                        userId={user?.user_id}
+                        onOpenCart={() => {
+                            setIsDetailsOpen(false);
+                            setSelectedProduct(null);
+                            setDetailsPage("details");
+                            setSelectedBottomTab("Profile");
+                            setProfilePage("cart");
+                        }}
+                    />
+                ) : (
+                    <HeaderBack
+                        title="Back"
+                        onBack={handleAppBack}
+                    />
+                )
             }
-           
+
             {
                 !isDetailsOpen &&
 
-                (selectedBottomTab === "Home" ||
+                (selectedBottomTab === null ||
 
                     selectedBottomTab === "Premium") &&
 
                 <Search
 
                     selectedMenu={
-                        selectedBottomTab === "Home"
+                        selectedBottomTab === null
                             ? selectedMenu
                             : "Premium"
                     }
@@ -337,7 +555,7 @@ function Home({
 
                 {
                     !isDetailsOpen &&
-                    selectedBottomTab === "Home" &&
+                    selectedBottomTab === null &&
 
 
 
@@ -374,6 +592,10 @@ function Home({
                                 setGiftCategoryPage={setGiftCategoryPage}
                                 selectedGiftCategory={selectedGiftCategory}
                                 setSelectedGiftCategory={setSelectedGiftCategory}
+                                allGiftCategoriesPage={allGiftCategoriesPage}
+                                setAllGiftCategoriesPage={setAllGiftCategoriesPage}
+                                allGiftsPage={allGiftsPage}
+                                setAllGiftsPage={setAllGiftsPage}
                                 setSuggestionData={setGiftSuggestionsData}
                             />
 
@@ -391,6 +613,10 @@ function Home({
                                 setShopCategoryPage={setShopCategoryPage}
                                 selectedShopCategory={selectedShopCategory}
                                 setSelectedShopCategory={setSelectedShopCategory}
+                                allShopCategoriesPage={allShopCategoriesPage}
+                                setAllShopCategoriesPage={setAllShopCategoriesPage}
+                                allShopsPage={allShopsPage}
+                                setAllShopsPage={setAllShopsPage}
                                 setSuggestionData={setShopSuggestionsData}
                             />
                         }

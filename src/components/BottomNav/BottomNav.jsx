@@ -4,7 +4,6 @@ import { API } from "../../services/api";
 import NODP from "../../assets/NODP.png";
 
 function BottomNav({
-    user,
     profileImageRefresh,
     selectedBottomTab,
     setSelectedBottomTab,

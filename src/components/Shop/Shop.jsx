@@ -17,7 +17,11 @@ function Shop({
     shopCategoryPage,
     setShopCategoryPage,
     selectedShopCategory,
+    allShopCategoriesPage,
+    setAllShopCategoriesPage,
     setSelectedShopCategory,
+    allShopsPage,
+    setAllShopsPage,
     setSuggestionData
 }) {
 
@@ -25,11 +29,9 @@ function Shop({
 
     const [shops, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [allShopsPage, setAllShopsPage] = useState(false);
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
-    const [allShopCategoriesPage, setAllShopCategoriesPage] = useState(false);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
     const [showLoading, setShowLoading] = useState(true);

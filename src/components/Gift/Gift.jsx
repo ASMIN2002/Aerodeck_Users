@@ -17,7 +17,11 @@ function Gift({
     giftCategoryPage,
     setGiftCategoryPage,
     selectedGiftCategory,
+    allGiftCategoriesPage,
+    setAllGiftCategoriesPage,
     setSelectedGiftCategory,
+    allGiftsPage,
+    setAllGiftsPage,
     setSuggestionData
 
 }) {
@@ -25,13 +29,10 @@ function Gift({
     const [gifts, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [categories, setCategories] = useState([]);
-    const [allGiftsPage, setAllGiftsPage] = useState(false);
     const [savedProducts, setSavedProducts] = useState(new Set());
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
-    const [allGiftCategoriesPage, setAllGiftCategoriesPage] =
-        useState(false);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [showLoading, setShowLoading] = useState(true);
     const showToast = (message, type = "success") => {

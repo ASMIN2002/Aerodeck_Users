@@ -42,7 +42,7 @@ function Header({
             closeDetails();
         }
 
-        setSelectedBottomTab("Home");
+        setSelectedBottomTab(null);
         setSelectedMenu(menu);
         setIsMenuOpen(false);
     };
