@@ -7,7 +7,6 @@
 .mycart-page {
    width: 100%;
    min-height: 100dvh;
-   background: #f6f8fc;
    display: flex;
    flex-direction: column;
 }

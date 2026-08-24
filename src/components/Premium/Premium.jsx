@@ -835,68 +835,71 @@ function Premium({
     }
 
     return (
-
-
-        <section className="cds-section">
-            {
-                showLoading && (
-                    <Loading
-                        duration={500}
-                        text="Loading Premium Cards..."
-                        onComplete={() => setShowLoading(false)}
-                    />
-                )
-            }
-            <div className="cds-grid">
-
+        <>
+            <header className="headallp">
+                HEEPIT PREMIUM COLLECTIONS
+            </header>
+            <section className="cds-section">
                 {
-                    finalPremiums.map((product) => (
-
-                        <PremiumCard
-                            key={product.premium_id}
-                            product={product}
-                            isSaved={savedProducts.has(String(product.premium_id))}
-                            isLiked={likedProducts.has(String(product.premium_id))}
-                            isAddedToCart={
-                                cartProducts.some(
-
-                                    item => String(item.product_id) === String(product.premium_id)
-
-                                )
-                            }
-                            cartQuantity={
-                                cartProducts.find(
-
-                                    item => String(item.product_id) === String(product.premium_id)
-
-                                )?.quantity || 0
-                            }
-                            onSave={handleSave}
-                            onLike={handleLike}
-                            onAddToCart={handleAddToCart}
-                            onIncreaseQuantity={handleIncreaseQuantity}
-                            onDecreaseQuantity={handleDecreaseQuantity}
-
-                            onOpenDetails={() =>
-                                onOpenDetails(product, "premium")
-                            }
+                    showLoading && (
+                        <Loading
+                            duration={500}
+                            text="Loading Premium Cards..."
+                            onComplete={() => setShowLoading(false)}
                         />
-
-                    ))
+                    )
                 }
+                <div className="cds-grid">
 
-            </div>
-            <Toast
+                    {
+                        finalPremiums.map((product) => (
 
-                show={toast.show}
+                            <PremiumCard
+                                key={product.premium_id}
+                                product={product}
+                                isSaved={savedProducts.has(String(product.premium_id))}
+                                isLiked={likedProducts.has(String(product.premium_id))}
+                                isAddedToCart={
+                                    cartProducts.some(
 
-                message={toast.message}
+                                        item => String(item.product_id) === String(product.premium_id)
 
-                type={toast.type}
+                                    )
+                                }
+                                cartQuantity={
+                                    cartProducts.find(
 
-            />
+                                        item => String(item.product_id) === String(product.premium_id)
 
-        </section>
+                                    )?.quantity || 0
+                                }
+                                onSave={handleSave}
+                                onLike={handleLike}
+                                onAddToCart={handleAddToCart}
+                                onIncreaseQuantity={handleIncreaseQuantity}
+                                onDecreaseQuantity={handleDecreaseQuantity}
+
+                                onOpenDetails={() =>
+                                    onOpenDetails(product, "premium")
+                                }
+                            />
+
+                        ))
+                    }
+
+                </div>
+                <Toast
+
+                    show={toast.show}
+
+                    message={toast.message}
+
+                    type={toast.type}
+
+                />
+
+            </section>
+        </>
 
     );
 

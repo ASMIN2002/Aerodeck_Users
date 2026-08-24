@@ -149,6 +149,9 @@ function Offer() {
     return (
 
         <div className="offer-container">
+            <header className="headall">
+                HEEPIT MEGA OFFERS
+            </header>
 
             {
 

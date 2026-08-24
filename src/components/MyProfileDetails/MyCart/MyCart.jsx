@@ -260,6 +260,9 @@ function MyCart({
     return (
 
         <div className="mycart-page">
+            <header className="headall">
+                HEEPIT
+            </header>
 
             <div className="mycart-topbar">
                 <Address
@@ -268,11 +271,11 @@ function MyCart({
                 />
             </div>
 
-            <CartTabs
+            {/* <CartTabs
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 setProfilePage={setProfilePage}
-            />
+            /> */}
             <div className="mycart-content">
 
                 {activeTab === "products" ? (

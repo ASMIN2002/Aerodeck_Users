@@ -3718,3 +3718,13 @@ font-size:28px;
     }
 
 }
+
+.headall{
+    color: white;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    background: red;
+    padding: 4px;
+    border-radius: 10px;
+}

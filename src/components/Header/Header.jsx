@@ -41,9 +41,10 @@ function Header({
         if (isDetailsOpen) {
             closeDetails();
         }
+        setSelectedBottomTab("Home");
 
-        setSelectedBottomTab(null);
         setSelectedMenu(menu);
+
         setIsMenuOpen(false);
     };
 

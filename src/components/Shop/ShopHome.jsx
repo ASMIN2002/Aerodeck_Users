@@ -310,7 +310,7 @@ function ShopHome({
                         onClick={onOpenAllShops}
                         className="gift-all-button"
                     >
-                        →
+                       View All
                     </button>
 
                 </div>

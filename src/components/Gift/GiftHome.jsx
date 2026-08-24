@@ -123,7 +123,7 @@ function GiftHome({
 
                     <button
                         type="button"
-                        onClick={onOpenAllGiftCategories}
+                        onClick={onOpenAllGiftCategories} className="viewALL"
                     >
                         View All
                     </button>
@@ -178,7 +178,7 @@ function GiftHome({
                         onClick={onOpenAllGifts}
                         className="gift-all-button"
                     >
-                        →
+                        View All
                     </button>
 
                 </div>

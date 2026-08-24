@@ -44,9 +44,7 @@ function Home({
     setCartCount
 }) {
 
-    const [selectedMenu, setSelectedMenu] = useState(() => {
-        return localStorage.getItem("selectedMenu") || "Shop";
-    });
+    const [selectedMenu, setSelectedMenu] = useState("Shop");
 
     const [selectedBottomTab, setSelectedBottomTab] = useState(() => {
         const savedTab = localStorage.getItem("selectedBottomTab");
@@ -308,12 +306,6 @@ function Home({
 
     }, [
         isDetailsOpen,
-        allShopCategoriesPage,
-        allShopsPage,
-        shopCategoryPage,
-        allGiftCategoriesPage,
-        allGiftsPage,
-        giftCategoryPage,
         selectedBottomTab,
         profilePage,
         detailsBackPage
@@ -382,18 +374,13 @@ function Home({
     };
     const showMainHeader =
         !isDetailsOpen &&
-        (
-            (
-                selectedBottomTab === null &&
-                (
-                    selectedMenu === "Shop" ||
-                    selectedMenu === "Cards" ||
-                    selectedMenu === "Gifts"
-                )
-            ) ||
-            selectedBottomTab === "Premium" ||
-            selectedBottomTab === "Offers"
-        );
+        selectedBottomTab === "Home" &&
+        !allShopCategoriesPage &&
+        !allShopsPage &&
+        !allGiftCategoriesPage &&
+        !allGiftsPage &&
+        !shopCategoryPage &&
+        !giftCategoryPage;
     const [profile, setProfile] = useState(null);
     useEffect(() => {
         async function loadProfile() {
@@ -439,10 +426,20 @@ function Home({
                         }}
                     />
                 ) : (
-                    <HeaderBack
-                        title="Back"
-                        onBack={handleAppBack}
-                    />
+                    (
+                        isDetailsOpen ||
+                        allShopCategoriesPage ||
+                        allShopsPage ||
+                        shopCategoryPage ||
+                        allGiftCategoriesPage ||
+                        allGiftsPage ||
+                        giftCategoryPage
+                    ) && (
+                        <HeaderBack
+                            title="Back"
+                            onBack={handleAppBack}
+                        />
+                    )
                 )
             }
 
@@ -456,7 +453,7 @@ function Home({
                 <Search
 
                     selectedMenu={
-                        selectedBottomTab === null
+                        selectedBottomTab === "Home"
                             ? selectedMenu
                             : "Premium"
                     }
@@ -552,13 +549,9 @@ function Home({
                 }
 
 
-
                 {
                     !isDetailsOpen &&
-                    selectedBottomTab === null &&
-
-
-
+                    selectedBottomTab === "Home" &&
                     <>
 
                         {

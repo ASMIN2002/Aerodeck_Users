@@ -264,15 +264,10 @@
 }
 
 .gift-all-button {
-    width: 39px;
-    height: 18px;
-    border-radius: 999px;
-    font-size: 11px;
-    cursor: pointer;
-    font-weight: bold;
-    border: 1px solid black;
-    color: rgb(255, 255, 255);
-    background: linear-gradient(50deg, rgb(7, 165, 233), rgb(192, 146, 146));
+    padding: 3px;
+    background: none;
+    border: none;
+    color: aqua;
 }
 
 .gift-suggested-image {

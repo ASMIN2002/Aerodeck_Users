@@ -1,7 +1,6 @@
 import "./BottomNav.css";
-import { useEffect, useState } from "react";
-import { API } from "../../services/api";
-import NODP from "../../assets/NODP.png";
+import { FiGift, FiHome, FiStar, FiShoppingCart, FiUser } from "react-icons/fi";
+
 
 function BottomNav({
     profileImageRefresh,
@@ -11,98 +10,33 @@ function BottomNav({
     isDetailsOpen,
     closeDetails,
     setProfilePage,
-    navigateWithLoading
 }) {
 
-    const [profileImage, setProfileImage] = useState("");
-
-    useEffect(() => {
-
-        async function loadProfileImage() {
-
-            try {
-
-                const response = await fetch(
-                    `${API}/api/user/profile`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            session_token:
-                                localStorage.getItem("session_token")
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (data.success) {
-                    setProfileImage(data.user?.profile_image || "");
-                }
-
-            } catch (err) {
-                console.error("BOTTOM NAV PROFILE ERROR:", err);
-            }
-
-        }
-
-        loadProfileImage();
-
-    }, [profileImageRefresh]);
-    useEffect(() => {
-
-        const refreshProfileImage = () => {
-            setProfileImage("");
-
-            // Database se latest DP dobara fetch karne ke liye
-            fetch(
-                `${API}/api/user/profile`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        session_token:
-                            localStorage.getItem("session_token")
-                    })
-                }
-            )
-                .then(response => response.json())
-                .then(data => {
-
-                    if (data.success) {
-                        setProfileImage(
-                            data.user?.profile_image || ""
-                        );
-                    }
-
-                })
-                .catch(err => {
-                    console.error(
-                        "PROFILE IMAGE REFRESH ERROR:",
-                        err
-                    );
-                });
-        };
-
-        window.addEventListener(
-            "profileImageUpdated",
-            refreshProfileImage
-        );
-
-        return () => {
-            window.removeEventListener(
-                "profileImageUpdated",
-                refreshProfileImage
-            );
-        };
-
-    }, []);
     return (
         <nav className="bn-nav">
+            <button
+                className={`bn-item ${selectedBottomTab === "Home" ? "bn-active" : ""
+                    }`}
+                onClick={() => {
+
+                    if (isDetailsOpen) {
+                        closeDetails();
+                    }
+
+                    setSelectedMenu("Shop");
+                    setProfilePage("profile");
+                    setSelectedBottomTab("Home");
+
+                }}
+            >
+                <span className="bn-icon">
+                    <FiHome />
+                </span>
+
+                <span className="bn-text">
+                    Home
+                </span>
+            </button>
             <button
                 className={`bn-item ${selectedBottomTab === "Offers"
                     ? "bn-active"
@@ -121,7 +55,7 @@ function BottomNav({
                 }}
             >
                 <span className="bn-icon">
-                    🎁
+                    <FiGift />
                 </span>
 
                 <span className="bn-text">
@@ -144,7 +78,7 @@ function BottomNav({
                 }}
             >
                 <span className="bn-icon">
-                    👑
+                    <FiStar />
                 </span>
                 <span className="bn-text">
                     Premium
@@ -169,16 +103,16 @@ function BottomNav({
                 }}
             >
                 <span className="bn-icon">
-                    🛒
+                    <FiShoppingCart />
                 </span>
 
                 <span className="bn-text">
                     Cart
                 </span>
             </button>
-
             <button
-                className={`bn-item ${selectedBottomTab === "Profile" ? "bn-active" : ""}`}
+                className={`bn-item ${selectedBottomTab === "Profile" ? "bn-active" : ""
+                    }`}
                 onClick={() => {
 
                     if (isDetailsOpen) {
@@ -186,28 +120,15 @@ function BottomNav({
                     }
 
                     setSelectedMenu(null);
-
-                    navigateWithLoading(
-                        () => {
-                            setProfilePage("profile");
-                            setSelectedBottomTab("Profile");
-                        },
-                        "Loading Profile...",
-                        10
-                    );
+                    setProfilePage("profile");
+                    setSelectedBottomTab("Profile");
 
                 }}
             >
-                <span className="bn-icon bn-profile-icon">
-                    <img
-                        src={profileImage || NODP}
-                        alt="Profile"
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = NODP;
-                        }}
-                    />
+                <span className="bn-icon">
+                    <FiUser />
                 </span>
+
                 <span className="bn-text">
                     Profile
                 </span>
