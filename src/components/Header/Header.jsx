@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 import "./Header.css";
 
@@ -12,6 +13,7 @@ function Header({
     userId
 }) {
     const dropdownRef = useRef(null);
+    const navigate = useNavigate();
     const [version, setVersion] = useState("");
 
     useEffect(() => {
@@ -78,7 +80,10 @@ function Header({
                             ? "hd-tab-active"
                             : ""
                             }`}
-                        onClick={() => handleTabClick("Shop")}
+                        onClick={() => {
+                            handleTabClick("Shop");
+                            navigate("/home/shop");
+                        }}
                     >
                         Products
                     </button>
@@ -90,7 +95,10 @@ function Header({
                             ? "hd-tab-active"
                             : ""
                             }`}
-                        onClick={() => handleTabClick("Gifts")}
+                        onClick={() => {
+                            handleTabClick("Gifts");
+                            navigate("/home/gifts");
+                        }}
                     >
                         Gifts
                     </button>
@@ -102,7 +110,10 @@ function Header({
                             ? "hd-tab-active"
                             : ""
                             }`}
-                        onClick={() => handleTabClick("Cards")}
+                        onClick={() => {
+                            handleTabClick("Cards");
+                            navigate("/home/cards");
+                        }}
                     >
                         Cards
                     </button>

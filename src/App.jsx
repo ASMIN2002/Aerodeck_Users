@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./App.css";
 
@@ -14,6 +15,64 @@ import AppUpdate from "./pages/Update/AppUpdate";
 import { API } from "./services/api";
 
 function App() {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const changePage = (nextPage) => {
+        const routes = {
+            splash: "/",
+            login: "/login",
+            register: "/register",
+            otp: "/otp",
+            home: "/home/shop",
+            appupdate: "/appupdate"
+        };
+        setPage(nextPage);
+        const route = routes[nextPage];
+        if (route && location.pathname !== route) {
+            navigate(route);
+        }
+    };
+
+    useEffect(() => {
+
+        const path = location.pathname;
+
+        if (path === "/") {
+
+            setPage("splash");
+
+        } else if (path === "/login") {
+
+            setPage("login");
+
+        } else if (path === "/register") {
+
+            setPage("register");
+
+        } else if (path === "/otp") {
+
+            setPage("otp");
+
+        } else if (
+            path === "/home/shop" ||
+            path === "/home/gifts" ||
+            path === "/home/cards" ||
+            path.startsWith("/home/shop/product/") ||
+            path.startsWith("/home/gifts/product/") ||
+            path.startsWith("/home/cards/product/")
+        ) {
+
+            setPage("home");
+
+        } else if (path === "/appupdate") {
+
+            setPage("appupdate");
+
+        }
+
+    }, [location.pathname]);
 
     // const [page, setPage] = useState("startup");
     const [page, setPage] = useState("splash");
@@ -279,7 +338,7 @@ function App() {
 
                     if (navigator.onLine) {
 
-                        setPage("login");
+                        changePage("login");
 
                     }
 
@@ -339,14 +398,14 @@ function App() {
             {
                 page === "splash" &&
                 <Splash
-                    setPage={setPage}
+                    setPage={changePage}
                 />
             }
 
             {
                 page === "login" &&
                 <Login
-                    setPage={setPage}
+                    setPage={changePage}
                     setUser={setUser}
                     setAuthMode={setAuthMode}
                 />
@@ -355,7 +414,7 @@ function App() {
             {
                 page === "otp" &&
                 <Otp
-                    setPage={setPage}
+                    setPage={changePage}
                     user={user}
                     setUser={setUser}
                     authMode={authMode}
@@ -366,7 +425,7 @@ function App() {
                 page === "home" &&
                 <Home
                     user={user}
-                    setPage={setPage}
+                    setPage={changePage}
                     navigateWithLoading={navigateWithLoading}
                     cartCount={cartCount}
                     setCartCount={setCartCount}
@@ -381,7 +440,7 @@ function App() {
                     }}
                     onUpdate={() => {
                         setUpdateRequired(false);
-                        setPage("appupdate");
+                        changePage("appupdate");
                     }}
                 />
             }
@@ -392,7 +451,7 @@ function App() {
             {
                 page === "register" &&
                 <Register
-                    setPage={setPage}
+                    setPage={changePage}
                     setAuthMode={setAuthMode}
                 />
             }

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 
 import "../../styles/Home.css";
@@ -43,9 +44,76 @@ function Home({
     cartCount,
     setCartCount
 }) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (location.pathname === "/home/shop") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Shop");
+            setProfilePage("profile");
+        }
+        if (location.pathname === "/home/gifts") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Gifts");
+            setProfilePage("profile");
+        }
+        if (location.pathname === "/home/cards") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Cards");
+            setProfilePage("profile");
+        }
+    }, [location.pathname]);
+
+    useEffect(() => {
+        const parts = location.pathname.split("/");
+        if (
+            parts.length !== 5 ||
+            parts[3] !== "product"
+        ) {
+            return;
+        }
+        const id = parts[4];
+        if (!id) {
+            return;
+        }
+        let type = "";
+        if (parts[1] === "home" && parts[2] === "shop") {
+            type = "products";
+            setSelectedMenu("Shop");
+        }
+        if (parts[1] === "home" && parts[2] === "gifts") {
+            type = "gifts";
+            setSelectedMenu("Gifts");
+        }
+        if (parts[1] === "home" && parts[2] === "cards") {
+            type = "cards";
+            setSelectedMenu("Cards");
+        }
+        if (parts[1] === "home" && parts[2] === "premium") {
+            type = "premium";
+            setSelectedBottomTab("Premium");
+        }
+        if (!type) {
+            return;
+        }
+        setSelectedBottomTab(
+            parts[2] === "premium" ? "Premium" : "Home"
+        );
+        setProfilePage("profile");
+        setSelectedProduct({
+            type,
+            data: {
+                product_id: type === "products" ? id : undefined,
+                gift_id: type === "gifts" ? id : undefined,
+                shop_id: type === "cards" ? id : undefined,
+                premium_id: type === "premium" ? id : undefined
+            }
+        });
+        setDetailsPage("details");
+        setIsDetailsOpen(true);
+    }, [location.pathname]);
 
     const [selectedMenu, setSelectedMenu] = useState("Shop");
-
     const [selectedBottomTab, setSelectedBottomTab] = useState(() => {
         const savedTab = localStorage.getItem("selectedBottomTab");
 
@@ -146,7 +214,8 @@ function Home({
         setDetailsBackPage({
             selectedBottomTab,
             profilePage,
-            selectedMenu
+            selectedMenu,
+            pathname: location.pathname
         });
 
         setDetailsPage("details");
@@ -158,8 +227,14 @@ function Home({
 
         setIsDetailsOpen(true);
 
-    };
+        const id =
+            product.product_id ||
+            product.gift_id ||
+            product.shop_id ||
+            product.premium_id;
 
+        navigate(`${location.pathname}/product/${id}`);
+    };
 
     const handleCloseDetails = () => {
 
@@ -169,20 +244,8 @@ function Home({
 
         setIsDetailsOpen(false);
 
-        if (detailsBackPage) {
-
-            setSelectedBottomTab(
-                detailsBackPage.selectedBottomTab
-            );
-
-            setProfilePage(
-                detailsBackPage.profilePage
-            );
-
-            setSelectedMenu(
-                detailsBackPage.selectedMenu
-            );
-
+        if (detailsBackPage?.pathname) {
+            navigate(detailsBackPage.pathname);
         }
 
     };

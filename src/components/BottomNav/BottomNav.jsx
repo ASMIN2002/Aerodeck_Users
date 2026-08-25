@@ -1,4 +1,5 @@
 import "./BottomNav.css";
+import { useNavigate } from "react-router-dom";
 import { FiGift, FiHome, FiStar, FiShoppingCart, FiUser } from "react-icons/fi";
 
 
@@ -11,6 +12,8 @@ function BottomNav({
     closeDetails,
     setProfilePage,
 }) {
+
+    const navigate = useNavigate();
 
     return (
         <nav className="bn-nav">
@@ -26,6 +29,7 @@ function BottomNav({
                     setSelectedMenu("Shop");
                     setProfilePage("profile");
                     setSelectedBottomTab("Home");
+                    navigate("/home/shop");
 
                 }}
             >
@@ -51,6 +55,7 @@ function BottomNav({
                     setSelectedMenu(null);
                     setProfilePage("profile");
                     setSelectedBottomTab("Offers");
+                    navigate("/offers");
 
                 }}
             >
@@ -74,6 +79,7 @@ function BottomNav({
                     setSelectedMenu(null);
                     setProfilePage("profile");
                     setSelectedBottomTab("Premium");
+                    navigate("/premium");
 
                 }}
             >
@@ -99,6 +105,7 @@ function BottomNav({
                     setSelectedMenu(null);
                     setProfilePage("cart");
                     setSelectedBottomTab("Cart");
+                    navigate("/cart");
 
                 }}
             >
@@ -122,6 +129,7 @@ function BottomNav({
                     setSelectedMenu(null);
                     setProfilePage("profile");
                     setSelectedBottomTab("Profile");
+                    navigate("/profile");
 
                 }}
             >
