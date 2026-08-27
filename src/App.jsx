@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { App as CapacitorApp } from "@capacitor/app";
 
 import "./App.css";
 
@@ -18,6 +19,46 @@ function App() {
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    useEffect(() => {
+
+        const handleBackButton = () => {
+
+            if (window.__heepitInternalBack) {
+
+                const handled =
+                    window.__heepitInternalBack();
+
+                if (handled) {
+                    return;
+                }
+            }
+
+            if (window.history.length > 1) {
+                navigate(-1);
+            } else {
+                CapacitorApp.exitApp();
+            }
+        };
+
+        let listener;
+
+        CapacitorApp.addListener(
+            "backButton",
+            handleBackButton
+        ).then((result) => {
+            listener = result;
+        });
+
+        return () => {
+
+            if (listener) {
+                listener.remove();
+            }
+
+        };
+
+    }, [navigate]);
 
     const changePage = (nextPage) => {
         const routes = {
@@ -64,7 +105,7 @@ function App() {
             path.startsWith("/home/cards/product/")
         ) {
 
-            setPage("home");
+            changePage("home");
 
         } else if (path === "/appupdate") {
 
@@ -73,6 +114,7 @@ function App() {
         }
 
     }, [location.pathname]);
+
 
     // const [page, setPage] = useState("startup");
     const [page, setPage] = useState("splash");

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 
@@ -42,10 +42,72 @@ function Home({
     setPage,
     navigateWithLoading,
     cartCount,
-    setCartCount
+    setCartCount,
+    onAppBack
 }) {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const internalHistoryRef = useRef([]);
+
+    const saveCurrentState = () => ({
+        selectedBottomTab,
+        selectedMenu,
+        profilePage,
+        isDetailsOpen,
+        detailsPage,
+        selectedProduct,
+        shopCategoryPage,
+        selectedShopCategory,
+        giftCategoryPage,
+        selectedGiftCategory,
+        allShopCategoriesPage,
+        allShopsPage,
+        allGiftCategoriesPage,
+        allGiftsPage
+    });
+
+    const pushInternalPage = (update) => {
+        internalHistoryRef.current.push(saveCurrentState());
+        update();
+    };
+
+    const handleInternalBack = useCallback(() => {
+        const previous =
+            internalHistoryRef.current.pop();
+
+        if (!previous) {
+            return false;
+        }
+
+        setSelectedBottomTab(previous.selectedBottomTab);
+        setSelectedMenu(previous.selectedMenu);
+        setProfilePage(previous.profilePage);
+        setIsDetailsOpen(previous.isDetailsOpen);
+        setDetailsPage(previous.detailsPage);
+        setSelectedProduct(previous.selectedProduct);
+        setShopCategoryPage(previous.shopCategoryPage);
+        setSelectedShopCategory(previous.selectedShopCategory);
+        setGiftCategoryPage(previous.giftCategoryPage);
+        setSelectedGiftCategory(previous.selectedGiftCategory);
+        setAllShopCategoriesPage(previous.allShopCategoriesPage);
+        setAllShopsPage(previous.allShopsPage);
+        setAllGiftCategoriesPage(previous.allGiftCategoriesPage);
+        setAllGiftsPage(previous.allGiftsPage);
+
+        return true;
+    }, []);
+
+    useEffect(() => {
+        window.__heepitInternalBack = handleInternalBack;
+
+        return () => {
+            delete window.__heepitInternalBack;
+        };
+    }, [handleInternalBack]);
+    const handleAppBack = () => {
+        navigate(-1);
+    };
     useEffect(() => {
         if (location.pathname === "/home/shop") {
             setSelectedBottomTab("Home");
@@ -265,176 +327,12 @@ function Home({
     const [allShopsPage, setAllShopsPage] = useState(false);
     const [allGiftsPage, setAllGiftsPage] = useState(false);
 
-    const isHandlingBackRef = useRef(false);
-    useEffect(() => {
 
-        const handleBrowserBack = (event) => {
 
-            window.history.pushState(
-                null,
-                "",
-                window.location.href
-            );
 
-            if (isHandlingBackRef.current) {
-                return;
-            }
 
-            isHandlingBackRef.current = true;
 
-            // 1. Details → previous page
-            if (isDetailsOpen) {
-                handleCloseDetails();
-                isHandlingBackRef.current = false;
-                return;
-            }
 
-            if (allShopCategoriesPage) {
-                setAllShopCategoriesPage(false);
-                isHandlingBackRef.current = false;
-                return;
-            }
-            // Shop → All Shops → Shop main
-            if (allShopsPage) {
-                setAllShopsPage(false);
-                isHandlingBackRef.current = false;
-                return;
-            }
-            // 2. Shop Category → Shop main
-            if (shopCategoryPage) {
-                setShopCategoryPage(false);
-                setSelectedShopCategory(null);
-                isHandlingBackRef.current = false;
-                return;
-            }
-
-            if (allGiftCategoriesPage) {
-                setAllGiftCategoriesPage(false);
-                isHandlingBackRef.current = false;
-                return;
-            }
-            // Gifts → All Gifts → Gifts main
-            if (allGiftsPage) {
-                setAllGiftsPage(false);
-                isHandlingBackRef.current = false;
-                return;
-            }
-
-            // 3. Gift Category → Gifts main
-            if (giftCategoryPage) {
-                setGiftCategoryPage(false);
-                setSelectedGiftCategory(null);
-                isHandlingBackRef.current = false;
-                return;
-            }
-            // 3. Cart → Profile
-            if (selectedBottomTab === "Cart") {
-                setSelectedBottomTab("Profile");
-                setProfilePage("profile");
-                isHandlingBackRef.current = false;
-                return;
-            }
-
-            // 4. Profile sub-page → Profile main
-            if (
-                selectedBottomTab === "Profile" &&
-                profilePage !== "profile"
-            ) {
-                setProfilePage("profile");
-                isHandlingBackRef.current = false;
-                return;
-            }
-
-            // 5. Main page → app ke bahar nahi jaane do
-            isHandlingBackRef.current = false;
-        };
-
-        window.history.pushState(
-            null,
-            "",
-            window.location.href
-        );
-
-        window.addEventListener(
-            "popstate",
-            handleBrowserBack
-        );
-
-        return () => {
-            window.removeEventListener(
-                "popstate",
-                handleBrowserBack
-            );
-        };
-
-    }, [
-        isDetailsOpen,
-        selectedBottomTab,
-        profilePage,
-        detailsBackPage
-    ]);
-    const handleAppBack = () => {
-
-        // Details
-        if (isDetailsOpen) {
-            handleCloseDetails();
-            return;
-        }
-
-        // Shop → All Categories → Shop
-        if (allShopCategoriesPage) {
-            setAllShopCategoriesPage(false);
-            return;
-        }
-
-        // Shop → All Shops → Shop
-        if (allShopsPage) {
-            setAllShopsPage(false);
-            return;
-        }
-
-        // Shop → Category → Shop
-        if (shopCategoryPage) {
-            setShopCategoryPage(false);
-            setSelectedShopCategory(null);
-            return;
-        }
-
-        // Gifts → All Categories → Gifts
-        if (allGiftCategoriesPage) {
-            setAllGiftCategoriesPage(false);
-            return;
-        }
-
-        // Gifts → All Gifts → Gifts
-        if (allGiftsPage) {
-            setAllGiftsPage(false);
-            return;
-        }
-
-        // Gifts → Category → Gifts
-        if (giftCategoryPage) {
-            setGiftCategoryPage(false);
-            setSelectedGiftCategory(null);
-            return;
-        }
-
-        // Cart → Profile
-        if (selectedBottomTab === "Cart") {
-            setSelectedBottomTab("Profile");
-            setProfilePage("profile");
-            return;
-        }
-
-        // Profile internal page → Profile
-        if (
-            selectedBottomTab === "Profile" &&
-            profilePage !== "profile"
-        ) {
-            setProfilePage("profile");
-            return;
-        }
-    };
     const showMainHeader =
         !isDetailsOpen &&
         selectedBottomTab === "Home" &&

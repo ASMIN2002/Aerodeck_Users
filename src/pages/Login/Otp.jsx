@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/Otp.css";
 import { API } from "../../services/api";
 
@@ -8,8 +9,8 @@ function Otp({
     setLoginUser,
     authMode
 }) {
+    const navigate = useNavigate();
     const [otp, setOtp] = useState("");
-
     const mobileNumber =
         localStorage.getItem("mobile_number");
 
@@ -75,7 +76,7 @@ function Otp({
                 data.session_token
             );
 
-            setPage("home");
+            navigate("/home/shop", { replace: true });
 
         }
 
