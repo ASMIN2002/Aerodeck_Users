@@ -187,7 +187,17 @@ function MyWishlist({
 
                             <button
                                 className="wishlist-view"
-                                onClick={() => onOpenDetails(item, item.type)}
+                                onClick={() => {
+
+                                    const type =
+                                        item.product_id ? "products" :
+                                            item.gift_id ? "gifts" :
+                                                item.shop_id ? "shop" :
+                                                    item.premium_id ? "premium" :
+                                                        "";
+
+                                    onOpenDetails(item, type);
+                                }}
                             >
                                 View
                             </button>

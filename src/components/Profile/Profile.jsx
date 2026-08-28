@@ -138,15 +138,12 @@ function Profile({
                     <p>{maskedMobile}</p>
                     <button
                         className="edit-profile-btn-pro"
-                        onClick={() => {
-                            navigateWithLoading(
-                                () => {
-                                    setProfilePage("viewprofile");
-                                },
-                                "Loading Profile Details...",
-                                500
-                            );
-                        }}
+                        onClick={() =>
+                            handleProfileNavigation(
+                                "viewprofile",
+                                "Loading Profile Details..."
+                            )
+                        }
                     >
                         View Profile
                     </button>

@@ -1,5 +1,6 @@
 import "./OrderItemDetails.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../../services/api";
 import OrderItem from "./OrderItem/OrderItem";
 
@@ -11,6 +12,7 @@ function OrderItemDetails({
     setSelectedInvoice,
     navigateWithLoading
 }) {
+    const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -65,7 +67,12 @@ function OrderItemDetails({
 
             <div className="order-details-header">
 
-                <button onClick={() => setProfilePage("orders")}>
+                <button
+                    onClick={() => {
+                        setProfilePage("orders");
+                        navigate("/profile/orders", { replace: true });
+                    }}
+                >
                     ←
                 </button>
 

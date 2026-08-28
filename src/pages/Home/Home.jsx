@@ -296,6 +296,13 @@ function Home({
 
     // PROFILE
     useEffect(() => {
+        if (
+            location.pathname.startsWith("/profile/wishlist/product/")
+        ) {
+            setSelectedBottomTab("Profile");
+            setProfilePage("wishlist");
+            return;
+        }
 
         if (!location.pathname.startsWith("/profile")) {
             return;
@@ -315,15 +322,23 @@ function Home({
         }
 
         if (location.pathname === "/profile/address") {
+
             setProfilePage("address");
+
             return;
         }
+
         if (location.pathname === "/profile/address/addaddress") {
+
             setProfilePage("addaddress");
+
             return;
         }
+
         if (location.pathname === "/profile/address/editaddress") {
+
             setProfilePage("editaddress");
+
             return;
         }
 
@@ -334,6 +349,18 @@ function Home({
             return;
         }
 
+        if (location.pathname.startsWith("/profile/orders/order/")) {
+
+            const orderId = location.pathname.split("/profile/orders/order/")[1];
+
+            setProfilePage("order-details");
+
+            setSelectedOrder({
+                order_id: orderId
+            });
+
+            return;
+        }
         if (location.pathname === "/profile/orders") {
 
             setProfilePage("orders");
@@ -362,6 +389,13 @@ function Home({
             return;
         }
 
+        if (location.pathname === "/profile/viewprofile/editprofile") {
+
+            setProfilePage("editprofile");
+
+            return;
+        }
+
         if (location.pathname === "/profile/viewprofile") {
 
             setProfilePage("viewprofile");
@@ -371,18 +405,38 @@ function Home({
 
     }, [location.pathname]);
 
+
     useEffect(() => {
-
         const parts = location.pathname.split("/").filter(Boolean);
-
         let type = "";
         let id = "";
 
-        // NORMAL PRODUCT URL
-        // /home/shop/product/P27
-        // /home/gifts/product/G27
-        // /home/cards/product/C27
-        // /home/premium/product/PR27
+        if (
+            parts.length === 6 &&
+            parts[0] === "profile" &&
+            parts[1] === "orders" &&
+            parts[2] === "order" &&
+            parts[4] === "product"
+        ) {
+            type = "shop";
+            id = parts[5];
+
+            setSelectedBottomTab("Profile");
+            setProfilePage("order-details");
+        }
+        if (
+            parts.length === 4 &&
+            parts[0] === "profile" &&
+            parts[1] === "wishlist" &&
+            parts[2] === "product"
+        ) {
+
+            type = "shop";
+            id = parts[3];
+
+            setSelectedBottomTab("Profile");
+            setProfilePage("wishlist");
+        }
 
         if (
             parts.length === 4 &&
@@ -390,29 +444,47 @@ function Home({
             parts[3]
         ) {
 
-            if (parts[1] === "shop" && parts[2] === "product") {
+            if (
+                parts[1] === "shop" &&
+                parts[2] === "product"
+            ) {
+
                 type = "products";
                 id = parts[3];
             }
 
-            if (parts[1] === "gifts" && parts[2] === "product") {
+            if (
+                parts[1] === "gifts" &&
+                parts[2] === "product"
+            ) {
+
                 type = "gifts";
                 id = parts[3];
             }
 
-            if (parts[1] === "cards" && parts[2] === "product") {
+            if (
+                parts[1] === "cards" &&
+                parts[2] === "product"
+            ) {
+
                 type = "cards";
                 id = parts[3];
             }
 
-            if (parts[1] === "premium" && parts[2] === "product") {
+            if (
+                parts[1] === "premium" &&
+                parts[2] === "product"
+            ) {
+
                 type = "premium";
                 id = parts[3];
             }
         }
 
+        // ==========================================
         // ALL CATEGORY PRODUCT URL
         // /home/shop/allcategory/ELECTRONICS/product/P27
+        // ==========================================
 
         if (
             parts.length === 6 &&
@@ -436,9 +508,11 @@ function Home({
             setAllShopsPage(false);
         }
 
+        // ==========================================
         // CATEGORY PRODUCT URL
         // /home/gifts/category/BIRTHDAY/product/G27
         // /home/shop/category/ELECTRONICS/product/P27
+        // ==========================================
 
         if (
             parts.length === 6 &&
@@ -476,22 +550,49 @@ function Home({
             }
         }
 
+        // ==========================================
         // INVALID / NON-PRODUCT URL
+        // ==========================================
+
         if (!type || !id) {
             return;
         }
 
-        setSelectedBottomTab(
-            parts[1] === "premium"
-                ? "Premium"
-                : "Home"
+        // ==========================================
+        // BOTTOM TAB
+        // ==========================================
+
+        if (type === "premium") {
+
+            setSelectedBottomTab("Premium");
+
+        } else if (
+            location.pathname.startsWith("/profile/wishlist/")
+        ) {
+
+            setSelectedBottomTab("Profile");
+
+        } else {
+
+            setSelectedBottomTab("Home");
+        }
+
+        setProfilePage(
+            location.pathname.startsWith("/profile/wishlist/")
+                ? "wishlist"
+                : "profile"
         );
 
-        setProfilePage("profile");
+        // ==========================================
+        // SELECTED PRODUCT
+        // ==========================================
 
         setSelectedProduct({
+
             type,
+
             data: {
+
                 product_id:
                     type === "products"
                         ? id
@@ -503,7 +604,7 @@ function Home({
                         : undefined,
 
                 shop_id:
-                    type === "cards"
+                    type === "shop" || type === "cards"
                         ? id
                         : undefined,
 
@@ -518,7 +619,6 @@ function Home({
         setIsDetailsOpen(true);
 
     }, [location.pathname]);
-
 
     const [selectedMenu, setSelectedMenu] = useState("Shop");
 

@@ -1,4 +1,5 @@
 import "./ViewProfile.css";
+import { useNavigate } from "react-router-dom";
 import NODP from "../../../assets/NODP.png";
 
 function ViewProfile({
@@ -6,6 +7,7 @@ function ViewProfile({
     setProfilePage,
     navigateWithLoading
 }) {
+    const navigate = useNavigate();
     function formatJoinedDate(date) {
         if (!date) return "NOT SET";
         const d = new Date(date);
@@ -32,6 +34,7 @@ function ViewProfile({
                                 navigateWithLoading(
                                     () => {
                                         setProfilePage("profile");
+                                        navigate("/profile", { replace: true });
                                     },
                                     "Loading Profile...",
                                     10
@@ -97,6 +100,7 @@ function ViewProfile({
                         navigateWithLoading(
                             () => {
                                 setProfilePage("editprofile");
+                                navigate("/profile/viewprofile/editprofile");
                             },
                             "Loading Edit Profile...",
                             500

@@ -1,25 +1,22 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Terms.css";
 
 function Terms({ setProfilePage }) {
-
-    const handleBack = () => {
-        setProfilePage("profile");
-    };
-
+    const navigate = useNavigate();
     return (
         <div className="terms-page">
 
             <header className="terms-header">
 
                 <button
-                    type="button"
-                    className="terms-back-btn"
-                    onClick={handleBack}
+                    className="terms-back"
+                    onClick={() => {
+                        setProfilePage("profile");
+                        navigate("/profile", { replace: true });
+                    }}
                 >
                     ←
                 </button>
-
                 <div className="terms-header-title">
                     <h1>Terms & Conditions</h1>
                     <span>HEEPIT</span>

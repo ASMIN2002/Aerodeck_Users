@@ -1,5 +1,6 @@
 import "./MyOrders.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../../services/api";
 
 function MyOrders({
@@ -8,6 +9,7 @@ function MyOrders({
     setSelectedOrder,
     navigateWithLoading
 }) {
+    const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -65,8 +67,8 @@ function MyOrders({
                 <button
                     className="orders-back"
                     onClick={() => {
-
                         setProfilePage("profile");
+                        navigate("/profile");
                     }}
                 >
                     ←
@@ -116,6 +118,10 @@ function MyOrders({
                             navigateWithLoading(
                                 () => {
                                     setProfilePage("order-details");
+
+                                    navigate(
+                                        `/profile/orders/order/${order.order_id}`
+                                    );
                                 },
                                 "Loading Order Details...",
                                 500

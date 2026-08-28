@@ -1,20 +1,21 @@
 import "./AboutAerodeck.css";
+import { useNavigate } from "react-router-dom";
 
 function AboutAerodeck({
-
     setProfilePage
-
 }) {
 
+
+    const navigate = useNavigate();
     return (
-
         <div className="aboutaerodeck">
-
             <div className="about-header">
-
                 <button
                     className="about-back"
-                    onClick={() => setProfilePage("profile")}
+                    onClick={() => {
+                        setProfilePage("profile");
+                        navigate("/profile", { replace: true });
+                    }}
                 >
                     ←
                 </button>

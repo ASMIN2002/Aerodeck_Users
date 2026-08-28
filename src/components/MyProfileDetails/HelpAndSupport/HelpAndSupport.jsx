@@ -1,68 +1,44 @@
 import "./HelpAndSupport.css";
+import { useNavigate } from "react-router-dom";
 
 function HelpAndSupport({
 
     setProfilePage
 
 }) {
+    const navigate = useNavigate();
 
     return (
-
         <div className="helpsupport">
-
             <div className="help-header">
 
                 <button
                     className="help-back"
-                    onClick={() => setProfilePage("profile")}
+                    onClick={() => {
+                        setProfilePage("profile");
+                        navigate("/profile", { replace: true });
+                    }}
                 >
                     ←
                 </button>
-
-                <h2>
-                    Help & Support
-                </h2>
-
+                <h2>Help & Support</h2>
             </div>
-
             <div className="help-card">
-
                 <span className="help-icon">
                     ❓
                 </span>
-
                 <div>
-
-                    <h3>
-                        Frequently Asked Questions
-                    </h3>
-
-                    <p>
-                        Find answers to common questions.
-                    </p>
-
+                    <h3>Frequently Asked Questions</h3>
+                    <p>Find answers to common questions.</p>
                 </div>
-
             </div>
 
             <div className="help-card">
-
-                <span className="help-icon">
-                    💬
-                </span>
-
+                <span className="help-icon">💬</span>
                 <div>
-
-                    <h3>
-                        Live Chat
-                    </h3>
-
-                    <p>
-                        Chat with our support team.
-                    </p>
-
+                    <h3>Live Chat</h3>
+                    <p>Chat with our support team.</p>
                 </div>
-
             </div>
 
             <div className="help-card">
