@@ -12,6 +12,7 @@ function Gift({
     user,
     setCartCount,
     onOpenDetails,
+    goTo,
     search,
     filter,
     giftCategoryPage,
@@ -932,12 +933,12 @@ function Gift({
                         }}
 
                         onCategoryClick={(category) => {
-
                             setSelectedGiftCategory(category);
-
                             setAllGiftCategoriesPage(false);
-
                             setGiftCategoryPage(true);
+                            goTo(
+                                `/home/gifts/allcategory/${encodeURIComponent(category)}`
+                            );
 
                         }}
 
@@ -1073,14 +1074,13 @@ function Gift({
                         gifts={gifts}
 
                         onCategoryClick={(category) => {
-
                             setSelectedGiftCategory(category);
-
                             setGiftCategoryPage(true);
-
+                            goTo(`/home/gifts/category/${encodeURIComponent(category)}`);
                         }}
                         onOpenAllGiftCategories={() => {
                             setAllGiftCategoriesPage(true);
+                            goTo("/home/gifts/allcategory");
                         }}
 
                         onOpenDetails={onOpenDetails}
@@ -1102,15 +1102,11 @@ function Gift({
                         cartProducts={cartProducts}
 
                         onOpenAllGifts={() => {
-
                             setGiftCategoryPage(false);
-
                             setSelectedGiftCategory(null);
-
                             setSelectedCategory(null);
-
                             setAllGiftsPage(true);
-
+                            goTo("/home/gifts/allgifts");
                         }}
 
                     />

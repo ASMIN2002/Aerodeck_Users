@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import "./App.css";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
-
-import "./App.css";
-
 import Loading from "./components/Loading/Loading";
 import Splash from "./pages/Splash/Splash";
 import Login from "./pages/Login/Login";
@@ -15,30 +13,119 @@ import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
 import { API } from "./services/api";
 
-function App() {
+const NAV_HISTORY_KEY = "heepit_navigation_history";
 
+function App() {
+    // useEffect(() => {
+    //     localStorage.removeItem(NAV_HISTORY_KEY);
+    // }, []);
     const navigate = useNavigate();
+    const goTo = (url) => {
+        let history = [];
+
+        try {
+            const saved = localStorage.getItem(NAV_HISTORY_KEY);
+            history = saved ? JSON.parse(saved) : [];
+        } catch {
+            history = [];
+        }
+
+        if (history.length === 0 || history[history.length - 1].url !== url) {
+            history.push({
+                number: history.length + 1,
+                url: url
+            });
+
+            localStorage.setItem(
+                NAV_HISTORY_KEY,
+                JSON.stringify(history)
+            );
+        }
+
+        navigate(url);
+    };
+
     const location = useLocation();
 
+    const skipHistorySaveRef = useRef(false);
+
     useEffect(() => {
+        const path = location.pathname;
 
-        const handleBackButton = () => {
+        if (
+            path === "/" ||
+            path === "/login" ||
+            path === "/register" ||
+            path === "/otp"
+        ) {
+            return;
+        }
 
-            if (window.__heepitInternalBack) {
+        let history = [];
 
-                const handled =
-                    window.__heepitInternalBack();
+        try {
+            const saved = localStorage.getItem(NAV_HISTORY_KEY);
+            history = saved ? JSON.parse(saved) : [];
+        } catch {
+            history = [];
+        }
 
-                if (handled) {
-                    return;
-                }
+        // Back se aaye page ko dobara history mein add nahi karna
+        if (skipHistorySaveRef.current) {
+            skipHistorySaveRef.current = false;
+            return;
+        }
+
+        // Same URL duplicate nahi hogi
+        if (history.length === 0 || history[history.length - 1].url !== path) {
+            history.push({
+                number: history.length + 1,
+                url: path
+            });
+        }
+
+        localStorage.setItem(
+            NAV_HISTORY_KEY,
+            JSON.stringify(history)
+        );
+    }, [location.pathname]);
+    useEffect(() => {
+        const handleBackButton = async () => {
+            let history = [];
+
+            try {
+                const saved = localStorage.getItem(NAV_HISTORY_KEY);
+                history = saved ? JSON.parse(saved) : [];
+            } catch {
+                history = [];
             }
 
-            if (window.history.length > 1) {
-                navigate(-1);
-            } else {
-                CapacitorApp.exitApp();
+            if (history.length > 1) {
+                // Current page remove karo
+                history.pop();
+
+                // Numbers dobara 1,2,3... mein set karo
+                history = history.map((item, index) => ({
+                    number: index + 1,
+                    url: item.url
+                }));
+
+                localStorage.setItem(
+                    NAV_HISTORY_KEY,
+                    JSON.stringify(history)
+                );
+
+                // Previous page ko history mein dobara save mat karna
+                skipHistorySaveRef.current = true;
+
+                navigate(history[history.length - 1].url);
+                return;
             }
+
+            // History mein first page hi bacha hai
+            localStorage.removeItem(NAV_HISTORY_KEY);
+
+            await CapacitorApp.exitApp();
         };
 
         let listener;
@@ -51,13 +138,10 @@ function App() {
         });
 
         return () => {
-
             if (listener) {
                 listener.remove();
             }
-
         };
-
     }, [navigate]);
 
     const changePage = (nextPage) => {
@@ -102,11 +186,12 @@ function App() {
             path === "/home/cards" ||
             path.startsWith("/home/shop/product/") ||
             path.startsWith("/home/gifts/product/") ||
-            path.startsWith("/home/cards/product/")
+            path.startsWith("/home/cards/product/") ||
+
+            path === "/profile" ||
+            path.startsWith("/profile/")
         ) {
-
-            changePage("home");
-
+            setPage("home");
         } else if (path === "/appupdate") {
 
             setPage("appupdate");
@@ -471,6 +556,7 @@ function App() {
                     navigateWithLoading={navigateWithLoading}
                     cartCount={cartCount}
                     setCartCount={setCartCount}
+                    goTo={goTo}
                 />
             }
             {

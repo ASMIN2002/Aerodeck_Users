@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 
 import "../../styles/Home.css";
 
 import Header from "../../components/Header/Header";
-import HeaderBack from "../../components/Header/HeaderBack";
 import Search from "../../components/Search/Search";
 import Cards from "../../components/Cards/Cards";
 import Gift from "../../components/Gift/Gift";
@@ -41,6 +40,7 @@ function Home({
     setUser,
     setPage,
     navigateWithLoading,
+    goTo,
     cartCount,
     setCartCount,
     onAppBack
@@ -48,138 +48,485 @@ function Home({
     const location = useLocation();
     const navigate = useNavigate();
 
-    const internalHistoryRef = useRef([]);
+    // SAMAN
+    useEffect(() => {
+        if (location.pathname === "/home") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Shop");
+            setProfilePage("profile");
 
-    const saveCurrentState = () => ({
-        selectedBottomTab,
-        selectedMenu,
-        profilePage,
-        isDetailsOpen,
-        detailsPage,
-        selectedProduct,
-        shopCategoryPage,
-        selectedShopCategory,
-        giftCategoryPage,
-        selectedGiftCategory,
-        allShopCategoriesPage,
-        allShopsPage,
-        allGiftCategoriesPage,
-        allGiftsPage
-    });
+            setAllShopCategoriesPage(false);
+            setAllShopsPage(false);
+            setShopCategoryPage(false);
+            setSelectedShopCategory(null);
 
-    const pushInternalPage = (update) => {
-        internalHistoryRef.current.push(saveCurrentState());
-        update();
-    };
+            setAllGiftCategoriesPage(false);
+            setAllGiftsPage(false);
+            setGiftCategoryPage(false);
+            setSelectedGiftCategory(null);
 
-    const handleInternalBack = useCallback(() => {
-        const previous =
-            internalHistoryRef.current.pop();
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
 
-        if (!previous) {
-            return false;
+            return;
         }
+        if (location.pathname === "/premium") {
+            setSelectedBottomTab("Premium");
+            setSelectedMenu("Premium");
+            setProfilePage("profile");
 
-        setSelectedBottomTab(previous.selectedBottomTab);
-        setSelectedMenu(previous.selectedMenu);
-        setProfilePage(previous.profilePage);
-        setIsDetailsOpen(previous.isDetailsOpen);
-        setDetailsPage(previous.detailsPage);
-        setSelectedProduct(previous.selectedProduct);
-        setShopCategoryPage(previous.shopCategoryPage);
-        setSelectedShopCategory(previous.selectedShopCategory);
-        setGiftCategoryPage(previous.giftCategoryPage);
-        setSelectedGiftCategory(previous.selectedGiftCategory);
-        setAllShopCategoriesPage(previous.allShopCategoriesPage);
-        setAllShopsPage(previous.allShopsPage);
-        setAllGiftCategoriesPage(previous.allGiftCategoriesPage);
-        setAllGiftsPage(previous.allGiftsPage);
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
 
-        return true;
-    }, []);
-
-    useEffect(() => {
-        window.__heepitInternalBack = handleInternalBack;
-
-        return () => {
-            delete window.__heepitInternalBack;
-        };
-    }, [handleInternalBack]);
-    const handleAppBack = () => {
-        navigate(-1);
-    };
-    useEffect(() => {
+            return;
+        }
         if (location.pathname === "/home/shop") {
             setSelectedBottomTab("Home");
             setSelectedMenu("Shop");
             setProfilePage("profile");
+
+            setAllShopCategoriesPage(false);
+            setAllShopsPage(false);
+            setShopCategoryPage(false);
+            setSelectedShopCategory(null);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
         }
+        if (location.pathname === "/home/shop/allcategory") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Shop");
+            setProfilePage("profile");
+
+            setAllShopCategoriesPage(true);
+            setAllShopsPage(false);
+            setShopCategoryPage(false);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+        if (
+            location.pathname.startsWith("/home/shop/allcategory/") &&
+            !location.pathname.includes("/product/")
+        ) {
+
+            const category = decodeURIComponent(
+                location.pathname.split("/home/shop/allcategory/")[1]
+            );
+
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Shop");
+            setProfilePage("profile");
+
+            setSelectedShopCategory(category);
+
+            setAllShopCategoriesPage(false);
+            setAllShopsPage(false);
+            setShopCategoryPage(true);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+        if (
+            location.pathname.startsWith("/home/shop/category/") &&
+            !location.pathname.includes("/product/")
+        ) {
+
+            const category = decodeURIComponent(
+                location.pathname.split("/home/shop/category/")[1]
+            );
+
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Shop");
+            setProfilePage("profile");
+
+            setSelectedShopCategory(category);
+
+            setAllShopCategoriesPage(false);
+            setAllShopsPage(false);
+            setShopCategoryPage(true);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+
+        if (location.pathname === "/home/shop/allshops") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Shop");
+            setProfilePage("profile");
+
+            setAllShopsPage(true);
+            setAllShopCategoriesPage(false);
+            setShopCategoryPage(false);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+
         if (location.pathname === "/home/gifts") {
             setSelectedBottomTab("Home");
             setSelectedMenu("Gifts");
             setProfilePage("profile");
+
+            setAllGiftCategoriesPage(false);
+            setAllGiftsPage(false);
+            setGiftCategoryPage(false);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
         }
+
+        // ALL GIFT CATEGORIES
+        if (location.pathname === "/home/gifts/allcategory") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Gifts");
+            setProfilePage("profile");
+
+            setAllGiftCategoriesPage(true);
+            setAllGiftsPage(false);
+            setGiftCategoryPage(false);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+
+        if (location.pathname === "/home/gifts/allgifts") {
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Gifts");
+            setProfilePage("profile");
+
+            setAllGiftsPage(true);
+            setAllGiftCategoriesPage(false);
+            setGiftCategoryPage(false);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+        if (
+            location.pathname.startsWith("/home/gifts/allcategory/") &&
+            !location.pathname.includes("/product/")
+        ) {
+
+            const category = decodeURIComponent(
+                location.pathname.split("/home/gifts/allcategory/")[1]
+            );
+
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Gifts");
+            setProfilePage("profile");
+
+            setSelectedGiftCategory(category);
+            setAllGiftCategoriesPage(false);
+            setAllGiftsPage(false);
+            setGiftCategoryPage(true);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+
+        // GIFT CATEGORY
+        if (location.pathname.startsWith("/home/gifts/category/")) {
+
+            const category = decodeURIComponent(
+                location.pathname.split("/home/gifts/category/")[1]
+            );
+
+            setSelectedBottomTab("Home");
+            setSelectedMenu("Gifts");
+            setProfilePage("profile");
+
+            setSelectedGiftCategory(category);
+            setGiftCategoryPage(true);
+
+            setAllGiftCategoriesPage(false);
+            setAllGiftsPage(false);
+
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
+        }
+
         if (location.pathname === "/home/cards") {
             setSelectedBottomTab("Home");
             setSelectedMenu("Cards");
             setProfilePage("profile");
+
+            setAllGiftCategoriesPage(false);
+            setGiftCategoryPage(false);
+            setIsDetailsOpen(false);
+            setSelectedProduct(null);
+            setDetailsPage("details");
+
+            return;
         }
+
+    }, [location.pathname]);
+
+
+    // PROFILE
+    useEffect(() => {
+
+        if (!location.pathname.startsWith("/profile")) {
+            return;
+        }
+
+        setSelectedBottomTab("Profile");
+
+        setIsDetailsOpen(false);
+        setSelectedProduct(null);
+        setDetailsPage("details");
+
+        if (location.pathname === "/profile") {
+
+            setProfilePage("profile");
+
+            return;
+        }
+
+        if (location.pathname === "/profile/address") {
+            setProfilePage("address");
+            return;
+        }
+        if (location.pathname === "/profile/address/addaddress") {
+            setProfilePage("addaddress");
+            return;
+        }
+        if (location.pathname === "/profile/address/editaddress") {
+            setProfilePage("editaddress");
+            return;
+        }
+
+        if (location.pathname === "/profile/wishlist") {
+
+            setProfilePage("wishlist");
+
+            return;
+        }
+
+        if (location.pathname === "/profile/orders") {
+
+            setProfilePage("orders");
+
+            return;
+        }
+
+        if (location.pathname === "/profile/help") {
+
+            setProfilePage("help");
+
+            return;
+        }
+
+        if (location.pathname === "/profile/about") {
+
+            setProfilePage("about");
+
+            return;
+        }
+
+        if (location.pathname === "/profile/terms") {
+
+            setProfilePage("terms");
+
+            return;
+        }
+
+        if (location.pathname === "/profile/viewprofile") {
+
+            setProfilePage("viewprofile");
+
+            return;
+        }
+
     }, [location.pathname]);
 
     useEffect(() => {
-        const parts = location.pathname.split("/");
-        if (
-            parts.length !== 5 ||
-            parts[3] !== "product"
-        ) {
-            return;
-        }
-        const id = parts[4];
-        if (!id) {
-            return;
-        }
+
+        const parts = location.pathname.split("/").filter(Boolean);
+
         let type = "";
-        if (parts[1] === "home" && parts[2] === "shop") {
+        let id = "";
+
+        // NORMAL PRODUCT URL
+        // /home/shop/product/P27
+        // /home/gifts/product/G27
+        // /home/cards/product/C27
+        // /home/premium/product/PR27
+
+        if (
+            parts.length === 4 &&
+            parts[0] === "home" &&
+            parts[3]
+        ) {
+
+            if (parts[1] === "shop" && parts[2] === "product") {
+                type = "products";
+                id = parts[3];
+            }
+
+            if (parts[1] === "gifts" && parts[2] === "product") {
+                type = "gifts";
+                id = parts[3];
+            }
+
+            if (parts[1] === "cards" && parts[2] === "product") {
+                type = "cards";
+                id = parts[3];
+            }
+
+            if (parts[1] === "premium" && parts[2] === "product") {
+                type = "premium";
+                id = parts[3];
+            }
+        }
+
+        // ALL CATEGORY PRODUCT URL
+        // /home/shop/allcategory/ELECTRONICS/product/P27
+
+        if (
+            parts.length === 6 &&
+            parts[0] === "home" &&
+            parts[1] === "shop" &&
+            parts[2] === "allcategory" &&
+            parts[4] === "product"
+        ) {
+
             type = "products";
+            id = parts[5];
+
             setSelectedMenu("Shop");
+
+            setSelectedShopCategory(
+                decodeURIComponent(parts[3])
+            );
+
+            setShopCategoryPage(true);
+            setAllShopCategoriesPage(false);
+            setAllShopsPage(false);
         }
-        if (parts[1] === "home" && parts[2] === "gifts") {
-            type = "gifts";
-            setSelectedMenu("Gifts");
+
+        // CATEGORY PRODUCT URL
+        // /home/gifts/category/BIRTHDAY/product/G27
+        // /home/shop/category/ELECTRONICS/product/P27
+
+        if (
+            parts.length === 6 &&
+            parts[0] === "home" &&
+            parts[2] === "category" &&
+            parts[4] === "product"
+        ) {
+
+            if (parts[1] === "gifts") {
+
+                type = "gifts";
+                id = parts[5];
+
+                setSelectedMenu("Gifts");
+
+                setSelectedGiftCategory(
+                    decodeURIComponent(parts[3])
+                );
+
+                setGiftCategoryPage(true);
+            }
+
+            if (parts[1] === "shop") {
+
+                type = "products";
+                id = parts[5];
+
+                setSelectedMenu("Shop");
+
+                setSelectedShopCategory(
+                    decodeURIComponent(parts[3])
+                );
+
+                setShopCategoryPage(true);
+            }
         }
-        if (parts[1] === "home" && parts[2] === "cards") {
-            type = "cards";
-            setSelectedMenu("Cards");
-        }
-        if (parts[1] === "home" && parts[2] === "premium") {
-            type = "premium";
-            setSelectedBottomTab("Premium");
-        }
-        if (!type) {
+
+        // INVALID / NON-PRODUCT URL
+        if (!type || !id) {
             return;
         }
+
         setSelectedBottomTab(
-            parts[2] === "premium" ? "Premium" : "Home"
+            parts[1] === "premium"
+                ? "Premium"
+                : "Home"
         );
+
         setProfilePage("profile");
+
         setSelectedProduct({
             type,
             data: {
-                product_id: type === "products" ? id : undefined,
-                gift_id: type === "gifts" ? id : undefined,
-                shop_id: type === "cards" ? id : undefined,
-                premium_id: type === "premium" ? id : undefined
+                product_id:
+                    type === "products"
+                        ? id
+                        : undefined,
+
+                gift_id:
+                    type === "gifts"
+                        ? id
+                        : undefined,
+
+                shop_id:
+                    type === "cards"
+                        ? id
+                        : undefined,
+
+                premium_id:
+                    type === "premium"
+                        ? id
+                        : undefined
             }
         });
+
         setDetailsPage("details");
         setIsDetailsOpen(true);
+
     }, [location.pathname]);
 
+
     const [selectedMenu, setSelectedMenu] = useState("Shop");
+
     const [selectedBottomTab, setSelectedBottomTab] = useState(() => {
         const savedTab = localStorage.getItem("selectedBottomTab");
 
         if (
+            savedTab === "Home" ||
             savedTab === "Premium" ||
             savedTab === "Offers" ||
             savedTab === "Cart" ||
@@ -188,9 +535,8 @@ function Home({
             return savedTab;
         }
 
-        return null;
+        return "Home";
     });
-
     const [search, setSearch] = useState("");
 
     const [filter, setFilter] = useState({
@@ -295,23 +641,47 @@ function Home({
             product.shop_id ||
             product.premium_id;
 
-        navigate(`${location.pathname}/product/${id}`);
+        let productUrl;
+
+        if (
+            (type === "gift" &&
+                location.pathname.startsWith("/home/gifts/category/")) ||
+            (type === "shop" &&
+                location.pathname.startsWith("/home/shop/category/"))
+        ) {
+            productUrl = `${location.pathname}/product/${id}`;
+        } else {
+            productUrl = `${location.pathname}/product/${id}`;
+        }
+
+        goTo(productUrl);
     };
 
     const handleCloseDetails = () => {
 
+        if (detailsBackPage) {
+
+            setSelectedBottomTab(
+                detailsBackPage.selectedBottomTab
+            );
+
+            setProfilePage(
+                detailsBackPage.profilePage
+            );
+
+            setSelectedMenu(
+                detailsBackPage.selectedMenu
+            );
+        }
+
         setDetailsPage("details");
-
         setSelectedProduct(null);
-
         setIsDetailsOpen(false);
 
         if (detailsBackPage?.pathname) {
-            navigate(detailsBackPage.pathname);
+            goTo(detailsBackPage.pathname);
         }
-
     };
-
     const [orderData, setOrderData] = useState({
         items: [],
         orderType: ""
@@ -366,7 +736,7 @@ function Home({
 
         <div className="home-container">
             {
-                showMainHeader ? (
+                showMainHeader && (
                     <Header
                         selectedMenu={selectedMenu}
                         setSelectedMenu={setSelectedMenu}
@@ -386,21 +756,6 @@ function Home({
                             setProfilePage("cart");
                         }}
                     />
-                ) : (
-                    (
-                        isDetailsOpen ||
-                        allShopCategoriesPage ||
-                        allShopsPage ||
-                        shopCategoryPage ||
-                        allGiftCategoriesPage ||
-                        allGiftsPage ||
-                        giftCategoryPage
-                    ) && (
-                        <HeaderBack
-                            title="Back"
-                            onBack={handleAppBack}
-                        />
-                    )
                 )
             }
 
@@ -551,6 +906,7 @@ function Home({
                                 allGiftsPage={allGiftsPage}
                                 setAllGiftsPage={setAllGiftsPage}
                                 setSuggestionData={setGiftSuggestionsData}
+                                goTo={goTo}
                             />
 
                         }
@@ -572,6 +928,7 @@ function Home({
                                 allShopsPage={allShopsPage}
                                 setAllShopsPage={setAllShopsPage}
                                 setSuggestionData={setShopSuggestionsData}
+                                goTo={goTo}
                             />
                         }
 

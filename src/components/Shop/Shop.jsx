@@ -22,7 +22,8 @@ function Shop({
     setSelectedShopCategory,
     allShopsPage,
     setAllShopsPage,
-    setSuggestionData
+    setSuggestionData,
+    goTo
 }) {
 
     const sessionToken = localStorage.getItem("session_token");
@@ -1036,8 +1037,11 @@ function Shop({
 
                             setShopCategoryPage(true);
 
-                        }}
+                            goTo(
+                                `/home/shop/allcategory/${encodeURIComponent(category)}`
+                            );
 
+                        }}
                     />
 
                 ) : allShopsPage ? (
@@ -1180,9 +1184,15 @@ function Shop({
 
                             setShopCategoryPage(true);
 
+                            goTo(
+                                `/home/shop/category/${encodeURIComponent(category)}`
+                            );
+
                         }}
                         onOpenAllShopCategories={() => {
                             setAllShopCategoriesPage(true);
+
+                            goTo("/home/shop/allcategory");
                         }}
 
                         onOpenDetails={onOpenDetails}
@@ -1204,8 +1214,9 @@ function Shop({
                             setSelectedShopCategory(null);
                             setAllShopsPage(true);
 
-                        }}
+                            goTo("/home/shop/allshops");
 
+                        }}
                     />
 
                 )

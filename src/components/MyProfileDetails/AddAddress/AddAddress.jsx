@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AddAddress.css";
 import { FiArrowLeft } from "react-icons/fi";
 import Toast from "../../../components/Toast/Toast";
@@ -6,6 +7,7 @@ import Loading from "../../../components/Loading/Loading";
 import { API } from "../../../services/api";
 
 function AddAddress({ setProfilePage }) {
+    const navigate = useNavigate();
 
     const sessionToken = localStorage.getItem("session_token");
 
@@ -278,6 +280,7 @@ function AddAddress({ setProfilePage }) {
                 );
 
                 setProfilePage("address");
+                navigate("/profile/address", { replace: true });
 
             } else {
                 setSavingAddress(false);

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import "./EditAddress.css";
 import { API } from "../../../services/api";
 import Loading from "../../../components/Loading/Loading";
 
 function EditAddress({ setProfilePage }) {
+    const navigate = useNavigate();
 
     const sessionToken = localStorage.getItem("session_token");
 
@@ -133,6 +135,7 @@ function EditAddress({ setProfilePage }) {
                 );
 
                 setProfilePage("address");
+                navigate("/profile/address", { replace: true });
 
             } else {
 

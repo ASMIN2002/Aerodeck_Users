@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import NODP from "../../assets/NODP.png";
 import Loading from "../../components/Loading/Loading";
@@ -12,7 +13,7 @@ function Profile({
     setProfilePage,
     navigateWithLoading
 }) {
-
+    const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
     const [version, setVersion] = useState("");
@@ -89,12 +90,19 @@ function Profile({
         navigateWithLoading(
             () => {
                 setProfilePage(page);
+
+                const currentPath = window.location.pathname;
+
+                if (currentPath === "/profile") {
+                    navigate(`/profile/${page}`);
+                } else {
+                    navigate(`/profile/${page}`);
+                }
             },
             text,
             500
         );
     };
-
     if (!profile) {
         return (
             <Loading

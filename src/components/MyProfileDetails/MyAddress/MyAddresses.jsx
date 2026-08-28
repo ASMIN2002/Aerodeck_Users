@@ -1,5 +1,6 @@
 import "./MyAddresses.css";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading/Loading";
 import { FiArrowLeft } from "react-icons/fi";
 import { API } from "../../../services/api";
@@ -10,6 +11,10 @@ function MyAddresses({
     setSelectedAddress,
     navigateWithLoading
 }) {
+
+    const navigate = useNavigate();
+
+
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [successMessage, setSuccessMessage] = useState("");
@@ -180,7 +185,10 @@ function MyAddresses({
                 <div className="address-header">
                     <button
                         className="back-btn"
-                        onClick={() => setProfilePage("profile")}
+                        onClick={() => {
+                            setProfilePage("profile");
+                            navigate("/profile");
+                        }}
                     >
                         <FiArrowLeft />
                     </button>
@@ -204,6 +212,7 @@ function MyAddresses({
                             navigateWithLoading(
                                 () => {
                                     setProfilePage("addaddress");
+                                    navigate("/profile/address/addaddress");
                                 },
                                 "Loading...",
                                 500
@@ -273,6 +282,7 @@ function MyAddresses({
                                                     navigateWithLoading(
                                                         () => {
                                                             setProfilePage("editaddress");
+                                                            navigate("/profile/address/editaddress");
                                                         },
                                                         "Loading Edit Address...",
                                                         500
