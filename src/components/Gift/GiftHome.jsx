@@ -2,6 +2,7 @@ import { useMemo, useEffect, useRef, useState } from "react";
 import "./GiftHome.css";
 import GiftCard from "./GiftCard";
 import { API } from "../../services/api";
+import { FiArrowRight } from "react-icons/fi";
 
 function GiftHome({
 
@@ -125,7 +126,7 @@ function GiftHome({
                         type="button"
                         onClick={onOpenAllGiftCategories} className="viewALL"
                     >
-                        View All
+                        View All <FiArrowRight/>
                     </button>
 
                 </div>
@@ -176,9 +177,9 @@ function GiftHome({
                     <button
                         type="button"
                         onClick={onOpenAllGifts}
-                        className="gift-all-button"
+                        className="viewALL"
                     >
-                        View All
+                        View All <FiArrowRight/>
                     </button>
 
                 </div>

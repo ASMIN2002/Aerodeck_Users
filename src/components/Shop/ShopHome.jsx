@@ -2,6 +2,7 @@ import { useMemo, useEffect, useRef, useState } from "react";
 import "./ShopHome.css";
 import ShopCard from "./ShopCard";
 import { API } from "../../services/api";
+import { FiArrowRight } from "react-icons/fi";
 
 function ShopHome({
 
@@ -210,7 +211,7 @@ function ShopHome({
                         type="button" className="viewALL"
                         onClick={onOpenAllShopCategories}
                     >
-                        View All
+                        View all <FiArrowRight />
                     </button>
 
                 </div>
@@ -308,9 +309,9 @@ function ShopHome({
                     <button
                         type="button"
                         onClick={onOpenAllShops}
-                        className="gift-all-button"
+                        className="viewALL"
                     >
-                       View All
+                        View all <FiArrowRight />
                     </button>
 
                 </div>

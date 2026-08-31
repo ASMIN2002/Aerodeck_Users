@@ -1,0 +1,81 @@
+/* ================================
+   AUTH FLIP CONTAINER
+================================ */
+
+.auth-container {
+    width: 100%;
+    min-height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    perspective: 1800px;
+    background: #03032d;
+}
+
+
+/* ================================
+   FLIP CARD
+================================ */
+
+.auth-flip-card {
+    width: 100%;
+    min-height: 100dvh;
+
+    position: relative;
+
+    transform-style: preserve-3d;
+
+    -webkit-transform-style: preserve-3d;
+
+    transition:
+        transform 0.8s cubic-bezier(
+            0.4,
+            0.15,
+            0.2,
+            1
+        );
+}
+
+
+/* REGISTER FLIP */
+
+.auth-flip-card.auth-flipped {
+    transform: rotateY(180deg);
+}
+
+
+/* ================================
+   BOTH SIDES
+================================ */
+
+.auth-flip-side {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    min-height: 100dvh;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+
+/* ================================
+   LOGIN - FRONT
+================================ */
+
+.auth-login-side {
+    transform: rotateY(0deg);
+}
+
+
+/* ================================
+   REGISTER - BACK
+================================ */
+
+.auth-register-side {
+    transform: rotateY(180deg);
+}

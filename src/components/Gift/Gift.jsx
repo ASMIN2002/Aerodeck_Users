@@ -930,6 +930,7 @@ function Gift({
 
                         onBack={() => {
                             setAllGiftCategoriesPage(false);
+                            goTo("/home/gifts");
                         }}
 
                         onCategoryClick={(category) => {
@@ -951,6 +952,7 @@ function Gift({
 
                         onBack={() => {
                             setAllGiftsPage(false);
+                            goTo("/home/gifts");
                         }}
 
                         onOpenDetails={onOpenDetails}
@@ -982,6 +984,7 @@ function Gift({
                             setSelectedCategory(null);
                             setSelectedGiftCategory(null);
                             setGiftCategoryPage(false);
+                            goTo("/home/gifts/allcategory");
                         }}
 
                         onOpenDetails={onOpenDetails}

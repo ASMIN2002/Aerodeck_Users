@@ -21,22 +21,26 @@
 }
 
 .shop-section-title h3 {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    color: rgb(243, 245, 245);
     margin: 2px;
     letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffbc09, #f4f4f4, #06ff1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
+
 
 /* --- Category Section & Scroll Row --- */
 .shop-category-section {
     border-radius: 10px;
-
+    padding: 10px;
 }
 
 .shop-category-scroll {
     display: flex;
-    gap: 4px;
+    gap: 5px;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -74,8 +78,8 @@
 
 /* --- Category Icon / Image --- */
 .shop-category-icon {
-    width: 80%;
-    height: 70px;
+    width: 95%;
+    height: 80px;
     border-radius: 15px;
     overflow: hidden;
     background: none;
@@ -103,7 +107,7 @@
 
 .shop-category-box span {
     font-size: 10px;
-    color: #00ff07;
+    color: white;
     margin-bottom: 1px;
     display: block;
     width: 70px;
@@ -113,6 +117,7 @@
     text-overflow: ellipsis;
     text-align: center;
     font-weight: bold;
+    letter-spacing: 1.3px;
 }
 
 
@@ -128,7 +133,11 @@
     padding: 3px;
     background: none;
     border: none;
-    color: aqua;
+    color: white;
+    display: flex;
+    font-size: 10px;
+    cursor: pointer;
+    gap: 5px;
 }
 
 /* --- Suggested & Offer Placeholders --- */
@@ -175,6 +184,8 @@
 .shop-suggested-grid {
     display: flex;
     width: max-content;
+    margin-top: 10px;
+    gap: 10px;
 }
 
 
@@ -198,7 +209,7 @@
 ========================================= */
 
 .shop-suggested-image {
-    width: 85%;
+    width: 100%;
     height: 115px;
     overflow: hidden;
     border-radius: 10px;
@@ -262,11 +273,14 @@
 }
 
 .shop-section-title h4 {
-    font-size: 12px;
-    font-weight: bold;
-    color: #ffffff;
-    margin: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 2px;
     letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffbc09, #f4f4f4, #06ff1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .shop-all-button {
@@ -332,7 +346,7 @@
 
 
 .shop-liked-card {
-    width: 100px;
+    width: 115px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
@@ -406,9 +420,15 @@
 }
 
 .likeheader {
-    font-weight: bold;
     margin: 5px;
-    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 2px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffbc09, #f4f4f4, #06ff1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .shop-top-liked-section {
@@ -463,8 +483,8 @@
 .shop-value-card {
     width: 100px;
     background: #ffffff;
-    border-radius: 10px;
-    padding: 6px;
+    border-radius: 5px;
+    padding: 4px;
     overflow: hidden;
     cursor: pointer;
 }
@@ -481,7 +501,7 @@
 
 .shop-value-image img {
     width: 100%;
-    height: 100%;
+    height: 80%;
     display: block;
     object-fit: cover;
 }
@@ -556,16 +576,6 @@
     cursor: grabbing;
 }
 
-.shop-offer-slide img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-
 .shop-offer-slide {
     position: relative;
     flex: 0 0 100%;
@@ -575,6 +585,7 @@
     border-radius: 14px;
     scroll-snap-align: start;
     cursor: pointer;
+    box-shadow: 0 0 7px white;
 }
 
 .shop-offer-slide img {
@@ -619,7 +630,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    margin-top: 7px;
+    margin-top: 2px;
 }
 
 .shop-offer-dot {
@@ -693,6 +704,7 @@
     background: none;
     padding: 3px;
     border-radius: 8px;
+    margin-top: 15px;
 }
 
 .shop-finest-deals-scroll {
@@ -703,7 +715,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 
-    padding: 3px 2px 0px;
+    padding: 10px 2px 0px;
 }
 
 .shop-finest-deals-scroll::-webkit-scrollbar {
@@ -712,7 +724,7 @@
 
 .shop-finest-deals-grid {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     width: max-content;
 }
 
@@ -728,9 +740,8 @@
 
 .shop-finest-deal-image {
     position: relative;
-
     width: 100%;
-    height: 115px;
+    height: 130px;
     overflow: hidden;
     border-radius: 9px;
     border: 1px solid white;
@@ -739,7 +750,7 @@
 
 .shop-finest-deal-image img {
     width: 100%;
-    height: 100%;
+    height: 85%;
 
     display: block;
     object-fit: cover;
@@ -769,7 +780,7 @@
     display: block;
     margin-top: 5px;
     width: 75%;
-    color: #fdfdfd;
+    color: #000000;
     font-size: 9px;
     line-height: 1.25;
     white-space: nowrap;
@@ -777,7 +788,14 @@
     text-overflow: ellipsis;
     margin-left: 5px;
 }
-.rendomhead h3{
-    color: white;
-    font-size: 11px;
+
+.rendomhead h3 {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 2px;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffbc09, #f4f4f4, #06ff1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }

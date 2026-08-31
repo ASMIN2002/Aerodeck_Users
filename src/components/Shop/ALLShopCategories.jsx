@@ -25,7 +25,7 @@ function ALLShopCategories({
                 </button>
 
                 <h2>
-                    All Shop Categories
+                    All Categories
                 </h2>
 
             </div>

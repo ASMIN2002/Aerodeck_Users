@@ -6,7 +6,7 @@ function WhyChoose() {
 
         <div className="dt-why">
 
-            <h3>Why Choose AERODECK?</h3>
+            <h3>Why Choose HEEPIT?</h3>
 
             <div className="dt-why-grid">
 

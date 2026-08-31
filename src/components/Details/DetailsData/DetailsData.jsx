@@ -61,11 +61,11 @@ function DetailsData({
                 />
                 <Features />
                 <WhyChoose />
-                <RelatedProducts
+                {/* <RelatedProducts
                     product={product}
                     onOpenDetails={onOpenDetails}
                     onViewAll={onViewAll}
-                />
+                /> */}
             </div>
         </>
     );

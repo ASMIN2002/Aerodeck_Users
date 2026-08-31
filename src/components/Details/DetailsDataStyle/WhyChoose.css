@@ -15,7 +15,7 @@ ROOT
     display: flex;
 
     flex-direction: column;
-
+    padding-bottom: 50px;
     gap: 5px;
 
 }
@@ -34,7 +34,7 @@ ROOT
 
     font-weight: 700;
 
-    color: #111;
+    color: white;
 
 }
 

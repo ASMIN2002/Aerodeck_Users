@@ -39,7 +39,7 @@ HEADER
     font-size: 11px;
     font-weight: 700;
     line-height: 1.35;
-    color: #111;
+    color: white;
 }
 
 
@@ -84,7 +84,7 @@ PRICE
 .ps-price {
     font-size: 22px;
     font-weight: 700;
-    color: #111;
+    color: white;
 }
 
 
@@ -233,93 +233,54 @@ QUANTITY
 
 
 .ps-qty span {
-
     min-width: 22px;
-
     text-align: center;
-
     font-size: 16px;
-
     font-weight: 700;
-
+    color: white;
 }
 
 
 
-/*==============================
-DELIVERY
-==============================*/
-
 .ps-delivery {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
-
     padding: 16px;
-
     background: #fafafa;
-
     border: 1px solid #ececec;
-
     border-radius: 16px;
-
 }
 
 
 
 .ps-stock {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
     font-size: 14px;
-
     font-weight: 600;
-
 }
 
 
 
 .ps-stock-dot {
-
     width: 10px;
-
     height: 10px;
-
     border-radius: 50%;
-
     background: #19b24a;
-
 }
 
 
 
 .ps-delivery-text,
-
 .ps-cod {
-
     font-size: 13px;
-
     color: #555;
-
 }
 
-
-
-/*==============================
-BUY NOW
-==============================*/
-
 .ps-buy-btn {
-
     width: 100%;
-
     height: 54px;
 
     border: none;
@@ -521,7 +482,7 @@ FOCUS
     font-size: 11px;
     line-height: 1.6;
     font-weight: 400;
-    color: #444;
+    color: white;
     word-break: break-word;
 }
 

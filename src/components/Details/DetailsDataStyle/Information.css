@@ -36,7 +36,7 @@ TITLE
 
     font-weight:700;
 
-    color:#111;
+    color:white;
 
     text-align:left;
 
@@ -49,12 +49,13 @@ TITLE
     align-items:center;
     justify-content:space-between;
     gap:16px;
+    color: white;
 }
 
 
 .dt-info-row span:first-child{
 
-    color:#666;
+    color:white;
 
     font-size:13px;
 

@@ -439,7 +439,7 @@ function Home({
         }
 
         if (
-            parts.length === 4 &&
+            (parts.length === 4 || parts.length === 5) &&
             parts[0] === "home" &&
             parts[3]
         ) {
@@ -507,12 +507,6 @@ function Home({
             setAllShopCategoriesPage(false);
             setAllShopsPage(false);
         }
-
-        // ==========================================
-        // CATEGORY PRODUCT URL
-        // /home/gifts/category/BIRTHDAY/product/G27
-        // /home/shop/category/ELECTRONICS/product/P27
-        // ==========================================
 
         if (
             parts.length === 6 &&
@@ -615,7 +609,20 @@ function Home({
             }
         });
 
-        setDetailsPage("details");
+        if (location.pathname.endsWith("/reviews")) {
+
+            setDetailsPage("allreview");
+
+        } else if (location.pathname.endsWith("/media")) {
+
+            setDetailsPage("allmedia");
+
+        } else {
+
+            setDetailsPage("details");
+
+        }
+
         setIsDetailsOpen(true);
 
     }, [location.pathname]);
@@ -725,7 +732,21 @@ function Home({
             selectedMenu,
             pathname: location.pathname
         });
+        if (!location.pathname.includes("/product/")) {
 
+            setDetailsBackPage({
+
+                selectedBottomTab,
+
+                profilePage,
+
+                selectedMenu,
+
+                pathname: location.pathname
+
+            });
+
+        }
         setDetailsPage("details");
 
         setSelectedProduct({
@@ -743,37 +764,108 @@ function Home({
 
         let productUrl;
 
-        if (
+        if (location.pathname.includes("/product/")) {
+
+            const basePath =
+                location.pathname.split("/product/")[0];
+
+            productUrl = `${basePath}/product/${id}`;
+
+        } else if (
+
             (type === "gift" &&
                 location.pathname.startsWith("/home/gifts/category/")) ||
+
             (type === "shop" &&
                 location.pathname.startsWith("/home/shop/category/"))
+
         ) {
+
             productUrl = `${location.pathname}/product/${id}`;
+
         } else {
+
             productUrl = `${location.pathname}/product/${id}`;
+
         }
 
-        goTo(productUrl);
+
+        // RELATED PRODUCT → replace history
+        if (location.pathname.includes("/product/")) {
+
+            window.history.replaceState(
+                {},
+                "",
+                productUrl
+            );
+
+            window.dispatchEvent(
+                new PopStateEvent("popstate")
+            );
+
+        } else {
+
+            goTo(productUrl);
+
+        }
     };
 
     const handleCloseDetails = () => {
 
-        if (detailsBackPage) {
+        console.log("BACK DEBUG:", {
+            currentPath: location.pathname,
+            detailsBackPage
+        });
+        const currentPath = location.pathname;
 
-            setSelectedBottomTab(
-                detailsBackPage.selectedBottomTab
-            );
+        // Reviews / Media → Product Details
+        if (
+            currentPath.endsWith("/reviews") ||
+            currentPath.endsWith("/media")
+        ) {
 
-            setProfilePage(
-                detailsBackPage.profilePage
-            );
+            const productPath = currentPath
+                .replace(/\/reviews$/, "")
+                .replace(/\/media$/, "");
 
-            setSelectedMenu(
-                detailsBackPage.selectedMenu
-            );
+            setDetailsPage("details");
+
+            goTo(productPath);
+
+            return;
         }
 
+        // Product Details → Parent Page
+        if (currentPath.includes("/product/")) {
+
+            const parentPath =
+                currentPath.split("/product/")[0];
+
+            if (detailsBackPage) {
+
+                setSelectedBottomTab(
+                    detailsBackPage.selectedBottomTab
+                );
+
+                setProfilePage(
+                    detailsBackPage.profilePage
+                );
+
+                setSelectedMenu(
+                    detailsBackPage.selectedMenu
+                );
+            }
+
+            setDetailsPage("details");
+            setSelectedProduct(null);
+            setIsDetailsOpen(false);
+
+            goTo(parentPath);
+
+            return;
+        }
+
+        // Normal fallback
         setDetailsPage("details");
         setSelectedProduct(null);
         setIsDetailsOpen(false);
@@ -835,6 +927,7 @@ function Home({
     return (
 
         <div className="home-container">
+
             {
                 showMainHeader && (
                     <Header
@@ -858,16 +951,15 @@ function Home({
                     />
                 )
             }
-
             {
                 !isDetailsOpen &&
 
-                (selectedBottomTab === null ||
-
-                    selectedBottomTab === "Premium") &&
+                (
+                    selectedBottomTab === "Home" ||
+                    selectedBottomTab === "Premium"
+                ) &&
 
                 <Search
-
                     selectedMenu={
                         selectedBottomTab === "Home"
                             ? selectedMenu
@@ -878,16 +970,12 @@ function Home({
                     filter={filter}
                     setFilter={setFilter}
                     categories={categories}
-
                     cards={cardSuggestionsData}
                     gifts={giftSuggestionsData}
                     shops={shopSuggestionsData}
                     premiums={premiumSuggestionsData}
-
-
                 />
             }
-
             <div className="home-content">
 
                 {
@@ -905,10 +993,17 @@ function Home({
 
                                 onOpenDetails={handleOpenDetails}
 
-                                onViewAll={() => setDetailsPage("allreview")}
+                                onViewAll={() => {
+                                    setDetailsPage("allreview");
 
-                                onViewAllMedia={() => setDetailsPage("allmedia")}
+                                    navigate(`${location.pathname}/reviews`);
+                                }}
 
+
+                                onViewAllMedia={() => {
+                                    setDetailsPage("allmedia");
+                                    navigate(`${location.pathname}/media`);
+                                }}
                                 onBuyNow={(buyNowItem, orderType) => {
 
 

@@ -48,7 +48,7 @@ function AllShops({
 
             {/* All Shops */}
 
-            <div className="cds-grid">
+            <div className="cdss-grid">
 
                 {
                     shops.map((shop) => (

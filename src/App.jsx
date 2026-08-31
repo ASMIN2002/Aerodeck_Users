@@ -2,12 +2,12 @@ import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
+import AuthFlip from "./pages/Login/AuthFlip";
+import TermsAndCondition from "./pages/Login/TermsAndCondition";
 import Loading from "./components/Loading/Loading";
 import Splash from "./pages/Splash/Splash";
-import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
 import Home from "./pages/Home/Home";
-import Register from "./pages/Login/Register";
 import NoInternet from "./components/NoInternet/NoInternet";
 import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
@@ -16,9 +16,6 @@ import { API } from "./services/api";
 const NAV_HISTORY_KEY = "heepit_navigation_history";
 
 function App() {
-    // useEffect(() => {
-    //     localStorage.removeItem(NAV_HISTORY_KEY);
-    // }, []);
     const navigate = useNavigate();
     const goTo = (url) => {
         let history = [];
@@ -528,15 +525,29 @@ function App() {
                     setPage={changePage}
                 />
             }
-
             {
+                (page === "login" || page === "register") && (
+                    <AuthFlip
+                        page={page}
+                        setPage={changePage}
+                        setAuthMode={setAuthMode}
+                    />
+                )
+            }
+            {page === "terms" && (
+                <TermsAndCondition
+                    setPage={setPage}
+                />
+            )}
+
+            {/* {
                 page === "login" &&
                 <Login
                     setPage={changePage}
                     setUser={setUser}
                     setAuthMode={setAuthMode}
                 />
-            }
+            } */}
 
             {
                 page === "otp" &&
@@ -576,13 +587,13 @@ function App() {
                 page === "appupdate" &&
                 <AppUpdate user={user} />
             }
-            {
+            {/* {
                 page === "register" &&
                 <Register
                     setPage={changePage}
                     setAuthMode={setAuthMode}
                 />
-            }
+            } */}
         </>
     );
 

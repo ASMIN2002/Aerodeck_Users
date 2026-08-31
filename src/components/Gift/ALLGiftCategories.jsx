@@ -11,6 +11,8 @@ function ALLGiftCategories({
             String(item.catname).toUpperCase() === "GIFT"
     );
 
+
+
     return (
 
         <section className="all-gift-categories">
@@ -25,11 +27,10 @@ function ALLGiftCategories({
                 </button>
 
                 <h2>
-                    All Gift Categories
+                    All Categories
                 </h2>
 
             </div>
-
 
             <div className="all-gift-category-grid">
 
@@ -64,7 +65,6 @@ function ALLGiftCategories({
             </div>
 
         </section>
-
     );
 }
 

@@ -48,7 +48,6 @@ function Reviews({
                 >
                     View All
                 </button>
-
             </div>
 
             <div className="dt-review-scroll">
@@ -62,6 +61,8 @@ function Reviews({
                             <div
                                 className="dt-review-card"
                                 key={index}
+                                onClick={onViewAll}
+                                style={{ cursor: "pointer" }}
                             >
 
                                 <div className="dt-review-top">
