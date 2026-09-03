@@ -1,21 +1,53 @@
 import "./BottomNav.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiGift, FiHome, FiStar, FiShoppingCart, FiUser } from "react-icons/fi";
 
 
 function BottomNav({
-    profileImageRefresh,
     selectedBottomTab,
     setSelectedBottomTab,
     setSelectedMenu,
     isDetailsOpen,
     closeDetails,
     setProfilePage,
+    cartCount,
+    setCartCount
 }) {
 
     const navigate = useNavigate();
     const [showComingSoon, setShowComingSoon] = useState(false);
+
+    useEffect(() => {
+        const fetchCartCount = async () => {
+            try {
+                const userData = JSON.parse(localStorage.getItem("user"));
+
+                if (!userData?.user_id) {
+                    setCartCount(0);
+                    return;
+                }
+
+                const response = await fetch(
+                    `https://aerodeck-server.onrender.com/api/user/cart?user_id=${userData.user_id}`
+                );
+
+                const data = await response.json();
+
+                if (data.success && data.cart) {
+                    setCartCount(data.cart.length);
+                } else {
+                    setCartCount(0);
+                }
+
+            } catch (error) {
+                console.error("Cart count error:", error);
+                setCartCount(0);
+            }
+        };
+
+        fetchCartCount();
+    }, []);
 
     return (
         <>
@@ -38,10 +70,6 @@ function BottomNav({
                 >
                     <span className="bn-icon">
                         <FiHome />
-                    </span>
-
-                    <span className="bn-text">
-                        Home
                     </span>
                 </button>
                 <button
@@ -74,10 +102,6 @@ function BottomNav({
                     <span className="bn-iconpre">
                         <FiGift />
                     </span>
-
-                    <span className="bn-text">
-                        Offers
-                    </span>
                 </button>
 
                 <button
@@ -107,9 +131,6 @@ function BottomNav({
                     <span className="bn-iconpre">
                         <FiStar />
                     </span>
-                    <span className="bn-text">
-                        Premium
-                    </span>
                 </button>
 
                 <button
@@ -131,11 +152,9 @@ function BottomNav({
                     }}
                 >
                     <span className="bn-icon">
-                        <FiShoppingCart />
-                    </span>
-
-                    <span className="bn-text">
-                        Cart
+                        <FiShoppingCart /><span className="bn-cart-count">
+                            {cartCount}
+                        </span>
                     </span>
                 </button>
                 <button
@@ -156,10 +175,6 @@ function BottomNav({
                 >
                     <span className="bn-icon">
                         <FiUser />
-                    </span>
-
-                    <span className="bn-text">
-                        Profile
                     </span>
                 </button>
             </nav>

@@ -1,36 +1,66 @@
-import { useRef, useState } from "react";
 import "../DetailsDataStyle/PreviewVideo.css";
 
 function PreviewVideo({ video_link }) {
 
-    const videoRef = useRef(null);
-    const [showPlay, setShowPlay] = useState(true);
+    const getYouTubeId = (url) => {
 
-    const playVideo = () => {
+        if (!url) return null;
 
-        if (!videoRef.current || !video_link) return;
+        try {
 
-        videoRef.current.currentTime = 0;
-        videoRef.current.play();
-        setShowPlay(false);
+            const parsedUrl = new URL(url);
 
-    };
+            // youtu.be/VIDEO_ID
+            if (
+                parsedUrl.hostname.includes("youtu.be")
+            ) {
+                return parsedUrl.pathname
+                    .split("/")
+                    .filter(Boolean)[0];
+            }
 
-    const openFullscreen = () => {
+            // youtube.com/watch?v=VIDEO_ID
+            if (
+                parsedUrl.pathname === "/watch"
+            ) {
+                return parsedUrl.searchParams.get("v");
+            }
 
-        if (!videoRef.current) return;
+            // youtube.com/shorts/VIDEO_ID
+            if (
+                parsedUrl.pathname.includes("/shorts/")
+            ) {
+                return parsedUrl.pathname
+                    .split("/shorts/")[1]
+                    ?.split("/")[0];
+            }
 
-        if (videoRef.current.requestFullscreen) {
-            videoRef.current.requestFullscreen();
+            // youtube.com/embed/VIDEO_ID
+            if (
+                parsedUrl.pathname.includes("/embed/")
+            ) {
+                return parsedUrl.pathname
+                    .split("/embed/")[1]
+                    ?.split("/")[0];
+            }
+
+            return null;
+
+        } catch {
+
+            return null;
+
         }
 
     };
 
-    const handleVideoEnd = () => {
 
-        setShowPlay(true);
+    const videoId = getYouTubeId(video_link);
+    const hasValidVideo =
+        typeof video_link === "string" &&
+        /^https?:\/\//i.test(video_link.trim()) &&
+        videoId;
 
-    };
 
     return (
 
@@ -39,52 +69,36 @@ function PreviewVideo({ video_link }) {
             <h3>Product Preview</h3>
 
             {
-                !video_link ? (
+                !hasValidVideo ? (
 
                     <div className="dt-no-preview">
                         No Preview Available
                     </div>
 
-                ) : (
+                ) : videoId ? (
 
                     <div className="dt-video-container">
 
-                        <video
-                            ref={videoRef}
+                        <iframe
                             className="dt-preview-video"
-                            playsInline
-                            preload="metadata"
-                            controls={false}
-                            onEnded={handleVideoEnd}
-                        >
-
-                            <source
-                                src={video_link}
-                                type="video/mp4"
-                            />
-
-                        </video>
-
-                        {showPlay && (
-                            <button
-                                className="dt-play-btn"
-                                onClick={playVideo}
-                            >
-                                ▶
-                            </button>
-                        )}
-
-                        <button
-                            className="dt-fullscreen-btn"
-                            onClick={openFullscreen}
-                        >
-                            ⛶
-                        </button>
+                            src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0`}
+                            title="Product Preview"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                            allowFullScreen
+                        />
 
                     </div>
 
+                ) : (
+
+                    <div className="dt-no-preview">
+                        Invalid YouTube Video Link
+                    </div>
+
                 )
+
             }
+
         </div>
 
     );

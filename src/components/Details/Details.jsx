@@ -33,6 +33,20 @@ function Details({
     const [touchStart, setTouchStart] = useState(0);
     const [touchEnd, setTouchEnd] = useState(0);
 
+    const [fullscreenImage, setFullscreenImage] = useState(null);
+    const [imageZoom, setImageZoom] = useState(1);
+    const [pinchDistance, setPinchDistance] = useState(null);
+
+    const openFullscreenImage = (image) => {
+        setFullscreenImage(image);
+        setImageZoom(1);
+    };
+
+    const closeFullscreenImage = () => {
+        setFullscreenImage(null);
+        setImageZoom(1);
+    };
+
     const images = [
 
         details?.product_image1 ||
@@ -710,33 +724,44 @@ function Details({
                     className="dt-image-box"
 
                     onTouchStart={(e) => {
-                        setTouchStart(e.targetTouches[0].clientX);
+                        setTouchStart(e.touches[0].clientX);
                     }}
 
-                    onTouchMove={(e) => {
-                        setTouchEnd(e.targetTouches[0].clientX);
-                    }}
+                    onTouchEnd={(e) => {
 
-                    onTouchEnd={() => {
+                        const touchEndX =
+                            e.changedTouches[0].clientX;
 
-                        const distance = touchStart - touchEnd;
+                        const distance =
+                            touchEndX - touchStart;
 
-                        if (Math.abs(distance) < 50) return;
+                        // Sirf proper drag par image change
+                        if (Math.abs(distance) < 80) return;
 
-                        if (distance > 0) {
+                        // LEFT DRAG → NEXT IMAGE
+                        if (distance < 0) {
 
                             if (currentIndex < images.length - 1) {
+
                                 const next = currentIndex + 1;
+
                                 setCurrentIndex(next);
                                 setSelectedImage(images[next]);
+
                             }
 
-                        } else {
+                        }
+
+                        // RIGHT DRAG → PREVIOUS IMAGE
+                        else {
 
                             if (currentIndex > 0) {
+
                                 const prev = currentIndex - 1;
+
                                 setCurrentIndex(prev);
                                 setSelectedImage(images[prev]);
+
                             }
 
                         }
@@ -747,6 +772,10 @@ function Details({
                     <img
                         src={selectedImage}
                         alt={product?.product_name}
+                        onClick={() =>
+                            openFullscreenImage(selectedImage)
+                        }
+                        style={{ cursor: "zoom-in" }}
                     />
 
                 </div>
@@ -856,6 +885,136 @@ function Details({
                 onViewAll={onViewAll}
                 onViewAllMedia={onViewAllMedia}
             />
+            {fullscreenImage && (
+
+                <div
+                    className="dt-fullscreen-overlay"
+                    onClick={closeFullscreenImage}
+                >
+
+                    <button
+                        className="dt-fullscreen-close"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            closeFullscreenImage();
+                        }}
+                    >
+                        ✕
+                    </button>
+
+                    <div
+                        className="dt-fullscreen-image-box"
+
+                        onClick={(e) => e.stopPropagation()}
+
+                        onTouchStart={(e) => {
+
+                            if (e.touches.length === 2) {
+
+                                const dx =
+                                    e.touches[0].clientX -
+                                    e.touches[1].clientX;
+
+                                const dy =
+                                    e.touches[0].clientY -
+                                    e.touches[1].clientY;
+
+                                const distance =
+                                    Math.sqrt(dx * dx + dy * dy);
+
+                                setPinchDistance(distance);
+
+                            }
+
+                        }}
+
+                        onTouchMove={(e) => {
+
+                            if (
+                                e.touches.length === 2 &&
+                                pinchDistance
+                            ) {
+
+                                const dx =
+                                    e.touches[0].clientX -
+                                    e.touches[1].clientX;
+
+                                const dy =
+                                    e.touches[0].clientY -
+                                    e.touches[1].clientY;
+
+                                const currentDistance =
+                                    Math.sqrt(dx * dx + dy * dy);
+
+                                const scale =
+                                    currentDistance / pinchDistance;
+
+                                setImageZoom((prev) => {
+
+                                    const newZoom =
+                                        prev * scale;
+
+                                    return Math.min(
+                                        Math.max(newZoom, 1),
+                                        4
+                                    );
+
+                                });
+
+                                setPinchDistance(currentDistance);
+
+                            }
+
+                        }}
+                        onTouchEnd={() => {
+
+                            const distance = touchStart - touchEnd;
+
+                            if (Math.abs(distance) < 50) return;
+
+                            if (distance > 0) {
+
+                                if (currentIndex < images.length - 1) {
+
+                                    const next = currentIndex + 1;
+
+                                    setCurrentIndex(next);
+
+                                    setSelectedImage(images[next]);
+
+                                    setFullscreenImage(images[next]);
+
+                                }
+
+                            } else {
+
+                                if (currentIndex > 0) {
+
+                                    const prev = currentIndex - 1;
+
+                                    setCurrentIndex(prev);
+
+                                    setSelectedImage(images[prev]);
+
+                                    setFullscreenImage(images[prev]);
+
+                                }
+
+                            }
+
+                        }}
+                    >
+
+                        <img
+                            src={fullscreenImage}
+                            alt="Fullscreen Preview"
+                        />
+
+                    </div>
+
+                </div>
+
+            )}
 
         </div>
 

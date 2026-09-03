@@ -3,7 +3,6 @@ import "./MyCart.css";
 import Address from "../../Address/Address";
 import CartBilling from "./CartBilling";
 import CartCard from "./CartCard";
-import CartTabs from "./CartTabs";
 import { API } from "../../../services/api";
 
 function MyCart({
@@ -11,10 +10,11 @@ function MyCart({
     setOrderData,
     setBuyNowFromDetails,
     onOpenDetails,
-    setSelectedBottomTab
+    setSelectedBottomTab,
+    setCartCount
 }) {
     const sessionToken = localStorage.getItem("session_token");
-    const [activeTab, setActiveTab] = useState("products");
+    const [activeTab] = useState("products");
     const [cart, setCart] = useState([]);
 
     const products = cart.filter(item => {
@@ -64,48 +64,39 @@ function MyCart({
 
         try {
 
-            await fetch(
-
+            const response = await fetch(
                 `${API}/api/user/cart/${productId}`,
-
                 {
-
                     method: "DELETE",
 
                     headers: {
-
                         "Content-Type": "application/json"
-
                     },
 
                     body: JSON.stringify({
-
                         session_token: sessionToken
-
                     })
-
                 }
-
             );
+
+            const data = await response.json();
+
+            if (!data.success) return;
 
             setCart(prev =>
-
                 prev.filter(
-
                     item => item.product_id !== productId
-
                 )
-
             );
 
-        }
+            // Cart badge count update
+            setCartCount(prev => Math.max(0, prev - 1));
 
-        catch (err) {
+        } catch (err) {
 
             console.log(err);
 
         }
-
     };
     const handleIncrease = async (item) => {
 
@@ -229,7 +220,11 @@ function MyCart({
 
     };
     const handlePlaceOrder = () => {
+
         setBuyNowFromDetails(false);
+
+        setSelectedBottomTab("Profile");
+
         if (activeTab === "products") {
 
             setOrderData({
@@ -239,6 +234,16 @@ function MyCart({
 
             setProfilePage("productorder");
 
+            window.history.pushState(
+                {},
+                "",
+                "/cart/placeorder"
+            );
+
+            window.dispatchEvent(
+                new PopStateEvent("popstate")
+            );
+
         } else {
 
             setOrderData({
@@ -247,6 +252,16 @@ function MyCart({
             });
 
             setProfilePage("cardorder");
+
+            window.history.pushState(
+                {},
+                "",
+                "/cart/placeorder"
+            );
+
+            window.dispatchEvent(
+                new PopStateEvent("popstate")
+            );
 
         }
 

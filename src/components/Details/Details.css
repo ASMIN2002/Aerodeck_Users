@@ -28,13 +28,13 @@ ROOT
     --dt-primary-hover: #000000;
 
     --dt-shadow-sm:
-        0 2px 8px rgba(0,0,0,.05);
+        0 2px 8px rgba(0, 0, 0, .05);
 
     --dt-shadow:
-        0 8px 22px rgba(0,0,0,.08);
+        0 8px 22px rgba(0, 0, 0, .08);
 
     --dt-shadow-lg:
-        0 18px 45px rgba(0,0,0,.12);
+        0 18px 45px rgba(0, 0, 0, .12);
 
     --dt-transition:
         .25s ease;
@@ -49,29 +49,29 @@ GLOBAL
 
 *,
 *::before,
-*::after{
+*::after {
 
-    box-sizing:border-box;
-
-}
-
-html{
-
-    scroll-behavior:smooth;
+    box-sizing: border-box;
 
 }
 
-body{
+html {
 
-    margin:0;
+    scroll-behavior: smooth;
 
-    background:var(--dt-bg);
+}
 
-    color:var(--dt-text);
+body {
 
-    overflow-x:hidden;
+    margin: 0;
 
-    -webkit-font-smoothing:antialiased;
+    background: var(--dt-bg);
+
+    color: var(--dt-text);
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
 
 }
 
@@ -81,21 +81,21 @@ body{
 PAGE
 ==============================*/
 
-.dt-page{
+.dt-page {
 
-    width:100%;
+    width: 100%;
 
-    max-width:var(--dt-max-width);
+    max-width: var(--dt-max-width);
 
-    margin:auto;
+    margin: auto;
 
-    padding:8px;
+    padding: 8px;
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:10px;
+    gap: 10px;
 }
 
 
@@ -104,19 +104,19 @@ PAGE
 IMAGE WRAPPER
 ==============================*/
 
-.dt-image-wrapper{
+.dt-image-wrapper {
 
-    position:relative;
+    position: relative;
 
     width: 100%;
 
-    border-radius:var(--dt-radius-lg);
+    border-radius: var(--dt-radius-lg);
 
-    overflow:hidden;
+    overflow: hidden;
 
-    background:var(--dt-white);
+    background: var(--dt-white);
 
-    box-shadow:var(--dt-shadow);
+    box-shadow: var(--dt-shadow);
     /* height: 50%; */
 
 }
@@ -127,53 +127,53 @@ IMAGE WRAPPER
 IMAGE BOX
 ==============================*/
 
-.dt-image-box{
+.dt-image-box {
 
-    position:relative;
+    position: relative;
 
-    width:100%;
+    width: 100%;
 
-    aspect-ratio:1/1;
+    aspect-ratio: 1/1;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    background:#ffffff;
+    background: #ffffff;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
 }
 
 
 
-.dt-image-box img{
+.dt-image-box img {
 
-    width:100%;
+    width: 100%;
 
     height: 100%;
 
-    object-fit:contain;
+    object-fit: contain;
 
-    user-select:none;
+    user-select: none;
 
-    -webkit-user-drag:none;
+    -webkit-user-drag: none;
 
     transition:
         transform .45s ease,
         opacity .25s ease;
 
-    will-change:transform;
+    will-change: transform;
 
 }
 
 
 
-.dt-image-box:hover img{
+.dt-image-box:hover img {
 
-    transform:scale(1.03);
+    transform: scale(1.03);
 
 }
 
@@ -183,31 +183,31 @@ IMAGE BOX
 OVERLAY
 ==============================*/
 
-.dt-overlay{
+.dt-overlay {
 
-    position:absolute;
+    position: absolute;
 
-    top:8px;
+    top: 8px;
 
-    left:8px;
+    left: 8px;
 
-    right:8px;
+    right: 8px;
 
-    display:flex;
+    display: flex;
 
-    justify-content:space-between;
+    justify-content: space-between;
 
-    align-items:flex-start;
+    align-items: flex-start;
 
-    pointer-events:none;
+    pointer-events: none;
 
 }
 
 
 
-.dt-overlay>*{
+.dt-overlay>* {
 
-    pointer-events:auto;
+    pointer-events: auto;
 
 }
 
@@ -217,46 +217,46 @@ OVERLAY
 BACK BUTTON
 ==============================*/
 
-.dt-back{
+.dt-back {
 
-    width:34px;
+    width: 34px;
 
-    height:34px;
+    height: 34px;
 
-    border:none;
+    border: none;
 
-    border-radius:50%;
+    border-radius: 50%;
 
     background:
-        rgba(255,255,255,.86);
+        rgba(255, 255, 255, .86);
 
-    backdrop-filter:blur(12px);
+    backdrop-filter: blur(12px);
 
-    cursor:pointer;
+    cursor: pointer;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    font-size:15px;
+    font-size: 15px;
 
-    color:var(--dt-text);
+    color: var(--dt-text);
 
-    box-shadow:var(--dt-shadow-sm);
+    box-shadow: var(--dt-shadow-sm);
 
-    transition:var(--dt-transition);
+    transition: var(--dt-transition);
 
 }
 
 
 
-.dt-back:hover{
+.dt-back:hover {
 
-    transform:translateY(-2px);
+    transform: translateY(-2px);
 
-    box-shadow:var(--dt-shadow);
+    box-shadow: var(--dt-shadow);
 
 }
 
@@ -266,17 +266,17 @@ BACK BUTTON
 RIGHT ACTIONS
 ==============================*/
 
-.dt-overlay{
+.dt-overlay {
 
-    display:flex;
+    display: flex;
 
 }
 
 
 
-.dt-overlay .dt-action-btn{
+.dt-overlay .dt-action-btn {
 
-    margin-left:6px;
+    margin-left: 6px;
 
 }
 
@@ -286,78 +286,78 @@ RIGHT ACTIONS
 ACTION BUTTON
 ==============================*/
 
-.dt-action-btn{
+.dt-action-btn {
 
-    min-width:34px;
+    min-width: 34px;
 
-    height:34px;
+    height: 34px;
 
-    padding:0 9px;
+    padding: 0 9px;
 
-    border:none;
+    border: none;
 
-    border-radius:var(--dt-radius-round);
+    border-radius: var(--dt-radius-round);
 
     background:
-        rgba(255,255,255,.88);
+        rgba(255, 255, 255, .88);
 
-    backdrop-filter:blur(12px);
+    backdrop-filter: blur(12px);
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    gap:5px;
+    gap: 5px;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    color:var(--dt-text);
+    color: var(--dt-text);
 
-    box-shadow:var(--dt-shadow-sm);
+    box-shadow: var(--dt-shadow-sm);
 
-    transition:var(--dt-transition);
-
-}
-
-
-
-.dt-action-btn:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:var(--dt-shadow);
+    transition: var(--dt-transition);
 
 }
 
 
 
-.dt-action-btn:active{
+.dt-action-btn:hover {
 
-    transform:scale(.95);
+    transform: translateY(-2px);
 
-}
-
-
-
-.dt-action-btn svg{
-
-    font-size:14px;
-
-    flex-shrink:0;
+    box-shadow: var(--dt-shadow);
 
 }
 
 
 
-.dt-action-btn span{
+.dt-action-btn:active {
 
-    font-size:11px;
+    transform: scale(.95);
 
-    font-weight:600;
+}
 
-    line-height:1;
+
+
+.dt-action-btn svg {
+
+    font-size: 14px;
+
+    flex-shrink: 0;
+
+}
+
+
+
+.dt-action-btn span {
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    line-height: 1;
 
 }
 
@@ -367,30 +367,30 @@ ACTION BUTTON
 IMAGE COUNT
 ==============================*/
 
-.dt-image-count{
+.dt-image-count {
 
-    position:absolute;
+    position: absolute;
 
-    right:10px;
+    right: 10px;
 
-    bottom:10px;
+    bottom: 10px;
 
-    padding:5px 10px;
+    padding: 5px 10px;
 
-    border-radius:999px;
+    border-radius: 999px;
 
     background:
-        rgba(17,17,17,.72);
+        rgba(17, 17, 17, .72);
 
-    color:#ffffff;
+    color: #ffffff;
 
-    font-size:10px;
+    font-size: 10px;
 
-    font-weight:600;
+    font-weight: 600;
 
-    letter-spacing:.3px;
+    letter-spacing: .3px;
 
-    backdrop-filter:blur(10px);
+    backdrop-filter: blur(10px);
 
 }
 
@@ -400,9 +400,9 @@ IMAGE COUNT
 LOADING
 ==============================*/
 
-.dt-image-box img[src=""]{
+.dt-image-box img[src=""] {
 
-    opacity:0;
+    opacity: 0;
 
 }
 
@@ -413,11 +413,11 @@ FOCUS
 ==============================*/
 
 .dt-back:focus-visible,
-.dt-action-btn:focus-visible{
+.dt-action-btn:focus-visible {
 
-    outline:2px solid #111;
+    outline: 2px solid #111;
 
-    outline-offset:2px;
+    outline-offset: 2px;
 
 }
 
@@ -427,44 +427,45 @@ FOCUS
 SELECTION
 ==============================*/
 
-::selection{
+::selection {
 
-    background:#111;
+    background: #111;
 
-    color:#fff;
+    color: #fff;
 
 }
+
 /*=========================================================
   THUMBNAILS
 =========================================================*/
 
-.dt-images{
+.dt-images {
 
-    width:100%;
+    width: 100%;
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:8px;
+    gap: 8px;
 
-    overflow-x:auto;
+    overflow-x: auto;
 
-    overflow-y:hidden;
+    overflow-y: hidden;
 
-    padding:2px 0 6px;
+    padding: 2px 0 6px;
 
-    scroll-behavior:smooth;
+    scroll-behavior: smooth;
 
-    scrollbar-width:none;
+    scrollbar-width: none;
 
-    -ms-overflow-style:none;
+    -ms-overflow-style: none;
 
 }
 
-.dt-images::-webkit-scrollbar{
+.dt-images::-webkit-scrollbar {
 
-    display:none;
+    display: none;
 
 }
 
@@ -474,29 +475,29 @@ SELECTION
   THUMBNAIL
 =========================================================*/
 
-.dt-thumb{
+.dt-thumb {
 
-    width:58px;
+    width: 58px;
 
-    height:58px;
+    height: 58px;
 
-    flex:0 0 auto;
+    flex: 0 0 auto;
 
-    border-radius:14px;
+    border-radius: 14px;
 
-    object-fit:cover;
+    object-fit: cover;
 
-    background:#ffffff;
+    background: #ffffff;
 
-    border:1px solid var(--dt-border);
+    border: 1px solid var(--dt-border);
 
-    cursor:pointer;
+    cursor: pointer;
 
-    user-select:none;
+    user-select: none;
 
-    -webkit-user-drag:none;
+    -webkit-user-drag: none;
 
-    box-shadow:var(--dt-shadow-sm);
+    box-shadow: var(--dt-shadow-sm);
 
     transition:
         transform .25s ease,
@@ -508,32 +509,32 @@ SELECTION
 
 
 
-.dt-thumb:hover{
+.dt-thumb:hover {
 
-    transform:translateY(-2px);
+    transform: translateY(-2px);
 
-    border-color:#d7d7d7;
+    border-color: #d7d7d7;
 
-    box-shadow:var(--dt-shadow);
-
-}
-
-
-
-.dt-thumb:active{
-
-    transform:scale(.95);
+    box-shadow: var(--dt-shadow);
 
 }
 
 
 
-.dt-thumb.active{
+.dt-thumb:active {
 
-    border:2px solid var(--dt-primary);
+    transform: scale(.95);
+
+}
+
+
+
+.dt-thumb.active {
+
+    border: 2px solid var(--dt-primary);
 
     box-shadow:
-        0 0 0 3px rgba(17,17,17,.08);
+        0 0 0 3px rgba(17, 17, 17, .08);
 
 }
 
@@ -543,11 +544,11 @@ SELECTION
   HOVER EFFECTS
 =========================================================*/
 
-@media (hover:hover){
+@media (hover:hover) {
 
-    .dt-image-box:hover img{
+    .dt-image-box:hover img {
 
-        transform:scale(1.03);
+        transform: scale(1.03);
 
     }
 
@@ -555,11 +556,11 @@ SELECTION
 
 
 
-@media (hover:none){
+@media (hover:none) {
 
-    .dt-image-box:hover img{
+    .dt-image-box:hover img {
 
-        transform:none;
+        transform: none;
 
     }
 
@@ -573,7 +574,7 @@ SELECTION
 
 .dt-back,
 .dt-action-btn,
-.dt-thumb{
+.dt-thumb {
 
     transition:
         transform .25s ease,
@@ -587,18 +588,18 @@ SELECTION
 
 
 .dt-back:hover,
-.dt-action-btn:hover{
+.dt-action-btn:hover {
 
-    background:#ffffff;
+    background: #ffffff;
 
 }
 
 
 
 .dt-back:active,
-.dt-action-btn:active{
+.dt-action-btn:active {
 
-    transform:scale(.95);
+    transform: scale(.95);
 
 }
 
@@ -608,19 +609,19 @@ SELECTION
   IMAGE TRANSITION
 =========================================================*/
 
-.dt-image-box{
+.dt-image-box {
 
-    isolation:isolate;
+    isolation: isolate;
 
 }
 
 
 
-.dt-image-box img{
+.dt-image-box img {
 
-    backface-visibility:hidden;
+    backface-visibility: hidden;
 
-    transform:translateZ(0);
+    transform: translateZ(0);
 
 }
 
@@ -632,11 +633,11 @@ SELECTION
 
 .dt-back,
 .dt-action-btn,
-.dt-thumb{
+.dt-thumb {
 
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
-    touch-action:manipulation;
+    touch-action: manipulation;
 
 }
 
@@ -646,19 +647,19 @@ SELECTION
   ACCESSIBILITY
 =========================================================*/
 
-.dt-thumb:focus-visible{
+.dt-thumb:focus-visible {
 
-    outline:2px solid var(--dt-primary);
+    outline: 2px solid var(--dt-primary);
 
-    outline-offset:3px;
+    outline-offset: 3px;
 
 }
 
 
 
-.dt-images img{
+.dt-images img {
 
-    display:block;
+    display: block;
 
 }
 
@@ -669,17 +670,17 @@ SELECTION
 =========================================================*/
 
 .dt-back,
-.dt-action-btn{
+.dt-action-btn {
 
-    border:1px solid rgba(255,255,255,.65);
+    border: 1px solid rgba(255, 255, 255, .65);
 
 }
 
 
 
-.dt-image-count{
+.dt-image-count {
 
-    border:1px solid rgba(255,255,255,.12);
+    border: 1px solid rgba(255, 255, 255, .12);
 
 }
 
@@ -692,9 +693,9 @@ SELECTION
 .dt-image-box img,
 .dt-thumb,
 .dt-back,
-.dt-action-btn{
+.dt-action-btn {
 
-    will-change:transform;
+    will-change: transform;
 
 }
 
@@ -704,21 +705,21 @@ SELECTION
   SAFE IMAGE HANDLING
 =========================================================*/
 
-.dt-thumb{
+.dt-thumb {
 
-    overflow:hidden;
+    overflow: hidden;
 
 }
 
 
 
-.dt-thumb img{
+.dt-thumb img {
 
-    width:100%;
+    width: 100%;
 
-    height:100%;
+    height: 100%;
 
-    object-fit:cover;
+    object-fit: cover;
 
 }
 
@@ -728,7 +729,7 @@ SELECTION
   REDUCED MOTION
 =========================================================*/
 
-@media (prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion:reduce) {
 
     .dt-image-box img,
 
@@ -736,9 +737,9 @@ SELECTION
 
     .dt-back,
 
-    .dt-action-btn{
+    .dt-action-btn {
 
-        transition:none;
+        transition: none;
 
     }
 
@@ -750,17 +751,18 @@ SELECTION
   PRINT
 =========================================================*/
 
-@media print{
+@media print {
 
     .dt-overlay,
 
-    .dt-images{
+    .dt-images {
 
-        display:none;
+        display: none;
 
     }
 
 }
+
 /*=========================================================
   RESPONSIVE
   Mobile First → 2560px
@@ -771,53 +773,53 @@ SELECTION
 240px+
 ==============================*/
 
-@media (min-width:240px){
+@media (min-width:240px) {
 
-    .dt-page{
+    .dt-page {
 
-        padding:8px;
-        gap:10px;
-
-    }
-
-    .dt-image-wrapper{
-
-        border-radius:18px;
+        padding: 8px;
+        gap: 10px;
 
     }
 
-    .dt-back{
+    .dt-image-wrapper {
 
-        width:32px;
-        height:32px;
-        font-size:14px;
+        border-radius: 18px;
 
     }
 
-    .dt-action-btn{
+    .dt-back {
 
-        height:32px;
-        min-width:32px;
-        padding:0 8px;
-
-    }
-
-    .dt-action-btn svg{
-
-        font-size:13px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
 
     }
 
-    .dt-action-btn span{
+    .dt-action-btn {
 
-        font-size:10px;
+        height: 32px;
+        min-width: 32px;
+        padding: 0 8px;
 
     }
 
-    .dt-thumb{
+    .dt-action-btn svg {
 
-        width:54px;
-        height:54px;
+        font-size: 13px;
+
+    }
+
+    .dt-action-btn span {
+
+        font-size: 10px;
+
+    }
+
+    .dt-thumb {
+
+        width: 54px;
+        height: 54px;
 
     }
 
@@ -829,19 +831,19 @@ SELECTION
 320px+
 ==============================*/
 
-@media (min-width:320px){
+@media (min-width:320px) {
 
-    .dt-page{
+    .dt-page {
 
-        padding:10px;
-        gap:12px;
+        padding: 10px;
+        gap: 12px;
 
     }
 
-    .dt-thumb{
+    .dt-thumb {
 
-        width:58px;
-        height:58px;
+        width: 58px;
+        height: 58px;
 
     }
 
@@ -853,26 +855,26 @@ SELECTION
 375px+
 ==============================*/
 
-@media (min-width:375px){
+@media (min-width:375px) {
 
-    .dt-back{
+    .dt-back {
 
-        width:34px;
-        height:34px;
-
-    }
-
-    .dt-action-btn{
-
-        height:34px;
-        min-width:34px;
+        width: 34px;
+        height: 34px;
 
     }
 
-    .dt-thumb{
+    .dt-action-btn {
 
-        width:62px;
-        height:62px;
+        height: 34px;
+        min-width: 34px;
+
+    }
+
+    .dt-thumb {
+
+        width: 62px;
+        height: 62px;
 
     }
 
@@ -884,24 +886,24 @@ SELECTION
 430px+
 ==============================*/
 
-@media (min-width:430px){
+@media (min-width:430px) {
 
-    .dt-page{
+    .dt-page {
 
-        padding:12px;
-
-    }
-
-    .dt-images{
-
-        gap:10px;
+        padding: 12px;
 
     }
 
-    .dt-thumb{
+    .dt-images {
 
-        width:66px;
-        height:66px;
+        gap: 10px;
+
+    }
+
+    .dt-thumb {
+
+        width: 66px;
+        height: 66px;
 
     }
 
@@ -913,19 +915,19 @@ SELECTION
 576px+
 ==============================*/
 
-@media (min-width:576px){
+@media (min-width:576px) {
 
-    .dt-page{
+    .dt-page {
 
-        padding:16px;
-        gap:16px;
+        padding: 16px;
+        gap: 16px;
 
     }
 
-    .dt-thumb{
+    .dt-thumb {
 
-        width:74px;
-        height:74px;
+        width: 74px;
+        height: 74px;
 
     }
 
@@ -937,24 +939,24 @@ SELECTION
 768px+
 ==============================*/
 
-@media (min-width:768px){
+@media (min-width:768px) {
 
-    .dt-page{
+    .dt-page {
 
-        padding:20px;
-
-    }
-
-    .dt-image-wrapper{
-
-        border-radius:22px;
+        padding: 20px;
 
     }
 
-    .dt-thumb{
+    .dt-image-wrapper {
 
-        width:82px;
-        height:82px;
+        border-radius: 22px;
+
+    }
+
+    .dt-thumb {
+
+        width: 82px;
+        height: 82px;
 
     }
 
@@ -966,59 +968,59 @@ SELECTION
 1024px+
 ==============================*/
 
-@media (min-width:1024px){
+@media (min-width:1024px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1180px;
-
-    }
-
-    .dt-image-wrapper{
-
-        border-radius:24px;
+        max-width: 1180px;
 
     }
 
-    .dt-back{
+    .dt-image-wrapper {
 
-        width:42px;
-        height:42px;
-        font-size:17px;
+        border-radius: 24px;
 
     }
 
-    .dt-action-btn{
+    .dt-back {
 
-        height:42px;
-        min-width:42px;
-        padding:0 14px;
-
-    }
-
-    .dt-action-btn svg{
-
-        font-size:16px;
+        width: 42px;
+        height: 42px;
+        font-size: 17px;
 
     }
 
-    .dt-action-btn span{
+    .dt-action-btn {
 
-        font-size:12px;
-
-    }
-
-    .dt-image-count{
-
-        font-size:12px;
-        padding:7px 14px;
+        height: 42px;
+        min-width: 42px;
+        padding: 0 14px;
 
     }
 
-    .dt-thumb{
+    .dt-action-btn svg {
 
-        width:88px;
-        height:88px;
+        font-size: 16px;
+
+    }
+
+    .dt-action-btn span {
+
+        font-size: 12px;
+
+    }
+
+    .dt-image-count {
+
+        font-size: 12px;
+        padding: 7px 14px;
+
+    }
+
+    .dt-thumb {
+
+        width: 88px;
+        height: 88px;
 
     }
 
@@ -1030,11 +1032,11 @@ SELECTION
 1200px+
 ==============================*/
 
-@media (min-width:1200px){
+@media (min-width:1200px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1280px;
+        max-width: 1280px;
 
     }
 
@@ -1046,11 +1048,11 @@ SELECTION
 1366px+
 ==============================*/
 
-@media (min-width:1366px){
+@media (min-width:1366px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1366px;
+        max-width: 1366px;
 
     }
 
@@ -1062,11 +1064,11 @@ SELECTION
 1440px+
 ==============================*/
 
-@media (min-width:1440px){
+@media (min-width:1440px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1440px;
+        max-width: 1440px;
 
     }
 
@@ -1078,18 +1080,18 @@ SELECTION
 1600px+
 ==============================*/
 
-@media (min-width:1600px){
+@media (min-width:1600px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1520px;
+        max-width: 1520px;
 
     }
 
-    .dt-thumb{
+    .dt-thumb {
 
-        width:96px;
-        height:96px;
+        width: 96px;
+        height: 96px;
 
     }
 
@@ -1101,18 +1103,18 @@ SELECTION
 1920px+
 ==============================*/
 
-@media (min-width:1920px){
+@media (min-width:1920px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1650px;
+        max-width: 1650px;
 
     }
 
-    .dt-thumb{
+    .dt-thumb {
 
-        width:102px;
-        height:102px;
+        width: 102px;
+        height: 102px;
 
     }
 
@@ -1124,24 +1126,24 @@ SELECTION
 2560px+
 ==============================*/
 
-@media (min-width:2560px){
+@media (min-width:2560px) {
 
-    .dt-page{
+    .dt-page {
 
-        max-width:1850px;
-
-    }
-
-    .dt-image-wrapper{
-
-        border-radius:30px;
+        max-width: 1850px;
 
     }
 
-    .dt-thumb{
+    .dt-image-wrapper {
 
-        width:118px;
-        height:118px;
+        border-radius: 30px;
+
+    }
+
+    .dt-thumb {
+
+        width: 118px;
+        height: 118px;
 
     }
 
@@ -1153,18 +1155,18 @@ SELECTION
   LANDSCAPE PHONES
 =========================================================*/
 
-@media (max-height:500px) and (orientation:landscape){
+@media (max-height:500px) and (orientation:landscape) {
 
-    .dt-page{
+    .dt-page {
 
-        padding:8px;
+        padding: 8px;
 
     }
 
-    .dt-thumb{
+    .dt-thumb {
 
-        width:52px;
-        height:52px;
+        width: 52px;
+        height: 52px;
 
     }
 
@@ -1176,18 +1178,113 @@ SELECTION
   LARGE TOUCH DEVICES
 =========================================================*/
 
-@media (pointer:coarse){
+@media (pointer:coarse) {
 
-    .dt-thumb{
+    .dt-thumb {
 
-        scroll-snap-align:start;
+        scroll-snap-align: start;
 
     }
 
-    .dt-images{
+    .dt-images {
 
-        scroll-snap-type:x proximity;
+        scroll-snap-type: x proximity;
 
+    }
+
+}
+
+.dt-fullscreen-overlay {
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    animation: dtFullscreenFade .25s ease;
+}
+
+
+.dt-fullscreen-image-box {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    max-width: 95vw;
+    max-height: 92vh;
+
+    overflow: hidden;
+}
+
+
+.dt-fullscreen-image-box img {
+
+    max-width: 95vw;
+    max-height: 92vh;
+
+    object-fit: contain;
+
+    user-select: none;
+
+    cursor: grab;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 20px 80px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.dt-fullscreen-close {
+
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    z-index: 100000;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    backdrop-filter: blur(10px);
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+}
+
+
+@keyframes dtFullscreenFade {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 
 }

@@ -28,7 +28,6 @@ import CardOrder from "../../components/MyProfileDetails/PlaceOrder/CardOrder";
 import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
 import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
 import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
-import TrackOrder from "../../components/MyProfileDetails/PlaceOrder/OrderItem/TrackOrder";
 import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/ItemInvoice";
 import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfile";
 import AllReview from "../../components/Details/DetailsData/AllReview";
@@ -889,12 +888,6 @@ function Home({
     const [allShopsPage, setAllShopsPage] = useState(false);
     const [allGiftsPage, setAllGiftsPage] = useState(false);
 
-
-
-
-
-
-
     const showMainHeader =
         !isDetailsOpen &&
         selectedBottomTab === "Home" &&
@@ -923,6 +916,31 @@ function Home({
         }
         loadProfile();
     }, []);
+    useEffect(() => {
+
+        const handleBackNavigation = () => {
+
+            if (window.location.pathname === "/cart") {
+
+                setIsDetailsOpen(false);
+                setSelectedProduct(null);
+                setDetailsPage("details");
+                setSelectedBottomTab("Cart");
+                setProfilePage("cart");
+            }
+
+        };
+
+        window.addEventListener("popstate", handleBackNavigation);
+
+        return () => {
+            window.removeEventListener(
+                "popstate",
+                handleBackNavigation
+            );
+        };
+
+    }, []);
 
     return (
 
@@ -942,11 +960,16 @@ function Home({
                         closeDetails={handleCloseDetails}
                         userId={user?.user_id}
                         onOpenCart={() => {
+
                             setIsDetailsOpen(false);
                             setSelectedProduct(null);
                             setDetailsPage("details");
-                            setSelectedBottomTab("Profile");
+
+                            setSelectedBottomTab("Cart");
                             setProfilePage("cart");
+
+                            navigate("/cart");
+
                         }}
                     />
                 )
@@ -1210,6 +1233,7 @@ function Home({
                         setBuyNowFromDetails={setBuyNowFromDetails}
                         onOpenDetails={handleOpenDetails}
                         setSelectedBottomTab={setSelectedBottomTab}
+                        setCartCount={setCartCount}
                     />
                 }
                 {
@@ -1365,6 +1389,8 @@ function Home({
                 closeDetails={handleCloseDetails}
                 setProfilePage={setProfilePage}
                 navigateWithLoading={navigateWithLoading}
+                cartCount={cartCount}
+                setCartCount={setCartCount}
             />
 
         </div>

@@ -45,51 +45,32 @@ function CartCard({
         item.shop_price;
 
     const getDeliveryDate = (days) => {
-
         if (!days) return "-";
 
         const date = new Date();
+        date.setDate(date.getDate() + Number(days));
 
-        date.setDate(
-            date.getDate() + Number(days)
-        );
-
-        const day = date.toLocaleDateString("en-IN", {
-            weekday: "short"
-        }).toUpperCase();
-
-        const formattedDate = date.toLocaleDateString("en-IN", {
+        return date.toLocaleDateString("en-IN", {
             day: "2-digit",
             month: "short",
             year: "numeric"
         });
-
-        return `${formattedDate}, ${day}`;
     };
-
     return (
 
         <div className="cart-card">
-
-            <img
-
-                src={image}
-
-                alt={name}
-
-                className="cart-image"
-
-            />
+            <div>
+                <img
+                    src={image}
+                    alt={name}
+                    className="cart-image"
+                />
+            </div>
             <button
-
                 className="delete-cart-btn"
-
                 onClick={() => onDelete(item.product_id)}
-
             >
-
                 <FaTrash />
-
             </button>
 
             <div className="cart-details">
@@ -111,7 +92,7 @@ function CartCard({
 
 
                 <p className="cart-delivery-date">
-                    Delivery by : {getDeliveryDate(item.delivery)}
+                    Delivery by: {getDeliveryDate(item.delivery)}
                 </p>
                 <div className="qtyviewcart">
                     <div className="cart-quantity">
@@ -148,18 +129,25 @@ function CartCard({
 
                         className="view-product-btn"
 
-                        onClick={() =>
-                            onOpenDetails(
-                                item,
-                                String(item.product_id).startsWith("G")
-                                    ? "gift"
-                                    : String(item.product_id).startsWith("S")
-                                        ? "shop"
-                                        : String(item.product_id).startsWith("P")
-                                            ? "premium"
-                                            : "card"
-                            )
-                        }
+                        onClick={() => {
+
+                            const productId = String(item.product_id);
+
+                            let type = "card";
+
+                            if (productId.startsWith("G")) {
+                                type = "gift";
+                            }
+                            else if (productId.startsWith("S")) {
+                                type = "shop";
+                            }
+                            else if (productId.startsWith("P")) {
+                                type = "premium";
+                            }
+
+                            onOpenDetails(item, type);
+
+                        }}
 
                     >
 

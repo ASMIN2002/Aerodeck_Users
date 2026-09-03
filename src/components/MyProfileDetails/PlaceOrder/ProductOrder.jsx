@@ -13,7 +13,7 @@ function ProductOrder({
     onBackToDetails
 }) {
 
-    const products = orderData.items || [];
+    const products = orderData?.items || [];
 
     const getPrice = (item) => {
 
@@ -44,18 +44,13 @@ function ProductOrder({
 
     }, 0);
 
-    const gst = +(subtotal * 0.18).toFixed(2);
-
     const platformFee = 2;
-
-    const codCharge = paymentMethod === "COD" ? 5 : 0;
+    const MINIMUM_ORDER_AMOUNT = 200;
 
     const grandTotal =
         subtotal +
-        gst +
-        platformFee +
-        codCharge;
-    const upiTotal = subtotal + gst + platformFee;
+        platformFee;
+    const upiTotal = subtotal + platformFee;
 
     const [primaryAddress, setPrimaryAddress] = useState(null);
 
@@ -127,11 +122,13 @@ function ProductOrder({
                 <button
                     className="product-order-back"
                     onClick={() => {
+
                         if (buyNowFromDetails) {
                             onBackToDetails();
                         } else {
-                            setProfilePage("cart");
+                            window.history.back();
                         }
+
                     }}
                 >
                     ←
@@ -281,12 +278,6 @@ function ProductOrder({
                         <span>Total MRP</span>
                         <span>₹{subtotal.toFixed(2)}</span>
                     </div>
-
-                    <div className="row">
-                        <span>GST (18%)</span>
-                        <span>₹{gst.toFixed(2)}</span>
-                    </div>
-
                     <div className="row">
                         <span>Platform Fee</span>
                         <span>₹{platformFee.toFixed(2)}</span>
@@ -372,6 +363,21 @@ function ProductOrder({
             <button
                 className="continue-payment-btn"
                 onClick={() => {
+                    if (subtotal < MINIMUM_ORDER_AMOUNT) {
+
+                        const remainingAmount =
+                            MINIMUM_ORDER_AMOUNT - subtotal;
+
+                        setAddressError(
+                            `Minimum order amount is ₹200. Add ₹${remainingAmount.toFixed(2)} more to continue.`
+                        );
+
+                        setTimeout(() => {
+                            setAddressError("");
+                        }, 3000);
+
+                        return;
+                    }
 
                     if (!primaryAddress) {
 
@@ -401,9 +407,6 @@ function ProductOrder({
                             total_items: products.length,
 
                             subtotal,
-
-                            gst,
-
                             platform_fee: platformFee,
 
                             delivery_fee: 0,
@@ -448,8 +451,6 @@ function ProductOrder({
                                     total_items: products.length,
 
                                     subtotal,
-
-                                    gst,
 
                                     platform_fee: platformFee,
 
