@@ -369,115 +369,145 @@ function App() {
             if (page !== "splash") {
                 return;
             }
+
             setShowLoading(true);
+
             try {
 
-                const sessionToken = localStorage.getItem("session_token");
+                const sessionToken =
+                    localStorage.getItem("session_token");
 
                 if (!sessionToken) {
 
                     setPage("login");
                     return;
-
                 }
 
                 const response = await fetch(
-
                     `${API}/api/auth/check-session`,
-
                     {
-
                         method: "POST",
 
                         headers: {
-
                             "Content-Type": "application/json"
-
                         },
 
                         body: JSON.stringify({
-
                             session_token: sessionToken
-
                         })
-
                     }
-
                 );
 
                 const data = await response.json();
+
                 if (data.success && data.authenticated) {
 
                     setUser(data.user);
 
-                    const updatePending =
-                        localStorage.getItem("heepit_update_pending");
+                    // =========================================
+                    // ACTUAL INSTALLED APP VERSION SYNC
+                    // =========================================
 
-                    if (updatePending === "true") {
+                    try {
 
-                        try {
+                        const appInfo =
+                            await CapacitorApp.getInfo();
 
-                            const versionResponse = await fetch(
-                                `${API}/user/update-app-version/${data.user.user_id}`,
-                                {
-                                    method: "PUT",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    }
-                                }
+                        const installedVersion =
+                            String(appInfo.version);
+
+                        console.log(
+                            "ACTUAL INSTALLED VERSION:",
+                            installedVersion
+                        );
+
+                        const currentVersionResponse =
+                            await fetch(
+                                `${API}/user/app-version/${data.user.user_id}`
                             );
+
+                        const currentVersionData =
+                            await currentVersionResponse.json();
+
+                        const databaseVersion =
+                            currentVersionData.version
+                                ? String(currentVersionData.version)
+                                : "";
+
+                        console.log(
+                            "DATABASE VERSION:",
+                            databaseVersion
+                        );
+
+                        // DB update ONLY when actual installed
+                        // APK version is different
+                        if (
+                            databaseVersion !== installedVersion
+                        ) {
+
+                            console.log(
+                                "VERSION DIFFERENT - SYNCING DATABASE..."
+                            );
+
+                            const versionResponse =
+                                await fetch(
+                                    `${API}/user/update-app-version/${data.user.user_id}`,
+                                    {
+                                        method: "PUT",
+
+                                        headers: {
+                                            "Content-Type":
+                                                "application/json"
+                                        },
+
+                                        body: JSON.stringify({
+                                            version: installedVersion
+                                        })
+                                    }
+                                );
 
                             const versionData =
                                 await versionResponse.json();
 
                             console.log(
-                                "POST UPDATE VERSION:",
+                                "VERSION SYNC RESULT:",
                                 versionData
                             );
 
-                            if (
-                                versionResponse.ok &&
-                                versionData.success
-                            ) {
+                        } else {
 
-                                localStorage.removeItem(
-                                    "heepit_update_pending"
-                                );
-
-                            }
-
-                        } catch (versionError) {
-
-                            console.error(
-                                "POST UPDATE VERSION ERROR:",
-                                versionError
+                            console.log(
+                                "VERSION ALREADY MATCHED"
                             );
-
                         }
+
+                    } catch (versionError) {
+
+                        console.error(
+                            "APP VERSION SYNC ERROR:",
+                            versionError
+                        );
                     }
 
+                    // Version sync ke baad home
                     setPage("home");
 
                 } else {
 
                     if (navigator.onLine) {
-
                         changePage("login");
-
                     }
-
                 }
 
             } catch (err) {
+
                 console.error(err);
-                return;
+
             } finally {
 
                 setCheckingSession(false);
                 setShowLoading(false);
-
             }
-
         }
 
         restoreSession();

@@ -52,11 +52,23 @@
 
 .bn-active {
     color: rgb(248, 247, 247);
-    font-weight: bold;
     font-size: 10px;
     text-shadow: 0 0 3px black;
+    position: relative;
 }
 
+.bn-active::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: rgb(255, 0, 0);
+    border-radius: 10px;
+    box-shadow: 0 0 6px white;
+}
 
 .bn-coming-toast {
     position: fixed;

@@ -129,10 +129,6 @@ function AppUpdate({ user }) {
             setDownloadedMB(0);
             setTotalMB(0);
             setDownloading(true);
-            localStorage.setItem(
-                "heepit_update_pending",
-                "true"
-            );
             await updater.update({
                 url: apkUrl
             });
