@@ -4,8 +4,8 @@
     z-index: 1000;
     width: 100%;
     box-sizing: border-box;
-    background-color: #3899a3;
-    background: linear-gradient(90deg, orange, white, rgb(0, 255, 0));
+    background-color: BLACK;
+    /* background: linear-gradient(90deg, orange, white, rgb(0, 255, 0)); */
 }
 
 /* ================================

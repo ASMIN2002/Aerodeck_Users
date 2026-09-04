@@ -1,3 +1,22 @@
+// ✅ SABSE PEHLE VERSION FETCH KARO
+def versionApiUrl = "https://aerodeck-server.onrender.com/api/app/latest-version"
+
+def connection = new URL(versionApiUrl).openConnection()
+connection.setRequestMethod("GET")
+connection.setUseCaches(false)
+connection.setConnectTimeout(15000)
+connection.setReadTimeout(15000)
+
+def responseText = connection.inputStream.getText("UTF-8")
+def versionResponse = new groovy.json.JsonSlurper().parseText(responseText)
+
+if (!versionResponse.success || !versionResponse.version) {
+    throw new GradleException("Unable to fetch latest app version")
+}
+def latestVersion = versionResponse.version.toString()
+
+println("BUILDING APK VERSION: " + latestVersion)
+
 apply plugin: 'com.android.application'
 
 android {
@@ -8,11 +27,9 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
-        versionName "27.03.02"
+        versionName latestVersion   // ← DYNAMIC VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
-             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
-             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }

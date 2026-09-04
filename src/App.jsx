@@ -513,6 +513,44 @@ function App() {
         restoreSession();
 
     }, [page]);
+    useEffect(() => {
+        async function syncVersionAfterUpdate() {
+            if (!user?.user_id) return;
+
+            try {
+                const appInfo = await CapacitorApp.getInfo();
+                const installedVersion = String(appInfo.version);
+
+                const currentVersionResponse = await fetch(
+                    `${API}/user/app-version/${user.user_id}`
+                );
+                const currentVersionData = await currentVersionResponse.json();
+                const databaseVersion = currentVersionData.version
+                    ? String(currentVersionData.version)
+                    : "";
+
+                if (databaseVersion !== installedVersion) {
+                    await fetch(`${API}/user/update-app-version/${user.user_id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ version: installedVersion })
+                    });
+                    console.log("✅ VERSION SYNCED AFTER UPDATE!");
+
+                    // ✅ UPDATE CHECK DOBARA KARO
+                    const updateRes = await fetch(`${API}/user/check-update/${user.user_id}`);
+                    const updateData = await updateRes.json();
+                    if (updateData.update_available === false) {
+                        setUpdateRequired(false);
+                    }
+                }
+            } catch (err) {
+                console.error("VERSION SYNC ERROR:", err);
+            }
+        }
+
+        syncVersionAfterUpdate();
+    }, [user, page]);   // ← YEH DEPENDENCY RAKHO
     if (!isOnline) {
 
         return (

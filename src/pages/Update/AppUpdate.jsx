@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./AppUpdate.css";
+import { API } from "../../services/api";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 
 const AppUpdater = registerPlugin("AppUpdater");
@@ -11,16 +12,13 @@ function AppUpdate({ user }) {
     const [totalMB, setTotalMB] = useState(0);
     const [downloading, setDownloading] = useState(false);
     const [error, setError] = useState("");
+    const userRef = useRef(user);
+    useEffect(() => {
+        userRef.current = user;
+    }, [user]);
 
     useEffect(() => {
         const updater = AppUpdater;
-
-        console.log("PLATFORM:", Capacitor.getPlatform());
-        console.log(
-            "NATIVE APP:",
-            Capacitor.isNativePlatform()
-        );
-        console.log("APP UPDATER:", updater);
 
         if (!updater) {
             console.error("HEEPIT native updater not available.");
@@ -53,18 +51,40 @@ function AppUpdate({ user }) {
 
                 }
             );
+        const completeListener = updater.addListener("downloadComplete", async () => {
+            setProgress(100);
+            setDownloading(false);
 
-        const completeListener =
-            updater.addListener(
-                "downloadComplete",
-                () => {
+            // ✅ REF SE USER LO
+            const userId = userRef.current?.user_id;
 
-                    setProgress(100);
-                    setDownloading(false);
+            if (!userId) {
+                console.error("❌ USER ID NOT FOUND!");
+                setError("User session not found.");
+                return;
+            }
 
-                }
-            );
+            try {
+                const versionRes = await fetch(`${API}/api/app/latest-version`);
+                const versionData = await versionRes.json();
+                const latestVersion = versionData.version;
+                await fetch(`${API}/user/update-app-version/${userId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ version: latestVersion })
+                });
+                await fetch(`${API}/user/update-download-status/${userId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ isdownload: true })
+                });
+                window.location.href = "/home/shop";
 
+            } catch (err) {
+                console.error("VERSION UPDATE ERROR:", err);
+                setError("Version update failed: " + err.message);
+            }
+        });
         const errorListener =
             updater.addListener(
                 "downloadError",

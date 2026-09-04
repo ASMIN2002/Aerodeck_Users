@@ -312,18 +312,13 @@ public class AppUpdaterPlugin extends Plugin {
                                 )
                         )
                 );
-
+                installApk(context, Uri.parse(localUri));
                 notifyListeners(
                         "downloadComplete",
                         new JSObject()
                 );
 
                 cleanupReceiver();
-
-                installApk(
-                        context,
-                        Uri.parse(localUri)
-                );
 
             } else if (status ==
                     DownloadManager
