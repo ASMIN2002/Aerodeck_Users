@@ -1,319 +1,522 @@
+/* ========================================
+   PROFILE PAGE - Professional White Theme
+   ======================================== */
+
+/* ===== BASE ===== */
 .profile {
-    width: 100%;
-    min-height: 100%;
-    padding: 4px 14px 28px;
-    box-sizing: border-box;
-    color: #0f172a;
+  /* max-width: 480px; */
+  margin: 0 auto;
+  padding: 20px 16px 30px;
+  background: #ffffff;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  position: relative;
 }
 
+/* ===== LOADING OVERLAY ===== */
+.profile-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.profile-loader {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #f0f0f0;
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.profile-loading p {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* ===== HEADER ===== */
 .profile-header {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background: linear-gradient(90deg, aqua, #8745ac);
-    border: 1px solid rgba(5, 13, 231, 0.9);
-    border-radius: 24px;
-    box-shadow: 0 0 5px black;
-    backdrop-filter: blur(18px);
-    overflow: hidden;
-}
-
-.prohead2 {
-    text-align: left;
-    border-left: 1px solid black;
-    padding: 5px;
-    color: white;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 0 20px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .prohead1 {
-    position: relative;
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    overflow: hidden;
-
-    border: 4px solid transparent;
-    background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(135deg, #000000, #02f2fe, #5908e6) border-box;
+  flex-shrink: 0;
 }
 
 .profile-image1 {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-
-    transform: scale(1.2);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  background: #f8f9fa;
 }
 
+.prohead2 {
+  flex: 1;
+  min-width: 0;
+}
 
 .prohead2 h2 {
-    position: relative;
-    z-index: 1;
-    max-width: 100%;
-    font-size: 12px;
-    font-weight: 750;
-    letter-spacing: 1px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
 .prohead2 p {
-    position: relative;
-    z-index: 1;
-    margin: 3px;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 2px;
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 10px;
+  letter-spacing: 0.3px;
 }
 
 .edit-profile-btn-pro {
-    position: relative;
-    z-index: 1;
-    min-width: 185px;
-    height: 32px;
-    border: 0;
-    border-radius: 12px;
-    background: #0f172a;
-    color: #ffffff;
-    font-size: 9px;
-    font-weight: 650;
-    letter-spacing: 0.2px;
-    cursor: pointer;
-    border: 1px solid white;
+  padding: 6px 18px;
+  border: none;
+  border-radius: 20px;
+  background: #1a1a1a;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
 }
 
-.edit-profile-btn:active {
-    transform: scale(0.97);
+.edit-profile-btn-pro:hover {
+  background: #333333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.edit-profile-btn-pro:active {
+  transform: scale(0.96);
+}
 
-/* =========================================================
-   PROFILE MENU
-   ========================================================= */
-
+/* ===== PROFILE MENU ===== */
 .profile-menu {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 28px;
+  margin: 18px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-
-/* =========================================================
-   PROFILE ITEM
-   ========================================================= */
 
 .profile-item {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 50px;
-    padding: 0 15px;
-    box-sizing: border-box;
-    background: rgb(255 255 255 / 90%);
-    border: 1px solid rgba(226, 232, 240, 0.9);
-    border-radius: 9px;
-    cursor: pointer;
-    box-shadow: 0 0 3px black;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
 }
 
+.profile-item:hover {
+  background: #f0f2f5;
+  transform: translateX(4px);
+  border-color: #e8eaed;
+}
 
-/* icon */
+.profile-item:active {
+  transform: scale(0.98);
+}
 
 .profile-item span:first-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    margin-right: 6px;
-    border-radius: 9px;
-    background: #4a4049;
-    font-size: 12px;
-    flex-shrink: 0;
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
 }
-
-
-/* text */
 
 .profile-item span:last-child {
-    font-size: 8px;
-    font-weight: bold;
-    color: #334155;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  letter-spacing: -0.2px;
 }
-
-
-/* arrow */
 
 .profile-item::after {
-    content: "›";
-    position: absolute;
-    right: 10px;
-    font-size: 20px;
-    font-weight: 300;
-    color: #94a3b8;
-    margin-top: -4px;
+  content: '›';
+  margin-left: auto;
+  font-size: 22px;
+  color: #ccc;
+  font-weight: 300;
+  transition: transform 0.2s ease;
 }
-
 
 .profile-item:hover::after {
-    color: #000000;
+  transform: translateX(4px);
+  color: #888;
 }
 
-
-
+/* ===== LOGOUT BUTTON ===== */
 .logout-btn {
-    width: 100%;
-    height: 42px;
-    margin-top: 18px;
-    border: 1px solid rgb(22 4 4 / 16%);
-    border-radius: 6px;
-    background: rgb(243 131 131 / 85%);
-    color: #000000;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #fff5f5;
+  color: #e53935;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin: 8px 0 12px;
+  gap: 8px;
+}
+
+.logout-btn::before {
+  content: '🚪';
+  font-size: 18px;
 }
 
 .logout-btn:hover {
-    background: #fee2e2;
-
-    box-shadow:
-        0 7px 20px rgba(239, 68, 68, 0.1);
+  background: #ffebeb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(229, 57, 53, 0.15);
 }
 
 .logout-btn:active {
-    transform: scale(0.98);
+  transform: scale(0.97);
 }
 
-
+/* ===== VERSION ===== */
 .profile-version {
-    margin: 17px 0 0;
-    text-align: center;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: #eeeff3;
-    text-transform: uppercase;
+  text-align: center;
+  font-size: 12px;
+  color: #bbb;
+  margin: 16px 0 0;
+  letter-spacing: 0.5px;
+  font-weight: 400;
 }
 
-.reward-profile-item {
-    position: relative;
-}
-
-.reward-notification-dot {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 10px;
-    height: 10px;
-
-    border-radius: 50%;
-
-    background: #ffd700;
-
-    box-shadow:
-        0 0 6px #ffd700,
-        0 0 14px rgba(255, 215, 0, 0.8);
-
-    animation: rewardPulse 1.5s infinite;
-}
-
-@keyframes rewardPulse {
-
-    0%,
-    100% {
-        transform: translateY(-50%) scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: translateY(-50%) scale(1.35);
-        opacity: 0.65;
-    }
-}
-
+/* ===== LOGOUT MODAL ===== */
 .logout-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.25s ease;
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(5px);
-
-    padding: 20px;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .logout-message-box {
-    width: min(90%, 360px);
-    background: #fff;
-    border-radius: 18px;
-    padding: 24px 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px 28px 24px;
+  max-width: 340px;
+  width: 90%;
+  text-align: center;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
 
-    text-align: center;
-
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
-
-    animation: logoutBoxIn 0.2s ease-out;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .logout-message-box h3 {
-    margin: 0 0 8px;
-    font-size: 20px;
-    color: #111;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 6px;
 }
 
 .logout-message-box p {
-    margin: 0 0 22px;
-    font-size: 14px;
-    color: #666;
+  font-size: 15px;
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.5;
 }
 
 .logout-box-buttons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .logout-box-buttons button {
-    flex: 1;
-    height: 44px;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .logout-cancel-btn {
-    background: #f1f1f1;
-    color: #333;
+  background: #f0f0f0;
+  color: #555;
+}
+
+.logout-cancel-btn:hover {
+  background: #e5e5e5;
 }
 
 .logout-confirm-btn {
-    background: #e53935;
-    color: #fff;
+  background: #e53935;
+  color: #ffffff;
 }
 
-@keyframes logoutBoxIn {
-    from {
-        opacity: 0;
-        transform: scale(0.92);
-    }
+.logout-confirm-btn:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(229, 57, 53, 0.3);
+}
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.logout-confirm-btn:active {
+  transform: scale(0.96);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+/* ===== TABLET ===== */
+@media (min-width: 481px) and (max-width: 768px) {
+  .profile {
+    max-width: 600px;
+    padding: 24px 24px 40px;
+  }
+
+  .profile-image1 {
+    width: 96px;
+    height: 96px;
+  }
+
+  .prohead2 h2 {
+    font-size: 24px;
+  }
+
+  .profile-item {
+    padding: 16px 20px;
+  }
+
+  .profile-item span:last-child {
+    font-size: 16px;
+  }
+}
+
+/* ===== DESKTOP ===== */
+@media (min-width: 769px) {
+  .profile {
+    padding: 32px 24px 48px;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    margin: 20px auto;
+    min-height: auto;
+  }
+
+  .profile-image1 {
+    width: 100px;
+    height: 100px;
+  }
+
+  .prohead2 h2 {
+    font-size: 26px;
+  }
+
+  .profile-item {
+    padding: 16px 20px;
+    border-radius: 14px;
+  }
+}
+
+/* ===== MOBILE SMALL ===== */
+@media (max-width: 380px) {
+  .profile {
+    padding: 12px 12px 24px;
+  }
+
+  .profile-image1 {
+    width: 64px;
+    height: 64px;
+  }
+
+  .prohead2 h2 {
+    font-size: 17px;
+  }
+
+  .profile-item {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .profile-item span:first-child {
+    font-size: 17px;
+    width: 24px;
+  }
+
+  .profile-item span:last-child {
+    font-size: 14px;
+  }
+
+  .logout-message-box {
+    padding: 24px 20px 20px;
+  }
+}
+
+/* ========================================
+   DARK MODE SUPPORT
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+  .prohead2 h2 {
+    color: black;
+  }
+
+  .prohead2 p {
+    color: #999;
+  }
+  .profile-item:hover {
+    background: #2d2d2d;
+    border-color: #3a3a3a;
+  }
+
+  .profile-item span:last-child {
+    color: black;
+  }
+
+  .profile-item::after {
+    color: #555;
+  }
+
+  .edit-profile-btn-pro {
+    background: #000000;
+    color: #f7f4f4;
+  }
+
+  .edit-profile-btn-pro:hover {
+    background: #e5e5e5;
+  }
+
+  .logout-btn {
+    background: red;
+    color: white;
+  }
+
+  .logout-btn:hover {
+    background: #332020;
+  }
+
+  .logout-message-box {
+    background: #1a1a1a;
+  }
+
+  .logout-message-box h3 {
+    color: #ffffff;
+  }
+
+  .logout-message-box p {
+    color: #aaa;
+  }
+
+  .logout-cancel-btn {
+    background: #333;
+    color: #ccc;
+  }
+
+  .logout-cancel-btn:hover {
+    background: #444;
+  }
+
+  .profile-version {
+    color: #555;
+  }
+
+  .profile-loader {
+    border-color: #333;
+    border-top-color: #fff;
+  }
+
+  .profile-loading {
+    background: rgba(26, 26, 26, 0.95);
+  }
+
+  .profile-loading p {
+    color: #aaa;
+  }
+
+  .profile-image1 {
+    border-color: #2a2a2a;
+    background: #2a2a2a;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY & TOUCH
+   ======================================== */
+.profile-item,
+.logout-btn,
+.edit-profile-btn-pro,
+.logout-box-buttons button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.profile-item:focus-visible,
+.logout-btn:focus-visible,
+.edit-profile-btn-pro:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

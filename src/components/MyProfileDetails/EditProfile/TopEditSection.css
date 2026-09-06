@@ -1,358 +1,670 @@
+/* ========================================
+   TOP EDIT SECTION - Profile Picture Upload
+   Professional White Theme
+   ======================================== */
+
+/* ===== BASE ===== */
 .top-edit-card {
-    position: relative;
-    width: 90%;
-    box-sizing: border-box;
-    border-radius: 22px;
-    box-shadow:
-        0 15px 45px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    overflow: hidden;
-    margin: 10px auto;
+  margin: 0 auto;
+  padding: 16px 16px 30px;
+  /* background: #ffffff; */
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  position: relative;
 }
 
-
-/* =========================================================
-   TOP GLOW
-========================================================= */
-
-.top-edit-card::before {
-    content: "";
-    position: absolute;
-
-    top: -120px;
-    left: 50%;
-
-    width: 260px;
-    height: 260px;
-
-    transform: translateX(-50%);
-
-    background: rgba(0, 242, 255, 0.12);
-
-    filter: blur(70px);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   IMAGE PREVIEW
-========================================================= */
-
+/* ========================================
+   IMAGE PREVIEW WITH PENCIL BUTTON
+   ======================================== */
 .mypropreview-section-pro {
-    position: relative;
-    z-index: 1;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin: 8px 0 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 24px;
 }
 
 .mypropreview-box-pro {
-    width: 120px;
-    height: 120px;
-    overflow: hidden;
-    border-radius: 50%;
-    position: relative;
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: visible;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border: 4px solid #ffffff;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
 }
 
-.mypropreview-image-pro {
-    width: 100%;
-    height: 100%;
-    display: block;
-
-    object-fit: cover;
-    object-position: center;
-
-    transform: scale(1.15);
-    transform-origin: center;
+.mypropreview-box-pro:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
-
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
-
-.preview-actions {
-    position: relative;
-    z-index: 5;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    background: none;
+/* ===== IMAGE BOX ===== */
+/* ===== IMAGE BOX ===== */
+.mypropreview-box-pro {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background: #f8f9fa;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
 
-.preview-actions button {
-    position: relative;
-    min-height: 35px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    color: black;
-    border: 1px solid black;
+/* ===== IMAGE INSIDE BOX ===== */
+.mypropreview-box-pro img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block; /* Important */
+  transition: transform 0.3s ease;
+  background: #f8f9fa;
+}
+/* ===== PENCIL EDIT BUTTON ===== */
+.profile-edit-btn {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  padding: 0;
 }
 
-.preview-actions button:not(:disabled):active {
-    transform: scale(0.96);
+.profile-edit-btn:hover:not(:disabled) {
+  background: #333333;
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-
-/* =========================================================
-   BACK
-========================================================= */
-
-.myproedit-back {
-    color: #d9faff;
-
-    background:
-        linear-gradient(135deg,
-            rgba(255, 255, 255, 0.06),
-            rgba(0, 242, 255, 0.04));
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+.profile-edit-btn:active:not(:disabled) {
+  transform: scale(0.92);
 }
 
-.myproedit-back:not(:disabled):hover {
-    border-color: rgba(0, 242, 255, 0.55);
-
-    box-shadow:
-        0 0 18px rgba(0, 242, 255, 0.12);
+.profile-edit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-
-/* =========================================================
-   UPLOAD
-========================================================= */
-
-.myproupload-btn {
-    color: #001014;
-
-    background:
-        linear-gradient(135deg,
-            #00f2ff,
-            #00c8ff);
-
-    border: none !important;
-
-    box-shadow:
-        0 8px 22px rgba(0, 242, 255, 0.20);
+.profile-edit-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #ffffff;
 }
 
-
-.myprochange-btn:not(:disabled):hover {
-    border-color: rgba(0, 242, 255, 0.65);
-
-    box-shadow:
-        0 0 20px rgba(0, 242, 255, 0.14);
+/* ========================================
+   POPUP MODAL
+   ======================================== */
+.profile-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.25s ease;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
 
-/* =========================================================
-   DISABLED
-========================================================= */
-
-.preview-actions button:disabled {
-    opacity: 0.38;
-
-    cursor: not-allowed;
-
-    box-shadow: none;
-
-    transform: none;
+  to {
+    opacity: 1;
+  }
 }
 
-
-/* =========================================================
-   UPLOAD SUCCESS TOAST
-========================================================= */
-
-.profile-upload-success {
-    position: fixed;
-
-    top: 18px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    z-index: 100000;
-
-    width: max-content;
-    max-width: calc(100% - 30px);
-
-    padding: 12px 18px;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(135deg,
-            rgba(0, 255, 170, 0.15),
-            rgba(0, 242, 255, 0.08));
-
-    border: 1px solid rgba(0, 255, 170, 0.45);
-
-    color: #66ffd0;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    letter-spacing: 0.5px;
-
-    text-align: center;
-
-    backdrop-filter: blur(16px);
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.4),
-        0 0 25px rgba(0, 255, 170, 0.12);
-
-    animation:
-        successIn 0.35s ease forwards;
+.profile-popup {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  max-width: 380px;
+  width: 90%;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
 
-/* =========================================================
-   FULL UPLOAD SCREEN
-========================================================= */
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
+.profile-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-popup-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.profile-popup-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.profile-popup-close:hover {
+  background: #e0e0e0;
+  transform: rotate(90deg);
+}
+
+.profile-popup-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popup-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  position: relative;
+  font-family: inherit;
+}
+
+.popup-option:hover:not(:disabled) {
+  background: #f0f2f5;
+  transform: translateX(4px);
+}
+
+.popup-option:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.popup-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.popup-option .popup-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.popup-option .popup-sub {
+  display: block;
+  font-size: 11px;
+  color: #999;
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.popup-option.upload {
+  background: #f0f7ff;
+  color: #1a73e8;
+  font-weight: 600;
+}
+
+.popup-option.upload:hover:not(:disabled) {
+  background: #e3f0ff;
+}
+
+.popup-option.remove {
+  background: #fff5f5;
+  color: #e53935;
+  font-weight: 600;
+}
+
+.popup-option.remove:hover:not(:disabled) {
+  background: #ffebeb;
+}
+
+.popup-option.cancel {
+  background: #f0f0f0;
+  color: #666;
+  font-weight: 500;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.popup-option.cancel:hover {
+  background: #e5e5e5;
+}
+
+/* ========================================
+   CROP MODAL
+   ======================================== */
+.crop-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+}
+
+.crop-modal {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.crop-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.crop-modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.crop-modal-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.crop-modal-close:hover {
+  background: #e0e0e0;
+  transform: rotate(90deg);
+}
+
+.crop-modal-body {
+  padding: 20px;
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  min-height: 300px;
+}
+
+.crop-image {
+  max-width: 100%;
+  max-height: 60vh;
+  display: block;
+}
+
+.crop-modal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.crop-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.crop-btn.cancel {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.crop-btn.cancel:hover {
+  background: #e5e5e5;
+}
+
+.crop-btn.apply {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.crop-btn.apply:hover {
+  background: #333333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.crop-btn.apply:active {
+  transform: scale(0.97);
+}
+
+/* ========================================
+   UPLOAD PROGRESS OVERLAY
+   ======================================== */
 .profile-upload-screen {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 99999;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-
-    background:
-        radial-gradient(circle at center,
-            rgba(0, 242, 255, 0.10),
-            rgba(0, 0, 0, 0.92) 65%);
-
-    backdrop-filter: blur(14px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
-
-
-/* =========================================================
-   UPLOAD BOX
-========================================================= */
 
 .profile-upload-box {
-    width: min(100%, 360px);
-
-    padding: 28px 22px;
-
-    text-align: center;
-
-    border-radius: 24px;
-
-    background:
-        linear-gradient(145deg,
-            rgba(10, 23, 31, 0.97),
-            rgba(3, 8, 12, 0.98));
-
-    border: 1px solid rgba(0, 242, 255, 0.25);
-
-    box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.65),
-        0 0 35px rgba(0, 242, 255, 0.08);
-
-    animation: uploadBoxIn 0.3s ease;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px 32px 32px;
+  max-width: 360px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.4s ease;
 }
-
-
-/* =========================================================
-   UPLOAD ICON
-========================================================= */
 
 .profile-upload-icon {
-    width: 58px;
-    height: 58px;
-
-    margin: 0 auto 17px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    font-size: 28px;
-    font-weight: 900;
-
-    color: #00f2ff;
-
-    background:
-        rgba(0, 242, 255, 0.08);
-
-    border: 1px solid rgba(0, 242, 255, 0.35);
-
-    box-shadow:
-        0 0 25px rgba(0, 242, 255, 0.12);
-
-    animation: uploadIconPulse 1.4s ease-in-out infinite;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #f0f4ff;
+  color: #1a1a1a;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  animation: bounceIcon 1.5s ease-in-out infinite;
 }
 
+@keyframes bounceIcon {
 
-/* =========================================================
-   UPLOAD TEXT
-========================================================= */
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
 
 .profile-upload-box h2 {
-    margin: 0;
-
-    color: #f4fdff;
-
-    font-size: 19px;
-    font-weight: 800;
-
-    letter-spacing: 0.2px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 6px;
 }
 
 .profile-upload-box p {
-    margin: 8px 0 22px;
-
-    color: #7e9ca5;
-
-    font-size: 13px;
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 20px;
 }
 
 .profile-upload-progress {
-    width: 100%;
-    height: 8px;
-    overflow: hidden;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
 }
 
 .profile-upload-progress-fill {
-    height: 100%;
-    border-radius: inherit;
-    background:
-        linear-gradient(90deg,
-            #006eff,
-            #00f2ff,
-            #00ffd5);
-    box-shadow:
-        0 0 15px rgba(0, 242, 255, 0.5);
+  height: 100%;
+  background: linear-gradient(90deg, #1a1a1a, #4a4a4a);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  position: relative;
 }
 
+.profile-upload-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
 
 .profile-upload-percent {
-    margin-top: 12px;
-    color: #00f2ff;
+  margin-top: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   SUCCESS MESSAGE
+   ======================================== */
+.profile-upload-success {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  z-index: 1001;
+  animation: slideDown 0.4s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 90%;
+  text-align: center;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .mypropreview-box-pro {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-edit-btn {
+    width: 40px;
+    height: 40px;
+    bottom: 2px;
+    right: 2px;
+  }
+
+  .profile-edit-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .crop-modal {
+    max-width: 100%;
+    border-radius: 16px;
+    max-height: 95vh;
+  }
+
+  .crop-modal-header {
+    padding: 16px 18px;
+  }
+
+  .crop-modal-body {
+    padding: 12px;
+    min-height: 200px;
+  }
+
+  .crop-modal-footer {
+    padding: 12px 18px 16px;
+    gap: 10px;
+  }
+
+  .profile-popup {
+    padding: 20px 16px 16px;
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mypropreview-box-pro {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-edit-btn {
+    width: 36px;
+    height: 36px;
+    bottom: 0px;
+    right: 0px;
+    border-width: 2px;
+  }
+
+  .profile-edit-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .popup-option {
+    padding: 12px 14px;
     font-size: 14px;
-    font-weight: 800;
-    letter-spacing: 1px;
+  }
+
+  .popup-option .popup-icon {
+    font-size: 18px;
+    width: 30px;
+  }
+
+  .crop-modal-header h3 {
+    font-size: 16px;
+  }
+
+  .crop-btn {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+.profile-edit-btn,
+.popup-option,
+.crop-btn,
+.profile-popup-close,
+.crop-modal-close {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-edit-btn:focus-visible,
+.popup-option:focus-visible,
+.crop-btn:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

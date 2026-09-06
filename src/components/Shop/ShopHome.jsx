@@ -116,6 +116,53 @@ function ShopHome({
     return (
 
         <div className="shop-home">
+            <section className="shop-category-section">
+
+
+
+
+                <div className="shop-category-scroll">
+
+                    {categories.map((item) => (
+
+                        <button
+                            key={item.catid}
+                            className="shop-category-box"
+                            onClick={() => onCategoryClick(item.category)}
+                        >
+
+                            <div className="shop-category-icon">
+
+                                <img
+                                    src={item.image}
+                                    alt={item.category}
+                                />
+
+                            </div>
+
+                            <span>
+                                {item.category}
+                            </span>
+
+                        </button>
+
+                    ))}
+                </div>
+                <div className="shop-section-title">
+
+                    <h3>
+                        Top Categories
+                    </h3>
+
+                    <button
+                        type="button" className="viewALL"
+                        onClick={onOpenAllShopCategories}
+                    >
+                        View all <FiArrowRight />
+                    </button>
+
+                </div>
+            </section>
             <section className="shop-offer-carousel-section">
 
                 <div
@@ -199,53 +246,7 @@ function ShopHome({
 
                 </div>
             </section>
-            <section className="shop-category-section">
 
-                <div className="shop-section-title">
-
-                    <h3>
-                        Top Categories
-                    </h3>
-
-                    <button
-                        type="button" className="viewALL"
-                        onClick={onOpenAllShopCategories}
-                    >
-                        View all <FiArrowRight />
-                    </button>
-
-                </div>
-
-
-                <div className="shop-category-scroll">
-
-                    {categories.map((item) => (
-
-                        <button
-                            key={item.catid}
-                            className="shop-category-box"
-                            onClick={() => onCategoryClick(item.category)}
-                        >
-
-                            <div className="shop-category-icon">
-
-                                <img
-                                    src={item.image}
-                                    alt={item.category}
-                                />
-
-                            </div>
-
-                            <span>
-                                {item.category}
-                            </span>
-
-                        </button>
-
-                    ))}
-                </div>
-
-            </section>
             <section className="shop-finest-deals-section">
 
 

@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import "./AppUpdate.css";
 import { API } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 
 const AppUpdater = registerPlugin("AppUpdater");
 
 function AppUpdate({ user }) {
+    const navigate = useNavigate();
 
     const [progress, setProgress] = useState(0);
     const [downloadedMB, setDownloadedMB] = useState(0);
@@ -78,7 +80,7 @@ function AppUpdate({ user }) {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ isdownload: true })
                 });
-                window.location.href = "/home/shop";
+                navigate("/home/shop");
 
             } catch (err) {
                 console.error("VERSION UPDATE ERROR:", err);
