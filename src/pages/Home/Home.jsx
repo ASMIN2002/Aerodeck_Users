@@ -33,6 +33,7 @@ import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfi
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../components/MyProfileDetails/Terms/Terms";
+import Address from "../../components/Address/Address";
 
 function Home({
     user,
@@ -948,30 +949,36 @@ function Home({
 
             {
                 showMainHeader && (
-                    <Header
-                        selectedMenu={selectedMenu}
-                        setSelectedMenu={setSelectedMenu}
-                        isMenuOpen={isMenuOpen}
-                        setSelectedBottomTab={setSelectedBottomTab}
-                        setIsMenuOpen={setIsMenuOpen}
-                        selectedBottomTab={selectedBottomTab}
-                        cartCount={cartCount}
-                        isDetailsOpen={isDetailsOpen}
-                        closeDetails={handleCloseDetails}
-                        userId={user?.user_id}
-                        onOpenCart={() => {
+                    <>
+                        <Header
+                            selectedMenu={selectedMenu}
+                            setSelectedMenu={setSelectedMenu}
+                            isMenuOpen={isMenuOpen}
+                            setSelectedBottomTab={setSelectedBottomTab}
+                            setIsMenuOpen={setIsMenuOpen}
+                            selectedBottomTab={selectedBottomTab}
+                            cartCount={cartCount}
+                            isDetailsOpen={isDetailsOpen}
+                            closeDetails={handleCloseDetails}
+                            userId={user?.user_id}
+                            onOpenCart={() => {
+                                setIsDetailsOpen(false);
+                                setSelectedProduct(null);
+                                setDetailsPage("details");
+                                setSelectedBottomTab("Cart");
+                                setProfilePage("cart");
+                                navigate("/cart");
+                            }}
+                        />
 
-                            setIsDetailsOpen(false);
-                            setSelectedProduct(null);
-                            setDetailsPage("details");
+                        <div className="home-address">
+                            <Address
+                                setProfilePage={setProfilePage}
+                                setSelectedBottomTab={setSelectedBottomTab}
+                            />
+                        </div>
 
-                            setSelectedBottomTab("Cart");
-                            setProfilePage("cart");
-
-                            navigate("/cart");
-
-                        }}
-                    />
+                    </>
                 )
             }
             {

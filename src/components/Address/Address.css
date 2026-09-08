@@ -1,6 +1,8 @@
 .ad-container {
     padding: 4px 8px;
     border: none;
+    display: flex;
+    gap: 10px;
 }
 
 .ad-button {
@@ -10,12 +12,12 @@
     align-items: center;
     gap: 5px;
     padding: 11px 8px;
-    background: rgb(55, 0, 63);
+    background: #515b5b;
     cursor: pointer;
     transition: .2s;
     overflow: hidden;
     border: 1px solid rgb(98, 0, 125);
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 
@@ -28,12 +30,12 @@
 .ad-text {
     flex: 1;
     font-size: 9px;
-    font-weight: 600;
     color: #fffdfd;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+    letter-spacing: 0.5px;
 }
 
 .ad-no-address {
@@ -48,4 +50,65 @@
     font-weight: 700;
     color: #f6f3f3;
     line-height: 1;
+}
+
+.ad-money-box {
+    border: none;
+    background: black;
+    padding: 6px 8px;
+    display: flex;
+    gap: 5px;
+    border-radius: 5px;
+}
+.ad-money-box svg{
+    color: rgb(0, 255, 217);
+}
+.money-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.money-amount {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 3px;
+    color: white;
+}
+
+.ad-money-box:active {
+    transform: scale(0.95);
+}
+
+
+.ad-coming-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: adToastIn 0.3s ease;
+}
+
+@keyframes adToastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+.ad-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    color: white;
 }

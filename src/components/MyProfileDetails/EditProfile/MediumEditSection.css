@@ -83,7 +83,7 @@
     border: 1px solid black;
     border-radius: 12px;
     outline: none;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 1px;
     font-weight: bold;
 }
@@ -191,7 +191,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: black;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 650;
 }
 

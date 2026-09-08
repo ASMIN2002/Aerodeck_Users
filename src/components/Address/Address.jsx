@@ -1,13 +1,17 @@
 import "./Address.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiMapPin, FiCreditCard } from "react-icons/fi";
 import { API } from "../../services/api";
 
 function Address({
     setProfilePage,
-    setSelectedBottomTab,
-    navigateWithLoading
+    setSelectedBottomTab
 }) {
+    const navigate = useNavigate();
+
     const [primaryAddress, setPrimaryAddress] = useState(null);
+    const [showComingSoon, setShowComingSoon] = useState(false);
     useEffect(() => {
         fetchPrimaryAddress();
     }, []);
@@ -41,63 +45,56 @@ function Address({
     };
 
     return (
-
-        <div className="ad-container">
+        < div className="ad-container" >
             <button
                 className="ad-button"
                 type="button"
                 onClick={() => {
-
-                    navigateWithLoading(
-                        () => {
-
-                            setSelectedBottomTab("Profile");
-                            setProfilePage("address");
-
-                        },
-                        "Loading Addresses...",
-                        1000
-                    );
-
+                    setSelectedBottomTab("Profile");
+                    setProfilePage("address");
+                    navigate("/profile/address");
                 }}
             >
-                <span className="ad-icon">
-                    📍
-                </span>
+                <FiMapPin className="ad-icon" />
 
-                {
-                    primaryAddress ? (
+                {primaryAddress ? (
+                    <span className="ad-text">
+                        {primaryAddress.city},{" "}
+                        {primaryAddress.state},{" "}
+                        {primaryAddress.area_street},{" "}
+                        {primaryAddress.house_flat}
+                    </span>
+                ) : (
+                    <span className="ad-text ad-no-address">
+                        Choose the Primary address for delivery
+                    </span>
+                )}
 
-                        <span className="ad-text">
-
-                            {primaryAddress.city},
-                            {" "}
-                            {primaryAddress.state},
-                            {" "}
-                            {primaryAddress.area_street},
-                            {" "}
-                            {primaryAddress.house_flat}
-
-                        </span>
-
-                    ) : (
-
-                        <span className="ad-text ad-no-address">
-
-                            Choose the Primary address for delivery
-
-                        </span>
-
-                    )
-                }
-
-                <span className="ad-arrow">
-                    ›
-                </span>
-
+                <span className="ad-arrow">›</span>
             </button>
+            <button
+                className="ad-money-box"
+                type="button"
+                onClick={() => {
+                    setShowComingSoon(true);
 
-        </div>
+                    setTimeout(() => {
+                        setShowComingSoon(false);
+                    }, 2500);
+                }}
+            >
+                <FiCreditCard className="money-icon" />
+                <span className="money-amount">₹0</span>
+            </button>
+            {
+                showComingSoon && (
+                    <div className="ad-coming-toast">
+                        HYPO Coming Soon
+                    </div>
+                )
+            }
+        </div >
+
 
     );
 

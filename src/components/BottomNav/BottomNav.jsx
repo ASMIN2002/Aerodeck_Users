@@ -56,7 +56,6 @@ function BottomNav({
                     className={`bn-item ${selectedBottomTab === "Home" ? "bn-active" : ""
                         }`}
                     onClick={() => {
-
                         if (isDetailsOpen) {
                             closeDetails();
                         }
@@ -64,8 +63,23 @@ function BottomNav({
                         setSelectedMenu("Shop");
                         setProfilePage("profile");
                         setSelectedBottomTab("Home");
-                        navigate("/home/shop");
 
+                        navigate("/home/shop");
+                        setTimeout(() => {
+                            document.querySelectorAll("*").forEach((element) => {
+                                if (element.scrollTop > 0) {
+                                    element.scrollTo({
+                                        top: 0,
+                                        behavior: "smooth"
+                                    });
+                                }
+                            });
+
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+                        }, 150);
                     }}
                 >
                     <span className="bn-icon">

@@ -160,7 +160,6 @@
 }
 
 .shop-category-scroll {
-  gap: 18px;
   padding: 2px 2px 16px;
   margin-bottom: 6px;
 }
@@ -171,16 +170,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   width: 76px;
 }
 
 .shop-category-icon {
   width: 64px;
   height: 64px;
-  border-radius: var(--sh-radius-full);
-  background: var(--sh-surface);
-  border: 1px solid var(--sh-border);
+  background: none;
+  border: none;
   overflow: hidden;
   display: flex;
   align-items: center;

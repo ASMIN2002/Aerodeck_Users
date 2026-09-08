@@ -15,6 +15,8 @@ function Header({
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
     const [version, setVersion] = useState("");
+    const [toastMessage, setToastMessage] = useState("");
+    const [showToast, setShowToast] = useState(false);
 
     useEffect(() => {
         async function loadVersion() {
@@ -48,6 +50,14 @@ function Header({
         setSelectedMenu(menu);
 
         setIsMenuOpen(false);
+    };
+
+    const handleComingSoon = (feature) => {
+        setToastMessage(`${feature} Coming Soon!`);
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 2000);
     };
 
     return (
@@ -88,8 +98,7 @@ function Header({
                         Products
                     </button>
 
-                    {/* GIFTS */}
-                    <button
+                    {/* <button
                         type="button"
                         className={`hd-tab ${selectedMenu === "Gifts"
                             ? "hd-tab-active"
@@ -101,10 +110,20 @@ function Header({
                         }}
                     >
                         Gifts
+                    </button> */}
+
+                    <button
+                        type="button"
+                        className={`hd-tab ${selectedMenu === "Gifts" ? "hd-tab-active" : ""}`}
+                        onClick={() => {
+                            handleComingSoon("Gifts");
+                        }}
+                    >
+                        Gifts
                     </button>
 
-                    {/* CARDS */}
-                    <button
+
+                    {/* <button
                         type="button"
                         className={`hd-tab ${selectedMenu === "Cards"
                             ? "hd-tab-active"
@@ -116,10 +135,24 @@ function Header({
                         }}
                     >
                         Cards
+                    </button> */}
+                    <button
+                        type="button"
+                        className={`hd-tab ${selectedMenu === "Cards" ? "hd-tab-active" : ""}`}
+                        onClick={() => {
+                            handleComingSoon("Cards");
+                        }}
+                    >
+                        Cards
                     </button>
 
                 </div>
             </div>
+            {showToast && (
+                <div className="hd-toast">
+                    {toastMessage}
+                </div>
+            )}
 
         </header>
     );
