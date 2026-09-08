@@ -1,0 +1,508 @@
+.fd-crop-overlay {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    background: rgba(8, 12, 20, 0.75);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    animation: fdFadeIn 0.25s ease;
+}
+
+
+/* =========================================
+   CROP CARD
+========================================= */
+
+.fd-crop-card {
+    width: 100%;
+    max-width: 520px;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.4);
+
+    animation: fdCropPopup 0.3s ease;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.fd-crop-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #edf0f3;
+
+    background: #ffffff;
+}
+
+.fd-crop-header h2 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.fd-crop-header p {
+    margin: 5px 0 0;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    color: #7b8492;
+}
+
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.fd-crop-close {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f2f4f7;
+
+    color: #374151;
+
+    font-size: 25px;
+    font-weight: 400;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.fd-crop-close:hover {
+    background: #e5e7eb;
+    transform: rotate(90deg);
+}
+
+.fd-crop-close:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   IMAGE CROP AREA
+========================================= */
+
+.fd-crop-container {
+    position: relative;
+
+    width: 100%;
+    height: 420px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #252b36,
+            #10141c
+        );
+}
+
+
+/* =========================================
+   ZOOM SECTION
+========================================= */
+
+.fd-crop-slider {
+    padding: 18px 22px 20px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+.fd-zoom-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.fd-zoom-header label {
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #374151;
+}
+
+.fd-zoom-header span {
+    min-width: 42px;
+
+    padding: 4px 8px;
+
+    border-radius: 7px;
+
+    text-align: center;
+
+    background: #eff6ff;
+
+    color: #0077ff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   RANGE SLIDER
+========================================= */
+
+.fd-crop-slider input[type="range"] {
+    width: 100%;
+    height: 5px;
+
+    margin: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border-radius: 20px;
+
+    background: #dce2e8;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+/* Chrome Thumb */
+
+.fd-crop-slider input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 19px;
+    height: 19px;
+
+    border-radius: 50%;
+
+    border: 3px solid #ffffff;
+
+    background: #0077ff;
+
+    box-shadow:
+        0 3px 10px rgba(0, 119, 255, 0.35);
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.fd-crop-slider input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+
+/* Firefox Thumb */
+
+.fd-crop-slider input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+
+    border: 3px solid #ffffff;
+
+    background: #0077ff;
+
+    box-shadow:
+        0 3px 10px rgba(0, 119, 255, 0.35);
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   BUTTON AREA
+========================================= */
+
+.fd-crop-buttons {
+    display: flex;
+    gap: 10px;
+
+    padding: 16px 20px;
+
+    background: #ffffff;
+}
+
+.fd-crop-buttons button {
+    flex: 1;
+
+    height: 45px;
+
+    border-radius: 11px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* =========================================
+   CANCEL BUTTON
+========================================= */
+
+.fd-cancel-btn {
+    border: 1px solid #e1e5ea;
+
+    background: #ffffff;
+
+    color: #4b5563;
+}
+
+.fd-cancel-btn:hover {
+    background: #f5f7f9;
+}
+
+
+/* =========================================
+   CROP BUTTON
+========================================= */
+
+.fd-crop-btn {
+    border: none;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0077ff,
+            #00b7ff
+        );
+
+    box-shadow:
+        0 6px 18px
+        rgba(0, 119, 255, 0.28);
+}
+
+.fd-crop-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 22px
+        rgba(0, 119, 255, 0.38);
+}
+
+.fd-crop-btn:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+
+/* =========================================
+   DISABLED
+========================================= */
+
+.fd-crop-buttons button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes fdFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fdCropPopup {
+    from {
+        opacity: 0;
+        transform:
+            translateY(25px)
+            scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+
+    .fd-crop-card {
+        max-width: 480px;
+    }
+
+    .fd-crop-container {
+        height: 380px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+
+    .fd-crop-overlay {
+        padding: 10px;
+    }
+
+    .fd-crop-card {
+        border-radius: 18px;
+    }
+
+    .fd-crop-header {
+        padding: 15px 16px;
+    }
+
+    .fd-crop-header h2 {
+        font-size: 16px;
+    }
+
+    .fd-crop-header p {
+        font-size: 11px;
+    }
+
+    .fd-crop-close {
+        width: 33px;
+        height: 33px;
+
+        font-size: 22px;
+    }
+
+    .fd-crop-container {
+        height: 350px;
+    }
+
+    .fd-crop-slider {
+        padding: 15px 16px;
+    }
+
+    .fd-crop-buttons {
+        padding: 14px 16px;
+    }
+
+    .fd-crop-buttons button {
+        height: 43px;
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+
+    .fd-crop-container {
+        height: 300px;
+    }
+
+    .fd-crop-header h2 {
+        font-size: 15px;
+    }
+
+    .fd-crop-buttons {
+        gap: 8px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL DEVICES
+========================================= */
+
+@media (max-width: 280px) {
+
+    .fd-crop-overlay {
+        padding: 5px;
+    }
+
+    .fd-crop-container {
+        height: 260px;
+    }
+
+    .fd-crop-header {
+        padding: 12px;
+    }
+
+    .fd-crop-slider {
+        padding: 12px;
+    }
+
+    .fd-crop-buttons {
+        padding: 12px;
+    }
+
+    .fd-crop-buttons button {
+        height: 40px;
+        font-size: 11px;
+    }
+}

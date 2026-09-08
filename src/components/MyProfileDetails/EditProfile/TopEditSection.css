@@ -1,670 +1,805 @@
-/* ========================================
-   TOP EDIT SECTION - Profile Picture Upload
-   Professional White Theme
-   ======================================== */
+/* =========================================================
+   TOP EDIT SECTION
+========================================================= */
 
-/* ===== BASE ===== */
 .top-edit-card {
-  margin: 0 auto;
-  padding: 16px 16px 30px;
-  /* background: #ffffff; */
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-  position: relative;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
 }
 
-/* ========================================
-   IMAGE PREVIEW WITH PENCIL BUTTON
-   ======================================== */
+/* =========================================================
+   PROFILE IMAGE
+========================================================= */
+
 .mypropreview-section-pro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mypropreview-box-pro {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  overflow: visible;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  border: 4px solid #ffffff;
-  background: #f8f9fa;
-  transition: all 0.3s ease;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    border-radius: 50%;
+    padding: 4px;
+    background: rgb(22, 2, 245);
 }
 
-.mypropreview-box-pro:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+.mypropreview-image-pro {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #f2f4f7;
 }
 
-/* ===== IMAGE BOX ===== */
-/* ===== IMAGE BOX ===== */
-.mypropreview-box-pro {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 3px solid #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  background: #f8f9fa;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
 
-/* ===== IMAGE INSIDE BOX ===== */
-.mypropreview-box-pro img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block; /* Important */
-  transition: transform 0.3s ease;
-  background: #f8f9fa;
-}
-/* ===== PENCIL EDIT BUTTON ===== */
 .profile-edit-btn {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background: #1a1a1a;
-  color: #ffffff;
-  border: 3px solid #ffffff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  padding: 0;
+    position: absolute;
+    right: 4px;
+    bottom: 5px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+    border: 3px solid #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #111827;
+    color: #fff;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
-.profile-edit-btn:hover:not(:disabled) {
-  background: #333333;
-  transform: scale(1.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+.profile-edit-btn:hover {
+    transform: scale(1.08);
+    background: #0077ff;
 }
 
-.profile-edit-btn:active:not(:disabled) {
-  transform: scale(0.92);
+.profile-edit-btn:active {
+    transform: scale(0.95);
 }
 
 .profile-edit-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.profile-edit-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: #ffffff;
-}
+/* =========================================================
+   POPUP OVERLAY
+========================================================= */
 
-/* ========================================
-   POPUP MODAL
-   ======================================== */
 .profile-popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  animation: fadeIn 0.25s ease;
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+
+    animation: profileFadeIn 0.2s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+@keyframes profileFadeIn {
+    from {
+        opacity: 0;
+    }
 
-  to {
-    opacity: 1;
-  }
+    to {
+        opacity: 1;
+    }
 }
+
+/* =========================================================
+   POPUP
+========================================================= */
 
 .profile-popup {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 24px 20px 20px;
-  max-width: 380px;
-  width: 90%;
-  animation: slideUp 0.3s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    width: min(100%, 380px);
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #fff;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.25);
+
+    animation: profilePopupIn 0.25s ease;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
+@keyframes profilePopupIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(15px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .profile-popup-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f0f0f0;
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #edf0f3;
 }
 
 .profile-popup-header h3 {
-  font-size: 17px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: #111827;
 }
 
 .profile-popup-close {
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: 50%;
-  background: #f0f0f0;
-  color: #666;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f4f6;
+
+    font-size: 22px;
+    line-height: 1;
+
+    color: #374151;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
 .profile-popup-close:hover {
-  background: #e0e0e0;
-  transform: rotate(90deg);
+    background: #e5e7eb;
+    transform: rotate(90deg);
 }
 
+/* =========================================================
+   POPUP OPTIONS
+========================================================= */
+
 .profile-popup-options {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    padding: 12px;
 }
 
 .popup-option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border: none;
-  border-radius: 12px;
-  background: #f8f9fa;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: left;
-  position: relative;
-  font-family: inherit;
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 8px;
+
+    border: none;
+    border-radius: 14px;
+
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
-.popup-option:hover:not(:disabled) {
-  background: #f0f2f5;
-  transform: translateX(4px);
-}
-
-.popup-option:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.popup-option:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.popup-option .popup-icon {
-  font-size: 22px;
-  flex-shrink: 0;
-  width: 36px;
-  text-align: center;
-}
-
-.popup-option .popup-sub {
-  display: block;
-  font-size: 11px;
-  color: #999;
-  font-weight: 400;
-  margin-top: 1px;
+.popup-option:last-child {
+    margin-bottom: 0;
 }
 
 .popup-option.upload {
-  background: #f0f7ff;
-  color: #1a73e8;
-  font-weight: 600;
+    background: #eef8ff;
+    color: #0066cc;
 }
 
-.popup-option.upload:hover:not(:disabled) {
-  background: #e3f0ff;
+.popup-option.upload:hover {
+    background: #dcefff;
 }
 
 .popup-option.remove {
-  background: #fff5f5;
-  color: #e53935;
-  font-weight: 600;
+    background: #fff1f2;
+    color: #dc2626;
 }
 
-.popup-option.remove:hover:not(:disabled) {
-  background: #ffebeb;
+.popup-option.remove:hover {
+    background: #ffe4e6;
 }
 
 .popup-option.cancel {
-  background: #f0f0f0;
-  color: #666;
-  font-weight: 500;
-  justify-content: center;
-  margin-top: 4px;
+    background: #f4f5f7;
+    color: #374151;
 }
 
 .popup-option.cancel:hover {
-  background: #e5e5e5;
+    background: #e9ebee;
 }
 
-/* ========================================
+.popup-icon {
+    grid-row: span 2;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.popup-option {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.popup-sub {
+    grid-column: 2;
+
+    margin-top: 3px;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    opacity: 0.65;
+}
+
+/* =========================================================
    CROP MODAL
-   ======================================== */
+========================================================= */
+
 .crop-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-  animation: fadeIn 0.3s ease;
-  padding: 20px;
+    position: fixed;
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+
+    animation: profileFadeIn 0.2s ease;
 }
 
 .crop-modal {
-  background: #ffffff;
-  border-radius: 24px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  animation: slideUp 0.3s ease;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+    width: min(100%, 560px);
+
+    max-height: 92vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    background: #fff;
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.4);
+
+    animation: cropModalIn 0.25s ease;
 }
 
+@keyframes cropModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================================================
+   CROP HEADER
+========================================================= */
+
 .crop-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 24px;
-  border-bottom: 1px solid #f0f0f0;
-  flex-shrink: 0;
+    padding: 17px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #edf0f3;
 }
 
 .crop-modal-header h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: #111827;
 }
 
 .crop-modal-close {
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: #f0f0f0;
-  color: #666;
-  font-size: 22px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f3f4f6;
+
+    font-size: 23px;
+    color: #374151;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
 .crop-modal-close:hover {
-  background: #e0e0e0;
-  transform: rotate(90deg);
+    background: #e5e7eb;
+    transform: rotate(90deg);
 }
 
+/* =========================================================
+   CROP BODY
+========================================================= */
+
 .crop-modal-body {
-  padding: 20px;
-  flex: 1;
-  overflow: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f8f9fa;
-  min-height: 300px;
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    overflow: auto;
+
+    background:
+        linear-gradient(45deg, #f5f5f5 25%, transparent 25%),
+        linear-gradient(-45deg, #f5f5f5 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f5f5f5 75%),
+        linear-gradient(-45deg, transparent 75%, #f5f5f5 75%);
+
+    background-size: 20px 20px;
+    background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0px;
+}
+
+.crop-modal-body .ReactCrop {
+    max-width: 100%;
+    max-height: 60vh;
 }
 
 .crop-image {
-  max-width: 100%;
-  max-height: 60vh;
-  display: block;
+    display: block;
+
+    max-width: 100%;
+    max-height: 58vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 6px;
 }
 
+/* =========================================================
+   CROP FOOTER
+========================================================= */
+
 .crop-modal-footer {
-  display: flex;
-  gap: 12px;
-  padding: 16px 24px 20px;
-  border-top: 1px solid #f0f0f0;
-  flex-shrink: 0;
+    padding: 15px 20px;
+
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+
+    border-top: 1px solid #edf0f3;
+
+    background: #fff;
 }
 
 .crop-btn {
-  flex: 1;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
+    min-width: 110px;
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
 .crop-btn.cancel {
-  background: #f0f0f0;
-  color: #666;
+    border: 1px solid #e2e5e9;
+
+    background: #fff;
+    color: #4b5563;
 }
 
 .crop-btn.cancel:hover {
-  background: #e5e5e5;
+    background: #f5f6f8;
 }
 
 .crop-btn.apply {
-  background: #1a1a1a;
-  color: #ffffff;
+    border: none;
+
+    color: #fff;
+
+    background: linear-gradient(135deg,
+            #0077ff,
+            #00b8ff);
+
+    box-shadow:
+        0 5px 15px rgba(0, 119, 255, 0.25);
 }
 
 .crop-btn.apply:hover {
-  background: #333333;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 119, 255, 0.35);
 }
 
 .crop-btn.apply:active {
-  transform: scale(0.97);
+    transform: scale(0.97);
 }
 
-/* ========================================
-   UPLOAD PROGRESS OVERLAY
-   ======================================== */
+/* =========================================================
+   UPLOAD SCREEN
+========================================================= */
+
 .profile-upload-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease;
+    position: fixed;
+    inset: 0;
+
+    z-index: 20000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(10, 15, 25, 0.7);
+    backdrop-filter: blur(8px);
 }
 
 .profile-upload-box {
-  background: #ffffff;
-  border-radius: 24px;
-  padding: 40px 32px 32px;
-  max-width: 360px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-  animation: slideUp 0.4s ease;
+    width: min(100%, 330px);
+
+    padding: 30px 25px;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    background: #fff;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35);
 }
 
 .profile-upload-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: #f0f4ff;
-  color: #1a1a1a;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
-  animation: bounceIcon 1.5s ease-in-out infinite;
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #eaf6ff;
+
+    color: #0077ff;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    animation: uploadBounce 1s infinite ease-in-out;
 }
 
-@keyframes bounceIcon {
+@keyframes uploadBounce {
 
-  0%,
-  100% {
-    transform: translateY(0);
-  }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
 
-  50% {
-    transform: translateY(-8px);
-  }
+    50% {
+        transform: translateY(-6px);
+    }
 }
 
 .profile-upload-box h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 6px;
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #111827;
 }
 
 .profile-upload-box p {
-  font-size: 14px;
-  color: #888;
-  margin: 0 0 20px;
+    margin: 7px 0 20px;
+
+    font-size: 13px;
+
+    color: #6b7280;
 }
 
 .profile-upload-progress {
-  width: 100%;
-  height: 6px;
-  background: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #e9edf2;
 }
 
 .profile-upload-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #1a1a1a, #4a4a4a);
-  border-radius: 4px;
-  transition: width 0.3s ease;
-  position: relative;
-}
+    height: 100%;
 
-.profile-upload-progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent);
-  animation: shimmer 1.5s infinite;
-}
+    border-radius: inherit;
 
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
+    background: linear-gradient(90deg,
+            #0077ff,
+            #00d4ff);
 
-  100% {
-    transform: translateX(100%);
-  }
+    transition: width 0.25s ease;
 }
 
 .profile-upload-percent {
-  margin-top: 12px;
-  font-size: 24px;
-  font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: 0.5px;
+    margin-top: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #0077ff;
 }
 
-/* ========================================
+/* =========================================================
    SUCCESS MESSAGE
-   ======================================== */
+========================================================= */
+
 .profile-upload-success {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1a1a1a;
-  color: #ffffff;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  z-index: 1001;
-  animation: slideDown 0.4s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  max-width: 90%;
-  text-align: center;
+    position: fixed;
+
+    top: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 30000;
+
+    width: max-content;
+    max-width: calc(100vw - 30px);
+
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    background: #111827;
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+
+    animation: successSlide 0.3s ease;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
-  }
+@keyframes successSlide {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
 }
 
-/* ========================================
-   RESPONSIVE
-   ======================================== */
+/* =========================================================
+   TABLET
+========================================================= */
 
-@media (max-width: 768px) {
-  .mypropreview-box-pro {
-    width: 140px;
-    height: 140px;
-  }
+@media (min-width: 768px) {
 
-  .profile-edit-btn {
-    width: 40px;
-    height: 40px;
-    bottom: 2px;
-    right: 2px;
-  }
+    .mypropreview-box-pro {
+        width: 180px;
+        height: 180px;
+    }
 
-  .profile-edit-btn svg {
-    width: 18px;
-    height: 18px;
-  }
+    .profile-edit-btn {
+        width: 46px;
+        height: 46px;
+    }
 
-  .crop-modal {
-    max-width: 100%;
-    border-radius: 16px;
-    max-height: 95vh;
-  }
+    .crop-modal-body {
+        padding: 25px;
+    }
 
-  .crop-modal-header {
-    padding: 16px 18px;
-  }
-
-  .crop-modal-body {
-    padding: 12px;
-    min-height: 200px;
-  }
-
-  .crop-modal-footer {
-    padding: 12px 18px 16px;
-    gap: 10px;
-  }
-
-  .profile-popup {
-    padding: 20px 16px 16px;
-    max-width: 340px;
-  }
+    .crop-image {
+        max-height: 65vh;
+    }
 }
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 480px) {
-  .mypropreview-box-pro {
-    width: 120px;
-    height: 120px;
-  }
 
-  .profile-edit-btn {
-    width: 36px;
-    height: 36px;
-    bottom: 0px;
-    right: 0px;
-    border-width: 2px;
-  }
+    .mypropreview-box-pro {
+        width: 125px;
+        height: 125px;
+    }
 
-  .profile-edit-btn svg {
-    width: 16px;
-    height: 16px;
-  }
+    .profile-edit-btn {
+        width: 38px;
+        height: 38px;
+    }
 
-  .popup-option {
-    padding: 12px 14px;
+    .profile-edit-btn svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .profile-popup {
+        border-radius: 18px;
+    }
+
+    .crop-modal-overlay {
+        padding: 8px;
+    }
+
+    .crop-modal {
+        width: 100%;
+        border-radius: 18px;
+    }
+
+    .crop-modal-header,
+    .crop-modal-footer {
+        padding: 14px;
+    }
+
+    .crop-modal-body {
+        padding: 12px;
+    }
+
+    .crop-image {
+        max-height: 55vh;
+    }
+
+    .crop-modal-footer {
+        gap: 8px;
+    }
+
+    .crop-btn {
+        flex: 1;
+        min-width: 0;
+        padding: 0 10px;
+    }
+
+    .profile-upload-box {
+        padding: 25px 20px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 300px) {
+
+    .mypropreview-box-pro {
+        width: 105px;
+        height: 105px;
+    }
+
+    .popup-option {
+        padding: 11px;
+    }
+
+    .crop-modal-header h3 {
+        font-size: 15px;
+    }
+
+    .crop-btn {
+        font-size: 11px;
+    }
+}
+
+.top-edit-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #333;
     font-size: 14px;
-  }
-
-  .popup-option .popup-icon {
-    font-size: 18px;
-    width: 30px;
-  }
-
-  .crop-modal-header h3 {
-    font-size: 16px;
-  }
-
-  .crop-btn {
-    font-size: 13px;
-    padding: 10px 16px;
-  }
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
 }
 
-/* ========================================
-   ACCESSIBILITY
-   ======================================== */
-.profile-edit-btn,
-.popup-option,
-.crop-btn,
-.profile-popup-close,
-.crop-modal-close {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.profile-edit-btn:focus-visible,
-.popup-option:focus-visible,
-.crop-btn:focus-visible {
-  outline: 2px solid #1a1a1a;
-  outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.back-button:hover {
+    background: rgba(0, 0, 0, 0.05);
 }

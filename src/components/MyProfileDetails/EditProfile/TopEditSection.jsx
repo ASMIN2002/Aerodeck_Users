@@ -1,17 +1,17 @@
+// TopEditSection.jsx - Complete working code
+
 import "./TopEditSection.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { API } from "../../../services/api";
 import NODP from "../../../assets/NODP.png";
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import { useNavigate } from "react-router-dom";
+import ImageCropper from "../../../pages/Crop/ImageCropper";
 
 function TopEditSection({
     profile,
-    setProfile,
-    setProfilePage,
-    navigateWithLoading
+    setProfile
 }) {
-
+    const navigate = useNavigate();
     const fileInputRef = useRef(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [uploading, setUploading] = useState(false);
@@ -19,104 +19,155 @@ function TopEditSection({
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadAction, setUploadAction] = useState("");
 
+    // ✅ NEW: Preview image URL state
+    const [previewImage, setPreviewImage] = useState(null);
+
     // ===== STATES FOR CROP & POPUP =====
     const [showPopup, setShowPopup] = useState(false);
     const [showCropModal, setShowCropModal] = useState(false);
     const [imageForCrop, setImageForCrop] = useState(null);
-    const [crop, setCrop] = useState({
-        unit: '%',
-        width: 80,
-        height: 80,
-        x: 10,
-        y: 10,
-        aspect: 1
-    });
-    const [selectedFile, setSelectedFile] = useState(null);
 
-    // ===== HANDLE IMAGE SELECTION FROM FILE INPUT =====
+    const handleGoBack = () => {
+        navigate(-1);
+    };
+    useEffect(() => {
+        return () => {
+            if (previewImage) {
+                URL.revokeObjectURL(previewImage);
+            }
+        };
+    }, [previewImage]);
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
+
         if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = () => {
-            setImageForCrop(reader.result);
-            setShowCropModal(true);
-            setSelectedFile(file);
-        };
-        reader.readAsDataURL(file);
-        
-        // Reset file input
+        if (!file.type.startsWith("image/")) {
+            alert("Please select a valid image.");
+            return;
+        }
+
+        const imageUrl = URL.createObjectURL(file);
+
+        setImageForCrop(imageUrl);
+        setShowCropModal(true);
+
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
     };
 
-    // ===== HANDLE CROP COMPLETE + AUTO UPLOAD =====
     const getCroppedImage = () => {
-        if (!imageForCrop || !crop) return;
-
-        const image = new Image();
-        image.src = imageForCrop;
-
-        image.onload = () => {
-            const canvas = document.createElement('canvas');
-            const scaleX = image.naturalWidth / 100;
-            const scaleY = image.naturalHeight / 100;
-
-            canvas.width = crop.width * scaleX;
-            canvas.height = crop.height * scaleY;
-
-            const ctx = canvas.getContext('2d');
-            
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
-
-            ctx.drawImage(
-                image,
-                crop.x * scaleX,
-                crop.y * scaleY,
-                crop.width * scaleX,
-                crop.height * scaleY,
-                0,
-                0,
-                crop.width * scaleX,
-                crop.height * scaleY
-            );
-
-            const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-            
-            // Close crop modal
-            setShowCropModal(false);
-            
-            // Convert data URL to File object
-            fetch(croppedDataUrl)
-                .then(res => res.blob())
-                .then(blob => {
-                    const file = new File([blob], 'profile_cropped.jpg', { type: 'image/jpeg' });
-                    setSelectedImage(file);
-                    setSelectedFile(file);
-                    
-                    // ✅ AUTOMATIC UPLOAD - Crop ke baad directly upload
-                    setTimeout(() => {
-                        handleUpload(file);
-                    }, 300);
-                });
-        };
-    };
-
-    // ===== HANDLE UPLOAD - Modified to accept file parameter =====
-    const handleUpload = (file) => {
-        // Use passed file or selectedImage
-        const imageToUpload = file || selectedImage;
-        
-        if (!imageToUpload || uploading) {
-            console.log("Upload skipped: No image or already uploading");
+        if (!imageForCrop || !crop) {
+            alert("No image to crop");
             return;
         }
 
-        console.log("=== UPLOAD STARTED ===");
-        console.log("Image to upload:", imageToUpload);
+        const image = new Image();
+        image.src = imageForCrop;
+        image.crossOrigin = "anonymous";
+
+        image.onload = () => {
+            try {
+                console.log("Image size:", image.naturalWidth, "x", image.naturalHeight);
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // ✅ CRITICAL: Correct crop calculation
+                // crop.x, crop.y, crop.width, crop.height are in percentage (0-100)
+                const imgWidth = image.naturalWidth;
+                const imgHeight = image.naturalHeight;
+
+                // Convert percentage to pixels
+                const cropX = (crop.x / 100) * imgWidth;
+                const cropY = (crop.y / 100) * imgHeight;
+                const cropWidth = (crop.width / 100) * imgWidth;
+                const cropHeight = (crop.height / 100) * imgHeight;
+
+                canvas.width = Math.round(cropWidth);
+                canvas.height = Math.round(cropHeight);
+
+                // ✅ Draw ONLY the cropped area
+                ctx.drawImage(
+                    image,
+                    cropX,           // Source X
+                    cropY,           // Source Y
+                    cropWidth,       // Source Width
+                    cropHeight,      // Source Height
+                    0,               // Dest X
+                    0,               // Dest Y
+                    canvas.width,    // Dest Width
+                    canvas.height    // Dest Height
+                );
+
+                // ✅ Verify canvas has content
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                let hasContent = false;
+                for (let i = 0; i < imageData.data.length; i += 4) {
+                    if (imageData.data[i + 3] > 0) {
+                        hasContent = true;
+                        break;
+                    }
+                }
+
+
+                if (!hasContent) {
+                    alert("Cropped image is empty. Please try again.");
+                    return;
+                }
+
+                // ✅ Convert to blob
+                canvas.toBlob((blob) => {
+                    if (!blob || blob.size === 0) {
+                        alert("Failed to create cropped image.");
+                        return;
+                    }
+
+                    const file = new File([blob], 'profile_cropped.jpg', {
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    });
+
+                    const previewUrl = URL.createObjectURL(file);
+                    setPreviewImage(previewUrl);
+                    setSelectedImage(file);
+                    setSelectedFile(file);
+                    setShowCropModal(false);
+
+                    // Upload
+                    setTimeout(() => {
+                        handleUpload(file);
+                    }, 300);
+
+                }, 'image/jpeg', 0.95);
+
+            } catch (error) {
+                console.error("Crop error:", error);
+                alert("Failed to crop image: " + error.message);
+            }
+        };
+
+        image.onerror = (err) => {
+            console.error("Image load error:", err);
+            alert("Failed to load image for cropping.");
+        };
+    };
+    // ===== HANDLE UPLOAD =====
+    const handleUpload = (file) => {
+        const imageToUpload = file || selectedImage;
+
+        if (!imageToUpload || uploading) {
+            console.log("Upload skipped");
+            return;
+        }
+
+        if (imageToUpload.size === 0) {
+            alert("Image file is empty. Please select another image.");
+            return;
+        }
 
         setUploading(true);
         setUploadProgress(0);
@@ -126,15 +177,11 @@ function TopEditSection({
 
         const formData = new FormData();
         formData.append("image", imageToUpload);
-        formData.append(
-            "session_token",
-            localStorage.getItem("session_token")
-        );
+        formData.append("session_token", localStorage.getItem("session_token"));
 
         const xhr = new XMLHttpRequest();
         xhr.open("POST", `${API}/api/upload/user-profile`);
 
-        // Real progress
         xhr.upload.onprogress = (event) => {
             if (event.lengthComputable) {
                 const progress = Math.round((event.loaded / event.total) * 100);
@@ -146,7 +193,7 @@ function TopEditSection({
             try {
                 const data = JSON.parse(xhr.responseText);
                 console.log("Upload Response:", data);
-                
+
                 if (!data.success) {
                     setUploading(false);
                     setUploadProgress(0);
@@ -157,10 +204,10 @@ function TopEditSection({
                 // ✅ Update profile
                 setProfile(data.user);
                 window.dispatchEvent(new Event("profileImageUpdated"));
-                
-                // Cleanup
+
+                // ✅ Clear selected image (profile image se replace ho jayegi)
                 setSelectedImage(null);
-                setSelectedFile(null);
+                setPreviewImage(null); // ✅ Clear preview
 
                 if (fileInputRef.current) {
                     fileInputRef.current.value = "";
@@ -193,7 +240,7 @@ function TopEditSection({
         xhr.send(formData);
     };
 
-    // ===== HANDLE REMOVE PROFILE PICTURE =====
+    // ===== HANDLE REMOVE =====
     const handleRemoveProfilePicture = async () => {
         if (!profile?.profile_image || uploading) return;
 
@@ -234,33 +281,98 @@ function TopEditSection({
                 setUploading(false);
                 setUploadProgress(0);
                 setUploadSuccess("removed");
+                setPreviewImage(null);
+                setSelectedImage(null);
                 setTimeout(() => {
                     setUploadSuccess(false);
                 }, 3000);
             }, 500);
 
         } catch (err) {
-            console.error("REMOVE PROFILE PICTURE ERROR:", err);
+            console.error("REMOVE ERROR:", err);
             setUploading(false);
             setUploadProgress(0);
             alert("Profile picture deletion failed.");
         }
     };
 
-    // ===== CLOSE POPUP =====
+    // ===== POPUP CONTROLS =====
     const handleClosePopup = () => {
         setShowPopup(false);
     };
 
-    // ===== HANDLE PENCIL CLICK =====
     const handlePencilClick = (e) => {
         e.stopPropagation();
         setShowPopup(true);
     };
 
+    const getImageSource = () => {
+        // ✅ Priority: previewImage > selectedImage > profile image > NODP
+        if (previewImage) {
+            return previewImage;
+        }
+        return profile?.profile_image || NODP;
+    };
+    const handleCropDone = async (blob) => {
+        try {
+
+            if (!blob || blob.size === 0) {
+                alert("Failed to create cropped image.");
+                return;
+            }
+
+            const croppedFile = new File(
+                [blob],
+                "profile_cropped.jpg",
+                {
+                    type: "image/jpeg",
+                    lastModified: Date.now()
+                }
+            );
+
+            const previewUrl = URL.createObjectURL(croppedFile);
+
+            setPreviewImage(previewUrl);
+            setSelectedImage(croppedFile);
+
+            setShowCropModal(false);
+            setImageForCrop(null);
+
+            handleUpload(croppedFile);
+
+        } catch (error) {
+
+            console.error("CROP DONE ERROR:", error);
+            alert("Failed to process cropped image.");
+
+        }
+    };
+
+
+    const handleCropCancel = () => {
+
+        if (imageForCrop) {
+            URL.revokeObjectURL(imageForCrop);
+        }
+
+        setImageForCrop(null);
+        setShowCropModal(false);
+
+    };
+
+
     return (
         <div className="top-edit-card">
 
+            <div className="top-edit-header">
+                <button className="back-button" onClick={handleGoBack}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M19 12H5" />
+                        <path d="M12 19l-7-7 7-7" />
+                    </svg>
+                    <span>Back</span>
+                </button>
+            </div>
             {/* ===== SUCCESS MESSAGE ===== */}
             {uploadSuccess && (
                 <div className="profile-upload-success">
@@ -271,7 +383,7 @@ function TopEditSection({
                 </div>
             )}
 
-            {/* ===== UPLOAD PROGRESS OVERLAY ===== */}
+            {/* ===== UPLOAD PROGRESS ===== */}
             {uploading && (
                 <div className="profile-upload-screen">
                     <div className="profile-upload-box">
@@ -296,19 +408,19 @@ function TopEditSection({
                 </div>
             )}
 
-            {/* ===== IMAGE PREVIEW WITH PENCIL BUTTON ===== */}
+            {/* ===== IMAGE PREVIEW ===== */}
             <div className="mypropreview-section-pro">
                 <div className="mypropreview-box-pro">
                     <img
-                        src={
-                            selectedImage
-                                ? URL.createObjectURL(selectedImage)
-                                : profile?.profile_image || NODP
-                        }
+                        src={getImageSource()} // ✅ Updated
                         alt="Profile"
                         className="mypropreview-image-pro"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = NODP;
+                        }}
                     />
-                    
+
                     {/* ===== PENCIL BUTTON ===== */}
                     <button
                         className="profile-edit-btn"
@@ -316,14 +428,14 @@ function TopEditSection({
                         disabled={uploading}
                         aria-label="Edit Profile Picture"
                     >
-                        <svg 
-                            width="20" 
-                            height="20" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
                             strokeWidth="2"
-                            strokeLinecap="round" 
+                            strokeLinecap="round"
                             strokeLinejoin="round"
                         >
                             <path d="M12 20h9" />
@@ -365,7 +477,7 @@ function TopEditSection({
                                 Upload Photo
                                 <span className="popup-sub">Choose from gallery</span>
                             </button>
-                            
+
                             {profile?.profile_image && (
                                 <button
                                     className="popup-option remove"
@@ -377,7 +489,7 @@ function TopEditSection({
                                     <span className="popup-sub">Remove current photo</span>
                                 </button>
                             )}
-                            
+
                             <button
                                 className="popup-option cancel"
                                 onClick={handleClosePopup}
@@ -395,7 +507,7 @@ function TopEditSection({
                     <div className="crop-modal">
                         <div className="crop-modal-header">
                             <h3>Crop Profile Picture</h3>
-                            <button 
+                            <button
                                 className="crop-modal-close"
                                 onClick={() => {
                                     setShowCropModal(false);
@@ -405,23 +517,19 @@ function TopEditSection({
                                 ×
                             </button>
                         </div>
-                        
+
                         <div className="crop-modal-body">
-                            <ReactCrop
-                                crop={crop}
-                                onChange={(newCrop) => setCrop(newCrop)}
-                                aspect={1}
-                                circularCrop
-                                ruleOfThirds
-                            >
-                                <img 
-                                    src={imageForCrop} 
-                                    alt="Crop preview" 
-                                    className="crop-image"
+                            {/* ===== IMAGE CROPPER ===== */}
+
+                            {showCropModal && imageForCrop && (
+                                <ImageCropper
+                                    image={imageForCrop}
+                                    onCancel={handleCropCancel}
+                                    onCropDone={handleCropDone}
                                 />
-                            </ReactCrop>
+                            )}
                         </div>
-                        
+
                         <div className="crop-modal-footer">
                             <button
                                 className="crop-btn cancel"
@@ -434,7 +542,7 @@ function TopEditSection({
                             </button>
                             <button
                                 className="crop-btn apply"
-                                onClick={getCroppedImage} // ✅ YAHAN UPLOAD TRIGGER HOGA
+                                onClick={getCroppedImage}
                             >
                                 Apply & Upload
                             </button>
