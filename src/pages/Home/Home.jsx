@@ -34,6 +34,7 @@ import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../components/MyProfileDetails/Terms/Terms";
 import Address from "../../components/Address/Address";
+import TOPHEADER from "../../components/Header/TOPHEADER";
 
 function Home({
     user,
@@ -658,7 +659,6 @@ function Home({
 
     });
     const [categories, setCategories] = useState([]);
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profilePage, setProfilePage] = useState("profile");
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -988,23 +988,46 @@ function Home({
                     selectedBottomTab === "Home" ||
                     selectedBottomTab === "Premium"
                 ) &&
+                <>
+                    {shopCategoryPage && selectedBottomTab === "Home" && (
+                        <>
+                            <TOPHEADER
+                                title={selectedShopCategory}
+                                onBack={() => {
+                                    setSelectedShopCategory(null);
+                                    setShopCategoryPage(false);
+                                    goTo("/home/shop");
+                                }}
+                            />
+                            <div className="home-address">
+                                <Address
+                                    setProfilePage={setProfilePage}
+                                    setSelectedBottomTab={setSelectedBottomTab}
+                                />
+                            </div>
+                        </>
 
-                <Search
-                    selectedMenu={
-                        selectedBottomTab === "Home"
-                            ? selectedMenu
-                            : "Premium"
-                    }
-                    search={search}
-                    setSearch={setSearch}
-                    filter={filter}
-                    setFilter={setFilter}
-                    categories={categories}
-                    cards={cardSuggestionsData}
-                    gifts={giftSuggestionsData}
-                    shops={shopSuggestionsData}
-                    premiums={premiumSuggestionsData}
-                />
+                    )}
+
+
+                    <Search
+                        selectedMenu={
+                            selectedBottomTab === "Home"
+                                ? selectedMenu
+                                : "Premium"
+                        }
+                        search={search}
+                        setSearch={setSearch}
+                        categoryName={shopCategoryPage ? selectedShopCategory : null}
+                        filter={filter}
+                        setFilter={setFilter}
+                        categories={categories}
+                        cards={cardSuggestionsData}
+                        gifts={giftSuggestionsData}
+                        shops={shopSuggestionsData}
+                        premiums={premiumSuggestionsData}
+                    />
+                </>
             }
             <div className="home-content">
 

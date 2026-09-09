@@ -39,7 +39,7 @@ HEADER
     font-size: 11px;
     font-weight: 700;
     line-height: 1.35;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 
@@ -84,7 +84,7 @@ PRICE
 .ps-price {
     font-size: 22px;
     font-weight: 700;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 
@@ -157,7 +157,7 @@ CART
     border: none;
     border-radius: 14px;
     background: #1601ff;
-    color: #fff;
+    color: #fdfdfd;
     font-size: 13px;
     cursor: pointer;
     transition: .25s ease;
@@ -212,7 +212,7 @@ QUANTITY
 
     background: #111;
 
-    color: #fff;
+    color: #ffffff;
 
     font-size: 18px;
 
@@ -237,7 +237,7 @@ QUANTITY
     text-align: center;
     font-size: 16px;
     font-weight: 700;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 
@@ -289,7 +289,7 @@ QUANTITY
 
     background: #ff9800;
 
-    color: #fff;
+    color: #f00000;
 
     font-size: 16px;
 
@@ -482,7 +482,7 @@ FOCUS
     font-size: 11px;
     line-height: 1.6;
     font-weight: 400;
-    color: white;
+    color: rgb(0, 0, 0);
     word-break: break-word;
 }
 

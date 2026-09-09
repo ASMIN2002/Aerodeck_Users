@@ -60,9 +60,11 @@
     gap: 5px;
     border-radius: 5px;
 }
-.ad-money-box svg{
+
+.ad-money-box svg {
     color: rgb(0, 255, 217);
 }
+
 .money-icon {
     font-size: 18px;
     line-height: 1;
@@ -107,8 +109,10 @@
         transform: translateX(-50%) translateY(0);
     }
 }
+
 .ad-icon {
     font-size: 18px;
     flex-shrink: 0;
     color: white;
 }
+

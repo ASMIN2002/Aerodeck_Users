@@ -117,12 +117,7 @@ function ShopHome({
 
         <div className="shop-home">
             <section className="shop-category-section">
-
-
-
-
                 <div className="shop-category-scroll">
-
                     {categories.map((item) => (
 
                         <button
@@ -130,14 +125,15 @@ function ShopHome({
                             className="shop-category-box"
                             onClick={() => onCategoryClick(item.category)}
                         >
+                            <div>
+                                <div className="shop-category-icon">
 
-                            <div className="shop-category-icon">
+                                    <img
+                                        src={item.image}
+                                        alt={item.category}
+                                    />
 
-                                <img
-                                    src={item.image}
-                                    alt={item.category}
-                                />
-
+                                </div>
                             </div>
 
                             <span>
@@ -149,18 +145,12 @@ function ShopHome({
                     ))}
                 </div>
                 <div className="shop-section-title">
-
-                    <h3>
-                        Top Categories
-                    </h3>
-
                     <button
                         type="button" className="viewALL"
                         onClick={onOpenAllShopCategories}
                     >
-                        View all <FiArrowRight />
+                        <FiArrowRight />
                     </button>
-
                 </div>
             </section>
             <section className="shop-offer-carousel-section">
@@ -312,7 +302,7 @@ function ShopHome({
                         onClick={onOpenAllShops}
                         className="viewALL"
                     >
-                        View all <FiArrowRight />
+                        <FiArrowRight />
                     </button>
 
                 </div>

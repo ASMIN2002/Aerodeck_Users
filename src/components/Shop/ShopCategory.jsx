@@ -1,5 +1,5 @@
 import ShopCard from "./ShopCard";
-// import "./ShopCategory.css";
+import TOPHEADER from "../Header/TOPHEADER";
 
 function ShopCategory({
     category,
@@ -23,22 +23,6 @@ function ShopCategory({
     return (
 
         <section className="cds-section">
-
-            <div className="gift-category-header">
-
-                <button
-                    type="button"
-                    onClick={onBack}
-                >
-                    ← Back
-                </button>
-
-                <h2>
-                    {category}
-                </h2>
-
-            </div>
-
             <div className="cds-grid">
 
                 {

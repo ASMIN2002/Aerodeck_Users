@@ -1,0 +1,30 @@
+.top-header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    background: #004E59;
+    color: white;
+    position: relative;
+    z-index: 100;
+}
+.top-header-info{
+    display: flex;
+    gap: 12px;
+}
+
+.top-header-back {
+    border: none !important;
+    background: transparent !important;
+    color: white !important;
+    font-size: 24px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.top-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}

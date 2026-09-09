@@ -8,36 +8,79 @@
   gap: 0.5rem;
   width: 100%;
   margin: 0 auto;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 10px 5px 10px;
   background: white;
 }
 
-/* ===== SEARCH BOX ===== */
 .sr-search-box {
   flex: 1;
   position: relative;
 }
 
-/* ===== SEARCH INPUT ===== */
 .sr-input {
   width: 100%;
-  padding: 0.6rem 1rem;
+  padding: 10px 1rem;
   font-size: 0.9rem;
   color: #1a1a2e;
   background: #ffffff;
-  border: 1px solid #030304;
-  border-radius: 8px;
+  border: none;
+  border-radius: 15px;
   outline: none;
   transition: all 0.2s ease;
   font-family: inherit;
+  position: relative;
+  box-sizing: border-box;
+  letter-spacing: 1px;
 }
 
-.sr-input::placeholder {
+/* Mixed colour border */
+.sr-input {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg, #004E59, #00A6A6, #7B2CBF, #FF4D6D) border-box;
+}
+
+.sr-animated-placeholder {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: #9ca3af;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 3;
+
+  animation: placeholderSlide 2.2s ease-in-out;
+}
+
+@keyframes placeholderSlide {
+
+  0% {
+    opacity: 0;
+    transform: translateY(-180%);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(130%);
+  }
+
 }
 
 .sr-input:focus {
-  border-color: #6b7280;
   box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
 }
 
@@ -146,8 +189,7 @@
   }
 
   .sr-input {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.85rem;
+    font-size: 15px;
   }
 
   .sr-filter-btn {
@@ -169,9 +211,7 @@
   }
 
   .sr-input {
-    padding: 0.45rem 0.7rem;
-    font-size: 0.8rem;
-    border-radius: 6px;
+    font-size: 12px;
   }
 
   .sr-filter-btn {
@@ -196,4 +236,20 @@
     font-size: 0.6rem;
     width: 14px;
   }
+}
+
+.sr-static-placeholder {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 2rem);
+  z-index: 3;
 }

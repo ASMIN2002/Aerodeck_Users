@@ -12,6 +12,7 @@ function Address({
 
     const [primaryAddress, setPrimaryAddress] = useState(null);
     const [showComingSoon, setShowComingSoon] = useState(false);
+
     useEffect(() => {
         fetchPrimaryAddress();
     }, []);
@@ -58,11 +59,15 @@ function Address({
                 <FiMapPin className="ad-icon" />
 
                 {primaryAddress ? (
-                    <span className="ad-text">
-                        {primaryAddress.city},{" "}
-                        {primaryAddress.state},{" "}
+                    <span
+                        className="ad-text"
+                    >
                         {primaryAddress.area_street},{" "}
                         {primaryAddress.house_flat}
+                        {primaryAddress.city},{" "}
+                        {primaryAddress.state},{" "}
+                        {primaryAddress.full_name},{" "}
+                        {primaryAddress.address_type},{" "}
                     </span>
                 ) : (
                     <span className="ad-text ad-no-address">

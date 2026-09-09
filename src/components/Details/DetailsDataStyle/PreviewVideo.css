@@ -41,7 +41,7 @@ TITLE
 
     font-weight: 700;
 
-    color: white;
+    color: rgb(0, 0, 0);
 
 }
 
@@ -193,7 +193,7 @@ FULLSCREEN BUTTON
 }
 
 .dt-no-preview {
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .dt-fullscreen-btn:hover {

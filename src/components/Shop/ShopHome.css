@@ -8,28 +8,34 @@
 
 .shop-home {
   /* ---- design tokens (scoped to this page) ---- */
-  --sh-bg:            #ffffff;
-  --sh-surface:       #f7f8f9;
-  --sh-surface-2:     #f0f2f4;
-  --sh-border:        #e6e9ec;
-  --sh-text:          #14181f;
-  --sh-text-soft:     #5b6472;
-  --sh-text-faint:    #8b93a1;
+  --sh-bg: #ffffff;
+  --sh-surface: #f7f8f9;
+  --sh-surface-2: #f0f2f4;
+  --sh-border: #e6e9ec;
+  --sh-text: #14181f;
+  --sh-text-soft: #5b6472;
+  --sh-text-faint: #8b93a1;
 
-  --sh-brand:         #0f6d5c;   /* teal — links, CTAs, active states   */
-  --sh-brand-dark:    #0b5548;
-  --sh-brand-tint:    #e6f2ef;
+  --sh-brand: #0f6d5c;
+  /* teal — links, CTAs, active states   */
+  --sh-brand-dark: #0b5548;
+  --sh-brand-tint: #e6f2ef;
 
-  --sh-price:         #14181f;  /* current price                       */
-  --sh-price-strike:  #a3aab5;  /* struck-through original price       */
-  --sh-deal:          #c2410c;  /* discount / highlight badges         */
-  --sh-deal-tint:     #fdece3;
-  --sh-like:          #e11d48;  /* heart / likes                       */
-  --sh-star:          #f5a524;  /* rating star                         */
+  --sh-price: #14181f;
+  /* current price                       */
+  --sh-price-strike: #a3aab5;
+  /* struck-through original price       */
+  --sh-deal: #c2410c;
+  /* discount / highlight badges         */
+  --sh-deal-tint: #fdece3;
+  --sh-like: #e11d48;
+  /* heart / likes                       */
+  --sh-star: #f5a524;
+  /* rating star                         */
 
-  --sh-radius-sm:  10px;
-  --sh-radius-md:  14px;
-  --sh-radius-lg:  18px;
+  --sh-radius-sm: 10px;
+  --sh-radius-md: 14px;
+  --sh-radius-lg: 18px;
   --sh-radius-full: 999px;
 
   --sh-shadow-sm: 0 1px 2px rgba(20, 24, 31, 0.06);
@@ -59,7 +65,7 @@
 .shop-home button {
   font-family: inherit;
   cursor: pointer;
-  border: none;
+  border: 1px solid black;
   background: none;
   color: inherit;
 }
@@ -78,10 +84,9 @@
 /* ---- shared layout primitives ---- */
 
 .shop-home section {
-  padding: 22px var(--sh-pad-inline) 6px;
+  padding: 10px 0 0 10px;
 }
 
-.shop-section-title,
 .likeheader,
 .rendomhead {
   display: flex;
@@ -90,6 +95,16 @@
   gap: 12px;
   margin-bottom: 14px;
 }
+
+.shop-section-title {
+  display: flex;
+  justify-content: space-between;
+}
+.shop-section-title button{
+  border: none;
+  padding: 5px;
+}
+
 
 .shop-section-title h3,
 .shop-section-title h4,
@@ -157,11 +172,12 @@
 
 .shop-category-section {
   padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .shop-category-scroll {
-  padding: 2px 2px 16px;
-  margin-bottom: 6px;
+  gap: 10px;
 }
 
 .shop-category-box {
@@ -170,17 +186,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 76px;
+  border-radius: 10px;
 }
 
 .shop-category-icon {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   background: none;
   border: none;
   overflow: hidden;
   display: flex;
-  align-items: center;
   justify-content: center;
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
@@ -192,12 +207,13 @@
 }
 
 .shop-category-icon img {
-  width: 62%;
-  height: 62%;
+  width: 100%;
   object-fit: contain;
+  border-radius: 10px 10px 0 0;
 }
 
 .shop-category-box span {
+  width: 95%;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--sh-text-soft);
@@ -207,6 +223,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+  padding: 5px 0px;
 }
 
 /* ==========================================================================
@@ -248,12 +265,10 @@
   justify-content: space-between;
   gap: 10px;
   padding: 14px 16px;
-  background: linear-gradient(
-    to top,
-    rgba(10, 12, 16, 0.72) 0%,
-    rgba(10, 12, 16, 0.32) 55%,
-    rgba(10, 12, 16, 0) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(10, 12, 16, 0.72) 0%,
+      rgba(10, 12, 16, 0.32) 55%,
+      rgba(10, 12, 16, 0) 100%);
 }
 
 .shop-offer-name {
@@ -292,7 +307,7 @@
   width: 6px;
   height: 6px;
   border-radius: var(--sh-radius-full);
-  background: var(--sh-border);
+  background: rgb(227, 190, 4);
   transition: background 0.2s ease, width 0.2s ease;
 }
 
@@ -311,7 +326,7 @@
 .shop-liked-card,
 .shop-value-card {
   background: var(--sh-bg);
-  border: 1px solid var(--sh-border);
+  border: 1px solid black;
   border-radius: var(--sh-radius-md);
   overflow: hidden;
   transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
@@ -338,9 +353,10 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(1, auto);
-  grid-auto-columns: 148px;
-  gap: var(--sh-gap);
+  grid-auto-columns: 107px;
+  gap: 5px;
   padding: 2px 2px 10px;
+  margin-top: 10px;
 }
 
 .shop-finest-deal-card {
@@ -397,9 +413,10 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(1, auto);
-  grid-auto-columns: 160px;
-  gap: var(--sh-gap);
+  grid-auto-columns: 120px;
+  gap: 10px;
   padding: 2px 2px 10px;
+  margin-top: 10px;
 }
 
 .shop-suggested-card {
@@ -444,10 +461,9 @@
 }
 
 .shop-suggested-info {
-  padding: 9px 10px 11px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .shop-suggested-name {
@@ -636,14 +652,11 @@
 
 .shop-random-products {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--sh-gap);
-  padding: 2px 2px 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  padding: 2px 10px 5rem 2px;
 }
 
-/* ==========================================================================
-   Responsive breakpoints
-   ========================================================================== */
 
 /* small phones */
 @media (max-width: 380px) {
@@ -770,145 +783,159 @@
 
 /* ===== ROOT VARIABLES ===== */
 :root {
-    --sh-radius-full: 999px;
-    --offer-bg-start: #e74c3c;
-    --offer-bg-end: #c0392b;
-    --offer-glow: rgba(231, 76, 60, 0.5);
-    --offer-text: #ffffff;
+  --sh-radius-full: 999px;
+  --offer-bg-start: #e74c3c;
+  --offer-bg-end: #c0392b;
+  --offer-glow: rgba(231, 76, 60, 0.5);
+  --offer-text: #ffffff;
 }
 
 /* ===== MAIN BADGE — fully animated ===== */
 .shop-offer-percent {
-    font-size: 13px;
-    font-weight: 800;
-    color: var(--offer-text);
-    background: linear-gradient(135deg, var(--offer-bg-start), var(--offer-bg-end));
-    padding: 8px 18px;
-    border-radius: var(--sh-radius-full);
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    position: relative;
-    cursor: default;
-    user-select: none;
-    box-shadow: 0 0 20px var(--offer-glow);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--offer-text);
+  background: linear-gradient(135deg, var(--offer-bg-start), var(--offer-bg-end));
+  padding: 8px 18px;
+  border-radius: var(--sh-radius-full);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  box-shadow: 0 0 20px var(--offer-glow);
 
-    /* 🎯 ANIMATION */
-    animation: offerPulse 1.8s ease-in-out infinite;
-    transition: transform 0.2s ease;
+  /* 🎯 ANIMATION */
+  animation: offerPulse 1.8s ease-in-out infinite;
+  transition: transform 0.2s ease;
 }
 
 /* —— Hover: pause & grow —— */
 .shop-offer-percent:hover {
-    animation-play-state: paused;
-    transform: scale(1.12);
-    box-shadow: 0 0 40px var(--offer-glow);
+  animation-play-state: paused;
+  transform: scale(1.12);
+  box-shadow: 0 0 40px var(--offer-glow);
 }
 
 /* —— 🔥 Keyframes —— */
 @keyframes offerPulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 20px var(--offer-glow);
-        background: linear-gradient(135deg, var(--offer-bg-start), var(--offer-bg-end));
-    }
-    45% {
-        transform: scale(1.10);
-        box-shadow: 0 0 45px var(--offer-glow), 0 0 80px rgba(231, 76, 60, 0.25);
-        background: linear-gradient(135deg, #ff6b6b, #e74c3c);
-    }
-    70% {
-        transform: scale(0.97);
-        box-shadow: 0 0 30px var(--offer-glow);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 20px var(--offer-glow);
-        background: linear-gradient(135deg, var(--offer-bg-start), var(--offer-bg-end));
-    }
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--offer-glow);
+    background: linear-gradient(135deg, var(--offer-bg-start), var(--offer-bg-end));
+  }
+
+  45% {
+    transform: scale(1.10);
+    box-shadow: 0 0 45px var(--offer-glow), 0 0 80px rgba(231, 76, 60, 0.25);
+    background: linear-gradient(135deg, #ff6b6b, #e74c3c);
+  }
+
+  70% {
+    transform: scale(0.97);
+    box-shadow: 0 0 30px var(--offer-glow);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--offer-glow);
+    background: linear-gradient(135deg, var(--offer-bg-start), var(--offer-bg-end));
+  }
 }
 
 /* ===== VARIANT 2 — Glow & Bounce ===== */
 .shop-offer-percent--bounce {
-    background: linear-gradient(135deg, #f39c12, #e67e22);
-    --offer-glow: rgba(243, 156, 18, 0.5);
-    animation: offerBounce 1.6s ease-in-out infinite;
-    box-shadow: 0 0 25px var(--offer-glow);
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  --offer-glow: rgba(243, 156, 18, 0.5);
+  animation: offerBounce 1.6s ease-in-out infinite;
+  box-shadow: 0 0 25px var(--offer-glow);
 }
+
 .shop-offer-percent--bounce:hover {
-    animation-play-state: paused;
-    transform: scale(1.10);
+  animation-play-state: paused;
+  transform: scale(1.10);
 }
 
 @keyframes offerBounce {
-    0% {
-        transform: scale(1) translateY(0);
-        box-shadow: 0 0 25px var(--offer-glow);
-    }
-    30% {
-        transform: scale(1.12) translateY(-6px);
-        box-shadow: 0 15px 35px var(--offer-glow);
-    }
-    50% {
-        transform: scale(0.96) translateY(2px);
-    }
-    70% {
-        transform: scale(1.06) translateY(-3px);
-    }
-    100% {
-        transform: scale(1) translateY(0);
-        box-shadow: 0 0 25px var(--offer-glow);
-    }
+  0% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 25px var(--offer-glow);
+  }
+
+  30% {
+    transform: scale(1.12) translateY(-6px);
+    box-shadow: 0 15px 35px var(--offer-glow);
+  }
+
+  50% {
+    transform: scale(0.96) translateY(2px);
+  }
+
+  70% {
+    transform: scale(1.06) translateY(-3px);
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 0 25px var(--offer-glow);
+  }
 }
 
 /* ===== VARIANT 3 — Shimmer / Sweep ===== */
 .shop-offer-percent--shimmer {
-    background: linear-gradient(135deg, #8e44ad, #6c3483);
-    --offer-glow: rgba(142, 68, 173, 0.5);
-    animation: offerShimmer 2.2s ease-in-out infinite;
-    box-shadow: 0 0 25px var(--offer-glow);
-    overflow: hidden;
+  background: linear-gradient(135deg, #8e44ad, #6c3483);
+  --offer-glow: rgba(142, 68, 173, 0.5);
+  animation: offerShimmer 2.2s ease-in-out infinite;
+  box-shadow: 0 0 25px var(--offer-glow);
+  overflow: hidden;
 }
+
 .shop-offer-percent--shimmer::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 40%;
-    height: 200%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.25),
-            transparent);
-    transform: rotate(25deg);
-    animation: shimmerSweep 2.2s ease-in-out infinite;
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
+  transform: rotate(25deg);
+  animation: shimmerSweep 2.2s ease-in-out infinite;
 }
+
 .shop-offer-percent--shimmer:hover {
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
+
 .shop-offer-percent--shimmer:hover::after {
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 @keyframes offerShimmer {
-    0%,
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 25px var(--offer-glow);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 45px var(--offer-glow), 0 0 70px rgba(142, 68, 173, 0.2);
-    }
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 25px var(--offer-glow);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 45px var(--offer-glow), 0 0 70px rgba(142, 68, 173, 0.2);
+  }
 }
 
 @keyframes shimmerSweep {
-    0% {
-        left: -60%;
-    }
-    100% {
-        left: 120%;
-    }
+  0% {
+    left: -60%;
+  }
+
+  100% {
+    left: 120%;
+  }
 }

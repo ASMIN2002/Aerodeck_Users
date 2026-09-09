@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-
 import "./Search.css";
 import Filter from "../Filter/Filter";
+import { FaSearch } from "react-icons/fa";
+import { API } from "../../services/api";
 
 function Search({
     selectedMenu,
@@ -9,14 +10,72 @@ function Search({
     setSearch,
     filter,
     setFilter,
-    categories,
     cards,
     gifts,
     shops,
-    premiums
+    premiums,
+    categoryName
 }) {
 
+    const [categories, setCategories] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
+    const [placeholderIndex, setPlaceholderIndex] = useState(0);
+    useEffect(() => {
+        const loadCategories = async () => {
+            try {
+                const response = await fetch(`${API}/api/category`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const shopCategories = (data.data || [])
+                        .filter(item =>
+                            item.catname?.trim().toUpperCase() === "SHOP"
+                        )
+                        .filter(item => item.category?.trim());
+
+                    // Random order
+                    const shuffled = [...shopCategories].sort(
+                        () => Math.random() - 0.5
+                    );
+
+                    setCategories(shuffled);
+                }
+            } catch (error) {
+                console.error("CATEGORY FETCH ERROR:", error);
+            }
+        };
+
+        loadCategories();
+    }, []);
+    const shopCategories = (categories || [])
+        .map(item => item.category?.trim())
+        .filter(Boolean);
+    useEffect(() => {
+
+        if (
+            categoryName ||
+            search.trim() ||
+            shopCategories.length === 0
+        ) {
+            return;
+        }
+
+        const interval = setInterval(() => {
+
+            setPlaceholderIndex(prev =>
+                (prev + 1) % shopCategories.length
+            );
+
+        }, 2200);
+
+        return () => clearInterval(interval);
+
+    }, [
+        categories,
+        search,
+        shopCategories.length,
+        categoryName
+    ]);
 
     const srRef = useRef(null);
 
@@ -143,7 +202,14 @@ function Search({
         shops,
         premiums
     ]);
+    console.log("ALL CATEGORIES:", categories);
 
+    console.log(
+        "SHOP CATEGORIES:",
+        (categories || [])
+            .filter(item => item.catname?.toUpperCase() === "SHOP")
+            .map(item => item.category)
+    );
     return (
 
         <div
@@ -153,10 +219,26 @@ function Search({
 
             <div className="sr-search-box">
 
+
+                {!search.trim() && (
+                    categoryName ? (
+                        <span className="sr-static-placeholder">
+                            Search {categoryName}...
+                        </span>
+                    ) : (
+                        shopCategories.length > 0 && (
+                            <span
+                                key={shopCategories[placeholderIndex]}
+                                className="sr-animated-placeholder"
+                            >
+                                Search {shopCategories[placeholderIndex]}...
+                            </span>
+                        )
+                    )
+                )}
                 <input
                     type="text"
                     className="sr-input"
-                    placeholder={`Search ${selectedMenu}...`}
                     value={search}
                     onChange={(e) =>
                         setSearch(e.target.value)
@@ -169,7 +251,6 @@ function Search({
 
                     }}
                 />
-
             </div>
             {
                 searchSuggestions.length > 0 && (
