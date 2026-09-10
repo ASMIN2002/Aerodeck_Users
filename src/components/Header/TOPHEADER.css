@@ -3,8 +3,9 @@
     height: 40px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 15px;
-    background: #004E59;
+    background: #5ea4e2;
     color: white;
     position: relative;
     z-index: 100;

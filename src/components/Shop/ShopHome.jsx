@@ -71,38 +71,33 @@ function ShopHome({
 
     }, [shops]);
     const offerScrollRef = useRef(null);
+
     useEffect(() => {
         if (offerShops.length <= 1) return;
 
-        const timer = setInterval(() => {
+        const timer = setTimeout(() => {
 
             const container = offerScrollRef.current;
 
             if (!container) return;
 
-            const nextPosition =
-                container.scrollLeft + container.clientWidth;
+            const nextIndex =
+                activeOfferIndex + 1 >= offerShops.length
+                    ? 0
+                    : activeOfferIndex + 1;
 
-            if (
-                nextPosition >=
-                container.scrollWidth - container.clientWidth
-            ) {
-                container.scrollTo({
-                    left: 0,
-                    behavior: "smooth"
-                });
-            } else {
-                container.scrollTo({
-                    left: nextPosition,
-                    behavior: "smooth"
-                });
-            }
+            container.scrollTo({
+                left: nextIndex * container.clientWidth,
+                behavior: "smooth"
+            });
 
-        }, 3000);
+        }, 5000);
 
-        return () => clearInterval(timer);
+        return () => clearTimeout(timer);
 
-    }, [offerShops]);
+    }, [activeOfferIndex, offerShops]);
+
+
     const randomShops = useMemo(() => {
         return [...shops]
             .sort(() => Math.random() - 0.5);
@@ -159,67 +154,77 @@ function ShopHome({
                     className="shop-offer-carousel"
                     ref={offerScrollRef}
                     onScroll={(e) => {
-
                         const container = e.currentTarget;
 
                         const index = Math.round(
-                            container.scrollLeft /
-                            container.clientWidth
+                            container.scrollLeft / container.clientWidth
                         );
 
                         setActiveOfferIndex(index);
-
                     }}
                 >
-                    {offerShops.map((shop) => {
+
+                    {offerShops.map((shop, index) => {
 
                         const highlight = shop.shop_highlight_text || "";
-
-                        const percentMatch =
-                            highlight.match(/(\d+(?:\.\d+)?)\s*%\s*off/i);
-
-                        const percent = percentMatch
-                            ? percentMatch[1]
-                            : null;
 
                         return (
                             <div
                                 key={shop.shop_id}
-                                className="shop-offer-slide"
+                                className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""
+                                    }`}
                                 onClick={() =>
                                     onOpenDetails(shop, "shop")
                                 }
                             >
 
-                                <img
-                                    src={shop.shop_image1}
-                                    alt={shop.shop_name}
-                                />
-
-                                <div className="shop-offer-overlay">
-
-                                    <div className="shop-offer-name">
-                                        {shop.shop_name}
-                                    </div>
-
-                                    {highlight && (
-                                        <div className="shop-offer-percent">
-                                            {highlight}
-                                        </div>
-                                    )}
-
-                                    <div className="shop-offer-price">
-                                        ₹{Number(
-                                            shop.shop_price || 0
-                                        ).toLocaleString("en-IN")}
-                                    </div>
-
+                                {/* LEFT IMAGE */}
+                                <div className="shop-offer-image">
+                                    <img
+                                        src={shop.shop_image1}
+                                        alt={shop.shop_name}
+                                    />
                                 </div>
 
+
+                                {/* RIGHT DETAILS */}
+                                <div className="shop-offer-details">
+                                    <div className="shop-offer-content">
+
+                                        <div className="shop-offer-name">
+                                            {shop.shop_name}
+                                        </div>
+
+                                        <div className="shop-offer-category">
+                                            Premium Fashion Store
+                                        </div>
+
+                                        <div className="shop-offer-percent">
+                                            40% OFF
+                                        </div>
+
+                                        <div className="shop-offer-description">
+                                            Trendy fashion
+                                        </div>
+
+                                        <div className="shop-offer-price">
+                                            Starting ₹799
+                                        </div>
+
+                                        <div className="shop-offer-rating">
+                                            ★ 4.8 • 2.4K+ Customers
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         );
                     })}
+
                 </div>
+
+
+                {/* DOTS */}
                 <div className="shop-offer-dots">
 
                     {offerShops.map((shop, index) => (
@@ -235,6 +240,7 @@ function ShopHome({
                     ))}
 
                 </div>
+
             </section>
 
             <section className="shop-finest-deals-section">

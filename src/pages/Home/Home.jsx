@@ -989,6 +989,24 @@ function Home({
                     selectedBottomTab === "Premium"
                 ) &&
                 <>
+                    {allShopCategoriesPage && selectedBottomTab === "Home" && (
+                        <>
+                            <TOPHEADER
+                                title="All Categories"
+                                onBack={() => {
+                                    setAllShopCategoriesPage(false);
+                                    goTo("/home/shop");
+                                }}
+                            />
+
+                            <div className="home-address">
+                                <Address
+                                    setProfilePage={setProfilePage}
+                                    setSelectedBottomTab={setSelectedBottomTab}
+                                />
+                            </div>
+                        </>
+                    )}
                     {shopCategoryPage && selectedBottomTab === "Home" && (
                         <>
                             <TOPHEADER
@@ -1007,6 +1025,24 @@ function Home({
                             </div>
                         </>
 
+                    )}
+                    {allShopsPage && selectedBottomTab === "Home" && (
+                        <>
+                            <TOPHEADER
+                                title="All Shops"
+                                onBack={() => {
+                                    setAllShopsPage(false);
+                                    goTo("/home/shop");
+                                }}
+                            />
+
+                            <div className="home-address">
+                                <Address
+                                    setProfilePage={setProfilePage}
+                                    setSelectedBottomTab={setSelectedBottomTab}
+                                />
+                            </div>
+                        </>
                     )}
 
 

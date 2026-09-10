@@ -13,8 +13,8 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 
   background:
-    radial-gradient(circle at top left, #00a6a6 0%, transparent 22%),
-    radial-gradient(circle at top right, #7b2cbf 0%, transparent 22%),
+    radial-gradient(circle at top left, #9a8ff0 0%, transparent 22%),
+    radial-gradient(circle at top right, #9a8ff0 0%, transparent 22%),
     radial-gradient(circle at bottom left, #ffffff 0%, transparent 22%),
     radial-gradient(circle at bottom right, #f8f9f9 0%, transparent 22%),
     #ffffff;

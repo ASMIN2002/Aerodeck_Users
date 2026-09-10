@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./MyCart.css";
 import Address from "../../Address/Address";
 import CartBilling from "./CartBilling";
 import CartCard from "./CartCard";
+import TOPHEADER from "../../Header/TOPHEADER";
 import { API } from "../../../services/api";
 
 function MyCart({
@@ -13,6 +15,7 @@ function MyCart({
     setSelectedBottomTab,
     setCartCount
 }) {
+    const navigate = useNavigate();
     const sessionToken = localStorage.getItem("session_token");
     const [activeTab] = useState("products");
     const [cart, setCart] = useState([]);
@@ -275,9 +278,10 @@ function MyCart({
     return (
 
         <div className="mycart-page">
-            <header className="headall">
-                HEEPIT
-            </header>
+            <TOPHEADER
+                title="My Cart"
+                onBack={() => navigate(-1)}
+            />
 
             <div className="mycart-topbar">
                 <Address

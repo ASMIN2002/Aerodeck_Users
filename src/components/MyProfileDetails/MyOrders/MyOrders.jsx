@@ -48,6 +48,16 @@ function MyOrders({
 
     }, []);
 
+    const formatOrderDate = (date) => {
+        return new Date(date)
+            .toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            })
+            .toUpperCase();
+    };
+
     if (loading) {
 
         return (
@@ -154,7 +164,7 @@ function MyOrders({
                                 <span
                                     className={`order-status ${order.order_status.toLowerCase()}`}
                                 >
-                                    {order.order_status}
+                                    {formatOrderDate(order.created_at)}
                                 </span>
 
                             </div>

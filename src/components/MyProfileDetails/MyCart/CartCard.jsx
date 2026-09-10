@@ -59,6 +59,13 @@ function CartCard({
     return (
 
         <div className="cart-card">
+
+            <button
+                className="delete-cart-btn"
+                onClick={() => onDelete(item.product_id)}
+            >
+                <FaTrash />
+            </button>
             <div>
                 <img
                     src={image}
@@ -66,63 +73,27 @@ function CartCard({
                     className="cart-image"
                 />
             </div>
-            <button
-                className="delete-cart-btn"
-                onClick={() => onDelete(item.product_id)}
-            >
-                <FaTrash />
-            </button>
 
             <div className="cart-details">
-
-                <h3>
-                    {name}
-                </h3>
+                <h3>{name}</h3>
                 <div className="cartdipri">
-                    <p className="cart-discount">
-                        ↓ {discount}%
-                    </p>
-                    <p className="cart-demo-price">
-                        ₹ {demoPrice}
-                    </p>
-                    <h2>
-                        ₹ {price}
-                    </h2>
+                    <p className="cart-discount">↓ {discount}%</p>
+                    <p className="cart-demo-price">₹ {demoPrice}</p>
+                    <h2>₹ {price}</h2>
                 </div>
-
-
                 <p className="cart-delivery-date">
                     Delivery by: {getDeliveryDate(item.delivery)}
                 </p>
+
                 <div className="qtyviewcart">
                     <div className="cart-quantity">
-
-                        <button
-
-                            onClick={() => onDecrease(item)}
-
-                        >
-
+                        <button onClick={() => onDecrease(item)}>
                             -
-
                         </button>
-
-                        <span>
-
-                            {item.quantity}
-
-                        </span>
-
-                        <button
-
-                            onClick={() => onIncrease(item)}
-
-                        >
-
+                        <span>{item.quantity}</span>
+                        <button onClick={() => onIncrease(item)}>
                             +
-
                         </button>
-
                     </div>
 
                     <button
@@ -154,6 +125,7 @@ function CartCard({
                         View Product
 
                     </button>
+
                 </div>
 
             </div>

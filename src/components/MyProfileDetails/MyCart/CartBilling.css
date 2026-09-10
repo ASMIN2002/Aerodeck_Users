@@ -12,7 +12,7 @@
     justify-content: space-between;
     gap: 12px;
     padding: 6px 8px;
-    border-top: 1px solid #fffefe;
+    border-top: 1px solid black;
     box-shadow: 0 -8px 25px rgba(0, 0, 0, .08);
     z-index: 999;
     padding-bottom: 33px;
@@ -27,7 +27,7 @@
 .cart-billing-left h2 {
     font-size: 14px;
     font-weight: 800;
-    color: #fcfdff;
+    color: black;
     line-height: 1;
 }
 

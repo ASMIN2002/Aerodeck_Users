@@ -14,23 +14,6 @@ function ALLShopCategories({
     return (
 
         <section className="all-shop-categories">
-
-            <div className="gift-category-header">
-
-                <button
-                    type="button"
-                    onClick={onBack}
-                >
-                    ← Back
-                </button>
-
-                <h2>
-                    All Categories
-                </h2>
-
-            </div>
-
-
             <div className="all-shop-category-grid">
 
                 {shopCategories.map((item) => (

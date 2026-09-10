@@ -303,7 +303,7 @@ function TrackOrder({
                             }`}>
                             <div className="track-circle"></div>
                             <span>PLACED</span>
-                            <small>11-AUG-2026</small>
+                            {/* <small>11-AUG-2026</small> */}
                         </div>
 
 
@@ -311,7 +311,7 @@ function TrackOrder({
                             }`}>
                             <div className="track-circle"></div>
                             <span>PACKED</span>
-                            <small>11-AUG-2026</small>
+                            {/* <small>11-AUG-2026</small> */}
                         </div>
 
 
@@ -319,7 +319,7 @@ function TrackOrder({
                             }`}>
                             <div className="track-circle"></div>
                             <span>SHIPPED</span>
-                            <small>12-AUG-2026</small>
+                            {/* <small>12-AUG-2026</small> */}
                         </div>
 
 
@@ -327,7 +327,7 @@ function TrackOrder({
                             }`}>
                             <div className="track-circle"></div>
                             <span>OOD</span>
-                            <small>13-AUG-2026</small>
+                            {/* <small>13-AUG-2026</small> */}
                         </div>
 
 
@@ -335,7 +335,7 @@ function TrackOrder({
                             }`}>
                             <div className="track-circle"></div>
                             <span>DELIVERED</span>
-                            <small>14-AUG-2026</small>
+                            {/* <small>14-AUG-2026</small> */}
                         </div>
 
                     </div>

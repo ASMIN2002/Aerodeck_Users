@@ -13,6 +13,9 @@ function TOPHEADER({ title, onBack }) {
                 </button>
                 <h2>{title}</h2>
             </div>
+            <div className="top-header-title">
+                <h3>HEEPIT</h3>
+            </div>
         </header>
     );
 }

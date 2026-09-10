@@ -59,25 +59,13 @@
 
 .order-card {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     padding: 7px;
     margin-bottom: 10px;
     background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
     transition: .3s;
-}
-
-.order-card:hover {
-    transform: translateY(-2px);
-}
-
-.order-card img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 14px;
-    flex-shrink: 0;
 }
 
 .order-info {
@@ -106,7 +94,6 @@
 
 .order-status {
     width: max-content;
-    padding: 5px 12px;
     border-radius: 30px;
     font-size: 8px;
     font-weight: 700;

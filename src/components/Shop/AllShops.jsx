@@ -29,25 +29,6 @@ function AllShops({
                 boxSizing: "border-box"
             }}
         >
-
-            <div className="gift-category-header">
-
-                <button
-                    type="button"
-                    onClick={onBack}
-                >
-                    ← Back
-                </button>
-
-                <h2>
-                    All Shops
-                </h2>
-
-            </div>
-
-
-            {/* All Shops */}
-
             <div className="cdss-grid">
 
                 {
