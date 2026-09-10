@@ -847,6 +847,9 @@
 
 .shop-offer-slide.active .shop-offer-content>div:nth-child(3) {
   animation-delay: 1.2s;
+  color: rgb(113, 220, 113);
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .shop-offer-slide.active .shop-offer-content>div:nth-child(4) {
@@ -855,10 +858,15 @@
 
 .shop-offer-slide.active .shop-offer-content>div:nth-child(5) {
   animation-delay: 2.2s;
+  color: rgb(157, 163, 210);
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .shop-offer-slide.active .shop-offer-content>div:nth-child(6) {
   animation-delay: 2.7s;
+  letter-spacing: 1px;
+  font-size: 11px;
 }
 
 @keyframes shopOfferDetailIn {
