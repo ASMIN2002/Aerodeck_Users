@@ -786,7 +786,7 @@
 
 .shop-offer-image img {
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: block;
   object-fit: cover;
   border-radius: 10px;
@@ -823,10 +823,11 @@
 }
 
 
-.shop-offer-content{
+.shop-offer-content {
   padding: 10px;
   font-size: 10px;
 }
+
 .shop-offer-slide .shop-offer-content>div {
   opacity: 0;
   transform: translateX(35px);
@@ -868,6 +869,11 @@
   letter-spacing: 1px;
   font-size: 11px;
 }
+.shop-offer-slide.active .shop-offer-content>div:nth-child(7) {
+  animation-delay: 3.2s;
+
+}
+
 
 @keyframes shopOfferDetailIn {
   from {
@@ -878,5 +884,40 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* =====================================
+   OFFER COUNTDOWN
+===================================== */
+
+.shop-offer-countdown {
+  margin-top: 6px;
+  font-size: 7px;
+  font-weight: 700;
+  color: #d32f2f;
+  background: #fff3f3;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  letter-spacing: 0.3px;
+  animation: countdown-pulse 2s infinite;
+}
+
+.shop-offer-countdown.expired {
+  color: #888;
+  background: #f0f0f0;
+  animation: none;
+}
+
+@keyframes countdown-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.65;
   }
 }

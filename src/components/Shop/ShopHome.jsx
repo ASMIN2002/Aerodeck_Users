@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useRef, useState } from "react";
 import "./ShopHome.css";
 import ShopCard from "./ShopCard";
+import toast from "react-hot-toast";
 import { API } from "../../services/api";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -16,6 +17,30 @@ function ShopHome({
 
 }) {
     const [activeOfferIndex, setActiveOfferIndex] = useState(0);
+    const [openOffers, setOpenOffers] = useState([]);
+
+    useEffect(() => {
+        const fetchOpenOffers = async () => {
+            try {
+                const res = await fetch(`${API}/api/openoffers/active`);
+                const data = await res.json();
+                if (data.success) setOpenOffers(data.data);
+            } catch (err) {
+                console.error("Open offers fetch error:", err);
+            }
+        };
+        fetchOpenOffers();
+    }, []);
+
+    const [now, setNow] = useState(Date.now());
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setNow(Date.now());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     const suggestedShops = useMemo(() => {
 
         const good = shops.filter(
@@ -57,23 +82,11 @@ function ShopHome({
             .slice(0, 16);
 
     }, [shops]);
-    const offerShops = useMemo(() => {
 
-        const eligible = shops.filter(shop =>
-            /\d+(?:\.\d+)?\s*%\s*off/i.test(
-                shop.shop_highlight_text || ""
-            )
-        );
-
-        return [...eligible]
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 5);
-
-    }, [shops]);
     const offerScrollRef = useRef(null);
 
     useEffect(() => {
-        if (offerShops.length <= 1) return;
+        if (openOffers.length <= 1) return;
 
         const timer = setTimeout(() => {
 
@@ -82,7 +95,7 @@ function ShopHome({
             if (!container) return;
 
             const nextIndex =
-                activeOfferIndex + 1 >= offerShops.length
+                activeOfferIndex + 1 >= openOffers.length
                     ? 0
                     : activeOfferIndex + 1;
 
@@ -95,8 +108,7 @@ function ShopHome({
 
         return () => clearTimeout(timer);
 
-    }, [activeOfferIndex, offerShops]);
-
+    }, [activeOfferIndex, openOffers]);
 
     const randomShops = useMemo(() => {
         return [...shops]
@@ -108,6 +120,27 @@ function ShopHome({
             .sort(() => Math.random() - 0.5)
             .slice(0, 10);
     }, [shops]);
+    const getCountdown = (validAt) => {
+        if (!validAt) return null;
+
+        const end = new Date(validAt).getTime();
+        const diff = end - now;
+
+        if (diff <= 0) return { expired: true, text: "Expired" };
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        let text = "";
+        if (days > 0) text += `${days}d `;
+        if (days > 0 || hours > 0) text += `${hours}h `;
+        text += `${minutes}m ${seconds}s`;
+
+        return { expired: false, text };
+    };
+    
     return (
 
         <div className="shop-home">
@@ -164,73 +197,87 @@ function ShopHome({
                     }}
                 >
 
-                    {offerShops.map((shop, index) => {
-
-                        const highlight = shop.shop_highlight_text || "";
-
-                        return (
-                            <div
-                                key={shop.shop_id}
-                                className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""
-                                    }`}
-                                onClick={() =>
-                                    onOpenDetails(shop, "shop")
+                    {openOffers.map((offer, index) => (
+                        <div
+                            key={offer.id}
+                            className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""
+                                }`}
+                            onClick={() => toast("Feature Coming Soon 🚀", {
+                                duration: 2500,
+                                style: {
+                                    background: "#1a1a1a",
+                                    color: "#fff",
+                                    borderRadius: "10px",
+                                    padding: "12px 18px",
+                                    fontSize: "14px",
+                                    fontWeight: 600
                                 }
-                            >
+                            })}
+                        >
 
-                                {/* LEFT IMAGE */}
-                                <div className="shop-offer-image">
-                                    <img
-                                        src={shop.shop_image1}
-                                        alt={shop.shop_name}
-                                    />
-                                </div>
+                            {/* LEFT IMAGE */}
+                            <div className="shop-offer-image">
+                                <img
+                                    src={offer.image_url || ""}
+                                    alt={offer.shop_name}
+                                />
+                            </div>
 
 
-                                {/* RIGHT DETAILS */}
-                                <div className="shop-offer-details">
-                                    <div className="shop-offer-content">
+                            {/* RIGHT DETAILS */}
+                            <div className="shop-offer-details">
+                                <div className="shop-offer-content">
 
-                                        <div className="shop-offer-name">
-                                            {shop.shop_name}
-                                        </div>
-
-                                        <div className="shop-offer-category">
-                                            Premium Fashion Store
-                                        </div>
-
-                                        <div className="shop-offer-percent">
-                                            40% OFF
-                                        </div>
-
-                                        <div className="shop-offer-description">
-                                            Trendy fashion
-                                        </div>
-
-                                        <div className="shop-offer-price">
-                                            Starting ₹799
-                                        </div>
-
-                                        <div className="shop-offer-rating">
-                                            ★ 4.8 • 2.4K+ Customers
-                                        </div>
-
+                                    <div className="shop-offer-name">
+                                        {offer.shop_name}
                                     </div>
+
+                                    <div className="shop-offer-category">
+                                        {offer.category}
+                                    </div>
+
+                                    <div className="shop-offer-percent">
+                                        {offer.offer_percent}% OFF
+                                    </div>
+
+                                    <div className="shop-offer-description">
+                                        {offer.description || "Limited time offer"}
+                                    </div>
+
+                                    <div className="shop-offer-price">
+                                        Starting ₹{Number(offer.price || 0).toLocaleString("en-IN")}
+                                    </div>
+
+                                    <div className="shop-offer-rating">
+                                        ★ {offer.rating || "—"} •{" "}
+                                        {Number(offer.customer_count || 0).toLocaleString("en-IN")}+ Customers
+                                    </div>
+                                    <div className="shop-offer-time">
+                                        {(() => {
+                                            const cd = getCountdown(offer.valid_at);
+                                            if (!cd) return null;
+                                            return (
+                                                <div className={`shop-offer-countdown ${cd.expired ? "expired" : ""}`}>
+                                                    {cd.expired ? "⏰ Expired" : `⏳ Ends in ${cd.text}`}
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+
                                 </div>
                             </div>
-                        );
-                    })}
-
+                        </div>
+                    ))}
                 </div>
 
 
                 {/* DOTS */}
                 <div className="shop-offer-dots">
 
-                    {offerShops.map((shop, index) => (
+                    {openOffers.map((offer, index) => (
 
                         <span
-                            key={shop.shop_id}
+                            key={offer.id}
                             className={`shop-offer-dot ${index === activeOfferIndex
                                 ? "active"
                                 : ""

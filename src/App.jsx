@@ -12,6 +12,7 @@ import Home from "./pages/Home/Home";
 import NoInternet from "./components/NoInternet/NoInternet";
 import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
+import { Toaster } from "react-hot-toast";
 import { API } from "./services/api";
 
 const NAV_HISTORY_KEY = "heepit_navigation_history";
@@ -560,6 +561,12 @@ function App() {
     return (
 
         <>
+            <Toaster
+                position="top-center"
+                toastOptions={{
+                    duration: 2500
+                }}
+            />
             {
                 showLoading && (
                     <Loading
