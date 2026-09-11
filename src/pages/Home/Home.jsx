@@ -609,19 +609,12 @@ function Home({
                         : undefined
             }
         });
-
         if (location.pathname.endsWith("/reviews")) {
-
             setDetailsPage("allreview");
-
         } else if (location.pathname.endsWith("/media")) {
-
             setDetailsPage("allmedia");
-
         } else {
-
             setDetailsPage("details");
-
         }
 
         setIsDetailsOpen(true);
@@ -918,29 +911,46 @@ function Home({
         loadProfile();
     }, []);
     useEffect(() => {
-
         const handleBackNavigation = () => {
+            const path = window.location.pathname;
 
-            if (window.location.pathname === "/cart") {
-
+            if (path === "/cart") {
                 setIsDetailsOpen(false);
                 setSelectedProduct(null);
                 setDetailsPage("details");
                 setSelectedBottomTab("Cart");
                 setProfilePage("cart");
+                return;
             }
 
+            if (path.endsWith("/reviews")) {
+                setDetailsPage("allreview");
+                setIsDetailsOpen(true);
+                return;
+            }
+
+            if (path.endsWith("/media")) {
+                setDetailsPage("allmedia");
+                setIsDetailsOpen(true);
+                return;
+            }
+
+            if (
+                path.includes("/product/") &&
+                !path.endsWith("/reviews") &&
+                !path.endsWith("/media")
+            ) {
+                setDetailsPage("details");
+                setIsDetailsOpen(true);
+                return;
+            }
         };
 
         window.addEventListener("popstate", handleBackNavigation);
 
         return () => {
-            window.removeEventListener(
-                "popstate",
-                handleBackNavigation
-            );
+            window.removeEventListener("popstate", handleBackNavigation);
         };
-
     }, []);
 
     return (

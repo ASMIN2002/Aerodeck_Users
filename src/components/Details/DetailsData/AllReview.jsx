@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../DetailsDataStyle/AllReview.css";
 import { API } from "../../../services/api";
 
@@ -6,6 +7,8 @@ function AllReview({
     setDetailsPage,
     product_id
 }) {
+
+    const navigate = useNavigate();
     const [summary, setSummary] = useState({});
     const [reviews, setReviews] = useState([]);
     const [selectedStar, setSelectedStar] = useState(5);
@@ -14,17 +17,12 @@ function AllReview({
     );
 
     useEffect(() => {
-
         async function loadReviews() {
-
+            if (!product_id) return;
             const response = await fetch(
-
                 `${API}/api/user/review/all/${product_id}`
-
             );
-
             const data = await response.json();
-
             if (data.success) {
                 setSummary(data.summary);
                 setReviews(data.reviews);
@@ -40,7 +38,7 @@ function AllReview({
 
                 <button
                     className="allreview-back"
-                    onClick={() => setDetailsPage("details")}
+                    onClick={() => navigate(-1)}
                 >
                     ←
                 </button>

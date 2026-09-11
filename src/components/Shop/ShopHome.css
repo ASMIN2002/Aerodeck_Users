@@ -345,7 +345,7 @@
 
 .shop-finest-deal-image {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 0;
   background: var(--sh-surface);
 }
 
@@ -405,7 +405,7 @@
 
 .shop-suggested-image {
   position: relative;
-  aspect-ratio: 1 / 1.05;
+  aspect-ratio: 1 / 0;
   background: var(--sh-surface);
 }
 
@@ -497,7 +497,7 @@
 
 .shop-liked-image {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 0;
   background: var(--sh-surface);
 }
 
@@ -588,7 +588,7 @@
 
 .shop-value-image {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 0;
   background: var(--sh-surface);
 }
 
@@ -785,7 +785,7 @@
 }
 
 .shop-offer-image img {
-  width: 85%;
+  width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;

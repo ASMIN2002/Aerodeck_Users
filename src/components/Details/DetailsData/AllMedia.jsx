@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "../DetailsDataStyle/AllMedia.css";
-import { FaStar, FaRegStar } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import MediaViewer from "./MediaViewer";
 import { API } from "../../../services/api";
 
@@ -12,7 +12,7 @@ function AllMedia({
     onBack
 
 }) {
-
+    const navigate = useNavigate();
     const [images, setImages] = useState([]);
 
     const [showViewer, setShowViewer] = useState(false);
@@ -99,11 +99,9 @@ function AllMedia({
 
                 <button
                     className="all-media-back"
-                    onClick={onBack}
+                    onClick={() => navigate(-1)}
                 >
-
                     <IoArrowBack />
-
                 </button>
 
                 <h2>

@@ -96,7 +96,7 @@
 .pc-image-box {
     position: relative;
     width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1/0;
     background: #f7f7f7;
     overflow: hidden;
 }

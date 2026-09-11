@@ -638,8 +638,6 @@ function Shop({
                 const data = await response.json();
 
                 if (data.success) {
-                    console.log("ALL CATEGORY DATA:", data.data);
-
                     const shopCategories = data.data.filter(
                         item =>
                             item &&
@@ -647,7 +645,6 @@ function Shop({
                             item.category &&
                             String(item.catname).toUpperCase() === "SHOP"
                     );
-                    console.log("SHOP CATEGORIES:", shopCategories);
                     setCategories(shopCategories);
                 }
 

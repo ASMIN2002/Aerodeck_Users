@@ -29,18 +29,21 @@ function Information({ productDetail }) {
                 <span>Size</span>
                 <span>{productDetail?.size || "-"}</span>
             </div>
-
-            <div className="dt-info-row">
-                <span>Printing</span>
-                <span>{productDetail?.printing || "-"}</span>
-            </div>
-
             <div className="dt-info-row">
                 <span>Delivery On</span>
 
                 <span className="delidate">
-                   {getDeliveryDate(productDetail?.delivery)}
+                    {getDeliveryDate(productDetail?.delivery)}
+
+                    {(productDetail?.return_days == null ||
+                        Number(productDetail.return_days) === 0) && (
+                            <span className="open-box"> (Open Box)</span>
+                        )}
                 </span>
+            </div>
+            <div className="dt-info-row">
+                <span>Delivery Status</span>
+                <span>{productDetail?.printing || "-"}</span>
             </div>
 
             <div className="dt-info-row">
@@ -51,6 +54,8 @@ function Information({ productDetail }) {
                         : "-"}
                 </span>
             </div>
+
+
 
         </div>
 

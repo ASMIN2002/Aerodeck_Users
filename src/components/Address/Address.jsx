@@ -63,7 +63,7 @@ function Address({
                         className="ad-text"
                     >
                         {primaryAddress.area_street},{" "}
-                        {primaryAddress.house_flat}
+                        {primaryAddress.house_flat},{" "}
                         {primaryAddress.city},{" "}
                         {primaryAddress.state},{" "}
                         {primaryAddress.full_name},{" "}

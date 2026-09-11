@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
 import AuthFlip from "./pages/Login/AuthFlip";
 import TermsAndCondition from "./pages/Login/TermsAndCondition";
 import Loading from "./components/Loading/Loading";
@@ -410,83 +411,60 @@ function App() {
 
                     try {
 
-                        const appInfo =
-                            await CapacitorApp.getInfo();
+                        if (!Capacitor.isNativePlatform()) {
 
-                        const installedVersion =
-                            String(appInfo.version);
+                            console.log("Web platform - skipping version sync");
 
-                        console.log(
-                            "ACTUAL INSTALLED VERSION:",
-                            installedVersion
-                        );
+                        } else {
 
-                        const currentVersionResponse =
-                            await fetch(
+                            const appInfo = await CapacitorApp.getInfo();
+
+                            const installedVersion = String(appInfo.version);
+
+                            console.log("ACTUAL INSTALLED VERSION:", installedVersion);
+
+                            const currentVersionResponse = await fetch(
                                 `${API}/user/app-version/${data.user.user_id}`
                             );
 
-                        const currentVersionData =
-                            await currentVersionResponse.json();
+                            const currentVersionData = await currentVersionResponse.json();
 
-                        const databaseVersion =
-                            currentVersionData.version
+                            const databaseVersion = currentVersionData.version
                                 ? String(currentVersionData.version)
                                 : "";
 
-                        console.log(
-                            "DATABASE VERSION:",
-                            databaseVersion
-                        );
+                            console.log("DATABASE VERSION:", databaseVersion);
 
-                        // DB update ONLY when actual installed
-                        // APK version is different
-                        if (
-                            databaseVersion !== installedVersion
-                        ) {
+                            if (databaseVersion !== installedVersion) {
 
-                            console.log(
-                                "VERSION DIFFERENT - SYNCING DATABASE..."
-                            );
+                                console.log("VERSION DIFFERENT - SYNCING DATABASE...");
 
-                            const versionResponse =
-                                await fetch(
+                                const versionResponse = await fetch(
                                     `${API}/user/update-app-version/${data.user.user_id}`,
                                     {
                                         method: "PUT",
-
                                         headers: {
-                                            "Content-Type":
-                                                "application/json"
+                                            "Content-Type": "application/json"
                                         },
-
                                         body: JSON.stringify({
                                             version: installedVersion
                                         })
                                     }
                                 );
 
-                            const versionData =
-                                await versionResponse.json();
+                                const versionData = await versionResponse.json();
 
-                            console.log(
-                                "VERSION SYNC RESULT:",
-                                versionData
-                            );
+                                console.log("VERSION SYNC RESULT:", versionData);
 
-                        } else {
+                            } else {
 
-                            console.log(
-                                "VERSION ALREADY MATCHED"
-                            );
+                                console.log("VERSION ALREADY MATCHED");
+                            }
                         }
 
                     } catch (versionError) {
 
-                        console.error(
-                            "APP VERSION SYNC ERROR:",
-                            versionError
-                        );
+                        console.error("APP VERSION SYNC ERROR:", versionError);
                     }
 
                     // Version sync ke baad home
@@ -516,6 +494,10 @@ function App() {
     useEffect(() => {
         async function syncVersionAfterUpdate() {
             if (!user?.user_id) return;
+
+            if (!Capacitor.isNativePlatform()) {
+                return;
+            }
 
             try {
                 const appInfo = await CapacitorApp.getInfo();

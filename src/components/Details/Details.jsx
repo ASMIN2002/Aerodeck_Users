@@ -107,16 +107,19 @@ function Details({
 
                 switch (product.type) {
 
+                    case "cards":
                     case "card":
                         id = product.data.product_id;
                         break;
 
+                    case "gifts":
                     case "gift":
                         id = product.data.gift_id;
                         break;
 
+                    case "products":
                     case "shop":
-                        id = product.data.shop_id;
+                        id = product.data.product_id || product.data.shop_id;
                         break;
 
                     case "premium":
@@ -128,8 +131,14 @@ function Details({
 
                 }
 
+                let apiType = product.type;
+
+                if (apiType === "products") apiType = "shop";
+                if (apiType === "cards") apiType = "card";
+                if (apiType === "gifts") apiType = "gift";
+
                 const response = await fetch(
-                    `${API}/api/user/details/${product.type}/${id}`
+                    `${API}/api/user/details/${apiType}/${id}`
                 );
 
                 const result = await response.json();

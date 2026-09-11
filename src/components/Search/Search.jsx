@@ -202,14 +202,7 @@ function Search({
         shops,
         premiums
     ]);
-    console.log("ALL CATEGORIES:", categories);
 
-    console.log(
-        "SHOP CATEGORIES:",
-        (categories || [])
-            .filter(item => item.catname?.toUpperCase() === "SHOP")
-            .map(item => item.category)
-    );
     return (
 
         <div
