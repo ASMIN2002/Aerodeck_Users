@@ -147,6 +147,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    position: relative;
 }
 
 .product-info h4 {
@@ -431,4 +432,207 @@
     font-size: 11px;
     margin-top: 2.5px;
     color: black;
+}
+
+/* ================================
+   PRODUCT CART QUANTITY
+================================ */
+
+.order-cart-box {
+    width: 100%;
+    height: 38px;
+    margin-top: 8px;
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    background: #fff;
+
+    box-sizing: border-box;
+}
+
+.order-cart-icon {
+    font-size: 16px;
+}
+
+.order-cart-quantity {
+    flex: 1;
+    margin-left: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.order-cart-arrow {
+    width: 28px;
+    height: 28px;
+
+    border: none;
+    background: transparent;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.order-cart-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    background: #fff;
+
+    z-index: 9999;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.order-cart-dropdown button {
+    width: 100%;
+    height: 34px;
+
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: transparent;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.order-cart-dropdown button:last-child {
+    border-bottom: none;
+}
+
+.order-cart-dropdown button.selected {
+    font-weight: 700;
+}
+
+/* =================================
+   ORDER CONFIRMATION
+================================= */
+
+.order-confirm-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 80px 18px 20px;
+
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    z-index: 99999;
+
+    box-sizing: border-box;
+}
+
+.order-confirm-box {
+    width: 100%;
+    max-width: 360px;
+
+    padding: 24px 20px 20px;
+
+    background: #fff;
+    border-radius: 16px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.25);
+
+    animation: orderConfirmShow 0.18s ease-out;
+}
+
+.order-confirm-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f3f3f3;
+
+    font-size: 22px;
+}
+
+.order-confirm-box h3 {
+    margin: 0;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.order-confirm-box p {
+    margin: 8px 0 20px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #777;
+}
+
+.order-confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.order-confirm-actions button {
+    flex: 1;
+
+    height: 42px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.order-confirm-cancel {
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+}
+
+.order-confirm-submit {
+    border: none;
+    background: #111;
+    color: #fff;
+}
+
+@keyframes orderConfirmShow {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }

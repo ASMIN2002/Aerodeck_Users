@@ -1,118 +1,468 @@
-.ad-container {
-    padding: 4px 8px;
-    border: none;
-    display: flex;
-    gap: 10px;
+/* ============================================
+   ADDRESS COMPONENT — Animated & Responsive
+   ============================================ */
+
+:root {
+    --ad-c1: #6a11cb;
+    --ad-c2: #2575fc;
+    --ad-c3: #ff2e93;
+    --ad-c4: #feca57;
+    --ad-c5: #00d2ff;
+    --ad-text: #1a1a2e;
+    --ad-text-soft: #6b7280;
+    --ad-bg: #ffffff;
+    --ad-radius: 16px;
+    --ad-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ad-button {
+/* ============================================
+   CONTAINER
+   ============================================ */
+.ad-container {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
     width: 100%;
-    height: 30px;
+    max-width: 720px;
+    margin: 12px auto;
+    padding: 0 14px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ============================================
+   MAIN ADDRESS BUTTON
+   ============================================ */
+.ad-button {
+    position: relative;
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 11px 8px;
-    background: rgb(227, 224, 224);
+    gap: 12px;
+    padding: 14px 18px;
+    border: 2px solid transparent;
+    border-radius: var(--ad-radius);
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(135deg, #6a11cb, #2575fc, #ff2e93, #feca57) border-box;
+    background-size: 100% 100%, 300% 300%;
     cursor: pointer;
-    transition: .2s;
+    text-align: left;
     overflow: hidden;
-    border: 1px solid rgb(98, 0, 125);
-    border-radius: 5px;
+    transition: var(--ad-transition);
+    box-shadow: 0 4px 16px rgba(106, 17, 203, 0.12);
+    -webkit-tap-highlight-color: transparent;
+    animation: ad-border-flow 6s ease infinite;
+    outline: none;
 }
 
+@keyframes ad-border-flow {
+    0% {
+        background-position: 0% 0%, 0% 50%;
+    }
 
+    50% {
+        background-position: 0% 0%, 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 0%, 0% 50%;
+    }
+}
+
+/* Shimmer sweep on hover */
+.ad-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent 0%,
+            rgba(106, 17, 203, 0.12) 50%,
+            transparent 100%);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.ad-button:hover::before {
+    left: 120%;
+}
+
+.ad-button:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 10px 28px rgba(106, 17, 203, 0.28),
+        0 0 22px rgba(255, 46, 147, 0.22);
+}
+
+.ad-button:active {
+    transform: translateY(-1px) scale(0.985);
+}
+
+/* ============================================
+   LOCATION ICON
+   ============================================ */
 .ad-icon {
     flex-shrink: 0;
-    font-size: 12px;
-    line-height: 1;
+    font-size: 2rem;
+    color: #000000;
+    padding: 8px;
+    border-radius: 50%;
+    animation: ad-icon-float 3s ease-in-out infinite;
+    transition: var(--ad-transition);
 }
 
+@keyframes ad-icon-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+.ad-button:hover .ad-icon {
+    background: linear-gradient(135deg, #ff2e93, #feca57);
+    transform: scale(1.08) rotate(-6deg);
+    box-shadow: 0 6px 18px rgba(255, 46, 147, 0.5);
+}
+
+/* ============================================
+   ADDRESS TEXT
+   ============================================ */
 .ad-text {
     flex: 1;
-    font-size: 11px;
-    color: #fffdfd;
+    max-width: 100%;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ad-text);
+    line-height: 1.35;
+    letter-spacing: 0.15px;
+
+    /* Single line with ellipsis */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: left;
-    letter-spacing: 0.5px;
+
+    /* Important for flex children to shrink properly */
+    min-width: 0;
 }
 
+/* No address message */
 .ad-no-address {
-    color: #e60606;
-    font-weight: bold;
-    letter-spacing: 1px;
+    color: #ff2e93;
+    font-weight: 700;
+    font-style: italic;
+    animation: ad-text-pulse 2s ease-in-out infinite;
 }
 
+@keyframes ad-text-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.65;
+    }
+}
+
+/* ============================================
+   ARROW
+   ============================================ */
 .ad-arrow {
     flex-shrink: 0;
-    font-size: 16px;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #000000;
+    color: #6a11cb;
     line-height: 1;
+    transition: var(--ad-transition);
 }
 
+.ad-button:hover .ad-arrow {
+    transform: translateX(5px);
+    color: #ff2e93;
+}
+
+/* ============================================
+   MONEY BOX (₹0)
+   ============================================ */
 .ad-money-box {
-    border: none;
-    background: black;
-    padding: 6px 8px;
+    flex-shrink: 0;
     display: flex;
-    gap: 5px;
-    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 18px;
+    min-width: 92px;
+    border: none;
+    border-radius: var(--ad-radius);
+    cursor: pointer;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff2e93, #6a11cb, #2575fc);
+    background-size: 200% 200%;
+    animation: ad-money-flow 4s ease infinite;
+    box-shadow: 0 6px 18px rgba(255, 46, 147, 0.35);
+    transition: var(--ad-transition);
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
-.ad-money-box svg {
-    color: rgb(0, 255, 217);
+@keyframes ad-money-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.money-icon {
-    font-size: 18px;
-    line-height: 1;
-}
-
-.money-amount {
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 3px;
-    color: white;
+.ad-money-box:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 10px 26px rgba(255, 46, 147, 0.5),
+        0 0 24px rgba(254, 202, 87, 0.5);
 }
 
 .ad-money-box:active {
-    transform: scale(0.95);
+    transform: translateY(-1px) scale(0.98);
 }
 
+.money-icon {
+    font-size: 1.25rem;
+    color: #feca57;
+    filter: drop-shadow(0 0 6px rgba(254, 202, 87, 0.8));
+    animation: ad-coin-spin 3s ease-in-out infinite;
+}
 
+@keyframes ad-coin-spin {
+
+    0%,
+    100% {
+        transform: rotateY(0deg);
+    }
+
+    50% {
+        transform: rotateY(180deg);
+    }
+}
+
+.money-amount {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================
+   COMING SOON TOAST
+   ============================================ */
 .ad-coming-toast {
     position: fixed;
-    bottom: 80px;
+    top: 84px;
     left: 50%;
     transform: translateX(-50%);
-    background: #1a1a1a;
-    color: white;
-    padding: 10px 22px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    z-index: 9999;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    animation: adToastIn 0.3s ease;
+    z-index: 2000;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    background: linear-gradient(135deg, #ff2e93, #ff6b6b, #feca57);
+    background-size: 200% 200%;
+    animation:
+        ad-toast-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        ad-toast-glow 3s ease infinite;
+    box-shadow:
+        0 12px 34px rgba(255, 46, 147, 0.5),
+        0 0 26px rgba(254, 202, 87, 0.55);
 }
 
-@keyframes adToastIn {
-    from {
+.ad-coming-toast::before {
+    content: "🚀";
+    margin-right: 8px;
+}
+
+@keyframes ad-toast-in {
+    0% {
         opacity: 0;
-        transform: translateX(-50%) translateY(15px);
+        transform: translateX(-50%) translateY(-24px) scale(0.8);
     }
 
-    to {
+    100% {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateX(-50%) translateY(0) scale(1);
     }
 }
 
-.ad-icon {
-    font-size: 18px;
-    flex-shrink: 0;
-    color: rgb(47, 19, 228);
+@keyframes ad-toast-glow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .ad-container {
+        gap: 8px;
+        padding: 0 12px;
+    }
+
+    .ad-button {
+        padding: 4px 14px;
+        gap: 10px;
+    }
+
+    .ad-text {
+        font-size: 0.84rem;
+    }
+
+    .ad-icon {
+        padding: 7px;
+    }
+
+    .ad-money-box {
+        min-width: 84px;
+        padding: 0 14px;
+    }
+}
+
+/* Large phones */
+@media (max-width: 600px) {
+    .ad-container {
+        gap: 8px;
+        margin: 10px auto;
+        padding: 0 10px;
+    }
+
+    .ad-button {
+        padding: 4px 13px;
+    }
+
+    .ad-text {
+        font-size: 0.8rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .ad-arrow {
+        font-size: 1.3rem;
+    }
+
+    .money-amount {
+        font-size: 0.92rem;
+    }
+
+    .money-icon {
+        font-size: 1.1rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    .ad-container {
+        gap: 6px;
+        padding: 0 8px;
+    }
+
+    .ad-button {
+        padding: 2px 11px;
+        gap: 8px;
+        border-radius: 14px;
+    }
+
+    .ad-icon {
+        padding: 6px;
+    }
+
+    .ad-text {
+        font-size: 0.74rem;
+        line-height: 1.3;
+    }
+
+    .ad-arrow {
+        font-size: 1.15rem;
+    }
+
+    .ad-money-box {
+        min-width: 66px;
+        padding: 0 10px;
+        gap: 4px;
+        border-radius: 14px;
+    }
+
+    .money-amount {
+        font-size: 0.82rem;
+    }
+
+    .money-icon {
+        font-size: 1rem;
+    }
+
+    .ad-coming-toast {
+        font-size: 0.78rem;
+        padding: 10px 16px;
+        max-width: 88vw;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 340px) {
+    .ad-text {
+        font-size: 0.7rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .ad-money-box {
+        min-width: 56px;
+        padding: 0 8px;
+    }
+
+    .money-amount {
+        font-size: 0.76rem;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .ad-button,
+    .ad-button::before,
+    .ad-icon,
+    .ad-no-address,
+    .ad-money-box,
+    .money-icon,
+    .ad-coming-toast {
+        animation: none !important;
+        transition: none !important;
+    }
+}

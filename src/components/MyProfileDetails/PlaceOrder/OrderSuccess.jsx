@@ -48,27 +48,13 @@ function OrderSuccess({ setProfilePage }) {
                 </div>
 
                 <div className="success-row">
-
                     <span>Payment Status</span>
-
-                    <strong className="paid">
-
-                        Paid
-
-                    </strong>
-
+                    <strong className="paid">COD</strong>
                 </div>
 
                 <div className="success-row">
-
                     <span>Estimated Delivery</span>
-
-                    <strong>
-
-                        3 - 5 Business Days
-
-                    </strong>
-
+                    <strong>5 - 7 Business Days</strong>
                 </div>
 
             </div>

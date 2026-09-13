@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ProductOrder.css";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { API } from "../../../services/api";
@@ -8,11 +9,8 @@ function ProductOrder({
     setProfilePage,
     orderData,
     setOrderData,
-    selectedAddress,
-    buyNowFromDetails,
-    onBackToDetails
 }) {
-
+    const navigate = useNavigate();
     const products = orderData?.items || [];
 
     const getPrice = (item) => {
@@ -36,7 +34,50 @@ function ProductOrder({
 
     };
 
+    const updateCartQuantity = async (productId, quantity) => {
+        try {
+            const sessionToken = localStorage.getItem("session_token");
+
+            const response = await fetch(`${API}/api/user/cart`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    product_id: productId,
+                    quantity: quantity
+                })
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+                return false;
+            }
+
+            setOrderData(prev => ({
+                ...prev,
+                items: prev.items.map(item =>
+                    String(item.product_id) === String(productId)
+                        ? {
+                            ...item,
+                            quantity: quantity
+                        }
+                        : item
+                )
+            }));
+
+            return true;
+
+        } catch (error) {
+            console.error("Cart quantity update error:", error);
+            return false;
+        }
+    };
+
     const [paymentMethod, setPaymentMethod] = useState("COD");
+    const [openCartProduct, setOpenCartProduct] = useState(null);
 
     const subtotal = products.reduce((sum, item) => {
 
@@ -55,8 +96,22 @@ function ProductOrder({
     const [primaryAddress, setPrimaryAddress] = useState(null);
 
     const [placingOrder, setPlacingOrder] = useState(false);
+    const [showOrderConfirm, setShowOrderConfirm] = useState(false);
     const [addressError, setAddressError] = useState("");
 
+    useEffect(() => {
+        const handleOutsideClick = () => {
+            setOpenCartProduct(null);
+        };
+
+        if (openCartProduct !== null) {
+            document.addEventListener("click", handleOutsideClick);
+        }
+
+        return () => {
+            document.removeEventListener("click", handleOutsideClick);
+        };
+    }, [openCartProduct]);
 
     useEffect(() => {
 
@@ -122,13 +177,7 @@ function ProductOrder({
                 <button
                     className="product-order-back"
                     onClick={() => {
-
-                        if (buyNowFromDetails) {
-                            onBackToDetails();
-                        } else {
-                            window.history.back();
-                        }
-
+                        navigate(-1);
                     }}
                 >
                     ←
@@ -217,7 +266,6 @@ function ProductOrder({
                                         alt={getName(product)}
                                         className="order-product-image"
                                     />
-
                                     <div className="product-info">
 
                                         <h4>
@@ -228,6 +276,61 @@ function ProductOrder({
                                             Qty : {product.quantity}
                                         </small>
 
+                                        <div
+                                            className="order-cart-box"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+
+                                                setOpenCartProduct(
+                                                    openCartProduct === product.product_id
+                                                        ? null
+                                                        : product.product_id
+                                                );
+                                            }}
+                                        >
+                                            <span className="order-cart-icon">
+                                                🛒
+                                            </span>
+
+                                            <span className="order-cart-quantity">
+                                                {product.quantity}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                className="order-cart-arrow"
+                                            >
+                                                {openCartProduct === product.product_id ? "▲" : "▼"}
+                                            </button>
+                                        </div>
+
+                                        {openCartProduct === product.product_id && (
+                                            <div
+                                                className="order-cart-dropdown"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {[1, 2, 3, 4, 5].map((quantity) => (
+                                                    <button
+                                                        key={quantity}
+                                                        type="button"
+                                                        className={
+                                                            Number(product.quantity) === quantity
+                                                                ? "selected"
+                                                                : ""
+                                                        }
+                                                        onClick={async () => {
+                                                            await updateCartQuantity(
+                                                                product.product_id,
+                                                                quantity
+                                                            );
+
+                                                            setOpenCartProduct(null);
+                                                        }}
+                                                    >
+                                                        {quantity}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="product-price">
@@ -363,6 +466,7 @@ function ProductOrder({
             <button
                 className="continue-payment-btn"
                 onClick={() => {
+
                     if (subtotal < MINIMUM_ORDER_AMOUNT) {
 
                         const remainingAmount =
@@ -392,100 +496,120 @@ function ProductOrder({
 
                     setAddressError("");
 
-                    if (paymentMethod === "UPI") {
-
-                        setOrderData({
-
-                            ...orderData,
-
-                            address_id: primaryAddress.address_id,
-
-                            payment_method: paymentMethod,
-
-                            items: products,
-
-                            total_items: products.length,
-
-                            subtotal,
-                            platform_fee: platformFee,
-
-                            delivery_fee: 0,
-
-                            total_amount: upiTotal
-
-                        });
-
-                        setProfilePage("payment");
-
-                    } else {
-
-                        setPlacingOrder(true);
-
-                        setTimeout(async () => {
-
-                            const sessionToken = localStorage.getItem("session_token");
-
-                            const response = await fetch(`${API}/api/user/orders/place-order`, {
-
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-
-                                body: JSON.stringify({
-
-                                    session_token: sessionToken,
-
-                                    address_id: primaryAddress.address_id,
-
-                                    payment_method: paymentMethod,
-
-                                    order_type:
-                                        orderData.orderType === "products"
-                                            ? "PRODUCT"
-                                            : "CARD",
-
-                                    items: products,
-
-                                    total_items: products.length,
-
-                                    subtotal,
-
-                                    platform_fee: platformFee,
-
-                                    delivery_fee: 0,
-
-                                    total_amount: grandTotal
-
-                                })
-                            });
-
-                            const data = await response.json();
-
-                            console.log(data);
-
-                            setPlacingOrder(false);
-
-                            if (data.success) {
-
-                                setProfilePage("ordersuccess");
-
-                            }
-
-                        }, 2000);
-
-                    }
-
+                    // IMPORTANT:
+                    // Direct order nahi hoga.
+                    // Pehle confirmation box open hoga.
+                    setShowOrderConfirm(true);
                 }}
             >
-
                 {placingOrder
                     ? "Placing Order..."
                     : paymentMethod === "UPI"
                         ? "Continue Payment"
                         : "Place Order"}
             </button>
+
+            {showOrderConfirm && (
+                <div
+                    className="order-confirm-overlay"
+                    onClick={() => setShowOrderConfirm(false)}
+                >
+                    <div
+                        className="order-confirm-box"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="order-confirm-icon">
+                            🛒
+                        </div>
+
+                        <h3>
+                            Sure to order like this?
+                        </h3>
+
+                        <p>
+                            Please confirm your order before placing it.
+                        </p>
+
+                        <div className="order-confirm-actions">
+
+                            <button
+                                type="button"
+                                className="order-confirm-cancel"
+                                onClick={() => setShowOrderConfirm(false)}
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="button"
+                                className="order-confirm-submit"
+                                onClick={async () => {
+
+                                    setShowOrderConfirm(false);
+                                    setPlacingOrder(true);
+
+                                    try {
+
+                                        const sessionToken =
+                                            localStorage.getItem("session_token");
+
+                                        const response = await fetch(
+                                            `${API}/api/user/orders/place-order`,
+                                            {
+                                                method: "POST",
+
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+
+                                                body: JSON.stringify({
+                                                    session_token: sessionToken,
+                                                    address_id: primaryAddress.address_id,
+                                                    payment_method: paymentMethod,
+
+                                                    order_type:
+                                                        orderData.orderType === "products"
+                                                            ? "PRODUCT"
+                                                            : "CARD",
+
+                                                    items: products,
+                                                    total_items: products.length,
+                                                    subtotal,
+                                                    platform_fee: platformFee,
+                                                    delivery_fee: 0,
+                                                    total_amount: grandTotal
+                                                })
+                                            }
+                                        );
+
+                                        const data = await response.json();
+
+                                        if (data.success) {
+                                            setProfilePage("ordersuccess");
+                                        }
+
+                                    } catch (error) {
+
+                                        console.error(
+                                            "Place order error:",
+                                            error
+                                        );
+
+                                    } finally {
+
+                                        setPlacingOrder(false);
+
+                                    }
+
+                                }}
+                            >
+                                Confirm Order
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </div>
 

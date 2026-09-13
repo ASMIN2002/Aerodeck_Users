@@ -3,7 +3,9 @@ import "./ShopHome.css";
 import ShopCard from "./ShopCard";
 import toast from "react-hot-toast";
 import { API } from "../../services/api";
-import { FiArrowRight } from "react-icons/fi";
+import shopVideo1 from "../../videos/shop-video-1.mp4";
+import shopVideo2 from "../../videos/shop-video-2.mp4";
+import { FiArrowRight, FiVolume2, FiVolumeX } from "react-icons/fi";
 
 function ShopHome({
 
@@ -18,6 +20,58 @@ function ShopHome({
 }) {
     const [activeOfferIndex, setActiveOfferIndex] = useState(0);
     const [openOffers, setOpenOffers] = useState([]);
+
+    // 👇 SOUND STATE (localStorage se initial value)
+    const [isMuted, setIsMuted] = useState(() => {
+        const saved = localStorage.getItem("shopVideosMuted");
+        return saved === null ? true : saved === "true"; // default muted
+    });
+
+    const slide1Ref = useRef(null);
+    const slide2Ref = useRef(null);
+    const video1Ref = useRef(null);
+    const video2Ref = useRef(null);
+
+    // 👇 isMuted change hone par: save + sabhi videos pe apply
+    useEffect(() => {
+        localStorage.setItem("shopVideosMuted", String(isMuted));
+
+        [video1Ref, video2Ref].forEach((r) => {
+            if (r.current) r.current.muted = isMuted;
+        });
+    }, [isMuted]);
+
+    useEffect(() => {
+        const slides = [
+            { slide: slide1Ref.current, video: video1Ref.current },
+            { slide: slide2Ref.current, video: video2Ref.current },
+        ];
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const item = slides.find((s) => s.slide === entry.target);
+                    if (!item) return;
+
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+                        item.video.muted = isMuted;
+                        item.video.play().catch(() => { });
+                    } else {
+                        item.video.muted = true;
+                    }
+                });
+            },
+            { threshold: [0, 0.6, 1] }
+        );
+
+        slides.forEach((s) => s.slide && observer.observe(s.slide));
+
+        return () => observer.disconnect();
+    }, [isMuted]);
+
+    const toggleMute = () => {
+        setIsMuted((prev) => !prev);
+    };
 
     useEffect(() => {
         const fetchOpenOffers = async () => {
@@ -140,10 +194,137 @@ function ShopHome({
 
         return { expired: false, text };
     };
-    
+
+    const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+    const videoScrollRef = useRef(null);
+    const handleVideoScroll = (e) => {
+        const container = e.currentTarget;
+        const index = Math.round(container.scrollLeft / container.clientWidth);
+        setActiveVideoIndex(index);
+    };
+    const goToNextVideo = () => {
+        const container = videoScrollRef.current;
+        if (!container) return;
+
+        const totalSlides = 2; // abhi 2 videos hain
+        const nextIndex = (activeVideoIndex + 1) % totalSlides;
+
+        container.scrollTo({
+            left: nextIndex * container.clientWidth,
+            behavior: "smooth"
+        });
+    };
+
+    const videoSectionRef = useRef(null);
+    const [isVideoSectionVisible, setIsVideoSectionVisible] = useState(true);
+    useEffect(() => {
+        const section = videoSectionRef.current;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    setIsVideoSectionVisible(entry.isIntersecting);
+                });
+            },
+            { threshold: 0.3 }
+        );
+
+        observer.observe(section);
+        return () => observer.disconnect();
+    }, []);
+    useEffect(() => {
+        const videos = [video1Ref.current, video2Ref.current];
+
+        videos.forEach((v, i) => {
+            if (!v) return;
+
+            if (isVideoSectionVisible) {
+                if (i === activeVideoIndex) {
+                    v.play().catch(() => { });
+                }
+            } else {
+                v.pause();
+            }
+        });
+    }, [isVideoSectionVisible, activeVideoIndex]);
+
     return (
 
         <div className="shop-home">
+            {/* ================= VIDEO HERO ================= */}
+            <section className="shop-video-section" ref={videoSectionRef}>
+                <div
+                    className="shop-video-scroll"
+                    ref={videoScrollRef}
+                    onScroll={handleVideoScroll}
+                >
+
+                    {/* VIDEO 1 */}
+                    <div className="shop-video-slide" ref={slide1Ref}>
+                        <video
+                            ref={video1Ref}
+                            src={shopVideo1}
+                            autoPlay
+                            muted
+                            playsInline
+                            preload="metadata"
+                            onEnded={goToNextVideo}
+                        />
+                        <button
+                            type="button"
+                            className="shop-video-mute-btn"
+                            onClick={toggleMute}
+                            aria-label={isMuted ? "Unmute" : "Mute"}
+                        >
+                            {isMuted ? <FiVolumeX /> : <FiVolume2 />}
+                        </button>
+                        <span className="shop-video-label">Intro</span>
+                    </div>
+
+                    {/* VIDEO 2 */}
+                    <div className="shop-video-slide" ref={slide2Ref}>
+                        <video
+                            ref={video2Ref}
+                            src={shopVideo2}
+                            autoPlay
+                            muted
+                            playsInline
+                            preload="metadata"
+                            onEnded={goToNextVideo}
+                        />
+                        <button
+                            type="button"
+                            className="shop-video-mute-btn"
+                            onClick={toggleMute}
+                            aria-label={isMuted ? "Unmute" : "Mute"}
+                        >
+                            {isMuted ? <FiVolumeX /> : <FiVolume2 />}
+                        </button>
+                        <span className="shop-video-label">AD</span>
+                    </div>
+
+                </div>
+
+                {/* DOTS */}
+                <div className="shop-video-dots">
+                    {[0, 1].map((i) => (
+                        <span
+                            key={i}
+                            className={`shop-video-dot ${activeVideoIndex === i ? "active" : ""}`}
+                            onClick={() => {
+                                const container = videoScrollRef.current;
+                                if (container) {
+                                    container.scrollTo({
+                                        left: i * container.clientWidth,
+                                        behavior: "smooth"
+                                    });
+                                }
+                            }}
+                        />
+                    ))}
+                </div>
+            </section>
             <section className="shop-category-section">
                 <div className="shop-category-scroll">
                     {categories.map((item) => (
@@ -221,6 +402,17 @@ function ShopHome({
                                     src={offer.image_url || ""}
                                     alt={offer.shop_name}
                                 />
+                                <div className="shop-offer-time">
+                                    {(() => {
+                                        const cd = getCountdown(offer.valid_at);
+                                        if (!cd) return null;
+                                        return (
+                                            <div className={`shop-offer-countdown ${cd.expired ? "expired" : ""}`}>
+                                                {cd.expired ? "⏰ Expired" : `⏳ Ends in ${cd.text}`}
+                                            </div>
+                                        );
+                                    })()}
+                                </div>
                             </div>
 
 
@@ -251,17 +443,6 @@ function ShopHome({
                                     <div className="shop-offer-rating">
                                         ★ {offer.rating || "—"} •{" "}
                                         {Number(offer.customer_count || 0).toLocaleString("en-IN")}+ Customers
-                                    </div>
-                                    <div className="shop-offer-time">
-                                        {(() => {
-                                            const cd = getCountdown(offer.valid_at);
-                                            if (!cd) return null;
-                                            return (
-                                                <div className={`shop-offer-countdown ${cd.expired ? "expired" : ""}`}>
-                                                    {cd.expired ? "⏰ Expired" : `⏳ Ends in ${cd.text}`}
-                                                </div>
-                                            );
-                                        })()}
                                     </div>
 
                                 </div>

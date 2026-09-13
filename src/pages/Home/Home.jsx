@@ -38,13 +38,11 @@ import TOPHEADER from "../../components/Header/TOPHEADER";
 
 function Home({
     user,
-    setUser,
     setPage,
     navigateWithLoading,
     goTo,
     cartCount,
     setCartCount,
-    onAppBack
 }) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -804,11 +802,6 @@ function Home({
     };
 
     const handleCloseDetails = () => {
-
-        console.log("BACK DEBUG:", {
-            currentPath: location.pathname,
-            detailsBackPage
-        });
         const currentPath = location.pathname;
 
         // Reviews / Media → Product Details

@@ -191,7 +191,7 @@ function Profile({
                     <span>My Orders</span>
                 </div>
 
-                <div
+                {/* <div
                     className="profile-item"
                     onClick={() =>
                         handleProfileNavigation("help", "Loading Help & Support...")
@@ -199,7 +199,7 @@ function Profile({
                 >
                     <span>❓</span>
                     <span>Help & Support</span>
-                </div>
+                </div> */}
 
                 <div
                     className="profile-item"

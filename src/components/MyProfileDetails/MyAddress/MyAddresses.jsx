@@ -8,7 +8,6 @@ import { API } from "../../../services/api";
 function MyAddresses({
     setProfilePage,
     selectedAddress,
-    setSelectedAddress,
     navigateWithLoading
 }) {
 
@@ -186,8 +185,7 @@ function MyAddresses({
                     <button
                         className="back-btn"
                         onClick={() => {
-                            setProfilePage("profile");
-                            navigate("/profile");
+                            navigate(-1);
                         }}
                     >
                         <FiArrowLeft />

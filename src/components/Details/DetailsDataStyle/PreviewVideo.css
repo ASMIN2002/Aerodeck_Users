@@ -1,436 +1,180 @@
-/*=========================================================
-  PREVIEW VIDEO
-  Mobile First
-=========================================================*/
-
-/*==============================
-ROOT
-==============================*/
-
+/* ===== Preview Video Container ===== */
 .dt-preview {
-
-    width: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    text-align: left;
-
-    gap: 16px;
-
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #ffffff, #f5f7fa);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, -apple-system, sans-serif;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+.dt-preview:hover {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
 
-
-/*==============================
-TITLE
-==============================*/
-
+/* ===== Heading ===== */
 .dt-preview h3 {
-
-    width: 100%;
-
-    margin: 0;
-
-    text-align: left;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    color: rgb(0, 0, 0);
-
+  margin: 0 0 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  letter-spacing: 0.3px;
+  position: relative;
+  padding-bottom: 0.6rem;
 }
 
+.dt-preview h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #ff6b35, #f7931e);
+  border-radius: 2px;
+}
 
-
-/*==============================
-VIDEO CONTAINER
-==============================*/
-
+/* ===== Video Container (16:9 Aspect Ratio) ===== */
 .dt-video-container {
-
-    position: relative;
-
-    width: 30%;
-
-    aspect-ratio: 9/16;
-
-    overflow: hidden;
-
-    border-radius: 18px;
-
-    background: #000;
-
-    align-self: flex-start;
-
-    margin: 0;
-
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, .08);
-
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
-
-
-
-/*==============================
-VIDEO
-==============================*/
 
 .dt-preview-video {
-
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    border: none;
-
-    background: #000;
-
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
 }
 
-
-
-/*==============================
-PLAY BUTTON
-==============================*/
-
-.dt-play-btn {
-
-    position: absolute;
-
-    left: 18px;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 20px;
-
-    height: 20px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, .94);
-
-    color: #111;
-
-    font-size: 9px;
-
-    cursor: pointer;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    backdrop-filter: blur(12px);
-
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, .20);
-
-    transition:
-        transform .25s ease,
-        background .25s ease,
-        box-shadow .25s ease;
-
-}
-
-
-
-.dt-play-btn:hover {
-
-    transform: translateY(-50%) scale(1.08);
-
-    background: #ffffff;
-
-    box-shadow:
-        0 16px 34px rgba(0, 0, 0, .25);
-
-}
-
-
-
-.dt-play-btn:active {
-
-    transform: translateY(-50%) scale(.95);
-
-}
-
-
-
-/*==============================
-FULLSCREEN BUTTON
-==============================*/
-
-.dt-fullscreen-btn {
-
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    width: 20px;
-    height: 20px;
-    border: none;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, .92);
-    color: #111;
-    font-size: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .18);
-    transition: transform .25s ease, background .25s ease;
-
-}
-
+/* ===== No Preview / Error State ===== */
 .dt-no-preview {
-    color: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f8f9fb, #eef1f6);
+  border: 2px dashed #cbd3e0;
+  border-radius: 12px;
+  color: #7a8699;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.4px;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.dt-fullscreen-btn:hover {
-
-    transform: scale(1.08);
-
-    background: #ffffff;
-
+.dt-no-preview:hover {
+  background: linear-gradient(135deg, #eef1f6, #e4e9f2);
+  border-color: #a8b4c9;
 }
 
+/* ===== Tablet (≤ 768px) ===== */
+@media (max-width: 768px) {
+  .dt-preview {
+    padding: 1.2rem;
+    border-radius: 14px;
+    max-width: 100%;
+  }
 
+  .dt-preview h3 {
+    font-size: 1.2rem;
+  }
 
-.dt-fullscreen-btn:active {
-
-    transform: scale(.95);
-
+  .dt-no-preview {
+    min-height: 180px;
+    font-size: 0.95rem;
+    padding: 1.5rem 1rem;
+  }
 }
 
+/* ===== Mobile (≤ 480px) ===== */
+@media (max-width: 480px) {
+  .dt-preview {
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
 
+  .dt-preview h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+  }
 
-/*==============================
-FOCUS
-==============================*/
+  .dt-preview h3::after {
+    width: 40px;
+    height: 2.5px;
+  }
 
-.dt-play-btn:focus-visible,
+  .dt-video-container {
+    border-radius: 10px;
+  }
 
-.dt-fullscreen-btn:focus-visible {
+  .dt-preview-video {
+    border-radius: 10px;
+  }
 
-    outline: 2px solid #111;
-
-    outline-offset: 3px;
-
+  .dt-no-preview {
+    min-height: 150px;
+    font-size: 0.88rem;
+    padding: 1.2rem 0.8rem;
+    border-radius: 10px;
+  }
 }
 
-.dt-video-container iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    z-index: 1;
+/* ===== Large Screens (≥ 1200px) ===== */
+@media (min-width: 1200px) {
+  .dt-preview {
+    max-width: 1000px;
+    padding: 2rem;
+  }
+
+  .dt-preview h3 {
+    font-size: 1.6rem;
+  }
 }
 
-/*==============================
-576px+
-==============================*/
+/* ===== Dark Mode Support (Optional) ===== */
+@media (prefers-color-scheme: dark) {
+  .dt-preview {
+    background: linear-gradient(145deg, #1e1e2e, #25253a);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
 
-@media (min-width:576px) {
+  .dt-preview h3 {
+    color: #f0f0f5;
+  }
 
-    .dt-preview h3 {
+  .dt-no-preview {
+    background: linear-gradient(135deg, #2a2a3d, #32324a);
+    border-color: #4a4a6a;
+    color: #a0a8c0;
+  }
 
-        font-size: 18px;
-
-    }
-
-    .dt-play-btn {
-
-        width: 68px;
-
-        height: 68px;
-
-        font-size: 28px;
-
-        left: 22px;
-
-    }
-
+  .dt-no-preview:hover {
+    background: linear-gradient(135deg, #32324a, #3a3a55);
+    border-color: #5a5a80;
+  }
 }
 
-
-
-/*==============================
-768px+
-==============================*/
-
-@media (min-width:768px) {
-
-    .dt-video-container {
-
-        border-radius: 20px;
-
-    }
-
-    .dt-preview h3 {
-
-        font-size: 20px;
-
-    }
-
-    .dt-play-btn {
-
-        width: 74px;
-
-        height: 74px;
-
-        font-size: 30px;
-
-        left: 24px;
-
-    }
-
-    .dt-fullscreen-btn {
-
-        width: 46px;
-
-        height: 46px;
-
-        font-size: 20px;
-
-    }
-
-}
-
-
-
-/*==============================
-1024px+
-==============================*/
-
-@media (min-width:1024px) {
-
-    .dt-preview {
-
-        gap: 18px;
-
-    }
-
-    .dt-preview h3 {
-
-        font-size: 22px;
-
-    }
-
-    .dt-video-container {
-
-        border-radius: 24px;
-
-    }
-
-    .dt-play-btn {
-
-        width: 84px;
-
-        height: 84px;
-
-        left: 28px;
-
-        font-size: 34px;
-
-    }
-
-    .dt-fullscreen-btn {
-
-        width: 50px;
-
-        height: 50px;
-
-        font-size: 22px;
-
-    }
-
-}
-
-
-
-/*==============================
-1440px+
-==============================*/
-
-@media (min-width:1440px) {
-
-    .dt-play-btn {
-
-        width: 92px;
-
-        height: 92px;
-
-        left: 32px;
-
-        font-size: 38px;
-
-    }
-
-}
-
-
-
-/*==============================
-1920px+
-==============================*/
-
-@media (min-width:1920px) {
-
-    .dt-preview h3 {
-
-        font-size: 24px;
-
-    }
-
-    .dt-play-btn {
-
-        width: 100px;
-
-        height: 100px;
-
-        left: 36px;
-
-        font-size: 42px;
-
-    }
-
-    .dt-fullscreen-btn {
-
-        width: 56px;
-
-        height: 56px;
-
-        font-size: 24px;
-
-    }
-
-}
-
-
-
-/*==============================
-REDUCED MOTION
-==============================*/
-
-@media (prefers-reduced-motion:reduce) {
-
-    .dt-play-btn,
-
-    .dt-fullscreen-btn {
-
-        transition: none;
-
-    }
-
+/* ===== Reduced Motion Accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  .dt-preview,
+  .dt-no-preview {
+    transition: none;
+  }
 }
