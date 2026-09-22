@@ -1,397 +1,773 @@
-/* =========================================================
-   HEEPIT TERMS & CONDITIONS
-========================================================= */
+/* ==========================================================================
+   TERMS & CONDITIONS — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
 
 .terms-page {
+    position: relative;
     width: 100%;
     min-height: 100vh;
-
-    box-sizing: border-box;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(0, 242, 255, 0.07),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            #070b11 0%,
-            #0a0f17 50%,
-            #070a10 100%
-        );
-
+    background: #0a0a0f;
+    background-image:
+        radial-gradient(circle at 15% 0%, rgba(162, 155, 254, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 100%, rgba(108, 92, 231, 0.06) 0%, transparent 50%);
     color: #ffffff;
-
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 120px;
+    box-sizing: border-box;
     overflow-x: hidden;
 }
 
+.terms-page * {
+    box-sizing: border-box;
+}
 
-/* =========================================================
+/* ============================================
    HEADER
-========================================================= */
+   ============================================ */
 
 .terms-header {
     position: sticky;
     top: 0;
-
-    z-index: 100;
-
-    width: 100%;
-
-    min-height: 64px;
-
-    padding:
-        10px
-        14px;
-
-    box-sizing: border-box;
-
+    z-index: 50;
     display: flex;
-
     align-items: center;
-
-    gap: 12px;
-
-    background:
-        rgba(7, 11, 17, 0.88);
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.07);
-
-    backdrop-filter: blur(18px);
-
-    -webkit-backdrop-filter: blur(18px);
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(10, 10, 15, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1.5px solid #1c1c24;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    animation: headerSlideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+@keyframes headerSlideDown {
+    from { opacity: 0; transform: translateY(-100%); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 
-/* =========================================================
-   BACK BUTTON
-========================================================= */
+.terms-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        #a29bfe 25%,
+        #6c5ce7 50%,
+        #a29bfe 75%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 4s linear infinite;
+}
 
-.terms-back-btn {
+@keyframes gradientSlide {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* --- Back Button --- */
+.terms-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 42px;
     height: 42px;
-
-    flex-shrink: 0;
-
-    padding: 0;
-
-    border: 1px solid rgba(255, 255, 255, 0.10);
-
-    border-radius: 13px;
-
-    background:
-        rgba(255, 255, 255, 0.055);
-
+    min-width: 42px;
+    background: linear-gradient(145deg, #1c1c24, #232330);
+    border: 1.5px solid #2a2a35;
+    border-radius: 12px;
     color: #ffffff;
-
-    font-size: 26px;
-
-    line-height: 1;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: inherit;
     cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-
-.terms-back-btn:active {
-    transform: scale(0.91);
-
-    background:
-        rgba(0, 242, 255, 0.10);
-
-    border-color:
-        rgba(0, 242, 255, 0.25);
+.terms-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
 }
 
+.terms-back:hover::before {
+    opacity: 1;
+}
 
-/* =========================================================
-   HEADER TITLE
-========================================================= */
+.terms-back:hover {
+    border-color: #a29bfe;
+    transform: translateX(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(162, 155, 254, 0.45);
+}
 
+.terms-back:active {
+    transform: translateX(-1px) scale(0.95);
+}
+
+.terms-back:focus-visible {
+    outline: 2px solid #a29bfe;
+    outline-offset: 2px;
+}
+
+/* --- Header Title --- */
 .terms-header-title {
+    flex: 1;
     min-width: 0;
-
     display: flex;
-
     flex-direction: column;
-
-    justify-content: center;
+    gap: 2px;
 }
-
 
 .terms-header-title h1 {
+    font-size: 1.1rem;
+    font-weight: 800;
     margin: 0;
-
-    font-size: 17px;
-
-    line-height: 1.25;
-
-    font-weight: 850;
-
-    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: linear-gradient(135deg, #ffffff 0%, #a29bfe 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleShimmer 4s ease infinite;
 }
 
+@keyframes titleShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
 
 .terms-header-title span {
-    margin-top: 2px;
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-
-    color: #00f2ff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #6b6b7a;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    animation: headerBadgeFade 0.6s ease 0.3s backwards;
 }
 
+@keyframes headerBadgeFade {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
 
-/* =========================================================
-   CONTENT
-========================================================= */
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
 
 .terms-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     width: 100%;
-
-    max-width: 760px;
-
+    max-width: 850px;
     margin: 0 auto;
-
-    padding:
-        22px
-        15px
-        45px;
-
+    padding: 24px 18px 0;
     box-sizing: border-box;
 }
 
-
-/* =========================================================
-   SECTION
-========================================================= */
+/* ============================================
+   SECTION (Each Terms Section)
+   ============================================ */
 
 .terms-section {
-    width: 100%;
-
-    margin-bottom: 27px;
-
-    padding-bottom: 24px;
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.065);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px 22px 22px 26px;
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: sectionEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
+/* Staggered animation for sections */
+.terms-section:nth-child(1)  { animation-delay: 0.05s; }
+.terms-section:nth-child(2)  { animation-delay: 0.10s; }
+.terms-section:nth-child(3)  { animation-delay: 0.15s; }
+.terms-section:nth-child(4)  { animation-delay: 0.20s; }
+.terms-section:nth-child(5)  { animation-delay: 0.25s; }
+.terms-section:nth-child(6)  { animation-delay: 0.30s; }
+.terms-section:nth-child(7)  { animation-delay: 0.35s; }
+.terms-section:nth-child(8)  { animation-delay: 0.40s; }
+.terms-section:nth-child(9)  { animation-delay: 0.45s; }
+.terms-section:nth-child(10) { animation-delay: 0.50s; }
+.terms-section:nth-child(11) { animation-delay: 0.55s; }
+.terms-section:nth-child(12) { animation-delay: 0.60s; }
 
-/* =========================================================
+@keyframes sectionEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Left accent bar */
+.terms-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
+}
+
+.terms-section:hover::before {
+    transform: translateY(-50%) scaleY(1);
+}
+
+/* Radial glow */
+.terms-section::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -30%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(162, 155, 254, 0.08) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+.terms-section:hover::after {
+    opacity: 1;
+}
+
+.terms-section:hover {
+    transform: translateY(-3px);
+    border-color: rgba(162, 155, 254, 0.3);
+    box-shadow:
+        0 12px 32px rgba(162, 155, 254, 0.12),
+        0 0 0 1px rgba(162, 155, 254, 0.08) inset;
+    background: linear-gradient(145deg, #1a1a22 0%, #232330 100%);
+}
+
+/* ============================================
    SECTION HEADING
-========================================================= */
+   ============================================ */
 
 .terms-section h2 {
-    margin: 0 0 11px;
-
-    font-size: 15px;
-
-    line-height: 1.35;
-
-    font-weight: 850;
-
+    position: relative;
+    font-size: 1rem;
+    font-weight: 800;
     color: #ffffff;
-
-    letter-spacing: 0.1px;
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s ease;
+    z-index: 1;
 }
 
-
+/* Number badge */
 .terms-section h2::before {
-    content: "";
-
-    display: inline-block;
-
-    width: 4px;
-
-    height: 17px;
-
-    margin-right: 9px;
-
-    vertical-align: -3px;
-
-    border-radius: 4px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #00f2ff,
-            #6674ff
-        );
-
+    content: '';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 900;
     box-shadow:
-        0 0 10px rgba(0, 242, 255, 0.25);
+        0 4px 14px rgba(162, 155, 254, 0.4),
+        0 0 0 1px rgba(162, 155, 254, 0.3) inset;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='20 6 9 17 4 12'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
 }
 
+.terms-section:hover h2 {
+    color: #a29bfe;
+}
 
-/* =========================================================
-   PARAGRAPHS
-========================================================= */
+.terms-section:hover h2::before {
+    transform: scale(1.1) rotate(-6deg);
+    box-shadow:
+        0 8px 22px rgba(162, 155, 254, 0.6),
+        0 0 0 1px rgba(162, 155, 254, 0.5) inset;
+}
+
+/* ============================================
+   SECTION PARAGRAPH
+   ============================================ */
 
 .terms-section p {
-    margin:
-        0 0 11px;
-
-    color:
-        rgba(255, 255, 255, 0.64);
-
-    font-size: 13px;
-
-    line-height: 1.75;
-
+    position: relative;
+    font-size: 0.87rem;
     font-weight: 400;
+    color: #b8b8c5;
+    margin: 0;
+    letter-spacing: 0.005em;
+    line-height: 1.7;
+    z-index: 1;
+    padding-left: 12px;
+    border-left: 2px solid rgba(162, 155, 254, 0.15);
+    transition: all 0.3s ease;
 }
 
-
-.terms-section p:last-child {
-    margin-bottom: 0;
+.terms-section:hover p {
+    border-left-color: rgba(162, 155, 254, 0.4);
+    color: #c8c8dc;
 }
 
-
-/* =========================================================
-   LAST NOTE
-========================================================= */
+/* ============================================
+   LAST NOTE (Thank You Section)
+   ============================================ */
 
 .terms-last-note {
-    padding:
-        22px
-        18px;
-
-    box-sizing: border-box;
-
-    border-radius: 18px;
-
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 36px 24px;
+    margin-top: 12px;
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 22px;
     text-align: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0, 242, 255, 0.075),
-            rgba(101, 83, 255, 0.06)
-        );
-
-    border:
-        1px solid rgba(0, 242, 255, 0.12);
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    animation: lastNoteEnter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s backwards;
 }
 
+@keyframes lastNoteEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animated gradient top line */
+.terms-last-note::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        #a29bfe 25%,
+        #6c5ce7 50%,
+        #a29bfe 75%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 4s linear infinite;
+}
+
+/* Rotating glow */
+.terms-last-note::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    margin-left: -150px;
+    background: radial-gradient(circle, rgba(162, 155, 254, 0.15) 0%, transparent 65%);
+    animation: lastGlow 12s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes lastGlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
 
 .terms-last-note strong {
-    display: block;
-
-    color: #00f2ff;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #ffffff 0%, #a29bfe 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleShimmer 4s ease infinite;
 }
-
 
 .terms-last-note p {
-    margin:
-        7px
-        0 0;
-
-    color:
-        rgba(255, 255, 255, 0.48);
-
-    font-size: 11px;
+    position: relative;
+    z-index: 1;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #b8b8c5;
+    margin: 0;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+    max-width: 320px;
 }
 
+/* Heart/Sparkle accent */
+.terms-last-note p::before {
+    content: '✨';
+    display: inline-block;
+    margin-right: 6px;
+    font-size: 0.9rem;
+    animation: sparkleSpin 2s ease-in-out infinite;
+}
 
-/* =========================================================
-   TABLET
-========================================================= */
+@keyframes sparkleSpin {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50%      { transform: rotate(20deg) scale(1.2); }
+}
 
-@media (min-width: 600px) {
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .terms-page {
+        padding-bottom: 140px;
+    }
 
     .terms-header {
-        padding:
-            11px
-            22px;
+        padding: 20px 28px;
     }
 
+    .terms-header-title h1 { font-size: 1.25rem; }
+    .terms-header-title span { font-size: 0.68rem; }
+    .terms-back { width: 46px; height: 46px; font-size: 1.3rem; }
 
     .terms-content {
-        padding:
-            30px
-            24px
-            55px;
+        max-width: 950px;
+        padding: 32px 28px 0;
+        gap: 20px;
     }
-
 
     .terms-section {
-        margin-bottom: 32px;
-
-        padding-bottom: 28px;
+        padding: 26px 28px 26px 32px;
+        border-radius: 20px;
+        gap: 14px;
     }
-
 
     .terms-section h2 {
-        font-size: 17px;
+        font-size: 1.12rem;
     }
 
+    .terms-section h2::before {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        background-size: 18px;
+    }
 
     .terms-section p {
-        font-size: 14px;
-
-        line-height: 1.8;
+        font-size: 0.94rem;
+        line-height: 1.75;
     }
 
+    .terms-last-note {
+        padding: 44px 32px;
+        border-radius: 24px;
+    }
+
+    .terms-last-note strong { font-size: 1.75rem; }
+    .terms-last-note p { font-size: 0.95rem; max-width: 380px; }
 }
 
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .terms-content { max-width: 880px; }
+}
 
-/* =========================================================
-   DESKTOP
-========================================================= */
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .terms-page { padding-bottom: 110px; }
 
-@media (min-width: 1000px) {
-
-    .terms-header {
-        min-height: 70px;
-
-        padding:
-            12px
-            30px;
-    }
-
+    .terms-header { padding: 14px 16px; }
+    .terms-header-title h1 { font-size: 1.05rem; }
+    .terms-header-title span { font-size: 0.56rem; }
+    .terms-back { width: 40px; height: 40px; font-size: 1.1rem; }
 
     .terms-content {
-        max-width: 820px;
-
-        padding-top: 38px;
+        padding: 20px 16px 0;
+        gap: 14px;
     }
 
-
-    .terms-header-title h1 {
-        font-size: 19px;
+    .terms-section {
+        padding: 18px 18px 18px 22px;
+        border-radius: 16px;
+        gap: 10px;
     }
 
+    .terms-section h2 { font-size: 0.94rem; }
+    .terms-section h2::before {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        background-size: 14px;
+    }
+    .terms-section p { font-size: 0.82rem; }
+
+    .terms-last-note {
+        padding: 30px 22px;
+        border-radius: 20px;
+    }
+    .terms-last-note strong { font-size: 1.35rem; }
+    .terms-last-note p { font-size: 0.84rem; }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .terms-page { padding-bottom: 100px; }
+
+    .terms-header { padding: 12px 14px; gap: 12px; }
+    .terms-header-title h1 { font-size: 1rem; }
+    .terms-back { width: 38px; height: 38px; font-size: 1.05rem; border-radius: 10px; }
+
+    .terms-content {
+        padding: 18px 14px 0;
+        gap: 12px;
+    }
+
+    .terms-section {
+        padding: 16px 16px 16px 20px;
+        border-radius: 15px;
+        gap: 9px;
+    }
+
+    .terms-section h2 { font-size: 0.9rem; gap: 8px; }
+    .terms-section h2::before {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        background-size: 13px;
+        border-radius: 8px;
+    }
+    .terms-section p { font-size: 0.78rem; line-height: 1.65; padding-left: 10px; }
+
+    .terms-last-note {
+        padding: 28px 20px;
+        border-radius: 18px;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .terms-last-note strong { font-size: 1.2rem; }
+    .terms-last-note p { font-size: 0.8rem; max-width: 280px; }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .terms-page { padding-bottom: 96px; }
+
+    .terms-header { padding: 11px 12px; gap: 11px; }
+    .terms-header-title h1 { font-size: 0.95rem; }
+    .terms-header-title span { font-size: 0.52rem; }
+    .terms-back { width: 36px; height: 36px; font-size: 1rem; }
+
+    .terms-content {
+        padding: 16px 12px 0;
+        gap: 11px;
+    }
+
+    .terms-section {
+        padding: 15px 14px 15px 18px;
+        border-radius: 14px;
+        gap: 8px;
+    }
+
+    .terms-section h2 { font-size: 0.86rem; }
+    .terms-section h2::before {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        background-size: 12px;
+        border-radius: 7px;
+    }
+    .terms-section p { font-size: 0.75rem; line-height: 1.6; }
+
+    .terms-last-note {
+        padding: 24px 16px;
+        border-radius: 16px;
+    }
+    .terms-last-note strong { font-size: 1.1rem; }
+    .terms-last-note p { font-size: 0.76rem; }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .terms-page { padding-bottom: 90px; }
+
+    .terms-header { padding: 10px 10px; gap: 9px; }
+    .terms-header-title h1 { font-size: 0.88rem; }
+    .terms-header-title span { font-size: 0.48rem; letter-spacing: 0.15em; }
+    .terms-back { width: 34px; height: 34px; font-size: 0.95rem; border-radius: 9px; }
+
+    .terms-content {
+        padding: 14px 10px 0;
+        gap: 10px;
+    }
+
+    .terms-section {
+        padding: 13px 12px 13px 16px;
+        border-radius: 12px;
+        gap: 7px;
+    }
 
     .terms-section h2 {
-        font-size: 18px;
+        font-size: 0.8rem;
+        gap: 7px;
+    }
+    .terms-section h2::before {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        background-size: 11px;
+        border-radius: 6px;
+    }
+    .terms-section p { font-size: 0.7rem; line-height: 1.55; padding-left: 8px; border-left-width: 1.5px; }
+
+    .terms-last-note {
+        padding: 22px 14px;
+        border-radius: 14px;
+        gap: 8px;
+    }
+    .terms-last-note strong { font-size: 1rem; letter-spacing: 0.1em; }
+    .terms-last-note p { font-size: 0.7rem; max-width: 220px; }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .terms-page *,
+    .terms-page *::before,
+    .terms-page *::after {
+        animation: none !important;
+        transition: none !important;
     }
 
-
-    .terms-section p {
-        font-size: 14px;
-
-        line-height: 1.85;
+    .terms-section:hover,
+    .terms-section:hover h2::before,
+    .terms-back:hover {
+        transform: none;
     }
 
+    .terms-last-note p::before {
+        animation: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .terms-header,
+    .terms-section,
+    .terms-last-note {
+        border: 2px solid ButtonText;
+    }
+
+    .terms-back {
+        border: 2px solid ButtonText;
+    }
+
+    .terms-section h2::before {
+        border: 1px solid ButtonText;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .terms-page {
+        padding-bottom: max(120px, calc(120px + env(safe-area-inset-bottom)));
+    }
+
+    .terms-header {
+        padding-left: max(18px, env(safe-area-inset-left));
+        padding-right: max(18px, env(safe-area-inset-right));
+    }
+
+    .terms-content {
+        padding-left: max(18px, env(safe-area-inset-left));
+        padding-right: max(18px, env(safe-area-inset-right));
+    }
+
+    @media (max-width: 767px) {
+        .terms-page {
+            padding-bottom: max(100px, calc(100px + env(safe-area-inset-bottom)));
+        }
+
+        .terms-header,
+        .terms-content {
+            padding-left: max(14px, env(safe-area-inset-left));
+            padding-right: max(14px, env(safe-area-inset-right));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .terms-page {
+            padding-bottom: max(90px, calc(90px + env(safe-area-inset-bottom)));
+        }
+
+        .terms-header,
+        .terms-content {
+            padding-left: max(10px, env(safe-area-inset-left));
+            padding-right: max(10px, env(safe-area-inset-right));
+        }
+    }
 }

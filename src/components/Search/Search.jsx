@@ -211,8 +211,6 @@ function Search({
         >
 
             <div className="sr-search-box">
-
-
                 {!search.trim() && (
                     categoryName ? (
                         <span className="sr-static-placeholder">
@@ -229,21 +227,26 @@ function Search({
                         )
                     )
                 )}
+
                 <input
                     type="text"
                     className="sr-input"
                     value={search}
-                    onChange={(e) =>
-                        setSearch(e.target.value)
-                    }
+                    onChange={(e) => setSearch(e.target.value)}
                     onKeyDown={(e) => {
-
-                        if (e.key === "Enter") {
-                            setSearchSuggestions([]);
-                        }
-
+                        if (e.key === "Enter") setSearchSuggestions([]);
                     }}
                 />
+
+                {/* ✅ SEARCH ICON — Right side mein */}
+                <button
+                    type="button"
+                    className="sr-search-icon-btn"
+                    aria-label="Search"
+                    onClick={() => setSearchSuggestions([])}
+                >
+                    <FaSearch />
+                </button>
             </div>
             {
                 searchSuggestions.length > 0 && (
@@ -281,7 +284,7 @@ function Search({
                 )
             }
 
-            <button
+            {/* <button
                 className="sr-filter-btn"
                 type="button"
                 onClick={() =>
@@ -289,22 +292,15 @@ function Search({
                 }
             >
                 ⚙
-            </button>
+            </button> */}
 
             {
-
                 showFilter &&
-
                 <Filter
-
                     selectedMenu={selectedMenu}
-
                     filter={filter}
-
                     setFilter={setFilter}
-
                     categories={categories}
-
                 />
             }
 

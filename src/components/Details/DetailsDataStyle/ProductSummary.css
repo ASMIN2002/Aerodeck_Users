@@ -1,498 +1,813 @@
-/*=========================================================
-  PRODUCT SUMMARY
-  Mobile First
-=========================================================*/
+/* ============================================
+   PRODUCT SUMMARY SECTION - PREMIUM RESPONSIVE STYLES
+   ============================================ */
 
-/*==============================
-SECTION
-==============================*/
-
+/* --- Base Container --- */
 .ps-section {
     width: 100%;
+    padding: 20px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-top: -15px;
+    gap: 14px;
 }
 
-/*==============================
-HEADER
-==============================*/
+/* ============================================
+   TOP BAR (Price + Rating)
+   ============================================ */
 
-.ps-header {
-
+.tobbardet {
     display: flex;
-
+    align-items: center;
     justify-content: space-between;
-
-    align-items: flex-start;
-
     gap: 12px;
-
-}
-
-
-
-.ps-name {
-    flex: 1;
-    margin: 0;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1.35;
-    color: rgb(0, 0, 0);
-}
-
-
-
-.ps-rating {
-
-    padding: 6px 10px;
-    border-radius: 999px;
-    color: #b7791f;
-    font-size: 14px;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-
-}
-
-
-
-/*==============================
-PRICE
-==============================*/
-
-.ps-price-row {
-
-    display: flex;
-
-    align-items: flex-start;
-
     flex-wrap: wrap;
+    width: 100%;
+}
 
-    gap: 2px;
-    flex-direction: column;
-
+/* --- Price Row --- */
+.ps-price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .pridisc {
     display: flex;
-    gap: 1rem;
-}
-
-.ps-price {
-    font-size: 22px;
-    font-weight: 700;
-    color: rgb(0, 0, 0);
-}
-
-
-
-.ps-demo-price {
-
-    font-size: 16px;
-
-    color: #888;
-
-    text-decoration: line-through;
-
-}
-
-
-
-.ps-discount {
-
-    border-radius: 999px;
-    color: #088a26;
-    font-size: 19px;
-    font-weight: 700;
-
-}
-
-
-
-/*==============================
-LIKE SAVE
-==============================*/
-
-.ps-count-row {
-
-    display: flex;
-
     align-items: center;
-
-    gap: 20px;
-
+    gap: 10px;
     flex-wrap: wrap;
-
 }
 
-
-
-.ps-count-row span {
-
-    font-size: 14px;
-
-    color: #555;
-
-    font-weight: 600;
-
+/* --- Demo Price (Strikethrough) --- */
+.ps-demo-price {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #9a9ab0;
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+    text-decoration-color: #c0c0d0;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
 }
 
-
-
-/*==============================
-CART
-==============================*/
-
-.ps-cart-row {
-
-    width: 100%;
-
-}
-.ps-cart-btn {
-    width: 100%;
-    height: 40px;
-    border: none;
-    border-radius: 14px;
-    background: #1601ff;
-    color: #fdfdfd;
-    font-size: 13px;
-    cursor: pointer;
-    transition: .25s ease;
-}
-
-.downcartbuy {
-    display: flex;
-    gap:5px;
-}
-
-.ps-buy-now {
-    width: 100%;
-    height: 40px;
-    border: none;
-    border-radius: 14px;
-    background: #1601ff;
-    color: #fff;
-    font-size: 13px;
-    cursor: pointer;
-    transition: .25s ease;
-}
-
-
-
-/*==============================
-QUANTITY
-==============================*/
-
-.ps-qty {
-    width: 100%;
-    display: flex;
+/* --- Discount Badge --- */
+.ps-discount {
+    display: inline-flex;
     align-items: center;
-    gap: 18px;
-    padding: 6px;
-    border: 1px solid #e5e5e5;
-    border-radius: 999px;
-    justify-content: space-between;
-
-}
-
-
-
-.ps-qty button {
-
-    width: 32px;
-
-    height: 32px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: #111;
-
+    font-size: 0.72rem;
+    font-weight: 700;
     color: #ffffff;
-
-    font-size: 18px;
-
-    cursor: pointer;
-
-    transition: .25s ease;
-
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    padding: 4px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(0, 184, 148, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-
-.ps-qty button:hover {
-
+.ps-discount:hover {
     transform: scale(1.05);
-
+    box-shadow: 0 5px 16px rgba(0, 184, 148, 0.45);
 }
 
-
-
-.ps-qty span {
-    min-width: 22px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 700;
-    color: rgb(0, 0, 0);
+/* --- Main Price --- */
+.ps-price {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    transition: color 0.3s ease;
 }
 
-
-
-.ps-delivery {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 16px;
-    background: #fafafa;
-    border: 1px solid #ececec;
-    border-radius: 16px;
-}
-
-
-
-.ps-stock {
-    display: flex;
+/* --- Rating Badge --- */
+.ps-rating {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-
-
-.ps-stock-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #19b24a;
-}
-
-
-
-.ps-delivery-text,
-.ps-cod {
-    font-size: 13px;
-    color: #555;
-}
-
-.ps-buy-btn {
-    width: 100%;
-    height: 54px;
-
-    border: none;
-
-    border-radius: 16px;
-
-    background: #ff9800;
-
-    color: #f00000;
-
-    font-size: 16px;
-
+    gap: 4px;
+    font-size: 0.82rem;
     font-weight: 700;
-
-    cursor: pointer;
-
-    transition: .25s ease;
-
+    color: #1a1a2e;
+    background: linear-gradient(145deg, #fff9e6, #fff3d4);
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 1.5px solid #ffeaa7;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
 }
 
-
-
-.ps-buy-btn:hover {
-
-    background: #fb8c00;
-
-    transform: translateY(-2px);
-
+.ps-rating:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 14px rgba(255, 193, 7, 0.3);
 }
 
+/* ============================================
+   HEADER (Product Name)
+   ============================================ */
 
-
-.ps-buy-btn:active {
-
-    transform: scale(.98);
-
+.ps-header {
+    width: 100%;
 }
 
-
-
-/*==============================
-FOCUS
-==============================*/
-
-.ps-cart-btn:focus-visible,
-
-.ps-buy-btn:focus-visible,
-
-.ps-qty button:focus-visible {
-
-    outline: 2px solid #111;
-
-    outline-offset: 2px;
-
+.ps-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    word-break: break-word;
+    transition: color 0.3s ease;
 }
 
-
-
-/*=========================================================
-  576px+
-=========================================================*/
-
-@media (min-width:576px) {
-
-    .ps-name {
-
-        font-size: 26px;
-
-    }
-}
-
-
-
-/*=========================================================
-  768px+
-=========================================================*/
-
-@media (min-width:768px) {
-
-    .ps-section {
-
-        gap: 20px;
-
-    }
-
-    .ps-name {
-
-        font-size: 30px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1024px+
-=========================================================*/
-
-@media (min-width:1024px) {
-
-    .ps-section {
-
-        gap: 24px;
-
-    }
-
-    .ps-name {
-
-        font-size: 36px;
-
-    }
-
-    .ps-buy-btn {
-
-        height: 58px;
-
-        font-size: 17px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1440px+
-=========================================================*/
-
-@media (min-width:1440px) {
-
-    .ps-name {
-
-        font-size: 40px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  1920px+
-=========================================================*/
-
-@media (min-width:1920px) {
-
-    .ps-name {
-
-        font-size: 44px;
-
-    }
-
-    .ps-buy-btn {
-
-        height: 62px;
-
-        font-size: 18px;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  REDUCED MOTION
-=========================================================*/
-
-@media (prefers-reduced-motion:reduce) {
-
-    .ps-cart-btn,
-
-    .ps-buy-btn,
-
-    .ps-qty button {
-
-        transition: none;
-
-    }
-
-}
-
-.tobbardet {
-    display: flex;
-    justify-content: space-between;
-}
-
-.ps-desc.clamp {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-}
+/* ============================================
+   DESCRIPTION
+   ============================================ */
 
 .ps-desc {
-    margin: 0;
-    font-size: 11px;
-    line-height: 1.6;
+    font-size: 0.9rem;
     font-weight: 400;
-    color: rgb(0, 0, 0);
+    color: #5a5a70;
+    line-height: 1.65;
+    margin: 0;
+    letter-spacing: 0.005em;
     word-break: break-word;
+    transition: color 0.3s ease;
 }
 
 .ps-more {
-    color: #0f6fff;
-    font-weight: 600;
+    color: #6c5ce7;
+    font-weight: 700;
     cursor: pointer;
-    user-select: none;
+    margin-left: 4px;
+    transition: color 0.25s ease, text-decoration 0.25s ease;
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .ps-more:hover {
-    text-decoration: underline;
+    color: #5648c4;
+    border-bottom-color: #5648c4;
+}
+
+.ps-more:active {
+    color: #4538a8;
+}
+
+/* ============================================
+   ACTION ROW (Cart + Buy Now)
+   ============================================ */
+
+.downcartbuy {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-top: 4px;
+}
+
+/* --- Cart Row --- */
+.ps-cart-row {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Quantity Selector --- */
+.ps-qty {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(145deg, #fafafe, #f0f0ff);
+    border: 1.5px solid #e0e0f0;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.08);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ps-qty:hover {
+    border-color: rgba(108, 92, 231, 0.35);
+    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.15);
+}
+
+.ps-qty button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    color: #6c5ce7;
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
+    user-select: none;
+    position: relative;
+}
+
+.ps-qty button:hover {
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    color: #ffffff;
+}
+
+.ps-qty button:active {
+    transform: scale(0.92);
+}
+
+.ps-qty button:focus-visible {
+    outline: 2px solid #6c5ce7;
+    outline-offset: -2px;
+}
+
+.ps-qty span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 4px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.01em;
+    user-select: none;
+    border-left: 1.5px solid #e0e0f0;
+    border-right: 1.5px solid #e0e0f0;
+    background: #ffffff;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+/* --- Base Button (Add to Cart / Buy Now) --- */
+.ps-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 24px;
+    height: 46px;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Shine sweep effect */
+.ps-cart-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.ps-cart-btn:hover::before {
+    left: 100%;
+}
+
+.ps-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(108, 92, 231, 0.45);
+    background: linear-gradient(135deg, #5b4cd6, #9188f0);
+}
+
+.ps-cart-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+}
+
+.ps-cart-btn:focus-visible {
+    outline: 2px solid #6c5ce7;
+    outline-offset: 3px;
+}
+
+/* --- Buy Now Wrapper --- */
+.ps-buy-now {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.ps-buy-now .ps-cart-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+    box-shadow: 0 6px 20px rgba(26, 26, 46, 0.3);
+}
+
+.ps-buy-now .ps-cart-btn:hover {
+    background: linear-gradient(135deg, #2d2d4a, #3d3d5c);
+    box-shadow: 0 10px 28px rgba(26, 26, 46, 0.45);
+}
+
+/* --- Total Price in Buy Button --- */
+.ps-total-price {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: 0.95rem;
+}
+
+/* --- ORDER NOW Button (Non-shop/gift) --- */
+.ps-buy-now .ps-cart-btn:only-child {
+    background: blue;
+    box-shadow: 0 6px 20px rgba(0, 184, 148, 0.3);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+}
+
+.ps-buy-now .ps-cart-btn:only-child:hover {
+    background: linear-gradient(135deg, #00a884, #00bdb8);
+    box-shadow: 0 10px 28px rgba(0, 184, 148, 0.45);
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .ps-section {
+        padding: 24px 0;
+        gap: 16px;
+    }
+
+    .ps-price {
+        font-size: 2rem;
+    }
+
+    .ps-name {
+        font-size: 1.5rem;
+    }
+
+    .ps-desc {
+        font-size: 0.95rem;
+    }
+
+    .ps-cart-btn {
+        height: 50px;
+        padding: 0 28px;
+        font-size: 0.95rem;
+    }
+
+    .ps-qty button,
+    .ps-qty span {
+        height: 48px;
+    }
+
+    .ps-qty button {
+        width: 44px;
+    }
+
+    .ps-qty span {
+        min-width: 48px;
+        font-size: 1rem;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .ps-price {
+        font-size: 1.85rem;
+    }
+
+    .ps-name {
+        font-size: 1.4rem;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .ps-section {
+        padding: 18px 0;
+        gap: 13px;
+    }
+
+    .ps-price {
+        font-size: 1.65rem;
+    }
+
+    .ps-name {
+        font-size: 1.25rem;
+    }
+
+    .ps-desc {
+        font-size: 0.87rem;
+    }
+
+    .ps-cart-btn {
+        height: 44px;
+        padding: 0 22px;
+        font-size: 0.87rem;
+    }
+
+    .ps-qty button,
+    .ps-qty span {
+        height: 42px;
+    }
+
+    .ps-qty button {
+        width: 38px;
+        font-size: 1.15rem;
+    }
+
+    .ps-qty span {
+        min-width: 42px;
+        font-size: 0.92rem;
+    }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .ps-section {
+        padding: 16px 0;
+        gap: 12px;
+    }
+
+    .tobbardet {
+        gap: 10px;
+    }
+
+    .ps-price-row {
+        gap: 10px;
+    }
+
+    .pridisc {
+        gap: 8px;
+    }
+
+    .ps-demo-price {
+        font-size: 0.88rem;
+    }
+
+    .ps-discount {
+        font-size: 0.68rem;
+        padding: 3px 8px;
+    }
+
+    .ps-price {
+        font-size: 1.5rem;
+    }
+
+    .ps-rating {
+        font-size: 0.78rem;
+        padding: 5px 10px;
+    }
+
+    .ps-name {
+        font-size: 1.15rem;
+    }
+
+    .ps-desc {
+        font-size: 0.84rem;
+        line-height: 1.6;
+    }
+
+    .downcartbuy {
+        gap: 10px;
+    }
+
+    .ps-cart-btn {
+        height: 42px;
+        padding: 0 18px;
+        font-size: 0.84rem;
+    }
+
+    .ps-qty button,
+    .ps-qty span {
+        height: 40px;
+    }
+
+    .ps-qty button {
+        width: 36px;
+        font-size: 1.1rem;
+    }
+
+    .ps-qty span {
+        min-width: 40px;
+        font-size: 0.88rem;
+    }
+
+    .ps-total-price {
+        font-size: 0.88rem;
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .ps-section {
+        padding: 14px 0;
+        gap: 11px;
+    }
+
+    .tobbardet {
+        gap: 8px;
+    }
+
+    .ps-price-row {
+        gap: 8px;
+    }
+
+    .pridisc {
+        gap: 7px;
+    }
+
+    .ps-demo-price {
+        font-size: 0.82rem;
+    }
+
+    .ps-discount {
+        font-size: 0.65rem;
+        padding: 3px 7px;
+    }
+
+    .ps-price {
+        font-size: 1.35rem;
+    }
+
+    .ps-rating {
+        font-size: 0.74rem;
+        padding: 4px 9px;
+    }
+
+    .ps-name {
+        font-size: 1.05rem;
+    }
+
+    .ps-desc {
+        font-size: 0.8rem;
+    }
+
+    .downcartbuy {
+        gap: 8px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ps-cart-row,
+    .ps-buy-now {
+        width: 100%;
+    }
+
+    .ps-cart-btn {
+        height: 44px;
+        padding: 0 16px;
+        font-size: 0.82rem;
+        width: 100%;
+    }
+
+    .ps-qty {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .ps-qty button {
+        width: 44px;
+        height: 44px;
+        font-size: 1.15rem;
+    }
+
+    .ps-qty span {
+        flex: 1;
+        height: 44px;
+        min-width: 0;
+        font-size: 0.9rem;
+    }
+
+    .ps-total-price {
+        font-size: 0.85rem;
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .ps-section {
+        padding: 12px 0;
+        gap: 10px;
+    }
+
+    .tobbardet {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .ps-demo-price {
+        font-size: 0.78rem;
+    }
+
+    .ps-discount {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+    }
+
+    .ps-price {
+        font-size: 1.25rem;
+    }
+
+    .ps-rating {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+
+    .ps-name {
+        font-size: 0.95rem;
+    }
+
+    .ps-desc {
+        font-size: 0.76rem;
+    }
+
+    .ps-more {
+        font-size: 0.76rem;
+    }
+
+    .downcartbuy {
+        gap: 7px;
+    }
+
+    .ps-cart-btn {
+        height: 42px;
+        padding: 0 14px;
+        font-size: 0.78rem;
+    }
+
+    .ps-qty button {
+        width: 40px;
+        height: 42px;
+        font-size: 1.05rem;
+    }
+
+    .ps-qty span {
+        height: 42px;
+        font-size: 0.85rem;
+    }
+
+    .ps-total-price {
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION PREFERENCES
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .ps-section *,
+    .ps-section *::before,
+    .ps-section *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .ps-cart-btn:hover {
+        transform: none;
+    }
+
+    .ps-discount:hover,
+    .ps-rating:hover {
+        transform: none;
+    }
+
+    .ps-cart-btn:hover::before {
+        left: -100%;
+    }
+}
+
+/* --- High Contrast Mode --- */
+@media (forced-colors: active) {
+    .ps-cart-btn {
+        border: 2px solid ButtonText;
+    }
+
+    .ps-qty {
+        border: 2px solid ButtonText;
+    }
+
+    .ps-rating {
+        border: 2px solid ButtonText;
+    }
+
+    .ps-discount {
+        border: 1px solid ButtonText;
+    }
+
+    .ps-more {
+        color: LinkText;
+    }
+}
+
+/* --- Dark Mode Support --- */
+@media (prefers-color-scheme: dark) {
+    .ps-demo-price {
+        color: #6a6a80;
+        text-decoration-color: #4a4a60;
+    }
+
+    .ps-price {
+        color: #f0f0f5;
+    }
+
+    .ps-rating {
+        background: linear-gradient(145deg, #2a2515, #3a3018);
+        border-color: #4a3a1a;
+        color: #ffd93d;
+        box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+    }
+
+    .ps-rating:hover {
+        box-shadow: 0 4px 14px rgba(255, 193, 7, 0.3);
+    }
+
+    .ps-name {
+        color: #f0f0f5;
+    }
+
+    .ps-desc {
+        color: #a0a0b8;
+    }
+
+    .ps-more {
+        color: #a29bfe;
+    }
+
+    .ps-more:hover {
+        color: #b8b0ff;
+        border-bottom-color: #b8b0ff;
+    }
+
+    .ps-qty {
+        background: linear-gradient(145deg, #1e1e35, #252545);
+        border-color: #2e2e48;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .ps-qty:hover {
+        border-color: rgba(108, 92, 231, 0.45);
+        box-shadow: 0 4px 14px rgba(108, 92, 231, 0.25);
+    }
+
+    .ps-qty span {
+        color: #f0f0f5;
+        background: #1a1a2e;
+        border-color: #2e2e48;
+    }
+
+    .ps-cart-btn {
+        box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+    }
+
+    .ps-cart-btn:hover {
+        box-shadow: 0 10px 28px rgba(108, 92, 231, 0.55);
+    }
+
+    .ps-buy-now .ps-cart-btn {
+        background: linear-gradient(135deg, #2d2d4a, #3d3d5c);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .ps-buy-now .ps-cart-btn:hover {
+        background: linear-gradient(135deg, #3d3d5c, #4d4d6c);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+    }
 }

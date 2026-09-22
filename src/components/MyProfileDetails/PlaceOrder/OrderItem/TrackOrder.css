@@ -1,379 +1,801 @@
+/* ==========================================================================
+   TRACK ORDER — PREMIUM DARK ANIMATED STYLES
+   Order tracking · Cancel tracking · Return tracking
+   ========================================================================== */
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+
 .track-order {
+    position: relative;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 16px;
+    margin: 8px 0;
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 18px;
+    overflow: hidden;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    animation: trackEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.track-order * {
     box-sizing: border-box;
 }
 
-.track-title {
-    margin: 2px 0px 5px 5px;
-    font-size: 10px;
-    font-weight: 700;
-    color: #222;
+@keyframes trackEnter {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* Top gradient accent */
+.track-order::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        #a29bfe 25%,
+        #6c5ce7 50%,
+        #a29bfe 75%,
+        transparent 100%);
+    background-size: 200% 100%;
+    opacity: 0.6;
+    animation: gradientSlide 4s linear infinite;
+}
+
+@keyframes gradientSlide {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* ============================================
+   TITLE
+   ============================================ */
+
+.track-title {
+    position: relative;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    padding-left: 14px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    animation: titleFadeIn 0.5s ease 0.2s backwards;
+}
+
+@keyframes titleFadeIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.track-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 70%;
+    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
+}
+
+/* ============================================
+   TRACK LINE (Common for all states)
+   ============================================ */
 
 .track-line {
     position: relative;
-
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-
-    width: 100%;
-    padding: 0 5px;
-
-    box-sizing: border-box;
-}
-
-
-/* Grey background line */
-
-.track-line::before {
-    content: "";
-
-    position: absolute;
-
-    top: 4px;
-    left: 5px;
-    right: 5px;
-
-    height: 3px;
-
-    background: #dedede;
-
-    border-radius: 10px;
-
+    justify-content: space-between;
+    gap: 4px;
+    padding: 12px 8px 8px;
     z-index: 1;
 }
 
-
-/* Green animated line */
+/* ============================================
+   PROGRESS LINE (Base track + animated overlay)
+   ============================================ */
 
 .track-progress-line {
     position: absolute;
-
-    top: 4px;
-    left: 5px;
-
-    width: 0;
+    top: 22px;
+    left: 8%;
+    right: 8%;
     height: 3px;
-
-    background: #22c55e;
-
-    border-radius: 10px;
-
-    z-index: 2;
-
-    transition: width 1.8s ease-in-out;
+    background: #2a2a35;
+    border-radius: 50px;
+    overflow: hidden;
+    z-index: 0;
 }
 
+.track-progress-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #a29bfe, #6c5ce7, #a29bfe);
+    background-size: 200% 100%;
+    border-radius: 50px;
+    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* Actual animation */
-
-.track-progress-line.animate-progress {
+.track-progress-line.animate-progress::before {
     width: var(--progress);
+    animation: progressShimmer 2s linear infinite;
 }
 
+@keyframes progressShimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
 
-/* =========================
-   STEP
-========================= */
+/* ============================================
+   TRACK STEP (Each step)
+   ============================================ */
 
 .track-step {
     position: relative;
-    z-index: 3;
-
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    width: 20%;
-
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
     text-align: center;
 }
 
-
-/* =========================
-   DOT
-========================= */
-
-.track-circle {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #d4d4d4;
-
-    border: 2px solid #d4d4d4;
-
-    box-sizing: content-box;
-
-    z-index: 4;
-
-    transition:
-        background .3s ease,
-        border-color .3s ease;
-}
-
-
-/* Completed dot */
-
-.track-step.completed .track-circle {
-    background: #22c55e;
-    border-color: #22c55e;
-}
-
-
-/* =========================
-   STATUS TEXT
-========================= */
-
 .track-step span {
-    margin-top: 7px;
-
-    font-size: 8px;
+    font-size: 0.62rem;
     font-weight: 700;
-
-    color: #000000c9;
-
+    color: #6b6b7a;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.3;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: color 0.4s ease;
 }
-
-.track-step.completed span {
-    color: #22c55e;
-}
-
-
-/* =========================
-   DATE
-========================= */
 
 .track-step small {
-    font-size: 6px;
-    font-weight: 500;
-    color: #aaa;
-    white-space: nowrap;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: #55555f;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+    transition: color 0.4s ease;
+}
+
+/* --- Circle (Default / Inactive) --- */
+.track-circle {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    background: #1c1c24;
+    border: 3px solid #2a2a35;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 0 0 rgba(162, 155, 254, 0);
+}
+
+/* --- Completed Step --- */
+.track-step.completed .track-circle {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    border-color: #a29bfe;
+    box-shadow:
+        0 0 0 4px rgba(162, 155, 254, 0.15),
+        0 0 16px rgba(162, 155, 254, 0.6);
+    animation: dotPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dotPop {
+    0%   { transform: scale(0.5); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Checkmark inside completed dot */
+.track-step.completed .track-circle::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 900;
+    line-height: 1;
+    animation: checkFadeIn 0.4s ease 0.2s backwards;
+}
+
+@keyframes checkFadeIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Pulsing ring for latest completed step */
+.track-step.completed:not(:has(~ .track-step.completed)) .track-circle::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(162, 155, 254, 0.6);
+    animation: stepPulse 2s ease-in-out infinite;
+}
+
+@keyframes stepPulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.3); opacity: 0; }
+}
+
+/* --- Completed text --- */
+.track-step.completed span {
+    color: #a29bfe;
 }
 
 .track-step.completed small {
-    color: #777;
+    color: #b8b8c5;
 }
 
-
-/* =========================
-   CANCELLED
-========================= */
-
-.cancelled-track::before {
-    background: #e5e5e5;
-}
-
-.cancelled-progress {
-    width: 50%;
-    background: #ef4444;
-}
-
-.track-step.cancelled .track-circle {
-    background: #ef4444;
-    border-color: #ef4444;
-}
-
-.track-step.cancelled span {
-    color: #ef4444;
-}
-
-.track-step.cancelled small {
-    color: #777;
-}
-
-/* =========================
-   CANCEL TRACKING
-========================= */
+/* ============================================
+   CANCEL TRACK (Cancelled Order)
+   ============================================ */
 
 .cancel-track {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    padding: 0 5px;
-    box-sizing: border-box;
 }
 
-
-/* Grey background */
-
+/* Base red track */
 .cancel-track::before {
-    content: "";
-
+    content: '';
     position: absolute;
-
-    top: 4px;
-    left: 5px;
-    right: 5px;
-
+    top: 22px;
+    left: 8%;
+    right: 8%;
     height: 3px;
+    background: #2a2a35;
+    border-radius: 50px;
+    z-index: 0;
+}
 
-    background: #e5e5e5;
-
-    border-radius: 10px;
-
+/* Red progress bar */
+.cancel-progress-red {
+    position: absolute;
+    top: 22px;
+    left: 8%;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #ff2d55, #ff6b81, #ff2d55);
+    background-size: 200% 100%;
+    border-radius: 50px;
+    box-shadow: 0 0 12px rgba(255, 45, 85, 0.6);
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
 }
 
-
-/* =========================
-   RED PROGRESS
-========================= */
-
-.cancel-progress-red {
-    position: absolute;
-
-    top: 4px;
-    left: 5px;
-
-    width: 0;
-    height: 3px;
-
-    background: #ef4444;
-
-    border-radius: 10px;
-
-    z-index: 2;
-
-    transition: width 1.8s ease-in-out;
-}
-
-.animate-cancel-red {
+.cancel-progress-red.animate-cancel-red {
     width: var(--cancel-progress);
+    animation: redProgressShimmer 2s linear infinite;
 }
 
+@keyframes redProgressShimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
 
-
-
+/* Green refund progress */
 .cancel-progress-green {
     position: absolute;
-
-    top: 4px;
-
-    left: 5px;
-
+    top: 22px;
+    left: 8%;
     height: 3px;
-
     width: 0;
-
-    background: #22c55e;
-
-    border-radius: 0 10px 10px 0;
-
+    background: linear-gradient(90deg, #00b894, #00cec9, #00b894);
+    background-size: 200% 100%;
+    border-radius: 50px;
+    box-shadow: 0 0 12px rgba(0, 184, 148, 0.6);
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1s;
     z-index: 2;
-
-    transition: width 1.5s ease-in-out;
 }
 
-
-.has-refund .cancel-progress-green {
-    left: 66.66%;
-    width: 0;
+.cancel-progress-green.animate-cancel-green {
+    width: calc(var(--cancel-progress) * 0.25);
+    animation: greenProgressShimmer 2s linear infinite;
 }
 
-.has-refund .cancel-progress-green.animate-refund {
-    width: 33.34%;
+@keyframes greenProgressShimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
 }
 
-
-/* =========================
-   CANCEL STEP
-========================= */
-
+/* Cancel step */
 .cancel-step {
     position: relative;
-
-    z-index: 4;
-
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    width: 33.33%;
-
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
     text-align: center;
 }
 
-
-.has-refund .cancel-step {
-    width: 25%;
-}
-
-
-/* =========================
-   CANCEL DOT
-========================= */
-
-.cancel-dot {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #ef4444;
-
-    border: 2px solid #ef4444;
-
-    box-sizing: content-box;
-
-    z-index: 5;
-}
-
-
-/* =========================
-   CANCEL TEXT
-========================= */
-
 .cancel-step span {
-    margin-top: 7px;
-
-    font-size: 8px;
+    font-size: 0.62rem;
     font-weight: 700;
-
-    color: #ef4444;
-
+    color: #6b6b7a;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.3;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: color 0.4s ease;
 }
 
-
-/* =========================
-   CANCEL DATE
-========================= */
-
-.cancel-step small {
-    margin-top: 3px;
-
-    font-size: 7px;
-
-    color: #777;
-
-    white-space: nowrap;
+/* --- Cancel Dot (Red themed) --- */
+.track-circle.cancel-dot {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    background: #1c1c24;
+    border: 3px solid #2a2a35;
 }
 
-
-/* =========================
-   REFUND
-========================= */
-
-.refund-step span {
-    color: #999;
+.cancel-step.completed .track-circle.cancel-dot {
+    background: linear-gradient(135deg, #ff2d55, #ff6b81);
+    border-color: #ff6b81;
+    box-shadow:
+        0 0 0 4px rgba(255, 45, 85, 0.15),
+        0 0 16px rgba(255, 45, 85, 0.6);
+    animation: redDotPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.refund-dot {
-    background: #d4d4d4;
-    border-color: #d4d4d4;
+@keyframes redDotPop {
+    0%   { transform: scale(0.5); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.cancel-step.completed .track-circle.cancel-dot::after {
+    content: '✕';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 900;
+    line-height: 1;
+    animation: checkFadeIn 0.4s ease 0.2s backwards;
+}
+
+.cancel-step.completed span {
+    color: #ff6b81;
+}
+
+/* Latest completed cancel step — pulsing */
+.cancel-step.completed:not(:has(~ .cancel-step.completed)) .track-circle.cancel-dot::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 107, 129, 0.6);
+    animation: stepPulseRed 2s ease-in-out infinite;
+}
+
+@keyframes stepPulseRed {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.3); opacity: 0; }
+}
+
+/* --- Refund Dot (Green) --- */
+.track-circle.refund-dot {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    background: #1c1c24;
+    border: 3px solid #2a2a35;
+}
+
+.refund-step.completed .track-circle.refund-dot {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    border-color: #00cec9;
+    box-shadow:
+        0 0 0 4px rgba(0, 184, 148, 0.15),
+        0 0 16px rgba(0, 206, 201, 0.6);
+    animation: greenDotPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes greenDotPop {
+    0%   { transform: scale(0.5); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.refund-step.completed .track-circle.refund-dot::after {
+    content: '₹';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 900;
+    line-height: 1;
+    animation: checkFadeIn 0.4s ease 0.2s backwards;
 }
 
 .refund-step.completed span {
-    color: #22c55e;
+    color: #00cec9;
 }
 
-.refund-step.completed .refund-dot {
-    background: #22c55e;
-    border-color: #22c55e;
+.refund-step.completed .track-circle.refund-dot::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 206, 201, 0.6);
+    animation: stepPulseGreen 2s ease-in-out infinite;
+}
+
+@keyframes stepPulseGreen {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.3); opacity: 0; }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .track-order {
+        padding: 22px 20px;
+        border-radius: 20px;
+        gap: 20px;
+    }
+
+    .track-title {
+        font-size: 1.02rem;
+    }
+
+    .track-line {
+        padding: 16px 12px 10px;
+    }
+
+    .track-progress-line,
+    .cancel-track::before,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 26px;
+    }
+
+    .track-circle,
+    .track-circle.cancel-dot,
+    .track-circle.refund-dot {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        border-width: 3.5px;
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.72rem;
+    }
+
+    .track-step small {
+        font-size: 0.62rem;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .track-order {
+        padding: 18px 16px;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .track-order {
+        padding: 16px 14px;
+        border-radius: 16px;
+        gap: 14px;
+    }
+
+    .track-title {
+        font-size: 0.88rem;
+    }
+
+    .track-line {
+        padding: 10px 6px 8px;
+    }
+
+    .track-progress-line,
+    .cancel-track::before,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 20px;
+    }
+
+    .track-circle,
+    .track-circle.cancel-dot,
+    .track-circle.refund-dot {
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        border-width: 2.5px;
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.58rem;
+    }
+
+    .track-step small {
+        font-size: 0.52rem;
+    }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .track-order {
+        padding: 14px 12px;
+        border-radius: 15px;
+        gap: 12px;
+    }
+
+    .track-title {
+        font-size: 0.84rem;
+        padding-left: 12px;
+    }
+
+    .track-title::before {
+        width: 2.5px;
+    }
+
+    .track-line {
+        padding: 8px 4px 6px;
+        gap: 2px;
+    }
+
+    .track-progress-line,
+    .cancel-track::before,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 18px;
+    }
+
+    .track-circle,
+    .track-circle.cancel-dot,
+    .track-circle.refund-dot {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        border-width: 2px;
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.54rem;
+        letter-spacing: 0.02em;
+    }
+
+    .track-step small {
+        font-size: 0.48rem;
+    }
+
+    .track-step.completed .track-circle::after,
+    .cancel-step.completed .track-circle.cancel-dot::after {
+        font-size: 0.55rem;
+    }
+
+    .refund-step.completed .track-circle.refund-dot::after {
+        font-size: 0.6rem;
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .track-order {
+        padding: 12px 10px;
+        border-radius: 14px;
+        gap: 10px;
+    }
+
+    .track-title {
+        font-size: 0.8rem;
+    }
+
+    .track-line {
+        padding: 6px 2px 4px;
+    }
+
+    .track-progress-line,
+    .cancel-track::before,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 16px;
+    }
+
+    .track-circle,
+    .track-circle.cancel-dot,
+    .track-circle.refund-dot {
+        width: 14px;
+        height: 14px;
+        min-width: 14px;
+        border-width: 2px;
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.5rem;
+        letter-spacing: 0.01em;
+    }
+
+    .track-step small {
+        font-size: 0.44rem;
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .track-order {
+        padding: 10px 8px;
+        border-radius: 12px;
+        gap: 9px;
+    }
+
+    .track-title {
+        font-size: 0.74rem;
+        padding-left: 10px;
+    }
+
+    .track-title::before {
+        width: 2px;
+    }
+
+    .track-line {
+        padding: 4px 0 2px;
+        gap: 1px;
+    }
+
+    .track-progress-line,
+    .cancel-track::before,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 14px;
+    }
+
+    .track-circle,
+    .track-circle.cancel-dot,
+    .track-circle.refund-dot {
+        width: 12px;
+        height: 12px;
+        min-width: 12px;
+        border-width: 2px;
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.44rem;
+        letter-spacing: 0;
+    }
+
+    .track-step small {
+        font-size: 0.4rem;
+    }
+
+    .track-step.completed .track-circle::after,
+    .cancel-step.completed .track-circle.cancel-dot::after {
+        font-size: 0.5rem;
+    }
+
+    .refund-step.completed .track-circle.refund-dot::after {
+        font-size: 0.55rem;
+    }
+
+    .track-step.completed:not(:has(~ .track-step.completed)) .track-circle::before,
+    .cancel-step.completed:not(:has(~ .cancel-step.completed)) .track-circle.cancel-dot::before {
+        inset: -4px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .track-order *,
+    .track-order *::before,
+    .track-order *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .track-progress-line.animate-progress::before,
+    .cancel-progress-red.animate-cancel-red,
+    .cancel-progress-green.animate-cancel-green {
+        animation: none;
+    }
+
+    .track-step.completed:not(:has(~ .track-step.completed)) .track-circle::before,
+    .cancel-step.completed:not(:has(~ .cancel-step.completed)) .track-circle.cancel-dot::before,
+    .refund-step.completed .track-circle.refund-dot::before {
+        display: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .track-order {
+        border: 2px solid ButtonText;
+    }
+
+    .track-circle,
+    .track-circle.cancel-dot,
+    .track-circle.refund-dot {
+        border: 2px solid ButtonText;
+    }
+
+    .track-progress-line::before,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        background: Highlight;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .track-order {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    @media (max-width: 767px) {
+        .track-order {
+            padding-left: max(12px, env(safe-area-inset-left));
+            padding-right: max(12px, env(safe-area-inset-right));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .track-order {
+            padding-left: max(8px, env(safe-area-inset-left));
+            padding-right: max(8px, env(safe-area-inset-right));
+        }
+    }
 }

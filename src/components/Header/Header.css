@@ -1,307 +1,283 @@
-/* ============================================
-   HEADER - HEEPIT  |  Animated Colorful Theme
-   ============================================ */
+/* ==========================================================================
+   HEADER — PREMIUM ANIMATED STYLESHEET
+   Dark gradient · Animated toast · Fully responsive
+   ========================================================================== */
 
-:root {
-    --hd-c1: #6a11cb;
-    --hd-c2: #2575fc;
-    --hd-c3: #ff6b6b;
-    --hd-c4: #feca57;
-    --hd-c5: #00d2ff;
-    --hd-c6: #ff2e93;
-    --hd-text: #ffffff;
-    --hd-text-soft: rgba(255, 255, 255, 0.75);
-    --hd-radius: 999px;
-    --hd-transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
 /* ============================================
-   HEADER WRAPPER — Animated Multi-Color Background
+   HEADER CONTAINER
    ============================================ */
+
 .hd-header {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 50;
     width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-    /* Mixed animated gradient background */
-    background: linear-gradient(-45deg,
-            #6a11cb,
-            #2575fc,
-            #ff2e93,
-            #ff6b6b,
-            #feca57,
-            #00d2ff,
-            #6a11cb);
-    background-size: 400% 400%;
-    animation: hd-bg-move 18s ease infinite;
+    /* ✅ PREMIUM GRADIENT BACKGROUND */
+    background: linear-gradient(135deg,
+            #0a0a0f 0%,
+            #14141a 25%,
+            #1e1a2e 50%,
+            #14141a 75%,
+            #0a0a0f 100%);
+    background-size: 200% 200%;
+
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+    border-bottom: 1.5px solid #1c1c24;
 
     box-shadow:
-        0 6px 30px rgba(106, 17, 203, 0.35),
-        0 2px 8px rgba(0, 0, 0, 0.15);
+        0 4px 24px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(162, 155, 254, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.03) inset;
+
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    animation:
+        headerSlideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        headerBgShift 8s ease infinite;
+
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-@keyframes hd-bg-move {
-    0% {
+.hd-header * {
+    box-sizing: border-box;
+}
+
+@keyframes headerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes headerBgShift {
+
+    0%,
+    100% {
         background-position: 0% 50%;
     }
 
     50% {
         background-position: 100% 50%;
     }
+}
+
+/* Top glowing accent line */
+.hd-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            #a29bfe 25%,
+            #6c5ce7 50%,
+            #a29bfe 75%,
+            transparent 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 4s linear infinite;
+    z-index: 1;
+}
+
+@keyframes gradientSlide {
+    0% {
+        background-position: 0% 50%;
+    }
 
     100% {
-        background-position: 0% 50%;
+        background-position: 200% 50%;
     }
 }
 
-/* Floating colorful blobs for depth */
-.hd-header::before,
+/* Rotating radial glow */
 .hd-header::after {
-    content: "";
+    content: '';
     position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.55;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle,
+            rgba(162, 155, 254, 0.15) 0%,
+            rgba(108, 92, 231, 0.08) 40%,
+            transparent 70%);
     pointer-events: none;
+    animation: headerGlowRotate 15s linear infinite;
     z-index: 0;
 }
 
-.hd-header::before {
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, #ff2e93, transparent 70%);
-    top: -100px;
-    left: -60px;
-    animation: hd-blob-1 12s ease-in-out infinite;
-}
-
-.hd-header::after {
-    width: 260px;
-    height: 260px;
-    background: radial-gradient(circle, #00d2ff, transparent 70%);
-    bottom: -140px;
-    right: -80px;
-    animation: hd-blob-2 14s ease-in-out infinite;
-}
-
-@keyframes hd-blob-1 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
+@keyframes headerGlowRotate {
+    from {
+        transform: rotate(0deg);
     }
 
-    50% {
-        transform: translate(60px, 40px) scale(1.25);
-    }
-}
-
-@keyframes hd-blob-2 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(-50px, -30px) scale(1.2);
-    }
-}
-
-/* Shimmer sweep line across the header */
-.hd-header .hd-top-row::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.25) 50%,
-            transparent 100%);
-    animation: hd-shimmer 6s linear infinite;
-    pointer-events: none;
-}
-
-@keyframes hd-shimmer {
-    0% {
-        left: -150%;
-    }
-
-    100% {
-        left: 150%;
+    to {
+        transform: rotate(360deg);
     }
 }
 
 /* ============================================
    TOP ROW
    ============================================ */
+
 .hd-top-row {
     position: relative;
     z-index: 2;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    max-width: 1280px;
+    gap: 12px;
+    padding: 14px 20px 14px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 12px 22px;
-    flex-wrap: wrap;
 }
 
 /* ============================================
-   BRAND (Center)
+   CENTER (Brand + Version)
    ============================================ */
+
 .hd-center {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.1;
-    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    animation: centerFadeIn 0.6s ease 0.1s backwards;
 }
 
+@keyframes centerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Brand Name --- */
 .hd-brand-name {
-    font-size: 1.55rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: #ffffff;
-    text-shadow:
-        0 0 12px rgba(255, 255, 255, 0.55),
-        0 0 26px rgba(255, 46, 147, 0.6),
-        0 2px 6px rgba(0, 0, 0, 0.25);
-    cursor: default;
+    position: relative;
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    background: linear-gradient(135deg,
+            #ffffff 0%,
+            #a29bfe 30%,
+            #6c5ce7 60%,
+            #a29bfe 80%,
+            #ffffff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brandShimmer 5s ease infinite;
     user-select: none;
-    animation: hd-brand-pulse 3s ease-in-out infinite;
+    padding: 4px 0 8px 0;
+    cursor: default;
+    transition: transform 0.3s ease;
 }
 
-@keyframes hd-brand-pulse {
+.hd-brand-name:hover {
+    transform: scale(1.04);
+}
+
+@keyframes brandShimmer {
 
     0%,
     100% {
-        text-shadow:
-            0 0 12px rgba(255, 255, 255, 0.55),
-            0 0 26px rgba(255, 46, 147, 0.6),
-            0 2px 6px rgba(0, 0, 0, 0.25);
-    }
-
-    50% {
-        text-shadow:
-            0 0 18px rgba(255, 255, 255, 0.9),
-            0 0 38px rgba(0, 210, 255, 0.9),
-            0 0 60px rgba(255, 46, 147, 0.7);
-    }
-}
-
-.hd-version {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--hd-text-soft);
-    letter-spacing: 1px;
-    margin-top: 2px;
-}
-
-/* ============================================
-   TABS
-   ============================================ */
-.hd-tabs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    
-}
-
-/* Base Tab (inactive) */
-.hd-tab {
-    position: relative;
-    border: 1.5px solid rgb(0, 0, 0);
-    outline: none;
-    cursor: pointer;
-    padding: 9px 24px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: var(--hd-radius);
-    transition: var(--hd-transition);
-    white-space: nowrap;
-    overflow: hidden;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* Soft glow ring on hover (inactive) */
-.hd-tab:not(.hd-tab-active):hover {
-    background: rgba(255, 255, 255, 0.28);
-    border-color: rgba(255, 255, 255, 0.75);
-    transform: translateY(-2px);
-    box-shadow:
-        0 8px 22px rgba(255, 255, 255, 0.25),
-        0 0 20px rgba(0, 210, 255, 0.4);
-    color: #ffffff;
-}
-
-.hd-tab:not(.hd-tab-active):active {
-    transform: translateY(0) scale(0.96);
-}
-
-/* ============================================
-   ACTIVE TAB — ONLY ONE ACTIVE AT A TIME
-   ============================================ */
-.hd-tab-active {
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.95) !important;
-    background: linear-gradient(135deg,
-            #ff2e93 0%,
-            #6a11cb 50%,
-            #2575fc 100%) !important;
-    background-size: 200% 200% !important;
-    animation: hd-active-glow 3s ease infinite !important;
-    box-shadow:
-        0 0 0 2px rgba(255, 255, 255, 0.25),
-        0 8px 26px rgba(255, 46, 147, 0.55),
-        0 0 34px rgba(37, 117, 252, 0.55) !important;
-    transform: translateY(-2px) scale(1.04);
-    cursor: default;
-}
-
-@keyframes hd-active-glow {
-    0% {
         background-position: 0% 50%;
     }
 
     50% {
         background-position: 100% 50%;
     }
+}
 
+/* Brand underline accent */
+.hd-brand-name::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 3px;
+    background: linear-gradient(90deg, #a29bfe, #6c5ce7);
+    border-radius: 50px;
+    box-shadow:
+        0 2px 10px rgba(162, 155, 254, 0.6),
+        0 0 20px rgba(108, 92, 231, 0.4);
+    animation: brandUnderline 3s ease-in-out infinite;
+}
+
+@keyframes brandUnderline {
+
+    0%,
     100% {
-        background-position: 0% 50%;
+        width: 36px;
+        opacity: 1;
+    }
+
+    50% {
+        width: 52px;
+        opacity: 0.7;
     }
 }
 
-/* Small pulse dot on active tab */
-.hd-tab-active::before {
-    content: "";
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #feca57;
-    box-shadow: 0 0 10px #feca57;
-    animation: hd-dot-pulse 1.4s ease-in-out infinite;
+/* --- Version Badge --- */
+.hd-version {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.66rem;
+    font-weight: 800;
+    color: #a29bfe;
+    background: rgba(162, 155, 254, 0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(162, 155, 254, 0.3);
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(162, 155, 254, 0.15);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes hd-dot-pulse {
+.hd-version::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: #a29bfe;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(162, 155, 254, 0.9);
+    animation: versionDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes versionDotPulse {
 
     0%,
     100% {
@@ -310,46 +286,301 @@
     }
 
     50% {
-        transform: scale(1.5);
-        opacity: 0.55;
+        transform: scale(1.3);
+        opacity: 0.6;
     }
 }
 
+.hd-version:hover {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    color: #ffffff;
+    border-color: transparent;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow:
+        0 6px 20px rgba(162, 155, 254, 0.45),
+        0 0 24px rgba(108, 92, 231, 0.3);
+}
+
+.hd-version:hover::before {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
 /* ============================================
-   TOAST
+   TABS
    ============================================ */
-.hd-toast {
-    position: fixed;
-    top: 84px;
+
+.hd-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+    animation: tabsFadeIn 0.6s ease 0.2s backwards;
+}
+
+@keyframes tabsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Tab Button --- */
+.hd-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 22px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid #2a2a35;
+    border-radius: 50px;
+    color: #b8b8c5;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    user-select: none;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hd-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(162, 155, 254, 0.15), transparent);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.hd-tab:hover::before {
+    left: 100%;
+}
+
+.hd-tab:hover:not(.hd-tab-active) {
+    background: rgba(162, 155, 254, 0.08);
+    border-color: rgba(162, 155, 254, 0.4);
+    color: #a29bfe;
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 24px rgba(162, 155, 254, 0.15),
+        0 0 0 1px rgba(162, 155, 254, 0.1) inset;
+}
+
+.hd-tab:active:not(.hd-tab-active) {
+    transform: translateY(0) scale(0.96);
+}
+
+/* --- Active Tab --- */
+.hd-tab-active {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    border-color: transparent;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 28px rgba(162, 155, 254, 0.5),
+        0 0 0 1px rgba(162, 155, 254, 0.3) inset,
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    animation: activePulse 3s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 10px 28px rgba(162, 155, 254, 0.5),
+            0 0 0 1px rgba(162, 155, 254, 0.3) inset,
+            0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    }
+
+    50% {
+        box-shadow:
+            0 12px 36px rgba(162, 155, 254, 0.65),
+            0 0 0 1px rgba(162, 155, 254, 0.5) inset,
+            0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    }
+}
+
+.hd-tab-active:hover {
+    background: linear-gradient(135deg, #b8b2ff, #7c6ff0);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 16px 40px rgba(162, 155, 254, 0.6),
+        0 0 0 1px rgba(162, 155, 254, 0.5) inset;
+}
+
+.hd-tab-active::after {
+    content: '';
+    position: absolute;
+    top: 5px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2000;
-    padding: 12px 26px;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-    background: linear-gradient(135deg, #ff2e93, #ff6b6b, #feca57);
+    width: 5px;
+    height: 5px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    animation: activeDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes activeDotPulse {
+
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(-50%) scale(1.4);
+        opacity: 0.7;
+    }
+}
+
+.hd-tab:focus-visible {
+    outline: 2px solid #a29bfe;
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   TOAST MESSAGE — Button Ke Just Neeche, Premium Gradient
+   ========================================================================== */
+
+.hd-toast {
+    position: fixed;
+
+    /* ✅ Header ke top pe sticky hai (~90px), uske just neeche */
+    top: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2147483647;
+    /* Max possible value */
+    isolation: isolate;
+    /* Naya stacking context banayega */
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+
+    /* ✅ PREMIUM GRADIENT — Purple → Lavender → Cyan */
+    background: linear-gradient(135deg,
+            #6c5ce7 0%,
+            #a29bfe 35%,
+            #00cec9 100%);
     background-size: 200% 200%;
+
     animation:
-        hd-toast-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-        hd-toast-glow 3s ease infinite;
+        toastDropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        toastGradientShift 4s ease infinite 0.5s;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    white-space: nowrap;
+
     box-shadow:
-        0 12px 34px rgba(255, 46, 147, 0.5),
-        0 0 26px rgba(254, 202, 87, 0.55);
+        0 16px 40px rgba(108, 92, 231, 0.5),
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        0 0 60px rgba(0, 206, 201, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+        0 2px 0 rgba(255, 255, 255, 0.3) inset;
+
+    pointer-events: none;
+    overflow: hidden;
+    max-width: calc(100vw - 32px);
 }
 
+@keyframes toastGradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ✨ Sparkle icon */
 .hd-toast::before {
-    content: "✨";
-    margin-right: 8px;
+    content: '✨';
+    font-size: 1rem;
+    line-height: 1;
+    animation: sparkleSpin 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
 }
 
-@keyframes hd-toast-in {
+@keyframes sparkleSpin {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(20deg) scale(1.2);
+    }
+}
+
+/* Shine sweep */
+.hd-toast::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    animation: toastShimmer 1.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes toastShimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Top se drop-in animation */
+@keyframes toastDropIn {
     0% {
         opacity: 0;
-        transform: translateX(-50%) translateY(-24px) scale(0.8);
+        transform: translateX(-50%) translateY(-30px) scale(0.85);
+    }
+
+    60% {
+        transform: translateX(-50%) translateY(4px) scale(1.05);
     }
 
     100% {
@@ -358,137 +589,365 @@
     }
 }
 
-@keyframes hd-toast-glow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE BREAKPOINTS
    ============================================ */
 
-/* Tablets */
-@media (max-width: 768px) {
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
     .hd-top-row {
-        padding: 11px 16px;
-        gap: 12px;
+        padding: 18px 32px 16px;
+        gap: 14px;
     }
 
     .hd-brand-name {
-        font-size: 1.3rem;
-        letter-spacing: 1.5px;
+        font-size: 1.95rem;
+        padding: 5px 0 10px 0;
+    }
+
+    .hd-brand-name::after {
+        width: 44px;
+        height: 3.5px;
+    }
+
+    .hd-version {
+        font-size: 0.72rem;
+        padding: 5px 14px;
+    }
+
+    .hd-tabs {
+        gap: 10px;
+    }
+
+    .hd-tab {
+        padding: 11px 28px;
+        font-size: 0.92rem;
+    }
+
+    .hd-toast {
+        top: 116px;
+        padding: 14px 28px;
+        font-size: 0.92rem;
+        gap: 12px;
+    }
+
+    .hd-toast::before {
+        font-size: 1.15rem;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .hd-top-row {
+        padding: 14px 24px 14px;
+    }
+
+    .hd-brand-name {
+        font-size: 1.6rem;
+    }
+
+    .hd-tab {
+        padding: 9px 22px;
+    }
+
+    .hd-toast {
+        top: 100px;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .hd-top-row {
+        padding: 12px 18px 12px;
+        gap: 10px;
+    }
+
+    .hd-brand-name {
+        font-size: 1.45rem;
+        padding: 3px 0 7px 0;
+    }
+
+    .hd-brand-name::after {
+        width: 32px;
+        height: 2.5px;
+    }
+
+    .hd-version {
+        font-size: 0.62rem;
+        padding: 3px 10px;
+    }
+
+    .hd-tabs {
+        gap: 7px;
     }
 
     .hd-tab {
         padding: 8px 18px;
-        font-size: 0.84rem;
-    }
-}
-
-/* Large phones */
-@media (max-width: 600px) {
-    .hd-top-row {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 12px;
-        gap: 10px;
+        font-size: 0.8rem;
     }
 
-    .hd-center {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .hd-version {
-        margin-top: 0;
-    }
-
-    .hd-tabs {
-        width: 100%;
-        justify-content: center;
-        gap: 6px;
-    }
-
-    .hd-tab {
-        flex: 1;
-        max-width: 140px;
-        text-align: center;
-        padding: 9px 10px;
+    .hd-toast {
+        top: 96px;
+        padding: 11px 22px;
         font-size: 0.82rem;
     }
-
-    .hd-tab-active {
-        transform: translateY(-1px) scale(1.03);
-    }
 }
 
-/* Small phones */
-@media (max-width: 400px) {
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .hd-top-row {
+        padding: 11px 14px 11px;
+        gap: 9px;
+    }
+
     .hd-brand-name {
-        font-size: 1.15rem;
+        font-size: 1.35rem;
+        letter-spacing: -0.01em;
+    }
+
+    .hd-brand-name::after {
+        width: 28px;
+        height: 2.5px;
     }
 
     .hd-version {
         font-size: 0.6rem;
+        padding: 3px 9px;
+    }
+
+    .hd-tabs {
+        gap: 6px;
     }
 
     .hd-tab {
-        padding: 8px 8px;
-        font-size: 0.74rem;
-        letter-spacing: 0.2px;
-        border-radius: 12px;
+        padding: 7px 16px;
+        font-size: 0.76rem;
+        border-width: 1.5px;
     }
 
-    .hd-tab-active::before {
-        width: 5px;
-        height: 5px;
-        top: 5px;
-        right: 6px;
+    .hd-tab-active::after {
+        width: 4px;
+        height: 4px;
+        top: 4px;
     }
 
     .hd-toast {
-        top: 72px;
-        font-size: 0.8rem;
-        padding: 10px 18px;
-        max-width: 90vw;
-        white-space: normal;
-        text-align: center;
+        top: 92px;
+        padding: 10px 20px;
+        font-size: 0.78rem;
+        gap: 9px;
+    }
+
+    .hd-toast::before {
+        font-size: 0.92rem;
     }
 }
 
-/* Landscape */
-@media (max-height: 480px) and (orientation: landscape) {
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
     .hd-top-row {
-        padding: 6px 16px;
+        padding: 10px 12px 10px;
+        gap: 8px;
+    }
+
+    .hd-center {
+        gap: 8px;
     }
 
     .hd-brand-name {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
+    }
+
+    .hd-brand-name::after {
+        width: 26px;
+        height: 2px;
+    }
+
+    .hd-version {
+        font-size: 0.58rem;
+        padding: 3px 8px;
+    }
+
+    .hd-tab {
+        padding: 6px 14px;
+        font-size: 0.74rem;
+    }
+
+    .hd-toast {
+        top: 88px;
+        padding: 9px 18px;
+        font-size: 0.75rem;
+        gap: 8px;
+    }
+
+    .hd-toast::before {
+        font-size: 0.88rem;
     }
 }
 
-/* Reduced motion */
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .hd-top-row {
+        padding: 9px 10px 9px;
+        gap: 7px;
+    }
+
+    .hd-brand-name {
+        font-size: 1.15rem;
+    }
+
+    .hd-brand-name::after {
+        width: 22px;
+        height: 2px;
+    }
+
+    .hd-version {
+        font-size: 0.54rem;
+        padding: 2px 7px;
+    }
+
+    .hd-tabs {
+        gap: 5px;
+        width: 100%;
+    }
+
+    .hd-tab {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .hd-toast {
+        top: 82px;
+        padding: 8px 16px;
+        font-size: 0.72rem;
+        gap: 7px;
+        max-width: calc(100vw - 24px);
+    }
+
+    .hd-toast::before {
+        font-size: 0.82rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
 
-    .hd-header,
-    .hd-header::before,
-    .hd-header::after,
-    .hd-brand-name,
-    .hd-tab-active,
-    .hd-tab-active::before,
+    .hd-header *,
+    .hd-header *::before,
+    .hd-header *::after,
     .hd-toast,
-    .hd-top-row::after {
+    .hd-toast::before,
+    .hd-toast::after {
         animation: none !important;
         transition: none !important;
+    }
+
+    .hd-header {
+        animation: none;
+        background-position: 0% 50%;
+    }
+
+    .hd-brand-name {
+        background-position: 0% 50%;
+    }
+
+    .hd-tab:hover,
+    .hd-tab-active,
+    .hd-version:hover,
+    .hd-brand-name:hover {
+        transform: none;
+    }
+
+    .hd-toast {
+        background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    }
+}
+
+@media (forced-colors: active) {
+    .hd-header {
+        border-bottom: 2px solid ButtonText;
+    }
+
+    .hd-brand-name {
+        -webkit-text-fill-color: ButtonText;
+        color: ButtonText;
+    }
+
+    .hd-version,
+    .hd-tab,
+    .hd-toast {
+        border: 2px solid ButtonText;
+    }
+
+    .hd-tab-active {
+        border: 3px solid Highlight;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .hd-top-row {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+    }
+
+    .hd-toast {
+        top: calc(96px + env(safe-area-inset-top, 0px));
+    }
+
+    @media (max-width: 767px) {
+        .hd-top-row {
+            padding-left: max(14px, env(safe-area-inset-left));
+            padding-right: max(14px, env(safe-area-inset-right));
+        }
+
+        .hd-toast {
+            top: calc(92px + env(safe-area-inset-top, 0px));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .hd-top-row {
+            padding-left: max(10px, env(safe-area-inset-left));
+            padding-right: max(10px, env(safe-area-inset-right));
+        }
+
+        .hd-toast {
+            top: calc(82px + env(safe-area-inset-top, 0px));
+        }
+    }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+
+@media print {
+    .hd-header {
+        position: static;
+        background: #ffffff;
+        box-shadow: none;
+        border-bottom: 2px solid #000;
+        animation: none;
+    }
+
+    .hd-brand-name {
+        -webkit-text-fill-color: #000000;
+        color: #000000;
+        animation: none;
+    }
+
+    .hd-version,
+    .hd-tab,
+    .hd-toast {
+        display: none;
     }
 }

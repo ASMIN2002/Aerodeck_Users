@@ -44,7 +44,7 @@
     border: 2px solid transparent;
     border-radius: var(--ad-radius);
     background:
-        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(#000000, #000000) padding-box,
         linear-gradient(135deg, #6a11cb, #2575fc, #ff2e93, #feca57) border-box;
     background-size: 100% 100%, 300% 300%;
     cursor: pointer;
@@ -108,7 +108,7 @@
 .ad-icon {
     flex-shrink: 0;
     font-size: 2rem;
-    color: #000000;
+    color: #fdfdfd;
     padding: 8px;
     border-radius: 50%;
     animation: ad-icon-float 3s ease-in-out infinite;
@@ -141,7 +141,7 @@
     max-width: 100%;
     font-size: 0.88rem;
     font-weight: 600;
-    color: var(--ad-text);
+    color: var(--ad-bg);
     line-height: 1.35;
     letter-spacing: 0.15px;
 
@@ -149,7 +149,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    letter-spacing: 1px;
     /* Important for flex children to shrink properly */
     min-width: 0;
 }
@@ -181,7 +181,7 @@
     flex-shrink: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #6a11cb;
+    color: #04d1fa;
     line-height: 1;
     transition: var(--ad-transition);
 }
@@ -402,7 +402,7 @@
     }
 
     .ad-text {
-        font-size: 0.74rem;
+        font-size: 0.68rem;
         line-height: 1.3;
     }
 

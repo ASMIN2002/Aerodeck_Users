@@ -1,31 +1,526 @@
+/* ==========================================================================
+   TOP HEADER — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   HEADER CONTAINER
+   ============================================ */
+
 .top-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
     width: 100%;
-    height: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px;
-    background: #5ea4e2;
-    color: white;
-    position: relative;
-    z-index: 100;
-}
-.top-header-info{
-    display: flex;
     gap: 12px;
+    padding: 14px 18px;
+    background: rgba(10, 10, 15, 0.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1.5px solid #1c1c24;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.5),
+        0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    box-sizing: border-box;
+    animation: headerSlideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.top-header * {
+    box-sizing: border-box;
+}
+
+@keyframes headerSlideDown {
+    from { opacity: 0; transform: translateY(-100%); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animated bottom gradient line */
+.top-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        #a29bfe 25%,
+        #6c5ce7 50%,
+        #a29bfe 75%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 4s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes gradientSlide {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* ============================================
+   LEFT SIDE (Back + Title)
+   ============================================ */
+
+.top-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Back Button --- */
 .top-header-back {
-    border: none !important;
-    background: transparent !important;
-    color: white !important;
-    font-size: 24px;
-    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    background: linear-gradient(145deg, #1c1c24, #232330);
+    border: 1.5px solid #2a2a35;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: inherit;
     cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.top-header h2 {
+.top-header-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.top-header-back:hover::before {
+    opacity: 1;
+}
+
+.top-header-back:hover {
+    border-color: #a29bfe;
+    transform: translateX(-4px) scale(1.05);
+    box-shadow:
+        0 8px 24px rgba(162, 155, 254, 0.45),
+        0 0 24px rgba(108, 92, 231, 0.3);
+}
+
+.top-header-back:active {
+    transform: translateX(-2px) scale(0.95);
+}
+
+.top-header-back:focus-visible {
+    outline: 2px solid #a29bfe;
+    outline-offset: 2px;
+}
+
+/* --- Title --- */
+.top-header-info h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #b8b2ff 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleShimmer 5s ease infinite;
+}
+
+@keyframes titleShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+/* ============================================
+   RIGHT SIDE (HEEPIT Brand)
+   ============================================ */
+
+.top-header-title {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.top-header-title h3 {
+    position: relative;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    padding: 4px 0 6px 0;
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        #a29bfe 30%,
+        #6c5ce7 60%,
+        #a29bfe 80%,
+        #ffffff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brandShimmer 5s ease infinite;
+    user-select: none;
+    cursor: default;
+    transition: transform 0.3s ease;
+}
+
+.top-header-title h3:hover {
+    transform: scale(1.05);
+}
+
+@keyframes brandShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+/* Brand underline */
+.top-header-title h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 2.5px;
+    background: linear-gradient(90deg, #a29bfe, #6c5ce7);
+    border-radius: 50px;
+    box-shadow:
+        0 2px 10px rgba(162, 155, 254, 0.6),
+        0 0 16px rgba(108, 92, 231, 0.4);
+    animation: brandUnderline 3s ease-in-out infinite;
+}
+
+@keyframes brandUnderline {
+    0%, 100% { width: 28px; opacity: 1; }
+    50%      { width: 40px; opacity: 0.7; }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .top-header {
+        padding: 18px 28px;
+        gap: 16px;
+    }
+
+    .top-header-info {
+        gap: 14px;
+    }
+
+    .top-header-back {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        font-size: 1.35rem;
+        border-radius: 14px;
+    }
+
+    .top-header-info h2 {
+        font-size: 1.35rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 1.35rem;
+        padding: 5px 0 8px 0;
+    }
+
+    .top-header-title h3::after {
+        width: 34px;
+        height: 3px;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .top-header {
+        padding: 14px 22px;
+    }
+
+    .top-header-back {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        font-size: 1.25rem;
+    }
+
+    .top-header-info h2 {
+        font-size: 1.2rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .top-header {
+        padding: 12px 16px;
+        gap: 10px;
+    }
+
+    .top-header-info {
+        gap: 10px;
+    }
+
+    .top-header-back {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 1.1rem;
+        border-radius: 11px;
+    }
+
+    .top-header-info h2 {
+        font-size: 1.08rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 1.08rem;
+        padding: 3px 0 6px 0;
+    }
+
+    .top-header-title h3::after {
+        width: 26px;
+        height: 2.5px;
+    }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .top-header {
+        padding: 12px 14px;
+        gap: 9px;
+    }
+
+    .top-header-info {
+        gap: 9px;
+    }
+
+    .top-header-back {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+
+    .top-header-info h2 {
+        font-size: 1rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 1rem;
+    }
+
+    .top-header-title h3::after {
+        width: 22px;
+        height: 2px;
+    }
+
+    .top-header-back:hover {
+        transform: translateX(-3px) scale(1.03);
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .top-header {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .top-header-info {
+        gap: 8px;
+    }
+
+    .top-header-back {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 1rem;
+        border-radius: 10px;
+    }
+
+    .top-header-info h2 {
+        font-size: 0.95rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 0.95rem;
+    }
+
+    .top-header-title h3::after {
+        width: 20px;
+        height: 2px;
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .top-header {
+        padding: 9px 10px;
+        gap: 6px;
+    }
+
+    .top-header-info {
+        gap: 7px;
+    }
+
+    .top-header-back {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 0.95rem;
+        border-radius: 9px;
+    }
+
+    .top-header-info h2 {
+        font-size: 0.88rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 0.88rem;
+        padding: 3px 0 5px 0;
+    }
+
+    .top-header-title h3::after {
+        width: 18px;
+        height: 2px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .top-header,
+    .top-header::after,
+    .top-header-back,
+    .top-header-back::before,
+    .top-header-info h2,
+    .top-header-title h3,
+    .top-header-title h3::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .top-header-back:hover,
+    .top-header-title h3:hover {
+        transform: none;
+    }
+
+    .top-header-info h2,
+    .top-header-title h3 {
+        background-position: 0% 50%;
+    }
+}
+
+@media (forced-colors: active) {
+    .top-header {
+        border-bottom: 2px solid ButtonText;
+    }
+
+    .top-header-back {
+        border: 2px solid ButtonText;
+    }
+
+    .top-header-info h2 {
+        -webkit-text-fill-color: ButtonText;
+        color: ButtonText;
+    }
+
+    .top-header-title h3 {
+        -webkit-text-fill-color: ButtonText;
+        color: ButtonText;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .top-header {
+        padding-top: max(14px, calc(14px + env(safe-area-inset-top)));
+        padding-left: max(18px, env(safe-area-inset-left));
+        padding-right: max(18px, env(safe-area-inset-right));
+    }
+
+    @media (max-width: 767px) {
+        .top-header {
+            padding-top: max(12px, calc(12px + env(safe-area-inset-top)));
+            padding-left: max(14px, env(safe-area-inset-left));
+            padding-right: max(14px, env(safe-area-inset-right));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .top-header {
+            padding-top: max(9px, calc(9px + env(safe-area-inset-top)));
+            padding-left: max(10px, env(safe-area-inset-left));
+            padding-right: max(10px, env(safe-area-inset-right));
+        }
+    }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+
+@media print {
+    .top-header {
+        position: static;
+        background: #ffffff;
+        box-shadow: none;
+        border-bottom: 2px solid #000;
+    }
+
+    .top-header-info h2,
+    .top-header-title h3 {
+        -webkit-text-fill-color: #000000;
+        color: #000000;
+    }
+
+    .top-header-back {
+        display: none;
+    }
 }

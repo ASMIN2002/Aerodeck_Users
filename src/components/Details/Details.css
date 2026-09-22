@@ -1,1290 +1,799 @@
-/* =========================================================
-   AERODECK DETAILS
-   Part 1 : Root • Layout • Main Image • Overlay
-   Mobile First (240px+)
-=========================================================*/
+/* ============================================
+   DETAILS PAGE - PREMIUM RESPONSIVE STYLES
+   ============================================ */
 
-/*==============================
-ROOT
-==============================*/
-
-:root {
-
-    --dt-max-width: 1700px;
-
-    --dt-radius: 18px;
-    --dt-radius-sm: 12px;
-    --dt-radius-lg: 24px;
-    --dt-radius-round: 999px;
-
-    --dt-white: #ffffff;
-    --dt-bg: #fafafa;
-    --dt-border: #ececec;
-
-    --dt-text: #111111;
-    --dt-text-light: #6f6f6f;
-
-    --dt-primary: #111111;
-    --dt-primary-hover: #000000;
-
-    --dt-shadow-sm:
-        0 2px 8px rgba(0, 0, 0, .05);
-
-    --dt-shadow:
-        0 8px 22px rgba(0, 0, 0, .08);
-
-    --dt-shadow-lg:
-        0 18px 45px rgba(0, 0, 0, .12);
-
-    --dt-transition:
-        .25s ease;
-
-}
-
-
-
-/*==============================
-GLOBAL
-==============================*/
-
-*,
-*::before,
-*::after {
-
-    box-sizing: border-box;
-
-}
-
-html {
-
-    scroll-behavior: smooth;
-
-}
-
-body {
-
-    margin: 0;
-
-    background: var(--dt-bg);
-
-    color: var(--dt-text);
-
-    overflow-x: hidden;
-
-    -webkit-font-smoothing: antialiased;
-
-}
-
-
-
-/*==============================
-PAGE
-==============================*/
-
+/* --- Base Page Container --- */
 .dt-page {
-
     width: 100%;
-
-    max-width: var(--dt-max-width);
-
-    margin: auto;
-
-    padding: 8px;
-
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     display: flex;
-
+    padding: 10px;
     flex-direction: column;
-
-    gap: 10px;
+    padding-bottom: 32px;
+    position: relative;
 }
 
-
-
-/*==============================
-IMAGE WRAPPER
-==============================*/
+/* ============================================
+   IMAGE WRAPPER
+   ============================================ */
 
 .dt-image-wrapper {
-
     position: relative;
-
     width: 100%;
-
-    border-radius: var(--dt-radius-lg);
-
+    aspect-ratio: 1 / 1;
+    max-height: 520px;
+    background: linear-gradient(145deg, #f5f5fa 0%, #ebebf5 100%);
     overflow: hidden;
-
-    background: var(--dt-white);
-
-    box-shadow: var(--dt-shadow);
-    /* height: 50%; */
-
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    box-shadow: 0 8px 32px rgba(26, 26, 46, 0.08);
 }
 
-
-
-/*==============================
-IMAGE BOX
-==============================*/
-
+/* --- Image Box --- */
 .dt-image-box {
-
-    position: relative;
-
     width: 100%;
-
-    aspect-ratio: 1/1;
-
-    overflow: hidden;
-
-    background: #ffffff;
-
+    height: 100%;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
+    overflow: hidden;
+    position: relative;
+    touch-action: pan-y;
+    user-select: none;
 }
-
-
 
 .dt-image-box img {
-
     width: 100%;
-
     height: 100%;
-
     object-fit: contain;
-
-    user-select: none;
-
-    -webkit-user-drag: none;
-
-    transition:
-        transform .45s ease,
-        opacity .25s ease;
-
-    will-change: transform;
-
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px;
+    animation: imageFadeIn 0.4s ease;
 }
 
+@keyframes imageFadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
 
-
-.dt-image-box:hover img {
-
+.dt-image-box img:hover {
     transform: scale(1.03);
-
 }
 
-
-
-/*==============================
-OVERLAY
-==============================*/
+/* ============================================
+   OVERLAY (Back, Like, Save, Share)
+   ============================================ */
 
 .dt-overlay {
-
     position: absolute;
-
-    top: 8px;
-
-    left: 8px;
-
-    right: 8px;
-
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
-
-    justify-content: space-between;
-
-    align-items: flex-start;
-
-    pointer-events: none;
-
-}
-
-
-
-.dt-overlay>* {
-
-    pointer-events: auto;
-
-}
-
-
-
-/*==============================
-BACK BUTTON
-==============================*/
-
-.dt-back {
-
-    width: 34px;
-
-    height: 34px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255, 255, 255, .86);
-
-    backdrop-filter: blur(12px);
-
-    cursor: pointer;
-
-    display: flex;
-
     align-items: center;
-
-    justify-content: center;
-
-    font-size: 15px;
-
-    color: var(--dt-text);
-
-    box-shadow: var(--dt-shadow-sm);
-
-    transition: var(--dt-transition);
-
+    justify-content: space-between;
+    padding: 16px;
+    gap: 10px;
+    z-index: 5;
+    pointer-events: none;
 }
 
-
+/* --- Back Button --- */
+.dt-back {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    color: #1a1a2e;
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(26, 26, 46, 0.15);
+    line-height: 1;
+    flex-shrink: 0;
+}
 
 .dt-back:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow: var(--dt-shadow);
-
+    background: #ffffff;
+    transform: translateX(-3px);
+    box-shadow: 0 6px 20px rgba(26, 26, 46, 0.25);
 }
 
-
-
-/*==============================
-RIGHT ACTIONS
-==============================*/
-
-.dt-overlay {
-
-    display: flex;
-
+.dt-back:active {
+    transform: translateX(-1px) scale(0.95);
 }
 
-
-
-.dt-overlay .dt-action-btn {
-
-    margin-left: 6px;
-
+.dt-back:focus-visible {
+    outline: 2px solid #6c5ce7;
+    outline-offset: 2px;
 }
 
-
-
-/*==============================
-ACTION BUTTON
-==============================*/
-
+/* --- Action Buttons (Like / Save / Share) --- */
 .dt-action-btn {
-
-    min-width: 34px;
-
-    height: 34px;
-
-    padding: 0 9px;
-
-    border: none;
-
-    border-radius: var(--dt-radius-round);
-
-    background:
-        rgba(255, 255, 255, .88);
-
-    backdrop-filter: blur(12px);
-
-    display: flex;
-
+    pointer-events: auto;
+    display: inline-flex;
     align-items: center;
-
     justify-content: center;
-
-    gap: 5px;
-
+    gap: 6px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50px;
+    color: #1a1a2e;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 600;
     cursor: pointer;
-
-    color: var(--dt-text);
-
-    box-shadow: var(--dt-shadow-sm);
-
-    transition: var(--dt-transition);
-
-}
-
-
-
-.dt-action-btn:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow: var(--dt-shadow);
-
-}
-
-
-
-.dt-action-btn:active {
-
-    transform: scale(.95);
-
-}
-
-
-
-.dt-action-btn svg {
-
-    font-size: 14px;
-
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(26, 26, 46, 0.15);
+    line-height: 1;
     flex-shrink: 0;
-
 }
-
-
 
 .dt-action-btn span {
-
-    font-size: 11px;
-
-    font-weight: 600;
-
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #1a1a2e;
     line-height: 1;
-
 }
 
+.dt-action-btn:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.25);
+    border-color: rgba(108, 92, 231, 0.3);
+}
 
+.dt-action-btn:active {
+    transform: translateY(-1px) scale(0.96);
+}
 
-/*==============================
-IMAGE COUNT
-==============================*/
+.dt-action-btn:focus-visible {
+    outline: 2px solid #6c5ce7;
+    outline-offset: 2px;
+}
+
+/* Heart color override */
+.dt-action-btn svg[style*="#ff2d55"] {
+    filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.4));
+}
+
+/* ============================================
+   IMAGE COUNTER (1 / 5)
+   ============================================ */
 
 .dt-image-count {
-
     position: absolute;
-
-    right: 10px;
-
-    bottom: 10px;
-
-    padding: 5px 10px;
-
-    border-radius: 999px;
-
-    background:
-        rgba(17, 17, 17, .72);
-
+    bottom: 16px;
+    right: 16px;
+    background: rgba(26, 26, 46, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: #ffffff;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-    letter-spacing: .3px;
-
-    backdrop-filter: blur(10px);
-
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-
-
-/*==============================
-LOADING
-==============================*/
-
-.dt-image-box img[src=""] {
-
-    opacity: 0;
-
-}
-
-
-
-/*==============================
-FOCUS
-==============================*/
-
-.dt-back:focus-visible,
-.dt-action-btn:focus-visible {
-
-    outline: 2px solid #111;
-
-    outline-offset: 2px;
-
-}
-
-
-
-/*==============================
-SELECTION
-==============================*/
-
-::selection {
-
-    background: #111;
-
-    color: #fff;
-
-}
-
-/*=========================================================
-  THUMBNAILS
-=========================================================*/
+/* ============================================
+   THUMBNAILS
+   ============================================ */
 
 .dt-images {
-
-    width: 100%;
-
     display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
+    gap: 10px;
+    padding: 16px 16px 0;
     overflow-x: auto;
-
-    overflow-y: hidden;
-
-    padding: 2px 0 6px;
-
     scroll-behavior: smooth;
-
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-
-    -ms-overflow-style: none;
-
+    margin-bottom: 8px;
 }
 
 .dt-images::-webkit-scrollbar {
-
     display: none;
-
 }
 
-
-
-/*=========================================================
-  THUMBNAIL
-=========================================================*/
-
+/* --- Thumbnail --- */
 .dt-thumb {
-
-    width: 58px;
-
-    height: 58px;
-
     flex: 0 0 auto;
-
-    border-radius: 14px;
-
+    width: 62px;
+    height: 62px;
     object-fit: cover;
-
-    background: #ffffff;
-
-    border: 1px solid var(--dt-border);
-
+    border-radius: 12px;
+    border: 2.5px solid #ebebf5;
     cursor: pointer;
-
-    user-select: none;
-
-    -webkit-user-drag: none;
-
-    box-shadow: var(--dt-shadow-sm);
-
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease,
-        opacity .25s ease;
-
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #f5f5fa;
+    padding: 2px;
 }
-
-
 
 .dt-thumb:hover {
-
-    transform: translateY(-2px);
-
-    border-color: #d7d7d7;
-
-    box-shadow: var(--dt-shadow);
-
+    border-color: rgba(108, 92, 231, 0.5);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.2);
 }
-
-
-
-.dt-thumb:active {
-
-    transform: scale(.95);
-
-}
-
-
 
 .dt-thumb.active {
-
-    border: 2px solid var(--dt-primary);
-
-    box-shadow:
-        0 0 0 3px rgba(17, 17, 17, .08);
-
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2),
+                0 6px 20px rgba(108, 92, 231, 0.35);
+    transform: translateY(-3px) scale(1.06);
+    padding: 2px;
 }
 
-
-
-/*=========================================================
-  HOVER EFFECTS
-=========================================================*/
-
-@media (hover:hover) {
-
-    .dt-image-box:hover img {
-
-        transform: scale(1.03);
-
-    }
-
+.dt-thumb:active {
+    transform: translateY(-1px) scale(1.02);
 }
 
+/* ============================================
+   FULLSCREEN IMAGE VIEWER
+   ============================================ */
 
-
-@media (hover:none) {
-
-    .dt-image-box:hover img {
-
-        transform: none;
-
-    }
-
+.dt-fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 20, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: overlayFadeIn 0.3s ease;
 }
 
-
-
-/*=========================================================
-  BUTTON ANIMATION
-=========================================================*/
-
-.dt-back,
-.dt-action-btn,
-.dt-thumb {
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease,
-        background .25s ease,
-        color .25s ease;
-
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-
-
-.dt-back:hover,
-.dt-action-btn:hover {
-
-    background: #ffffff;
-
+/* --- Fullscreen Close Button --- */
+.dt-fullscreen-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+    line-height: 1;
 }
 
-
-
-.dt-back:active,
-.dt-action-btn:active {
-
-    transform: scale(.95);
-
+.dt-fullscreen-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(90deg) scale(1.08);
 }
 
-
-
-/*=========================================================
-  IMAGE TRANSITION
-=========================================================*/
-
-.dt-image-box {
-
-    isolation: isolate;
-
+.dt-fullscreen-close:active {
+    transform: rotate(90deg) scale(0.95);
 }
 
-
-
-.dt-image-box img {
-
-    backface-visibility: hidden;
-
-    transform: translateZ(0);
-
-}
-
-
-
-/*=========================================================
-  TOUCH OPTIMIZATION
-=========================================================*/
-
-.dt-back,
-.dt-action-btn,
-.dt-thumb {
-
-    -webkit-tap-highlight-color: transparent;
-
-    touch-action: manipulation;
-
-}
-
-
-
-/*=========================================================
-  ACCESSIBILITY
-=========================================================*/
-
-.dt-thumb:focus-visible {
-
-    outline: 2px solid var(--dt-primary);
-
-    outline-offset: 3px;
-
-}
-
-
-
-.dt-images img {
-
-    display: block;
-
-}
-
-
-
-/*=========================================================
-  PREMIUM GLASS EFFECT
-=========================================================*/
-
-.dt-back,
-.dt-action-btn {
-
-    border: 1px solid rgba(255, 255, 255, .65);
-
-}
-
-
-
-.dt-image-count {
-
-    border: 1px solid rgba(255, 255, 255, .12);
-
-}
-
-
-
-/*=========================================================
-  SMOOTH PERFORMANCE
-=========================================================*/
-
-.dt-image-box img,
-.dt-thumb,
-.dt-back,
-.dt-action-btn {
-
-    will-change: transform;
-
-}
-
-
-
-/*=========================================================
-  SAFE IMAGE HANDLING
-=========================================================*/
-
-.dt-thumb {
-
+/* --- Fullscreen Image Box --- */
+.dt-fullscreen-image-box {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
     overflow: hidden;
-
+    border-radius: 16px;
+    animation: imageZoomIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
-
-.dt-thumb img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-
+@keyframes imageZoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
+.dt-fullscreen-image-box img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+}
 
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
 
-/*=========================================================
-  REDUCED MOTION
-=========================================================*/
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .dt-image-wrapper {
+        max-height: 620px;
+        border-bottom-left-radius: 32px;
+        border-bottom-right-radius: 32px;
+    }
 
-@media (prefers-reduced-motion:reduce) {
-
-    .dt-image-box img,
-
-    .dt-thumb,
+    .dt-overlay {
+        padding: 20px;
+    }
 
     .dt-back,
-
     .dt-action-btn {
-
-        transition: none;
-
-    }
-
-}
-
-
-
-/*=========================================================
-  PRINT
-=========================================================*/
-
-@media print {
-
-    .dt-overlay,
-
-    .dt-images {
-
-        display: none;
-
-    }
-
-}
-
-/*=========================================================
-  RESPONSIVE
-  Mobile First → 2560px
-=========================================================*/
-
-
-/*==============================
-240px+
-==============================*/
-
-@media (min-width:240px) {
-
-    .dt-page {
-
-        padding: 8px;
-        gap: 10px;
-
-    }
-
-    .dt-image-wrapper {
-
-        border-radius: 18px;
-
-    }
-
-    .dt-back {
-
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-
+        width: 46px;
+        height: 46px;
     }
 
     .dt-action-btn {
-
-        height: 32px;
-        min-width: 32px;
-        padding: 0 8px;
-
-    }
-
-    .dt-action-btn svg {
-
-        font-size: 13px;
-
-    }
-
-    .dt-action-btn span {
-
-        font-size: 10px;
-
-    }
-
-    .dt-thumb {
-
-        width: 54px;
-        height: 54px;
-
-    }
-
-}
-
-
-
-/*==============================
-320px+
-==============================*/
-
-@media (min-width:320px) {
-
-    .dt-page {
-
-        padding: 10px;
-        gap: 12px;
-
-    }
-
-    .dt-thumb {
-
-        width: 58px;
-        height: 58px;
-
-    }
-
-}
-
-
-
-/*==============================
-375px+
-==============================*/
-
-@media (min-width:375px) {
-
-    .dt-back {
-
-        width: 34px;
-        height: 34px;
-
-    }
-
-    .dt-action-btn {
-
-        height: 34px;
-        min-width: 34px;
-
-    }
-
-    .dt-thumb {
-
-        width: 62px;
-        height: 62px;
-
-    }
-
-}
-
-
-
-/*==============================
-430px+
-==============================*/
-
-@media (min-width:430px) {
-
-    .dt-page {
-
-        padding: 12px;
-
-    }
-
-    .dt-images {
-
-        gap: 10px;
-
-    }
-
-    .dt-thumb {
-
-        width: 66px;
-        height: 66px;
-
-    }
-
-}
-
-
-
-/*==============================
-576px+
-==============================*/
-
-@media (min-width:576px) {
-
-    .dt-page {
-
-        padding: 16px;
-        gap: 16px;
-
-    }
-
-    .dt-thumb {
-
-        width: 74px;
-        height: 74px;
-
-    }
-
-}
-
-
-
-/*==============================
-768px+
-==============================*/
-
-@media (min-width:768px) {
-
-    .dt-page {
-
-        padding: 20px;
-
-    }
-
-    .dt-image-wrapper {
-
-        border-radius: 22px;
-
-    }
-
-    .dt-thumb {
-
-        width: 82px;
-        height: 82px;
-
-    }
-
-}
-
-
-
-/*==============================
-1024px+
-==============================*/
-
-@media (min-width:1024px) {
-
-    .dt-page {
-
-        max-width: 1180px;
-
-    }
-
-    .dt-image-wrapper {
-
-        border-radius: 24px;
-
-    }
-
-    .dt-back {
-
-        width: 42px;
-        height: 42px;
-        font-size: 17px;
-
-    }
-
-    .dt-action-btn {
-
-        height: 42px;
-        min-width: 42px;
         padding: 0 14px;
-
     }
 
-    .dt-action-btn svg {
-
-        font-size: 16px;
-
+    .dt-images {
+        padding: 20px 20px 0;
+        gap: 12px;
     }
 
-    .dt-action-btn span {
-
-        font-size: 12px;
-
+    .dt-thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: 14px;
     }
 
     .dt-image-count {
-
-        font-size: 12px;
-        padding: 7px 14px;
-
+        font-size: 0.82rem;
+        padding: 7px 16px;
     }
-
-    .dt-thumb {
-
-        width: 88px;
-        height: 88px;
-
-    }
-
 }
 
-
-
-/*==============================
-1200px+
-==============================*/
-
-@media (min-width:1200px) {
-
-    .dt-page {
-
-        max-width: 1280px;
-
-    }
-
-}
-
-
-
-/*==============================
-1366px+
-==============================*/
-
-@media (min-width:1366px) {
-
-    .dt-page {
-
-        max-width: 1366px;
-
-    }
-
-}
-
-
-
-/*==============================
-1440px+
-==============================*/
-
-@media (min-width:1440px) {
-
-    .dt-page {
-
-        max-width: 1440px;
-
-    }
-
-}
-
-
-
-/*==============================
-1600px+
-==============================*/
-
-@media (min-width:1600px) {
-
-    .dt-page {
-
-        max-width: 1520px;
-
-    }
-
-    .dt-thumb {
-
-        width: 96px;
-        height: 96px;
-
-    }
-
-}
-
-
-
-/*==============================
-1920px+
-==============================*/
-
-@media (min-width:1920px) {
-
-    .dt-page {
-
-        max-width: 1650px;
-
-    }
-
-    .dt-thumb {
-
-        width: 102px;
-        height: 102px;
-
-    }
-
-}
-
-
-
-/*==============================
-2560px+
-==============================*/
-
-@media (min-width:2560px) {
-
-    .dt-page {
-
-        max-width: 1850px;
-
-    }
-
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
     .dt-image-wrapper {
-
-        border-radius: 30px;
-
+        max-height: 560px;
     }
 
     .dt-thumb {
-
-        width: 118px;
-        height: 118px;
-
+        width: 68px;
+        height: 68px;
     }
-
 }
 
-
-
-/*=========================================================
-  LANDSCAPE PHONES
-=========================================================*/
-
-@media (max-height:500px) and (orientation:landscape) {
-
-    .dt-page {
-
-        padding: 8px;
-
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .dt-image-wrapper {
+        max-height: 480px;
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
     }
 
-    .dt-thumb {
-
-        width: 52px;
-        height: 52px;
-
+    .dt-overlay {
+        padding: 14px;
+        gap: 8px;
     }
 
-}
+    .dt-back,
+    .dt-action-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.95rem;
+    }
 
+    .dt-action-btn {
+        padding: 0 11px;
+    }
 
-
-/*=========================================================
-  LARGE TOUCH DEVICES
-=========================================================*/
-
-@media (pointer:coarse) {
-
-    .dt-thumb {
-
-        scroll-snap-align: start;
-
+    .dt-action-btn span {
+        font-size: 0.75rem;
     }
 
     .dt-images {
-
-        scroll-snap-type: x proximity;
-
+        padding: 14px 14px 0;
+        gap: 9px;
     }
 
-}
-
-.dt-fullscreen-overlay {
-
-    position: fixed;
-    inset: 0;
-
-    z-index: 99999;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 30px;
-
-    background: rgba(0, 0, 0, 0.45);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    animation: dtFullscreenFade .25s ease;
-}
-
-
-.dt-fullscreen-image-box {
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    max-width: 95vw;
-    max-height: 92vh;
-
-    overflow: hidden;
-}
-
-
-.dt-fullscreen-image-box img {
-
-    max-width: 95vw;
-    max-height: 92vh;
-
-    object-fit: contain;
-
-    user-select: none;
-
-    cursor: grab;
-
-    border-radius: 8px;
-
-    box-shadow:
-        0 20px 80px rgba(0, 0, 0, 0.5);
-
-}
-
-
-.dt-fullscreen-close {
-
-    position: fixed;
-
-    top: 20px;
-    right: 20px;
-
-    z-index: 100000;
-
-    width: 42px;
-    height: 42px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.18);
-
-    backdrop-filter: blur(10px);
-
-    color: white;
-
-    font-size: 22px;
-
-    cursor: pointer;
-
-}
-
-
-@keyframes dtFullscreenFade {
-
-    from {
-        opacity: 0;
+    .dt-thumb {
+        width: 58px;
+        height: 58px;
+        border-radius: 10px;
     }
 
-    to {
-        opacity: 1;
+    .dt-image-count {
+        font-size: 0.72rem;
+        padding: 5px 12px;
+        bottom: 14px;
+        right: 14px;
+    }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .dt-page {
+        padding-bottom: 24px;
     }
 
+    .dt-image-wrapper {
+        max-height: 440px;
+        border-bottom-left-radius: 22px;
+        border-bottom-right-radius: 22px;
+    }
+
+    .dt-image-box img {
+        padding: 10px;
+    }
+
+    .dt-overlay {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .dt-back,
+    .dt-action-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+
+    .dt-action-btn {
+        padding: 0 10px;
+        gap: 5px;
+    }
+
+    .dt-action-btn span {
+        font-size: 0.72rem;
+    }
+
+    .dt-images {
+        padding: 12px 12px 0;
+        gap: 8px;
+    }
+
+    .dt-thumb {
+        width: 54px;
+        height: 54px;
+        border-radius: 10px;
+        border-width: 2px;
+    }
+
+    .dt-image-count {
+        font-size: 0.7rem;
+        padding: 5px 11px;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .dt-fullscreen-overlay {
+        padding: 16px;
+    }
+
+    .dt-fullscreen-close {
+        width: 40px;
+        height: 40px;
+        font-size: 1.05rem;
+        top: 16px;
+        right: 16px;
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .dt-image-wrapper {
+        max-height: 400px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .dt-image-box img {
+        padding: 8px;
+    }
+
+    .dt-overlay {
+        padding: 10px;
+        gap: 6px;
+    }
+
+    .dt-back,
+    .dt-action-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+
+    .dt-action-btn {
+        padding: 0 9px;
+        gap: 4px;
+    }
+
+    .dt-action-btn span {
+        font-size: 0.68rem;
+    }
+
+    .dt-images {
+        padding: 10px 10px 0;
+        gap: 7px;
+    }
+
+    .dt-thumb {
+        width: 50px;
+        height: 50px;
+        border-radius: 9px;
+    }
+
+    .dt-image-count {
+        font-size: 0.66rem;
+        padding: 4px 10px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .dt-fullscreen-overlay {
+        padding: 12px;
+    }
+
+    .dt-fullscreen-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        top: 12px;
+        right: 12px;
+    }
+
+    .dt-fullscreen-image-box {
+        border-radius: 12px;
+    }
+
+    .dt-fullscreen-image-box img {
+        border-radius: 10px;
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .dt-image-wrapper {
+        max-height: 340px;
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 18px;
+    }
+
+    .dt-overlay {
+        padding: 8px;
+        gap: 5px;
+    }
+
+    .dt-back,
+    .dt-action-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.8rem;
+    }
+
+    .dt-action-btn {
+        padding: 0 8px;
+        gap: 3px;
+    }
+
+    .dt-action-btn span {
+        font-size: 0.62rem;
+    }
+
+    .dt-images {
+        padding: 8px 8px 0;
+        gap: 6px;
+    }
+
+    .dt-thumb {
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+    }
+
+    .dt-image-count {
+        font-size: 0.62rem;
+        padding: 4px 9px;
+        bottom: 8px;
+        right: 8px;
+    }
+
+    .dt-fullscreen-overlay {
+        padding: 10px;
+    }
+
+    .dt-fullscreen-close {
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION PREFERENCES
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .dt-page *,
+    .dt-page *::before,
+    .dt-page *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .dt-image-box img:hover {
+        transform: none;
+    }
+
+    .dt-back:hover {
+        transform: none;
+    }
+
+    .dt-action-btn:hover {
+        transform: none;
+    }
+
+    .dt-thumb:hover {
+        transform: none;
+    }
+
+    .dt-fullscreen-close:hover {
+        transform: none;
+    }
+}
+
+/* --- High Contrast Mode --- */
+@media (forced-colors: active) {
+    .dt-back,
+    .dt-action-btn {
+        border: 2px solid ButtonText;
+    }
+
+    .dt-thumb {
+        border: 2px solid ButtonText;
+    }
+
+    .dt-thumb.active {
+        border: 3px solid Highlight;
+    }
+
+    .dt-image-count {
+        border: 1px solid ButtonText;
+    }
+
+    .dt-fullscreen-close {
+        border: 2px solid ButtonText;
+    }
+}
+
+/* --- Dark Mode Support --- */
+@media (prefers-color-scheme: dark) {
+    .dt-page {
+        background: #0f0f1a;
+    }
+
+    .dt-image-wrapper {
+        background: linear-gradient(145deg, #1a1a2e 0%, #1e1e35 100%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .dt-back,
+    .dt-action-btn {
+        background: rgba(30, 30, 50, 0.9);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f0f0f5;
+    }
+
+    .dt-back:hover,
+    .dt-action-btn:hover {
+        background: rgba(40, 40, 65, 0.95);
+        border-color: rgba(108, 92, 231, 0.4);
+        box-shadow: 0 8px 24px rgba(108, 92, 231, 0.3);
+    }
+
+    .dt-action-btn span {
+        color: #f0f0f5;
+    }
+
+    .dt-image-count {
+        background: rgba(10, 10, 20, 0.85);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dt-thumb {
+        border-color: #2e2e48;
+        background: #1a1a2e;
+    }
+
+    .dt-thumb:hover {
+        border-color: rgba(108, 92, 231, 0.6);
+        box-shadow: 0 6px 18px rgba(108, 92, 231, 0.25);
+    }
+
+    .dt-thumb.active {
+        border-color: #a29bfe;
+        box-shadow: 0 0 0 2px rgba(162, 155, 254, 0.25),
+                    0 6px 20px rgba(108, 92, 231, 0.45);
+    }
+
+    .dt-fullscreen-overlay {
+        background: rgba(5, 5, 12, 0.98);
+    }
+
+    .dt-fullscreen-close {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .dt-fullscreen-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* ============================================
+   RESPONSIVE HEIGHTS FOR VERY SMALL SCREENS
+   ============================================ */
+
+/* Landscape mode on small devices */
+@media (max-height: 500px) and (orientation: landscape) {
+    .dt-image-wrapper {
+        max-height: 90vh;
+        aspect-ratio: auto;
+        height: 90vh;
+    }
+
+    .dt-overlay {
+        padding: 8px;
+    }
+
+    .dt-images {
+        padding: 8px 8px 0;
+    }
+
+    .dt-thumb {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Large screen tablets in portrait */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+    .dt-image-wrapper {
+        max-height: 60vh;
+    }
 }

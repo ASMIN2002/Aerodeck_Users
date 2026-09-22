@@ -1,10 +1,8 @@
 import ShopCard from "./ShopCard";
-import TOPHEADER from "../Header/TOPHEADER";
 
 function ShopCategory({
     category,
     shops,
-    onBack,
     onOpenDetails,
     onSave,
     onLike,

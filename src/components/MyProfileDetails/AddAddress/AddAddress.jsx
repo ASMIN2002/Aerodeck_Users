@@ -397,16 +397,30 @@ function AddAddress({ setProfilePage }) {
 
                             setFormData(prev => ({
                                 ...prev,
-                                pincode: pin
+                                pincode: pin,
+
+                                /* ✅ PIN hatane pe city/state/country/area clear karo */
+                                ...(pin.length < 6 && {
+                                    city: "",
+                                    state: "",
+                                    country: "",
+                                    area_street: ""
+                                })
                             }));
 
+                            /* ✅ PIN 6 se kam ho gaya toh areas clear karo */
+                            if (pin.length < 6) {
+                                setAreas([]);
+                                setDeliveryAvailable(true);
+                            }
+
+                            /* ✅ PIN 6 digit ka ho gaya toh fetch karo */
                             if (pin.length === 6) {
                                 fetchPincode(pin);
                             }
 
                         }}
                     />
-
                     <select
                         value={formData.area_street}
                         onChange={(e) =>
@@ -415,16 +429,20 @@ function AddAddress({ setProfilePage }) {
                                 area_street: e.target.value
                             }))
                         }
+                        disabled={areas.length === 0}
+                        className={areas.length === 0 ? "empty-select" : ""}
                     >
 
                         <option value="">
-                            Select Area
+                            {areas.length === 0
+                                ? "First add the pincode..."
+                                : "Select Area"}
                         </option>
 
                         {areas.map((area, index) => (
 
                             <option
-                                key={index}
+                                key={`${formData.pincode}-${area}`} 
                                 value={area}
                             >
                                 {area}

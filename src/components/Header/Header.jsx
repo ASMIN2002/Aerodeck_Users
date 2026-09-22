@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 import "./Header.css";
@@ -41,14 +42,11 @@ function Header({
     }, [userId]);
 
     const handleTabClick = (menu) => {
-
         if (isDetailsOpen) {
             closeDetails();
         }
         setSelectedBottomTab("Home");
-
         setSelectedMenu(menu);
-
         setIsMenuOpen(false);
     };
 
@@ -60,101 +58,65 @@ function Header({
         }, 2000);
     };
 
+    /* ==========================================
+       ✅ TOAST ELEMENT — Portal pe render hoga
+       ========================================== */
+    const toastElement = showToast ? (
+        <div className="hd-toast">
+            {toastMessage}
+        </div>
+    ) : null;
+
     return (
-        <header className="hd-header" ref={dropdownRef}>
+        <>
+            <header className="hd-header" ref={dropdownRef}>
+                {/* TOP ROW */}
+                <div className="hd-top-row">
+                    <div className="hd-center">
+                        <div className="hd-brand-name">
+                            HEEPIT
+                        </div>
 
-            {/* TOP ROW */}
-            <div className="hd-top-row">
-
-
-                <div className="hd-center">
-                    <div className="hd-brand-name">
-                        HEEPIT
+                        <div className="hd-version">
+                            v {version ? version : "27.03.01"}
+                        </div>
                     </div>
 
-                    <div className="hd-version">
-                        v {version ? version : "27.03.01"}
+                    {/* TABS */}
+                    <div className="hd-tabs">
+                        <button
+                            type="button"
+                            className={`hd-tab ${selectedMenu === "Shop" ? "hd-tab-active" : ""}`}
+                            onClick={() => {
+                                handleTabClick("Shop");
+                                navigate("/home/shop");
+                            }}
+                        >
+                            Products
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`hd-tab ${selectedMenu === "Gifts" ? "hd-tab-active" : ""}`}
+                            onClick={() => handleComingSoon("Gifts")}
+                        >
+                            Gifts
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`hd-tab ${selectedMenu === "Cards" ? "hd-tab-active" : ""}`}
+                            onClick={() => handleComingSoon("Cards")}
+                        >
+                            Cards
+                        </button>
                     </div>
                 </div>
+            </header>
 
-
-
-
-                {/* TABS */}
-                <div className="hd-tabs">
-
-                    {/* PRODUCTS */}
-                    <button
-                        type="button"
-                        className={`hd-tab ${selectedMenu === "Shop"
-                            ? "hd-tab-active"
-                            : ""
-                            }`}
-                        onClick={() => {
-                            handleTabClick("Shop");
-                            navigate("/home/shop");
-                        }}
-                    >
-                        Products
-                    </button>
-
-                    {/* <button
-                        type="button"
-                        className={`hd-tab ${selectedMenu === "Gifts"
-                            ? "hd-tab-active"
-                            : ""
-                            }`}
-                        onClick={() => {
-                            handleTabClick("Gifts");
-                            navigate("/home/gifts");
-                        }}
-                    >
-                        Gifts
-                    </button> */}
-
-                    <button
-                        type="button"
-                        className={`hd-tab ${selectedMenu === "Gifts" ? "hd-tab-active" : ""}`}
-                        onClick={() => {
-                            handleComingSoon("Gifts");
-                        }}
-                    >
-                        Gifts
-                    </button>
-
-
-                    {/* <button
-                        type="button"
-                        className={`hd-tab ${selectedMenu === "Cards"
-                            ? "hd-tab-active"
-                            : ""
-                            }`}
-                        onClick={() => {
-                            handleTabClick("Cards");
-                            navigate("/home/cards");
-                        }}
-                    >
-                        Cards
-                    </button> */}
-                    <button
-                        type="button"
-                        className={`hd-tab ${selectedMenu === "Cards" ? "hd-tab-active" : ""}`}
-                        onClick={() => {
-                            handleComingSoon("Cards");
-                        }}
-                    >
-                        Cards
-                    </button>
-
-                </div>
-            </div>
-            {showToast && (
-                <div className="hd-toast">
-                    {toastMessage}
-                </div>
-            )}
-
-        </header>
+            {/* ✅ TOAST — body pe render hoga, koi z-index issue nahi */}
+            {createPortal(toastElement, document.body)}
+        </>
     );
 }
 

@@ -1,42 +1,394 @@
-.order-item-details{
-    padding:16px;
+/* ==========================================================================
+   ORDER ITEM DETAILS — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+
+.order-item-details {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #0a0a0f;
+    background-image:
+        radial-gradient(circle at 20% 0%, rgba(162, 155, 254, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(108, 92, 231, 0.06) 0%, transparent 50%);
+    color: #ffffff;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 18px 130px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
-.order-details-header{
-    display:flex;
-    justify-content: space-between;
-    margin-bottom:7px;
+.order-item-details * {
+    box-sizing: border-box;
 }
 
-.order-details-header button{
-    width:20px;
-    height:20px;
-    border:none;
-    border-radius:20%;
-    cursor:pointer;
+/* ============================================
+   LOADING TEXT
+   ============================================ */
+
+.order-item-details:not(:has(.order-details-header)) {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #6b6b7a;
+    letter-spacing: 0.05em;
+    animation: pulseText 1.5s ease-in-out infinite;
 }
 
-.order-summary{
-    padding:16px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    margin-bottom:20px;
+@keyframes pulseText {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 1; }
 }
 
-.order-summary h3{
-    margin-bottom:8px;
+/* ============================================
+   HEADER
+   ============================================ */
+
+.order-details-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    animation: headerEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.order-summary p{
-    margin:4px 0;
+@keyframes headerEnter {
+    from { opacity: 0; transform: translateY(-16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.order-summary h4{
-    margin-top:10px;
+.order-details-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        #a29bfe 25%,
+        #6c5ce7 50%,
+        #a29bfe 75%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 3s linear infinite;
 }
-.order-details-header h2{
-    background: linear-gradient(135deg, #00f7ff, #000000);
+
+@keyframes gradientSlide {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.order-details-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(162, 155, 254, 0.15) 0%, transparent 70%);
+    animation: glowRotate 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes glowRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* --- Back Button --- */
+.order-details-header > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    background: linear-gradient(145deg, #1c1c24, #232330);
+    border: 1.5px solid #2a2a35;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.order-details-header > button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.order-details-header > button:hover::before {
+    opacity: 1;
+}
+
+.order-details-header > button:hover {
+    border-color: #a29bfe;
+    transform: translateX(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(162, 155, 254, 0.45);
+}
+
+.order-details-header > button:active {
+    transform: translateX(-1px) scale(0.95);
+}
+
+.order-details-header > button:focus-visible {
+    outline: 2px solid #a29bfe;
+    outline-offset: 2px;
+}
+
+/* --- Header Title --- */
+.order-details-header h2 {
+    flex: 1;
+    min-width: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #a29bfe 100%);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 12px;
+    animation: titleShimmer 4s ease infinite;
+}
+
+@keyframes titleShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+/* ============================================
+   ITEM WRAPPER (div around OrderItem)
+   ============================================ */
+
+.order-item-details > div:not(.order-details-header) {
+    animation: itemEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.order-item-details > div:nth-child(2) { animation-delay: 0.1s; }
+.order-item-details > div:nth-child(3) { animation-delay: 0.15s; }
+.order-item-details > div:nth-child(4) { animation-delay: 0.20s; }
+.order-item-details > div:nth-child(5) { animation-delay: 0.25s; }
+.order-item-details > div:nth-child(6) { animation-delay: 0.30s; }
+.order-item-details > div:nth-child(7) { animation-delay: 0.35s; }
+
+@keyframes itemEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .order-item-details {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 32px 40px 150px;
+        gap: 20px;
+    }
+
+    .order-details-header {
+        padding: 20px 24px;
+        border-radius: 20px;
+        gap: 18px;
+    }
+
+    .order-details-header h2 { font-size: 1.35rem; }
+    .order-details-header > button { width: 48px; height: 48px; font-size: 1.3rem; }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .order-item-details {
+        max-width: 850px;
+        margin: 0 auto;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .order-item-details {
+        padding: 18px 16px 120px;
+        gap: 14px;
+    }
+
+    .order-details-header {
+        padding: 14px 16px;
+        gap: 12px;
+        border-radius: 16px;
+    }
+
+    .order-details-header h2 { font-size: 1.08rem; }
+    .order-details-header > button { width: 40px; height: 40px; font-size: 1.1rem; }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .order-item-details {
+        padding: 16px 14px 115px;
+        gap: 12px;
+    }
+
+    .order-details-header {
+        padding: 12px 14px;
+        gap: 11px;
+        border-radius: 14px;
+    }
+
+    .order-details-header h2 { font-size: 1rem; }
+    .order-details-header > button { 
+        width: 38px; 
+        height: 38px; 
+        font-size: 1.05rem; 
+        border-radius: 10px; 
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .order-item-details {
+        padding: 14px 12px 112px;
+        gap: 11px;
+    }
+
+    .order-details-header {
+        padding: 11px 12px;
+        gap: 10px;
+        border-radius: 13px;
+    }
+
+    .order-details-header h2 { font-size: 0.95rem; }
+    .order-details-header > button { 
+        width: 36px; 
+        height: 36px; 
+        font-size: 1rem; 
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .order-item-details {
+        padding: 12px 10px 108px;
+        gap: 10px;
+    }
+
+    .order-details-header {
+        padding: 10px 12px;
+        gap: 9px;
+        border-radius: 12px;
+    }
+
+    .order-details-header h2 { font-size: 0.88rem; }
+    .order-details-header > button { 
+        width: 34px; 
+        height: 34px; 
+        font-size: 0.95rem; 
+        border-radius: 9px; 
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .order-item-details *,
+    .order-item-details *::before,
+    .order-item-details *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+@media (forced-colors: active) {
+    .order-details-header {
+        border: 2px solid ButtonText;
+    }
+
+    .order-details-header > button {
+        border: 2px solid ButtonText;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .order-item-details {
+        padding-left: max(18px, env(safe-area-inset-left));
+        padding-right: max(18px, env(safe-area-inset-right));
+        padding-bottom: max(130px, calc(130px + env(safe-area-inset-bottom)));
+    }
+
+    @media (max-width: 767px) {
+        .order-item-details {
+            padding-left: max(14px, env(safe-area-inset-left));
+            padding-right: max(14px, env(safe-area-inset-right));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .order-item-details {
+            padding-left: max(10px, env(safe-area-inset-left));
+            padding-right: max(10px, env(safe-area-inset-right));
+        }
+    }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+
+@media print {
+    .order-item-details { background: #ffffff; color: #000000; }
+    .order-details-header > button { display: none; }
 }

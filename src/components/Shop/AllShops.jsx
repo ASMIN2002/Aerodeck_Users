@@ -1,10 +1,9 @@
 import ShopCard from "./ShopCard";
+import "./AllShops.css";
 
 function AllShops({
 
     shops,
-
-    onBack,
     onOpenDetails,
 
     onSave,

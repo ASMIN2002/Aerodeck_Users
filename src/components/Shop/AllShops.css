@@ -1,0 +1,483 @@
+/* ==========================================================================
+   ALL SHOPS PAGE — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+
+.all-shops-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #0a0a0f;
+    background-image:
+        radial-gradient(circle at 15% 0%, rgba(162, 155, 254, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 100%, rgba(108, 92, 231, 0.06) 0%, transparent 50%);
+    padding: 0 12px 30px !important;
+    box-sizing: border-box !important;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    animation: pageFadeIn 0.5s ease;
+}
+
+.all-shops-page * {
+    box-sizing: border-box;
+}
+
+@keyframes pageFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ============================================
+   ✅ GRID — FORCE OVERRIDE
+   ============================================ */
+
+.cdss-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+/* ✅ Force grid item on every child */
+.cdss-grid > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: unset !important;
+}
+
+/* ✅ Force .pc-card width */
+.cdss-grid .pc-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: unset !important;
+}
+
+/* ============================================
+   STAGGERED CARD ANIMATION
+   ============================================ */
+
+.cdss-grid > * {
+    animation: shopCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.cdss-grid > *:nth-child(1)  { animation-delay: 0.02s; }
+.cdss-grid > *:nth-child(2)  { animation-delay: 0.04s; }
+.cdss-grid > *:nth-child(3)  { animation-delay: 0.06s; }
+.cdss-grid > *:nth-child(4)  { animation-delay: 0.08s; }
+.cdss-grid > *:nth-child(5)  { animation-delay: 0.10s; }
+.cdss-grid > *:nth-child(6)  { animation-delay: 0.12s; }
+.cdss-grid > *:nth-child(7)  { animation-delay: 0.14s; }
+.cdss-grid > *:nth-child(8)  { animation-delay: 0.16s; }
+.cdss-grid > *:nth-child(9)  { animation-delay: 0.18s; }
+.cdss-grid > *:nth-child(10) { animation-delay: 0.20s; }
+.cdss-grid > *:nth-child(11) { animation-delay: 0.22s; }
+.cdss-grid > *:nth-child(12) { animation-delay: 0.24s; }
+
+@keyframes shopCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   SCROLL TO TOP BUTTON
+   ============================================ */
+
+.all-shops-scroll-top {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    pointer-events: none;
+
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    box-shadow:
+        0 8px 24px rgba(162, 155, 254, 0.5),
+        0 0 0 1px rgba(162, 155, 254, 0.3) inset,
+        0 0 24px rgba(108, 92, 231, 0.3);
+}
+
+.all-shops-scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    animation: scrollTopBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scrollTopBounceIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.7);
+    }
+    60% {
+        transform: translateY(-4px) scale(1.08);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.all-shops-scroll-top svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 2;
+}
+
+.all-shops-scroll-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.35),
+        transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.all-shops-scroll-top:hover::before {
+    left: 100%;
+}
+
+.all-shops-scroll-top:hover {
+    background: linear-gradient(135deg, #b8b2ff, #7c6ff0);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow:
+        0 16px 40px rgba(162, 155, 254, 0.6),
+        0 0 0 1px rgba(162, 155, 254, 0.5) inset,
+        0 0 32px rgba(108, 92, 231, 0.5);
+}
+
+.all-shops-scroll-top:hover svg {
+    transform: translateY(-2px) scale(1.15);
+}
+
+.all-shops-scroll-top:active {
+    transform: translateY(-1px) scale(0.95);
+}
+
+.all-shops-scroll-top:focus-visible {
+    outline: 3px solid rgba(162, 155, 254, 0.6);
+    outline-offset: 3px;
+}
+
+.all-shops-scroll-top::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(162, 155, 254, 0.5);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.all-shops-scroll-top:hover::after {
+    opacity: 1;
+    animation: scrollTopPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollTopPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50%      { transform: scale(1.2); opacity: 0; }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS — GRID
+   ============================================ */
+
+/* --- Extra Large Desktop (1600px+) --- */
+@media (min-width: 1600px) {
+    .all-shops-page {
+        padding: 0 16px 40px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: 16px !important;
+    }
+}
+
+/* --- Large Desktop (1440px - 1599px) --- */
+@media (min-width: 1440px) and (max-width: 1599px) {
+    .all-shops-page {
+        padding: 0 16px 40px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+    }
+
+    .all-shops-scroll-top {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        bottom: 110px;
+        right: 28px;
+        font-size: 1.4rem;
+    }
+
+    .all-shops-scroll-top svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .all-shops-page {
+        padding: 0 14px 36px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+}
+
+/* --- Small Desktop / Large Tablet (900px - 1023px) --- */
+@media (max-width: 1023px) and (min-width: 900px) {
+    .all-shops-page {
+        padding: 0 14px 32px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 11px !important;
+    }
+
+    .all-shops-scroll-top {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        bottom: 90px;
+        right: 18px;
+    }
+
+    .all-shops-scroll-top svg {
+        width: 19px;
+        height: 19px;
+    }
+}
+
+/* --- Tablet (768px - 899px) --- */
+@media (max-width: 899px) and (min-width: 768px) {
+    .all-shops-page {
+        padding: 0 14px 30px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+}
+
+/* --- Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .all-shops-page {
+        padding: 0 12px 28px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+
+    .all-shops-scroll-top {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        bottom: 85px;
+        right: 16px;
+        font-size: 1.2rem;
+    }
+
+    .all-shops-scroll-top svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .all-shops-page {
+        padding: 0 10px 24px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 9px !important;
+    }
+
+    .all-shops-scroll-top {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        bottom: 80px;
+        right: 14px;
+        font-size: 1.15rem;
+    }
+
+    .all-shops-scroll-top svg {
+        width: 17px;
+        height: 17px;
+    }
+}
+
+/* --- Extra Small Phone (below 480px) --- */
+@media (max-width: 479px) {
+    .all-shops-page {
+        padding: 0 8px 20px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+}
+
+/* --- Tiny Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .all-shops-page {
+        padding: 0 6px 18px !important;
+    }
+
+    .cdss-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 7px !important;
+    }
+
+    .all-shops-scroll-top {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        bottom: 76px;
+        right: 12px;
+        font-size: 1.05rem;
+    }
+
+    .all-shops-scroll-top svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .all-shops-page,
+    .cdss-grid > *,
+    .all-shops-scroll-top,
+    .all-shops-scroll-top::before,
+    .all-shops-scroll-top::after,
+    .all-shops-scroll-top svg {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .all-shops-scroll-top:hover,
+    .all-shops-scroll-top:hover svg {
+        transform: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .cdss-grid > * {
+        border: 1px solid ButtonText;
+    }
+
+    .all-shops-scroll-top {
+        border: 2px solid ButtonText;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .all-shops-page {
+        padding-left: max(12px, env(safe-area-inset-left)) !important;
+        padding-right: max(12px, env(safe-area-inset-right)) !important;
+        padding-bottom: max(30px, calc(30px + env(safe-area-inset-bottom))) !important;
+    }
+
+    .all-shops-scroll-top {
+        bottom: max(90px, calc(90px + env(safe-area-inset-bottom)));
+    }
+
+    @media (max-width: 767px) {
+        .all-shops-page {
+            padding-left: max(12px, env(safe-area-inset-left)) !important;
+            padding-right: max(12px, env(safe-area-inset-right)) !important;
+        }
+
+        .all-shops-scroll-top {
+            bottom: max(85px, calc(85px + env(safe-area-inset-bottom)));
+        }
+    }
+
+    @media (max-width: 479px) {
+        .all-shops-page {
+            padding-left: max(8px, env(safe-area-inset-left)) !important;
+            padding-right: max(8px, env(safe-area-inset-right)) !important;
+        }
+    }
+
+    @media (max-width: 379px) {
+        .all-shops-page {
+            padding-left: max(6px, env(safe-area-inset-left)) !important;
+            padding-right: max(6px, env(safe-area-inset-right)) !important;
+        }
+
+        .all-shops-scroll-top {
+            bottom: max(76px, calc(76px + env(safe-area-inset-bottom)));
+        }
+    }
+}

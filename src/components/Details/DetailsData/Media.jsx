@@ -3,11 +3,8 @@ import "../DetailsDataStyle/Media.css";
 import { API } from "../../../services/api";
 
 function Media({
-
     product_id,
-
     onViewAll
-
 }) {
 
     const [images, setImages] = useState([]);

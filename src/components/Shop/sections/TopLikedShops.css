@@ -1,0 +1,762 @@
+/* ==========================================================================
+   TOP LIKED SHOPS — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   SECTION CONTAINER
+   ============================================ */
+
+.shop-top-liked-section {
+    position: relative;
+    width: 100%;
+    margin: 0 0 24px 0;
+    padding: 4px 0 8px 0;
+    background: #0a0a0f;
+    animation: topLikedSectionEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+.shop-top-liked-section * {
+    box-sizing: border-box;
+}
+
+@keyframes topLikedSectionEnter {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   SECTION TITLE (likeheader)
+   ============================================ */
+
+.shop-top-liked-section .likeheader {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+    margin-bottom: 14px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    animation: titleFadeIn 0.6s ease 0.4s backwards;
+}
+
+@keyframes titleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.shop-top-liked-section .likeheader::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 18px;
+    background: linear-gradient(180deg, #ff2d55, #ff6b81);
+    border-radius: 4px;
+    box-shadow:
+        0 0 12px rgba(255, 45, 85, 0.6),
+        0 0 20px rgba(255, 107, 129, 0.4);
+    flex-shrink: 0;
+    animation: likeHeaderPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes likeHeaderPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 12px rgba(255, 45, 85, 0.6),
+            0 0 20px rgba(255, 107, 129, 0.4);
+    }
+
+    50% {
+        box-shadow:
+            0 0 20px rgba(255, 45, 85, 0.9),
+            0 0 32px rgba(255, 107, 129, 0.6);
+    }
+}
+
+/* ============================================
+   SCROLL CONTAINER
+   ============================================ */
+
+.shop-liked-scroll {
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 0 8px;
+}
+
+.shop-liked-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.shop-liked-grid {
+    display: flex;
+    gap: 12px;
+    padding: 4px 16px;
+}
+
+/* ============================================
+   LIKED CARD
+   ============================================ */
+
+.shop-liked-card {
+    flex: 0 0 155px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background: linear-gradient(145deg, #14141a 0%, #1c1c24 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    animation: likedCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+@keyframes likedCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animated gradient top border — pink */
+.shop-liked-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            #ff2d55 50%,
+            transparent 100%);
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: likedBorderSlide 3s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.shop-liked-card:hover::before {
+    opacity: 1;
+}
+
+@keyframes likedBorderSlide {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* Radial pink glow */
+.shop-liked-card::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -30%;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(255, 45, 85, 0.12) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.shop-liked-card:hover::after {
+    opacity: 1;
+}
+
+.shop-liked-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 45, 85, 0.4);
+    box-shadow:
+        0 12px 32px rgba(255, 45, 85, 0.2),
+        0 0 0 1px rgba(255, 45, 85, 0.1) inset;
+    background: linear-gradient(145deg, #1a1a22 0%, #2a2030 100%);
+}
+
+.shop-liked-card:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* ============================================
+   LIKED IMAGE
+   ============================================ */
+
+.shop-liked-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0a0a0f;
+    z-index: 1;
+}
+
+.shop-liked-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.shop-liked-card:hover .shop-liked-image img {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   LIKED COUNT BADGE
+   ============================================ */
+
+.shop-liked-count {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    background: rgba(10, 10, 15, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 45, 85, 0.4);
+    border-radius: 50px;
+    color: #ffffff;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.shop-liked-card:hover .shop-liked-count {
+    transform: scale(1.08);
+    border-color: rgba(255, 45, 85, 0.6);
+    box-shadow:
+        0 4px 14px rgba(255, 45, 85, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.shop-liked-icon {
+    color: #ff2d55;
+    font-size: 0.72rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 45, 85, 0.7));
+    animation: heartBeat 1.6s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes heartBeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.25);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.2);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   LIKED INFO
+   ============================================ */
+
+.shop-liked-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.shop-liked-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 120px;
+    max-width: 100%;
+    transition: color 0.3s ease;
+}
+
+.shop-liked-card:hover .shop-liked-name {
+    color: #ff6b81;
+}
+
+/* ============================================
+   LIKED PRICE
+   ============================================ */
+
+.shop-liked-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.shop-liked-discount {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    border-radius: 50px;
+    color: #ffffff;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow:
+        0 3px 10px rgba(0, 184, 148, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transition: all 0.3s ease;
+}
+
+.shop-liked-card:hover .shop-liked-discount {
+    transform: scale(1.05);
+    box-shadow:
+        0 4px 14px rgba(0, 184, 148, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+.shop-liked-price strong {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    text-shadow: 0 0 12px rgba(255, 45, 85, 0.3);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.shop-liked-card:hover .shop-liked-price strong {
+    color: #ff6b81;
+    text-shadow: 0 0 16px rgba(255, 45, 85, 0.6);
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .shop-top-liked-section {
+        margin-bottom: 32px;
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding: 0 24px;
+        margin-bottom: 18px;
+        font-size: 1.2rem;
+    }
+
+    .shop-top-liked-section .likeheader::before {
+        width: 3.5px;
+        height: 20px;
+    }
+
+    .shop-liked-grid {
+        gap: 16px;
+        padding: 4px 24px;
+    }
+
+    .shop-liked-card {
+        flex: 0 0 180px;
+        padding: 10px;
+        gap: 10px;
+        border-radius: 18px;
+    }
+
+    .shop-liked-image {
+        border-radius: 14px;
+    }
+
+    .shop-liked-count {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+        top: 8px;
+        left: 8px;
+    }
+
+    .shop-liked-icon {
+        font-size: 0.8rem;
+    }
+
+    .shop-liked-name {
+        font-size: 0.86rem;
+    }
+
+    .shop-liked-discount {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.98rem;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .shop-liked-grid {
+        gap: 14px;
+        padding: 4px 20px;
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding: 0 20px;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .shop-top-liked-section {
+        margin-bottom: 20px;
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding: 0 14px;
+        margin-bottom: 12px;
+        font-size: 1rem;
+    }
+
+    .shop-liked-grid {
+        gap: 11px;
+        padding: 4px 14px;
+    }
+
+    .shop-liked-card {
+        flex: 0 0 145px;
+        padding: 7px;
+        gap: 7px;
+        border-radius: 15px;
+    }
+
+    .shop-liked-image {
+        border-radius: 11px;
+    }
+
+    .shop-liked-count {
+        font-size: 0.6rem;
+        padding: 3px 8px;
+        top: 5px;
+        left: 5px;
+    }
+
+    .shop-liked-name {
+        font-size: 0.74rem;
+    }
+
+    .shop-liked-discount {
+        font-size: 0.58rem;
+        padding: 2px 7px;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.82rem;
+    }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .shop-top-liked-section {
+        margin-bottom: 18px;
+        padding: 3px 0 6px;
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding: 0 12px;
+        margin-bottom: 11px;
+        font-size: 0.94rem;
+    }
+
+    .shop-top-liked-section .likeheader::before {
+        width: 2.5px;
+        height: 16px;
+    }
+
+    .shop-liked-grid {
+        gap: 10px;
+        padding: 4px 12px;
+    }
+
+    .shop-liked-card {
+        flex: 0 0 140px;
+        padding: 7px;
+        gap: 7px;
+    }
+
+    .shop-liked-name {
+        font-size: 0.72rem;
+    }
+
+    .shop-liked-discount {
+        font-size: 0.56rem;
+        padding: 2px 6px;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.8rem;
+    }
+
+    .shop-liked-card:hover {
+        transform: translateY(-4px);
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .shop-top-liked-section {
+        margin-bottom: 16px;
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        font-size: 0.88rem;
+    }
+
+    .shop-liked-grid {
+        gap: 9px;
+        padding: 4px 10px;
+    }
+
+    .shop-liked-card {
+        flex: 0 0 132px;
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .shop-liked-count {
+        font-size: 0.56rem;
+        padding: 2px 7px;
+    }
+
+    .shop-liked-icon {
+        font-size: 0.64rem;
+    }
+
+    .shop-liked-name {
+        font-size: 0.68rem;
+    }
+
+    .shop-liked-discount {
+        font-size: 0.52rem;
+        padding: 2px 6px;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.76rem;
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .shop-top-liked-section {
+        margin-bottom: 14px;
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding: 0 8px;
+        margin-bottom: 9px;
+        font-size: 0.82rem;
+    }
+
+    .shop-top-liked-section .likeheader::before {
+        width: 2px;
+        height: 14px;
+    }
+
+    .shop-liked-grid {
+        gap: 8px;
+        padding: 3px 8px;
+    }
+
+    .shop-liked-card {
+        flex: 0 0 122px;
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .shop-liked-image {
+        border-radius: 10px;
+    }
+
+    .shop-liked-count {
+        font-size: 0.52rem;
+        padding: 2px 6px;
+    }
+
+    .shop-liked-icon {
+        font-size: 0.6rem;
+    }
+
+    .shop-liked-name {
+        font-size: 0.64rem;
+    }
+
+    .shop-liked-discount {
+        font-size: 0.48rem;
+        padding: 1px 5px;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.72rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .shop-top-liked-section,
+    .shop-top-liked-section .likeheader,
+    .shop-top-liked-section .likeheader::before,
+    .shop-liked-card,
+    .shop-liked-card::before,
+    .shop-liked-card::after,
+    .shop-liked-image img,
+    .shop-liked-count,
+    .shop-liked-icon,
+    .shop-liked-discount {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .shop-liked-card:hover,
+    .shop-liked-card:hover .shop-liked-image img,
+    .shop-liked-card:hover .shop-liked-count,
+    .shop-liked-card:hover .shop-liked-discount {
+        transform: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .shop-liked-card {
+        border: 2px solid ButtonText;
+    }
+
+    .shop-liked-count,
+    .shop-liked-discount {
+        border: 1px solid ButtonText;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .shop-liked-grid {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    .shop-top-liked-section .likeheader {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    @media (max-width: 767px) {
+        .shop-liked-grid {
+            padding-left: max(12px, env(safe-area-inset-left));
+            padding-right: max(12px, env(safe-area-inset-right));
+        }
+
+        .shop-top-liked-section .likeheader {
+            padding-left: max(12px, env(safe-area-inset-left));
+            padding-right: max(12px, env(safe-area-inset-right));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .shop-liked-grid {
+            padding-left: max(8px, env(safe-area-inset-left));
+            padding-right: max(8px, env(safe-area-inset-right));
+        }
+
+        .shop-top-liked-section .likeheader {
+            padding-left: max(8px, env(safe-area-inset-left));
+            padding-right: max(8px, env(safe-area-inset-right));
+        }
+    }
+}

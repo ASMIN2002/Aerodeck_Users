@@ -267,15 +267,9 @@ function ProductOrder({
                                         className="order-product-image"
                                     />
                                     <div className="product-info">
-
                                         <h4>
                                             {getName(product)}
                                         </h4>
-
-                                        <small>
-                                            Qty : {product.quantity}
-                                        </small>
-
                                         <div
                                             className="order-cart-box"
                                             onClick={(e) => {
@@ -299,7 +293,7 @@ function ProductOrder({
                                                 type="button"
                                                 className="order-cart-arrow"
                                             >
-                                                {openCartProduct === product.product_id ? "▲" : "▼"}
+                                                {openCartProduct === product.product_id ? "▼" : "▲"}
                                             </button>
                                         </div>
 
