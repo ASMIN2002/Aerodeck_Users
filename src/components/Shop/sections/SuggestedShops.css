@@ -456,6 +456,7 @@
     align-items: baseline;
     gap: 6px;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .shop-suggested-price del {

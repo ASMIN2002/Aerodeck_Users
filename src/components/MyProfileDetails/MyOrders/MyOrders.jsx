@@ -2,6 +2,7 @@ import "./MyOrders.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../services/api";
+import Loading from "../../../components/Loading/Loading";
 
 function MyOrders({
     setProfilePage,
@@ -58,14 +59,16 @@ function MyOrders({
             .toUpperCase();
     };
 
+    /* ✅ LOADING STATE */
     if (loading) {
-
         return (
-            <div className="myorders">
-                Loading...
-            </div>
+            <Loading
+                type="order"
+                count={5}
+                text="Loading Orders..."
+                manual={true}
+            />
         );
-
     }
 
     return (
@@ -91,7 +94,8 @@ function MyOrders({
             </div>
 
 
-            {orders.length === 0 && (
+            {/* ✅ Empty state — loading ke baad */}
+            {!loading && orders.length === 0 && (
 
                 <div className="orders-empty">
 
@@ -110,7 +114,7 @@ function MyOrders({
             )}
 
 
-            {[...orders]
+            {!loading && [...orders]
                 .sort(
                     (a, b) =>
                         new Date(b.created_at) -

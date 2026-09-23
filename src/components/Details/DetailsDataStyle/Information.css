@@ -1,8 +1,7 @@
-/* ============================================
-   INFORMATION SECTION - PREMIUM RESPONSIVE STYLES
-   ============================================ */
+/* ==========================================================================
+   INFORMATION — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
 
-/* --- Base Container --- */
 .dt-information {
     width: 100%;
     padding: 20px 0;
@@ -17,7 +16,7 @@
 /* --- Info Row --- */
 .dt-info-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;       /* ✅ Top-aligned for multi-line */
     justify-content: space-between;
     gap: 16px;
     padding: 14px 18px;
@@ -73,14 +72,18 @@
     transform: translateX(4px);
 }
 
-/* --- First Span (Label) --- */
+/* ============================================
+   FIRST SPAN (LABEL) — FIXED WIDTH
+   ============================================ */
+
 .dt-info-row > span:first-child {
+    flex: 0 0 auto;               /* ✅ Label shrink nahi hoga */
     font-size: 0.85rem;
     font-weight: 500;
     color: #6b6b80;
     letter-spacing: 0.01em;
-    line-height: 1.4;
-    flex-shrink: 0;
+    line-height: 1.5;
+    white-space: nowrap;
     transition: color 0.3s ease;
     position: relative;
     z-index: 1;
@@ -90,15 +93,20 @@
     color: #6c5ce7;
 }
 
-/* --- Second Span (Value) --- */
 .dt-info-row > span:last-child {
+    flex: 1;                       
+    min-width: 0;                 
+    max-width: 65%;               
     font-size: 0.88rem;
     font-weight: 600;
     color: #1a1a2e;
     letter-spacing: -0.01em;
-    line-height: 1.4;
+    line-height: 1.5;
     text-align: right;
-    word-break: break-word;
+    word-wrap: break-word;        
+    word-break: break-word;        
+    overflow-wrap: break-word;    
+    white-space: normal;
     transition: color 0.3s ease;
     position: relative;
     z-index: 1;
@@ -109,7 +117,10 @@
     flex-wrap: wrap;
 }
 
-/* --- Delivery Date Highlight --- */
+/* ============================================
+   DELIVERY DATE HIGHLIGHT
+   ============================================ */
+
 .delidate {
     display: inline-flex;
     align-items: center;
@@ -118,7 +129,10 @@
     justify-content: flex-end;
 }
 
-/* --- Open Box Badge --- */
+/* ============================================
+   OPEN BOX BADGE
+   ============================================ */
+
 .open-box {
     display: inline-flex;
     align-items: center;
@@ -145,7 +159,10 @@
     }
 }
 
-/* --- Return Policy Special Styling --- */
+/* ============================================
+   RETURN POLICY SPECIAL STYLING
+   ============================================ */
+
 .dt-info-row:last-child > span:last-child {
     color: #6c5ce7;
     font-weight: 700;
@@ -174,6 +191,7 @@
 
     .dt-info-row > span:last-child {
         font-size: 0.95rem;
+        max-width: 65%;
     }
 
     .open-box {
@@ -187,6 +205,10 @@
     .dt-info-row {
         padding: 15px 20px;
     }
+
+    .dt-info-row > span:last-child {
+        max-width: 65%;
+    }
 }
 
 /* --- Tablet (768px - 1023px) --- */
@@ -199,6 +221,7 @@
         padding: 14px 16px;
         border-radius: 11px;
         margin-bottom: 7px;
+        gap: 14px;
     }
 
     .dt-info-row > span:first-child {
@@ -207,6 +230,7 @@
 
     .dt-info-row > span:last-child {
         font-size: 0.86rem;
+        max-width: 62%;
     }
 
     .dt-info-row:hover {
@@ -234,6 +258,7 @@
 
     .dt-info-row > span:last-child {
         font-size: 0.83rem;
+        max-width: 62%;
     }
 
     .dt-info-row:hover {
@@ -265,6 +290,7 @@
 
     .dt-info-row > span:last-child {
         font-size: 0.8rem;
+        max-width: 60%;
     }
 
     .open-box {
@@ -280,31 +306,25 @@
     }
 
     .dt-info-row {
-        padding: 10px 10px;
-        border-radius: 8px;
-        margin-bottom: 5px;
-        gap: 8px;
-        flex-wrap: wrap;
+        padding: 10px 12px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+        gap: 10px;
+        flex-direction: row;         /* ✅ ROW layout — right pe hi rahega */
+        align-items: flex-start;
     }
 
     .dt-info-row > span:first-child {
-        font-size: 0.72rem;
+        font-size: 0.74rem;
+        flex-shrink: 0;
+        max-width: 40%;
     }
 
     .dt-info-row > span:last-child {
-        font-size: 0.75rem;
-        text-align: left;
-        justify-content: flex-start;
-    }
-
-    .dt-info-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-    }
-
-    .dt-info-row > span:last-child {
-        width: 100%;
+        font-size: 0.76rem;
+        max-width: 58%;
+        text-align: right;
+        justify-content: flex-end;
     }
 
     .open-box {

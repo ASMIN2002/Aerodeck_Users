@@ -1,6 +1,7 @@
 import "../DetailsDataStyle/Information.css";
 
 function Information({ productDetail }) {
+
     const getDeliveryDate = (days) => {
         if (!days) return "-";
         const date = new Date();
@@ -12,40 +13,68 @@ function Information({ productDetail }) {
         });
     };
 
+    /* ✅ Split function — "Label~Value" → ["Label", "Value"] */
+    const splitField = (field) => {
+        if (!field) return ["-", "-"];
+
+        const parts = String(field).split("~");
+
+        if (parts.length < 2) return [field.trim(), "-"];
+
+        return [
+            parts[0].trim(),
+            parts.slice(1).join("~").trim()
+        ];
+    };
+
+    /* ✅ Split all fields */
+    const [categoryLabel, categoryValue] = splitField(productDetail?.category);
+    const [materialLabel, materialValue] = splitField(productDetail?.material);
+    const [sizeLabel, sizeValue] = splitField(productDetail?.size);
+    const [printingLabel, printingValue] = splitField(productDetail?.printing);
+
     return (
 
         <div className="dt-information">
+
+            {/* ✅ Category */}
             <div className="dt-info-row">
-                <span>Category</span>
-                <span>{productDetail?.category || "-"}</span>
+                <span>{categoryLabel}</span>
+                <span>{categoryValue}</span>
             </div>
 
+            {/* ✅ Material */}
             <div className="dt-info-row">
-                <span>Material</span>
-                <span>{productDetail?.material || "-"}</span>
+                <span>{materialLabel}</span>
+                <span>{materialValue}</span>
             </div>
 
+            {/* ✅ Size */}
             <div className="dt-info-row">
-                <span>Size</span>
-                <span>{productDetail?.size || "-"}</span>
+                <span>{sizeLabel}</span>
+                <span>{sizeValue}</span>
             </div>
+
+            {/* ✅ Delivery On — same */}
             <div className="dt-info-row">
                 <span>Delivery On</span>
-
                 <span className="delidate">
                     {getDeliveryDate(productDetail?.delivery)}
 
                     {(productDetail?.return_days == null ||
-                        Number(productDetail.return_days) === 0) && (
+                        Number(productDetail?.return_days) === 0) && (
                             <span className="open-box"> (Open Box)</span>
                         )}
                 </span>
             </div>
+
+            {/* ✅ Printing / Status */}
             <div className="dt-info-row">
-                <span>Delivery Status</span>
-                <span>{productDetail?.printing || "-"}</span>
+                <span>{printingLabel}</span>
+                <span>{printingValue}</span>
             </div>
 
+            {/* ✅ Return Policy — same */}
             <div className="dt-info-row">
                 <span>Return Policy</span>
                 <span>
@@ -55,12 +84,8 @@ function Information({ productDetail }) {
                 </span>
             </div>
 
-
-
         </div>
-
     );
-
 }
 
 export default Information;

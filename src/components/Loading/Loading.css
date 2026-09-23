@@ -1,162 +1,363 @@
+/* ==========================================================================
+   LOADING — PREMIUM SKELETON STYLES
+   ========================================================================== */
+
 .hp-loading-overlay {
-
     position: fixed;
-
     inset: 0;
-
-    z-index: 999999;
-
+    z-index: 9999;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    background: rgba(255, 255, 255, 0.35);
-
+    padding: 20px;
+    background: rgba(10, 10, 15, 0.85);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: overlayFadeIn 0.3s ease;
+    overflow-y: auto;
+}
 
-    -webkit-backdrop-filter: blur(8px);
-
-    pointer-events: all;
-
-    animation: hpLoadingFadeIn 0.2s ease;
-
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 .hp-loading-card {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 18px;
-
-    padding: 25px 32px;
-
-    border-radius: 20px;
-
-    background: rgba(255, 255, 255, 0.72);
-
+    width: 100%;
+    max-width: 500px;
+    padding: 24px;
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 22px;
     box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.12);
-
-    border: 1px solid rgba(255, 255, 255, 0.8);
-
+        0 24px 64px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(162, 155, 254, 0.15) inset;
+    animation: cardPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
-.hp-loading-spinner {
+.hp-loading-card::-webkit-scrollbar {
+    display: none;
+}
 
+@keyframes cardPopIn {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   SHIMMER ANIMATION (Universal)
+   ============================================ */
+
+.hp-skeleton-box,
+.hp-skeleton-line {
     position: relative;
-
-    width: 48px;
-
-    height: 48px;
-
-    animation: hpLoadingRotate 1s linear infinite;
-
+    background: linear-gradient(145deg, #1e1e35 0%, #252545 100%);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.hp-loading-spinner span {
-
+.hp-skeleton-box::before,
+.hp-skeleton-line::before {
+    content: '';
     position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(162, 155, 254, 0.15) 50%,
+        transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: shimmer 1.6s infinite;
+}
 
-    width: 7px;
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
 
-    height: 7px;
+/* ============================================
+   COMMON ELEMENTS
+   ============================================ */
 
+.hp-skeleton-line {
+    height: 12px;
+    border-radius: 6px;
+}
+
+.hp-skeleton-line-lg { width: 100%; height: 16px; }
+.hp-skeleton-line-md { width: 75%; height: 12px; }
+.hp-skeleton-line-sm { width: 50%; height: 10px; }
+
+.hp-skeleton-box {
+    border-radius: 12px;
+}
+
+.hp-skeleton-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* ============================================
+   PRODUCT SKELETON
+   ============================================ */
+
+.hp-skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    width: 100%;
+}
+
+.hp-skeleton-product {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #2a2a35;
+    border-radius: 14px;
+}
+
+.hp-skeleton-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+}
+
+/* ============================================
+   DETAILS SKELETON
+   ============================================ */
+
+.hp-skeleton-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.hp-skeleton-details-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    margin-bottom: 8px;
+}
+
+/* ============================================
+   CART SKELETON
+   ============================================ */
+
+.hp-skeleton-cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.hp-skeleton-cart {
+    display: flex;
+    gap: 14px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #2a2a35;
+    border-radius: 14px;
+}
+
+.hp-skeleton-cart-image {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 12px;
+}
+
+.hp-skeleton-cart-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* ============================================
+   PROFILE SKELETON
+   ============================================ */
+
+.hp-skeleton-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 8px 0;
+}
+
+.hp-skeleton-avatar {
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-
-    background: #111;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform-origin: 0 0;
-
+    margin-bottom: 8px;
 }
 
-.hp-loading-spinner span:nth-child(1) {
-    transform: rotate(0deg) translate(19px);
-    opacity: 1;
+.hp-skeleton-profile .hp-skeleton-line {
+    width: 60%;
 }
 
-.hp-loading-spinner span:nth-child(2) {
-    transform: rotate(45deg) translate(19px);
-    opacity: 0.85;
+.hp-skeleton-profile .hp-skeleton-row {
+    width: 100%;
+    gap: 12px;
 }
 
-.hp-loading-spinner span:nth-child(3) {
-    transform: rotate(90deg) translate(19px);
-    opacity: 0.7;
+.hp-skeleton-profile .hp-skeleton-row .hp-skeleton-line {
+    flex: 1;
+    width: auto;
 }
 
-.hp-loading-spinner span:nth-child(4) {
-    transform: rotate(135deg) translate(19px);
-    opacity: 0.55;
+/* ============================================
+   ORDER SKELETON
+   ============================================ */
+
+.hp-skeleton-order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
 }
 
-.hp-loading-spinner span:nth-child(5) {
-    transform: rotate(180deg) translate(19px);
-    opacity: 0.4;
+.hp-skeleton-order {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #2a2a35;
+    border-radius: 14px;
 }
 
-.hp-loading-spinner span:nth-child(6) {
-    transform: rotate(225deg) translate(19px);
-    opacity: 0.3;
+/* ============================================
+   VIDEO SKELETON
+   ============================================ */
+
+.hp-skeleton-video {
+    width: 100%;
 }
 
-.hp-loading-spinner span:nth-child(7) {
-    transform: rotate(270deg) translate(19px);
-    opacity: 0.2;
+.hp-skeleton-video-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
 }
 
-.hp-loading-spinner span:nth-child(8) {
-    transform: rotate(315deg) translate(19px);
-    opacity: 0.1;
+/* ============================================
+   DEFAULT SKELETON
+   ============================================ */
+
+.hp-skeleton-default {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
 }
+
+/* ============================================
+   LOADING TEXT
+   ============================================ */
 
 .hp-loading-text {
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    letter-spacing: 0.3px;
-
-    color: #111;
-
+    margin-top: 18px;
     text-align: center;
-
-    white-space: nowrap;
-
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #a29bfe;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    animation: textPulse 1.5s ease-in-out infinite;
 }
 
-@keyframes hpLoadingRotate {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-
+@keyframes textPulse {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
 }
 
-@keyframes hpLoadingFadeIn {
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 
-    from {
-        opacity: 0;
+@media (max-width: 767px) {
+    .hp-loading-card {
+        padding: 20px;
+        border-radius: 18px;
+        max-width: 100%;
     }
 
-    to {
-        opacity: 1;
+    .hp-skeleton-grid {
+        gap: 10px;
     }
 
+    .hp-skeleton-product {
+        padding: 8px;
+        border-radius: 12px;
+    }
+
+    .hp-skeleton-cart-image {
+        width: 70px;
+        height: 70px;
+        min-width: 70px;
+    }
+
+    .hp-skeleton-avatar {
+        width: 78px;
+        height: 78px;
+    }
+
+    .hp-loading-text {
+        font-size: 0.8rem;
+        margin-top: 14px;
+    }
+}
+
+@media (max-width: 479px) {
+    .hp-loading-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .hp-skeleton-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .hp-skeleton-cart-image {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+    }
+
+    .hp-skeleton-avatar {
+        width: 68px;
+        height: 68px;
+    }
+
+    .hp-loading-text {
+        font-size: 0.76rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .hp-loading-overlay,
+    .hp-loading-card,
+    .hp-skeleton-box::before,
+    .hp-skeleton-line::before,
+    .hp-loading-text {
+        animation: none !important;
+        transition: none !important;
+    }
 }

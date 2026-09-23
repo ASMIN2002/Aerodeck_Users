@@ -54,7 +54,7 @@
 .medium-field label {
     display: block;
     margin-bottom: 9px;
-    color: black;
+    color: rgb(248, 246, 246);
     font-size: 8px;
     font-weight: 800;
     letter-spacing: 0.8px;
@@ -97,7 +97,7 @@
 .name-input-wrapper input:focus,
 .email-input-row input:focus,
 .otp-verification-row input:focus {
-    background: rgba(0, 242, 255, 0.045);
+    background: rgb(255, 255, 255);
 
     border-color: rgba(0, 242, 255, 0.65);
 
@@ -182,7 +182,7 @@
     justify-content: space-between;
     padding: 9px;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.14);
+    border: 1px solid rgb(254, 252, 252);
 }
 
 .mobile-number {
@@ -190,7 +190,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 12px;
     font-weight: 650;
 }

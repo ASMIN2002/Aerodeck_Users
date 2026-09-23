@@ -1,393 +1,364 @@
+/* ==========================================================================
+   VIEW PROFILE — PREMIUM DARK ANIMATED STYLES
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+
 .viewprofile {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 16px 16px 30px;
-    background: #ffffff;
+    position: relative;
+    width: 100%;
     min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    background: #0a0a0f;
+    background-image:
+        radial-gradient(circle at 15% 0%, rgba(162, 155, 254, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 85% 100%, rgba(108, 92, 231, 0.08) 0%, transparent 50%);
+    color: #ffffff;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 18px 80px;
+    box-sizing: border-box;
+    animation: pageFadeIn 0.5s ease;
 }
+
+.viewprofile * {
+    box-sizing: border-box;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   VIEW CARD (Main Container)
+   ============================================ */
 
 .view-card {
-
-    border-radius: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 22px 20px;
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border: 1.5px solid #2a2a35;
+    border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 0 5px black;
-    border: 1px solid #f0f0f0;
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    animation: cardEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ✅ Animated top gradient line */
+.view-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            #a29bfe 25%,
+            #6c5ce7 50%,
+            #a29bfe 75%,
+            transparent 100%);
+    background-size: 200% 100%;
+    animation: gradientSlide 4s linear infinite;
+}
+
+@keyframes gradientSlide {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* ✅ Rotating radial glow */
+.view-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(162, 155, 254, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    animation: cardGlowRotate 15s linear infinite;
+}
+
+@keyframes cardGlowRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   HEADER ROW (Back + User ID + Avatar)
+   ============================================ */
+
 .headback {
-    background: #0b10ff;
-    padding: 20px 20px 16px;
     position: relative;
-    border-bottom: 1px solid #f0f0f0;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    min-height: 100px;
+    gap: 14px;
+    z-index: 1;
 }
 
 .leftheadback {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
     flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
+/* --- Back Button --- */
 .view-back {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #1a1a1a;
-    font-size: 20px;
-    font-weight: 300;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    background: linear-gradient(145deg, #1c1c24, #232330);
+    border: 1.5px solid #2a2a35;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.view-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.view-back:hover::before {
+    opacity: 1;
+}
+
+.view-back:hover {
+    border-color: #a29bfe;
+    transform: translateX(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(162, 155, 254, 0.45);
 }
 
 .view-back:active {
-    transform: scale(0.92);
+    transform: translateX(-2px) scale(0.95);
 }
 
+.view-back:focus-visible {
+    outline: 2px solid #a29bfe;
+    outline-offset: 2px;
+}
+
+/* --- User ID Row --- */
 .view-row1 {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding-top: 4px;
 }
 
 .view-row1 span {
-    font-size: 12px;
-    font-weight: 500;
-    color: white;
+    font-size: 0.66rem;
+    font-weight: 800;
+    color: #a29bfe;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    line-height: 1.4;
 }
 
 .view-row1 p {
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #ffffff;
     margin: 0;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
 }
 
+/* ============================================
+   PROFILE IMAGE (Avatar)
+   ============================================ */
+
 .view-image-wrapperdet {
+    position: relative;
     flex-shrink: 0;
-    margin-left: auto;
+    z-index: 1;
 }
 
 .view-image {
-    width: 72px;
-    height: 72px;
+    width: 84px;
+    height: 84px;
     border-radius: 50%;
     object-fit: cover;
+    display: block;
     border: 3px solid #ffffff;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    background: #f8f9fa;
-    transition: transform 0.3s ease;
+    background: #f5f5fa;
+    box-shadow:
+        0 8px 24px rgba(162, 155, 254, 0.35),
+        0 0 0 1px rgba(162, 155, 254, 0.3);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.5s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+    animation: avatarPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
 }
 
+@keyframes avatarPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-15deg);
+    }
 
-/* ===== INFO SECTION ===== */
+    60% {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.view-image:hover {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow:
+        0 12px 32px rgba(162, 155, 254, 0.5),
+        0 0 0 2px rgba(162, 155, 254, 0.5);
+}
+
+/* ✅ Online dot indicator */
+.view-image-wrapperdet::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    border: 3px solid #14141a;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 184, 148, 0.5);
+    animation: onlinePulse 2s ease-in-out infinite;
+}
+
+@keyframes onlinePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 2px 8px rgba(0, 184, 148, 0.5);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 4px 16px rgba(0, 184, 148, 0.9);
+        transform: scale(1.1);
+    }
+}
+
+/* ============================================
+   INFO ROWS (Name, Mobile, Email, Joined)
+   ============================================ */
+
 .view-info {
-    padding: 16px 20px 20px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 8px;
+    z-index: 1;
 }
 
-/* ===== INFO ROWS ===== */
 .view-row {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    transition: background 0.15s ease;
-}
-
-.view-row span {
-    font-size: 14px;
-    font-weight: 500;
-    color: #888;
-    letter-spacing: 0.2px;
-    flex-shrink: 0;
-}
-
-.view-row p {
-    font-size: 13px;
-    font-weight: 500;
-    color: #1a1a1a;
-    margin: 0;
-    text-align: right;
-    word-break: break-word;
-    max-width: 65%;
-    transition: color 0.2s ease;
-}
-
-/* ===== EMAIL STATUS ===== */
-.email-set {
-    color: #1a1a1a !important;
-    font-weight: 500 !important;
-}
-
-.email-not-set {
-    color: #e53935 !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-    letter-spacing: 0.5px;
-}
-
-/* ===== EDIT BUTTON ===== */
-.view-actions {
-    padding: 20px 0 8px;
-}
-
-.edit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 14px 20px;
-    border: none;
+    gap: 16px;
+    padding: 14px 18px;
+    background: linear-gradient(145deg, #0f0f18 0%, #14141a 100%);
+    border: 1.5px solid #2a2a35;
     border-radius: 14px;
-    background: blue;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    letter-spacing: 0.3px;
-}
-
-.edit-btn::before {
-    content: '✏️';
-    font-size: 16px;
-}
-
-
-
-.edit-btn:active {
-    transform: scale(0.97);
-}
-
-/* ========================================
-   RESPONSIVE
-   ======================================== */
-
-/* ===== TABLET ===== */
-@media (min-width: 481px) and (max-width: 768px) {
-    .viewprofile {
-        max-width: 600px;
-        padding: 20px 24px 40px;
-    }
-
-    .headback {
-        padding: 24px 24px 20px;
-        min-height: 120px;
-    }
-
-    .view-image {
-        width: 88px;
-        height: 88px;
-    }
-
-    .view-row1 p {
-        font-size: 16px;
-    }
-
-
-    .view-row span {
-        font-size: 15px;
-    }
-
-    .view-row p {
-        font-size: 16px;
-    }
-}
-
-/* ===== DESKTOP ===== */
-@media (min-width: 769px) {
-    .viewprofile {
-        max-width: 480px;
-        padding: 24px 24px 48px;
-        margin: 16px auto;
-        min-height: auto;
-    }
-
-    .view-card {
-        border-radius: 24px;
-    }
-
-    .headback {
-        padding: 28px 24px 20px;
-        min-height: 130px;
-        border-radius: 24px 24px 0 0;
-    }
-
-    .view-image {
-        width: 96px;
-        height: 96px;
-    }
-
-    .view-row1 p {
-        font-size: 17px;
-    }
-
-    .view-info {
-        padding: 20px 24px 24px;
-    }
-
-    .view-row {
-        padding: 14px 8px;
-    }
-
-    .edit-btn {
-        padding: 16px 24px;
-        border-radius: 16px;
-        font-size: 16px;
-    }
-}
-
-/* ===== MOBILE SMALL ===== */
-@media (max-width: 380px) {
-    .viewprofile {
-        padding: 12px 12px 20px;
-    }
-
-    .headback {
-        padding: 16px 14px 14px;
-        min-height: 80px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-    }
-
-    .leftheadback {
-        gap: 10px;
-    }
-
-    .view-back {
-        width: 34px;
-        height: 34px;
-        font-size: 17px;
-    }
-
-    .view-row1 span {
-        font-size: 10px;
-    }
-
-    .view-row1 p {
-        font-size: 12px;
-    }
-
-    .view-image-wrapperdet {
-        margin-left: 0;
-        display: flex;
-        justify-content: center;
-    }
-
-    .view-image {
-        width: 70px;
-        height: 70px;
-    }
-
-    .view-info {
-        padding: 12px 14px 16px;
-    }
-
-    .view-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-    }
-
-    .view-row span {
-        font-size: 12px;
-    }
-
-    .view-row p {
-        font-size: 14px;
-        text-align: left;
-        max-width: 100%;
-    }
-
-    .edit-btn {
-        padding: 12px 16px;
-        font-size: 14px;
-        border-radius: 12px;
-    }
-}
-
-
-.view-card {
-    animation: fadeSlideIn 0.4s ease;
-}
-
-@keyframes fadeSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.view-image {
-    animation: imageReveal 0.5s ease 0.15s both;
-}
-
-@keyframes imageReveal {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.view-row {
-    animation: rowSlide 0.4s ease both;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    animation: rowFadeIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
 .view-row:nth-child(1) {
-    animation-delay: 0.05s;
+    animation-delay: 0.25s;
 }
 
 .view-row:nth-child(2) {
-    animation-delay: 0.1s;
+    animation-delay: 0.30s;
 }
 
 .view-row:nth-child(3) {
-    animation-delay: 0.15s;
+    animation-delay: 0.35s;
 }
 
 .view-row:nth-child(4) {
-    animation-delay: 0.2s;
+    animation-delay: 0.40s;
 }
 
-@keyframes rowSlide {
+@keyframes rowFadeIn {
     from {
         opacity: 0;
-        transform: translateX(-10px);
+        transform: translateX(-12px);
     }
 
     to {
@@ -396,28 +367,655 @@
     }
 }
 
-/* ========================================
-   ACCESSIBILITY & TOUCH
-   ======================================== */
-.view-back,
-.edit-btn {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+/* ✅ Left accent bar */
+.view-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
 }
 
-.view-back:focus-visible,
-.edit-btn:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: 2px;
+.view-row:hover::before {
+    transform: translateY(-50%) scaleY(1);
 }
+
+.view-row:hover {
+    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
+    border-color: rgba(162, 155, 254, 0.4);
+    transform: translateX(4px);
+    box-shadow: 0 8px 22px rgba(162, 155, 254, 0.15);
+}
+
+/* --- Label (left span) --- */
+.view-row>span {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #8888a0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.view-row:hover>span {
+    color: #a29bfe;
+}
+
+/* --- Value (right p) --- */
+.view-row>p {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    text-align: right;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+}
+
+/* Email states */
+.view-row>p.email-set {
+    color: #00cec9;
+}
+
+.view-row>p.email-not-set {
+    color: #ff6b81;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.view-actions {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    z-index: 1;
+    animation: actionsFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s backwards;
+}
+
+@keyframes actionsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.edit-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 54px;
+    padding: 0 32px;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    border: none;
+    border-radius: 16px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    white-space: nowrap;
+    box-shadow:
+        0 10px 32px rgba(162, 155, 254, 0.4),
+        0 0 0 1px rgba(162, 155, 254, 0.3) inset,
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ✅ Shine sweep */
+.edit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.35),
+            transparent);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.edit-btn:hover::before {
+    left: 100%;
+}
+
+/* ✅ Pulsing ring */
+.edit-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 20px;
+    border: 2px solid rgba(162, 155, 254, 0.5);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.edit-btn:hover::after {
+    opacity: 1;
+    animation: editBtnPulse 2s ease-in-out infinite;
+}
+
+@keyframes editBtnPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.03);
+        opacity: 0;
+    }
+}
+
+.edit-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #b8b2ff, #7c6ff0);
+    box-shadow:
+        0 16px 40px rgba(162, 155, 254, 0.55),
+        0 0 0 1px rgba(162, 155, 254, 0.5) inset;
+}
+
+.edit-btn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 8px 20px rgba(162, 155, 254, 0.4);
+}
+
+.edit-btn:focus-visible {
+    outline: 3px solid rgba(162, 155, 254, 0.6);
+    outline-offset: 3px;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Large Desktop (1440px+) --- */
+@media (min-width: 1440px) {
+    .viewprofile {
+        padding: 32px 40px 100px;
+        gap: 24px;
+    }
+
+    .view-card {
+        max-width: 620px;
+        padding: 28px 26px;
+        border-radius: 26px;
+        gap: 24px;
+    }
+
+    .view-back {
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
+        border-radius: 14px;
+    }
+
+    .view-row1 span {
+        font-size: 0.72rem;
+    }
+
+    .view-row1 p {
+        font-size: 0.95rem;
+    }
+
+    .view-image {
+        width: 100px;
+        height: 100px;
+        border-width: 4px;
+    }
+
+    .view-image-wrapperdet::after {
+        width: 18px;
+        height: 18px;
+        border-width: 3.5px;
+    }
+
+    .view-info {
+        gap: 10px;
+    }
+
+    .view-row {
+        padding: 16px 22px;
+        border-radius: 16px;
+    }
+
+    .view-row>span {
+        font-size: 0.86rem;
+    }
+
+    .view-row>p {
+        font-size: 0.95rem;
+    }
+
+    .view-actions {
+        max-width: 620px;
+    }
+
+    .edit-btn {
+        height: 60px;
+        font-size: 1rem;
+        border-radius: 18px;
+    }
+}
+
+/* --- Desktop (1024px - 1439px) --- */
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .view-card {
+        max-width: 560px;
+    }
+
+    .view-actions {
+        max-width: 560px;
+    }
+}
+
+/* --- Tablet (768px - 1023px) --- */
+@media (max-width: 1023px) {
+    .viewprofile {
+        padding: 20px 16px 80px;
+        gap: 18px;
+    }
+
+    .view-card {
+        max-width: 100%;
+        padding: 20px 18px;
+        border-radius: 20px;
+        gap: 18px;
+    }
+
+    .view-back {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .view-image {
+        width: 78px;
+        height: 78px;
+        border-width: 2.5px;
+    }
+
+    .view-image-wrapperdet::after {
+        width: 14px;
+        height: 14px;
+        border-width: 2.5px;
+    }
+
+    .view-row {
+        padding: 13px 16px;
+        border-radius: 13px;
+    }
+
+    .view-row>span {
+        font-size: 0.74rem;
+    }
+
+    .view-row>p {
+        font-size: 0.84rem;
+    }
+
+    .view-actions {
+        max-width: 100%;
+    }
+
+    .edit-btn {
+        height: 50px;
+        font-size: 0.88rem;
+        border-radius: 14px;
+    }
+}
+
+/* --- Small Tablet / Large Phone (600px - 767px) --- */
+@media (max-width: 767px) {
+    .viewprofile {
+        padding: 16px 14px 76px;
+        gap: 16px;
+    }
+
+    .view-card {
+        padding: 18px 16px;
+        border-radius: 18px;
+        gap: 16px;
+    }
+
+    .headback {
+        gap: 12px;
+    }
+
+    .leftheadback {
+        gap: 10px;
+    }
+
+    .view-back {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+
+    .view-row1 span {
+        font-size: 0.62rem;
+    }
+
+    .view-row1 p {
+        font-size: 0.82rem;
+    }
+
+    .view-image {
+        width: 72px;
+        height: 72px;
+        border-width: 2.5px;
+    }
+
+    .view-image-wrapperdet::after {
+        width: 13px;
+        height: 13px;
+        border-width: 2.5px;
+        bottom: 3px;
+        right: 3px;
+    }
+
+    .view-info {
+        gap: 7px;
+    }
+
+    .view-row {
+        padding: 12px 14px;
+        border-radius: 12px;
+        gap: 12px;
+    }
+
+    .view-row>span {
+        font-size: 0.7rem;
+    }
+
+    .view-row>p {
+        font-size: 0.82rem;
+    }
+
+    .edit-btn {
+        height: 48px;
+        font-size: 0.86rem;
+        border-radius: 13px;
+    }
+
+    .view-row:hover {
+        transform: translateX(3px);
+    }
+}
+
+/* --- Small Phone (480px - 599px) --- */
+@media (max-width: 599px) {
+    .viewprofile {
+        padding: 14px 12px 72px;
+        gap: 14px;
+    }
+
+    .view-card {
+        padding: 16px 14px;
+        border-radius: 16px;
+        gap: 14px;
+    }
+
+    .headback {
+        gap: 10px;
+    }
+
+    .leftheadback {
+        gap: 9px;
+    }
+
+    .view-back {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 1rem;
+    }
+
+    .view-row1 span {
+        font-size: 0.58rem;
+    }
+
+    .view-row1 p {
+        font-size: 0.78rem;
+    }
+
+    .view-image {
+        width: 66px;
+        height: 66px;
+        border-width: 2px;
+    }
+
+    .view-image-wrapperdet::after {
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+    }
+
+    .view-info {
+        gap: 6px;
+    }
+
+    .view-row {
+        padding: 11px 12px;
+        border-radius: 11px;
+        gap: 10px;
+    }
+
+    .view-row>span {
+        font-size: 0.66rem;
+    }
+
+    .view-row>p {
+        font-size: 0.78rem;
+    }
+
+    .edit-btn {
+        height: 46px;
+        font-size: 0.82rem;
+        border-radius: 12px;
+    }
+}
+
+/* --- Extra Small Phone (below 380px) --- */
+@media (max-width: 379px) {
+    .viewprofile {
+        padding: 12px 10px 68px;
+        gap: 12px;
+    }
+
+    .view-card {
+        padding: 14px 12px;
+        border-radius: 14px;
+        gap: 12px;
+    }
+
+    .headback {
+        gap: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .leftheadback {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .view-back {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 0.95rem;
+        border-radius: 9px;
+    }
+
+    .view-row1 span {
+        font-size: 0.54rem;
+    }
+
+    .view-row1 p {
+        font-size: 0.72rem;
+    }
+
+    .view-image-wrapperdet {
+        align-self: center;
+    }
+
+    .view-image {
+        width: 60px;
+        height: 60px;
+        border-width: 2px;
+    }
+
+    .view-image-wrapperdet::after {
+        width: 11px;
+        height: 11px;
+        border-width: 2px;
+    }
+
+    .view-info {
+        gap: 5px;
+    }
+
+    .view-row {
+        padding: 10px 11px;
+        border-radius: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .view-row>span {
+        font-size: 0.6rem;
+    }
+
+    .view-row>p {
+        font-size: 0.72rem;
+        text-align: left;
+        width: 100%;
+    }
+
+    .edit-btn {
+        height: 44px;
+        font-size: 0.78rem;
+        border-radius: 11px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & MOTION
+   ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .viewprofile,
+    .view-card,
+    .view-card::before,
+    .view-card::after,
+    .view-back,
+    .view-image,
+    .view-image-wrapperdet::after,
+    .view-row,
+    .edit-btn,
+    .edit-btn::before,
+    .edit-btn::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .view-back:hover,
+    .view-row:hover,
+    .edit-btn:hover {
+        transform: none;
+    }
+
+    .view-image:hover {
+        transform: none;
+    }
+}
+
+@media (forced-colors: active) {
+
+    .view-card,
+    .view-back,
+    .view-row,
+    .view-image,
+    .edit-btn {
+        border: 2px solid ButtonText;
+    }
+
+    .view-row>span,
+    .view-row>p,
+    .view-row1 span,
+    .view-row1 p {
+        color: ButtonText;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .viewprofile {
+        padding-left: max(18px, env(safe-area-inset-left));
+        padding-right: max(18px, env(safe-area-inset-right));
+        padding-bottom: max(80px, calc(80px + env(safe-area-inset-bottom)));
+    }
+
+    @media (max-width: 767px) {
+        .viewprofile {
+            padding-left: max(14px, env(safe-area-inset-left));
+            padding-right: max(14px, env(safe-area-inset-right));
+        }
+    }
+
+    @media (max-width: 379px) {
+        .viewprofile {
+            padding-left: max(10px, env(safe-area-inset-left));
+            padding-right: max(10px, env(safe-area-inset-right));
+        }
     }
 }

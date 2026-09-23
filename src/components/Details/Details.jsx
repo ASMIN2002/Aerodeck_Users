@@ -1,7 +1,7 @@
 import "./Details.css";
 import { API } from "../../services/api";
-import CertifiedCard from "../../assets/Certifiedcard.png";
 import DetailsData from "./DetailsData/DetailsData";
+import toast from "react-hot-toast";
 import { FaShareAlt } from "react-icons/fa";
 
 import {
@@ -69,12 +69,12 @@ function Details({
         details?.shop_image4 ||
         details?.premium_image4,
 
-        CertifiedCard
+        details?.productDetail?.vdo1,
 
     ].filter(Boolean);
 
     const [selectedImage, setSelectedImage] = useState(
-        images[0] || CertifiedCard
+        images[0] || ""
     );
     useEffect(() => {
 
@@ -84,8 +84,7 @@ function Details({
             details.product_image1 ||
             details.gift_image1 ||
             details.shop_image1 ||
-            details.premium_image1 ||
-            CertifiedCard
+            details.premium_image1
         );
 
         setCurrentIndex(0);
@@ -708,21 +707,22 @@ function Details({
             isProduct ? "products" : "cards"
         );
     };
-    const handleShare = async () => {
-        try {
-            if (navigator.share) {
-                await navigator.share({
-                    title: details?.product_name || "AERODECK",
-                    text: details?.product_name || "Check this out on AERODECK",
-                    url: window.location.href
-                });
-            } else {
-                await navigator.clipboard.writeText(window.location.href);
-                alert("Link copied!");
+    const handleShare = () => {
+
+        toast("Feature Coming Soon 🚀", {
+            duration: 2500,
+            style: {
+                background: "#1a1a2e",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "12px 18px",
+                fontSize: "14px",
+                fontWeight: 600,
+                border: "1.5px solid rgba(162, 155, 254, 0.4)",
+                boxShadow: "0 8px 24px rgba(162, 155, 254, 0.3)"
             }
-        } catch (error) {
-            console.log("Share cancelled");
-        }
+        });
+
     };
     return (
 
@@ -777,16 +777,23 @@ function Details({
 
                     }}
                 >
-
-                    <img
-                        src={selectedImage}
-                        alt={product?.product_name}
-                        onClick={() =>
-                            openFullscreenImage(selectedImage)
-                        }
-                        style={{ cursor: "zoom-in" }}
-                    />
-
+                    {selectedImage === details?.productDetail?.vdo1 ? (
+                        <video
+                            src={selectedImage}
+                            controls
+                            autoPlay
+                            muted
+                            playsInline
+                            className="dt-video-player"
+                        />
+                    ) : (
+                        <img
+                            src={selectedImage}
+                            alt={product?.product_name}
+                            onClick={() => openFullscreenImage(selectedImage)}
+                            style={{ cursor: "zoom-in" }}
+                        />
+                    )}
                 </div>
                 <div className="dt-overlay">
                     <button
@@ -854,29 +861,55 @@ function Details({
 
             <div className="dt-images">
 
-                {images.map((image, index) => (
+                {images.map((image, index) => {
 
-                    <img
+                    /* ✅ Check: kya yeh video hai? */
+                    const isVideo = image === details?.productDetail?.vdo1;
 
-                        key={index}
+                    return isVideo ? (
 
-                        src={image}
+                        /* ✅ VIDEO THUMBNAIL */
+                        <div
+                            key={index}
+                            onClick={() => {
+                                setSelectedImage(image);
+                                setCurrentIndex(index);
+                            }}
+                            className={
+                                selectedImage === image
+                                    ? "dt-thumb dt-thumb-video active"
+                                    : "dt-thumb dt-thumb-video"
+                            }
+                        >
+                            <video
+                                src={image}
+                                muted
+                                preload="metadata"
+                            />
+                            <span className="dt-thumb-play">▶</span>
+                        </div>
 
-                        alt={`Image ${index + 1}`}
+                    ) : (
 
-                        onClick={() => {
-                            setSelectedImage(image);
-                            setCurrentIndex(index);
-                        }}
-                        className={
-                            selectedImage === image
-                                ? "dt-thumb active"
-                                : "dt-thumb"
-                        }
+                        /* ✅ IMAGE THUMBNAIL */
+                        <img
+                            key={index}
+                            src={image}
+                            alt={`Image ${index + 1}`}
+                            onClick={() => {
+                                setSelectedImage(image);
+                                setCurrentIndex(index);
+                            }}
+                            className={
+                                selectedImage === image
+                                    ? "dt-thumb active"
+                                    : "dt-thumb"
+                            }
+                        />
 
-                    />
+                    );
 
-                ))}
+                })}
 
             </div>
             <DetailsData
@@ -895,12 +928,17 @@ function Details({
                 onViewAllMedia={onViewAllMedia}
             />
             {fullscreenImage && (
-
                 <div
                     className="dt-fullscreen-overlay"
                     onClick={closeFullscreenImage}
                 >
 
+                    {/* ✅ IMAGE COUNT — Top Left */}
+                    <div className="dt-fullscreen-count">
+                        {currentIndex + 1} / {images.length}
+                    </div>
+
+                    {/* ✅ CLOSE BUTTON */}
                     <button
                         className="dt-fullscreen-close"
                         onClick={(e) => {
@@ -911,6 +949,13 @@ function Details({
                         ✕
                     </button>
 
+                    {/* ✅ PINCH ZOOM INDICATOR */}
+                    {imageZoom > 1 && (
+                        <div className="dt-fullscreen-zoom-badge">
+                            {imageZoom.toFixed(1)}×
+                        </div>
+                    )}
+
                     <div
                         className="dt-fullscreen-image-box"
 
@@ -918,20 +963,23 @@ function Details({
 
                         onTouchStart={(e) => {
 
+                            /* ✅ Pinch start */
                             if (e.touches.length === 2) {
 
                                 const dx =
-                                    e.touches[0].clientX -
-                                    e.touches[1].clientX;
+                                    e.touches[0].clientX - e.touches[1].clientX;
 
                                 const dy =
-                                    e.touches[0].clientY -
-                                    e.touches[1].clientY;
+                                    e.touches[0].clientY - e.touches[1].clientY;
 
-                                const distance =
-                                    Math.sqrt(dx * dx + dy * dy);
+                                setPinchDistance(Math.sqrt(dx * dx + dy * dy));
 
-                                setPinchDistance(distance);
+                            }
+
+                            /* ✅ Single finger — swipe start */
+                            if (e.touches.length === 1) {
+
+                                setTouchStart(e.touches[0].clientX);
 
                             }
 
@@ -939,34 +987,25 @@ function Details({
 
                         onTouchMove={(e) => {
 
-                            if (
-                                e.touches.length === 2 &&
-                                pinchDistance
-                            ) {
+                            /* ✅ Pinch move — ZOOM */
+                            if (e.touches.length === 2 && pinchDistance) {
 
                                 const dx =
-                                    e.touches[0].clientX -
-                                    e.touches[1].clientX;
+                                    e.touches[0].clientX - e.touches[1].clientX;
 
                                 const dy =
-                                    e.touches[0].clientY -
-                                    e.touches[1].clientY;
+                                    e.touches[0].clientY - e.touches[1].clientY;
 
                                 const currentDistance =
                                     Math.sqrt(dx * dx + dy * dy);
 
-                                const scale =
-                                    currentDistance / pinchDistance;
+                                const scale = currentDistance / pinchDistance;
 
                                 setImageZoom((prev) => {
 
-                                    const newZoom =
-                                        prev * scale;
+                                    const newZoom = prev * scale;
 
-                                    return Math.min(
-                                        Math.max(newZoom, 1),
-                                        4
-                                    );
+                                    return Math.min(Math.max(newZoom, 1), 4);
 
                                 });
 
@@ -975,56 +1014,85 @@ function Details({
                             }
 
                         }}
-                        onTouchEnd={() => {
 
-                            const distance = touchStart - touchEnd;
+                        onTouchEnd={(e) => {
+
+                            /* ✅ Reset pinch */
+                            setPinchDistance(null);
+
+                            /* ✅ Agar zoom 1 se zyada hai toh swipe skip karo */
+                            if (imageZoom > 1.05) return;
+
+                            /* ✅ Swipe detection */
+                            const touchEndX = e.changedTouches[0].clientX;
+                            const distance = touchStart - touchEndX;
 
                             if (Math.abs(distance) < 50) return;
 
                             if (distance > 0) {
 
-                                if (currentIndex < images.length - 1) {
+                                /* LEFT swipe → Next (LOOP) */
+                                const nextIndex =
+                                    currentIndex === images.length - 1
+                                        ? 0
+                                        : currentIndex + 1;
 
-                                    const next = currentIndex + 1;
-
-                                    setCurrentIndex(next);
-
-                                    setSelectedImage(images[next]);
-
-                                    setFullscreenImage(images[next]);
-
-                                }
+                                setCurrentIndex(nextIndex);
+                                setSelectedImage(images[nextIndex]);
+                                setFullscreenImage(images[nextIndex]);
+                                setImageZoom(1);
 
                             } else {
 
-                                if (currentIndex > 0) {
+                                /* RIGHT swipe → Prev (LOOP) */
+                                const prevIndex =
+                                    currentIndex === 0
+                                        ? images.length - 1
+                                        : currentIndex - 1;
 
-                                    const prev = currentIndex - 1;
-
-                                    setCurrentIndex(prev);
-
-                                    setSelectedImage(images[prev]);
-
-                                    setFullscreenImage(images[prev]);
-
-                                }
+                                setCurrentIndex(prevIndex);
+                                setSelectedImage(images[prevIndex]);
+                                setFullscreenImage(images[prevIndex]);
+                                setImageZoom(1);
 
                             }
 
                         }}
+
                     >
 
-                        <img
-                            src={fullscreenImage}
-                            alt="Fullscreen Preview"
-                        />
+                        {fullscreenImage === details?.productDetail?.vdo1 ? (
+
+                            <video
+                                src={fullscreenImage}
+                                controls
+                                autoPlay
+                                playsInline
+                                style={{
+                                    transform: `scale(${imageZoom})`,
+                                    transformOrigin: "center center",
+                                    transition: pinchDistance ? "none" : "transform 0.2s ease-out"
+                                }}
+                            />
+
+                        ) : (
+
+                            <img
+                                src={fullscreenImage}
+                                alt="Fullscreen Preview"
+                                style={{
+                                    transform: `scale(${imageZoom})`,
+                                    transformOrigin: "center center",
+                                    transition: pinchDistance ? "none" : "transform 0.2s ease-out"
+                                }}
+                            />
+
+                        )}
 
                     </div>
 
                 </div>
-
             )}
-
         </div>
 
     );

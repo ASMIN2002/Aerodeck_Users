@@ -39,7 +39,7 @@ function DetailsData({
                 />
                 <Information productDetail={productDetail} />
 
-                <PreviewVideo video_link={productDetail?.video_link} />
+                <PreviewVideo productDetail={productDetail} />
                 <Reviews
                     onViewAll={onViewAll}
                     product_id={
