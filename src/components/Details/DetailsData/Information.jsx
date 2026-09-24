@@ -26,8 +26,6 @@ function Information({ productDetail }) {
             parts.slice(1).join("~").trim()
         ];
     };
-
-    /* ✅ Split all fields */
     const [categoryLabel, categoryValue] = splitField(productDetail?.category);
     const [materialLabel, materialValue] = splitField(productDetail?.material);
     const [sizeLabel, sizeValue] = splitField(productDetail?.size);
@@ -36,12 +34,6 @@ function Information({ productDetail }) {
     return (
 
         <div className="dt-information">
-
-            {/* ✅ Category */}
-            <div className="dt-info-row">
-                <span>{categoryLabel}</span>
-                <span>{categoryValue}</span>
-            </div>
 
             {/* ✅ Material */}
             <div className="dt-info-row">

@@ -127,11 +127,8 @@ function AllMedia({
                                 alt="Customer Media"
                                 className="all-media-image"
                                 onClick={() => {
-
                                     setSelectedIndex(index);
-
                                     setShowViewer(true);
-
                                 }}
                             />
 

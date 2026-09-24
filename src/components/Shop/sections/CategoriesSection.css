@@ -236,10 +236,10 @@
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
     user-select: none;
     -webkit-user-drag: none;
+    transform: scale(1.6);
 }
 
 .shop-category-box:hover .shop-category-icon img {
-    transform: scale(1.15) rotate(-6deg);
     filter: drop-shadow(0 4px 16px rgba(162, 155, 254, 0.6));
 }
 

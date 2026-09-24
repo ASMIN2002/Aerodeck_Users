@@ -433,7 +433,6 @@
 
 .view-row>p.email-not-set {
     color: #ff6b81;
-    font-style: italic;
     font-weight: 600;
     font-size: 0.82rem;
     letter-spacing: 0.04em;
@@ -933,7 +932,6 @@
 
     .view-row>p {
         font-size: 0.72rem;
-        text-align: left;
         width: 100%;
     }
 

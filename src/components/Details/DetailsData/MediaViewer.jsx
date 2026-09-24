@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { API } from "../../../services/api";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
 import "../DetailsDataStyle/MediaViewer.css";
+
 function MediaViewer({
 
     product_id,
@@ -80,159 +82,92 @@ function MediaViewer({
 
     if (!currentImage) return null;
 
-    return (
-
+    return createPortal(
         <div
-            className="media-viewer-overlay"
+            className="heepit-mv-overlay"
             onClick={onClose}
         >
-
-            <div
-                className="media-viewer"
-            >
+            <div className="heepit-mv-box">
 
                 <button
-                    className="viewer-close"
+                    className="heepit-mv-close"
                     onClick={(e) => {
-
                         e.stopPropagation();
-
                         onClose();
-
                     }}
                 >
-
                     <IoClose />
-
                 </button>
 
-                {
-                    selectedIndex > 0 && (
+                {selectedIndex > 0 && (
+                    <button
+                        className="heepit-mv-arrow heepit-mv-arrow-left"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (selectedIndex <= 0) return;
+                            setDirection("left");
+                            setSelectedIndex(selectedIndex - 1);
+                        }}
+                    >
+                        <IoChevronBack />
+                    </button>
+                )}
 
-                        <button className="viewer-arrow left"
-                            onClick={(e) => {
+                {selectedIndex < images.length - 1 && (
+                    <button
+                        className="heepit-mv-arrow heepit-mv-arrow-right"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (selectedIndex >= images.length - 1) return;
+                            setDirection("right");
+                            setSelectedIndex(selectedIndex + 1);
+                        }}
+                    >
+                        <IoChevronForward />
+                    </button>
+                )}
 
-                                e.stopPropagation();
-
-                                if (selectedIndex <= 0) return;
-
-                                setDirection("left");
-
-                                setSelectedIndex(selectedIndex - 1);
-
-                            }}
-                        >
-
-                            <IoChevronBack />
-
-                        </button>
-
-                    )
-
-                }
-                {
-                    selectedIndex < images.length - 1 && (
-
-                        <button className="viewer-arrow right"
-                            onClick={(e) => {
-
-                                e.stopPropagation();
-
-                                if (selectedIndex >= images.length - 1) return;
-
-                                setDirection("right");
-
-                                setSelectedIndex(selectedIndex + 1);
-
-                            }}
-                        >
-
-                            <IoChevronForward />
-
-                        </button>
-
-                    )
-
-                }
-
-                < div
-                    className="viewer-image-wrapper"
+                <div
+                    className="heepit-mv-image-wrapper"
                     onClick={(e) => e.stopPropagation()}
                 >
-
                     <img
                         src={currentImage.image_url}
                         alt=""
-                        className={`viewer-image ${direction}`}
+                        className={`heepit-mv-image ${direction}`}
                     />
-
                 </div>
 
                 <div
-                    className="viewer-bottom"
+                    className="heepit-mv-bottom"
                     onClick={(e) => e.stopPropagation()}
                 >
-
-                    <div className="viewer-user">
-
+                    <div className="heepit-mv-user">
                         <img
                             src={currentImage.profile_image}
                             alt=""
-                            className="viewer-profile"
+                            className="heepit-mv-profile"
                         />
-
-                        <div className="viewer-user-info">
-
-                            <h3>
-
-                                {currentImage.full_name}
-
-                            </h3>
-
-                            <span>
-
-                                {getTimeAgo(currentImage.upload_date)}
-
-                            </span>
-
+                        <div className="heepit-mv-user-info">
+                            <h3>{currentImage.full_name}</h3>
+                            <span>{getTimeAgo(currentImage.upload_date)}</span>
                         </div>
-
                     </div>
 
-                    <div className="viewer-rating">
-
-                        {
-
-                            [...Array(5)].map((_, index) => (
-
-                                index < currentImage.rating ? (
-
-                                    <FaStar
-                                        key={index}
-                                        className="star filled"
-                                    />
-
-                                ) : (
-
-                                    <FaRegStar
-                                        key={index}
-                                        className="star"
-                                    />
-
-                                )
-
-                            ))
-
-                        }
-
+                    <div className="heepit-mv-rating">
+                        {[...Array(5)].map((_, index) =>
+                            index < currentImage.rating ? (
+                                <FaStar key={index} className="heepit-mv-star heepit-mv-star-filled" />
+                            ) : (
+                                <FaRegStar key={index} className="heepit-mv-star" />
+                            )
+                        )}
                     </div>
-
                 </div>
 
             </div>
-
-        </div >
-
+        </div>,
+        document.body
     );
 
 }

@@ -47,7 +47,7 @@ function ViewProfile({
                             <span>User</span>
                             <p>
                                 {profile?.user_id
-                                    ? `#63717847${String(profile.user_id).padStart(4, "0")}USER`
+                                    ? `#63717847${String(profile.user_id).padStart(4, "0")}HEEPIT`
                                     : "NOT SET"}
                             </p>
                         </div>
