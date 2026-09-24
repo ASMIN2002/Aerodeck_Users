@@ -576,36 +576,28 @@ function Home({
                 : "profile"
         );
 
-        // ==========================================
-        // SELECTED PRODUCT
-        // ==========================================
+        setSelectedProduct((prev) => {
+            if (prev && prev.type === type) {
+                const prevId =
+                    prev.data?.product_id ||
+                    prev.data?.gift_id ||
+                    prev.data?.shop_id ||
+                    prev.data?.premium_id;
 
-        setSelectedProduct({
-
-            type,
-
-            data: {
-
-                product_id:
-                    type === "products"
-                        ? id
-                        : undefined,
-
-                gift_id:
-                    type === "gifts"
-                        ? id
-                        : undefined,
-
-                shop_id:
-                    type === "shop" || type === "cards"
-                        ? id
-                        : undefined,
-
-                premium_id:
-                    type === "premium"
-                        ? id
-                        : undefined
+                if (String(prevId) === String(id)) {
+                    return prev;
+                }
             }
+
+            return {
+                type,
+                data: {
+                    product_id: type === "products" ? id : undefined,
+                    gift_id: type === "gifts" ? id : undefined,
+                    shop_id: type === "shop" || type === "cards" ? id : undefined,
+                    premium_id: type === "premium" ? id : undefined
+                }
+            };
         });
         if (location.pathname.endsWith("/reviews")) {
             setDetailsPage("allreview");
@@ -945,6 +937,24 @@ function Home({
             window.removeEventListener("popstate", handleBackNavigation);
         };
     }, []);
+    useEffect(() => {
+        if (detailsPage !== "details") return;
+
+        const savedScroll = sessionStorage.getItem("detailsScrollPosition");
+        if (!savedScroll) return;
+
+        const homeContent = document.querySelector(".home-content");
+        if (!homeContent) return;
+
+        // Do rAF — DOM paint hone ka wait
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                homeContent.scrollTop = Number(savedScroll);
+                sessionStorage.removeItem("detailsScrollPosition");
+            });
+        });
+    }, [detailsPage]);
+
 
     return (
 
@@ -1071,86 +1081,66 @@ function Home({
             <div className="home-content">
 
                 {
-
                     isDetailsOpen && (
+                        <>
+                            <div style={{ display: detailsPage === "details" ? "block" : "none" }}>
+                                <Details
+                                    product={selectedProduct}
+                                    onBack={handleCloseDetails}
+                                    setCartCount={setCartCount}
+                                    onOpenDetails={handleOpenDetails}
+                                    onViewAll={() => {
+                                        setDetailsPage("allreview");
+                                        navigate(`${location.pathname}/reviews`);
+                                    }}
+                                    onViewAllMedia={() => {
+                                        setDetailsPage("allmedia");
+                                        navigate(`${location.pathname}/media`);
+                                    }}
+                                    onBuyNow={(buyNowItem, orderType) => {
+                                        setBuyNowFromDetails(true);
+                                        setOrderData({
+                                            items: [buyNowItem],
+                                            orderType: orderType
+                                        });
+                                        setIsDetailsOpen(false);
+                                        setSelectedProduct(null);
+                                        setSelectedBottomTab("Profile");
+                                        setProfilePage(
+                                            orderType === "products"
+                                                ? "productorder"
+                                                : "cardorder"
+                                        );
+                                    }}
+                                />
+                            </div>
 
-                        detailsPage === "details" ? (
+                            {detailsPage === "allreview" && (
+                                <AllReview
+                                    setDetailsPage={setDetailsPage}
+                                    product_id={
+                                        selectedProduct?.data?.product_id ||
+                                        selectedProduct?.data?.gift_id ||
+                                        selectedProduct?.data?.shop_id ||
+                                        selectedProduct?.data?.premium_id
+                                    }
+                                />
+                            )}
 
-                            <Details
-                                product={selectedProduct}
-
-                                onBack={handleCloseDetails}
-
-                                setCartCount={setCartCount}
-
-                                onOpenDetails={handleOpenDetails}
-
-                                onViewAll={() => {
-                                    setDetailsPage("allreview");
-
-                                    navigate(`${location.pathname}/reviews`);
-                                }}
-
-
-                                onViewAllMedia={() => {
-                                    setDetailsPage("allmedia");
-                                    navigate(`${location.pathname}/media`);
-                                }}
-                                onBuyNow={(buyNowItem, orderType) => {
-
-
-                                    setBuyNowFromDetails(true);
-
-                                    setOrderData({
-                                        items: [buyNowItem],
-                                        orderType: orderType
-                                    });
-
-                                    setIsDetailsOpen(false);
-
-                                    setSelectedProduct(null);
-
-                                    setSelectedBottomTab("Profile");
-
-                                    setProfilePage(
-                                        orderType === "products"
-                                            ? "productorder"
-                                            : "cardorder"
-                                    );
-
-                                }}
-                            />
-
-                        ) : detailsPage === "allreview" ? (
-
-                            <AllReview
-                                setDetailsPage={setDetailsPage}
-                                product_id={
-                                    selectedProduct?.data?.product_id ||
-                                    selectedProduct?.data?.gift_id ||
-                                    selectedProduct?.data?.shop_id ||
-                                    selectedProduct?.data?.premium_id
-                                }
-                            />
-
-                        ) : (
-
-                            <AllMedia
-                                onBack={() => setDetailsPage("details")}
-                                product_id={
-                                    selectedProduct?.data?.product_id ||
-                                    selectedProduct?.data?.gift_id ||
-                                    selectedProduct?.data?.shop_id ||
-                                    selectedProduct?.data?.premium_id
-                                }
-                            />
-
-                        )
-
+                            {detailsPage === "allmedia" && (
+                                <AllMedia
+                                    onBack={() => setDetailsPage("details")}
+                                    product_id={
+                                        selectedProduct?.data?.product_id ||
+                                        selectedProduct?.data?.gift_id ||
+                                        selectedProduct?.data?.shop_id ||
+                                        selectedProduct?.data?.premium_id
+                                    }
+                                />
+                            )}
+                        </>
                     )
-
                 }
-
 
                 {
                     !isDetailsOpen &&

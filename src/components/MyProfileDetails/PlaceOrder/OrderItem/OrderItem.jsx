@@ -123,19 +123,12 @@ function OrderItem({
                     body: JSON.stringify({
                         order_item_id: item.order_item_id,
                         product_id: item.product_id,
-
-                        user_id: order.user_id,
-
+                        user_id: item.user_id,
                         product_category: item.product_type,
-
                         quantity: item.quantity,
-
-                        order_date: order.created_at,
-
-                        payment_status: order.payment_status,
-
+                        order_date: item.order_date,
+                        payment_status: item.payment_status,
                         cancel_reason: cancelReason
-
                     })
 
                 }
@@ -189,7 +182,7 @@ function OrderItem({
                     <div className="numtot3">
                         <p>
                             <strong>Order :</strong>{" "}
-                            {new Date(order.created_at)
+                            {new Date(item.order_date)
                                 .toLocaleDateString("en-GB", {
                                     day: "2-digit",
                                     month: "short",
@@ -331,7 +324,7 @@ function OrderItem({
                 </button>
 
                 {
-                    !isReturned && (
+                    !isReturned && item.order_status !== "DELIVERED" && (
 
                         <div className="down-btn2">
 

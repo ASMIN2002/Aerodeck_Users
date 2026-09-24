@@ -130,7 +130,7 @@ function HelpSupport({
                             className="support-btn"
                             disabled
                         >
-                            No Return
+                           Open Box (No Return Available)
                         </button>
 
                     ) : canReturn ? (

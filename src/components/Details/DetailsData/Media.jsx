@@ -117,6 +117,8 @@ function Media({
                                         src={image.image_url}
                                         alt="Customer Media"
                                         className="dt-media-image"
+                                        onClick={onViewAll}
+                                        style={{ cursor: "pointer" }}
                                     />
 
                                     {

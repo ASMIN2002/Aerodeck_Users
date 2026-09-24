@@ -74,7 +74,7 @@ function Details({
     ].filter(Boolean);
 
     const [selectedImage, setSelectedImage] = useState(
-        images[0] || ""
+        images[0] || null
     );
     useEffect(() => {
 
@@ -90,14 +90,16 @@ function Details({
         setCurrentIndex(0);
 
     }, [details]);
-
     useEffect(() => {
-
         if (!product?.data) return;
-        document.querySelector(".home-content")?.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        const savedScroll = sessionStorage.getItem("detailsScrollPosition");
+
+        if (!savedScroll) {
+            document.querySelector(".home-content")?.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
         const fetchDetails = async () => {
 
             try {
@@ -159,7 +161,6 @@ function Details({
         fetchDetails();
 
     }, [product]);
-
     useEffect(() => {
 
         if (!details || !sessionToken) return;
@@ -724,6 +725,26 @@ function Details({
         });
 
     };
+    const handleViewAll = () => {
+        const homeContent = document.querySelector(".home-content");
+        if (homeContent) {
+            sessionStorage.setItem(
+                "detailsScrollPosition",
+                homeContent.scrollTop
+            );
+        }
+        onViewAll();
+    };
+    const handleViewAllMedia = () => {
+        const homeContent = document.querySelector(".home-content");
+        if (homeContent) {
+            sessionStorage.setItem(
+                "detailsScrollPosition",
+                homeContent.scrollTop
+            );
+        }
+        onViewAllMedia();
+    };
     return (
 
         <div className="dt-page">
@@ -924,8 +945,8 @@ function Details({
                 onDecreaseCart={handleDecreaseCart}
                 onBuyNow={handleBuyNow}
                 onOpenDetails={onOpenDetails}
-                onViewAll={onViewAll}
-                onViewAllMedia={onViewAllMedia}
+                onViewAll={handleViewAll}
+                onViewAllMedia={handleViewAllMedia}
             />
             {fullscreenImage && (
                 <div
