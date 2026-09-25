@@ -1,128 +1,244 @@
+/* ==========================================================================
+   CARDS SECTION — PREMIUM DARK ANIMATED
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   SECTION CONTAINER
+   ============================================ */
+
 .cds-section {
+    position: relative;
     width: 100%;
-    padding: 8px;
+    padding: 12px 0 90px 0;
+    background: #0a0a0f;
+    min-height: 100vh;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    animation: cdsSectionEnter 0.5s ease;
 }
+
+.cds-section * {
+    box-sizing: border-box;
+}
+
+@keyframes cdsSectionEnter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   GRID — 3 COLUMN
+   ============================================ */
 
 .cds-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 6px;
-    align-items: start;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 10px;
+    width: 100%;
 }
 
-.pc-card {
-    height: 80%;
+/* ============================================
+   CARD — BASE (ProductCard ke liye)
+   ============================================ */
+
+.cds-grid>* {
+    width: 100%;
+    min-width: 0;
+    animation: cdsCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
-.pc-body {
-    flex: 1;
+.cds-grid>*:nth-child(1) {
+    animation-delay: 0.02s;
 }
 
-@media(min-width:480px) {
-    .cds-section {
-        padding: 10px;
+.cds-grid>*:nth-child(2) {
+    animation-delay: 0.04s;
+}
+
+.cds-grid>*:nth-child(3) {
+    animation-delay: 0.06s;
+}
+
+.cds-grid>*:nth-child(4) {
+    animation-delay: 0.08s;
+}
+
+.cds-grid>*:nth-child(5) {
+    animation-delay: 0.10s;
+}
+
+.cds-grid>*:nth-child(6) {
+    animation-delay: 0.12s;
+}
+
+.cds-grid>*:nth-child(7) {
+    animation-delay: 0.14s;
+}
+
+.cds-grid>*:nth-child(8) {
+    animation-delay: 0.16s;
+}
+
+.cds-grid>*:nth-child(9) {
+    animation-delay: 0.18s;
+}
+
+.cds-grid>*:nth-child(10) {
+    animation-delay: 0.20s;
+}
+
+.cds-grid>*:nth-child(11) {
+    animation-delay: 0.22s;
+}
+
+.cds-grid>*:nth-child(12) {
+    animation-delay: 0.24s;
+}
+
+@keyframes cdsCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.94);
     }
 
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   GRID BACKGROUND GLOW — subtle animated
+   ============================================ */
+
+.cds-section::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(162, 155, 254, 0.06), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(108, 92, 231, 0.05), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(0, 206, 201, 0.03), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: cdsBgFloat 12s ease-in-out infinite;
+}
+
+@keyframes cdsBgFloat {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.05) rotate(2deg);
+    }
+}
+
+.cds-grid {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   RESPONSIVE — GRID COLUMNS
+   ============================================ */
+
+/* Tablet — 3 columns */
+@media (min-width: 600px) and (max-width: 1023px) {
     .cds-grid {
+        grid-template-columns: repeat(3, 1fr);
         gap: 12px;
+        padding: 0 14px;
     }
 }
 
-@media(min-width:768px) {
-    .cds-section {
-        padding: 14px;
-    }
-
+/* Desktop — 4 columns */
+@media (min-width: 1024px) {
     .cds-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-    }
-}
-
-@media(min-width:992px) {
-    .cds-section {
-        padding: 18px;
-    }
-
-    .cds-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 16px;
+        padding: 0 24px;
+        max-width: 1400px;
+        margin: 0 auto;
     }
 }
 
-@media(min-width:1200px) {
-    .cds-section {
-        padding: 20px 24px;
-    }
-
+/* Large desktop — 5 columns */
+@media (min-width: 1440px) {
     .cds-grid {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 18px;
-    }
-}
-
-@media(min-width:1440px) {
-    .cds-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-template-columns: repeat(5, 1fr);
         gap: 20px;
     }
 }
 
-
-.headallp {
-    position: relative;
-    overflow: hidden;
-
-    background: #111;
-    color: #fff;
-
-    padding: 14px 18px;
-    text-align: center;
-
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: auto;
-    border-radius: 10px;
-    width: 70%;
-    box-shadow:
-        0 0 10px rgba(255, 255, 255, 0.08),
-        inset 0 0 15px rgba(255, 255, 255, 0.04);
+/* Small phone — 2 columns */
+@media (max-width: 380px) {
+    .cds-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 0 8px;
+    }
 }
 
-/* Moving light */
-.headallp::before {
-    content: "";
-    position: absolute;
+/* ============================================
+   LOADING OVERLAY
+   ============================================ */
 
-    top: 0;
-    left: -60%;
-
-    width: 45%;
-    height: 100%;
-
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.18),
-            transparent);
-
-    transform: skewX(-20deg);
-
-    animation: premiumLight 3.5s ease-in-out infinite;
-
-    pointer-events: none;
+.cds-section .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@keyframes premiumLight {
-    0% {
-        left: -60%;
+/* ============================================
+   ACCESSIBILITY — reduced motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cds-section,
+    .cds-grid>*,
+    .cds-section::before {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .cds-grid {
+        padding-left: max(10px, env(safe-area-inset-left));
+        padding-right: max(10px, env(safe-area-inset-right));
     }
 
-    55% {
-        left: 120%;
-    }
-
-    100% {
-        left: 120%;
+    @media (min-width: 1024px) {
+        .cds-grid {
+            padding-left: max(24px, env(safe-area-inset-left));
+            padding-right: max(24px, env(safe-area-inset-right));
+        }
     }
 }

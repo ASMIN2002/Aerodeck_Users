@@ -1,0 +1,1226 @@
+/* ==========================================================================
+   HYPO REWARDS — PREMIUM AESTHETIC DARK
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+
+.my-rewards {
+    width: 100%;
+    min-height: 100vh;
+    background: #06060a;
+    padding: 0 0 120px 0;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Ambient background — gold glow */
+.my-rewards::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 15%, rgba(254, 202, 87, 0.10), transparent 40%),
+        radial-gradient(circle at 80% 85%, rgba(255, 159, 67, 0.08), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(254, 202, 87, 0.03), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: bgShift 12s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.08);
+        opacity: 0.85;
+    }
+}
+
+.my-rewards.demo-mode::before {
+    background:
+        radial-gradient(circle at 20% 15%, rgba(162, 155, 254, 0.12), transparent 40%),
+        radial-gradient(circle at 80% 85%, rgba(108, 92, 231, 0.10), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(253, 121, 168, 0.05), transparent 60%);
+}
+
+.my-rewards * {
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.my-rewards-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(6, 6, 10, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid #1a1a24;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.my-rewards-back {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.my-rewards-back:active {
+    background: rgba(254, 202, 87, 0.3);
+    transform: scale(0.9) rotate(-8deg);
+}
+
+.my-rewards-header h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43, #feca57);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleShine 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(254, 202, 87, 0.35));
+}
+
+@keyframes titleShine {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.my-rewards.demo-mode .my-rewards-header h2 {
+    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7, #a29bfe);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(162, 155, 254, 0.4));
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+
+.my-rewards-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 16px 16px 8px;
+}
+
+.my-rewards-tab {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #1f1f2a;
+    border-radius: 12px;
+    background: #0f0f16;
+    color: #6a6a7a;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.my-rewards-tab.active {
+    background: linear-gradient(135deg, #feca57, #ff9f43);
+    color: #1a1a2e;
+    border-color: transparent;
+    box-shadow:
+        0 8px 24px rgba(254, 202, 87, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    transform: translateY(-2px);
+}
+
+.my-rewards-tab.active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: tabShine 2.5s ease-in-out infinite;
+}
+
+@keyframes tabShine {
+    0% {
+        transform: translateX(-120%);
+    }
+
+    50% {
+        transform: translateX(120%);
+    }
+
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+.my-rewards.demo-mode .my-rewards-tab.active {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    color: #fff;
+    box-shadow:
+        0 8px 24px rgba(108, 92, 231, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+.rewards-section,
+.demo-section {
+    padding: 16px 16px 24px;
+    animation: sectionFade 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: visible;
+}
+
+@keyframes sectionFade {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   TOPBAR
+   ============================================ */
+
+.rewards-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 16px 20px;
+    background: linear-gradient(155deg, #14141e, #0c0c14);
+    border: 1px solid #23232e;
+    border-radius: 18px;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(254, 202, 87, 0.08) inset;
+    position: relative;
+    overflow: hidden;
+}
+
+.rewards-topbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(254, 202, 87, 0.06), transparent);
+    animation: topbarSweep 4s ease-in-out infinite;
+}
+
+@keyframes topbarSweep {
+
+    0%,
+    100% {
+        left: -100%;
+    }
+
+    50% {
+        left: 150%;
+    }
+}
+
+.rewards-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rewards-stat.right {
+    align-items: flex-end;
+    position: relative;
+}
+
+.rewards-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #6a6a7a;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.rewards-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.rewards-value.chances {
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.rewards-value.points {
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 16px rgba(254, 202, 87, 0.5));
+    animation: pointsShine 3s ease-in-out infinite;
+}
+
+@keyframes pointsShine {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.rewards-value.demo-points {
+    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 16px rgba(162, 155, 254, 0.55));
+    animation: pointsShine 3s ease-in-out infinite;
+}
+
+/* ============================================
+   HELP BUTTON
+   ============================================ */
+
+.rewards-help-btn {
+    position: absolute;
+    top: -4px;
+    right: -30px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid #feca57;
+    background: rgba(254, 202, 87, 0.15);
+    color: #feca57;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    transition: all 0.25s;
+    animation: helpBtnPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes helpBtnPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 rgba(254, 202, 87, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 12px rgba(254, 202, 87, 0.5);
+    }
+}
+
+.rewards-help-btn:active {
+    transform: scale(0.88);
+    background: rgba(254, 202, 87, 0.4);
+}
+
+/* ============================================
+   HELP TOOLTIP
+   ============================================ */
+
+.rewards-help-box {
+    position: absolute;
+    top: 140px;
+    right: 16px;
+    background: linear-gradient(155deg, #1c1c26, #0f0f16);
+    border: 1.5px solid #feca57;
+    border-radius: 16px;
+    padding: 16px 18px;
+    z-index: 100;
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.7),
+        0 0 32px rgba(254, 202, 87, 0.25),
+        0 0 0 1px rgba(254, 202, 87, 0.15) inset;
+    animation: helpFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 230px;
+}
+
+@keyframes helpFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.rewards-help-title {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #feca57;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(254, 202, 87, 0.25);
+    letter-spacing: 0.03em;
+}
+
+.rewards-help-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 0.78rem;
+    color: #c0c0d0;
+    font-weight: 600;
+}
+
+.help-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(254, 202, 87, 0.2), rgba(255, 159, 67, 0.15));
+    border: 1px solid rgba(254, 202, 87, 0.4);
+    color: #feca57;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   NOTICE
+   ============================================ */
+
+.scratch-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 14px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, rgba(254, 202, 87, 0.1), rgba(255, 159, 67, 0.06));
+    border: 1px dashed rgba(254, 202, 87, 0.45);
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #feca57;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    animation: noticePulse 2s ease-in-out infinite;
+}
+
+@keyframes noticePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 rgba(254, 202, 87, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(254, 202, 87, 0.25);
+    }
+}
+
+.notice-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #feca57;
+    box-shadow: 0 0 10px #feca57;
+    animation: dotBlink 1.2s ease-in-out infinite;
+}
+
+@keyframes dotBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
+}
+
+.demo-notice {
+    background: linear-gradient(135deg, rgba(162, 155, 254, 0.1), rgba(108, 92, 231, 0.06));
+    border-color: rgba(162, 155, 254, 0.45);
+    color: #a29bfe;
+}
+
+.demo-notice .notice-dot {
+    background: #a29bfe;
+    box-shadow: 0 0 10px #a29bfe;
+}
+
+/* ============================================
+   SCRATCH CARD
+   ============================================ */
+
+.scratch-card {
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(155deg, #14141e 0%, #0a0a12 100%);
+    border-radius: 22px;
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(254, 202, 87, 0.12) inset;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.scratch-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            #feca57, #ff9f43, #ffeaa7, #ffd93d, #feca57);
+    background-size: 400% 400%;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: goldBorderFlow 6s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes goldBorderFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.scratch-card.locked {
+    filter: grayscale(0.7) brightness(0.5);
+}
+
+.scratch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   SCRATCH BOX
+   ============================================ */
+
+.scratch-box {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.5),
+        0 0 0 1.5px rgba(255, 255, 255, 0.05) inset;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scratch-box:active:not(.revealed):not(.scratching) {
+    transform: scale(0.95);
+}
+
+/* NUMBER LAYER */
+.scratch-number-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    border-radius: 16px;
+    z-index: 1;
+}
+
+.demo-scratch .scratch-number-layer {
+    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
+}
+
+.scratch-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    text-align: center;
+    padding: 4px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    animation: numberPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.demo-scratch .scratch-number {
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes numberPop {
+    from {
+        transform: scale(0.5) rotate(-8deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* GREY SCRATCH COVER */
+.scratch-cover {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(155deg, #3a3a48 0%, #2a2a35 50%, #35353f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    overflow: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.scratch-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg,
+            transparent 0,
+            transparent 8px,
+            rgba(255, 255, 255, 0.045) 8px,
+            rgba(255, 255, 255, 0.045) 9px);
+}
+
+.scratch-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 60%);
+}
+
+.scratch-cover-text {
+    position: relative;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.18em;
+    transform: rotate(-8deg);
+    z-index: 1;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* SCRATCHING ANIMATION */
+.scratch-box.scratching .scratch-cover {
+    animation: autoScratch 0.9s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+}
+
+@keyframes autoScratch {
+    0% {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        opacity: 1;
+    }
+
+    30% {
+        clip-path: polygon(15% 0%, 100% 0%, 100% 75%, 45% 100%, 0% 65%, 0% 15%);
+        opacity: 0.85;
+    }
+
+    60% {
+        clip-path: polygon(35% 10%, 100% 0%, 80% 55%, 100% 85%, 65% 100%, 25% 78%, 5% 40%);
+        opacity: 0.5;
+    }
+
+    100% {
+        clip-path: polygon(45% 45%, 55% 40%, 50% 60%, 60% 70%, 45% 75%, 35% 55%, 40% 45%);
+        opacity: 0;
+    }
+}
+
+/* REVEALED */
+.scratch-box.revealed {
+    box-shadow:
+        0 0 24px rgba(254, 202, 87, 0.6),
+        0 0 0 1.5px rgba(255, 255, 255, 0.2) inset;
+}
+
+.demo-scratch .scratch-box.revealed {
+    box-shadow:
+        0 0 24px rgba(162, 155, 254, 0.6),
+        0 0 0 1.5px rgba(255, 255, 255, 0.2) inset;
+}
+
+.scratch-box.revealed .scratch-cover {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ============================================
+   LOCKED OVERLAY
+   ============================================ */
+
+.scratch-locked-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    border-radius: 22px;
+    animation: lockFade 0.5s ease;
+    pointer-events: none;
+}
+
+@keyframes lockFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.lock-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    pointer-events: auto;
+}
+
+.lock-icon {
+    font-size: 2.6rem;
+    animation: lockShake 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+}
+
+@keyframes lockShake {
+
+    0%,
+    90%,
+    100% {
+        transform: rotate(0);
+    }
+
+    92%,
+    96% {
+        transform: rotate(-10deg);
+    }
+
+    94%,
+    98% {
+        transform: rotate(10deg);
+    }
+}
+
+.lock-text {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.06em;
+}
+
+.lock-sub {
+    font-size: 0.72rem;
+    color: #8a8a9a;
+    font-weight: 600;
+}
+
+/* ============================================
+   DEMO
+   ============================================ */
+
+.demo-scratch::before {
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7, #fd79a8, #a29bfe);
+    background-size: 400% 400%;
+}
+
+/* ============================================
+   CONGRATS OVERLAY
+   ============================================ */
+
+.rewards-congrats {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: congratsFade 0.35s ease;
+    padding: 20px;
+}
+
+@keyframes congratsFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.rewards-congrats-inner {
+    background: linear-gradient(155deg, #1c1c26, #0a0a12);
+    border: 2px solid #feca57;
+    border-radius: 26px;
+    padding: 36px 30px;
+    text-align: center;
+    max-width: 300px;
+    width: 100%;
+    box-shadow:
+        0 24px 70px rgba(254, 202, 87, 0.45),
+        0 0 50px rgba(254, 202, 87, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    animation: congratsPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes congratsPop {
+    from {
+        transform: scale(0.5) rotate(-10deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.demo-congrats .rewards-congrats-inner {
+    border-color: #a29bfe;
+    box-shadow:
+        0 24px 70px rgba(162, 155, 254, 0.45),
+        0 0 50px rgba(162, 155, 254, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.rewards-congrats-emoji {
+    font-size: 4rem;
+    margin-bottom: 14px;
+    animation: congratsBounce 1s ease-in-out infinite;
+    filter: drop-shadow(0 8px 20px rgba(254, 202, 87, 0.5));
+}
+
+@keyframes congratsBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-12px) scale(1.08);
+    }
+}
+
+.rewards-congrats-inner h3 {
+    margin: 0 0 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.01em;
+}
+
+.rewards-congrats-points {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #feca57;
+    text-shadow: 0 0 32px rgba(254, 202, 87, 0.8);
+    animation: pointsPulse 1.5s ease-in-out infinite;
+    letter-spacing: -0.02em;
+}
+
+@keyframes pointsPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+.demo-congrats .rewards-congrats-points {
+    color: #a29bfe;
+    text-shadow: 0 0 32px rgba(162, 155, 254, 0.8);
+}
+
+/* ============================================
+   REWARDS TERMS
+   ============================================ */
+
+.rewards-terms {
+    margin-top: 20px;
+    padding: 18px 18px 16px;
+    background: linear-gradient(155deg, #14141e, #0a0a12);
+    border: 1px solid #23232e;
+    border-radius: 18px;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(254, 202, 87, 0.08) inset;
+    position: relative;
+    overflow: hidden;
+    animation: termsFadeIn 0.6s ease 0.3s backwards;
+}
+
+@keyframes termsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rewards-terms::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(254, 202, 87, 0.05),
+            transparent);
+    animation: termsSweep 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes termsSweep {
+
+    0%,
+    100% {
+        left: -100%;
+    }
+
+    50% {
+        left: 150%;
+    }
+}
+
+.rewards-terms-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #feca57;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(254, 202, 87, 0.15);
+}
+
+.terms-icon {
+    font-size: 1rem;
+    animation: termsIconPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes termsIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.rewards-terms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.terms-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.78rem;
+    color: #a0a0b0;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.terms-item strong {
+    color: #feca57;
+    font-weight: 800;
+}
+
+.terms-dot {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #feca57, #ff9f43);
+    box-shadow: 0 0 8px rgba(254, 202, 87, 0.6);
+    margin-top: 7px;
+}
+
+.rewards-terms-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(254, 202, 87, 0.2);
+    text-align: center;
+    font-size: 0.78rem;
+    color: #8a8a9a;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.rewards-terms-footer strong {
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+/* ============================================
+   DEMO NOTICE
+   ============================================ */
+
+.demo-notice-box {
+    margin-top: 20px;
+    padding: 18px 18px 16px;
+    background: linear-gradient(155deg, #14141e, #0a0a12);
+    border: 1px solid rgba(162, 155, 254, 0.25);
+    border-radius: 18px;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(162, 155, 254, 0.08) inset;
+    position: relative;
+    overflow: hidden;
+    animation: termsFadeIn 0.6s ease 0.3s backwards;
+}
+
+.demo-notice-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(162, 155, 254, 0.06),
+            transparent);
+    animation: termsSweep 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.demo-notice-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #a29bfe;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(162, 155, 254, 0.2);
+}
+
+.demo-notice-icon {
+    font-size: 1rem;
+    animation: termsIconPulse 2.5s ease-in-out infinite;
+}
+
+.demo-notice-box p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #a0a0b0;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.demo-notice-box p strong {
+    color: #a29bfe;
+    font-weight: 800;
+}
+
+.demo-notice-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(162, 155, 254, 0.25);
+    text-align: center;
+    font-size: 0.78rem;
+    color: #8a8a9a;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.demo-notice-footer strong {
+    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 380px) {
+    .scratch-grid {
+        gap: 9px;
+    }
+
+    .scratch-number {
+        font-size: 1.25rem;
+    }
+
+    .rewards-value {
+        font-size: 1.35rem;
+    }
+
+    .rewards-help-btn {
+        right: -26px;
+        width: 20px;
+        height: 20px;
+        font-size: 0.65rem;
+    }
+
+    .rewards-help-box {
+        right: 10px;
+        min-width: 200px;
+    }
+
+    .scratch-card {
+        padding: 16px;
+    }
+
+    .scratch-notice {
+        font-size: 0.65rem;
+        padding: 8px 12px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .my-rewards::before,
+    .my-rewards-header h2,
+    .my-rewards-tab.active::after,
+    .rewards-topbar::before,
+    .rewards-value.points,
+    .rewards-value.demo-points,
+    .rewards-help-btn,
+    .scratch-notice,
+    .notice-dot,
+    .scratch-card::before,
+    .scratch-cover,
+    .scratch-box.scratching .scratch-cover,
+    .scratch-number,
+    .lock-icon,
+    .rewards-congrats-inner,
+    .rewards-congrats-emoji,
+    .rewards-congrats-points,
+    .rewards-terms::before,
+    .terms-icon,
+    .demo-notice-box::before,
+    .demo-notice-icon {
+        animation: none !important;
+        transition: none !important;
+    }
+}

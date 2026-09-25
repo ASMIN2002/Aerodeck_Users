@@ -1,7 +1,8 @@
 import "./Address.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMapPin, FiCreditCard } from "react-icons/fi";
+import { FiMapPin } from "react-icons/fi";
+import { FaBolt } from "react-icons/fa";
 import { API } from "../../services/api";
 
 function Address({
@@ -11,11 +12,13 @@ function Address({
     const navigate = useNavigate();
 
     const [primaryAddress, setPrimaryAddress] = useState(null);
-    const [showComingSoon, setShowComingSoon] = useState(false);
+    const [hypoPoints, setHypoPoints] = useState(0);
 
     useEffect(() => {
         fetchPrimaryAddress();
+        fetchHypoPoints();
     }, []);
+
     const fetchPrimaryAddress = async () => {
 
         try {
@@ -45,8 +48,34 @@ function Address({
 
     };
 
+    const fetchHypoPoints = async () => {
+
+        try {
+
+            const sessionToken = localStorage.getItem("session_token");
+
+            const response = await fetch(
+                `${API}/api/user/rewards?session_token=${sessionToken}`
+            );
+            const data = await response.json();
+
+            if (data.success && data.data) {
+
+                setHypoPoints(data.data.hypo_points || 0);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    };
+
     return (
-        < div className="ad-container" >
+        <div className="ad-container">
+
             <button
                 className="ad-button"
                 type="button"
@@ -59,9 +88,7 @@ function Address({
                 <FiMapPin className="ad-icon" />
 
                 {primaryAddress ? (
-                    <span
-                        className="ad-text"
-                    >
+                    <span className="ad-text">
                         {primaryAddress.area_street},{" "}
                         {primaryAddress.house_flat},{" "}
                         {primaryAddress.city},{" "}
@@ -77,30 +104,23 @@ function Address({
 
                 <span className="ad-arrow">›</span>
             </button>
+
             <button
                 className="ad-money-box"
                 type="button"
                 onClick={() => {
-                    setShowComingSoon(true);
-
-                    setTimeout(() => {
-                        setShowComingSoon(false);
-                    }, 2500);
+                    setSelectedBottomTab("Profile");
+                    setProfilePage("rewards");
+                    navigate("/profile/rewards");
                 }}
             >
-                <FiCreditCard className="money-icon" />
-                <span className="money-amount">₹0</span>
+                <div className="money-icon-circle">
+                    <FaBolt className="money-icon" />
+                </div>
+                <span className="money-amount">{hypoPoints}</span>
             </button>
-            {
-                showComingSoon && (
-                    <div className="ad-coming-toast">
-                        HYPO Coming Soon
-                    </div>
-                )
-            }
-        </div >
 
-
+        </div>
     );
 
 }

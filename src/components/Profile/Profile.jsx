@@ -191,6 +191,16 @@ function Profile({
                     <span>My Orders</span>
                 </div>
 
+                <div
+                    className="profile-item"
+                    onClick={() =>
+                        handleProfileNavigation("rewards", "Loading My Rewards...")
+                    }
+                >
+                    <span>🎁</span>
+                    <span>My Rewards</span>
+                </div>
+
                 {/* <div
                     className="profile-item"
                     onClick={() =>

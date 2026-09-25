@@ -101,15 +101,6 @@ function ProductCard({
                         <div className="pc-final-price">
 
                             ₹{product.product_price}
-
-                            <span>
-
-                                {" "}
-
-                                / Piece
-
-                            </span>
-
                         </div>
 
                     </div>
@@ -267,9 +258,7 @@ function ProductCard({
             </div>
 
         </div>
-
     );
-
 }
 
 export default ProductCard;

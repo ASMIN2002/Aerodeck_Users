@@ -14,6 +14,10 @@ function MyOrders({
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [cancelOrderData, setCancelOrderData] = useState(null);
+    const [cancelReason, setCancelReason] = useState("");
+
     useEffect(() => {
 
         const fetchOrders = async () => {
@@ -59,7 +63,58 @@ function MyOrders({
             .toUpperCase();
     };
 
-    /* ✅ LOADING STATE */
+    /* ============================================
+       CANCEL WHOLE ORDER
+       ============================================ */
+    const handleCancelOrder = async () => {
+
+        if (!cancelReason) return;
+
+        try {
+
+            const sessionToken = localStorage.getItem("session_token");
+
+            const response = await fetch(
+                `${API}/api/user/orders/cancel-whole-order`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        session_token: sessionToken,
+                        order_id: cancelOrderData.order_id,
+                        cancel_reason: cancelReason
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                setShowCancelModal(false);
+                setCancelReason("");
+                setCancelOrderData(null);
+
+                /* reload orders */
+                const refreshRes = await fetch(
+                    `${API}/api/user/orders?session_token=${encodeURIComponent(sessionToken)}`
+                );
+                const refreshData = await refreshRes.json();
+
+                if (refreshData.success) {
+                    setOrders(refreshData.data);
+                }
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+        }
+
+    };
+
     if (loading) {
         return (
             <Loading
@@ -87,32 +142,19 @@ function MyOrders({
                     ←
                 </button>
 
-                <h2>
-                    MY ORDERS
-                </h2>
+                <h2>MY ORDERS</h2>
 
             </div>
 
-
-            {/* ✅ Empty state — loading ke baad */}
             {!loading && orders.length === 0 && (
 
                 <div className="orders-empty">
-
                     📦
-
-                    <h3>
-                        No Orders Yet
-                    </h3>
-
-                    <p>
-                        Your placed orders will appear here.
-                    </p>
-
+                    <h3>No Orders Yet</h3>
+                    <p>Your placed orders will appear here.</p>
                 </div>
 
             )}
-
 
             {!loading && [...orders]
                 .sort(
@@ -132,7 +174,6 @@ function MyOrders({
                             navigateWithLoading(
                                 () => {
                                     setProfilePage("order-details");
-
                                     navigate(
                                         `/profile/orders/order/${order.order_id}`
                                     );
@@ -147,42 +188,121 @@ function MyOrders({
                         <div className="order-info">
 
                             <div className="top-order-number">
-
-                                <h3>
-                                    Order #{order.order_number}
-                                </h3>
-
-                                <p>
-                                    Items : {order.total_items}
-                                </p>
-
+                                <h3>Order #{order.order_number}</h3>
+                                <p>Items : {order.total_items}</p>
                             </div>
 
-
                             <div className="myOrder-price-status">
-
-                                <h4>
-                                    ₹ {order.total_amount}
-                                </h4>
-
+                                <h4>₹ {order.total_amount}</h4>
                                 <span
                                     className={`order-status ${order.order_status.toLowerCase()}`}
                                 >
-                                    {formatOrderDate(order.created_at)}
+                                    {order.order_status === "REQUESTED"
+                                        ? "REQUESTED"
+                                        : order.order_status === "PROCESSING"
+                                            ? "PROCESSING"
+                                            : order.order_status === "CANCELLED"
+                                                ? "CANCELLED"
+                                                : order.order_status === "DELIVERED"
+                                                    ? "DELIVERED"
+                                                    : formatOrderDate(order.created_at)}
                                 </span>
-
                             </div>
 
                         </div>
 
+                        <div className="order-bottom-row">
 
-                        <div className="order-card-arrow">
-                            &gt;
+                            {order.order_status === "DELIVERED" && (
+                                <div className="order-delivered-badge">
+                                    <span className="delivered-icon">✓</span>
+                                    <span className="delivered-text">Delivered</span>
+                                </div>
+                            )}
+
+                            {order.is_hypo_used === 1 ? (
+                                <div className="order-hypo-badge">
+                                    <span className="hypo-badge-icon">⚡</span>
+                                    <span className="hypo-badge-text">HYPO USED</span>
+                                </div>
+                            ) : (
+                                <div className="order-hypo-hint">
+                                    <span className="hypo-hint-icon">⚡</span>
+                                    <span className="hypo-hint-text">HYPO NOT USED</span>
+                                </div>
+                            )}
+
+                            {order.order_status !== "DELIVERED" &&
+                                order.order_status !== "CANCELLED" &&
+                                order.order_status !== "REQUESTED" && (
+                                    <button
+                                        className="order-cancel-btn"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setCancelOrderData(order);
+                                            setShowCancelModal(true);
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                )}
+
+                            <div className="order-card-arrow">
+                                &gt;
+                            </div>
+
                         </div>
 
                     </div>
 
                 ))}
+
+            {/* ============================================
+                CANCEL MODAL
+               ============================================ */}
+            {showCancelModal && (
+                <div
+                    className="cancel-modal-overlay"
+                    onClick={() => setShowCancelModal(false)}
+                >
+                    <div
+                        className="cancel-modal-box"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3>Cancel Order?</h3>
+                        <p>All items in this order will be cancelled.</p>
+
+                        <select
+                            className="cancel-modal-select"
+                            value={cancelReason}
+                            onChange={(e) => setCancelReason(e.target.value)}
+                        >
+                            <option value="">Select a reason</option>
+                            <option value="Changed my mind">Changed my mind</option>
+                            <option value="Ordered by mistake">Ordered by mistake</option>
+                            <option value="Found a better option">Found a better option</option>
+                            <option value="Product no longer required">Product no longer required</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                        <div className="cancel-modal-actions">
+                            <button
+                                className="cancel-modal-cancel"
+                                onClick={() => setShowCancelModal(false)}
+                            >
+                                No, Keep
+                            </button>
+                            <button
+                                className="cancel-modal-confirm"
+                                disabled={!cancelReason}
+                                onClick={handleCancelOrder}
+                            >
+                                Yes, Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </div>
 

@@ -334,3 +334,139 @@
         border: 1px solid ButtonText;
     }
 }
+
+/* ============================================
+   VIDEO CONTAINER — POSITION
+   ============================================ */
+
+.dt-reel-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.dt-reel-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+    cursor: pointer;
+}
+
+/* ============================================
+   PLAY BUTTON — BADA (jab paused ho)
+   ============================================ */
+
+.dt-reel-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dt-reel-play-btn:active {
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(0, 0, 0, 0.75);
+}
+
+/* ============================================
+   PAUSE BUTTON — CHOTA (top-right corner)
+   ============================================ */
+
+.dt-reel-pause-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dt-reel-pause-btn:active {
+    transform: scale(0.9);
+    background: rgba(0, 0, 0, 0.75);
+}
+
+
+.dt-reel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 20px;
+    /* touch area bada */
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    cursor: pointer;
+    z-index: 10;
+    touch-action: none;
+}
+
+.dt-reel-progress::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.dt-reel-progress-fill {
+    position: absolute;
+    left: 8px;
+    height: 3px;
+    background: linear-gradient(90deg, #a29bfe, #6c5ce7);
+    border-radius: 4px;
+    pointer-events: none;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(162, 155, 254, 0.6);
+}
+
+.dt-reel-progress-thumb {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translateX(-50%);
+    box-shadow:
+        0 0 0 3px rgba(162, 155, 254, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: left 0.1s linear;
+    z-index: 2;
+}
+
+.dt-reel-progress-thumb::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+}

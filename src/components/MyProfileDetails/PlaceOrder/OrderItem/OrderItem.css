@@ -125,7 +125,9 @@
     flex-direction: column;
     gap: 8px;
 }
-
+.per-piece-rate{
+    font-size: 12px;
+}
 /* --- Row 1: Number + MRP --- */
 .numtot1 {
     display: flex;

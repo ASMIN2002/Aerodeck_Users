@@ -34,6 +34,7 @@ import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../components/MyProfileDetails/Terms/Terms";
 import Address from "../../components/Address/Address";
+import Rewards from "../../components/MyProfileDetails/Rewards/Rewards";
 import TOPHEADER from "../../components/Header/TOPHEADER";
 
 function Home({
@@ -1345,6 +1346,15 @@ function Home({
                         selectedOrder={selectedOrder}
                         setSelectedOrder={setSelectedOrder}
                         navigateWithLoading={navigateWithLoading}
+                    />
+                }
+                {
+                    !isDetailsOpen &&
+                    selectedBottomTab === "Profile" &&
+                    profilePage === "rewards" &&
+
+                    <Rewards
+                        setProfilePage={setProfilePage}
                     />
                 }
                 {!isDetailsOpen &&

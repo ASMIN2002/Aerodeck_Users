@@ -1,3 +1,4 @@
+import "./ShopCard.css";
 import { FiHeart, FiBookmark } from "react-icons/fi";
 import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
@@ -29,144 +30,104 @@ function ProductShop({
 }) {
 
     const handleShopClick = () => {
-
         onOpenDetails();
-
     };
+
     return (
 
         <div
-            className="pc-card"
+            className="heepit-shop-card"
             onClick={handleShopClick}
         >
 
-            <div className="pc-top">
+            <div className="heepit-shop-top">
 
                 <span
                     className={
                         product.shop_status
-                            ? "pc-status available"
-                            : "pc-status unavailable"
+                            ? "heepit-shop-status available"
+                            : "heepit-shop-status unavailable"
                     }
                 >
-
                     {
                         product.shop_status
-
                             ? "Available"
-
                             : "Out of Stock"
-
                     }
-
                 </span>
+
                 <button
-
-                    className={`pc-like ${isLiked ? "active" : ""}`}
-
+                    className={`heepit-shop-like ${isLiked ? "active" : ""}`}
                     onClick={(e) => {
-
                         e.stopPropagation();
-
                         onLike(product.shop_id);
-
                     }}
-
                 >
-
                     {
-
                         isLiked
-
                             ? <BsHeartFill />
-
                             : <FiHeart />
-
                     }
-
-                    <span className="pc-like-count">
-
+                    <span className="heepit-shop-like-count">
                         {product.shop_total_likes}
-
                     </span>
-
                 </button>
 
             </div>
 
-            <div className="pc-image-box">
-
-                <div className="pc-image-grid">
-                    <img src={product.shop_image1} alt="" className="pc-image" />
+            <div className="heepit-shop-image-box">
+                <div className="heepit-shop-image-grid">
+                    <img src={product.shop_image1} alt="" className="heepit-shop-image" />
                 </div>
-
             </div>
 
-            <div className="pc-body">
+            <div className="heepit-shop-body">
 
                 {
                     product.shop_highlight_text && (
-                        <div className="pc-highlight">
+                        <div className="heepit-shop-highlight">
                             {product.shop_highlight_text}
                         </div>
                     )
                 }
-                <div className="pc-rating-row">
+
+                <div className="heepit-shop-rating-row">
 
                     <span>
-
                         ⭐ {product.shop_rating || "4.3"}
-
                     </span>
 
-                    <div className="pc-final-price">
-
+                    <div className="heepit-shop-final-price">
                         ₹{product.shop_price}
-
-                        <span>
-
-                            {" "}
-
-                            / Piece
-
-                        </span>
-
                     </div>
 
                 </div>
 
-
-                <h3 className="pc-name">
-
+                <h3 className="heepit-shop-name">
                     {product.shop_name}
-
                 </h3>
 
+                <div className="heepit-shop-price-row">
 
-                <div className="pc-price-row">
-
-                    <span className="pc-demo-price">
-
+                    <span className="heepit-shop-demo-price">
                         ₹{product.shop_demo_price}
-
                     </span>
 
-                    <span className="pc-discount">
-
+                    <span className="heepit-shop-discount">
                         {product.shop_discount_percentage}% OFF
-
                     </span>
 
                 </div>
+
             </div>
 
-            <div className="pc-footer">
+            <div className="heepit-shop-footer">
 
                 {
                     !product.shop_status ? (
 
                         <button
-                            className="pc-cart-btn"
+                            className="heepit-shop-cart-btn"
                             disabled
                         >
                             Out Of Stock
@@ -175,59 +136,38 @@ function ProductShop({
                     ) : !isAddedToCart ? (
 
                         <button
-
-                            className="pc-cart-btn"
-
+                            className="heepit-shop-cart-btn"
                             onClick={(e) => {
-
                                 e.stopPropagation();
-
                                 onAddToCart(product.shop_id);
-
                             }}
-
                         >
-
                             <FiShoppingCart />
-
                             <span>Add To Cart</span>
-
                         </button>
 
                     ) : (
 
                         <div
-                            className="pc-qty-box"
+                            className="heepit-shop-qty-box"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <button
-
-                                className="pc-qty-btn"
-
+                                className="heepit-shop-qty-btn"
                                 onClick={() => onDecreaseQuantity(product.shop_id)}
-
                             >
-
                                 -
-
                             </button>
 
-                            <span className="pc-qty">
-
+                            <span className="heepit-shop-qty">
                                 {cartQuantity}
-
                             </span>
 
                             <button
-
-                                className="pc-qty-btn"
-
+                                className="heepit-shop-qty-btn"
                                 onClick={() => onIncreaseQuantity(product.shop_id)}
-
                             >
-
                                 +
-
                             </button>
 
                         </div>
@@ -236,35 +176,20 @@ function ProductShop({
                 }
 
                 <button
-
-                    className={`pc-save ${isSaved ? "active" : ""}`}
-
+                    className={`heepit-shop-save ${isSaved ? "active" : ""}`}
                     onClick={(e) => {
-
                         e.stopPropagation();
-
                         onSave(product.shop_id);
-
                     }}
-
                 >
-
                     {
-
                         isSaved
-
                             ? <BsBookmarkFill />
-
                             : <FiBookmark />
-
                     }
-
-                    <span className="pc-save-count">
-
+                    <span className="heepit-shop-save-count">
                         {product.shop_total_saves}
-
                     </span>
-
                 </button>
 
             </div>

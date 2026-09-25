@@ -191,73 +191,7 @@
     color: #ff2e93;
 }
 
-/* ============================================
-   MONEY BOX (₹0)
-   ============================================ */
-.ad-money-box {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 0 18px;
-    min-width: 92px;
-    border: none;
-    border-radius: var(--ad-radius);
-    cursor: pointer;
-    color: #ffffff;
-    background: linear-gradient(135deg, #ff2e93, #6a11cb, #2575fc);
-    background-size: 200% 200%;
-    animation: ad-money-flow 4s ease infinite;
-    box-shadow: 0 6px 18px rgba(255, 46, 147, 0.35);
-    transition: var(--ad-transition);
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-}
 
-@keyframes ad-money-flow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.ad-money-box:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow:
-        0 10px 26px rgba(255, 46, 147, 0.5),
-        0 0 24px rgba(254, 202, 87, 0.5);
-}
-
-.ad-money-box:active {
-    transform: translateY(-1px) scale(0.98);
-}
-
-.money-icon {
-    font-size: 1.25rem;
-    color: #feca57;
-    filter: drop-shadow(0 0 6px rgba(254, 202, 87, 0.8));
-    animation: ad-coin-spin 3s ease-in-out infinite;
-}
-
-@keyframes ad-coin-spin {
-
-    0%,
-    100% {
-        transform: rotateY(0deg);
-    }
-
-    50% {
-        transform: rotateY(180deg);
-    }
-}
 
 .money-amount {
     font-size: 1rem;
@@ -347,10 +281,7 @@
         padding: 7px;
     }
 
-    .ad-money-box {
-        min-width: 84px;
-        padding: 0 14px;
-    }
+
 }
 
 /* Large phones */
@@ -410,12 +341,7 @@
         font-size: 1.15rem;
     }
 
-    .ad-money-box {
-        min-width: 66px;
-        padding: 0 10px;
-        gap: 4px;
-        border-radius: 14px;
-    }
+
 
     .money-amount {
         font-size: 0.82rem;
@@ -442,10 +368,7 @@
         line-clamp: 2;
     }
 
-    .ad-money-box {
-        min-width: 56px;
-        padding: 0 8px;
-    }
+
 
     .money-amount {
         font-size: 0.76rem;
@@ -459,10 +382,108 @@
     .ad-button::before,
     .ad-icon,
     .ad-no-address,
-    .ad-money-box,
     .money-icon,
     .ad-coming-toast {
         animation: none !important;
         transition: none !important;
     }
+}
+
+.ad-money-box {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 60px;
+    border: 2px solid transparent;
+    border-radius: var(--ad-radius);
+    background:
+        linear-gradient(#000000, #000000) padding-box,
+        linear-gradient(135deg, #feca57, #ff6b6b, #ff2e93, #feca57) border-box;
+    background-size: 100% 100%, 300% 300%;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--ad-transition);
+    box-shadow:
+        0 4px 16px rgba(254, 202, 87, 0.25),
+        0 0 12px rgba(255, 46, 147, 0.15);
+    animation: ad-money-flow 6s ease infinite;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+
+.ad-money-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 100%;
+    height: 100%;
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.ad-money-box:active::before {
+    left: 120%;
+}
+
+.ad-money-box:active {
+    transform: scale(0.96);
+}
+
+/* ============================================
+   LIGHTNING ICON CIRCLE — GLOW + FLIP
+   ============================================ */
+
+.money-icon-circle {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(13, 0, 255);
+    animation: money-circle-pulse 2.5s ease-in-out infinite;
+    perspective: 600px;
+    overflow: hidden;
+}
+
+/* Sparkle highlight */
+.money-icon-circle::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%,
+            rgba(10, 179, 226, 0.8),
+            transparent 60%);
+    animation: money-sparkle 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+
+
+.money-icon-circle .money-icon {
+    font-size: 0.6rem;
+    color: #f1f1f2;
+    animation: money-icon-flip 3s ease-in-out infinite;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+
+.money-amount {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: money-amount-glow 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(254, 202, 87, 0.5));
 }

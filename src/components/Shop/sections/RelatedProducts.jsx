@@ -9,13 +9,13 @@ function RelatedProducts({ shops, onOpenDetails }) {
     }, [shops]);
 
     return (
-        <section className="shop-related-section">
+        <section className="heepit-related-section">
 
-            <div className="rendomhead">
+            <div className="heepit-related-head">
                 <h3>Related Products</h3>
             </div>
 
-            <div className="shop-random-products">
+            <div className="heepit-related-grid">
                 {randomShops.map((shop) => (
                     <ShopCard
                         key={shop.shop_id}

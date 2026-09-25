@@ -354,9 +354,9 @@
     display: none;
 }
 
-/* Empty state avatar (star emoji) */
+
 .dt-review-card:only-child .dt-review-avatar {
-    background: linear-gradient(135deg, #ffd93d, #ffb800);
+    background: black;
     box-shadow: 0 6px 20px rgba(255, 193, 7, 0.35);
     font-size: 1.4rem;
     animation: emptyStarPulse 2.5s ease-in-out infinite;

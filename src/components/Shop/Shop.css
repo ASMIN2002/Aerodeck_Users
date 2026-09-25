@@ -1,0 +1,142 @@
+/* ==========================================================================
+   SHOP.JSX — SEARCH RESULTS SECTION
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   SEARCH RESULTS SECTION
+   ============================================ */
+
+.heepit-shop-search-results {
+    position: relative;
+    width: 100%;
+    padding: 12px 0 90px 0;
+    background: #0a0a0f;
+    min-height: 100vh;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    animation: heepitShopSearchEnter 0.4s ease;
+}
+
+.heepit-shop-search-results * {
+    box-sizing: border-box;
+}
+
+@keyframes heepitShopSearchEnter {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ============================================
+   GRID
+   ============================================ */
+
+.heepit-shop-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 10px;
+    width: 100%;
+}
+
+/* Staggered card entry */
+.heepit-shop-grid > * {
+    animation: heepitShopCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.heepit-shop-grid > *:nth-child(1)  { animation-delay: 0.02s; }
+.heepit-shop-grid > *:nth-child(2)  { animation-delay: 0.04s; }
+.heepit-shop-grid > *:nth-child(3)  { animation-delay: 0.06s; }
+.heepit-shop-grid > *:nth-child(4)  { animation-delay: 0.08s; }
+.heepit-shop-grid > *:nth-child(5)  { animation-delay: 0.10s; }
+.heepit-shop-grid > *:nth-child(6)  { animation-delay: 0.12s; }
+.heepit-shop-grid > *:nth-child(7)  { animation-delay: 0.14s; }
+.heepit-shop-grid > *:nth-child(8)  { animation-delay: 0.16s; }
+.heepit-shop-grid > *:nth-child(9)  { animation-delay: 0.18s; }
+.heepit-shop-grid > *:nth-child(10) { animation-delay: 0.20s; }
+
+@keyframes heepitShopCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   RESPONSIVE GRID
+   ============================================ */
+
+/* Tablet — 3 columns */
+@media (min-width: 600px) and (max-width: 1023px) {
+    .heepit-shop-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 0 14px;
+    }
+}
+
+/* Desktop — 4 columns */
+@media (min-width: 1024px) {
+    .heepit-shop-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        padding: 0 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+/* Large desktop — 5 columns */
+@media (min-width: 1440px) {
+    .heepit-shop-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Small phone — 2 columns (360px) */
+@media (max-width: 360px) {
+    .heepit-shop-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 7px;
+        padding: 0 7px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .heepit-shop-search-results,
+    .heepit-shop-grid > * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .heepit-shop-grid {
+        padding-left: max(10px, env(safe-area-inset-left));
+        padding-right: max(10px, env(safe-area-inset-right));
+    }
+
+    @media (min-width: 1024px) {
+        .heepit-shop-grid {
+            padding-left: max(24px, env(safe-area-inset-left));
+            padding-right: max(24px, env(safe-area-inset-right));
+        }
+    }
+}

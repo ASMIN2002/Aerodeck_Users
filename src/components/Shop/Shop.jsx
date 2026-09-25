@@ -7,6 +7,7 @@ import ShopHome from "./ShopHome";
 import AllShops from "./AllShops";
 import ShopCategory from "./ShopCategory";
 import ALLShopCategories from "./ALLShopCategories";
+import "./Shop.css";
 
 function Shop({
     user,
@@ -1005,15 +1006,16 @@ function Shop({
     const isSearching = search.trim().length > 0;
 
     return (
-        <>{
-            showLoading && (
-                <Loading
-                    duration={500}
-                    text="Loading Shop Items..."
-                    onComplete={() => setShowLoading(false)}
-                />
-            )
-        }
+        <>
+            {
+                showLoading && (
+                    <Loading
+                        duration={500}
+                        text="Loading Shop Items..."
+                        onComplete={() => setShowLoading(false)}
+                    />
+                )
+            }
 
             {
                 allShopCategoriesPage ? (
@@ -1097,9 +1099,9 @@ function Shop({
 
                 ) : isSearching ? (
 
-                    <section className="shop-search-results">
+                    <section className="heepit-shop-search-results">
 
-                        <div className="cds-grid">
+                        <div className="heepit-shop-grid">
 
                             {
                                 finalShops.map((shop) => (
