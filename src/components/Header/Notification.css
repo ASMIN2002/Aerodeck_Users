@@ -1,0 +1,263 @@
+/* ==========================================================================
+   NOTIFICATION OVERLAY — DARK CLAY
+   ========================================================================== */
+
+.hd-notif-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 6, 10, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 9999;
+    animation: notifOverlayFade 0.3s ease;
+    padding: 100px 20px 20px;
+}
+
+@keyframes notifOverlayFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.hd-notif-box {
+    width: 100%;
+    max-width: 380px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: 20px;
+    border: 1px solid rgba(254, 202, 87, 0.15);
+    box-shadow:
+        16px 16px 40px rgba(0, 0, 0, 0.9),
+        -8px -8px 28px rgba(255, 255, 255, 0.04),
+        0 0 40px rgba(254, 202, 87, 0.1);
+    animation: notifBoxPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+@keyframes notifBoxPop {
+    from {
+        transform: scale(0.85) translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* HEADER */
+.hd-notif-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(254, 202, 87, 0.15);
+}
+
+.hd-notif-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(254, 202, 87, 0.4));
+}
+
+.hd-notif-close {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #1e1e28, #13131a);
+    color: #feca57;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow:
+        4px 4px 10px rgba(0, 0, 0, 0.7),
+        -2px -2px 6px rgba(255, 255, 255, 0.04);
+    transition: all 0.2s;
+}
+
+.hd-notif-close:active {
+    transform: scale(0.9);
+}
+
+/* ============================================
+   ACTION BOX — Accept / Ignore
+   ============================================ */
+
+.hd-notif-action-box {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hd-notif-message {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f0f0f5;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+.hd-notif-message strong {
+    color: #00d97f;
+    font-weight: 900;
+}
+
+.hd-notif-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.hd-notif-accept,
+.hd-notif-ignore {
+    flex: 1;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    letter-spacing: 0.03em;
+}
+
+.hd-notif-accept {
+    background: linear-gradient(145deg, #00d97f, #00a85e);
+    color: #fff;
+    box-shadow:
+        4px 4px 12px rgba(0, 217, 127, 0.4),
+        -4px -4px 12px rgba(255, 255, 255, 0.05),
+        inset 0 -2px 4px rgba(0, 90, 50, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hd-notif-accept:active {
+    transform: scale(0.96);
+    box-shadow:
+        inset 4px 4px 10px rgba(0, 90, 50, 0.5),
+        inset -3px -3px 8px rgba(255, 255, 255, 0.1);
+}
+
+.hd-notif-ignore {
+    background: linear-gradient(145deg, #2a2a35, #1a1a24);
+    color: #a0a0b0;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.7),
+        -3px -3px 8px rgba(255, 255, 255, 0.03),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.03);
+}
+
+.hd-notif-ignore:active {
+    transform: scale(0.96);
+    box-shadow:
+        inset 4px 4px 10px rgba(0, 0, 0, 0.7),
+        inset -3px -3px 8px rgba(255, 255, 255, 0.03);
+}
+
+/* ============================================
+   SIMPLE MESSAGE LINE
+   ============================================ */
+
+.hd-notif-line {
+    padding: 16px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f0f0f5;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hd-notif-line:last-child {
+    border-bottom: none;
+}
+
+.hd-notif-line strong {
+    color: #00d97f;
+    font-weight: 900;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
+.hd-notif-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hd-notif-empty span {
+    font-size: 3rem;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+    opacity: 0.5;
+}
+
+.hd-notif-empty p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6a6a7a;
+    font-weight: 600;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 380px) {
+    .hd-notif-overlay {
+        padding: 80px 14px 14px;
+    }
+
+    .hd-notif-box {
+        border-radius: 18px;
+    }
+
+    .hd-notif-header {
+        padding: 14px 16px;
+    }
+
+    .hd-notif-header h3 {
+        font-size: 0.92rem;
+    }
+
+    .hd-notif-close {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .hd-notif-line {
+        padding: 14px 16px;
+        font-size: 0.8rem;
+    }
+
+    .hd-notif-action-box {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+
+    .hd-notif-message {
+        font-size: 0.8rem;
+    }
+}

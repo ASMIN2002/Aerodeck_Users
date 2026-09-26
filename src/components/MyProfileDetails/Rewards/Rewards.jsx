@@ -6,7 +6,7 @@ import { API } from "../../../services/api";
 const SCRATCH_NUMBERS = [1, 2, 3, 4, 5, "Better Luck"];
 
 /* ============================================
-   SCRATCH BOX — TOUCH TO AUTO SCRATCH
+   SCRATCH BOX
    ============================================ */
 function ScratchBox({ number, onReveal, disabled }) {
 
@@ -32,18 +32,15 @@ function ScratchBox({ number, onReveal, disabled }) {
             onClick={handleTouch}
             onTouchStart={handleTouch}
         >
-            {/* NUMBER LAYER */}
             <div className="scratch-number-layer">
                 <span className="scratch-number">{number}</span>
             </div>
 
-            {/* GREY SCRATCH LAYER */}
             {!isRevealed && (
                 <div className="scratch-cover">
                     <div className="scratch-cover-text">SCRATCH</div>
                 </div>
             )}
-
         </div>
     );
 
@@ -73,9 +70,19 @@ function Rewards({ setProfilePage }) {
     const [demoShowCongrats, setDemoShowCongrats] = useState(null);
     const [demoResetKey, setDemoResetKey] = useState(0);
 
+    /* Redeem */
+    const [promoInput, setPromoInput] = useState("");
+    const [sendMsg, setSendMsg] = useState("");
+    const [sendMsgType, setSendMsgType] = useState("");
+    const [isChecking, setIsChecking] = useState(false);
+    const [reqUserId, setReqUserId] = useState(0);
+    const [redeemed, setRedeemed] = useState(false);
+
     const helpBoxRef = useRef(null);
 
-    /* FETCH REWARDS */
+    /* ============================================
+       FETCH REWARDS
+       ============================================ */
     useEffect(() => {
 
         async function loadRewards() {
@@ -92,6 +99,8 @@ function Rewards({ setProfilePage }) {
                 if (data.success && data.data) {
                     setHypoPoints(data.data.hypo_points || 0);
                     setCount(data.data.count || 0);
+                    setReqUserId(data.data.req_userid || 0);
+                    setRedeemed(data.data.redeemed === 1);
                 }
 
             } catch (err) {
@@ -104,7 +113,9 @@ function Rewards({ setProfilePage }) {
 
     }, []);
 
-    /* GENERATE BOXES */
+    /* ============================================
+       GENERATE BOXES
+       ============================================ */
     const generateBoxes = () => {
         return [...SCRATCH_NUMBERS]
             .sort(() => Math.random() - 0.5)
@@ -116,7 +127,9 @@ function Rewards({ setProfilePage }) {
         setDemoBoxes(generateBoxes());
     }, []);
 
-    /* CLICK OUTSIDE HELP */
+    /* ============================================
+       CLICK OUTSIDE HELP
+       ============================================ */
     useEffect(() => {
 
         function handleClickOutside(e) {
@@ -137,7 +150,9 @@ function Rewards({ setProfilePage }) {
 
     }, [showHelp]);
 
-    /* RESET AFTER SCRATCH */
+    /* ============================================
+       RESET AFTER SCRATCH
+       ============================================ */
     useEffect(() => {
 
         if (Object.keys(revealed).length === 0) return;
@@ -166,7 +181,9 @@ function Rewards({ setProfilePage }) {
 
     }, [demoRevealed]);
 
-    /* SCRATCH — REWARDS */
+    /* ============================================
+       SCRATCH — REWARDS
+       ============================================ */
     const handleScratch = async (index, number) => {
 
         if (revealed[index]) return;
@@ -210,7 +227,9 @@ function Rewards({ setProfilePage }) {
 
     };
 
-    /* SCRATCH — DEMO */
+    /* ============================================
+       SCRATCH — DEMO
+       ============================================ */
     const handleDemoScratch = (index, number) => {
 
         if (demoRevealed[index]) return;
@@ -224,6 +243,76 @@ function Rewards({ setProfilePage }) {
 
         setDemoShowCongrats({ number, points: pointsToAdd });
         setTimeout(() => setDemoShowCongrats(null), 2500);
+
+    };
+
+    /* ============================================
+       SEND REDEEM REQUEST
+       ============================================ */
+    const handleSendRequest = async () => {
+
+        if (!promoInput.trim()) {
+            setSendMsg("Enter a promo code.");
+            setSendMsgType("error");
+            setTimeout(() => setSendMsg(""), 2500);
+            return;
+        }
+
+        setIsChecking(true);
+        setSendMsg("");
+        setSendMsgType("");
+
+        try {
+
+            const sessionToken = localStorage.getItem("session_token");
+
+            await new Promise(resolve => setTimeout(resolve, 1800));
+
+            const res = await fetch(
+                `${API}/api/user/rewards/redeem/send`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        session_token: sessionToken,
+                        promo_code: promoInput.trim()
+                    })
+                }
+            );
+
+            const data = await res.json();
+
+            if (data.success) {
+
+                setPromoInput("");
+
+                /* Reload rewards */
+                const rewardRes = await fetch(
+                    `${API}/api/user/rewards?session_token=${sessionToken}`
+                );
+                const rewardData = await rewardRes.json();
+
+                if (rewardData.success && rewardData.data) {
+                    setReqUserId(rewardData.data.req_userid || 0);
+                    setRedeemed(rewardData.data.redeemed === 1);
+                }
+
+            } else {
+
+                setSendMsg(data.message || "Failed");
+                setSendMsgType("error");
+                setTimeout(() => setSendMsg(""), 3000);
+
+            }
+
+        } catch (err) {
+            console.error(err);
+            setSendMsg("Failed to send request.");
+            setSendMsgType("error");
+            setTimeout(() => setSendMsg(""), 3000);
+        } finally {
+            setIsChecking(false);
+        }
 
     };
 
@@ -257,6 +346,12 @@ function Rewards({ setProfilePage }) {
                     onClick={() => setActiveTab("demo")}
                 >
                     DEMO
+                </button>
+                <button
+                    className={`my-rewards-tab ${activeTab === "redeem" ? "active" : ""}`}
+                    onClick={() => setActiveTab("redeem")}
+                >
+                    REDEEM
                 </button>
             </div>
 
@@ -345,9 +440,6 @@ function Rewards({ setProfilePage }) {
 
                     </div>
 
-                    {/* ============================================
-                        TERMS NOTICE — REWARDS TAB
-                       ============================================ */}
                     <div className="rewards-terms">
 
                         <div className="rewards-terms-title">
@@ -470,9 +562,6 @@ function Rewards({ setProfilePage }) {
 
                     </div>
 
-                    {/* ============================================
-                        DEMO NOTICE — DEMO TAB
-                       ============================================ */}
                     <div className="demo-notice-box">
 
                         <div className="demo-notice-title">
@@ -510,6 +599,84 @@ function Rewards({ setProfilePage }) {
                                 )}
                             </div>
                         </div>
+                    )}
+
+                </div>
+
+            )}
+
+            {/* ============================================
+                REDEEM TAB
+               ============================================ */}
+            {activeTab === "redeem" && (
+
+                <div className="redeem-section">
+
+                    {reqUserId > 0 && redeemed ? (
+
+                        /* ============================================
+                           ALREADY REDEEMED
+                           ============================================ */
+                        <div className="redeem-redeemed-box">
+                            <div className="redeem-redeemed-icon">🎉</div>
+
+                            <h3 className="redeem-redeemed-title">
+                                Already Redeemed
+                            </h3>
+
+                            <p className="redeem-redeemed-text">
+                                You got <strong>10 HYPO Points</strong>
+                            </p>
+
+                            <p className="redeem-redeemed-footer">
+                                Congratulations! 🎊
+                            </p>
+                        </div>
+
+                    ) : (
+
+                        /* ============================================
+                           INPUT BOX
+                           ============================================ */
+                        <div className="redeem-input-box">
+
+                            <label className="redeem-label">
+                                Enter Promo Code
+                            </label>
+
+                            <input
+                                type="text"
+                                className="redeem-input"
+                                placeholder="HE0001HY"
+                                value={promoInput}
+                                onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+                                maxLength={10}
+                                disabled={isChecking}
+                            />
+
+                            <button
+                                className={`redeem-send-btn ${isChecking ? "checking" : ""}`}
+                                onClick={handleSendRequest}
+                                disabled={isChecking}
+                            >
+                                {isChecking ? (
+                                    <>
+                                        <span className="btn-spinner" />
+                                        Checking...
+                                    </>
+                                ) : (
+                                    "Send Request"
+                                )}
+                            </button>
+
+                            {sendMsg && (
+                                <p className={`redeem-msg ${sendMsgType}`}>
+                                    {sendMsg}
+                                </p>
+                            )}
+
+                        </div>
+
                     )}
 
                 </div>

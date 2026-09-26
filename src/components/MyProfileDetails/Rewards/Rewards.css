@@ -1,8 +1,39 @@
 /* ==========================================================================
-   HYPO REWARDS — PREMIUM AESTHETIC DARK
+   HYPO REWARDS — DARK CLAYMORPHISM UI
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   ROOT VARIABLES
+   ============================================ */
+
+:root {
+    --clay-bg: #0a0a0f;
+    --clay-surface: #16161e;
+    --clay-surface-light: #1e1e28;
+    --clay-surface-dark: #0e0e14;
+
+    --clay-shadow-dark: #000000;
+    --clay-shadow-light: rgba(255, 255, 255, 0.06);
+
+    --clay-gold: #feca57;
+    --clay-gold-dark: #ff9f43;
+    --clay-gold-deep: #d97706;
+    --clay-purple: #a29bfe;
+    --clay-purple-dark: #6c5ce7;
+    --clay-green: #00d97f;
+    --clay-green-dark: #00a85e;
+    --clay-red: #ff4757;
+    --clay-red-dark: #e8344a;
+
+    --clay-text: #f0f0f5;
+    --clay-text-soft: #a0a0b0;
+    --clay-text-light: #5a5a6a;
+
+    --clay-radius: 20px;
+    --clay-radius-lg: 28px;
+}
 
 /* ============================================
    PAGE CONTAINER
@@ -12,31 +43,34 @@
     width: 100%;
     min-height: 100vh;
     background: #06060a;
-    padding: 0 0 120px 0;
+    padding: 0 0 100px 0;
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
     position: relative;
     overflow-x: hidden;
-    overflow-y: auto;
 }
 
-/* Ambient background — gold glow */
+.my-rewards * {
+    box-sizing: border-box;
+}
+
+/* Ambient clay glow */
 .my-rewards::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 15%, rgba(254, 202, 87, 0.10), transparent 40%),
-        radial-gradient(circle at 80% 85%, rgba(255, 159, 67, 0.08), transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(254, 202, 87, 0.03), transparent 60%);
+        radial-gradient(circle at 15% 15%, rgba(254, 202, 87, 0.08), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(162, 155, 254, 0.06), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(0, 217, 127, 0.04), transparent 60%);
     pointer-events: none;
     z-index: 0;
-    animation: bgShift 12s ease-in-out infinite;
+    animation: clayAmbient 12s ease-in-out infinite;
 }
 
-@keyframes bgShift {
+@keyframes clayAmbient {
 
     0%,
     100% {
@@ -50,134 +84,129 @@
     }
 }
 
-.my-rewards.demo-mode::before {
-    background:
-        radial-gradient(circle at 20% 15%, rgba(162, 155, 254, 0.12), transparent 40%),
-        radial-gradient(circle at 80% 85%, rgba(108, 92, 231, 0.10), transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(253, 121, 168, 0.05), transparent 60%);
-}
-
-.my-rewards * {
-    box-sizing: border-box;
+.my-rewards>* {
     position: relative;
     z-index: 1;
 }
 
 /* ============================================
-   HEADER
+   HEADER — DARK CLAY
    ============================================ */
 
 .my-rewards-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px;
-    background: rgba(6, 6, 10, 0.85);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid #1a1a24;
+    gap: 14px;
+    padding: 18px 20px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: 0 0 var(--clay-radius-lg) var(--clay-radius-lg);
+    box-shadow:
+        10px 10px 30px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 1px rgba(0, 0, 0, 0.5);
     position: sticky;
     top: 0;
     z-index: 50;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .my-rewards-back {
-    width: 38px;
-    height: 38px;
+    width: 46px;
+    height: 46px;
     border: none;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
-    font-size: 20px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1e1e28, #13131a);
+    color: var(--clay-gold);
+    font-size: 22px;
+    font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow:
+        6px 6px 14px rgba(0, 0, 0, 0.8),
+        -4px -4px 10px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .my-rewards-back:active {
-    background: rgba(254, 202, 87, 0.3);
-    transform: scale(0.9) rotate(-8deg);
+    transform: scale(0.92);
+    box-shadow:
+        inset 6px 6px 14px rgba(0, 0, 0, 0.8),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.04);
+    background: linear-gradient(145deg, #13131a, #1e1e28);
 }
 
 .my-rewards-header h2 {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
-    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43, #feca57);
-    background-size: 200% 200%;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: titleShine 4s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px rgba(254, 202, 87, 0.35));
-}
-
-@keyframes titleShine {
-
-    0%,
-    100% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-}
-
-.my-rewards.demo-mode .my-rewards-header h2 {
-    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7, #a29bfe);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 12px rgba(162, 155, 254, 0.4));
+    filter: drop-shadow(0 0 10px rgba(254, 202, 87, 0.4));
+    flex: 1;
 }
 
 /* ============================================
-   TABS
+   TABS — DARK CLAY
    ============================================ */
 
 .my-rewards-tabs {
     display: flex;
-    gap: 10px;
-    padding: 16px 16px 8px;
+    gap: 12px;
+    padding: 0 20px 22px;
 }
 
 .my-rewards-tab {
     flex: 1;
-    padding: 12px;
-    border: 1px solid #1f1f2a;
-    border-radius: 12px;
-    background: #0f0f16;
-    color: #6a6a7a;
-    font-size: 0.82rem;
+    padding: 14px 12px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #1a1a24, #0f0f16);
+    color: var(--clay-text-soft);
+    font-size: 0.78rem;
     font-weight: 800;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     cursor: pointer;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     font-family: inherit;
+    box-shadow:
+        6px 6px 14px rgba(0, 0, 0, 0.8),
+        -4px -4px 10px rgba(255, 255, 255, 0.03),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .my-rewards-tab.active {
-    background: linear-gradient(135deg, #feca57, #ff9f43);
+    background: linear-gradient(145deg, #feca57, #ff9f43);
     color: #1a1a2e;
-    border-color: transparent;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
     box-shadow:
-        0 8px 24px rgba(254, 202, 87, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+        8px 8px 20px rgba(254, 202, 87, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.05),
+        inset 0 -3px 6px rgba(217, 119, 6, 0.4),
+        inset 0 3px 6px rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
+    border-color: transparent;
 }
 
 .my-rewards-tab.active::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
     animation: tabShine 2.5s ease-in-out infinite;
 }
 
@@ -195,12 +224,21 @@
     }
 }
 
+.my-rewards-tab:active:not(.active) {
+    transform: scale(0.95);
+    box-shadow:
+        inset 6px 6px 14px rgba(0, 0, 0, 0.8),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.03);
+}
+
 .my-rewards.demo-mode .my-rewards-tab.active {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
     color: #fff;
     box-shadow:
-        0 8px 24px rgba(108, 92, 231, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+        8px 8px 20px rgba(108, 92, 231, 0.5),
+        -6px -6px 16px rgba(255, 255, 255, 0.05),
+        inset 0 -3px 6px rgba(60, 40, 200, 0.4),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3);
 }
 
 /* ============================================
@@ -208,10 +246,10 @@
    ============================================ */
 
 .rewards-section,
-.demo-section {
-    padding: 16px 16px 24px;
+.demo-section,
+.redeem-section {
+    padding: 0 20px 20px;
     animation: sectionFade 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: visible;
 }
 
 @keyframes sectionFade {
@@ -227,23 +265,25 @@
 }
 
 /* ============================================
-   TOPBAR
+   TOPBAR — DARK CLAY
    ============================================ */
 
 .rewards-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 16px 20px;
-    background: linear-gradient(155deg, #14141e, #0c0c14);
-    border: 1px solid #23232e;
-    border-radius: 18px;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding: 20px 24px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
     box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(254, 202, 87, 0.08) inset;
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     overflow: hidden;
 }
 
@@ -255,7 +295,7 @@
     width: 60%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(254, 202, 87, 0.06), transparent);
-    animation: topbarSweep 4s ease-in-out infinite;
+    animation: topbarSweep 5s ease-in-out infinite;
 }
 
 @keyframes topbarSweep {
@@ -273,7 +313,9 @@
 .rewards-stat {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
+    position: relative;
+    z-index: 2;
 }
 
 .rewards-stat.right {
@@ -282,9 +324,9 @@
 }
 
 .rewards-label {
-    font-size: 0.62rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    color: #6a6a7a;
+    color: var(--clay-text-soft);
     text-transform: uppercase;
     letter-spacing: 0.12em;
 }
@@ -294,67 +336,55 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1;
-    font-variant-numeric: tabular-nums;
 }
 
 .rewards-value.chances {
-    color: #fff;
+    color: var(--clay-text);
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
 }
 
 .rewards-value.points {
     background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
-    background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 16px rgba(254, 202, 87, 0.5));
-    animation: pointsShine 3s ease-in-out infinite;
-}
-
-@keyframes pointsShine {
-
-    0%,
-    100% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
 }
 
 .rewards-value.demo-points {
     background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
-    background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 16px rgba(162, 155, 254, 0.55));
-    animation: pointsShine 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 16px rgba(162, 155, 254, 0.5));
 }
 
 /* ============================================
-   HELP BUTTON
+   HELP BUTTON — DARK CLAY
    ============================================ */
 
 .rewards-help-btn {
     position: absolute;
     top: -4px;
-    right: -30px;
-    width: 22px;
-    height: 22px;
+    right: -34px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    border: 1.5px solid #feca57;
-    background: rgba(254, 202, 87, 0.15);
-    color: #feca57;
-    font-size: 0.72rem;
-    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    color: #1a1a2e;
+    font-size: 0.85rem;
+    font-weight: 900;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: inherit;
+    box-shadow:
+        5px 5px 12px rgba(0, 0, 0, 0.7),
+        -3px -3px 8px rgba(255, 255, 255, 0.05),
+        inset 0 -2px 4px rgba(217, 119, 6, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
     transition: all 0.25s;
     animation: helpBtnPulse 2.5s ease-in-out infinite;
 }
@@ -363,38 +393,46 @@
 
     0%,
     100% {
-        box-shadow: 0 0 0 rgba(254, 202, 87, 0);
+        transform: scale(1);
+        box-shadow:
+            5px 5px 12px rgba(0, 0, 0, 0.7),
+            -3px -3px 8px rgba(255, 255, 255, 0.05);
     }
 
     50% {
-        box-shadow: 0 0 12px rgba(254, 202, 87, 0.5);
+        transform: scale(1.12);
+        box-shadow:
+            6px 6px 16px rgba(0, 0, 0, 0.8),
+            -4px -4px 10px rgba(255, 255, 255, 0.05),
+            0 0 24px rgba(254, 202, 87, 0.6);
     }
 }
 
 .rewards-help-btn:active {
     transform: scale(0.88);
-    background: rgba(254, 202, 87, 0.4);
 }
 
 /* ============================================
-   HELP TOOLTIP
+   HELP TOOLTIP — DARK CLAY
    ============================================ */
 
 .rewards-help-box {
     position: absolute;
-    top: 140px;
-    right: 16px;
-    background: linear-gradient(155deg, #1c1c26, #0f0f16);
-    border: 1.5px solid #feca57;
-    border-radius: 16px;
-    padding: 16px 18px;
+    top: 145px;
+    right: 20px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border: 1px solid rgba(254, 202, 87, 0.2);
+    border-radius: var(--clay-radius);
+    padding: 18px 20px;
     z-index: 100;
     box-shadow:
-        0 16px 40px rgba(0, 0, 0, 0.7),
-        0 0 32px rgba(254, 202, 87, 0.25),
-        0 0 0 1px rgba(254, 202, 87, 0.15) inset;
+        12px 12px 32px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        0 0 32px rgba(254, 202, 87, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
     animation: helpFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    min-width: 230px;
+    min-width: 240px;
 }
 
 @keyframes helpFadeIn {
@@ -410,80 +448,100 @@
 }
 
 .rewards-help-title {
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: #feca57;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(254, 202, 87, 0.25);
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--clay-gold);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(254, 202, 87, 0.2);
     letter-spacing: 0.03em;
+    text-shadow: 0 0 12px rgba(254, 202, 87, 0.5);
 }
 
 .rewards-help-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 6px 0;
-    font-size: 0.78rem;
-    color: #c0c0d0;
-    font-weight: 600;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 0.82rem;
+    color: var(--clay-text-soft);
+    font-weight: 700;
 }
 
 .help-num {
-    width: 26px;
-    height: 26px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, rgba(254, 202, 87, 0.2), rgba(255, 159, 67, 0.15));
-    border: 1px solid rgba(254, 202, 87, 0.4);
-    color: #feca57;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    color: #1a1a2e;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.72rem;
-    font-weight: 800;
+    font-size: 0.78rem;
+    font-weight: 900;
     flex-shrink: 0;
+    box-shadow:
+        4px 4px 10px rgba(0, 0, 0, 0.6),
+        -2px -2px 6px rgba(255, 255, 255, 0.05),
+        inset 0 -2px 4px rgba(217, 119, 6, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 /* ============================================
-   NOTICE
+   NOTICE — DARK CLAY
    ============================================ */
 
 .scratch-notice {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin: 0 0 14px;
-    padding: 10px 16px;
-    background: linear-gradient(135deg, rgba(254, 202, 87, 0.1), rgba(255, 159, 67, 0.06));
-    border: 1px dashed rgba(254, 202, 87, 0.45);
+    gap: 10px;
+    margin: 0 0 20px;
+    padding: 14px 22px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
     border-radius: 50px;
     font-size: 0.72rem;
-    font-weight: 700;
-    color: #feca57;
-    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: var(--clay-gold);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    box-shadow:
+        6px 6px 14px rgba(0, 0, 0, 0.8),
+        -4px -4px 10px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04),
+        0 0 24px rgba(254, 202, 87, 0.1);
     animation: noticePulse 2s ease-in-out infinite;
+    border: 1px solid rgba(254, 202, 87, 0.1);
 }
 
 @keyframes noticePulse {
 
     0%,
     100% {
-        box-shadow: 0 0 0 rgba(254, 202, 87, 0);
+        box-shadow:
+            6px 6px 14px rgba(0, 0, 0, 0.8),
+            -4px -4px 10px rgba(255, 255, 255, 0.04),
+            0 0 24px rgba(254, 202, 87, 0.1);
     }
 
     50% {
-        box-shadow: 0 0 20px rgba(254, 202, 87, 0.25);
+        box-shadow:
+            6px 6px 14px rgba(0, 0, 0, 0.8),
+            -4px -4px 10px rgba(255, 255, 255, 0.04),
+            0 0 36px rgba(254, 202, 87, 0.3);
     }
 }
 
 .notice-dot {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #feca57;
-    box-shadow: 0 0 10px #feca57;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    box-shadow:
+        0 0 12px rgba(254, 202, 87, 0.8),
+        inset 0 -1px 2px rgba(217, 119, 6, 0.5);
     animation: dotBlink 1.2s ease-in-out infinite;
 }
 
@@ -496,136 +554,118 @@
     }
 
     50% {
-        opacity: 0.3;
+        opacity: 0.4;
         transform: scale(0.7);
     }
 }
 
 .demo-notice {
-    background: linear-gradient(135deg, rgba(162, 155, 254, 0.1), rgba(108, 92, 231, 0.06));
-    border-color: rgba(162, 155, 254, 0.45);
-    color: #a29bfe;
+    color: var(--clay-purple);
+    border-color: rgba(162, 155, 254, 0.15);
 }
 
 .demo-notice .notice-dot {
-    background: #a29bfe;
-    box-shadow: 0 0 10px #a29bfe;
+    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    box-shadow: 0 0 12px rgba(162, 155, 254, 0.8);
 }
 
 /* ============================================
-   SCRATCH CARD
+   SCRATCH CARD — DARK CLAY
    ============================================ */
 
 .scratch-card {
     position: relative;
-    padding: 20px;
-    background: linear-gradient(155deg, #14141e 0%, #0a0a12 100%);
-    border-radius: 22px;
+    padding: 24px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
     box-shadow:
-        0 16px 40px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(254, 202, 87, 0.12) inset;
+        12px 12px 32px rgba(0, 0, 0, 0.9),
+        -8px -8px 24px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
     overflow: hidden;
-    isolation: isolate;
-}
-
-.scratch-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 22px;
-    padding: 2px;
-    background: linear-gradient(135deg,
-            #feca57, #ff9f43, #ffeaa7, #ffd93d, #feca57);
-    background-size: 400% 400%;
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: goldBorderFlow 6s linear infinite;
-    pointer-events: none;
-    z-index: 2;
-}
-
-@keyframes goldBorderFlow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    margin-bottom: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .scratch-card.locked {
-    filter: grayscale(0.7) brightness(0.5);
+    filter: grayscale(0.6) brightness(0.5);
 }
 
 .scratch-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 14px;
     position: relative;
     z-index: 1;
 }
 
 /* ============================================
-   SCRATCH BOX
+   SCRATCH BOX — DARK CLAY
    ============================================ */
 
 .scratch-box {
     position: relative;
     aspect-ratio: 1;
-    border-radius: 16px;
+    border-radius: 18px;
     overflow: hidden;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.5),
-        0 0 0 1.5px rgba(255, 255, 255, 0.05) inset;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        6px 6px 14px rgba(0, 0, 0, 0.85),
+        -4px -4px 10px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .scratch-box:active:not(.revealed):not(.scratching) {
     transform: scale(0.95);
+    box-shadow:
+        inset 6px 6px 14px rgba(0, 0, 0, 0.85),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.04);
 }
 
-/* NUMBER LAYER */
 .scratch-number-layer {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
-    border-radius: 16px;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    border-radius: 18px;
     z-index: 1;
+    box-shadow:
+        inset 0 -4px 8px rgba(217, 119, 6, 0.5),
+        inset 0 4px 8px rgba(255, 255, 255, 0.4);
 }
 
 .demo-scratch .scratch-number-layer {
-    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
+    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    box-shadow:
+        inset 0 -4px 8px rgba(60, 40, 200, 0.5),
+        inset 0 4px 8px rgba(255, 255, 255, 0.3);
 }
 
 .scratch-number {
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: 1.6rem;
+    font-weight: 900;
     color: #1a1a2e;
     text-align: center;
     padding: 4px;
     line-height: 1.1;
     letter-spacing: -0.02em;
     animation: numberPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    text-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .demo-scratch .scratch-number {
     color: #fff;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes numberPop {
@@ -640,18 +680,20 @@
     }
 }
 
-/* GREY SCRATCH COVER */
 .scratch-cover {
     position: absolute;
     inset: 0;
-    border-radius: 16px;
-    background: linear-gradient(155deg, #3a3a48 0%, #2a2a35 50%, #35353f 100%);
+    border-radius: 18px;
+    background: linear-gradient(145deg, #2a2a35, #1a1a24);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2;
     overflow: hidden;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.5s ease;
+    box-shadow:
+        inset 0 -4px 8px rgba(0, 0, 0, 0.6),
+        inset 0 4px 8px rgba(255, 255, 255, 0.05);
 }
 
 .scratch-cover::before {
@@ -660,30 +702,31 @@
     inset: 0;
     background: repeating-linear-gradient(45deg,
             transparent 0,
-            transparent 8px,
-            rgba(255, 255, 255, 0.045) 8px,
-            rgba(255, 255, 255, 0.045) 9px);
+            transparent 10px,
+            rgba(255, 255, 255, 0.03) 10px,
+            rgba(255, 255, 255, 0.03) 11px);
 }
 
 .scratch-cover::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 60%);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), transparent 60%);
 }
 
 .scratch-cover-text {
     position: relative;
-    font-size: 0.68rem;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.4);
-    letter-spacing: 0.18em;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.2em;
     transform: rotate(-8deg);
     z-index: 1;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.6),
+        0 -1px 1px rgba(255, 255, 255, 0.05);
 }
 
-/* SCRATCHING ANIMATION */
 .scratch-box.scratching .scratch-cover {
     animation: autoScratch 0.9s cubic-bezier(0.6, 0, 0.4, 1) forwards;
 }
@@ -710,17 +753,22 @@
     }
 }
 
-/* REVEALED */
 .scratch-box.revealed {
     box-shadow:
-        0 0 24px rgba(254, 202, 87, 0.6),
-        0 0 0 1.5px rgba(255, 255, 255, 0.2) inset;
+        8px 8px 20px rgba(254, 202, 87, 0.5),
+        -6px -6px 16px rgba(255, 255, 255, 0.05),
+        0 0 40px rgba(254, 202, 87, 0.6),
+        inset 0 -2px 4px rgba(217, 119, 6, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .demo-scratch .scratch-box.revealed {
     box-shadow:
-        0 0 24px rgba(162, 155, 254, 0.6),
-        0 0 0 1.5px rgba(255, 255, 255, 0.2) inset;
+        8px 8px 20px rgba(108, 92, 231, 0.5),
+        -6px -6px 16px rgba(255, 255, 255, 0.05),
+        0 0 40px rgba(162, 155, 254, 0.6),
+        inset 0 -2px 4px rgba(60, 40, 200, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .scratch-box.revealed .scratch-cover {
@@ -729,20 +777,20 @@
 }
 
 /* ============================================
-   LOCKED OVERLAY
+   LOCKED OVERLAY — DARK CLAY
    ============================================ */
 
 .scratch-locked-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.78);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(6, 6, 10, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 5;
-    border-radius: 22px;
+    border-radius: var(--clay-radius-lg);
     animation: lockFade 0.5s ease;
     pointer-events: none;
 }
@@ -761,15 +809,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-align: center;
-    pointer-events: auto;
+    padding: 24px 28px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius);
+    box-shadow:
+        10px 10px 28px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .lock-icon {
-    font-size: 2.6rem;
+    font-size: 2.8rem;
     animation: lockShake 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+    filter: drop-shadow(0 0 20px rgba(254, 202, 87, 0.5));
 }
 
 @keyframes lockShake {
@@ -793,36 +849,572 @@
 
 .lock-text {
     font-size: 1rem;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: 0.06em;
+    font-weight: 900;
+    color: var(--clay-text);
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 16px rgba(255, 255, 255, 0.15);
 }
 
 .lock-sub {
     font-size: 0.72rem;
-    color: #8a8a9a;
+    color: var(--clay-text-soft);
     font-weight: 600;
 }
 
 /* ============================================
-   DEMO
+   REWARDS TERMS — DARK CLAY
    ============================================ */
 
-.demo-scratch::before {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7, #fd79a8, #a29bfe);
-    background-size: 400% 400%;
+.rewards-terms {
+    margin-top: 24px;
+    padding: 24px 22px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    position: relative;
+    animation: termsFadeIn 0.6s ease 0.3s backwards;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+@keyframes termsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rewards-terms-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: var(--clay-gold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(254, 202, 87, 0.15);
+    text-shadow: 0 0 16px rgba(254, 202, 87, 0.4);
+}
+
+.terms-icon {
+    font-size: 1.1rem;
+    animation: termsIconPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes termsIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.rewards-terms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.terms-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: var(--clay-text-soft);
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.terms-item strong {
+    color: var(--clay-gold);
+    font-weight: 900;
+}
+
+.terms-dot {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    box-shadow:
+        3px 3px 6px rgba(0, 0, 0, 0.6),
+        -1px -1px 3px rgba(255, 255, 255, 0.05),
+        inset 0 -1px 2px rgba(217, 119, 6, 0.5),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    margin-top: 6px;
+}
+
+.rewards-terms-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(254, 202, 87, 0.2);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--clay-text-soft);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.rewards-terms-footer strong {
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    letter-spacing: 0.06em;
 }
 
 /* ============================================
-   CONGRATS OVERLAY
+   DEMO NOTICE — DARK CLAY
+   ============================================ */
+
+.demo-notice-box {
+    margin-top: 24px;
+    padding: 24px 22px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    animation: termsFadeIn 0.6s ease 0.3s backwards;
+    border: 1px solid rgba(162, 155, 254, 0.15);
+}
+
+.demo-notice-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: var(--clay-purple);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(162, 155, 254, 0.2);
+    text-shadow: 0 0 16px rgba(162, 155, 254, 0.5);
+}
+
+.demo-notice-icon {
+    font-size: 1.1rem;
+    animation: termsIconPulse 2.5s ease-in-out infinite;
+}
+
+.demo-notice-box p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--clay-text-soft);
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+.demo-notice-box p strong {
+    color: var(--clay-purple);
+    font-weight: 900;
+}
+
+.demo-notice-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(162, 155, 254, 0.25);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--clay-text-soft);
+    font-weight: 600;
+}
+
+.demo-notice-footer strong {
+    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+}
+
+/* ============================================
+   REDEEM SECTION — DARK CLAY
+   ============================================ */
+
+.redeem-section {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ============================================
+   WAITING STATE — DARK CLAY
+   ============================================ */
+
+.redeem-waiting-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 40px 28px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(254, 202, 87, 0.2);
+    animation: waitingFadeIn 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes waitingFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.redeem-waiting-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(254, 202, 87, 0.08), transparent);
+    animation: topbarSweep 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.redeem-waiting-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #00d97f, #00a85e);
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 900;
+    box-shadow:
+        6px 6px 16px rgba(0, 217, 127, 0.4),
+        -4px -4px 12px rgba(255, 255, 255, 0.05),
+        inset 0 -2px 4px rgba(0, 90, 50, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.waiting-spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid rgba(254, 202, 87, 0.15);
+    border-top-color: #feca57;
+    animation: spin 0.9s linear infinite;
+    box-shadow: 0 0 20px rgba(254, 202, 87, 0.5);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.redeem-waiting-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.02em;
+    text-align: center;
+    filter: drop-shadow(0 0 12px rgba(254, 202, 87, 0.5));
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-waiting-text {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--clay-text-soft);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-waiting-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-waiting-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    box-shadow:
+        0 0 10px rgba(254, 202, 87, 0.8),
+        inset 0 -1px 2px rgba(217, 119, 6, 0.5);
+    animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.redeem-waiting-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.redeem-waiting-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.redeem-waiting-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes dotBounce {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   INPUT BOX — DARK CLAY
+   ============================================ */
+
+.redeem-input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 24px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(254, 202, 87, 0.1);
+}
+
+.redeem-label {
+    font-size: 0.82rem;
+    font-weight: 900;
+    color: var(--clay-gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow: 0 0 16px rgba(254, 202, 87, 0.4);
+}
+
+.redeem-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: linear-gradient(145deg, #0e0e14, #1a1a24);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    color: var(--clay-gold);
+    font-size: 1.05rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    font-family: inherit;
+    outline: none;
+    text-transform: uppercase;
+    text-align: center;
+    box-shadow:
+        inset 6px 6px 14px rgba(0, 0, 0, 0.9),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+}
+
+.redeem-input:focus {
+    border-color: rgba(254, 202, 87, 0.4);
+    box-shadow:
+        inset 6px 6px 14px rgba(0, 0, 0, 0.9),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.03),
+        0 0 24px rgba(254, 202, 87, 0.3);
+}
+
+.redeem-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.redeem-input::placeholder {
+    color: var(--clay-text-light);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+}
+
+.redeem-send-btn {
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    color: #1a1a2e;
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-shadow:
+        8px 8px 20px rgba(254, 202, 87, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.05),
+        inset 0 -3px 6px rgba(217, 119, 6, 0.5),
+        inset 0 3px 6px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.redeem-send-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: tabShine 2.5s ease-in-out infinite;
+}
+
+.redeem-send-btn:active:not(:disabled) {
+    transform: scale(0.97);
+    box-shadow:
+        inset 6px 6px 14px rgba(217, 119, 6, 0.6),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.3);
+}
+
+.redeem-send-btn.checking {
+    cursor: wait;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0.9;
+}
+
+.btn-spinner {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(26, 26, 46, 0.3);
+    border-top-color: #1a1a2e;
+    animation: spin 0.8s linear infinite;
+}
+
+.redeem-msg {
+    margin: 0;
+    padding: 12px 16px;
+    background: linear-gradient(145deg, #0f2018, #0a1812);
+    border-radius: 14px;
+    color: var(--clay-green);
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-align: center;
+    box-shadow:
+        4px 4px 10px rgba(0, 0, 0, 0.7),
+        -2px -2px 6px rgba(255, 255, 255, 0.03),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(0, 217, 127, 0.1);
+    animation: msgPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(0, 217, 127, 0.25);
+}
+
+.redeem-msg.error {
+    background: linear-gradient(145deg, #2a0f14, #1a0a0e);
+    color: var(--clay-red);
+    border: 1px solid rgba(255, 71, 87, 0.3);
+    box-shadow:
+        4px 4px 10px rgba(0, 0, 0, 0.7),
+        -2px -2px 6px rgba(255, 255, 255, 0.03),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 71, 87, 0.1);
+    animation: errorShake 0.5s ease;
+}
+
+@keyframes errorShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-6px);
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    60% {
+        transform: translateX(-4px);
+    }
+
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes msgPop {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   CONGRATS OVERLAY — DARK CLAY
    ============================================ */
 
 .rewards-congrats {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.88);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(6, 6, 10, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -842,17 +1434,19 @@
 }
 
 .rewards-congrats-inner {
-    background: linear-gradient(155deg, #1c1c26, #0a0a12);
-    border: 2px solid #feca57;
-    border-radius: 26px;
-    padding: 36px 30px;
+    background: linear-gradient(145deg, #1a1a24, #0a0a12);
+    border: 1px solid rgba(254, 202, 87, 0.3);
+    border-radius: 32px;
+    padding: 40px 32px;
     text-align: center;
-    max-width: 300px;
+    max-width: 320px;
     width: 100%;
     box-shadow:
-        0 24px 70px rgba(254, 202, 87, 0.45),
-        0 0 50px rgba(254, 202, 87, 0.2),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        16px 16px 48px rgba(0, 0, 0, 0.9),
+        -8px -8px 28px rgba(255, 255, 255, 0.04),
+        0 0 60px rgba(254, 202, 87, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.05);
     animation: congratsPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -869,18 +1463,18 @@
 }
 
 .demo-congrats .rewards-congrats-inner {
-    border-color: #a29bfe;
+    border-color: rgba(162, 155, 254, 0.4);
     box-shadow:
-        0 24px 70px rgba(162, 155, 254, 0.45),
-        0 0 50px rgba(162, 155, 254, 0.2),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        16px 16px 48px rgba(0, 0, 0, 0.9),
+        -8px -8px 28px rgba(255, 255, 255, 0.04),
+        0 0 60px rgba(162, 155, 254, 0.4);
 }
 
 .rewards-congrats-emoji {
-    font-size: 4rem;
-    margin-bottom: 14px;
+    font-size: 4.5rem;
+    margin-bottom: 16px;
     animation: congratsBounce 1s ease-in-out infinite;
-    filter: drop-shadow(0 8px 20px rgba(254, 202, 87, 0.5));
+    filter: drop-shadow(0 0 30px rgba(254, 202, 87, 0.6));
 }
 
 @keyframes congratsBounce {
@@ -896,19 +1490,23 @@
 }
 
 .rewards-congrats-inner h3 {
-    margin: 0 0 10px;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #fff;
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--clay-text);
     letter-spacing: -0.01em;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .rewards-congrats-points {
     margin: 0;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #feca57;
-    text-shadow: 0 0 32px rgba(254, 202, 87, 0.8);
+    font-size: 2.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(254, 202, 87, 0.8));
     animation: pointsPulse 1.5s ease-in-out infinite;
     letter-spacing: -0.02em;
 }
@@ -926,29 +1524,484 @@
 }
 
 .demo-congrats .rewards-congrats-points {
-    color: #a29bfe;
-    text-shadow: 0 0 32px rgba(162, 155, 254, 0.8);
+    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(162, 155, 254, 0.8));
 }
 
 /* ============================================
-   REWARDS TERMS
+   RESPONSIVE — TABLET
    ============================================ */
 
-.rewards-terms {
-    margin-top: 20px;
-    padding: 18px 18px 16px;
-    background: linear-gradient(155deg, #14141e, #0a0a12);
-    border: 1px solid #23232e;
-    border-radius: 18px;
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(254, 202, 87, 0.08) inset;
-    position: relative;
-    overflow: hidden;
-    animation: termsFadeIn 0.6s ease 0.3s backwards;
+@media (min-width: 640px) {
+
+    .my-rewards-header {
+        padding: 20px 28px;
+        border-radius: 0 0 32px 32px;
+    }
+
+    .my-rewards-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .my-rewards-tabs {
+        padding: 0 28px 24px;
+        gap: 14px;
+    }
+
+    .my-rewards-tab {
+        padding: 16px 14px;
+        font-size: 0.85rem;
+        border-radius: 20px;
+    }
+
+    .rewards-section,
+    .demo-section,
+    .redeem-section {
+        padding: 0 28px 24px;
+    }
+
+    .rewards-topbar {
+        padding: 22px 28px;
+        border-radius: 28px;
+    }
+
+    .rewards-value {
+        font-size: 2rem;
+    }
+
+    .scratch-card {
+        padding: 28px;
+        border-radius: 32px;
+    }
+
+    .scratch-grid {
+        gap: 18px;
+    }
+
+    .scratch-number {
+        font-size: 2rem;
+    }
+
+    .scratch-cover-text {
+        font-size: 0.85rem;
+    }
+
+    .rewards-terms,
+    .demo-notice-box,
+    .redeem-input-box,
+    .redeem-waiting-box {
+        padding: 26px 28px;
+        border-radius: 28px;
+    }
+
+    .rewards-terms-title,
+    .demo-notice-title {
+        font-size: 0.95rem;
+    }
+
+    .terms-item {
+        font-size: 0.86rem;
+    }
 }
 
-@keyframes termsFadeIn {
+/* ============================================
+   RESPONSIVE — SMALL PHONE
+   ============================================ */
+
+@media (max-width: 380px) {
+
+    .my-rewards-header {
+        padding: 14px 16px;
+        gap: 10px;
+    }
+
+    .my-rewards-back {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        border-radius: 14px;
+    }
+
+    .my-rewards-header h2 {
+        font-size: 1rem;
+    }
+
+    .my-rewards-tabs {
+        padding: 0 16px 16px;
+        gap: 8px;
+    }
+
+    .my-rewards-tab {
+        padding: 12px 8px;
+        font-size: 0.65rem;
+        border-radius: 14px;
+        letter-spacing: 0.04em;
+    }
+
+    .rewards-section,
+    .demo-section,
+    .redeem-section {
+        padding: 0 16px 16px;
+    }
+
+    .rewards-topbar {
+        padding: 14px 18px;
+        border-radius: 20px;
+    }
+
+    .rewards-value {
+        font-size: 1.35rem;
+    }
+
+    .rewards-label {
+        font-size: 0.58rem;
+    }
+
+    .rewards-help-btn {
+        right: -28px;
+        width: 24px;
+        height: 24px;
+        font-size: 0.72rem;
+    }
+
+    .scratch-card {
+        padding: 16px;
+        border-radius: 22px;
+    }
+
+    .scratch-grid {
+        gap: 10px;
+    }
+
+    .scratch-box {
+        border-radius: 14px;
+    }
+
+    .scratch-number-layer,
+    .scratch-cover {
+        border-radius: 14px;
+    }
+
+    .scratch-number {
+        font-size: 1.3rem;
+    }
+
+    .scratch-cover-text {
+        font-size: 0.6rem;
+    }
+
+    .scratch-notice {
+        font-size: 0.65rem;
+        padding: 10px 16px;
+    }
+
+    .rewards-terms,
+    .demo-notice-box {
+        padding: 18px 16px;
+        border-radius: 20px;
+    }
+
+    .rewards-terms-title,
+    .demo-notice-title {
+        font-size: 0.8rem;
+    }
+
+    .terms-item {
+        font-size: 0.72rem;
+        gap: 10px;
+    }
+
+    .terms-dot {
+        width: 8px;
+        height: 8px;
+        margin-top: 5px;
+    }
+
+    .rewards-congrats-inner {
+        padding: 32px 24px;
+        border-radius: 26px;
+    }
+
+    .rewards-congrats-emoji {
+        font-size: 3.5rem;
+    }
+
+    .rewards-congrats-inner h3 {
+        font-size: 1.15rem;
+    }
+
+    .rewards-congrats-points {
+        font-size: 2rem;
+    }
+
+    .redeem-input-box,
+    .redeem-waiting-box {
+        padding: 22px 18px;
+        border-radius: 20px;
+    }
+
+    .redeem-waiting-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .waiting-spinner {
+        width: 30px;
+        height: 30px;
+    }
+
+    .redeem-waiting-title {
+        font-size: 0.9rem;
+    }
+
+    .redeem-waiting-text {
+        font-size: 0.78rem;
+    }
+
+    .redeem-input {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+    }
+
+    .redeem-send-btn {
+        padding: 14px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .my-rewards::before,
+    .my-rewards-tab.active::after,
+    .rewards-help-btn,
+    .notice-dot,
+    .scratch-notice,
+    .scratch-box.scratching .scratch-cover,
+    .scratch-number,
+    .lock-icon,
+    .terms-icon,
+    .demo-notice-icon,
+    .redeem-waiting-box::before,
+    .waiting-spinner,
+    .redeem-waiting-dots span,
+    .rewards-congrats-inner,
+    .rewards-congrats-emoji,
+    .rewards-congrats-points,
+    .redeem-send-btn::before,
+    .redeem-msg,
+    .btn-spinner {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   REDEEM SENT BOX — User A (Requester)
+   ============================================ */
+
+.redeem-sent-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 36px 28px;
+    background: linear-gradient(145deg, #1a1a24, #0e0e14);
+    border-radius: var(--clay-radius-lg);
+    border: 1px solid rgba(254, 202, 87, 0.3);
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04),
+        0 0 32px rgba(254, 202, 87, 0.15);
+    animation: successFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.redeem-sent-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(254, 202, 87, 0.08), transparent);
+    animation: topbarSweep 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Approved state */
+.redeem-sent-box.approved {
+    border-color: rgba(0, 217, 127, 0.4);
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.9),
+        -6px -6px 20px rgba(255, 255, 255, 0.04),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.04),
+        0 0 40px rgba(0, 217, 127, 0.3);
+}
+
+.redeem-sent-box.approved::before {
+    background: linear-gradient(90deg, transparent, rgba(0, 217, 127, 0.1), transparent);
+}
+
+/* Icon */
+.redeem-sent-icon {
+    font-size: 3.5rem;
+    filter: drop-shadow(0 0 24px rgba(254, 202, 87, 0.6));
+    animation: successBounce 1s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-sent-box.approved .redeem-sent-icon {
+    filter: drop-shadow(0 0 28px rgba(0, 217, 127, 0.8));
+}
+
+@keyframes successBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-10px) scale(1.08);
+    }
+}
+
+@keyframes successFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Title */
+.redeem-sent-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.02em;
+    text-align: center;
+    filter: drop-shadow(0 0 12px rgba(254, 202, 87, 0.5));
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-sent-box.approved .redeem-sent-title {
+    background: linear-gradient(135deg, #c9ffe6, #00d97f, #00a85e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(0, 217, 127, 0.6));
+}
+
+/* Text */
+.redeem-sent-text {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--clay-text-soft, #a0a0b0);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-sent-text strong {
+    color: #feca57;
+    font-weight: 900;
+    text-shadow: 0 0 8px rgba(254, 202, 87, 0.4);
+}
+
+.redeem-sent-box.approved .redeem-sent-text strong {
+    color: #00d97f;
+    text-shadow: 0 0 8px rgba(0, 217, 127, 0.4);
+}
+
+/* Status */
+.redeem-sent-status {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #feca57;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    background: rgba(254, 202, 87, 0.1);
+    border: 1px solid rgba(254, 202, 87, 0.3);
+    border-radius: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-sent-box.approved .redeem-sent-status {
+    color: #00d97f;
+    background: rgba(0, 217, 127, 0.1);
+    border-color: rgba(0, 217, 127, 0.3);
+    box-shadow: 0 0 16px rgba(0, 217, 127, 0.3);
+}
+
+/* Footer (only approved) */
+.redeem-sent-footer {
+    margin: 12px 0 0;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(0, 217, 127, 0.3);
+    font-size: 0.78rem;
+    color: var(--clay-text-soft, #a0a0b0);
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.redeem-sent-footer strong {
+    color: #00d97f;
+    font-weight: 900;
+    text-shadow: 0 0 8px rgba(0, 217, 127, 0.4);
+}
+
+/* ============================================
+   REDEEM RECEIVED BOX — User B (Owner)
+   ============================================ */
+
+.redeem-received-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: linear-gradient(145deg, #0f2018, #0a1812);
+    border-radius: 18px;
+    border: 1px solid rgba(0, 217, 127, 0.25);
+    box-shadow:
+        6px 6px 16px rgba(0, 0, 0, 0.8),
+        -4px -4px 10px rgba(255, 255, 255, 0.03),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(0, 217, 127, 0.1);
+    animation: receivedFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes receivedFadeIn {
     from {
         opacity: 0;
         transform: translateY(12px);
@@ -960,267 +2013,93 @@
     }
 }
 
-.rewards-terms::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(254, 202, 87, 0.05),
-            transparent);
-    animation: termsSweep 6s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes termsSweep {
-
-    0%,
-    100% {
-        left: -100%;
-    }
-
-    50% {
-        left: 150%;
-    }
-}
-
-.rewards-terms-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: #feca57;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid rgba(254, 202, 87, 0.15);
-}
-
-.terms-icon {
-    font-size: 1rem;
-    animation: termsIconPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes termsIconPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.15);
-    }
-}
-
-.rewards-terms-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.terms-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 0.78rem;
-    color: #a0a0b0;
-    line-height: 1.55;
-    font-weight: 500;
-}
-
-.terms-item strong {
-    color: #feca57;
-    font-weight: 800;
-}
-
-.terms-dot {
+.redeem-received-icon {
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 10px rgba(0, 217, 127, 0.6));
     flex-shrink: 0;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #feca57, #ff9f43);
-    box-shadow: 0 0 8px rgba(254, 202, 87, 0.6);
-    margin-top: 7px;
+    animation: notifIconBounce 2s ease-in-out infinite;
 }
 
-.rewards-terms-footer {
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px dashed rgba(254, 202, 87, 0.2);
-    text-align: center;
-    font-size: 0.78rem;
-    color: #8a8a9a;
-    font-weight: 600;
-    letter-spacing: 0.03em;
+@keyframes notifIconBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
 }
 
-.rewards-terms-footer strong {
-    background: linear-gradient(135deg, #ffeaa7, #feca57, #ff9f43);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.redeem-received-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.redeem-received-text p {
+    margin: 0 0 4px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #f0f0f5;
+    line-height: 1.4;
+}
+
+.redeem-received-text p strong {
+    color: #00d97f;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    text-shadow: 0 0 8px rgba(0, 217, 127, 0.4);
 }
 
-/* ============================================
-   DEMO NOTICE
-   ============================================ */
-
-.demo-notice-box {
-    margin-top: 20px;
-    padding: 18px 18px 16px;
-    background: linear-gradient(155deg, #14141e, #0a0a12);
-    border: 1px solid rgba(162, 155, 254, 0.25);
-    border-radius: 18px;
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(162, 155, 254, 0.08) inset;
-    position: relative;
-    overflow: hidden;
-    animation: termsFadeIn 0.6s ease 0.3s backwards;
-}
-
-.demo-notice-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(162, 155, 254, 0.06),
-            transparent);
-    animation: termsSweep 6s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.demo-notice-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
+.redeem-received-text span {
+    font-size: 0.7rem;
+    color: #feca57;
     font-weight: 800;
-    color: #a29bfe;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    padding-bottom: 10px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid rgba(162, 155, 254, 0.2);
-}
-
-.demo-notice-icon {
-    font-size: 1rem;
-    animation: termsIconPulse 2.5s ease-in-out infinite;
-}
-
-.demo-notice-box p {
-    margin: 0;
-    font-size: 0.78rem;
-    color: #a0a0b0;
-    line-height: 1.55;
-    font-weight: 500;
-}
-
-.demo-notice-box p strong {
-    color: #a29bfe;
-    font-weight: 800;
-}
-
-.demo-notice-footer {
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px dashed rgba(162, 155, 254, 0.25);
-    text-align: center;
-    font-size: 0.78rem;
-    color: #8a8a9a;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-}
-
-.demo-notice-footer strong {
-    background: linear-gradient(135deg, #c9c2ff, #a29bfe, #6c5ce7);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800;
-    letter-spacing: 0.06em;
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE — 380px
    ============================================ */
 
 @media (max-width: 380px) {
-    .scratch-grid {
-        gap: 9px;
+    .redeem-sent-box {
+        padding: 28px 20px;
+        gap: 12px;
     }
 
-    .scratch-number {
-        font-size: 1.25rem;
+    .redeem-sent-icon {
+        font-size: 3rem;
     }
 
-    .rewards-value {
-        font-size: 1.35rem;
+    .redeem-sent-title {
+        font-size: 1rem;
     }
 
-    .rewards-help-btn {
-        right: -26px;
-        width: 20px;
-        height: 20px;
-        font-size: 0.65rem;
+    .redeem-sent-text {
+        font-size: 0.78rem;
     }
 
-    .rewards-help-box {
-        right: 10px;
-        min-width: 200px;
+    .redeem-sent-status {
+        font-size: 0.7rem;
+        padding: 5px 12px;
     }
 
-    .scratch-card {
-        padding: 16px;
+    .redeem-sent-footer {
+        font-size: 0.72rem;
     }
 
-    .scratch-notice {
-        font-size: 0.65rem;
-        padding: 8px 12px;
+    .redeem-received-box {
+        padding: 14px 16px;
+        gap: 12px;
     }
-}
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
+    .redeem-received-icon {
+        font-size: 1.4rem;
+    }
 
-@media (prefers-reduced-motion: reduce) {
-
-    .my-rewards::before,
-    .my-rewards-header h2,
-    .my-rewards-tab.active::after,
-    .rewards-topbar::before,
-    .rewards-value.points,
-    .rewards-value.demo-points,
-    .rewards-help-btn,
-    .scratch-notice,
-    .notice-dot,
-    .scratch-card::before,
-    .scratch-cover,
-    .scratch-box.scratching .scratch-cover,
-    .scratch-number,
-    .lock-icon,
-    .rewards-congrats-inner,
-    .rewards-congrats-emoji,
-    .rewards-congrats-points,
-    .rewards-terms::before,
-    .terms-icon,
-    .demo-notice-box::before,
-    .demo-notice-icon {
-        animation: none !important;
-        transition: none !important;
+    .redeem-received-text p {
+        font-size: 0.76rem;
     }
 }

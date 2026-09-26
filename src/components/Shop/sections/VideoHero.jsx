@@ -13,14 +13,23 @@ function VideoHero() {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(true);
 
+    /* Independent sticky states */
+    const [isPlaying, setIsPlaying] = useState(true);
     const [isMuted, setIsMuted] = useState(() => {
         const saved = localStorage.getItem("shopVideosMuted");
         return saved === null ? true : saved === "true";
     });
 
     const videoRef = useRef(null);
+    const slideRef = useRef(null);
+
+    const dragRef = useRef({
+        active: false,
+        startX: 0,
+        startTime: 0,
+        duration: 0
+    });
 
     /* ===============================
        FETCH ACTIVE VIDEOS
@@ -28,31 +37,18 @@ function VideoHero() {
     useEffect(() => {
 
         const fetchVideos = async () => {
-
             try {
-
                 setLoading(true);
-
-                const res = await fetch(
-                    `${API}/api/videohero/active`
-                );
-
+                const res = await fetch(`${API}/api/videohero/active`);
                 const data = await res.json();
-
                 if (data.success) {
                     setVideos(data.data || []);
                 }
-
             } catch (err) {
-
                 console.error("Video fetch error:", err);
-
             } finally {
-
                 setLoading(false);
-
             }
-
         };
 
         fetchVideos();
@@ -60,28 +56,20 @@ function VideoHero() {
     }, []);
 
     /* ===============================
-       MUTE STATE SAVE
+       MUTE — apply to video only
     =============================== */
     useEffect(() => {
-
-        localStorage.setItem(
-            "shopVideosMuted",
-            String(isMuted)
-        );
-
+        localStorage.setItem("shopVideosMuted", String(isMuted));
         if (videoRef.current) {
             videoRef.current.muted = isMuted;
         }
-
     }, [isMuted, currentIndex]);
 
     /* ===============================
-       PLAY VIDEO WHEN INDEX CHANGES
+       PLAY/PAUSE — apply to video only
     =============================== */
     useEffect(() => {
-
         if (videos.length === 0) return;
-
         const video = videoRef.current;
         if (!video) return;
 
@@ -89,54 +77,126 @@ function VideoHero() {
 
         if (isPlaying) {
             video.play().catch(() => {});
+        } else {
+            video.pause();
         }
-
     }, [currentIndex, videos, isPlaying]);
 
     /* ===============================
-       HANDLERS
+       BUTTONS — independent
     =============================== */
-    const toggleMute = () => setIsMuted((prev) => !prev);
-
     const togglePlay = () => {
-
-        const video = videoRef.current;
-        if (!video) return;
-
-        if (video.paused) {
-            video.play().catch(() => {});
-            setIsPlaying(true);
-        } else {
-            video.pause();
-            setIsPlaying(false);
-        }
-
+        setIsPlaying((prev) => !prev);
     };
 
-    /* ✅ VIDEO END → NEXT VIDEO */
+    const toggleMute = () => {
+        setIsMuted((prev) => !prev);
+    };
+
     const handleVideoEnd = () => {
-
         const nextIndex = (currentIndex + 1) % videos.length;
-
         setCurrentIndex(nextIndex);
         setIsPlaying(true);
-
     };
 
-    /* ✅ DOT CLICK → JUMP TO VIDEO */
     const goToVideo = (index) => {
         setCurrentIndex(index);
         setIsPlaying(true);
     };
 
-    /* ===============================
-       LOADING
-    =============================== */
+    /* ============================================
+       DRAG — only seek, no play/pause
+    ============================================ */
+    const getDeltaTime = (clientX) => {
+        const slide = slideRef.current;
+        if (!slide) return 0;
+
+        const rect = slide.getBoundingClientRect();
+        const deltaX = clientX - dragRef.current.startX;
+        return (deltaX / rect.width) * dragRef.current.duration;
+    };
+
+    const handleDragStart = (clientX) => {
+        const video = videoRef.current;
+        if (!video || !video.duration) return;
+
+        dragRef.current = {
+            active: true,
+            startX: clientX,
+            startTime: video.currentTime,
+            duration: video.duration
+        };
+    };
+
+    const handleDragMove = (clientX) => {
+        const video = videoRef.current;
+        if (!video || !dragRef.current.active) return;
+
+        const deltaTime = getDeltaTime(clientX);
+        const newTime = dragRef.current.startTime + deltaTime;
+
+        if (newTime >= video.duration) {
+            dragRef.current.active = false;
+            const nextIndex = (currentIndex + 1) % videos.length;
+            setCurrentIndex(nextIndex);
+            return;
+        }
+
+        if (newTime <= 0) {
+            dragRef.current.active = false;
+            const prevIndex =
+                currentIndex === 0 ? videos.length - 1 : currentIndex - 1;
+            setCurrentIndex(prevIndex);
+            return;
+        }
+
+        video.currentTime = newTime;
+    };
+
+    const handleDragEnd = () => {
+        dragRef.current.active = false;
+    };
+
+    /* ============================================
+       TOUCH — only drag
+    ============================================ */
+    const onTouchStart = (e) => {
+        if (e.touches.length !== 1) return;
+        if (e.target.closest(".shop-video-controls")) return;
+        handleDragStart(e.touches[0].clientX);
+    };
+
+    const onTouchMove = (e) => {
+        if (e.touches.length !== 1) return;
+        if (!dragRef.current.active) return;
+        handleDragMove(e.touches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        handleDragEnd();
+    };
+
+    /* ============================================
+       MOUSE — only drag
+    ============================================ */
+    const onMouseDown = (e) => {
+        if (e.target.closest(".shop-video-controls")) return;
+        e.preventDefault();
+        handleDragStart(e.clientX);
+
+        const moveHandler = (ev) => handleDragMove(ev.clientX);
+        const upHandler = () => {
+            handleDragEnd();
+            document.removeEventListener("mousemove", moveHandler);
+            document.removeEventListener("mouseup", upHandler);
+        };
+
+        document.addEventListener("mousemove", moveHandler);
+        document.addEventListener("mouseup", upHandler);
+    };
+
     if (loading) return null;
 
-    /* ===============================
-       RENDER
-    =============================== */
     return (
         <section className="shop-video-section">
 
@@ -153,7 +213,14 @@ function VideoHero() {
                 <>
 
                     <div className="shop-video-scroll">
-                        <div className="shop-video-slide">
+                        <div
+                            className="shop-video-slide"
+                            ref={slideRef}
+                            onTouchStart={onTouchStart}
+                            onTouchMove={onTouchMove}
+                            onTouchEnd={onTouchEnd}
+                            onMouseDown={onMouseDown}
+                        >
 
                             <video
                                 ref={videoRef}
@@ -165,10 +232,12 @@ function VideoHero() {
                                 onEnded={handleVideoEnd}
                             />
 
+                            {/* TOP LEFT — Name */}
                             <div className="shop-video-info-name">
                                 {videos[currentIndex]?.name}
                             </div>
 
+                            {/* TOP RIGHT — Date */}
                             <div className="shop-video-info-date">
                                 {new Date(
                                     videos[currentIndex]?.created_at
@@ -179,40 +248,32 @@ function VideoHero() {
                                 })}
                             </div>
 
+                            {/* BOTTOM LEFT — Frontview */}
                             <div className="shop-video-info-frontview">
                                 {videos[currentIndex]?.frontview}
                             </div>
 
+                            {/* BOTTOM RIGHT — Controls */}
                             <div className="shop-video-controls">
 
+                                {/* Play/Pause — purple when playing */}
                                 <button
                                     type="button"
-                                    className="shop-video-control-btn"
+                                    className={`shop-video-control-btn ${isPlaying ? "purple" : ""}`}
                                     onClick={togglePlay}
-                                    aria-label={
-                                        isPlaying ? "Pause" : "Play"
-                                    }
+                                    aria-label={isPlaying ? "Pause" : "Play"}
                                 >
-                                    {isPlaying ? (
-                                        <FiPause />
-                                    ) : (
-                                        <FiPlay />
-                                    )}
+                                    {isPlaying ? <FiPause /> : <FiPlay />}
                                 </button>
 
+                                {/* Mute — purple when unmuted */}
                                 <button
                                     type="button"
-                                    className="shop-video-control-btn"
+                                    className={`shop-video-control-btn ${!isMuted ? "purple" : ""}`}
                                     onClick={toggleMute}
-                                    aria-label={
-                                        isMuted ? "Unmute" : "Mute"
-                                    }
+                                    aria-label={isMuted ? "Unmute" : "Mute"}
                                 >
-                                    {isMuted ? (
-                                        <FiVolumeX />
-                                    ) : (
-                                        <FiVolume2 />
-                                    )}
+                                    {isMuted ? <FiVolumeX /> : <FiVolume2 />}
                                 </button>
 
                             </div>

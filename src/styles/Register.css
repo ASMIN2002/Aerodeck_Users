@@ -1,889 +1,792 @@
-/* ================================
-   REGISTER PAGE
-================================ */
+/* ==========================================================================
+   REGISTER — WHITE CLAYMORPHISM UI
+   Fully responsive · Keypad-safe · Animated
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   ROOT VARIABLES
+   ============================================ */
+
+:root {
+    --clay-bg: #eef0f6;
+    --clay-bg-light: #f8f9fc;
+    --clay-bg-dark: #d8dae2;
+
+    --clay-shadow-dark: rgba(184, 186, 196, 0.7);
+    --clay-shadow-light: #ffffff;
+
+    --clay-purple: #6c5ce7;
+    --clay-purple-light: #a29bfe;
+    --clay-purple-deep: #4834d4;
+
+    --clay-gold: #feca57;
+    --clay-gold-dark: #ff9f43;
+    --clay-gold-deep: #d97706;
+
+    --clay-green: #00d97f;
+    --clay-green-dark: #00a85e;
+    --clay-red: #ff4757;
+    --clay-red-dark: #e8344a;
+
+    --clay-text: #2d3436;
+    --clay-text-soft: #636e72;
+    --clay-text-light: #b2bec3;
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
 
 .rg-container {
-    width: 100%;
-    min-height: 100dvh;
     position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: linear-gradient(145deg, #eef0f6, #d8dae2);
     display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
-    background: #03032d;
-    font-family: Arial, sans-serif;
+    justify-content: center;
+    padding: 24px 16px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
+.rg-container * {
+    box-sizing: border-box;
+}
 
-/* ================================
-   MAIN BOX
-================================ */
+/* Soft ambient glow */
+.rg-container::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(162, 155, 254, 0.15), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(254, 202, 87, 0.12), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: rgAmbient 10s ease-in-out infinite;
+}
+
+@keyframes rgAmbient {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.08);
+        opacity: 0.85;
+    }
+}
+
+/* ============================================
+   MAIN ORB (Card)
+   ============================================ */
 
 .rg-orb {
-    width: min(88vw, 560px);
-    aspect-ratio: 1;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 10px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 0 10px aqua;
-    height: 70vh;
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(145deg, #f0f2f8, #d8dae2);
+    border-radius: 32px;
+    box-shadow:
+        16px 16px 40px rgba(184, 186, 196, 0.7),
+        -12px -12px 32px rgba(255, 255, 255, 0.95),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.04),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    padding: 32px 28px;
+    overflow: hidden;
+    z-index: 1;
+    animation: rgOrbEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.3s ease;
 }
 
+@keyframes rgOrbEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
 
-.rg-orb::before {
-    content: "";
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
+/* ============================================
+   SENDING OVERLAY
+   ============================================ */
+
+.rg-orb-sending .rg-content {
+    filter: blur(3px);
+    opacity: 0.4;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.rg-sending-overlay {
     position: absolute;
-
-    width: 110%;
-    height: 110%;
-
-    background:
-        radial-gradient(circle,
-            rgba(255, 255, 255, 0.2),
-            transparent 68%);
-
-    filter: blur(20px);
-
-    z-index: -1;
-}
-
-
-/* ================================
-   CONTENT
-================================ */
-
-.rg-content {
-    width: 72%;
-
-    position: relative;
-    z-index: 2;
-
+    inset: 0;
+    background: linear-gradient(145deg, rgba(240, 242, 248, 0.95), rgba(216, 218, 226, 0.95));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 10;
+    border-radius: 32px;
+    animation: rgOverlayFade 0.3s ease;
 }
 
+@keyframes rgOverlayFade {
+    from {
+        opacity: 0;
+    }
 
-/* ================================
+    to {
+        opacity: 1;
+    }
+}
+
+.rg-sending-overlay svg {
+    font-size: 3rem;
+    color: var(--clay-purple);
+    animation: rgSpin 1s linear infinite;
+    filter: drop-shadow(0 4px 8px rgba(108, 92, 231, 0.3));
+}
+
+@keyframes rgSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rg-sending-overlay span {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--clay-purple);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.rg-sending-overlay small {
+    font-size: 0.75rem;
+    color: var(--clay-text-soft);
+    font-weight: 600;
+}
+
+/* ============================================
+   CONTENT
+   ============================================ */
+
+.rg-content {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* ============================================
    WELCOME BADGE
-================================ */
+   ============================================ */
 
 .rg-welcome-badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-
-    gap: 6px;
-
-    padding: 7px 13px;
-
+    gap: 8px;
+    padding: 6px 14px;
+    background: linear-gradient(145deg, #f0f2f8, #d8dae2);
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--clay-text-soft);
+    letter-spacing: 0.04em;
     margin-bottom: 18px;
-
-    border-radius: 30px;
-
-    background:
-        rgba(255, 255, 255, 0.35);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.6);
-
     box-shadow:
-        3px 3px 8px rgba(120, 125, 140, 0.12),
-        -2px -2px 7px rgba(255, 255, 255, 0.7);
-
-    font-size: 10px;
-    letter-spacing: 1px;
-
-    color: #ffffff;
-
-    animation:
-        rgWelcomeFloat 2.5s ease-in-out infinite;
+        4px 4px 10px rgba(184, 186, 196, 0.6),
+        -4px -4px 10px rgba(255, 255, 255, 0.95),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.03),
+        inset 0 1px 2px rgba(255, 255, 255, 0.7);
+    animation: rgBadgeFadeIn 0.5s ease 0.1s backwards;
 }
 
+@keyframes rgBadgeFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
 
-.rg-welcome-badge b {
-    color: aqua;
-    letter-spacing: 2px;
-    text-shadow: 0 0 2px white;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
 
 .rg-welcome-dot {
     width: 7px;
     height: 7px;
-
-    flex-shrink: 0;
-
     border-radius: 50%;
-
-    background: #00dce7;
-
-    animation:
-        rgPulse 1.8s infinite;
+    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    box-shadow: 0 0 8px rgba(108, 92, 231, 0.7);
+    animation: rgDotPulse 2s ease-in-out infinite;
 }
 
+@keyframes rgDotPulse {
 
-/* ================================
-   BRAND
-================================ */
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+.rg-welcome-badge b {
+    color: var(--clay-purple);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+}
+
+/* ============================================
+   BRAND / HEADING
+   ============================================ */
 
 .rg-brand {
-    width: 100%;
-    text-align: center;
-
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    animation: rgBrandFadeIn 0.5s ease 0.15s backwards;
 }
 
+@keyframes rgBrandFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 .rg-heading {
-    margin: 0;
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: white;
+    margin: 0 0 6px;
+    font-size: 1.65rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    background: linear-gradient(135deg,
+            #2d3436 0%,
+            #6c5ce7 40%,
+            #4834d4 70%,
+            #6c5ce7 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rgHeadingShine 5s ease infinite;
 }
 
+@keyframes rgHeadingShine {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
 
 .rg-subtitle {
-    margin: 7px 0 0;
-
-    font-size: 12px;
-
-    letter-spacing: 0.5px;
-
-    color: white;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--clay-text-soft);
+    font-weight: 600;
+    line-height: 1.5;
 }
 
-
-/* ================================
+/* ============================================
    FORM
-================================ */
+   ============================================ */
 
 .rg-form {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: rgFormFadeIn 0.5s ease 0.2s backwards;
 }
 
+@keyframes rgFormFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 .rg-field {
-    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-
 
 .rg-label {
-    display: block;
-
-    margin-bottom: 15px;
-
-    padding-left: 5px;
-
-    font-size: 11px;
-    font-weight: 600;
-
-    letter-spacing: 1px;
-
-    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-left: 4px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
 }
 
-
-/* ================================
-   INPUT BOXES
-================================ */
+/* ============================================
+   INPUT BOX — CLAY
+   ============================================ */
 
 .rg-input-box,
 .rg-phone-box {
-    width: 100%;
-    height: 48px;
+    position: relative;
     display: flex;
     align-items: center;
-    border-radius: 13px;
-    background:black;
-    border: 1px solid white;
+    gap: 10px;
+    padding: 14px 18px;
+    background: linear-gradient(145deg, #e0e3eb, #f4f6fa);
+    border-radius: 16px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow:
-        inset 4px 4px 9px rgba(79, 70, 70, 0.14),
-        inset -4px -4px 9px rgba(255, 255, 255, 0.45);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        background 0.3s ease;
+        inset 6px 6px 14px rgba(184, 186, 196, 0.6),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
-
 
 .rg-input-box:focus-within,
 .rg-phone-box:focus-within {
-    transform: translateY(-3px);
-
-    /* background: rgba(255, 255, 255, 0.5); */
-
-    box-shadow:0 0 5px white;
+    background: linear-gradient(145deg, #e0e3eb, #f4f6fa);
+    box-shadow:
+        inset 6px 6px 14px rgba(184, 186, 196, 0.7),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.95),
+        0 0 0 3px rgba(108, 92, 231, 0.2);
+    border-color: rgba(108, 92, 231, 0.4);
 }
 
-/* ================================
-   INPUT ICON
-================================ */
+/* Checking state */
+.rg-field-checking {
+    animation: rgFieldPulse 1.2s ease-in-out infinite;
+}
 
+@keyframes rgFieldPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            inset 6px 6px 14px rgba(184, 186, 196, 0.6),
+            inset -6px -6px 14px rgba(255, 255, 255, 0.95),
+            0 0 0 3px rgba(108, 92, 231, 0.15);
+    }
+
+    50% {
+        box-shadow:
+            inset 6px 6px 14px rgba(184, 186, 196, 0.6),
+            inset -6px -6px 14px rgba(255, 255, 255, 0.95),
+            0 0 0 5px rgba(108, 92, 231, 0.35);
+    }
+}
+
+/* Verified state */
+.rg-field-verified {
+    box-shadow:
+        inset 6px 6px 14px rgba(184, 186, 196, 0.6),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.95),
+        0 0 0 3px rgba(0, 217, 127, 0.3);
+    border-color: rgba(0, 217, 127, 0.4);
+    animation: rgVerifiedBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes rgVerifiedBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Icons */
 .rg-input-icon {
-    margin-left: 15px;
-
-    font-size: 17px;
-
-    color: white;
-
+    font-size: 1.15rem;
+    color: var(--clay-purple);
+    filter: drop-shadow(1px 1px 2px rgba(108, 92, 231, 0.3));
     flex-shrink: 0;
 }
 
-
-/* ================================
-   INPUT
-================================ */
-
-.rg-input,
-.rg-phone-input {
-    width: 100%;
-    height: 100%;
-
-    border: none;
-    outline: none;
-
-    background: transparent;
-
-    padding: 0 13px;
-
-    font-size: 13px;
-
-    color: white;
+.rg-country {
+    font-size: 0.9rem;
+    font-weight: 800;
+    padding-right: 8px;
+    border-right: 1.5px solid rgba(184, 186, 196, 0.5);
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
 }
 
+/* Inputs */
+.rg-input,
+.rg-phone-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    padding: 0;
+    min-width: 0;
+    width: 100%;
+}
 
 .rg-input::placeholder,
 .rg-phone-input::placeholder {
-    color: white;
-}
-
-
-.rg-phone-input::-webkit-outer-spin-button,
-.rg-phone-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-
-/* ================================
-   COUNTRY CODE
-================================ */
-
-.rg-country {
-    margin-left: 9px;
-    padding-right: 9px;
-    border-right:1px solid white;
-    font-size: 13px;
+    color: var(--clay-text-light);
     font-weight: 600;
-
-    color: white;
 }
 
-
-/* ================================
-   TERMS & CONDITIONS
-================================ */
-
-.rg-terms {
-    width: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    flex-wrap: wrap;
-
-    gap: 5px;
-
-    margin: 4px 0 14px;
-}
-
-
-.rg-checkbox-wrapper {
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
-
-    cursor: pointer;
-
-    user-select: none;
-}
-
-
-.rg-checkbox-wrapper input {
-    position: absolute;
-
-    opacity: 0;
-
-    pointer-events: none;
-}
-
-
-/* CUSTOM CHECKBOX */
-
-.rg-custom-checkbox {
-    width: 15px;
-    height: 15px;
-
-    position: relative;
-
-    flex-shrink: 0;
-
-    border:
-        1.5px solid rgba(80, 90, 100, 0.5);
-
-    border-radius: 4px;
-
-    background:
-        rgba(255, 255, 255, 0.35);
-
-    transition: 0.2s ease;
-}
-
-
-.rg-checkbox-wrapper input:checked+.rg-custom-checkbox {
-    background: #00cbd5;
-
-    border-color: #00b7c0;
-
-    box-shadow:
-        0 0 8px rgba(0, 203, 213, 0.3);
-}
-
-
-/* CHECKMARK */
-
-.rg-checkbox-wrapper input:checked+.rg-custom-checkbox::after {
-    content: "";
-
-    position: absolute;
-
-    left: 4px;
-    top: 1px;
-
-    width: 4px;
-    height: 8px;
-
-    border: solid white;
-
-    border-width:
-        0 2px 2px 0;
-
-    transform: rotate(45deg);
-}
-
-
-.rg-terms-text {
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: white;
-}
-
-
-.rg-terms-link {
-    border: none;
-    padding: 0;
-
-    background: transparent;
-
-    color: #79a4f0;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    cursor: pointer;
-    letter-spacing: 1px;
-    text-decoration: underline;
-
-    text-underline-offset: 2px;
-}
-
-
-/* ================================
-   CONTINUE BUTTON
-================================ */
-
-.rg-btn {
-    width: 100%;
-    height: 50px;
-
-    border: none;
-    border-radius: 13px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: 10px;
-
-    color: white;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    letter-spacing: 1.5px;
-
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-
-/* ACTIVE */
-
-.rg-btn-active {
-    cursor: pointer;
-
-    opacity: 1;
-
-    background:
-        linear-gradient(135deg,
-            rgba(0, 247, 255, 0.85),
-            rgba(0, 190, 210, 0.8));
-
-    box-shadow:
-        0 8px 18px rgba(0, 180, 190, 0.22),
-        6px 6px 12px rgba(130, 135, 150, 0.15);
-}
-
-
-.rg-btn-active:hover {
-    transform: translateY(-2px);
-}
-
-
-.rg-btn-active:active {
-    transform: scale(0.98);
-}
-
-
-/* DISABLED */
-
-.rg-btn-disabled {
-    opacity: 0.35;
-
+.rg-input:disabled,
+.rg-phone-input:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
-
-    background:
-        rgba(150, 155, 160, 0.4);
-
-    box-shadow: none;
 }
 
-
-/* ARROW */
-
-.rg-btn-arrow {
-    font-size: 17px;
-
-    transition: transform 0.25s ease;
+/* Field loader (checking) */
+.rg-field-loader {
+    font-size: 1.15rem;
+    color: var(--clay-purple);
+    animation: rgSpin 0.9s linear infinite;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px rgba(108, 92, 231, 0.5));
 }
 
-
-.rg-btn-active:hover .rg-btn-arrow {
-    transform: translateX(4px);
+/* Field tick (verified) */
+.rg-field-tick {
+    font-size: 1.15rem;
+    color: var(--clay-green);
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 6px rgba(0, 217, 127, 0.6));
+    animation: rgTickPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+@keyframes rgTickPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
 
-/* ================================
-   FOOTER
-================================ */
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
 
-.rg-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: 5px;
-
-    margin-top: 18px;
-
-    font-size: 11px;
-
-    color: #737780;
-}
-.rg-footer span{
-    color: white;
-    letter-spacing: 1px;
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-.rg-login-btn {
-    border: none;
-    padding: 0;
-
-    background: transparent;
-
-    color: aqua;
-    letter-spacing: 1px;
-    font-size: 11px;
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-/* =========================================
-   REGISTER VALIDATION RULES
-========================================= */
+/* ============================================
+   NAME RULES
+   ============================================ */
 
 .rg-name-rules {
     display: flex;
     flex-direction: column;
     gap: 4px;
-
-    margin-top: 7px;
-    padding-left: 5px;
-    margin-bottom: 15px;
+    padding: 0 4px;
+    margin-top: 2px;
 }
 
-.rg-name-rules div {
+.rg-name-rules>div {
     display: flex;
     align-items: center;
-    gap: 5px;
-
-    font-size: 9px;
-    letter-spacing: 1px;
-
-    color: white;
-
-    opacity: 0.55;
-
-    transition: 0.25s ease;
+    gap: 6px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--clay-text-soft);
+    line-height: 1.4;
+    transition: color 0.2s ease;
 }
 
 .rg-name-rules svg {
-    font-size: 10px;
+    font-size: 0.72rem;
+    flex-shrink: 0;
 }
 
 .rg-rule-error {
-    color: #d34a58 !important;
-    opacity: 1 !important;
-
-    animation: rgRuleShake 0.3s ease;
+    color: var(--clay-red) !important;
 }
 
-@keyframes rgRuleShake {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-3px);
-    }
-
-    75% {
-        transform: translateX(3px);
-    }
+.rg-rule-error svg {
+    filter: drop-shadow(0 0 4px rgba(255, 71, 87, 0.5));
 }
 
-
-/* =========================================
-   FIELD CHECKING ANIMATION
-========================================= */
-
-.rg-input-box,
-.rg-phone-box {
-    position: relative;
-}
-
-
-/* Checking running border */
-
-.rg-field-checking {
-    border: 2px solid transparent !important;
-
-    background:
-        linear-gradient(rgba(255, 255, 255, 0.45),
-            rgba(255, 255, 255, 0.45)) padding-box,
-
-        conic-gradient(from var(--rg-angle),
-            transparent 0deg,
-            transparent 45deg,
-            #00d9e8 90deg,
-            #00ffff 130deg,
-            transparent 180deg,
-            transparent 360deg) border-box;
-
-    animation:
-        rgBorderRotate 1s linear infinite;
-
-    box-shadow:
-        0 0 8px rgba(0, 220, 230, 0.2),
-        0 0 20px rgba(0, 220, 230, 0.12);
-}
-
-
-@property --rg-angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
-
-
-@keyframes rgBorderRotate {
-
-    from {
-        --rg-angle: 0deg;
-    }
-
-    to {
-        --rg-angle: 360deg;
-    }
-}
-
-
-/* =========================================
-   VERIFIED FIELD
-========================================= */
-
-.rg-field-verified {
-    border: 1.5px solid rgba(30, 170, 100, 0.65) !important;
-
-    box-shadow:
-        0 0 0 3px rgba(30, 170, 100, 0.06),
-        0 0 15px rgba(30, 170, 100, 0.1);
-
-    animation: rgVerifiedPulse 0.5s ease;
-}
-
-
-@keyframes rgVerifiedPulse {
-
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.025);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-
-/* =========================================
-   FIELD LOADER
-========================================= */
-
-.rg-field-loader {
-    position: absolute;
-
-    right: 15px;
-
-    font-size: 17px;
-
-    color: #00aeba;
-
-    animation:
-        rgFieldSpin 0.8s linear infinite;
-}
-
-
-@keyframes rgFieldSpin {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* =========================================
-   GREEN VERIFIED TICK
-========================================= */
-
-.rg-field-tick {
-    position: absolute;
-
-    right: 15px;
-
-    font-size: 19px;
-
-    color: #20a869;
-
-    stroke-width: 3;
-
-    animation:
-        rgTickPop 0.45s cubic-bezier(0.175,
-            0.885,
-            0.32,
-            1.275);
-}
-
-
-@keyframes rgTickPop {
-
-    0% {
-        opacity: 0;
-        transform: scale(0);
-    }
-
-    70% {
-        transform: scale(1.25);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-
-/* Make space for tick */
-
-.rg-input,
-.rg-phone-input {
-    padding-right: 45px !important;
-}
-
-
-/* =========================================
-   SENDING OTP FULL ORB ANIMATION
-========================================= */
-
-.rg-orb {
-    position: relative;
-}
-
-
-.rg-orb-sending {
-    overflow: hidden;
-
-    animation:
-        rgOrbSendingPulse 1.2s ease-in-out infinite;
-
-    box-shadow:
-        0 0 15px rgba(0, 225, 240, 0.25),
-        0 0 45px rgba(0, 225, 240, 0.18);
-}
-
-
-.rg-orb-sending::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -60%;
-
-    background:
-        conic-gradient(transparent,
-            rgba(0, 230, 255, 0.18),
-            transparent,
-            transparent);
-
-    animation:
-        rgOrbSweep 2s linear infinite;
-}
-
-
-@keyframes rgOrbSweep {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-@keyframes rgOrbSendingPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.015);
-    }
-}
-
-
-/* =========================================
-   SENDING OTP OVERLAY
-========================================= */
-
-.rg-sending-overlay {
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 20;
-
+/* ============================================
+   TERMS
+   ============================================ */
+
+.rg-terms {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px;
+    margin-top: 4px;
+}
 
+.rg-checkbox-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+}
+
+.rg-checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.rg-custom-checkbox {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border-radius: 8px;
+    background: linear-gradient(145deg, #e0e3eb, #f4f6fa);
+    box-shadow:
+        inset 4px 4px 8px rgba(184, 186, 196, 0.7),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.95),
+        2px 2px 6px rgba(184, 186, 196, 0.4),
+        -2px -2px 6px rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rg-checkbox-wrapper input:checked+.rg-custom-checkbox {
+    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    box-shadow:
+        4px 4px 10px rgba(108, 92, 231, 0.4),
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        inset 0 -2px 4px rgba(72, 52, 212, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.rg-checkbox-wrapper input:checked+.rg-custom-checkbox::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    gap: 10px;
-
-    border-radius: inherit;
-
-    background:
-        rgba(240, 242, 247, 0.78);
-
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
-    animation:
-        rgOverlayIn 0.35s ease forwards;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-shadow: 0 1px 2px rgba(72, 52, 212, 0.5);
 }
 
-
-.rg-sending-overlay svg {
-    font-size: 35px;
-
-    color: #00aeba;
-
-    animation:
-        rgSendingSpin 1s linear infinite;
+.rg-checkbox-wrapper input:disabled+.rg-custom-checkbox {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
+.rg-terms-text {
+    font-size: 0.8rem;
+    color: var(--clay-text-soft);
+    font-weight: 600;
+    line-height: 1.4;
+}
 
-.rg-sending-overlay span {
-    font-size: 13px;
-
+.rg-terms-link {
+    border: none;
+    background: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: 0.8rem;
     font-weight: 800;
-
-    letter-spacing: 2px;
-
-    color: #3f454e;
+    color: var(--clay-purple);
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-
-.rg-sending-overlay small {
-    font-size: 10px;
-
-    letter-spacing: 0.7px;
-
-    color: #858993;
-
-    animation:
-        rgSendingBlink 1.2s ease-in-out infinite;
+.rg-terms-link:hover {
+    color: var(--clay-purple-deep);
 }
 
+.rg-terms-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
-@keyframes rgOverlayIn {
+/* ============================================
+   CONTINUE BUTTON — CLAY
+   ============================================ */
 
+.rg-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 18px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    margin-top: 6px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.rg-btn-active {
+    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(72, 52, 212, 0.4);
+    box-shadow:
+        8px 8px 20px rgba(108, 92, 231, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.9),
+        inset 0 -3px 6px rgba(72, 52, 212, 0.4),
+        inset 0 3px 6px rgba(255, 255, 255, 0.4);
+    animation: rgBtnPulse 3s ease-in-out infinite;
+}
+
+@keyframes rgBtnPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            8px 8px 20px rgba(108, 92, 231, 0.4),
+            -6px -6px 16px rgba(255, 255, 255, 0.9),
+            inset 0 -3px 6px rgba(72, 52, 212, 0.4),
+            inset 0 3px 6px rgba(255, 255, 255, 0.4);
+    }
+
+    50% {
+        box-shadow:
+            10px 10px 26px rgba(108, 92, 231, 0.55),
+            -8px -8px 20px rgba(255, 255, 255, 0.9),
+            inset 0 -3px 6px rgba(72, 52, 212, 0.4),
+            inset 0 3px 6px rgba(255, 255, 255, 0.5);
+    }
+}
+
+.rg-btn-active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: rgBtnShine 2.5s ease-in-out infinite;
+}
+
+@keyframes rgBtnShine {
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.rg-btn-active:active {
+    transform: scale(0.97);
+    box-shadow:
+        inset 6px 6px 14px rgba(72, 52, 212, 0.5),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.3);
+}
+
+.rg-btn-disabled {
+    background: linear-gradient(145deg, #e0e3eb, #d8dae2);
+    color: var(--clay-text-light);
+    cursor: not-allowed;
+    box-shadow:
+        inset 4px 4px 10px rgba(184, 186, 196, 0.6),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.9);
+}
+
+.rg-btn-arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rg-btn-active:hover .rg-btn-arrow {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   FOOTER (Login link)
+   ============================================ */
+
+.rg-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(184, 186, 196, 0.4);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--clay-text-soft);
+    animation: rgFooterFadeIn 0.5s ease 0.3s backwards;
+}
+
+@keyframes rgFooterFadeIn {
     from {
         opacity: 0;
     }
@@ -893,252 +796,349 @@
     }
 }
 
-
-@keyframes rgSendingSpin {
-
-    to {
-        transform: rotate(360deg);
-    }
+.rg-login-btn {
+    border: none;
+    background: none;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 900;
+    color: var(--clay-purple);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    box-shadow:
+        2px 2px 6px rgba(184, 186, 196, 0.5),
+        -2px -2px 6px rgba(255, 255, 255, 0.9);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
-
-@keyframes rgSendingBlink {
-
-    0%,
-    100% {
-        opacity: 0.4;
-    }
-
-    50% {
-        opacity: 1;
-    }
+.rg-login-btn:hover {
+    color: var(--clay-purple-deep);
+    transform: translateY(-1px);
+    box-shadow:
+        4px 4px 10px rgba(108, 92, 231, 0.2),
+        -3px -3px 8px rgba(255, 255, 255, 0.9);
 }
 
+.rg-login-btn:active {
+    transform: scale(0.95);
+}
 
-/* =========================================
-   REGISTER TOAST
-========================================= */
+.rg-login-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   TOAST — CLAY
+   ============================================ */
 
 .rg-toast {
     position: fixed;
-
-    top: 20px;
+    top: 24px;
     left: 50%;
-
     transform: translateX(-50%);
-
-    width: min(85vw, 370px);
-
-    min-height: 52px;
-
-    display: flex;
+    z-index: 9999;
+    display: inline-flex;
     align-items: center;
-
     gap: 10px;
-
-    padding: 12px 16px;
-
-    border-radius: 13px;
-
-    z-index: 99999;
-
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.16);
-
-    animation:
-        rgToastIn 0.4s ease forwards;
+    padding: 14px 22px;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    white-space: nowrap;
+    max-width: calc(100vw - 32px);
+    overflow: hidden;
+    animation: rgToastDropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2147483647;
 }
 
+@keyframes rgToastDropIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px) scale(0.85);
+    }
 
-.rg-toast-success {
-    background:
-        rgba(230, 255, 245, 0.97);
+    60% {
+        transform: translateX(-50%) translateY(4px) scale(1.05);
+    }
 
-    border:
-        1px solid rgba(30, 170, 100, 0.3);
-
-    color: #16865b;
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
 }
-
-
-.rg-toast-error {
-    background:
-        rgba(255, 235, 237, 0.97);
-
-    border:
-        1px solid rgba(220, 60, 75, 0.3);
-
-    color: #b52f40;
-}
-
 
 .rg-toast-icon {
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    font-size: 22px;
+    font-size: 1.15rem;
+    flex-shrink: 0;
 }
-
 
 .rg-toast-message {
-    font-size: 12px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.2px;
+    font-weight: 800;
 }
 
-
-@keyframes rgToastIn {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateX(-50%) translateY(-30px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateX(-50%) translateY(0);
-    }
+/* Success */
+.rg-toast-success {
+    background: linear-gradient(145deg, #00d97f, #00a85e);
+    color: #ffffff;
+    box-shadow:
+        8px 8px 20px rgba(0, 217, 127, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.5),
+        inset 0 -3px 6px rgba(0, 90, 50, 0.4),
+        inset 0 3px 6px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 90, 50, 0.3);
 }
 
-
-/* =========================================
-   MOBILE RESPONSIVE
-========================================= */
-
-@media (max-width: 420px) {
-
-    .rg-name-rules div {
-        font-size: 8px;
-    }
-
-    .rg-sending-overlay span {
-        font-size: 11px;
-    }
-
-    .rg-sending-overlay svg {
-        font-size: 30px;
-    }
-
+/* Error */
+.rg-toast-error {
+    background: linear-gradient(145deg, #ff6b7a, #e8344a);
+    color: #ffffff;
+    box-shadow:
+        8px 8px 20px rgba(255, 71, 87, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.5),
+        inset 0 -3px 6px rgba(150, 20, 30, 0.4),
+        inset 0 3px 6px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 1px 2px rgba(150, 20, 30, 0.3);
 }
 
-/* ================================
-   ANIMATIONS
-================================ */
-
-@keyframes rgWelcomeFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-4px);
-    }
-
+.rg-toast-icon svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
+/* ============================================
+   RESPONSIVE — TABLET
+   ============================================ */
 
-@keyframes rgPulse {
-
-    0% {
-        box-shadow:
-            0 0 0 0 rgba(0, 220, 231, 0.5);
+@media (max-width: 767px) {
+    .rg-container {
+        padding: 20px 14px;
+        align-items: flex-start;
+        padding-top: 32px;
     }
-
-    70% {
-        box-shadow:
-            0 0 0 7px rgba(0, 220, 231, 0);
-    }
-
-    100% {
-        box-shadow:
-            0 0 0 0 rgba(0, 220, 231, 0);
-    }
-
-}
-
-
-/* ================================
-   MOBILE
-================================ */
-
-@media (max-width: 420px) {
 
     .rg-orb {
-        width: 93vw;
-    }
-
-    .rg-content {
-        width: 80%;
-    }
-
-    .rg-input-box,
-    .rg-phone-box,
-    .rg-btn {
-        height: 40px;
-    }
-
-    .rg-welcome-badge {
-        margin-bottom: 13px;
-    }
-
-    .rg-brand {
-        margin-bottom: 15px;
-    }
-
-    .rg-field {
-        margin-bottom: 11px;
-    }
-
-    .rg-terms {
-        margin-bottom: 11px;
-    }
-
-}
-
-
-/* ================================
-   SMALL DEVICES
-================================ */
-
-@media (max-width: 300px) {
-
-    .rg-orb {
-        width: 90vw;
-    }
-
-    .rg-content {
-        width: 88%;
-    }
-
-    .rg-welcome-badge {
-        font-size: 8px;
-        letter-spacing: 0.5px;
+        padding: 28px 24px;
+        border-radius: 28px;
     }
 
     .rg-heading {
-        font-size: 19px;
+        font-size: 1.5rem;
     }
 
     .rg-subtitle {
-        font-size: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL PHONE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .rg-container {
+        padding: 16px 12px;
+        padding-top: 28px;
+    }
+
+    .rg-orb {
+        padding: 24px 20px;
+        border-radius: 24px;
+        max-width: 100%;
+    }
+
+    .rg-heading {
+        font-size: 1.35rem;
+    }
+
+    .rg-subtitle {
+        font-size: 0.78rem;
+    }
+
+    .rg-welcome-badge {
+        font-size: 0.66rem;
+        padding: 5px 12px;
+        margin-bottom: 14px;
+    }
+
+    .rg-input-box,
+    .rg-phone-box {
+        padding: 12px 15px;
+        border-radius: 14px;
+    }
+
+    .rg-input,
+    .rg-phone-input {
+        font-size: 0.86rem;
+    }
+
+    .rg-input-icon {
+        font-size: 1.05rem;
+    }
+
+    .rg-country {
+        font-size: 0.84rem;
+        padding-right: 6px;
+    }
+
+    .rg-btn {
+        padding: 14px 20px;
+        font-size: 0.82rem;
+        border-radius: 16px;
     }
 
     .rg-terms-text,
     .rg-terms-link {
-        font-size: 8px;
+        font-size: 0.75rem;
     }
 
+    .rg-footer {
+        font-size: 0.78rem;
+        margin-top: 16px;
+        padding-top: 16px;
+    }
+
+    .rg-name-rules>div {
+        font-size: 0.64rem;
+    }
+
+    .rg-toast {
+        font-size: 0.78rem;
+        padding: 12px 18px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — EXTRA SMALL
+   ============================================ */
+
+@media (max-width: 380px) {
+    .rg-container {
+        padding: 12px 10px;
+        padding-top: 24px;
+    }
+
+    .rg-orb {
+        padding: 20px 16px;
+        border-radius: 22px;
+    }
+
+    .rg-heading {
+        font-size: 1.2rem;
+    }
+
+    .rg-brand {
+        margin-bottom: 20px;
+    }
+
+    .rg-form {
+        gap: 16px;
+    }
+
+    .rg-input-box,
+    .rg-phone-box {
+        padding: 11px 14px;
+        gap: 8px;
+    }
+
+    .rg-btn {
+        padding: 13px 16px;
+        font-size: 0.78rem;
+    }
+}
+
+/* ============================================
+   KEYBOARD SAFE — FIX OVERLAP
+   ============================================ */
+
+/* Jab keyboard khula hai (mobile) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .rg-container {
+        align-items: flex-start;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    .rg-orb {
+        padding: 20px;
+        max-width: 500px;
+    }
+
+    .rg-heading {
+        font-size: 1.25rem;
+    }
+
+    .rg-brand {
+        margin-bottom: 16px;
+    }
+
+    .rg-form {
+        gap: 12px;
+    }
+}
+
+/* Keyboard ke time scroll */
+.rg-container {
+    scroll-padding-top: 20px;
+    scroll-padding-bottom: 20px;
+}
+
+.rg-input:focus,
+.rg-phone-input:focus {
+    scroll-margin-top: 80px;
+    scroll-margin-bottom: 80px;
+}
+
+/* Viewport height for mobile */
+@supports (height: 100dvh) {
+    .rg-container {
+        min-height: 100dvh;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .rg-container::before,
+    .rg-orb,
+    .rg-heading,
+    .rg-welcome-badge,
+    .rg-welcome-dot,
+    .rg-input-box,
+    .rg-phone-box,
+    .rg-field-checking,
+    .rg-field-verified,
+    .rg-field-loader,
+    .rg-field-tick,
+    .rg-btn-active,
+    .rg-btn-active::before,
+    .rg-toast,
+    .rg-sending-overlay svg {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .rg-btn-active:hover .rg-btn-arrow {
+        transform: none;
+    }
+}
+
+/* iOS safe area */
+@supports (padding: max(0px)) {
+    .rg-container {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
 }
