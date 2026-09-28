@@ -1,336 +1,754 @@
-/* =========================================================
-   TOP EDIT SECTION
-========================================================= */
+/* TopEditSection.css — 3D UTHA HUA CLAYMORPHISM */
 
-.top-edit-card {
-    width: 100%;
-    position: relative;
+.top-edit-card,
+.top-edit-card * {
     box-sizing: border-box;
 }
 
-/* =========================================================
-   PROFILE IMAGE
-========================================================= */
-
-.mypropreview-section-pro {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.mypropreview-box-pro {
-    width: 150px;
-    height: 150px;
+/* ============================================
+   🔥 CARD WRAPPER — HEAVY 3D UTHA HUA
+   ============================================ */
+.top-edit-card {
     position: relative;
-    border-radius: 50%;
-    padding: 4px;
-    background: rgb(22, 2, 245);
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 20px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 24px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
+    box-shadow:
+        0 20px 40px rgba(140, 150, 180, 0.55),
+        0 10px 20px rgba(140, 150, 180, 0.4),
+        0 5px 12px rgba(140, 150, 180, 0.28),
+        16px 16px 32px rgba(140, 150, 180, 0.28),
+        -16px -16px 32px rgba(255, 255, 255, 1),
+        13px -13px 26px rgba(255, 255, 255, 0.95),
+        -13px 13px 26px rgba(140, 150, 180, 0.15),
+        10px -10px 22px rgba(255, 255, 255, 0.9),
+        -10px 10px 22px rgba(140, 150, 180, 0.12),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-6px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+    animation: topEditIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@keyframes topEditIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-6px) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT LINE */
+.top-edit-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+    z-index: 3;
+    filter: blur(0.5px);
+}
+
+/* 🔥 BOTTOM GROUND SHADOW */
+.top-edit-card::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.4) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+/* ============================================
+   HEADER — back button
+   ============================================ */
+.top-edit-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    padding-bottom: 14px;
+
+    border-bottom: 1.5px dashed rgba(155, 165, 190, 0.35);
+
+    position: relative;
+}
+
+.top-edit-header::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.9) 50%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+/* ---- Back button — 3D wool pill with arrow ---- */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    color: #5b6ee1;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.55),
+        0 4px 10px rgba(140, 150, 180, 0.4),
+        5px 5px 12px rgba(140, 150, 180, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.9),
+        -4px 4px 10px rgba(140, 150, 180, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.back-button svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.back-button:hover {
+    transform: translateY(-6px);
+    color: #7c8cf8;
+
+    box-shadow:
+        0 14px 26px rgba(124, 140, 248, 0.5),
+        0 7px 14px rgba(124, 140, 248, 0.35),
+        9px 9px 20px rgba(124, 140, 248, 0.25),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.95),
+        -6px 6px 14px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+}
+
+.back-button:hover svg {
+    transform: translateX(-4px);
+}
+
+.back-button:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.65),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+.back-button:focus-visible {
+    outline: 2px solid #7c8cf8;
+    outline-offset: 3px;
+}
+
+/* ============================================
+   🔥 SUCCESS MESSAGE — 3D green pill
+   ============================================ */
+.profile-upload-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 12px 18px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+
+    color: #1a4a1a;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1.3;
+    text-align: center;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 6px rgba(255, 255, 255, 0.4);
+
+    box-shadow:
+        0 12px 24px rgba(95, 187, 90, 0.55),
+        0 6px 14px rgba(95, 187, 90, 0.4),
+        8px 8px 18px rgba(95, 187, 90, 0.28),
+        -8px -8px 18px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.85),
+        -6px 6px 14px rgba(95, 187, 90, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(40, 100, 40, 0.45);
+
+    transform: translateY(-3px);
+
+    animation: successPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes successPop {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-3px) scale(1);
+    }
+}
+
+/* ============================================
+   🔥 UPLOAD PROGRESS OVERLAY
+   ============================================ */
+.profile-upload-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(10, 10, 20, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    animation: uploadScreenIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes uploadScreenIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ---- Upload box — 3D utha hua modal ---- */
+.profile-upload-box {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    max-width: 320px;
+
+    padding: 24px 22px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    text-align: center;
+
+    /* 🔥🔥🔥 3D MODAL */
+    box-shadow:
+        0 26px 52px rgba(140, 150, 180, 0.6),
+        0 12px 26px rgba(140, 150, 180, 0.45),
+        0 6px 14px rgba(140, 150, 180, 0.3),
+        18px 18px 36px rgba(140, 150, 180, 0.3),
+        -18px -18px 36px rgba(255, 255, 255, 1),
+        14px -14px 30px rgba(255, 255, 255, 0.95),
+        -14px 14px 30px rgba(140, 150, 180, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-6px);
+
+    animation: uploadBoxPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes uploadBoxPop {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-6px) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT */
+.profile-upload-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ---- Upload icon — 3D wool ball ---- */
+.profile-upload-icon {
+    display: grid;
+    place-items: center;
+
+    width: 60px;
+    height: 60px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1;
+
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 10px 22px rgba(91, 110, 225, 0.55),
+        0 5px 14px rgba(91, 110, 225, 0.4),
+        7px 7px 16px rgba(91, 110, 225, 0.28),
+        -7px -7px 16px rgba(255, 255, 255, 1),
+        5px -5px 12px rgba(255, 255, 255, 0.85),
+        -5px 5px 12px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    animation: uploadIconPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes uploadIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+.profile-upload-box h2 {
+    margin: 0;
+
+    font-size: clamp(1rem, 2.8vw, 1.15rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 6px rgba(140, 150, 180, 0.15);
+}
+
+.profile-upload-box p {
+    margin: 0;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+
+    color: #8a90ac;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---- Progress bar ---- */
+.profile-upload-progress {
+    position: relative;
+
+    width: 100%;
+    height: 12px;
+
+    margin-top: 8px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    /* 🔥 3D inset groove */
+    box-shadow:
+        inset 3px 3px 6px rgba(155, 165, 190, 0.45),
+        inset -3px -3px 6px rgba(255, 255, 255, 1),
+        0 2px 6px rgba(140, 150, 180, 0.25),
+        0 1px 3px rgba(140, 150, 180, 0.15);
+
+    overflow: hidden;
+}
+
+.profile-upload-progress-fill {
+    height: 100%;
+
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.5), transparent 55%),
+        linear-gradient(90deg, #8e9dff 0%, #5b6ee1 100%);
+
+    box-shadow:
+        0 0 14px rgba(124, 140, 248, 0.7),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.6);
+
+    transition: width 0.3s ease-out;
+}
+
+.profile-upload-percent {
+    display: inline-block;
+
+    margin-top: 4px;
+
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+
+    color: #5b6ee1;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 0 10px rgba(124, 140, 248, 0.35);
+}
+
+/* ============================================
+   🔥 PROFILE PREVIEW SECTION
+   ============================================ */
+.mypropreview-section-pro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 12px 0;
+}
+
+/* ---- Preview box — 3D wool ball wrapper ---- */
+.mypropreview-box-pro {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    width: 132px;
+    height: 132px;
+
+    padding: 6px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    /* 🔥🔥🔥 HEAVY 3D OUTER RING */
+    box-shadow:
+        0 18px 36px rgba(140, 150, 180, 0.55),
+        0 9px 18px rgba(140, 150, 180, 0.4),
+        0 5px 10px rgba(140, 150, 180, 0.28),
+        14px 14px 28px rgba(140, 150, 180, 0.28),
+        -14px -14px 28px rgba(255, 255, 255, 1),
+        11px -11px 24px rgba(255, 255, 255, 0.95),
+        -11px 11px 24px rgba(140, 150, 180, 0.15),
+        9px -9px 20px rgba(255, 255, 255, 0.9),
+        -9px 9px 20px rgba(140, 150, 180, 0.12),
+        inset 3px 3px 6px rgba(255, 255, 255, 1),
+        inset -3px -3px 6px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-5px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mypropreview-box-pro:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 28px 52px rgba(124, 140, 248, 0.5),
+        0 14px 26px rgba(124, 140, 248, 0.35),
+        0 8px 16px rgba(124, 140, 248, 0.25),
+        18px 18px 36px rgba(124, 140, 248, 0.22),
+        -18px -18px 36px rgba(255, 255, 255, 1),
+        14px -14px 30px rgba(255, 255, 255, 0.95),
+        -14px 14px 30px rgba(124, 140, 248, 0.15),
+        11px -11px 24px rgba(255, 255, 255, 0.9),
+        -11px 11px 24px rgba(124, 140, 248, 0.12),
+        inset 3px 3px 6px rgba(255, 255, 255, 1),
+        inset -3px -3px 6px rgba(124, 140, 248, 0.25);
+}
+
+/* ---- Profile image — inside ring ---- */
 .mypropreview-image-pro {
+    display: block;
+
     width: 100%;
     height: 100%;
-    display: block;
-    object-fit: cover;
+
+    border: 3px solid rgba(255, 255, 255, 1);
     border-radius: 50%;
-    background: #f2f4f7;
+
+    object-fit: cover;
+    object-position: center;
+
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+
+    /* 🔥 3D INNER BALL */
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.5),
+        0 4px 10px rgba(140, 150, 180, 0.35),
+        5px 5px 12px rgba(140, 150, 180, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(140, 150, 180, 0.15),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
+
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* =========================================================
-   EDIT BUTTON
-========================================================= */
+.mypropreview-box-pro:hover .mypropreview-image-pro {
+    transform: scale(1.05) rotate(-3deg);
+}
 
+/* ---- Pencil button — 3D accent ball (bottom-right) ---- */
 .profile-edit-btn {
     position: absolute;
-    right: 4px;
-    bottom: 5px;
+    bottom: 2px;
+    right: 2px;
+    z-index: 4;
+
+    display: grid;
+    place-items: center;
 
     width: 42px;
     height: 42px;
 
+    border: 2px solid rgba(255, 255, 255, 1);
     border-radius: 50%;
-    border: 3px solid #fff;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
 
-    background: #111827;
-    color: #fff;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1;
 
     cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
 
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
+.profile-edit-btn svg {
+    width: 18px;
+    height: 18px;
+    color: black;
 }
 
 .profile-edit-btn:hover {
-    transform: scale(1.08);
-    background: #0077ff;
+    transform: scale(1.12) rotate(-8deg);
+
+
 }
 
 .profile-edit-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.94);
 }
 
 .profile-edit-btn:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
+    transform: scale(1);
 }
 
-/* =========================================================
-   POPUP OVERLAY
-========================================================= */
+/* ============================================
+   🔥 POPUP OVERLAY — Edit Profile Picture
+   ============================================ */
+
+/* ============================================
+   🔥 POPUP OVERLAY — FULLSCREEN FIX
+   ============================================ */
 
 .profile-popup-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
 
-    z-index: 9999;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    padding: 20px;
+    z-index: 2147483647 !important;
+   
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
+    margin: 0 !important;
+    padding: 20px !important;
 
-    animation: profileFadeIn 0.2s ease;
-}
+    background: rgba(10, 10, 20, 0.65);
 
-@keyframes profileFadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-/* =========================================================
-   POPUP
-========================================================= */
-
-.profile-popup {
-    width: min(100%, 380px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
     overflow: hidden;
+    isolation: isolate;
+    /* 🔥 naya stacking context */
 
-    border-radius: 20px;
-
-    background: #fff;
-
-    box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.25);
-
-    animation: profilePopupIn 0.25s ease;
+    animation: popupOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes profilePopupIn {
+@keyframes popupOverlayIn {
     from {
         opacity: 0;
-        transform: scale(0.9) translateY(15px);
     }
 
     to {
         opacity: 1;
-        transform: scale(1) translateY(0);
     }
 }
 
-.profile-popup-header {
-    padding: 18px 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom: 1px solid #edf0f3;
-}
-
-.profile-popup-header h3 {
-    margin: 0;
-
-    font-size: 17px;
-    font-weight: 700;
-
-    color: #111827;
-}
-
-.profile-popup-close {
-    width: 32px;
-    height: 32px;
-
-    border: none;
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #f3f4f6;
-
-    font-size: 22px;
-    line-height: 1;
-
-    color: #374151;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.profile-popup-close:hover {
-    background: #e5e7eb;
-    transform: rotate(90deg);
-}
-
-/* =========================================================
-   POPUP OPTIONS
-========================================================= */
-
-.profile-popup-options {
-    padding: 12px;
-}
-
-.popup-option {
-    width: 100%;
-
-    padding: 14px;
-
-    margin-bottom: 8px;
-
-    border: none;
-    border-radius: 14px;
-
-    display: grid;
-    grid-template-columns: 40px 1fr;
-    align-items: center;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-.popup-option:last-child {
-    margin-bottom: 0;
-}
-
-.popup-option.upload {
-    background: #eef8ff;
-    color: #0066cc;
-}
-
-.popup-option.upload:hover {
-    background: #dcefff;
-}
-
-.popup-option.remove {
-    background: #fff1f2;
-    color: #dc2626;
-}
-
-.popup-option.remove:hover {
-    background: #ffe4e6;
-}
-
-.popup-option.cancel {
-    background: #f4f5f7;
-    color: #374151;
-}
-
-.popup-option.cancel:hover {
-    background: #e9ebee;
-}
-
-.popup-icon {
-    grid-row: span 2;
-
-    width: 38px;
-    height: 38px;
-
-    border-radius: 11px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 18px;
-
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.popup-option {
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.popup-sub {
-    grid-column: 2;
-
-    margin-top: 3px;
-
-    font-size: 11px;
-    font-weight: 500;
-
-    opacity: 0.65;
-}
-
-/* =========================================================
-   CROP MODAL
-========================================================= */
-
-.crop-modal-overlay {
-    position: fixed;
-    inset: 0;
-
-    z-index: 10000;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 15px;
-
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(6px);
-
-    animation: profileFadeIn 0.2s ease;
-}
-
-.crop-modal {
-    width: min(100%, 560px);
-
-    max-height: 92vh;
+/* ---- Popup box — centered ---- */
+.profile-popup {
+    position: relative;
 
     display: flex;
     flex-direction: column;
+    gap: 8px;
 
-    overflow: hidden;
+    width: 100%;
+    max-width: 360px;
+    max-height: 90vh;
+    max-height: 90dvh;
 
+    padding: 20px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
     border-radius: 22px;
 
-    background: #fff;
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
 
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* 🔥🔥🔥 3D POPUP */
     box-shadow:
-        0 30px 100px rgba(0, 0, 0, 0.4);
+        0 26px 52px rgba(140, 150, 180, 0.6),
+        0 12px 26px rgba(140, 150, 180, 0.45),
+        0 6px 14px rgba(140, 150, 180, 0.3),
+        18px 18px 36px rgba(140, 150, 180, 0.3),
+        -18px -18px 36px rgba(255, 255, 255, 1),
+        14px -14px 30px rgba(255, 255, 255, 0.95),
+        -14px 14px 30px rgba(140, 150, 180, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
 
-    animation: cropModalIn 0.25s ease;
+    transform: translateY(0);
+    /* 🔥 reset transform */
+    animation: popupPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    /* scrollbar hidden */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-@keyframes cropModalIn {
+.profile-popup::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes popupPop {
     from {
         opacity: 0;
-        transform: translateY(25px) scale(0.96);
+        transform: translateY(20px) scale(0.9);
     }
 
     to {
@@ -339,369 +757,589 @@
     }
 }
 
-/* =========================================================
-   CROP HEADER
-========================================================= */
+/* 🔥 TOP HIGHLIGHT */
+.profile-popup::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+    z-index: 2;
+}
 
-.crop-modal-header {
-    padding: 17px 20px;
-
+/* ---- Popup header ---- */
+.profile-popup-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 
-    border-bottom: 1px solid #edf0f3;
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+
+    border-bottom: 1.5px dashed rgba(155, 165, 190, 0.35);
+}
+
+.profile-popup-header h3 {
+    margin: 0;
+
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
+}
+
+.profile-popup-close {
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    color: #8a90ac;
+    font-size: 1.2rem;
+    font-weight: 900;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 12px rgba(140, 150, 180, 0.5),
+        0 3px 8px rgba(140, 150, 180, 0.35),
+        4px 4px 10px rgba(140, 150, 180, 0.25),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profile-popup-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    color: #e25a5a;
+}
+
+.profile-popup-close:active {
+    transform: scale(0.92);
+}
+
+/* ---- Popup options ---- */
+.profile-popup-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ---- Popup option button — 3D wool pill ---- */
+.popup-option {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+
+    width: 100%;
+    padding: 14px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-size: 0.86rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+    text-align: left;
+
+    cursor: pointer;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.12);
+
+    /* 🔥 3D UTHA HUA */
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.5),
+        0 4px 10px rgba(140, 150, 180, 0.35),
+        5px 5px 12px rgba(140, 150, 180, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.popup-option:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 14px 26px rgba(124, 140, 248, 0.45),
+        0 7px 14px rgba(124, 140, 248, 0.32),
+        9px 9px 20px rgba(124, 140, 248, 0.25),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+}
+
+.popup-option:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+.popup-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-3px);
+}
+
+/* ---- Popup icon ---- */
+.popup-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+    margin-bottom: 2px;
+
+    filter: drop-shadow(0 2px 3px rgba(140, 150, 180, 0.4));
+}
+
+/* ---- Popup sub text ---- */
+.popup-sub {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.3;
+
+    color: #8a90ac;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---- Upload option — accent tint ---- */
+.popup-option.upload {
+    color: #5b6ee1;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f0f3ff 0%, #e0e6f9 100%);
+}
+
+.popup-option.upload .popup-icon {
+    filter: drop-shadow(0 2px 3px rgba(124, 140, 248, 0.5));
+}
+
+/* ---- Remove option — red tint ---- */
+.popup-option.remove {
+    color: #e25a5a;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #fff5f5 0%, #f9e0e0 100%);
+}
+
+.popup-option.remove .popup-icon {
+    filter: drop-shadow(0 2px 3px rgba(226, 90, 90, 0.5));
+}
+
+/* ---- Cancel option — neutral ---- */
+.popup-option.cancel {
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 16px;
+    text-align: center;
+
+    color: #8a90ac;
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
+}
+
+/* ============================================
+   🔥 CROP MODAL OVERLAY
+   ============================================ */
+.crop-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px;
+
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    animation: cropOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cropOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.crop-modal {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 520px;
+    max-height: 92vh;
+
+    padding: 0;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    overflow: hidden;
+
+    /* 🔥 3D MODAL */
+    box-shadow:
+        0 28px 56px rgba(0, 0, 0, 0.6),
+        0 14px 28px rgba(0, 0, 0, 0.45),
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        18px 18px 36px rgba(140, 150, 180, 0.4),
+        -18px -18px 36px rgba(255, 255, 255, 1),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    animation: cropModalPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cropModalPop {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT */
+.crop-modal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ---- Crop modal header ---- */
+.crop-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 16px 18px;
+
+    border-bottom: 1.5px solid rgba(155, 165, 190, 0.25);
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
 }
 
 .crop-modal-header h3 {
     margin: 0;
 
-    font-size: 17px;
-    font-weight: 700;
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
 
-    color: #111827;
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
 }
 
 .crop-modal-close {
-    width: 34px;
-    height: 34px;
+    flex-shrink: 0;
 
-    border: none;
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
     border-radius: 50%;
 
-    background: #f3f4f6;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
 
-    font-size: 23px;
-    color: #374151;
+    color: #8a90ac;
+    font-size: 1.2rem;
+    font-weight: 900;
+    line-height: 1;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    box-shadow:
+        0 5px 12px rgba(140, 150, 180, 0.5),
+        0 3px 8px rgba(140, 150, 180, 0.35),
+        4px 4px 10px rgba(140, 150, 180, 0.25),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .crop-modal-close:hover {
-    background: #e5e7eb;
-    transform: rotate(90deg);
+    transform: scale(1.1) rotate(90deg);
+    color: #e25a5a;
 }
 
-/* =========================================================
-   CROP BODY
-========================================================= */
-
+/* ---- Crop modal body ---- */
 .crop-modal-body {
     flex: 1;
-
     min-height: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 20px;
-
-    overflow: auto;
+    padding: 16px;
 
     background:
-        linear-gradient(45deg, #f5f5f5 25%, transparent 25%),
-        linear-gradient(-45deg, #f5f5f5 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #f5f5f5 75%),
-        linear-gradient(-45deg, transparent 75%, #f5f5f5 75%);
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.6), transparent 55%),
+        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
 
-    background-size: 20px 20px;
-    background-position:
-        0 0,
-        0 10px,
-        10px -10px,
-        -10px 0px;
+    overflow: hidden;
 }
 
-.crop-modal-body .ReactCrop {
-    max-width: 100%;
-    max-height: 60vh;
-}
-
-.crop-image {
-    display: block;
-
-    max-width: 100%;
-    max-height: 58vh;
-
-    width: auto;
-    height: auto;
-
-    object-fit: contain;
-
-    border-radius: 6px;
-}
-
-/* =========================================================
-   CROP FOOTER
-========================================================= */
-
+/* ---- Crop modal footer ---- */
 .crop-modal-footer {
-    padding: 15px 20px;
-
     display: flex;
-    gap: 10px;
+    align-items: center;
     justify-content: flex-end;
+    gap: 10px;
 
-    border-top: 1px solid #edf0f3;
+    padding: 14px 18px;
 
-    background: #fff;
+    border-top: 1.5px solid rgba(155, 165, 190, 0.25);
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
 }
 
+/* ---- Crop button ---- */
 .crop-btn {
-    min-width: 110px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    height: 42px;
+    padding: 10px 20px;
 
-    padding: 0 18px;
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
 
-    border-radius: 10px;
-
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
+/* ---- Cancel crop button — neutral 3D ---- */
 .crop-btn.cancel {
-    border: 1px solid #e2e5e9;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
 
-    background: #fff;
-    color: #4b5563;
+    color: #3f4664;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.5),
+        0 4px 10px rgba(140, 150, 180, 0.35),
+        5px 5px 12px rgba(140, 150, 180, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-3px);
 }
 
 .crop-btn.cancel:hover {
-    background: #f5f6f8;
-}
-
-.crop-btn.apply {
-    border: none;
-
-    color: #fff;
-
-    background: linear-gradient(135deg,
-            #0077ff,
-            #00b8ff);
+    transform: translateY(-6px);
+    color: #5b6ee1;
 
     box-shadow:
-        0 5px 15px rgba(0, 119, 255, 0.25);
+        0 14px 26px rgba(124, 140, 248, 0.45),
+        0 7px 14px rgba(124, 140, 248, 0.32),
+        9px 9px 20px rgba(124, 140, 248, 0.25),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
+}
+
+.crop-btn.cancel:active {
+    transform: translateY(1px) scale(0.97);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+/* ---- Apply crop button — accent 3D ---- */
+.crop-btn.apply {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 10px 22px rgba(91, 110, 225, 0.55),
+        0 5px 14px rgba(91, 110, 225, 0.4),
+        7px 7px 16px rgba(91, 110, 225, 0.28),
+        -7px -7px 16px rgba(255, 255, 255, 1),
+        5px -5px 12px rgba(255, 255, 255, 0.85),
+        -5px 5px 12px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
 }
 
 .crop-btn.apply:hover {
-    transform: translateY(-1px);
+    transform: translateY(-6px);
 
     box-shadow:
-        0 8px 20px rgba(0, 119, 255, 0.35);
+        0 16px 30px rgba(91, 110, 225, 0.65),
+        0 8px 18px rgba(91, 110, 225, 0.5),
+        10px 10px 22px rgba(91, 110, 225, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        7px -7px 16px rgba(255, 255, 255, 0.9),
+        -7px 7px 16px rgba(91, 110, 225, 0.22),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
 }
 
 .crop-btn.apply:active {
-    transform: scale(0.97);
-}
-
-/* =========================================================
-   UPLOAD SCREEN
-========================================================= */
-
-.profile-upload-screen {
-    position: fixed;
-    inset: 0;
-
-    z-index: 20000;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-
-    background: rgba(10, 15, 25, 0.7);
-    backdrop-filter: blur(8px);
-}
-
-.profile-upload-box {
-    width: min(100%, 330px);
-
-    padding: 30px 25px;
-
-    text-align: center;
-
-    border-radius: 22px;
-
-    background: #fff;
-
+    transform: translateY(1px) scale(0.97);
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.35);
+        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
 }
 
-.profile-upload-icon {
-    width: 58px;
-    height: 58px;
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 
-    margin: 0 auto 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background: #eaf6ff;
-
-    color: #0077ff;
-
-    font-size: 30px;
-    font-weight: 700;
-
-    animation: uploadBounce 1s infinite ease-in-out;
-}
-
-@keyframes uploadBounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
+/* Tablets */
+@media (max-width: 768px) {
+    .top-edit-card {
+        padding: 18px;
+        border-radius: 22px;
+        gap: 18px;
+        transform: translateY(-5px);
     }
 
-    50% {
-        transform: translateY(-6px);
-    }
-}
-
-.profile-upload-box h2 {
-    margin: 0;
-
-    font-size: 18px;
-
-    color: #111827;
-}
-
-.profile-upload-box p {
-    margin: 7px 0 20px;
-
-    font-size: 13px;
-
-    color: #6b7280;
-}
-
-.profile-upload-progress {
-    width: 100%;
-    height: 9px;
-
-    overflow: hidden;
-
-    border-radius: 20px;
-
-    background: #e9edf2;
-}
-
-.profile-upload-progress-fill {
-    height: 100%;
-
-    border-radius: inherit;
-
-    background: linear-gradient(90deg,
-            #0077ff,
-            #00d4ff);
-
-    transition: width 0.25s ease;
-}
-
-.profile-upload-percent {
-    margin-top: 10px;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    color: #0077ff;
-}
-
-/* =========================================================
-   SUCCESS MESSAGE
-========================================================= */
-
-.profile-upload-success {
-    position: fixed;
-
-    top: 20px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    z-index: 30000;
-
-    width: max-content;
-    max-width: calc(100vw - 30px);
-
-    padding: 13px 20px;
-
-    border-radius: 12px;
-
-    background: #111827;
-    color: #fff;
-
-    font-size: 12px;
-    font-weight: 700;
-
-    letter-spacing: 0.3px;
-
-    text-align: center;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.25);
-
-    animation: successSlide 0.3s ease;
-}
-
-@keyframes successSlide {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -20px);
+    .top-edit-header {
+        padding-bottom: 12px;
     }
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
+    .back-button {
+        padding: 8px 14px;
+        font-size: 0.78rem;
     }
-}
 
-/* =========================================================
-   TABLET
-========================================================= */
+    .back-button svg {
+        width: 16px;
+        height: 16px;
+    }
 
-@media (min-width: 768px) {
+    .profile-upload-success {
+        padding: 11px 16px;
+        font-size: 0.72rem;
+    }
 
     .mypropreview-box-pro {
-        width: 180px;
-        height: 180px;
-    }
-
-    .profile-edit-btn {
-        width: 46px;
-        height: 46px;
-    }
-
-    .crop-modal-body {
-        padding: 25px;
-    }
-
-    .crop-image {
-        max-height: 65vh;
-    }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 480px) {
-
-    .mypropreview-box-pro {
-        width: 125px;
-        height: 125px;
+        width: 120px;
+        height: 120px;
+        transform: translateY(-4px);
     }
 
     .profile-edit-btn {
@@ -710,96 +1348,425 @@
     }
 
     .profile-edit-btn svg {
-        width: 17px;
-        height: 17px;
+        width: 16px;
+        height: 16px;
     }
 
     .profile-popup {
-        border-radius: 18px;
+        padding: 18px;
+        border-radius: 20px;
+        gap: 7px;
     }
 
-    .crop-modal-overlay {
-        padding: 8px;
+    .profile-popup-header h3 {
+        font-size: 1rem;
+    }
+
+    .profile-popup-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    .popup-option {
+        padding: 12px 14px;
+        border-radius: 13px;
+        font-size: 0.82rem;
+    }
+
+    .popup-sub {
+        font-size: 0.68rem;
+    }
+
+    .profile-upload-box {
+        padding: 22px 20px;
+        border-radius: 20px;
+    }
+
+    .profile-upload-icon {
+        width: 54px;
+        height: 54px;
+        font-size: 1.45rem;
+    }
+
+    .profile-upload-box h2 {
+        font-size: 1.05rem;
+    }
+
+    .profile-upload-box p {
+        font-size: 0.76rem;
     }
 
     .crop-modal {
-        width: 100%;
+        border-radius: 20px;
+    }
+
+    .crop-modal-header {
+        padding: 14px 16px;
+    }
+
+    .crop-modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .crop-modal-footer {
+        padding: 12px 16px;
+        gap: 9px;
+    }
+
+    .crop-btn {
+        padding: 9px 18px;
+        font-size: 0.78rem;
+        border-radius: 13px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .top-edit-card {
+        padding: 16px;
+        border-radius: 20px;
+        gap: 16px;
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 14px 28px rgba(140, 150, 180, 0.5),
+            0 7px 16px rgba(140, 150, 180, 0.35),
+            0 4px 10px rgba(140, 150, 180, 0.25),
+            11px 11px 22px rgba(140, 150, 180, 0.22),
+            -11px -11px 22px rgba(255, 255, 255, 1),
+            9px -9px 20px rgba(255, 255, 255, 0.9),
+            -9px 9px 20px rgba(140, 150, 180, 0.12),
+            7px -7px 16px rgba(255, 255, 255, 0.85),
+            -7px 7px 16px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+    }
+
+    .top-edit-header {
+        padding-bottom: 11px;
+    }
+
+    .back-button {
+        padding: 7px 13px;
+        font-size: 0.74rem;
+        border-width: 1.5px;
+    }
+
+    .back-button svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .profile-upload-success {
+        padding: 10px 14px;
+        font-size: 0.68rem;
+        letter-spacing: 0.4px;
+        border-radius: 12px;
+    }
+
+    .mypropreview-section-pro {
+        padding: 10px 0;
+    }
+
+    .mypropreview-box-pro {
+        width: 108px;
+        height: 108px;
+        border-width: 1.5px;
+        transform: translateY(-3px);
+    }
+
+    .mypropreview-image-pro {
+        border-width: 2px;
+    }
+
+    .profile-edit-btn {
+        width: 34px;
+        height: 34px;
+        border-width: 1.5px;
+    }
+
+    .profile-edit-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .profile-popup {
+        padding: 16px;
+        border-radius: 18px;
+        max-width: 320px;
+        gap: 6px;
+    }
+
+    .profile-popup-header {
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    .profile-popup-header h3 {
+        font-size: 0.92rem;
+    }
+
+    .profile-popup-close {
+        width: 30px;
+        height: 30px;
+        font-size: 1.05rem;
+    }
+
+    .profile-popup-options {
+        gap: 8px;
+    }
+
+    .popup-option {
+        padding: 11px 13px;
+        border-radius: 12px;
+        font-size: 0.76rem;
+    }
+
+    .popup-icon {
+        font-size: 1.05rem;
+    }
+
+    .popup-sub {
+        font-size: 0.62rem;
+    }
+
+    .popup-option.cancel {
+        padding: 10px 13px;
+        font-size: 0.72rem;
+    }
+
+    .profile-upload-screen {
+        padding: 16px;
+    }
+
+    .profile-upload-box {
+        padding: 20px 18px;
+        border-radius: 18px;
+        max-width: 300px;
+        gap: 10px;
+    }
+
+    .profile-upload-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
+    }
+
+    .profile-upload-box h2 {
+        font-size: 0.98rem;
+    }
+
+    .profile-upload-box p {
+        font-size: 0.72rem;
+    }
+
+    .profile-upload-progress {
+        height: 10px;
+    }
+
+    .profile-upload-percent {
+        font-size: 1rem;
+    }
+
+    .crop-modal {
         border-radius: 18px;
     }
 
-    .crop-modal-header,
-    .crop-modal-footer {
-        padding: 14px;
+    .crop-modal-header {
+        padding: 12px 14px;
+    }
+
+    .crop-modal-header h3 {
+        font-size: 0.92rem;
+    }
+
+    .crop-modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.05rem;
     }
 
     .crop-modal-body {
         padding: 12px;
     }
 
-    .crop-image {
-        max-height: 55vh;
-    }
-
     .crop-modal-footer {
+        padding: 11px 14px;
         gap: 8px;
     }
 
     .crop-btn {
-        flex: 1;
-        min-width: 0;
-        padding: 0 10px;
-    }
-
-    .profile-upload-box {
-        padding: 25px 20px;
+        padding: 8px 16px;
+        font-size: 0.74rem;
+        border-radius: 12px;
     }
 }
 
-/* =========================================================
-   VERY SMALL DEVICES
-========================================================= */
+/* Small phones */
+@media (max-width: 360px) {
+    .top-edit-card {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 14px;
+        transform: translateY(-3px);
+    }
 
-@media (max-width: 300px) {
+    .top-edit-header {
+        padding-bottom: 10px;
+    }
+
+    .back-button {
+        padding: 6px 11px;
+        font-size: 0.68rem;
+    }
+
+    .back-button svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .profile-upload-success {
+        padding: 9px 12px;
+        font-size: 0.62rem;
+    }
+
+    .mypropreview-section-pro {
+        padding: 8px 0;
+    }
 
     .mypropreview-box-pro {
-        width: 105px;
-        height: 105px;
+        width: 96px;
+        height: 96px;
+    }
+
+    .profile-edit-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .profile-edit-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .profile-popup {
+        padding: 14px;
+        border-radius: 16px;
+        max-width: 290px;
+    }
+
+    .profile-popup-header h3 {
+        font-size: 0.84rem;
+    }
+
+    .profile-popup-close {
+        width: 28px;
+        height: 28px;
+        font-size: 0.95rem;
     }
 
     .popup-option {
-        padding: 11px;
+        padding: 10px 12px;
+        font-size: 0.7rem;
+        border-radius: 11px;
+    }
+
+    .popup-icon {
+        font-size: 0.95rem;
+    }
+
+    .popup-sub {
+        font-size: 0.58rem;
+    }
+
+    .popup-option.cancel {
+        font-size: 0.66rem;
+    }
+
+    .profile-upload-screen {
+        padding: 12px;
+    }
+
+    .profile-upload-box {
+        padding: 18px 16px;
+        border-radius: 16px;
+        max-width: 280px;
+    }
+
+    .profile-upload-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
+    }
+
+    .profile-upload-box h2 {
+        font-size: 0.88rem;
+    }
+
+    .profile-upload-box p {
+        font-size: 0.66rem;
+    }
+
+    .crop-modal {
+        border-radius: 16px;
+    }
+
+    .crop-modal-header {
+        padding: 11px 12px;
     }
 
     .crop-modal-header h3 {
-        font-size: 15px;
+        font-size: 0.84rem;
+    }
+
+    .crop-modal-close {
+        width: 28px;
+        height: 28px;
+        font-size: 0.95rem;
+    }
+
+    .crop-modal-body {
+        padding: 10px;
+    }
+
+    .crop-modal-footer {
+        padding: 10px 12px;
+        gap: 7px;
     }
 
     .crop-btn {
-        font-size: 11px;
+        padding: 7px 14px;
+        font-size: 0.68rem;
+        border-radius: 11px;
     }
 }
 
-.top-edit-header {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    width: 100%;
-}
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
 
-.back-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: none;
-    color: #fcfcfc;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 8px;
-}
+    .top-edit-card,
+    .profile-upload-success,
+    .profile-upload-screen,
+    .profile-upload-box,
+    .profile-upload-icon,
+    .profile-popup-overlay,
+    .profile-popup,
+    .crop-modal-overlay,
+    .crop-modal {
+        animation: none;
+    }
 
-.back-button:hover {
-    background: rgba(0, 0, 0, 0.05);
+    .back-button,
+    .profile-edit-btn,
+    .popup-option,
+    .crop-btn,
+    .profile-popup-close,
+    .crop-modal-close,
+    .mypropreview-box-pro,
+    .mypropreview-image-pro {
+        transition: none;
+    }
 }

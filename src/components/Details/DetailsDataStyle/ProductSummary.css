@@ -235,43 +235,8 @@
     0 1px 1px rgba(255, 255, 255, 0.65),
     0 0 4px rgba(255, 255, 255, 0.4);
   transform: translateY(-2px);
-
-  animation: psRatingPulse 2.4s ease-in-out infinite;
 }
 
-@keyframes psRatingPulse {
-
-  0%,
-  100% {
-    transform: translateY(-2px);
-    box-shadow:
-      0 5px 12px rgba(224, 165, 46, 0.6),
-      0 3px 8px rgba(224, 165, 46, 0.45),
-      4px 4px 10px rgba(224, 165, 46, 0.3),
-      -3px -3px 8px rgba(255, 255, 255, 1),
-      3px -3px 8px rgba(255, 255, 255, 0.75),
-      -3px 3px 8px rgba(224, 165, 46, 0.2),
-      inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.6),
-      inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.4);
-  }
-
-  50% {
-    transform: translateY(-4px);
-    box-shadow:
-      0 8px 16px rgba(224, 165, 46, 0.7),
-      0 5px 12px rgba(224, 165, 46, 0.5),
-      6px 6px 14px rgba(224, 165, 46, 0.35),
-      -4px -4px 10px rgba(255, 255, 255, 1),
-      4px -4px 10px rgba(255, 255, 255, 0.85),
-      -4px 4px 10px rgba(224, 165, 46, 0.25),
-      inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.65),
-      inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.45);
-  }
-}
-
-/* ============================================
-   HEADER — product name
-   ============================================ */
 .ps-header {
   width: 100%;
   margin: 0 0 10px;

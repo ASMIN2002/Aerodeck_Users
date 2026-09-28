@@ -79,11 +79,6 @@ function Media({
                     <div className="dt-media-scroll">
 
                         <div className="dt-media-card dt-no-media-card">
-
-                            <div className="dt-no-media-icon">
-                                📷
-                            </div>
-
                             <div className="dt-no-media-content">
 
                                 <h4>

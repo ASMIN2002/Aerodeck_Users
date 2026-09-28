@@ -1,843 +1,600 @@
-.editprofile {
-    width: 100%;
-    min-height: 100dvh;
-    padding: 10px 10px 90px;
+/* EditProfile.css — 3D UTHA HUA CLAYMORPHISM */
+
+.edit-profile,
+.edit-profile * {
     box-sizing: border-box;
-    background: linear-gradient(180deg, #f8fbff, #eef5ff);
-    animation: editProfileFade .35s ease;
 }
 
-/* ================= Header ================= */
+/* ============================================
+   PAGE WRAPPER
+   ============================================ */
+.edit-profile {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
 
-.edit-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px;
-    margin-bottom: 16px;
-    background: rgba(255, 255, 255, .92);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(228, 236, 247, .9);
-    border-radius: 16px;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
-}
+    flex-direction: column;
+    gap: 20px;
 
-.edit-back {
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #00c6ff, #4d7cff);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: .25s;
-    box-shadow: 0 8px 18px rgba(77, 124, 255, .20);
-}
-
-.edit-back:hover {
-    transform: translateY(-2px);
-}
-
-.edit-back:active {
-    transform: scale(.95);
-}
-
-.edit-header h2 {
-    flex: 1;
     margin: 0;
-    font-size: 12px;
-    font-weight: 700;
-    text-align: center;
-    color: #1f2937;
-    letter-spacing: .3px;
+    padding: 16px 14px 80px;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    -webkit-tap-highlight-color: transparent;
+
+    animation: editProfileIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ================= Profile ================= */
+@keyframes editProfileIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 
-.profile-image {
+/* ============================================
+   TOP EDIT SECTION — 3D UTHA HUA CARD
+   ============================================ */
+.edit-profile > .top-edit-section,
+.edit-profile > *:first-child {
+    position: relative;
+
     display: flex;
     flex-direction: column;
+    gap: 18px;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 20px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 24px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
+    box-shadow:
+        0 20px 40px rgba(140, 150, 180, 0.55),
+        0 10px 20px rgba(140, 150, 180, 0.4),
+        0 5px 12px rgba(140, 150, 180, 0.28),
+        16px 16px 32px rgba(140, 150, 180, 0.28),
+        -16px -16px 32px rgba(255, 255, 255, 1),
+        13px -13px 26px rgba(255, 255, 255, 0.95),
+        -13px 13px 26px rgba(140, 150, 180, 0.15),
+        10px -10px 22px rgba(255, 255, 255, 0.9),
+        -10px 10px 22px rgba(140, 150, 180, 0.12),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-6px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 🔥 TOP HIGHLIGHT LINE */
+.edit-profile > .top-edit-section::before,
+.edit-profile > *:first-child::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2.5px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 1) 50%,
+        transparent 100%);
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+    z-index: 3;
+    filter: blur(0.5px);
+}
+
+/* 🔥 BOTTOM GROUND SHADOW */
+.edit-profile > .top-edit-section::after,
+.edit-profile > *:first-child::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+        rgba(140, 150, 180, 0.4) 0%,
+        transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+/* ============================================
+   MEDIUM EDIT SECTION — 3D UTHA HUA CARD
+   ============================================ */
+.edit-profile > .medium-edit-section,
+.edit-profile > *:nth-child(2) {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 20px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 24px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
+    box-shadow:
+        0 18px 36px rgba(140, 150, 180, 0.55),
+        0 9px 18px rgba(140, 150, 180, 0.4),
+        0 5px 10px rgba(140, 150, 180, 0.28),
+        14px 14px 28px rgba(140, 150, 180, 0.28),
+        -14px -14px 28px rgba(255, 255, 255, 1),
+        11px -11px 24px rgba(255, 255, 255, 0.95),
+        -11px 11px 24px rgba(140, 150, 180, 0.15),
+        9px -9px 20px rgba(255, 255, 255, 0.9),
+        -9px 9px 20px rgba(140, 150, 180, 0.12),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-5px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 🔥 TOP HIGHLIGHT LINE */
+.edit-profile > .medium-edit-section::before,
+.edit-profile > *:nth-child(2)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2.5px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 1) 50%,
+        transparent 100%);
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+    z-index: 3;
+    filter: blur(0.5px);
+}
+
+/* 🔥 BOTTOM GROUND SHADOW */
+.edit-profile > .medium-edit-section::after,
+.edit-profile > *:nth-child(2)::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+        rgba(140, 150, 180, 0.4) 0%,
+        transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+/* ============================================
+   HOVER LIFT ON SECTIONS
+   ============================================ */
+.edit-profile > .top-edit-section:hover,
+.edit-profile > *:first-child:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 30px 56px rgba(124, 140, 248, 0.45),
+        0 15px 28px rgba(124, 140, 248, 0.32),
+        0 8px 16px rgba(124, 140, 248, 0.22),
+        20px 20px 40px rgba(124, 140, 248, 0.2),
+        -20px -20px 40px rgba(255, 255, 255, 1),
+        15px -15px 32px rgba(255, 255, 255, 0.95),
+        -15px 15px 32px rgba(124, 140, 248, 0.13),
+        11px -11px 24px rgba(255, 255, 255, 0.9),
+        -11px 11px 24px rgba(124, 140, 248, 0.1),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.22);
+}
+
+.edit-profile > .medium-edit-section:hover,
+.edit-profile > *:nth-child(2):hover {
+    transform: translateY(-9px);
+
+    box-shadow:
+        0 28px 52px rgba(124, 140, 248, 0.42),
+        0 14px 26px rgba(124, 140, 248, 0.3),
+        0 8px 16px rgba(124, 140, 248, 0.2),
+        18px 18px 36px rgba(124, 140, 248, 0.18),
+        -18px -18px 36px rgba(255, 255, 255, 1),
+        14px -14px 30px rgba(255, 255, 255, 0.95),
+        -14px 14px 30px rgba(124, 140, 248, 0.12),
+        10px -10px 22px rgba(255, 255, 255, 0.9),
+        -10px 10px 22px rgba(124, 140, 248, 0.08),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.2);
+}
+
+/* ============================================
+   COMMON SECTION HEADINGS (h2, h3, h4)
+   ============================================ */
+.edit-profile h2,
+.edit-profile h3,
+.edit-profile h4 {
+    margin: 0 0 6px;
+    padding-left: 12px;
+
+    position: relative;
+
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
+}
+
+/* 🔥 accent bar before heading */
+.edit-profile h2::before,
+.edit-profile h3::before,
+.edit-profile h4::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 5px;
+    height: 80%;
+
+    border-radius: 4px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    box-shadow:
+        2px 3px 6px rgba(91, 110, 225, 0.5),
+        -1.5px -1.5px 4px rgba(255, 255, 255, 1),
+        1.5px -1.5px 4px rgba(255, 255, 255, 0.7),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 2px rgba(60, 70, 160, 0.45);
+}
+
+/* ============================================
+   COMMON INPUT FIELDS (fallback — override in child CSS)
+   ============================================ */
+.edit-profile input,
+.edit-profile textarea,
+.edit-profile select {
+    width: 100%;
+    padding: 12px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-size: clamp(0.8rem, 2.1vw, 0.9rem);
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
+
+    outline: none;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    /* 🔥 3D inset feel */
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 4px 10px rgba(140, 150, 180, 0.25),
+        0 2px 6px rgba(140, 150, 180, 0.18),
+        3px 3px 8px rgba(140, 150, 180, 0.15),
+        -3px -3px 8px rgba(255, 255, 255, 1);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.edit-profile input:focus,
+.edit-profile textarea:focus,
+.edit-profile select:focus {
+    border-color: rgba(124, 140, 248, 0.5);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 6px 14px rgba(124, 140, 248, 0.35),
+        0 3px 8px rgba(124, 140, 248, 0.25),
+        4px 4px 10px rgba(124, 140, 248, 0.2),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        0 0 0 3px rgba(124, 140, 248, 0.15);
+}
+
+/* ============================================
+   COMMON BUTTONS (fallback)
+   ============================================ */
+.edit-profile button:not(.view-back):not(.edit-btn) {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 18px;
-}
 
-.profile-image img {
-    width: 92px;
-    height: 92px;
-    object-fit: cover;
-    border-radius: 50%;
-    background: #fff;
-    border: 4px solid #fff;
-    box-shadow:
-        0 12px 28px rgba(15, 23, 42, .08),
-        0 0 0 2px #dbeafe;
-    transition: .3s;
-}
+    padding: 10px 20px;
 
-.profile-image img:hover {
-    transform: scale(1.04);
-}
-
-.profile-image button {
-    margin-top: 12px;
-    height: 30px;
-    padding: 0 16px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #00c6ff, #4d7cff);
-    color: #fff;
-    font-size: 7px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .25s;
-    box-shadow: 0 8px 18px rgba(77, 124, 255, .18);
-}
-
-.profile-image button:hover {
-    transform: translateY(-2px);
-}
-
-.profile-image button:active {
-    transform: scale(.96);
-}
-
-/* ================= Animation ================= */
-
-@keyframes editProfileFade {
-
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-/* ================= Mobile ================= */
-
-@media(max-width:480px) {
-
-    .editprofile {
-        padding: 8px 8px 82px;
-    }
-
-    .edit-header {
-        padding: 7px;
-        border-radius: 14px;
-        margin-bottom: 14px;
-    }
-
-    .edit-back {
-        width: 30px;
-        height: 30px;
-        font-size: 12px;
-    }
-
-    .edit-header h2 {
-        font-size: 11px;
-    }
-
-    .profile-image img {
-        width: 86px;
-        height: 86px;
-    }
-
-    .profile-image button {
-        height: 28px;
-        padding: 0 14px;
-        font-size: 6.5px;
-        border-radius: 9px;
-    }
-
-}
-
-/* ================= Tablet ================= */
-
-@media(min-width:768px) {
-
-    .editprofile {
-        max-width: 760px;
-        margin: auto;
-        padding: 20px 20px 120px;
-    }
-
-    .edit-header {
-        padding: 14px;
-        border-radius: 20px;
-    }
-
-    .edit-back {
-        width: 42px;
-        height: 42px;
-        font-size: 18px;
-    }
-
-    .edit-header h2 {
-        font-size: 20px;
-    }
-
-    .profile-image img {
-        width: 130px;
-        height: 130px;
-    }
-
-    .profile-image button {
-        height: 40px;
-        padding: 0 24px;
-        font-size: 11px;
-        border-radius: 12px;
-    }
-
-}
-
-/* ================= Desktop ================= */
-
-@media(min-width:1200px) {
-
-    .editprofile {
-        max-width: 900px;
-    }
-
-}
-
-/* ================= Form ================= */
-
-.edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 14px;
-    background: #fff;
-    border: 1px solid #e7edf6;
-    border-radius: 18px;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
-}
-
-/* ================= Labels ================= */
-
-.edit-form label {
-    margin-bottom: -4px;
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: .3px;
-    color: #475569;
-    text-transform: uppercase;
-}
-
-/* ================= Inputs ================= */
-
-.edit-form input {
-    width: 100%;
-    height: 36px;
-    padding: 0 12px;
-    border: 1px solid #dbe6f3;
-    border-radius: 10px;
-    outline: none;
-    background: #f8fbff;
-    font-size: 8px;
-    font-weight: 600;
-    color: #1f2937;
-    transition: .25s;
-    box-sizing: border-box;
-}
-
-.edit-form input::placeholder {
-    font-size: 7px;
-    font-weight: 500;
-    color: #94a3b8;
-}
-
-.edit-form input:focus {
-    background: #fff;
-    border-color: #4d7cff;
-    box-shadow: 0 0 0 3px rgba(77, 124, 255, .10);
-}
-
-/* ================= View Section ================= */
-
-.calling-view {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
-    background: #f8fbff;
-    border: 1px solid #e3ebf6;
-    border-radius: 12px;
-}
-
-/* ================= Status ================= */
-
-.calling-status {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-    flex: 1;
-}
-
-.calling-status span:first-child {
-    font-size: 8px;
-    font-weight: 600;
-    color: #1f2937;
-    word-break: break-word;
-}
-
-.verified {
-    display: inline-flex;
-    align-items: center;
-    width: max-content;
-    padding: 2px 8px;
-    border-radius: 20px;
-    background: #dcfce7;
-    color: #15803d;
-    font-size: 6px;
-    font-weight: 700;
-}
-
-.pending {
-    display: inline-flex;
-    align-items: center;
-    width: max-content;
-    padding: 2px 8px;
-    border-radius: 20px;
-    background: #fef3c7;
-    color: #b45309;
-    font-size: 6px;
-    font-weight: 700;
-}
-
-/* ================= Edit Button ================= */
-
-.calling-view button {
-    width: 54px;
-    height: 26px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #00c6ff, #4d7cff);
-    color: #fff;
-    font-size: 6.5px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .25s;
-    flex-shrink: 0;
-    box-shadow: 0 6px 14px rgba(77, 124, 255, .18);
-}
-
-.calling-view button:hover {
-    transform: translateY(-2px);
-}
-
-.calling-view button:active {
-    transform: scale(.95);
-}
-
-/* ================= Mobile ================= */
-
-@media(max-width:480px) {
-
-    .edit-form {
-        padding: 12px;
-        gap: 10px;
-        border-radius: 16px;
-    }
-
-    .edit-form label {
-        font-size: 6.5px;
-    }
-
-    .edit-form input {
-        height: 34px;
-        font-size: 7px;
-    }
-
-    .edit-form input::placeholder {
-        font-size: 6.5px;
-    }
-
-    .calling-view {
-        padding: 9px 10px;
-    }
-
-    .calling-status span:first-child {
-        font-size: 7px;
-    }
-
-    .verified,
-    .pending {
-        font-size: 5.8px;
-        padding: 2px 7px;
-    }
-
-    .calling-view button {
-        width: 50px;
-        height: 24px;
-        font-size: 6px;
-    }
-
-}
-
-/* ================= Tablet ================= */
-
-@media(min-width:768px) {
-
-    .edit-form {
-        padding: 22px;
-        gap: 18px;
-        border-radius: 22px;
-    }
-
-    .edit-form label {
-        font-size: 11px;
-    }
-
-    .edit-form input {
-        height: 48px;
-        font-size: 13px;
-        padding: 0 16px;
-    }
-
-    .edit-form input::placeholder {
-        font-size: 12px;
-    }
-
-    .calling-view {
-        padding: 14px 16px;
-    }
-
-    .calling-status span:first-child {
-        font-size: 13px;
-    }
-
-    .verified,
-    .pending {
-        font-size: 10px;
-        padding: 5px 12px;
-    }
-
-    .calling-view button {
-        width: 82px;
-        height: 36px;
-        font-size: 10px;
-        border-radius: 10px;
-    }
-
-}
-
-/* ================= Edit Mode ================= */
-
-.calling-edit {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-    background: #f8fbff;
-    border: 1px solid #e5edf7;
+    border: 1.5px solid rgba(255, 255, 255, 1);
     border-radius: 14px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
-}
 
-/* ================= OTP Input ================= */
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
 
-.calling-edit input {
-    width: 100%;
-    height: 36px;
-    padding: 0 12px;
-    border: 1px solid #dbe6f3;
-    border-radius: 10px;
-    background: #fff;
-    font-size: 8px;
-    font-weight: 600;
-    color: #1f2937;
-    outline: none;
-    transition: .25s;
-    box-sizing: border-box;
-}
+    color: #3f4664;
+    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
 
-.calling-edit input::placeholder {
-    font-size: 7px;
-    font-weight: 500;
-    color: #94a3b8;
-}
-
-.calling-edit input:focus {
-    border-color: #4d7cff;
-    box-shadow: 0 0 0 3px rgba(77, 124, 255, .12);
-}
-
-/* ================= Buttons ================= */
-
-.calling-edit button {
-    height: 32px;
-    border: none;
-    border-radius: 10px;
     cursor: pointer;
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: .2px;
-    transition: .25s;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.5),
+        0 4px 10px rgba(140, 150, 180, 0.35),
+        5px 5px 12px rgba(140, 150, 180, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ================= Send OTP ================= */
+.edit-profile button:not(.view-back):not(.edit-btn):hover {
+    transform: translateY(-6px);
+    color: #5b6ee1;
 
-.calling-edit button:first-of-type {
-    background: linear-gradient(135deg, #00c6ff, #4d7cff);
-    color: #fff;
-    box-shadow: 0 8px 18px rgba(77, 124, 255, .20);
+    box-shadow:
+        0 14px 26px rgba(124, 140, 248, 0.45),
+        0 7px 14px rgba(124, 140, 248, 0.32),
+        9px 9px 20px rgba(124, 140, 248, 0.22),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(124, 140, 248, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
 }
 
-.calling-edit button:first-of-type:hover {
-    transform: translateY(-2px);
+.edit-profile button:not(.view-back):not(.edit-btn):active {
+    transform: translateY(1px) scale(0.97);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
 }
 
-.calling-edit button:first-of-type:active {
-    transform: scale(.96);
-}
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 
-/* ================= Verify OTP ================= */
-
-.calling-edit button:last-of-type {
-    background: linear-gradient(135deg, #16a34a, #22c55e);
-    color: #fff;
-    box-shadow: 0 8px 18px rgba(34, 197, 94, .20);
-}
-
-.calling-edit button:last-of-type:hover {
-    transform: translateY(-2px);
-}
-
-.calling-edit button:last-of-type:active {
-    transform: scale(.96);
-}
-
-/* ================= Disabled ================= */
-
-.calling-edit button:disabled {
-    background: #d8dee9;
-    color: #8b95a7;
-    box-shadow: none;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* ================= OTP Animation ================= */
-
-.calling-edit {
-    animation: otpFade .25s ease;
-}
-
-@keyframes otpFade {
-
-    from {
-        opacity: 0;
-        transform: translateY(8px);
+/* Tablets */
+@media (max-width: 768px) {
+    .edit-profile {
+        padding: 14px 12px 70px;
+        gap: 18px;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-/* ================= Mobile ================= */
-
-@media(max-width:480px) {
-
-    .calling-edit {
-        padding: 10px;
-        gap: 8px;
-        border-radius: 12px;
-    }
-
-    .calling-edit input {
-        height: 34px;
-        font-size: 7px;
-        padding: 0 10px;
-    }
-
-    .calling-edit input::placeholder {
-        font-size: 6.5px;
-    }
-
-    .calling-edit button {
-        height: 30px;
-        font-size: 6.3px;
-        border-radius: 9px;
-    }
-
-}
-
-/* ================= Tablet ================= */
-
-@media(min-width:768px) {
-
-    .calling-edit {
+    .edit-profile > .top-edit-section,
+    .edit-profile > *:first-child {
         padding: 18px;
+        border-radius: 22px;
+        gap: 16px;
+        transform: translateY(-5px);
+    }
+
+    .edit-profile > .medium-edit-section,
+    .edit-profile > *:nth-child(2) {
+        padding: 18px;
+        border-radius: 22px;
         gap: 14px;
-        border-radius: 18px;
+        transform: translateY(-4px);
     }
 
-    .calling-edit input {
-        height: 48px;
-        padding: 0 16px;
-        font-size: 13px;
+    .edit-profile h2,
+    .edit-profile h3,
+    .edit-profile h4 {
+        font-size: 1rem;
+        padding-left: 11px;
     }
 
-    .calling-edit input::placeholder {
-        font-size: 12px;
+    .edit-profile h2::before,
+    .edit-profile h3::before,
+    .edit-profile h4::before {
+        width: 4px;
     }
 
-    .calling-edit button {
-        height: 42px;
-        font-size: 11px;
+    .edit-profile input,
+    .edit-profile textarea,
+    .edit-profile select {
+        padding: 11px 14px;
+        border-radius: 13px;
+        font-size: 0.86rem;
+    }
+
+    .edit-profile button:not(.view-back):not(.edit-btn) {
+        padding: 9px 18px;
+        font-size: 0.84rem;
+        border-radius: 13px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .edit-profile {
+        padding: 12px 10px 60px;
+        gap: 16px;
+    }
+
+    .edit-profile > .top-edit-section,
+    .edit-profile > *:first-child {
+        padding: 16px;
+        border-radius: 20px;
+        gap: 14px;
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 14px 28px rgba(140, 150, 180, 0.5),
+            0 7px 16px rgba(140, 150, 180, 0.35),
+            0 4px 10px rgba(140, 150, 180, 0.25),
+            11px 11px 22px rgba(140, 150, 180, 0.22),
+            -11px -11px 22px rgba(255, 255, 255, 1),
+            9px -9px 20px rgba(255, 255, 255, 0.9),
+            -9px 9px 20px rgba(140, 150, 180, 0.12),
+            7px -7px 16px rgba(255, 255, 255, 0.85),
+            -7px 7px 16px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+    }
+
+    .edit-profile > .medium-edit-section,
+    .edit-profile > *:nth-child(2) {
+        padding: 16px;
+        border-radius: 20px;
+        gap: 12px;
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 12px 24px rgba(140, 150, 180, 0.5),
+            0 6px 12px rgba(140, 150, 180, 0.35),
+            0 3px 8px rgba(140, 150, 180, 0.25),
+            9px 9px 20px rgba(140, 150, 180, 0.22),
+            -9px -9px 20px rgba(255, 255, 255, 1),
+            7px -7px 16px rgba(255, 255, 255, 0.9),
+            -7px 7px 16px rgba(140, 150, 180, 0.12),
+            6px -6px 14px rgba(255, 255, 255, 0.85),
+            -6px 6px 14px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.24);
+    }
+
+    .edit-profile h2,
+    .edit-profile h3,
+    .edit-profile h4 {
+        font-size: 0.92rem;
+        padding-left: 10px;
+    }
+
+    .edit-profile h2::before,
+    .edit-profile h3::before,
+    .edit-profile h4::before {
+        width: 3.5px;
+        height: 75%;
+    }
+
+    .edit-profile input,
+    .edit-profile textarea,
+    .edit-profile select {
+        padding: 10px 13px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+
+    .edit-profile button:not(.view-back):not(.edit-btn) {
+        padding: 8px 16px;
+        font-size: 0.78rem;
         border-radius: 12px;
     }
-
 }
 
-/* ================= Desktop ================= */
-
-@media(min-width:1200px) {
-
-    .calling-edit {
-        padding: 20px;
+/* Small phones */
+@media (max-width: 360px) {
+    .edit-profile {
+        padding: 10px 8px 50px;
+        gap: 14px;
     }
 
-    .calling-edit button {
-        height: 44px;
+    .edit-profile > .top-edit-section,
+    .edit-profile > *:first-child {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 12px;
+        transform: translateY(-3px);
     }
 
-}
-
-/* ================= Save Button ================= */
-
-.save-profile {
-    width: 100%;
-    height: 42px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #2563eb, #4f46e5);
-    color: #fff;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: .4px;
-    cursor: pointer;
-    transition: .3s;
-    box-shadow:
-        0 12px 24px rgba(37, 99, 235, .22),
-        0 4px 10px rgba(79, 70, 229, .12);
-}
-
-.save-profile:hover {
-    transform: translateY(-2px);
-    box-shadow:
-        0 18px 30px rgba(37, 99, 235, .28),
-        0 6px 14px rgba(79, 70, 229, .18);
-}
-
-.save-profile:active {
-    transform: scale(.98);
-}
-
-.save-profile:disabled {
-    background: #d5dce8;
-    color: #8b96a8;
-    box-shadow: none;
-    cursor: not-allowed;
-}
-
-/* ================= Smooth Scroll ================= */
-
-.editprofile {
-    scroll-behavior: smooth;
-}
-
-.editprofile::-webkit-scrollbar {
-    width: 5px;
-}
-
-.editprofile::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.editprofile::-webkit-scrollbar-thumb {
-    background: #c9d8ef;
-    border-radius: 20px;
-}
-
-.editprofile::-webkit-scrollbar-thumb:hover {
-    background: #9eb9e7;
-}
-
-/* ================= Card Hover ================= */
-
-.edit-form,
-.calling-view,
-.calling-edit {
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease;
-}
-
-.edit-form:hover,
-.calling-view:hover,
-.calling-edit:hover {
-    border-color: #c8d9fb;
-    box-shadow:
-        0 12px 26px rgba(15, 23, 42, .06);
-}
-
-/* ================= Selection ================= */
-
-::selection {
-    background: #2563eb;
-    color: #fff;
-}
-
-/* ================= Autofill ================= */
-
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
-    -webkit-text-fill-color: #1f2937;
-}
-
-/* ================= Focus Visible ================= */
-
-button:focus-visible,
-input:focus-visible {
-    outline: none;
-}
-
-/* ================= Mobile ================= */
-
-@media(max-width:480px) {
-
-    .save-profile {
-        height: 38px;
-        margin-top: 8px;
-        border-radius: 10px;
-        font-size: 7px;
-        letter-spacing: .3px;
+    .edit-profile > .medium-edit-section,
+    .edit-profile > *:nth-child(2) {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 11px;
     }
 
-    .editprofile::-webkit-scrollbar {
+    .edit-profile h2,
+    .edit-profile h3,
+    .edit-profile h4 {
+        font-size: 0.84rem;
+        padding-left: 9px;
+    }
+
+    .edit-profile h2::before,
+    .edit-profile h3::before,
+    .edit-profile h4::before {
         width: 3px;
     }
 
-}
-
-/* ================= Tablet ================= */
-
-@media(min-width:768px) {
-
-    .save-profile {
-        height: 50px;
-        margin-top: 16px;
-        font-size: 12px;
-        border-radius: 14px;
+    .edit-profile input,
+    .edit-profile textarea,
+    .edit-profile select {
+        padding: 9px 12px;
+        border-radius: 11px;
+        font-size: 0.74rem;
     }
 
+    .edit-profile button:not(.view-back):not(.edit-btn) {
+        padding: 7px 14px;
+        font-size: 0.72rem;
+        border-radius: 11px;
+    }
 }
 
-/* ================= Desktop ================= */
-
-@media(min-width:1200px) {
-
-    .save-profile {
-        height: 54px;
-        font-size: 13px;
-        max-width: 320px;
-        margin: 24px auto 0;
-        display: block;
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .edit-profile {
+        animation: none;
     }
 
-    .edit-form {
-        padding: 28px;
+    .edit-profile > *:first-child,
+    .edit-profile > *:nth-child(2) {
+        transition: none;
     }
 
-}
-/* ===========================
-   PROFILE PREVIEW CARD
-=========================== */
-
-.profile-preview-card{
-    width:100%;
-    background:#ffffff;
-    border-radius:22px;
-    overflow:hidden;
-    border:1px solid #e8e8e8;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    margin-bottom:20px;
-}
-
-.preview-image-box{
-    width:100%;
-    height:220px;
-    background:#f5f7fb;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-}
-
-.preview-image{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.preview-actions{
-    display:flex;
-    gap:12px;
-    padding:15px;
-    background:#fff;
-}
-
-.change-photo-btn,
-.delete-photo-btn{
-    flex:1;
-    height:46px;
-    border:none;
-    border-radius:12px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.25s;
-}
-
-.change-photo-btn{
-    background:#0f62fe;
-    color:#fff;
-}
-
-.change-photo-btn:hover{
-    background:#0047d4;
-}
-
-.delete-photo-btn{
-    background:#ffe9e9;
-    color:#d10000;
-}
-
-.delete-photo-btn:hover{
-    background:#ffd6d6;
+    .edit-profile input,
+    .edit-profile textarea,
+    .edit-profile select,
+    .edit-profile button:not(.view-back):not(.edit-btn) {
+        transition: none;
+    }
 }

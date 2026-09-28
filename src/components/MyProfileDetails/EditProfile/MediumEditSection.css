@@ -1,306 +1,659 @@
-/* =========================================================
-   MEDIUM EDIT SECTION — AERODECK PREMIUM
-========================================================= */
+/* MediumEditSection.css — 3D UTHA HUA CLAYMORPHISM */
 
+.medium-edit-card,
+.medium-edit-card * {
+    box-sizing: border-box;
+}
+
+/* ============================================
+   🔥 CARD WRAPPER — HEAVY 3D UTHA HUA
+   ============================================ */
 .medium-edit-card {
     position: relative;
-    width: 90%;
-    box-sizing: border-box;
-    margin: 16px auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 1;
+    width: 100%;
+
+    margin: 0;
     padding: 20px;
-    overflow: hidden;
+
+    border: 2px solid rgba(255, 255, 255, 1);
     border-radius: 24px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
+    box-shadow:
+        0 20px 40px rgba(140, 150, 180, 0.55),
+        0 10px 20px rgba(140, 150, 180, 0.4),
+        0 5px 12px rgba(140, 150, 180, 0.28),
+        16px 16px 32px rgba(140, 150, 180, 0.28),
+        -16px -16px 32px rgba(255, 255, 255, 1),
+        13px -13px 26px rgba(255, 255, 255, 0.95),
+        -13px 13px 26px rgba(140, 150, 180, 0.15),
+        10px -10px 22px rgba(255, 255, 255, 0.9),
+        -10px 10px 22px rgba(140, 150, 180, 0.12),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-5px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+    animation: mediumEditIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@keyframes mediumEditIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
 
-/* Top ambient glow */
+    to {
+        opacity: 1;
+        transform: translateY(-5px) scale(1);
+    }
+}
 
+/* 🔥 TOP HIGHLIGHT LINE */
 .medium-edit-card::before {
     content: "";
-
     position: absolute;
-
-    top: -100px;
-    right: -80px;
-
-    width: 220px;
-    height: 220px;
-
-    border-radius: 50%;
-
-    background: rgba(0, 242, 255, 0.10);
-
-    filter: blur(70px);
-
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 24px 24px 0 0;
     pointer-events: none;
+    z-index: 3;
+    filter: blur(0.5px);
 }
 
-
-/* =========================================================
-   FIELD
-========================================================= */
-
-.medium-field {
-    position: relative;
-    z-index: 2;
-
-    margin-bottom: 22px;
+/* 🔥 BOTTOM GROUND SHADOW */
+.medium-edit-card::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.4) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: -1;
 }
 
-.medium-field:last-child {
-    margin-bottom: 0;
-}
-
-.medium-field label {
-    display: block;
-    margin-bottom: 9px;
-    color: rgb(248, 246, 246);
-    font-size: 8px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   FULL NAME
-========================================================= */
-
-.name-input-wrapper {
+/* ============================================
+   🔥 MESSAGE — success / error pills
+   ============================================ */
+.email-message {
     display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 11px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1.35;
+    text-align: center;
+
+    animation: messagePop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes messagePop {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-3px) scale(1);
+    }
+}
+
+/* ---- Success — green 3D pill ---- */
+.email-message.success {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+
+    color: #1a4a1a;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 6px rgba(255, 255, 255, 0.4);
+
+    box-shadow:
+        0 12px 24px rgba(95, 187, 90, 0.55),
+        0 6px 14px rgba(95, 187, 90, 0.4),
+        8px 8px 18px rgba(95, 187, 90, 0.28),
+        -8px -8px 18px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.85),
+        -6px 6px 14px rgba(95, 187, 90, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(40, 100, 40, 0.45);
+
+    transform: translateY(-3px);
+}
+
+/* ---- Error — red 3D pill ---- */
+.email-message.error {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
+
+    color: #ffffff;
+
+    text-shadow:
+        0 1px 3px rgba(140, 40, 40, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 12px 24px rgba(226, 90, 90, 0.55),
+        0 6px 14px rgba(226, 90, 90, 0.4),
+        8px 8px 18px rgba(226, 90, 90, 0.28),
+        -8px -8px 18px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.85),
+        -6px 6px 14px rgba(226, 90, 90, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
+
+    transform: translateY(-3px);
+}
+
+/* ============================================
+   FIELD GROUP
+   ============================================ */
+.medium-field {
+    display: flex;
+    flex-direction: column;
     gap: 8px;
 
     width: 100%;
 }
 
-.name-input-wrapper input {
-    flex: 1;
-    min-width: 0;
-    height: 38px;
-    padding: 0 13px;
-    box-sizing: border-box;
-    color: black;
-    border: 1px solid black;
-    border-radius: 12px;
-    outline: none;
-    font-size: 11px;
-    letter-spacing: 1px;
-    font-weight: bold;
+/* ---- Label ---- */
+.medium-field label {
+    display: inline-flex;
+    align-items: center;
+
+    position: relative;
+    padding-left: 11px;
+
+    font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1.3;
+
+    color: #8a90ac;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 1px 2px rgba(140, 150, 180, 0.15);
 }
 
-.name-input-wrapper input::placeholder,
-.email-input-row input::placeholder,
-.otp-verification-row input::placeholder {
-    color: #607b84;
-}
+/* 🔥 accent bar before label */
+.medium-field label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 
-.name-input-wrapper input:focus,
-.email-input-row input:focus,
-.otp-verification-row input:focus {
-    background: rgb(255, 255, 255);
+    width: 3.5px;
+    height: 70%;
 
-    border-color: rgba(0, 242, 255, 0.65);
+    border-radius: 3px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
 
     box-shadow:
-        0 0 0 3px rgba(0, 242, 255, 0.07),
-        0 0 20px rgba(0, 242, 255, 0.08);
+        1.5px 2px 4px rgba(91, 110, 225, 0.45),
+        -1px -1px 3px rgba(255, 255, 255, 1),
+        inset 1px 1px 1.5px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 1.5px rgba(60, 70, 160, 0.45);
 }
 
+/* ============================================
+   NAME INPUT WRAPPER
+   ============================================ */
+.name-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-/* =========================================================
-   COMMON BUTTON
-========================================================= */
+    width: 100%;
+}
 
-.name-input-wrapper button,
-.email-add-btn,
-.send-otp-btn,
-.verify-email-btn {
-    border: none;
+/* ---- Text input — 3D INSET field ---- */
+.medium-field input[type="text"],
+.medium-field input[type="email"] {
+    flex: 1;
+    min-width: 0;
 
-    border-radius: 11px;
+    width: 100%;
+    padding: 13px 16px;
 
-    font-family: inherit;
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
 
-    font-size: 11px;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-size: clamp(0.8rem, 2.1vw, 0.9rem);
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
+
+    outline: none;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    /* 🔥 3D INSET FEEL — dabaya hua */
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 4px 10px rgba(140, 150, 180, 0.25),
+        0 2px 6px rgba(140, 150, 180, 0.18),
+        3px 3px 8px rgba(140, 150, 180, 0.15),
+        -3px -3px 8px rgba(255, 255, 255, 1);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.medium-field input[type="text"]:focus,
+.medium-field input[type="email"]:focus {
+    border-color: rgba(124, 140, 248, 0.5);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 6px 14px rgba(124, 140, 248, 0.35),
+        0 3px 8px rgba(124, 140, 248, 0.25),
+        4px 4px 10px rgba(124, 140, 248, 0.2),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        0 0 0 3px rgba(124, 140, 248, 0.15);
+}
+
+.medium-field input::placeholder {
+    color: #b8bdcf;
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* ============================================
+   🔥 SAVE NAME BUTTON — 3D accent pill
+   ============================================ */
+.save-name-btn {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 20px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 0.78rem;
     font-weight: 900;
-
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    white-space: nowrap;
 
     cursor: pointer;
 
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        opacity 0.18s ease;
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.3);
+
+    /* 🔥 utha hua */
+    box-shadow:
+        0 8px 18px rgba(91, 110, 225, 0.55),
+        0 4px 10px rgba(91, 110, 225, 0.4),
+        5px 5px 12px rgba(91, 110, 225, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(91, 110, 225, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+
+    animation: saveBtnPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.name-input-wrapper button:not(:disabled):active,
-.email-add-btn:not(:disabled):active,
-.send-otp-btn:not(:disabled):active,
-.verify-email-btn:not(:disabled):active {
-    transform: scale(0.95);
+@keyframes saveBtnPop {
+    from {
+        opacity: 0;
+        transform: translateY(-3px) scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-3px) scale(1);
+    }
 }
 
-
-/* =========================================================
-   SAVE NAME
-========================================================= */
-
-.name-input-wrapper button {
-    min-width: 58px;
-
-    padding: 0 14px;
-
-    color: #001114;
-
-    background:
-        linear-gradient(
-            135deg,
-            #00f2ff,
-            #00c8ff
-        );
+.save-name-btn:hover {
+    transform: translateY(-6px);
 
     box-shadow:
-        0 7px 20px rgba(0, 242, 255, 0.18);
+        0 14px 26px rgba(91, 110, 225, 0.65),
+        0 7px 14px rgba(91, 110, 225, 0.5),
+        9px 9px 20px rgba(91, 110, 225, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(91, 110, 225, 0.22),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
 }
 
-.name-input-wrapper button:hover {
+.save-name-btn:active {
+    transform: translateY(1px) scale(0.96);
     box-shadow:
-        0 8px 28px rgba(0, 242, 255, 0.32);
+        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
 }
 
+.save-name-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-3px);
+    animation: none;
+}
 
-/* =========================================================
-   MOBILE VERIFIED BOX
-========================================================= */
-
+/* ============================================
+   🔥 MOBILE BOX — read-only 3D wool field
+   ============================================ */
 .mobile-box {
-    min-height: 40px;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 9px;
-    border-radius: 12px;
-    border: 1px solid rgb(254, 252, 252);
+    gap: 10px;
+
+    width: 100%;
+    padding: 13px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
+
+    /* 🔥 3D INSET feel */
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 4px 10px rgba(140, 150, 180, 0.25),
+        0 2px 6px rgba(140, 150, 180, 0.18),
+        3px 3px 8px rgba(140, 150, 180, 0.15),
+        -3px -3px 8px rgba(255, 255, 255, 1);
 }
 
 .mobile-number {
+    flex: 1;
     min-width: 0;
+
+    font-size: clamp(0.8rem, 2.1vw, 0.9rem);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 1px 2px rgba(140, 150, 180, 0.15);
+
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: rgb(255, 255, 255);
-    font-size: 12px;
-    font-weight: 650;
 }
 
+/* ---- Verified badge — green 3D pill ---- */
 .verified {
     flex-shrink: 0;
 
-    padding: 5px 8px;
-
-    border-radius: 20px;
-
-    color: aqua;
-
-    background: rgba(0, 0, 0, 0.671);
-
-    border: 1px solid rgba(0, 255, 170, 0.25);
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 0.5px;
-}
-
-
-/* =========================================================
-   EMAIL NOT SET
-========================================================= */
-
-.email-add-box {
-    min-height: 46px;
-
-    display: flex;
-
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
-    padding: 7px 8px 7px 13px;
+    padding: 5px 12px;
 
-    box-sizing: border-box;
-
-    border-radius: 12px;
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 999px;
 
     background:
-        rgba(255, 255, 255, 0.025);
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
 
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    color: #1a4a1a;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 6px rgba(255, 255, 255, 0.4);
+
+    box-shadow:
+        0 6px 14px rgba(95, 187, 90, 0.55),
+        0 3px 8px rgba(95, 187, 90, 0.4),
+        4px 4px 10px rgba(95, 187, 90, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(95, 187, 90, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.45);
+
+    transform: translateY(-2px);
+
+    animation: verifiedPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes verifiedPulse {
+
+    0%,
+    100% {
+        transform: translateY(-2px);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* ============================================
+   🔥 EMAIL ADD BOX — when email NOT SET
+   ============================================ */
+.email-add-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+    padding: 13px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3),
+        0 4px 10px rgba(140, 150, 180, 0.22),
+        0 2px 6px rgba(140, 150, 180, 0.15),
+        3px 3px 8px rgba(140, 150, 180, 0.12),
+        -3px -3px 8px rgba(255, 255, 255, 1);
 }
 
 .email-not-set {
-    color: #728b93;
+    flex: 1;
+    min-width: 0;
 
-    font-size: 11px;
+    font-size: clamp(0.74rem, 2vw, 0.84rem);
     font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
 
-    letter-spacing: 0.8px;
+    color: #8a90ac;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+/* ---- Add button — accent 3D pill ---- */
 .email-add-btn {
-    min-width: 58px;
+    flex-shrink: 0;
 
-    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    padding: 0 13px;
+    padding: 9px 18px;
 
-    color: #001114;
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
 
     background:
-        linear-gradient(
-            135deg,
-            #00f2ff,
-            #00aaff
-        );
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.3);
 
     box-shadow:
-        0 5px 18px rgba(0, 242, 255, 0.18);
+        0 8px 18px rgba(91, 110, 225, 0.55),
+        0 4px 10px rgba(91, 110, 225, 0.4),
+        5px 5px 12px rgba(91, 110, 225, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(91, 110, 225, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .email-add-btn:hover {
+    transform: translateY(-6px);
+
     box-shadow:
-        0 7px 25px rgba(0, 242, 255, 0.32);
+        0 14px 26px rgba(91, 110, 225, 0.65),
+        0 7px 14px rgba(91, 110, 225, 0.5),
+        9px 9px 20px rgba(91, 110, 225, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(91, 110, 225, 0.22),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
 }
 
+.email-add-btn:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
+}
 
-/* =========================================================
-   EMAIL VERIFICATION BOX
-========================================================= */
-
+/* ============================================
+   🔥 EMAIL VERIFICATION BOX — expandable
+   ============================================ */
 .email-verification-box {
-    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
+    width: 100%;
+    padding: 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
     border-radius: 16px;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(0, 242, 255, 0.045),
-            rgba(0, 80, 150, 0.025)
-        );
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f0f4fc 0%, #e0e6f3 100%);
 
-    border: 1px solid rgba(0, 242, 255, 0.13);
+    /* 🔥 3D INSET PANEL */
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 6px 14px rgba(140, 150, 180, 0.25),
+        0 3px 8px rgba(140, 150, 180, 0.18),
+        4px 4px 10px rgba(140, 150, 180, 0.15),
+        -4px -4px 10px rgba(255, 255, 255, 1);
+
+    animation: emailBoxExpand 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@keyframes emailBoxExpand {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+        max-height: 0;
+    }
 
-/* =========================================================
-   EMAIL INPUT
-========================================================= */
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        max-height: 300px;
+    }
+}
 
+/* ---- Email input row ---- */
 .email-input-row {
     display: flex;
-
+    align-items: center;
     gap: 8px;
 
     width: 100%;
@@ -310,226 +663,611 @@
     flex: 1;
     min-width: 0;
 
-    height: 45px;
+    padding: 11px 14px;
 
-    padding: 0 12px;
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
 
-    box-sizing: border-box;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
 
-    color: #f2fcff;
-
-    background: rgba(0, 0, 0, 0.20);
-
-    border: 1px solid rgba(0, 242, 255, 0.16);
-
-    border-radius: 11px;
+    color: #3f4664;
+    font-size: clamp(0.76rem, 2vw, 0.86rem);
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
 
     outline: none;
 
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   SEND OTP
-========================================================= */
-
-.send-otp-btn {
-    min-width: 88px;
-
-    padding: 0 12px;
-
-    color: #001114;
-
-    background:
-        linear-gradient(
-            135deg,
-            #00f2ff,
-            #008cff
-        );
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 
     box-shadow:
-        0 6px 20px rgba(0, 160, 255, 0.20);
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 3px 8px rgba(140, 150, 180, 0.22),
+        2px 2px 6px rgba(140, 150, 180, 0.15),
+        -2px -2px 6px rgba(255, 255, 255, 1);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.email-input-row input:focus {
+    border-color: rgba(124, 140, 248, 0.5);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 5px 12px rgba(124, 140, 248, 0.3),
+        0 3px 8px rgba(124, 140, 248, 0.2),
+        3px 3px 8px rgba(124, 140, 248, 0.18),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        0 0 0 3px rgba(124, 140, 248, 0.12);
+}
+
+.email-input-row input::placeholder {
+    color: #b8bdcf;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.email-input-row input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---- Send OTP button — accent 3D pill ---- */
+.send-otp-btn {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    line-height: 1;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 8px 18px rgba(91, 110, 225, 0.55),
+        0 4px 10px rgba(91, 110, 225, 0.4),
+        5px 5px 12px rgba(91, 110, 225, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(91, 110, 225, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .send-otp-btn:hover {
+    transform: translateY(-6px);
+
     box-shadow:
-        0 8px 27px rgba(0, 200, 255, 0.34);
+        0 14px 26px rgba(91, 110, 225, 0.65),
+        0 7px 14px rgba(91, 110, 225, 0.5),
+        9px 9px 20px rgba(91, 110, 225, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(91, 110, 225, 0.22),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
 }
 
+.send-otp-btn:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
+}
 
-/* =========================================================
-   OTP ROW
-========================================================= */
+.send-otp-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-3px);
+}
 
+/* ---- OTP verification row ---- */
 .otp-verification-row {
     display: flex;
-
+    align-items: center;
     gap: 8px;
 
-    margin-top: 10px;
+    width: 100%;
+
+    animation: otpRowSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes otpRowSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .otp-verification-row input {
     flex: 1;
     min-width: 0;
 
-    height: 45px;
+    padding: 11px 14px;
 
-    padding: 0 13px;
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
 
-    box-sizing: border-box;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
 
-    color: #00f2ff;
-
-    background: rgba(0, 0, 0, 0.25);
-
-    border: 1px solid rgba(0, 242, 255, 0.22);
-
-    border-radius: 11px;
+    color: #3f4664;
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-align: center;
+    line-height: 1.4;
 
     outline: none;
 
-    font-size: 15px;
-    font-weight: 800;
-
-    letter-spacing: 4px;
-
-    text-align: center;
-}
-
-.verify-email-btn {
-    min-width: 82px;
-
-    padding: 0 12px;
-
-    color: #001114;
-
-    background:
-        linear-gradient(
-            135deg,
-            #00ffd0,
-            #00c8ff
-        );
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 
     box-shadow:
-        0 6px 20px rgba(0, 255, 200, 0.18);
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 3px 8px rgba(140, 150, 180, 0.22),
+        2px 2px 6px rgba(140, 150, 180, 0.15),
+        -2px -2px 6px rgba(255, 255, 255, 1);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.otp-verification-row input:focus {
+    border-color: rgba(124, 140, 248, 0.5);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 5px 12px rgba(124, 140, 248, 0.3),
+        0 3px 8px rgba(124, 140, 248, 0.2),
+        3px 3px 8px rgba(124, 140, 248, 0.18),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        0 0 0 3px rgba(124, 140, 248, 0.12);
+}
+
+.otp-verification-row input::placeholder {
+    color: #b8bdcf;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-style: italic;
+}
+
+.otp-verification-row input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---- Verify button — green 3D pill ---- */
+.verify-email-btn {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 16px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+
+    color: #1a4a1a;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 6px rgba(255, 255, 255, 0.4);
+
+    box-shadow:
+        0 8px 18px rgba(95, 187, 90, 0.55),
+        0 4px 10px rgba(95, 187, 90, 0.4),
+        5px 5px 12px rgba(95, 187, 90, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(95, 187, 90, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.45);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .verify-email-btn:hover {
+    transform: translateY(-6px);
+
     box-shadow:
-        0 8px 28px rgba(0, 255, 200, 0.32);
+        0 14px 26px rgba(95, 187, 90, 0.65),
+        0 7px 14px rgba(95, 187, 90, 0.5),
+        9px 9px 20px rgba(95, 187, 90, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(95, 187, 90, 0.22),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.45);
 }
 
+.verify-email-btn:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 5px 5px 12px rgba(40, 100, 40, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.4);
+}
 
-/* =========================================================
-   DISABLED BUTTONS
-========================================================= */
-
-.name-input-wrapper button:disabled,
-.email-add-btn:disabled,
-.send-otp-btn:disabled,
 .verify-email-btn:disabled {
-    opacity: 0.38;
-
+    opacity: 0.5;
     cursor: not-allowed;
-
-    box-shadow: none;
+    transform: translateY(-3px);
 }
 
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 
-/* =========================================================
-   MESSAGE / TOAST
-========================================================= */
-
-.email-message {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    z-index: 100000;
-
-    width: max-content;
-    max-width: calc(100% - 28px);
-
-    padding: 12px 18px;
-
-    box-sizing: border-box;
-
-    border-radius: 13px;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    text-align: center;
-
-    letter-spacing: 0.2px;
-
-    backdrop-filter: blur(15px);
-
-    box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.45);
-
-    animation: mediumToastIn 0.3s ease;
-}
-
-
-/* Success */
-
-.email-message.success {
-    color: #65ffd1;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0, 255, 170, 0.14),
-            rgba(0, 242, 255, 0.07)
-        );
-
-    border: 1px solid rgba(0, 255, 170, 0.38);
-
-    box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.45),
-        0 0 25px rgba(0, 255, 170, 0.10);
-}
-
-
-/* Error */
-
-.email-message.error {
-    color: #ff8c8c;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 60, 60, 0.14),
-            rgba(255, 0, 80, 0.06)
-        );
-
-    border: 1px solid rgba(255, 70, 70, 0.38);
-}
-
-
-/* =========================================================
-   ANIMATION
-========================================================= */
-
-@keyframes mediumToastIn {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translate(-50%, -15px);
+/* Tablets */
+@media (max-width: 768px) {
+    .medium-edit-card {
+        padding: 18px;
+        border-radius: 22px;
+        gap: 16px;
+        transform: translateY(-4px);
     }
 
-    to {
-        opacity: 1;
+    .medium-field {
+        gap: 7px;
+    }
 
-        transform:
-            translate(-50%, 0);
+    .medium-field label {
+        font-size: 0.72rem;
+        padding-left: 10px;
+    }
+
+    .medium-field label::before {
+        width: 3px;
+    }
+
+    .medium-field input[type="text"],
+    .medium-field input[type="email"] {
+        padding: 12px 14px;
+        border-radius: 13px;
+        font-size: 0.86rem;
+    }
+
+    .save-name-btn {
+        padding: 11px 18px;
+        font-size: 0.74rem;
+        border-radius: 13px;
+    }
+
+    .mobile-box,
+    .email-add-box {
+        padding: 12px 14px;
+        border-radius: 13px;
+    }
+
+    .mobile-number {
+        font-size: 0.86rem;
+    }
+
+    .verified {
+        padding: 4px 10px;
+        font-size: 0.58rem;
+    }
+
+    .email-not-set {
+        font-size: 0.78rem;
+    }
+
+    .email-add-btn {
+        padding: 8px 16px;
+        font-size: 0.68rem;
+        border-radius: 11px;
+    }
+
+    .email-verification-box {
+        padding: 12px;
+        border-radius: 14px;
+        gap: 9px;
+    }
+
+    .email-input-row input,
+    .otp-verification-row input {
+        padding: 10px 12px;
+        border-radius: 11px;
+        font-size: 0.8rem;
+    }
+
+    .otp-verification-row input {
+        font-size: 0.9rem;
+        letter-spacing: 3.5px;
+    }
+
+    .send-otp-btn,
+    .verify-email-btn {
+        padding: 10px 14px;
+        font-size: 0.64rem;
+        border-radius: 11px;
     }
 }
 
+/* Phones */
+@media (max-width: 480px) {
+    .medium-edit-card {
+        padding: 16px;
+        border-radius: 20px;
+        gap: 14px;
+        transform: translateY(-3px);
 
+        box-shadow:
+            0 14px 28px rgba(140, 150, 180, 0.5),
+            0 7px 16px rgba(140, 150, 180, 0.35),
+            0 4px 10px rgba(140, 150, 180, 0.25),
+            11px 11px 22px rgba(140, 150, 180, 0.22),
+            -11px -11px 22px rgba(255, 255, 255, 1),
+            9px -9px 20px rgba(255, 255, 255, 0.9),
+            -9px 9px 20px rgba(140, 150, 180, 0.12),
+            7px -7px 16px rgba(255, 255, 255, 0.85),
+            -7px 7px 16px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+    }
+
+    .email-message {
+        padding: 10px 14px;
+        font-size: 0.68rem;
+        border-radius: 12px;
+        letter-spacing: 0.2px;
+    }
+
+    .medium-field {
+        gap: 6px;
+    }
+
+    .medium-field label {
+        font-size: 0.66rem;
+        padding-left: 9px;
+        letter-spacing: 0.4px;
+    }
+
+    .medium-field label::before {
+        width: 3px;
+        height: 65%;
+    }
+
+    .medium-field input[type="text"],
+    .medium-field input[type="email"] {
+        padding: 11px 13px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+
+    .name-input-wrapper {
+        gap: 6px;
+    }
+
+    .save-name-btn {
+        padding: 10px 14px;
+        font-size: 0.68rem;
+        border-radius: 12px;
+    }
+
+    .mobile-box,
+    .email-add-box {
+        padding: 11px 13px;
+        border-radius: 12px;
+        gap: 8px;
+    }
+
+    .mobile-number {
+        font-size: 0.78rem;
+        letter-spacing: 0.2px;
+    }
+
+    .verified {
+        padding: 4px 9px;
+        font-size: 0.54rem;
+        letter-spacing: 0.4px;
+    }
+
+    .email-not-set {
+        font-size: 0.72rem;
+        letter-spacing: 0.2px;
+    }
+
+    .email-add-btn {
+        padding: 8px 14px;
+        font-size: 0.62rem;
+        border-radius: 10px;
+    }
+
+    .email-verification-box {
+        padding: 11px;
+        border-radius: 13px;
+        gap: 8px;
+    }
+
+    .email-input-row,
+    .otp-verification-row {
+        gap: 6px;
+    }
+
+    .email-input-row input,
+    .otp-verification-row input {
+        padding: 9px 11px;
+        border-radius: 10px;
+        font-size: 0.76rem;
+    }
+
+    .otp-verification-row input {
+        font-size: 0.86rem;
+        letter-spacing: 3px;
+    }
+
+    .send-otp-btn,
+    .verify-email-btn {
+        padding: 9px 12px;
+        font-size: 0.6rem;
+        border-radius: 10px;
+        letter-spacing: 0.3px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .medium-edit-card {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 12px;
+        transform: translateY(-2px);
+    }
+
+    .email-message {
+        padding: 9px 12px;
+        font-size: 0.62rem;
+    }
+
+    .medium-field {
+        gap: 5px;
+    }
+
+    .medium-field label {
+        font-size: 0.6rem;
+        padding-left: 8px;
+    }
+
+    .medium-field label::before {
+        width: 2.5px;
+    }
+
+    .medium-field input[type="text"],
+    .medium-field input[type="email"] {
+        padding: 10px 12px;
+        border-radius: 11px;
+        font-size: 0.74rem;
+    }
+
+    .save-name-btn {
+        padding: 9px 12px;
+        font-size: 0.62rem;
+        border-radius: 11px;
+    }
+
+    .mobile-box,
+    .email-add-box {
+        padding: 10px 12px;
+        border-radius: 11px;
+    }
+
+    .mobile-number {
+        font-size: 0.72rem;
+    }
+
+    .verified {
+        padding: 3px 8px;
+        font-size: 0.5rem;
+    }
+
+    .email-not-set {
+        font-size: 0.66rem;
+    }
+
+    .email-add-btn {
+        padding: 7px 12px;
+        font-size: 0.58rem;
+        border-radius: 9px;
+    }
+
+    .email-verification-box {
+        padding: 10px;
+        border-radius: 12px;
+        gap: 7px;
+    }
+
+    .email-input-row input,
+    .otp-verification-row input {
+        padding: 8px 10px;
+        border-radius: 9px;
+        font-size: 0.7rem;
+    }
+
+    .otp-verification-row input {
+        font-size: 0.8rem;
+        letter-spacing: 2.5px;
+    }
+
+    .send-otp-btn,
+    .verify-email-btn {
+        padding: 8px 11px;
+        font-size: 0.56rem;
+        border-radius: 9px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    .medium-edit-card,
+    .email-message,
+    .save-name-btn,
+    .verified,
+    .email-verification-box,
+    .otp-verification-row {
+        animation: none;
+    }
+
+    .medium-edit-card,
+    .medium-field input[type="text"],
+    .medium-field input[type="email"],
+    .save-name-btn,
+    .email-add-btn,
+    .send-otp-btn,
+    .verify-email-btn,
+    .email-input-row input,
+    .otp-verification-row input {
+        transition: none;
+    }
+}

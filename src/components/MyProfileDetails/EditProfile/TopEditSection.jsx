@@ -2,6 +2,7 @@
 
 import "./TopEditSection.css";
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom"; // 🔥 ADD THIS
 import { API } from "../../../services/api";
 import NODP from "../../../assets/NODP.png";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +31,7 @@ function TopEditSection({
     const handleGoBack = () => {
         navigate(-1);
     };
+
     useEffect(() => {
         return () => {
             if (previewImage) {
@@ -75,12 +77,9 @@ function TopEditSection({
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
-                // ✅ CRITICAL: Correct crop calculation
-                // crop.x, crop.y, crop.width, crop.height are in percentage (0-100)
                 const imgWidth = image.naturalWidth;
                 const imgHeight = image.naturalHeight;
 
-                // Convert percentage to pixels
                 const cropX = (crop.x / 100) * imgWidth;
                 const cropY = (crop.y / 100) * imgHeight;
                 const cropWidth = (crop.width / 100) * imgWidth;
@@ -89,20 +88,18 @@ function TopEditSection({
                 canvas.width = Math.round(cropWidth);
                 canvas.height = Math.round(cropHeight);
 
-                // ✅ Draw ONLY the cropped area
                 ctx.drawImage(
                     image,
-                    cropX,           // Source X
-                    cropY,           // Source Y
-                    cropWidth,       // Source Width
-                    cropHeight,      // Source Height
-                    0,               // Dest X
-                    0,               // Dest Y
-                    canvas.width,    // Dest Width
-                    canvas.height    // Dest Height
+                    cropX,
+                    cropY,
+                    cropWidth,
+                    cropHeight,
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
                 );
 
-                // ✅ Verify canvas has content
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
                 let hasContent = false;
@@ -113,13 +110,11 @@ function TopEditSection({
                     }
                 }
 
-
                 if (!hasContent) {
                     alert("Cropped image is empty. Please try again.");
                     return;
                 }
 
-                // ✅ Convert to blob
                 canvas.toBlob((blob) => {
                     if (!blob || blob.size === 0) {
                         alert("Failed to create cropped image.");
@@ -137,7 +132,6 @@ function TopEditSection({
                     setSelectedFile(file);
                     setShowCropModal(false);
 
-                    // Upload
                     setTimeout(() => {
                         handleUpload(file);
                     }, 300);
@@ -155,7 +149,7 @@ function TopEditSection({
             alert("Failed to load image for cropping.");
         };
     };
-    // ===== HANDLE UPLOAD =====
+
     const handleUpload = (file) => {
         const imageToUpload = file || selectedImage;
 
@@ -201,13 +195,11 @@ function TopEditSection({
                     return;
                 }
 
-                // ✅ Update profile
                 setProfile(data.user);
                 window.dispatchEvent(new Event("profileImageUpdated"));
 
-                // ✅ Clear selected image (profile image se replace ho jayegi)
                 setSelectedImage(null);
-                setPreviewImage(null); // ✅ Clear preview
+                setPreviewImage(null);
 
                 if (fileInputRef.current) {
                     fileInputRef.current.value = "";
@@ -240,7 +232,6 @@ function TopEditSection({
         xhr.send(formData);
     };
 
-    // ===== HANDLE REMOVE =====
     const handleRemoveProfilePicture = async () => {
         if (!profile?.profile_image || uploading) return;
 
@@ -296,7 +287,6 @@ function TopEditSection({
         }
     };
 
-    // ===== POPUP CONTROLS =====
     const handleClosePopup = () => {
         setShowPopup(false);
     };
@@ -307,15 +297,14 @@ function TopEditSection({
     };
 
     const getImageSource = () => {
-        // ✅ Priority: previewImage > selectedImage > profile image > NODP
         if (previewImage) {
             return previewImage;
         }
         return profile?.profile_image || NODP;
     };
+
     const handleCropDone = async (blob) => {
         try {
-
             if (!blob || blob.size === 0) {
                 alert("Failed to create cropped image.");
                 return;
@@ -341,25 +330,19 @@ function TopEditSection({
             handleUpload(croppedFile);
 
         } catch (error) {
-
             console.error("CROP DONE ERROR:", error);
             alert("Failed to process cropped image.");
-
         }
     };
 
-
     const handleCropCancel = () => {
-
         if (imageForCrop) {
             URL.revokeObjectURL(imageForCrop);
         }
 
         setImageForCrop(null);
         setShowCropModal(false);
-
     };
-
 
     return (
         <div className="top-edit-card">
@@ -373,6 +356,7 @@ function TopEditSection({
                     <span>Back</span>
                 </button>
             </div>
+
             {/* ===== SUCCESS MESSAGE ===== */}
             {uploadSuccess && (
                 <div className="profile-upload-success">
@@ -412,7 +396,7 @@ function TopEditSection({
             <div className="mypropreview-section-pro">
                 <div className="mypropreview-box-pro">
                     <img
-                        src={getImageSource()} // ✅ Updated
+                        src={getImageSource()}
                         alt="Profile"
                         className="mypropreview-image-pro"
                         onError={(e) => {
@@ -421,26 +405,13 @@ function TopEditSection({
                         }}
                     />
 
-                    {/* ===== PENCIL BUTTON ===== */}
                     <button
                         className="profile-edit-btn"
                         onClick={handlePencilClick}
                         disabled={uploading}
                         aria-label="Edit Profile Picture"
                     >
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M12 20h9" />
-                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                        </svg>
+                        ✏️
                     </button>
                 </div>
             </div>
@@ -455,8 +426,10 @@ function TopEditSection({
                 disabled={uploading}
             />
 
-            {/* ===== POPUP MODAL ===== */}
-            {showPopup && (
+            {/* ============================================
+                🔥 POPUP MODAL — CREATE PORTAL
+                ============================================ */}
+            {showPopup && createPortal(
                 <div className="profile-popup-overlay" onClick={handleClosePopup}>
                     <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
                         <div className="profile-popup-header">
@@ -498,11 +471,14 @@ function TopEditSection({
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body  // 🔥 DIRECTLY BODY MEIN RENDER
             )}
 
-            {/* ===== CROP MODAL ===== */}
-            {showCropModal && imageForCrop && (
+            {/* ============================================
+                🔥 CROP MODAL — CREATE PORTAL
+                ============================================ */}
+            {showCropModal && imageForCrop && createPortal(
                 <div className="crop-modal-overlay">
                     <div className="crop-modal">
                         <div className="crop-modal-header">
@@ -519,8 +495,6 @@ function TopEditSection({
                         </div>
 
                         <div className="crop-modal-body">
-                            {/* ===== IMAGE CROPPER ===== */}
-
                             {showCropModal && imageForCrop && (
                                 <ImageCropper
                                     image={imageForCrop}
@@ -548,7 +522,8 @@ function TopEditSection({
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body  // 🔥 DIRECTLY BODY MEIN RENDER
             )}
 
         </div>

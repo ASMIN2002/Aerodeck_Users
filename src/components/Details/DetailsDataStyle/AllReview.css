@@ -1,729 +1,797 @@
-/* ============================================
-   ALL REVIEWS PAGE - PREMIUM RESPONSIVE STYLES
-   ============================================ */
+/* AllReview.css — 3D UTHA HUA CLAYMORPHISM */
 
-/* --- Base Page Container --- */
-.allreview-page {
-    width: 100%;
-    min-height: 100vh;
-    background: #ffffff;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 32px;
-}
-
-/* ============================================
-   HEADER
-   ============================================ */
-
-.allreview-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 20px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1.5px solid #ebebf5;
-    box-shadow: 0 4px 20px rgba(26, 26, 46, 0.04);
-}
-
-/* --- Back Button --- */
-.allreview-back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    background: linear-gradient(145deg, #f5f5fa, #ebebf5);
-    border: 1.5px solid #e0e0f0;
-    border-radius: 50%;
-    color: #1a1a2e;
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    line-height: 1;
-    flex-shrink: 0;
-}
-
-.allreview-back:hover {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    border-color: transparent;
-    color: #ffffff;
-    transform: translateX(-3px);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.35);
-}
-
-.allreview-back:active {
-    transform: translateX(-1px) scale(0.95);
-}
-
-.allreview-back:focus-visible {
-    outline: 2px solid #6c5ce7;
-    outline-offset: 2px;
-}
-
-/* --- Header Title --- */
-.allreview-header > div {
-    flex: 1;
-    min-width: 0;
-}
-
-.allreview-header h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* ============================================
-   REVIEW FILTER (Star Buttons)
-   ============================================ */
-
-.review-filter {
-    display: flex;
-    gap: 10px;
-    padding: 16px 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    border-bottom: 1.5px solid #f0f0f8;
-    background: #fafafe;
-}
-
-.review-filter::-webkit-scrollbar {
-    display: none;
-}
-
-/* --- Star Filter Button --- */
-.star-btn {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 9px 16px;
-    background: #ffffff;
-    border: 1.5px solid #e0e0f0;
-    border-radius: 50px;
-    color: #5a5a70;
-    font-size: 0.82rem;
-    font-weight: 700;
-    font-family: inherit;
-    letter-spacing: 0.01em;
-    line-height: 1.3;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-    user-select: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.star-btn:hover {
-    border-color: rgba(108, 92, 231, 0.4);
-    color: #6c5ce7;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.15);
-}
-
-.star-btn:active {
-    transform: translateY(0) scale(0.97);
-}
-
-.star-btn:focus-visible {
-    outline: 2px solid #6c5ce7;
-    outline-offset: 2px;
-}
-
-/* --- Active State --- */
-.star-btn.active {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    border-color: transparent;
-    color: #ffffff;
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.35);
-    transform: translateY(-2px);
-}
-
-.star-btn.active:hover {
-    box-shadow: 0 10px 28px rgba(108, 92, 231, 0.45);
-    background: linear-gradient(135deg, #5b4cd6, #9188f0);
-}
-
-/* --- Star-Specific Accent Colors (inactive hover) --- */
-.star-btn.five:hover {
-    border-color: rgba(0, 184, 148, 0.4);
-    color: #00b894;
-}
-
-.star-btn.four:hover {
-    border-color: rgba(108, 92, 231, 0.4);
-    color: #6c5ce7;
-}
-
-.star-btn.three:hover {
-    border-color: rgba(253, 150, 68, 0.4);
-    color: #fd9644;
-}
-
-.star-btn.two:hover {
-    border-color: rgba(253, 121, 168, 0.4);
-    color: #fd79a8;
-}
-
-.star-btn.one:hover {
-    border-color: rgba(225, 112, 85, 0.4);
-    color: #e17055;
-}
-
-/* ============================================
-   REVIEWS LIST
-   ============================================ */
-
-.allreview-list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 20px;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
+.allreview-page,
+.allreview-page * {
     box-sizing: border-box;
 }
 
 /* ============================================
-   REVIEW CARD
+   PAGE WRAPPER
    ============================================ */
-
-.allreview-card {
+.allreview-page {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 20px;
-    background: linear-gradient(145deg, #ffffff 0%, #fafafe 100%);
-    border: 1.5px solid #ebebf5;
-    border-radius: 18px;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.04);
-    overflow: hidden;
-    animation: cardFadeIn 0.4s ease backwards;
+    width: 100%;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 14px 14px 60px;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    -webkit-tap-highlight-color: transparent;
+
+    animation: allReviewIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Staggered animation delay for each card */
-.allreview-card:nth-child(1) { animation-delay: 0.02s; }
-.allreview-card:nth-child(2) { animation-delay: 0.06s; }
-.allreview-card:nth-child(3) { animation-delay: 0.1s; }
-.allreview-card:nth-child(4) { animation-delay: 0.14s; }
-.allreview-card:nth-child(5) { animation-delay: 0.18s; }
-.allreview-card:nth-child(6) { animation-delay: 0.22s; }
-.allreview-card:nth-child(7) { animation-delay: 0.26s; }
-.allreview-card:nth-child(8) { animation-delay: 0.3s; }
-
-@keyframes cardFadeIn {
+@keyframes allReviewIn {
     from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(14px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Left accent bar */
-.allreview-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleY(0);
-    width: 3px;
-    height: 60%;
-    background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-    border-radius: 0 4px 4px 0;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+/* ============================================
+   HEADER — back button + title
+   ============================================ */
+.allreview-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+
+    margin: 0 0 16px;
+    padding: 12px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 0 0 20px 20px;
+
+    background:
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
+
+    /* 🔥 utha hua header */
+    box-shadow:
+        0 12px 28px rgba(140, 150, 180, 0.5),
+        0 6px 14px rgba(140, 150, 180, 0.35),
+        0 3px 8px rgba(140, 150, 180, 0.25),
+        0 -3px 10px rgba(140, 150, 180, 0.15),
+        0 -1px 4px rgba(140, 150, 180, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
 }
 
-.allreview-card:hover::before {
-    transform: translateY(-50%) scaleY(1);
+/* ---- Back button — 3D wool ball ---- */
+.allreview-back {
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    color: #5b6ee1;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 14px rgba(140, 150, 180, 0.55),
+        0 3px 8px rgba(140, 150, 180, 0.4),
+        4px 4px 10px rgba(140, 150, 180, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Radial glow */
-.allreview-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -30%;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(circle, rgba(108, 92, 231, 0.06) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
+.allreview-back:hover {
+    transform: translateX(-3px) scale(1.06);
+    color: #7c8cf8;
+
+    box-shadow:
+        0 8px 18px rgba(124, 140, 248, 0.5),
+        0 4px 10px rgba(124, 140, 248, 0.35),
+        5px 5px 12px rgba(124, 140, 248, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.9),
+        -4px 4px 10px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
 }
 
-.allreview-card:hover::after {
-    opacity: 1;
+.allreview-back:active {
+    transform: translateX(0) scale(0.94);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
 }
 
-.allreview-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(108, 92, 231, 0.3);
-    box-shadow: 0 12px 32px rgba(108, 92, 231, 0.15);
-    background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
+.allreview-back:focus-visible {
+    outline: 2px solid #7c8cf8;
+    outline-offset: 3px;
+}
+
+/* ---- Header title ---- */
+.allreview-header>div {
+    flex: 1;
+    min-width: 0;
+}
+
+.allreview-header h2 {
+    margin: 0;
+
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ============================================
-   REVIEW CARD TOP (Avatar + Name + Stars)
+   🔥 REVIEW FILTER — 5 star pills
    ============================================ */
+.review-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
+    width: 100%;
+
+    margin: 0 0 18px;
+    padding: 4px 2px 12px;
+
+    overflow-x: auto;
+    overflow-y: visible;
+
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 8px,
+            #000 calc(100% - 8px),
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 8px,
+            #000 calc(100% - 8px),
+            transparent 100%);
+}
+
+.review-filter::-webkit-scrollbar {
+    display: none;
+}
+
+/* ---- Star button — 3D wool pill ---- */
+.star-btn {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    padding: 9px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    color: #3f4664;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    white-space: nowrap;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.95);
+
+    cursor: pointer;
+
+    /* 🔥 3D UTHA HUA PILL — chaaro taraf shadow */
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.5),
+        0 4px 10px rgba(140, 150, 180, 0.35),
+        5px 5px 12px rgba(140, 150, 180, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.star-btn:hover {
+    transform: translateY(-6px);
+}
+
+.star-btn:active {
+    transform: translateY(0) scale(0.96);
+
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+.star-btn:focus-visible {
+    outline: 2px solid #e0a52e;
+    outline-offset: 3px;
+}
+
+/* ---- 🔥 ACTIVE state — golden 3D pill ---- */
+.star-btn.active {
+    color: #4a3200;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
+
+    border-color: rgba(255, 255, 255, 1);
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 6px rgba(255, 255, 255, 0.4);
+    transform: translateY(-4px);
+}
+
+.star-btn.active:hover {
+    transform: translateY(-7px);
+}
+
+.star-btn.active:active {
+    transform: translateY(-1px) scale(0.97);
+
+}
+
+/* ============================================
+   LIST — review cards
+   ============================================ */
+.allreview-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 6px 4px 20px;
+}
+
+/* ============================================
+   🔥 REVIEW CARD — HEAVY 3D UTHA HUA
+   ============================================ */
+.allreview-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+    padding: 14px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 20px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
+    box-shadow:
+        0 16px 32px rgba(140, 150, 180, 0.55),
+        0 8px 16px rgba(140, 150, 180, 0.4),
+        0 4px 8px rgba(140, 150, 180, 0.28),
+        12px 12px 26px rgba(140, 150, 180, 0.28),
+        -12px -12px 26px rgba(255, 255, 255, 1),
+        10px -10px 22px rgba(255, 255, 255, 0.95),
+        -10px 10px 22px rgba(140, 150, 180, 0.15),
+        8px -8px 18px rgba(255, 255, 255, 0.9),
+        -8px 8px 18px rgba(140, 150, 180, 0.12),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-6px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+
+    overflow: visible;
+
+    animation: allReviewCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes allReviewCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-6px) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT LINE */
+.allreview-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+    z-index: 3;
+    filter: blur(0.5px);
+}
+
+/* 🔥 BOTTOM GROUND SHADOW */
+.allreview-card::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.4) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+.allreview-card:hover {
+    transform: translateY(-10px) scale(1.01);
+
+    box-shadow:
+        0 24px 46px rgba(124, 140, 248, 0.45),
+        0 14px 26px rgba(124, 140, 248, 0.32),
+        0 8px 14px rgba(124, 140, 248, 0.22),
+        16px 16px 32px rgba(124, 140, 248, 0.2),
+        -16px -16px 32px rgba(255, 255, 255, 1),
+        12px -12px 26px rgba(255, 255, 255, 0.95),
+        -12px 12px 26px rgba(124, 140, 248, 0.13),
+        10px -10px 22px rgba(255, 255, 255, 0.9),
+        -10px 10px 22px rgba(124, 140, 248, 0.1),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.22);
+}
+
+/* ============================================
+   REVIEW TOP — avatar + name + rating
+   ============================================ */
 .allreview-top {
     display: flex;
     align-items: center;
-    gap: 14px;
-    position: relative;
-    z-index: 1;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
 }
 
-/* --- Avatar Image --- */
+/* ---- Avatar image ---- */
 .allreview-avatar-image {
-    width: 52px;
-    height: 52px;
-    min-width: 52px;
-    border-radius: 50%;
-    object-fit: cover;
+    flex-shrink: 0;
+
     display: block;
-    border: 2.5px solid #ffffff;
-    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.18);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.35s ease;
+
+    width: 46px;
+    height: 46px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+
+    object-fit: cover;
+    object-position: center;
+
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+
+    /* 🔥 utha hua avatar */
+    box-shadow:
+        0 6px 14px rgba(140, 150, 180, 0.5),
+        0 3px 8px rgba(140, 150, 180, 0.35),
+        4px 4px 10px rgba(140, 150, 180, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
+
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .allreview-card:hover .allreview-avatar-image {
-    transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
-    border-color: #ede9ff;
+    transform: scale(1.06);
 }
 
-/* --- Avatar Initial Circle --- */
+/* ---- Avatar fallback ---- */
 .allreview-avatar {
-    width: 52px;
-    height: 52px;
-    min-width: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    box-shadow: 0 4px 16px rgba(108, 92, 231, 0.3);
-    border: 2.5px solid #ffffff;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.35s ease;
-    user-select: none;
     flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 46px;
+    height: 46px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+    /* 🔥 utha hua avatar ball */
+    box-shadow:
+        0 6px 14px rgba(91, 110, 225, 0.55),
+        0 3px 8px rgba(91, 110, 225, 0.4),
+        4px 4px 10px rgba(91, 110, 225, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .allreview-card:hover .allreview-avatar {
-    transform: scale(1.08);
-    box-shadow: 0 6px 22px rgba(108, 92, 231, 0.45);
+    transform: scale(1.06) rotate(-5deg);
 }
 
-/* --- User Info Wrapper --- */
+/* ---- User info (name + rating) ---- */
 .allreview-user {
     flex: 1;
     min-width: 0;
+
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
 .allreview-user h3 {
-    font-size: 0.98rem;
-    font-weight: 700;
-    color: #1a1a2e;
     margin: 0;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    white-space: nowrap;
+
+    font-size: clamp(0.88rem, 2.3vw, 1rem);
+    font-weight: 900;
+    letter-spacing: 0.15px;
+    line-height: 1.2;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.12);
+
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
-.allreview-card:hover .allreview-user h3 {
-    color: #6c5ce7;
-}
-
-/* --- Star Rating --- */
+/* ---- Rating stars ---- */
 .allreview-rating {
     font-size: 0.85rem;
     line-height: 1;
-    letter-spacing: 0.05em;
-    display: inline-flex;
-    align-items: center;
-    gap: 1px;
-    filter: drop-shadow(0 1px 3px rgba(255, 193, 7, 0.3));
-    transition: transform 0.3s ease;
-}
+    letter-spacing: 1.5px;
 
-.allreview-card:hover .allreview-rating {
-    transform: scale(1.05);
+    filter: drop-shadow(0 2px 3px rgba(224, 165, 46, 0.4));
 }
 
 /* ============================================
    REVIEW MESSAGE
    ============================================ */
-
 .allreview-message {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: #5a5a70;
-    line-height: 1.65;
     margin: 0;
-    letter-spacing: 0.005em;
-    word-break: break-word;
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s ease;
-}
 
-.allreview-card:hover .allreview-message {
-    color: #3a3a50;
+    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    line-height: 1.55;
+
+    color: #5a6180;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+
+    word-break: break-word;
 }
 
 /* ============================================
-   EMPTY STATE (No Reviews)
+   🔥 NO REVIEW — empty state 3D card
    ============================================ */
-
 .no-review {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 60px 24px;
-    background: linear-gradient(135deg, #fafafe 0%, #f0f0ff 100%);
-    border: 2px dashed #d8d8f0;
+    gap: 8px;
+
+    width: 100%;
+    min-height: 140px;
+    padding: 24px;
+
+    border: 1.5px dashed rgba(155, 165, 190, 0.5);
     border-radius: 20px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #e4e9f5 100%);
+
     text-align: center;
-    position: relative;
-    overflow: hidden;
-    animation: cardFadeIn 0.4s ease;
+
+    box-shadow:
+        0 12px 26px rgba(140, 150, 180, 0.4),
+        0 6px 14px rgba(140, 150, 180, 0.3),
+        9px 9px 20px rgba(140, 150, 180, 0.2),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        7px -7px 16px rgba(255, 255, 255, 0.9),
+        -7px 7px 16px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.25);
+
+    transform: translateY(-5px);
+
+    animation: noReviewPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Empty state icon */
-.no-review::before {
-    content: '⭐';
-    font-size: 2.5rem;
-    line-height: 1;
-    filter: grayscale(0.3);
-    animation: emptyStarPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes emptyStarPulse {
-    0%, 100% {
-        transform: scale(1);
-        filter: grayscale(0.3);
+@keyframes noReviewPop {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
     }
-    50% {
-        transform: scale(1.1);
-        filter: grayscale(0);
+
+    to {
+        opacity: 1;
+        transform: translateY(-5px) scale(1);
     }
 }
 
 .no-review h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #3a3a50;
     margin: 0;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+
+    font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
 }
 
 .no-review p {
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: #6b6b80;
     margin: 0;
-    line-height: 1.5;
-    max-width: 320px;
+
+    font-size: clamp(0.74rem, 2vw, 0.84rem);
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.45;
+
+    color: #8a90ac;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
+/* Tablets */
+@media (max-width: 768px) {
+    .allreview-page {
+        padding: 12px 12px 50px;
+    }
+
     .allreview-header {
-        padding: 20px 28px;
-    }
-
-    .allreview-header h2 {
-        font-size: 1.4rem;
-    }
-
-    .allreview-back {
-        width: 46px;
-        height: 46px;
-        font-size: 1.3rem;
-    }
-
-    .review-filter {
-        padding: 20px 28px;
-        gap: 12px;
-    }
-
-    .star-btn {
-        padding: 11px 20px;
-        font-size: 0.88rem;
-    }
-
-    .allreview-list {
-        padding: 24px 28px;
-        gap: 16px;
-        max-width: 1000px;
-    }
-
-    .allreview-card {
-        padding: 24px;
-        border-radius: 20px;
-        gap: 16px;
-    }
-
-    .allreview-avatar-image,
-    .allreview-avatar {
-        width: 58px;
-        height: 58px;
-        min-width: 58px;
-        font-size: 1.3rem;
-    }
-
-    .allreview-user h3 {
-        font-size: 1.05rem;
-    }
-
-    .allreview-rating {
-        font-size: 0.92rem;
-    }
-
-    .allreview-message {
-        font-size: 0.95rem;
-    }
-}
-
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .allreview-list {
-        max-width: 850px;
-    }
-}
-
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
-    .allreview-header {
-        padding: 14px 18px;
-    }
-
-    .allreview-header h2 {
-        font-size: 1.15rem;
-    }
-
-    .review-filter {
-        padding: 14px 18px;
-        gap: 8px;
-    }
-
-    .star-btn {
-        padding: 8px 14px;
-        font-size: 0.78rem;
-    }
-
-    .allreview-list {
-        padding: 18px;
-        gap: 12px;
-    }
-
-    .allreview-card {
-        padding: 18px;
-        border-radius: 16px;
-        gap: 12px;
-    }
-
-    .allreview-avatar-image,
-    .allreview-avatar {
-        width: 48px;
-        height: 48px;
-        min-width: 48px;
-        font-size: 1.1rem;
-        border-width: 2px;
-    }
-
-    .allreview-user h3 {
-        font-size: 0.92rem;
-    }
-
-    .allreview-rating {
-        font-size: 0.78rem;
-    }
-
-    .allreview-message {
-        font-size: 0.86rem;
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .allreview-header {
-        padding: 12px 16px;
-        gap: 12px;
-    }
-
-    .allreview-header h2 {
-        font-size: 1.05rem;
+        padding: 11px 12px;
+        border-radius: 0 0 18px 18px;
+        gap: 10px;
+        margin-bottom: 14px;
     }
 
     .allreview-back {
         width: 38px;
         height: 38px;
-        min-width: 38px;
         font-size: 1.05rem;
-    }
-
-    .review-filter {
-        padding: 12px 16px;
-        gap: 8px;
-    }
-
-    .star-btn {
-        padding: 7px 13px;
-        font-size: 0.75rem;
-        border-radius: 40px;
-    }
-
-    .allreview-list {
-        padding: 16px;
-        gap: 11px;
-    }
-
-    .allreview-card {
-        padding: 16px;
-        border-radius: 14px;
-        gap: 11px;
-    }
-
-    .allreview-avatar-image,
-    .allreview-avatar {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        font-size: 1rem;
-    }
-
-    .allreview-top {
-        gap: 12px;
-    }
-
-    .allreview-user h3 {
-        font-size: 0.88rem;
-    }
-
-    .allreview-rating {
-        font-size: 0.74rem;
-    }
-
-    .allreview-message {
-        font-size: 0.83rem;
-        line-height: 1.6;
-    }
-
-    .no-review {
-        padding: 48px 20px;
-        border-radius: 16px;
-    }
-
-    .no-review::before {
-        font-size: 2.2rem;
-    }
-
-    .no-review h3 {
-        font-size: 1rem;
-    }
-
-    .no-review p {
-        font-size: 0.82rem;
-    }
-}
-
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .allreview-header {
-        padding: 11px 14px;
-        gap: 10px;
     }
 
     .allreview-header h2 {
         font-size: 1rem;
     }
 
-    .allreview-back {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        font-size: 1rem;
-    }
-
     .review-filter {
-        padding: 11px 14px;
         gap: 7px;
+        margin-bottom: 16px;
+        padding: 3px 2px 11px;
     }
 
     .star-btn {
-        padding: 6px 11px;
-        font-size: 0.72rem;
+        padding: 8px 12px;
+        font-size: 0.74rem;
     }
 
     .allreview-list {
-        padding: 14px;
-        gap: 10px;
+        gap: 12px;
     }
 
     .allreview-card {
-        padding: 15px;
-        border-radius: 13px;
-        gap: 10px;
+        padding: 12px;
+        border-radius: 18px;
+        gap: 11px;
+        transform: translateY(-5px);
     }
 
-    .allreview-avatar-image,
-    .allreview-avatar {
+    .allreview-avatar,
+    .allreview-avatar-image {
         width: 42px;
         height: 42px;
-        min-width: 42px;
-        font-size: 0.95rem;
+    }
+
+    .allreview-avatar {
+        font-size: 1.05rem;
+    }
+
+    .allreview-user h3 {
+        font-size: 0.92rem;
+    }
+
+    .allreview-rating {
+        font-size: 0.8rem;
+    }
+
+    .allreview-message {
+        font-size: 0.82rem;
+    }
+
+    .no-review {
+        padding: 20px;
+        min-height: 130px;
+        border-radius: 18px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .allreview-page {
+        padding: 10px 10px 44px;
+    }
+
+    .allreview-header {
+        padding: 10px 11px;
+        border-radius: 0 0 16px 16px;
+        gap: 9px;
+        margin-bottom: 12px;
+    }
+
+    .allreview-back {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        border-width: 1.5px;
+
+        box-shadow:
+            0 5px 12px rgba(140, 150, 180, 0.5),
+            0 3px 8px rgba(140, 150, 180, 0.35),
+            3px 3px 8px rgba(140, 150, 180, 0.25),
+            -3px -3px 8px rgba(255, 255, 255, 1),
+            2px -2px 6px rgba(255, 255, 255, 0.85),
+            -2px 2px 6px rgba(140, 150, 180, 0.1),
+            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
+            inset -1px -1px 2.5px rgba(155, 165, 190, 0.4);
+    }
+
+    .allreview-header h2 {
+        font-size: 0.92rem;
+    }
+
+    .review-filter {
+        gap: 6px;
+        margin-bottom: 14px;
+        padding: 3px 2px 10px;
+    }
+
+    .star-btn {
+        padding: 7px 11px;
+        font-size: 0.68rem;
+        border-width: 1.5px;
+    }
+
+    .allreview-list {
+        gap: 11px;
+    }
+
+    .allreview-card {
+        padding: 12px;
+        border-radius: 16px;
+        gap: 10px;
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 12px 24px rgba(140, 150, 180, 0.5),
+            0 6px 12px rgba(140, 150, 180, 0.35),
+            0 3px 6px rgba(140, 150, 180, 0.25),
+            9px 9px 20px rgba(140, 150, 180, 0.22),
+            -9px -9px 20px rgba(255, 255, 255, 1),
+            7px -7px 16px rgba(255, 255, 255, 0.9),
+            -7px 7px 16px rgba(140, 150, 180, 0.12),
+            6px -6px 14px rgba(255, 255, 255, 0.85),
+            -6px 6px 14px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
     }
 
     .allreview-top {
-        gap: 11px;
+        gap: 10px;
+    }
+
+    .allreview-avatar,
+    .allreview-avatar-image {
+        width: 38px;
+        height: 38px;
+        border-width: 1.5px;
+    }
+
+    .allreview-avatar {
+        font-size: 0.95rem;
     }
 
     .allreview-user h3 {
@@ -731,84 +799,89 @@
     }
 
     .allreview-rating {
-        font-size: 0.72rem;
+        font-size: 0.74rem;
+        letter-spacing: 1px;
     }
 
     .allreview-message {
-        font-size: 0.8rem;
+        font-size: 0.76rem;
+        line-height: 1.5;
     }
 
     .no-review {
-        padding: 40px 18px;
-        border-radius: 14px;
-    }
-
-    .no-review::before {
-        font-size: 2rem;
+        padding: 18px;
+        min-height: 120px;
+        border-radius: 16px;
     }
 
     .no-review h3 {
-        font-size: 0.95rem;
-    }
-
-    .no-review p {
-        font-size: 0.78rem;
-    }
-}
-
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .allreview-header {
-        padding: 10px 12px;
-        gap: 9px;
-    }
-
-    .allreview-header h2 {
         font-size: 0.92rem;
     }
 
+    .no-review p {
+        font-size: 0.76rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .allreview-page {
+        padding: 8px 8px 40px;
+    }
+
+    .allreview-header {
+        padding: 9px 10px;
+        border-radius: 0 0 14px 14px;
+        gap: 8px;
+    }
+
     .allreview-back {
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-        font-size: 0.95rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .allreview-header h2 {
+        font-size: 0.84rem;
     }
 
     .review-filter {
-        padding: 10px 12px;
-        gap: 6px;
+        gap: 5px;
+        padding: 2px 2px 8px;
     }
 
     .star-btn {
-        padding: 5px 10px;
-        font-size: 0.68rem;
+        padding: 6px 9px;
+        font-size: 0.62rem;
     }
 
     .allreview-list {
-        padding: 12px;
         gap: 9px;
     }
 
     .allreview-card {
-        padding: 13px;
-        border-radius: 12px;
+        padding: 10px;
+        border-radius: 14px;
         gap: 9px;
-    }
-
-    .allreview-avatar-image,
-    .allreview-avatar {
-        width: 38px;
-        height: 38px;
-        min-width: 38px;
-        font-size: 0.88rem;
+        transform: translateY(-3px);
     }
 
     .allreview-top {
-        gap: 10px;
+        gap: 9px;
+    }
+
+    .allreview-avatar,
+    .allreview-avatar-image {
+        width: 34px;
+        height: 34px;
+    }
+
+    .allreview-avatar {
+        font-size: 0.85rem;
     }
 
     .allreview-user h3 {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
     }
 
     .allreview-rating {
@@ -816,215 +889,40 @@
     }
 
     .allreview-message {
-        font-size: 0.76rem;
+        font-size: 0.7rem;
     }
 
     .no-review {
-        padding: 32px 16px;
-        border-radius: 12px;
-    }
-
-    .no-review::before {
-        font-size: 1.8rem;
+        padding: 16px;
+        min-height: 110px;
+        border-radius: 14px;
     }
 
     .no-review h3 {
-        font-size: 0.88rem;
+        font-size: 0.85rem;
     }
 
     .no-review p {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
     }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
-    .allreview-page *,
-    .allreview-page *::before,
-    .allreview-page *::after {
-        transition: none !important;
-        animation: none !important;
-    }
 
-    .allreview-card:hover {
-        transform: none;
-    }
-
-    .allreview-card:hover .allreview-avatar,
-    .allreview-card:hover .allreview-avatar-image {
-        transform: none;
-    }
-
-    .star-btn:hover {
-        transform: none;
-    }
-
-    .allreview-back:hover {
-        transform: none;
-    }
-
-    .no-review::before {
+    .allreview-page,
+    .allreview-card,
+    .no-review {
         animation: none;
     }
 
-    .allreview-card {
-        animation: none;
-        opacity: 1;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
-    .allreview-card {
-        border: 2px solid ButtonText;
-    }
-
-    .star-btn {
-        border: 2px solid ButtonText;
-    }
-
-    .star-btn.active {
-        border: 3px solid Highlight;
-    }
-
-    .allreview-back {
-        border: 2px solid ButtonText;
-    }
-
+    .allreview-back,
+    .star-btn,
+    .allreview-card,
     .allreview-avatar,
     .allreview-avatar-image {
-        border: 2px solid ButtonText;
-    }
-
-    .no-review {
-        border: 2px dashed ButtonText;
-    }
-
-    .allreview-user h3,
-    .allreview-message {
-        color: ButtonText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .allreview-page {
-        background: #0f0f1a;
-    }
-
-    .allreview-header {
-        background: rgba(15, 15, 26, 0.92);
-        border-bottom-color: #2e2e48;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .allreview-header h2 {
-        color: #f0f0f5;
-    }
-
-    .allreview-back {
-        background: linear-gradient(145deg, #1e1e35, #252545);
-        border-color: #2e2e48;
-        color: #f0f0f5;
-    }
-
-    .allreview-back:hover {
-        background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-        border-color: transparent;
-        color: #ffffff;
-    }
-
-    .review-filter {
-        background: #14142a;
-        border-bottom-color: #2e2e48;
-    }
-
-    .star-btn {
-        background: #1e1e35;
-        border-color: #2e2e48;
-        color: #a0a0b8;
-    }
-
-    .star-btn:hover {
-        background: #252545;
-        border-color: rgba(108, 92, 231, 0.5);
-        color: #a29bfe;
-    }
-
-    .star-btn.active {
-        background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-        border-color: transparent;
-        color: #ffffff;
-        box-shadow: 0 6px 20px rgba(108, 92, 231, 0.45);
-    }
-
-    .star-btn.five:hover { color: #00cec9; }
-    .star-btn.four:hover { color: #a29bfe; }
-    .star-btn.three:hover { color: #fdcb6e; }
-    .star-btn.two:hover { color: #fd79a8; }
-    .star-btn.one:hover { color: #e17055; }
-
-    .allreview-card {
-        background: linear-gradient(145deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .allreview-card:hover {
-        background: linear-gradient(145deg, #1e1e35 0%, #252545 100%);
-        border-color: rgba(108, 92, 231, 0.45);
-        box-shadow: 0 12px 32px rgba(108, 92, 231, 0.25);
-    }
-
-    .allreview-card::after {
-        background: radial-gradient(circle, rgba(108, 92, 231, 0.12) 0%, transparent 70%);
-    }
-
-    .allreview-avatar-image {
-        border-color: #2e2e48;
-    }
-
-    .allreview-card:hover .allreview-avatar-image {
-        border-color: #3e3e58;
-    }
-
-    .allreview-avatar {
-        border-color: #2e2e48;
-    }
-
-    .allreview-user h3 {
-        color: #f0f0f5;
-    }
-
-    .allreview-card:hover .allreview-user h3 {
-        color: #a29bfe;
-    }
-
-    .allreview-message {
-        color: #a0a0b8;
-    }
-
-    .allreview-card:hover .allreview-message {
-        color: #c8c8dc;
-    }
-
-    .no-review {
-        background: linear-gradient(135deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-    }
-
-    .no-review h3 {
-        color: #c8c8dc;
-    }
-
-    .no-review p {
-        color: #8888a0;
-    }
-
-    .no-review::before {
-        filter: grayscale(0.4);
+        transition: none;
     }
 }

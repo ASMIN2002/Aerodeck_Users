@@ -1,240 +1,363 @@
-/* ============================================
-   MY CART PAGE - PREMIUM RESPONSIVE STYLES
-   ============================================ */
+/* MyCart.css — 3D UTHA HUA CLAYMORPHISM */
 
-.mycart-page {
-    width: 100%;
-    min-height: 100vh;
-    background: #f5f5fa;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    display: flex;
-    flex-direction: column;
-
-    /* ✅ NO padding-bottom — sticky billing khud handle karega */
+.mycart-page,
+.mycart-page * {
+    box-sizing: border-box;
 }
 
-
-
 /* ============================================
-   CART CONTENT
+   PAGE WRAPPER
    ============================================ */
+.mycart-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
 
-.mycart-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding: 16px 16px 24px;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    box-sizing: border-box;
 
-    /* ✅ No extra bottom padding needed — CartBilling sticky handles it */
+    margin: 0;
+    padding: 0 14px 80px;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    -webkit-tap-highlight-color: transparent;
+
+    animation: myCartIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Staggered animation */
-.mycart-content > * {
-    animation: cartCardFadeIn 0.4s ease backwards;
-}
+@keyframes myCartIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
 
-.mycart-content > *:nth-child(1) { animation-delay: 0.02s; }
-.mycart-content > *:nth-child(2) { animation-delay: 0.06s; }
-.mycart-content > *:nth-child(3) { animation-delay: 0.10s; }
-.mycart-content > *:nth-child(4) { animation-delay: 0.14s; }
-.mycart-content > *:nth-child(5) { animation-delay: 0.18s; }
-.mycart-content > *:nth-child(6) { animation-delay: 0.22s; }
-
-@keyframes cartCardFadeIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ============================================
-   EMPTY CART
+   🔥 TOPBAR — Address wrapper (3D)
    ============================================ */
+.mycart-topbar {
+    position: relative;
 
-.empty-cart {
+    width: 100%;
+
+    margin: 0;
+    padding: 4px 0 6px;
+
+    animation: myCartTopbarIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes myCartTopbarIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   🔥 CONTENT — Cart items list
+   ============================================ */
+.mycart-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 60px 24px;
-    background: linear-gradient(135deg, #fafafe 0%, #f0f0ff 100%);
-    border: 2px dashed #d8d8f0;
-    border-radius: 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    margin-top: 20px;
-    animation: cartCardFadeIn 0.4s ease;
-}
+    gap: 14px;
 
-.empty-cart::before {
-    content: '🛒';
-    font-size: 3.5rem;
-    line-height: 1;
-    filter: grayscale(0.3);
-    animation: emptyCartPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes emptyCartPulse {
-    0%, 100% { transform: scale(1) rotate(0deg); filter: grayscale(0.3); }
-    25%      { transform: scale(1.05) rotate(-5deg); filter: grayscale(0); }
-    75%      { transform: scale(1.05) rotate(5deg); filter: grayscale(0); }
-}
-
-.empty-cart::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.06), transparent);
-    pointer-events: none;
-    animation: emptyShimmer 3s ease-in-out infinite;
-}
 
-@keyframes emptyShimmer {
-    0%   { left: -100%; }
-    50%  { left: 100%; }
-    100% { left: 100%; }
-}
-
-.empty-cart h2 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #3a3a50;
-    margin: 0;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
-    max-width: 280px;
+    padding: 6px 4px 20px;
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   🔥 EMPTY CART — 3D UTHA HUA CARD
+   ============================================ */
+.empty-cart {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 180px;
+    padding: 28px 22px;
+
+    border: 2px dashed rgba(155, 165, 190, 0.5);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #e4e9f5 100%);
+
+    /* 🔥 3D UTHA HUA */
+    box-shadow:
+        0 16px 32px rgba(140, 150, 180, 0.45),
+        0 8px 16px rgba(140, 150, 180, 0.32),
+        0 4px 8px rgba(140, 150, 180, 0.25),
+        12px 12px 26px rgba(140, 150, 180, 0.22),
+        -12px -12px 26px rgba(255, 255, 255, 1),
+        9px -9px 20px rgba(255, 255, 255, 0.9),
+        -9px 9px 20px rgba(140, 150, 180, 0.12),
+        7px -7px 16px rgba(255, 255, 255, 0.85),
+        -7px 7px 16px rgba(140, 150, 180, 0.1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.25);
+
+    transform: translateY(-5px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+    text-align: center;
+
+    animation: emptyCartPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes emptyCartPop {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-5px) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT */
+.empty-cart::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+    z-index: 2;
+    filter: blur(0.5px);
+}
+
+/* 🔥 BOTTOM GROUND SHADOW */
+.empty-cart::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.35) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: -1;
+}
+
+.empty-cart:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 24px 44px rgba(124, 140, 248, 0.42),
+        0 12px 22px rgba(124, 140, 248, 0.3),
+        0 6px 12px rgba(124, 140, 248, 0.22),
+        16px 16px 32px rgba(124, 140, 248, 0.2),
+        -16px -16px 32px rgba(255, 255, 255, 1),
+        12px -12px 26px rgba(255, 255, 255, 0.95),
+        -12px 12px 26px rgba(124, 140, 248, 0.13),
+        9px -9px 20px rgba(255, 255, 255, 0.9),
+        -9px 9px 20px rgba(124, 140, 248, 0.1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.22);
+}
+
+/* ---- Empty cart heading ---- */
+.empty-cart h2 {
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 6px rgba(140, 150, 180, 0.15);
+}
+
+/* 🔥 emoji before heading */
+.empty-cart h2::before {
+    content: "🛒";
+    font-size: 1.15em;
+    filter: drop-shadow(0 2px 3px rgba(124, 140, 248, 0.35));
+    animation: emptyCartIcon 3s ease-in-out infinite;
+}
+
+@keyframes emptyCartIcon {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-4px) rotate(-6deg);
+    }
+
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-4px) rotate(6deg);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop --- */
-@media (min-width: 1440px) {
-    .mycart-content {
-        gap: 18px;
-        padding: 24px 28px;
-        max-width: 1000px;
-    }
-
-    .empty-cart { padding: 80px 32px; border-radius: 24px; }
-    .empty-cart::before { font-size: 4rem; }
-    .empty-cart h2 { font-size: 1.25rem; max-width: 340px; }
-}
-
-/* --- Desktop --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .mycart-content {
-        padding: 18px 20px;
-        max-width: 850px;
-    }
-}
-
-/* --- Tablet --- */
-@media (max-width: 1023px) {
-    .mycart-content {
-        gap: 12px;
-        padding: 16px 16px 20px;
-        max-width: 100%;
-    }
-
-    .empty-cart { padding: 50px 20px; border-radius: 18px; }
-    .empty-cart::before { font-size: 3rem; }
-    .empty-cart h2 { font-size: 1rem; max-width: 260px; }
-}
-
-/* --- Small Tablet / Large Phone --- */
-@media (max-width: 767px) {
-    .mycart-content { gap: 11px; padding: 14px 14px 18px; }
-    .empty-cart {
-        padding: 44px 18px;
-        border-radius: 16px;
-        margin-top: 16px;
-        gap: 14px;
-    }
-    .empty-cart::before { font-size: 2.75rem; }
-    .empty-cart h2 { font-size: 0.95rem; max-width: 240px; }
-}
-
-/* --- Small Phone --- */
-@media (max-width: 599px) {
-    .mycart-content { gap: 10px; padding: 12px 12px 16px; }
-
-    .empty-cart {
-        padding: 38px 16px;
-        border-radius: 15px;
-        margin-top: 14px;
+/* Tablets */
+@media (max-width: 768px) {
+    .mycart-page {
+        padding: 0 12px 70px;
         gap: 12px;
     }
-    .empty-cart::before { font-size: 2.5rem; }
-    .empty-cart h2 { font-size: 0.9rem; max-width: 220px; }
-}
 
-/* --- Extra Small Phone --- */
-@media (max-width: 379px) {
-    .mycart-content { gap: 9px; padding: 10px 10px 14px; }
+    .mycart-topbar {
+        padding: 3px 0 5px;
+    }
+
+    .mycart-content {
+        gap: 12px;
+        padding: 5px 3px 18px;
+    }
 
     .empty-cart {
-        padding: 32px 14px;
-        border-radius: 14px;
-        margin-top: 12px;
+        padding: 26px 20px;
+        min-height: 160px;
+        border-radius: 20px;
+        transform: translateY(-4px);
+    }
+
+    .empty-cart h2 {
+        font-size: 0.98rem;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .mycart-page {
+        padding: 0 10px 60px;
         gap: 10px;
     }
-    .empty-cart::before { font-size: 2.2rem; }
-    .empty-cart h2 { font-size: 0.82rem; max-width: 200px; }
+
+    .mycart-topbar {
+        padding: 2px 0 4px;
+    }
+
+    .mycart-content {
+        gap: 11px;
+        padding: 4px 2px 16px;
+    }
+
+    .empty-cart {
+        padding: 24px 18px;
+        min-height: 140px;
+        border-radius: 18px;
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 12px 24px rgba(140, 150, 180, 0.42),
+            0 6px 12px rgba(140, 150, 180, 0.3),
+            0 3px 8px rgba(140, 150, 180, 0.22),
+            9px 9px 20px rgba(140, 150, 180, 0.2),
+            -9px -9px 20px rgba(255, 255, 255, 1),
+            7px -7px 16px rgba(255, 255, 255, 0.9),
+            -7px 7px 16px rgba(140, 150, 180, 0.1),
+            6px -6px 14px rgba(255, 255, 255, 0.85),
+            -6px 6px 14px rgba(140, 150, 180, 0.08),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.24);
+    }
+
+    .empty-cart h2 {
+        font-size: 0.88rem;
+        gap: 6px;
+    }
+
+    .empty-cart h2::before {
+        font-size: 1.05em;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .mycart-page {
+        padding: 0 8px 50px;
+        gap: 9px;
+    }
+
+    .mycart-topbar {
+        padding: 2px 0 3px;
+    }
+
+    .mycart-content {
+        gap: 9px;
+        padding: 3px 2px 14px;
+    }
+
+    .empty-cart {
+        padding: 20px 16px;
+        min-height: 120px;
+        border-radius: 16px;
+        transform: translateY(-2px);
+    }
+
+    .empty-cart h2 {
+        font-size: 0.82rem;
+        gap: 5px;
+    }
+
+    .empty-cart h2::before {
+        font-size: 1rem;
+    }
 }
 
 /* ============================================
    ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
-    .mycart-page *,
-    .mycart-page *::before,
-    .mycart-page *::after {
-        transition: none !important;
-        animation: none !important;
+
+    .mycart-page,
+    .mycart-topbar,
+    .empty-cart,
+    .empty-cart h2::before {
+        animation: none;
     }
-    .mycart-content > * { opacity: 1; transform: none; }
-}
 
-@media (forced-colors: active) {
-    .empty-cart { border: 2px dashed ButtonText; }
-    .empty-cart h2 { color: ButtonText; }
-}
-
-/* ============================================
-   DARK MODE
-   ============================================ */
-
-@media (prefers-color-scheme: dark) {
-    .mycart-page { background: #0f0f1a; }
     .empty-cart {
-        background: linear-gradient(135deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-    }
-    .empty-cart::after {
-        background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.12), transparent);
-    }
-    .empty-cart h2 { color: #c8c8dc; }
-}
-
-/* ============================================
-   SAFE AREA INSETS (iOS)
-   ============================================ */
-
-@supports (padding: max(0px)) {
-
-    .mycart-content {
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
+        transition: none;
     }
 }
