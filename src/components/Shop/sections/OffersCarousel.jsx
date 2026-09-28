@@ -25,13 +25,13 @@ function OffersCarousel() {
         fetchOpenOffers();
     }, []);
 
-    /* Live tick for countdown */
+    /* Live tick */
     useEffect(() => {
         const interval = setInterval(() => setNow(Date.now()), 1000);
         return () => clearInterval(interval);
     }, []);
 
-    /* Auto-scroll every 5s */
+    /* Auto-scroll */
     useEffect(() => {
         if (openOffers.length <= 1) return;
 
@@ -53,7 +53,7 @@ function OffersCarousel() {
         return () => clearTimeout(timer);
     }, [activeOfferIndex, openOffers]);
 
-    /* Countdown helper */
+    /* Countdown */
     const getCountdown = (validAt) => {
         if (!validAt) return null;
 
@@ -91,77 +91,92 @@ function OffersCarousel() {
                     setActiveOfferIndex(index);
                 }}
             >
-                {openOffers.map((offer, index) => (
-                    <div
-                        key={offer.id}
-                        className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""
-                            }`}
-                        onClick={() =>
-                            toast("Feature Coming Soon 🚀", {
-                                duration: 2500,
-                                style: {
-                                    background: "#1a1a1a",
-                                    color: "#fff",
-                                    borderRadius: "10px",
-                                    padding: "12px 18px",
-                                    fontSize: "14px",
-                                    fontWeight: 600
-                                }
-                            })
-                        }
-                    >
-                        {/* LEFT IMAGE */}
-                        <div className="shop-offer-image">
-                            <img
-                                src={offer.image_url || ""}
-                                alt={offer.shop_name}
-                            />
-                            <div className="shop-offer-time">
-                                {(() => {
-                                    const cd = getCountdown(offer.valid_at);
-                                    if (!cd) return null;
-                                    return (
-                                        <div
-                                            className={`shop-offer-countdown ${cd.expired ? "expired" : ""
-                                                }`}
-                                        >
-                                            {cd.expired
-                                                ? "⏰ Expired"
-                                                : `⏳ Ends in ${cd.text}`}
-                                        </div>
-                                    );
-                                })()}
-                            </div>
-                        </div>
+                {openOffers.map((offer, index) => {
+                    const cd = getCountdown(offer.valid_at);
 
-                        {/* RIGHT DETAILS */}
-                        <div className="shop-offer-details">
-                            <div className="shop-offer-content">
-                                <div className="shop-offer-name">
-                                    {offer.shop_name}
+                    return (
+                        <div
+                            key={offer.id}
+                            className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""}`}
+                            onClick={() =>
+                                toast("Feature Coming Soon 🚀", {
+                                    duration: 2500,
+                                    style: {
+                                        background: "#1a1a1a",
+                                        color: "#fff",
+                                        borderRadius: "10px",
+                                        padding: "12px 18px",
+                                        fontSize: "14px",
+                                        fontWeight: 600
+                                    }
+                                })
+                            }
+                        >
+
+                            {/* ============================================
+                                LEFT — IMAGE + COUNTDOWN
+                                ============================================ */}
+                            <div className="shop-offer-image-wrap">
+
+                                <div className="shop-offer-image">
+                                    <img
+                                        src={offer.image_url || ""}
+                                        alt={offer.shop_name}
+                                    />
                                 </div>
-                                <div className="shop-offer-category">
-                                    {offer.category}
-                                </div>
-                                <div className="shop-offer-percent">
-                                    {offer.offer_percent}% OFF
-                                </div>
-                                <div className="shop-offer-description">
-                                    {offer.description || "Limited time offer"}
-                                </div>
-                                <div className="shop-offer-price">
-                                    Starting ₹
-                                    {Number(offer.price || 0).toLocaleString("en-IN")}
-                                </div>
-                                <div className="shop-offer-rating">
-                                    ★ {offer.rating || "—"} •{" "}
-                                    {Number(offer.customer_count || 0).toLocaleString("en-IN")}
-                                    + Customers
+
+                                {/* Countdown BELOW image (not overlapping) */}
+                                {cd && (
+                                    <div
+                                        className={`shop-offer-countdown ${cd.expired ? "expired" : ""}`}
+                                    >
+                                        {cd.expired
+                                            ? "⏰ Expired"
+                                            : `⏳ ${cd.text}`}
+                                    </div>
+                                )}
+
+                            </div>
+
+                            {/* ============================================
+                                RIGHT — DETAILS
+                                ============================================ */}
+                            <div className="shop-offer-details">
+                                <div className="shop-offer-content">
+
+                                    <div className="shop-offer-name">
+                                        {offer.shop_name}
+                                    </div>
+
+                                    <div className="shop-offer-category">
+                                        {offer.category}
+                                    </div>
+
+                                    <div className="shop-offer-percent">
+                                        {offer.offer_percent}% OFF
+                                    </div>
+
+                                    <div className="shop-offer-description">
+                                        {offer.description || "Limited time offer"}
+                                    </div>
+
+                                    <div className="shop-offer-price">
+                                        Starting ₹
+                                        {Number(offer.price || 0).toLocaleString("en-IN")}
+                                    </div>
+
+                                    <div className="shop-offer-rating">
+                                        ★ {offer.rating || "—"} •{" "}
+                                        {Number(offer.customer_count || 0).toLocaleString("en-IN")}
+                                        + Customers
+                                    </div>
+
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             {/* DOTS */}
@@ -169,8 +184,7 @@ function OffersCarousel() {
                 {openOffers.map((offer, index) => (
                     <span
                         key={offer.id}
-                        className={`shop-offer-dot ${index === activeOfferIndex ? "active" : ""
-                            }`}
+                        className={`shop-offer-dot ${index === activeOfferIndex ? "active" : ""}`}
                     />
                 ))}
             </div>

@@ -1,52 +1,27 @@
-/* ==========================================================================
-   SUGGESTED SHOPS — HEAVY WHITE CLAYMORPHISM
-   ========================================================================== */
+/* SuggestedShops.css */
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
-
-/* ============================================
-   ROOT VARIABLES
-   ============================================ */
-
-:root {
-    --ss-bg: #e4e7ef;
-    --ss-bg-dark: #ccd0db;
-    --ss-shadow-dark: rgba(160, 165, 180, 0.9);
-    --ss-shadow-light: #ffffff;
-    --ss-purple: #6c5ce7;
-    --ss-purple-light: #a29bfe;
-    --ss-gold: #feca57;
-    --ss-green: #00d97f;
-    --ss-red: #ff4757;
-    --ss-text: #2d3436;
-    --ss-text-soft: #4a5568;
-}
-
-/* ============================================
-   SECTION CONTAINER
-   ============================================ */
-
-.shop-suggested-section {
-    position: relative;
-    width: 100%;
-    margin: 0 0 16px 0;
-    padding: 4px 0 8px 0;
-    background: transparent;
-    animation: ssEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
-}
-
+.shop-suggested-section,
 .shop-suggested-section * {
     box-sizing: border-box;
 }
 
-@keyframes ssEnter {
+/* ============================================
+   SECTION WRAPPER
+   ============================================ */
+.shop-suggested-section {
+    position: relative;
+    width: 100%;
+
+    margin: 0 0 16px;
+    padding: 0 14px 6px;
+
+    animation: shopSuggestedIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shopSuggestedIn {
     from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(14px);
     }
 
     to {
@@ -56,599 +31,735 @@
 }
 
 /* ============================================
-   SECTION TITLE
+   TITLE ROW
    ============================================ */
-
-.shop-suggested-section .shop-section-title {
+.shop-section-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding: 0 14px;
-    margin-bottom: 10px;
+
+    margin: 0 0 10px;
+    padding: 0 2px;
 }
 
-.shop-suggested-section .shop-section-title h4 {
-    position: relative;
+.shop-section-title h4 {
     margin: 0;
-    font-size: 0.95rem;
+
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
     font-weight: 900;
-    color: var(--ss-text);
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    padding-left: 14px;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
+
+    position: relative;
+    padding-left: 12px;
 }
 
-.shop-suggested-section .shop-section-title h4::before {
-    content: '';
+/* 🔥 accent bar on left of title */
+.shop-section-title h4::before {
+    content: "";
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 4px;
-    height: 70%;
-    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
+
+    width: 5px;
+    height: 80%;
+
     border-radius: 4px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
     box-shadow:
-        2px 2px 6px rgba(108, 92, 231, 0.4),
-        -1px -1px 3px rgba(255, 255, 255, 0.9);
-}
-
-/* View All Button */
-.shop-suggested-section .viewALL {
-    flex-shrink: 0;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(145deg, #e4e7ef, #ccd0db);
-    color: var(--ss-text);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow:
-        5px 5px 12px rgba(160, 165, 180, 0.7),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.05),
-        inset 0 2px 4px rgba(255, 255, 255, 0.85);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.shop-suggested-section .viewALL:hover {
-    transform: translateY(-2px);
-}
-
-.shop-suggested-section .viewALL:active {
-    transform: scale(0.94);
-    box-shadow:
-        inset 5px 5px 12px rgba(160, 165, 180, 0.85),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
-}
-
-.shop-suggested-section .viewALL svg {
-    transition: transform 0.3s ease;
-}
-
-.shop-suggested-section .viewALL:hover svg {
-    transform: translateX(2px);
+        2px 3px 6px rgba(91, 110, 225, 0.5),
+        -1.5px -1.5px 4px rgba(255, 255, 255, 1),
+        1.5px -1.5px 4px rgba(255, 255, 255, 0.7),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 2px rgba(60, 70, 160, 0.45);
 }
 
 /* ============================================
-   SCROLL CONTAINER
+   VIEW ALL BUTTON — 3D WOOL BALL
    ============================================ */
+.viewALL {
+    display: grid;
+    place-items: center;
 
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid rgba(255, 255, 255, 0.98);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 0.98rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    /* 🔥 utha hua */
+    box-shadow:
+        4px 5px 12px rgba(91, 110, 225, 0.55),
+        2px 3px 8px rgba(91, 110, 225, 0.4),
+        3px 3px 8px rgba(91, 110, 225, 0.28),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        2px -2px 6px rgba(255, 255, 255, 0.75),
+        -2px 2px 6px rgba(91, 110, 225, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-2px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.viewALL:hover {
+    transform: translateX(4px) translateY(-2px) scale(1.08);
+
+    box-shadow:
+        6px 7px 16px rgba(91, 110, 225, 0.7),
+        3px 4px 10px rgba(91, 110, 225, 0.5),
+        4px 4px 10px rgba(91, 110, 225, 0.35),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(91, 110, 225, 0.22),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+}
+
+.viewALL:active {
+    transform: translateX(0) translateY(0) scale(0.94);
+
+    box-shadow:
+        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
+}
+
+.viewALL:focus-visible {
+    outline: 2px solid #7c8cf8;
+    outline-offset: 3px;
+}
+
+.viewALL svg {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.viewALL:hover svg {
+    transform: translateX(3px);
+}
+
+/* ============================================
+   SCROLL WRAPPER
+   ============================================ */
 .shop-suggested-scroll {
     width: 100%;
+
     overflow-x: auto;
+    overflow-y: visible;
+
+    padding: 14px 4px 18px;
+
     scroll-behavior: smooth;
-    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
+
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding: 4px 0 8px;
+
+    mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 10px,
+            #000 calc(100% - 10px),
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 10px,
+            #000 calc(100% - 10px),
+            transparent 100%);
 }
 
 .shop-suggested-scroll::-webkit-scrollbar {
     display: none;
 }
 
+/* ============================================
+   GRID
+   ============================================ */
 .shop-suggested-grid {
     display: flex;
-    gap: 10px;
-    padding: 4px 14px;
+    align-items: stretch;
+    gap: 12px;
+
+    width: max-content;
+    min-width: 100%;
 }
 
 /* ============================================
-   SUGGESTED CARD — COMPACT CLAY
+   🔥 CARD — 3D UTHA HUA
    ============================================ */
-
 .shop-suggested-card {
-    flex: 0 0 130px;
-    width: 130px;
+    position: relative;
+    flex-shrink: 0;
+
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    align-items: stretch;
+    gap: 8px;
+
+    width: 140px;
+    padding: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.98);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥 HEAVY OUTSET */
+    box-shadow:
+        0 12px 24px rgba(140, 150, 180, 0.5),
+        0 6px 12px rgba(140, 150, 180, 0.35),
+        10px 10px 22px rgba(140, 150, 180, 0.25),
+        -10px -10px 22px rgba(255, 255, 255, 1),
+        8px -8px 18px rgba(255, 255, 255, 0.85),
+        -8px 8px 18px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
+
     cursor: pointer;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    user-select: none;
+
+    transform: translateY(-6px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
-    scroll-snap-align: start;
-    animation: ssCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    overflow: hidden;
+
+    animation: shopSuggestedCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes ssCardEnter {
+@keyframes shopSuggestedCardIn {
     from {
         opacity: 0;
-        transform: translateY(16px) scale(0.94);
+        transform: translateY(20px) scale(0.95);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(-6px) scale(1);
     }
+}
+
+/* Top highlight */
+.shop-suggested-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 18px 18px 0 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Bottom ground shadow */
+.shop-suggested-card::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 18%;
+    right: 18%;
+    height: 4px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.3) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+    z-index: 0;
+}
+
+.shop-suggested-card:hover {
+    transform: translateY(-12px) scale(1.02);
+
+    box-shadow:
+        0 22px 42px rgba(124, 140, 248, 0.45),
+        0 12px 22px rgba(124, 140, 248, 0.3),
+        14px 14px 30px rgba(124, 140, 248, 0.2),
+        -14px -14px 30px rgba(255, 255, 255, 1),
+        10px -10px 24px rgba(255, 255, 255, 0.9),
+        -10px 10px 24px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.22);
 }
 
 .shop-suggested-card:active {
-    transform: scale(0.96);
+    transform: translateY(-2px) scale(0.98);
+
+    box-shadow:
+        0 4px 10px rgba(155, 165, 190, 0.5),
+        0 2px 6px rgba(155, 165, 190, 0.35),
+        inset 5px 5px 12px rgba(155, 165, 190, 0.5),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
 }
 
 /* ============================================
-   IMAGE — CLAY
+   IMAGE WRAPPER — 3D WOOL FRAME
    ============================================ */
-
 .shop-suggested-image {
     position: relative;
-    width: 130px;
-    height: 130px;
-    border-radius: 18px;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
     overflow: hidden;
-    background: #ffffff;
+
     box-shadow:
-        7px 7px 16px rgba(160, 165, 180, 0.7),
-        -7px -7px 16px rgba(255, 255, 255, 0.95),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.04),
-        inset 0 3px 6px rgba(255, 255, 255, 0.85);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    isolation: isolate;
+        5px 6px 14px rgba(140, 150, 180, 0.5),
+        2px 3px 8px rgba(140, 150, 180, 0.3),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.75),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
+
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.shop-suggested-card:active .shop-suggested-image {
-    box-shadow:
-        inset 5px 5px 12px rgba(160, 165, 180, 0.85),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
+.shop-suggested-card:hover .shop-suggested-image {
+    transform: scale(1.03);
 }
 
-/* Animated gradient border */
-.shop-suggested-image::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 18px;
-    padding: 1.5px;
-    background: linear-gradient(135deg,
-            #a29bfe, #6c5ce7, #00cec9, #fd79a8, #a29bfe);
-    background-size: 400% 400%;
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: ssBorderFlow 6s linear infinite;
-    pointer-events: none;
-    z-index: 3;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-}
-
-.shop-suggested-card:active .shop-suggested-image::before {
-    opacity: 1;
-}
-
-@keyframes ssBorderFlow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Image */
 .shop-suggested-image img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+
+    object-fit: cover;
     object-position: center;
-    display: block;
-    padding: 6px;
-    background: #ffffff;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    user-select: none;
-    -webkit-user-drag: none;
+
+    border-radius: 13px;
+
     image-rendering: -webkit-optimize-contrast;
-    position: relative;
-    z-index: 1;
-    transform: scale(1.4);
+    image-rendering: crisp-edges;
+
+    transform: scale(1.08);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.shop-suggested-card:hover .shop-suggested-image img {
+    transform: scale(1.2);
+}
 
 /* ============================================
-   RATING BADGE — GREEN CLAY
+   RATING BADGE — floats on image (top-right)
    ============================================ */
-
 .shop-suggested-rating {
     position: absolute;
     top: 6px;
     right: 6px;
+
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 2px;
+
     padding: 3px 7px;
-    border-radius: 50px;
-    background: linear-gradient(145deg, #00d97f, #00a85e);
-    color: #ffffff;
-    font-size: 0.58rem;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
+
+    color: #4a3200;
+    font-size: 0.56rem;
     font-weight: 900;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
-    text-shadow: 0 1px 2px rgba(0, 90, 50, 0.4);
-    box-shadow:
-        3px 3px 8px rgba(0, 217, 127, 0.5),
-        -2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 0 -1px 2px rgba(0, 90, 50, 0.4),
-        inset 0 1px 2px rgba(255, 255, 255, 0.4);
-    z-index: 4;
+    letter-spacing: 0.2px;
+    line-height: 1;
     white-space: nowrap;
+
+    text-shadow:
+        0 1px 1px rgba(255, 255, 255, 0.6),
+        0 0 4px rgba(255, 255, 255, 0.4);
+
+    /* 🔥 utha hua */
+    box-shadow:
+        0 4px 10px rgba(224, 165, 46, 0.6),
+        0 2px 6px rgba(224, 165, 46, 0.45),
+        3px 3px 8px rgba(224, 165, 46, 0.3),
+        -2px -2px 6px rgba(255, 255, 255, 1),
+        2px -2px 6px rgba(255, 255, 255, 0.7),
+        -2px 2px 6px rgba(224, 165, 46, 0.2),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+        inset -1px -1px 2px rgba(140, 90, 20, 0.4);
+
+    transform: translateY(-2px);
+    z-index: 2;
 }
 
 .rating-star {
     font-size: 0.6rem;
-    color: #ffffff;
-    filter: drop-shadow(0 1px 1px rgba(0, 90, 50, 0.5));
+    margin-left: 1px;
+    filter: drop-shadow(0 1px 1px rgba(140, 90, 20, 0.4));
 }
 
 /* ============================================
-   INFO — NAME + PRICE
+   INFO SECTION
    ============================================ */
-
 .shop-suggested-info {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    padding: 0 2px;
+    gap: 4px;
+
+    width: 100%;
+    padding: 2px 2px 0;
 }
 
 .shop-suggested-name {
     display: block;
+
     width: 100%;
-    font-size: 0.68rem;
+
+    font-size: clamp(0.7rem, 1.95vw, 0.8rem);
     font-weight: 800;
-    color: var(--ss-text);
-    letter-spacing: -0.005em;
-    line-height: 1.3;
+    letter-spacing: 0.1px;
+    line-height: 1.25;
     text-align: center;
-    white-space: nowrap;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.12);
+
     overflow: hidden;
     text-overflow: ellipsis;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
 }
 
+/* ---- Price row ---- */
 .shop-suggested-price {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: baseline;
     gap: 5px;
-    font-size: 0.62rem;
-    line-height: 1.2;
-    flex-wrap: wrap;
+
+    width: 100%;
+
+    font-size: clamp(0.62rem, 1.75vw, 0.72rem);
+    font-weight: 800;
+    letter-spacing: 0.1px;
+
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .shop-suggested-price del {
-    color: var(--ss-text-soft);
-    font-weight: 600;
+    color: #8a90ac;
+    font-size: 0.86em;
+    font-weight: 700;
     text-decoration: line-through;
-    font-size: 0.56rem;
-    opacity: 0.7;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .shop-suggested-price strong {
-    color: var(--ss-purple);
+    color: #5b6ee1;
     font-weight: 900;
-    font-size: 0.72rem;
-    letter-spacing: -0.01em;
+
     text-shadow:
-        1px 1px 1px rgba(255, 255, 255, 0.9),
-        0 0 6px rgba(108, 92, 231, 0.3);
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 0 6px rgba(124, 140, 248, 0.25);
 }
 
 /* ============================================
-   RESPONSIVE — TABLET
+   RESPONSIVE
    ============================================ */
 
+/* Tablets */
 @media (max-width: 768px) {
     .shop-suggested-section {
+        padding: 0 12px 4px;
         margin-bottom: 14px;
-        padding: 3px 0 6px;
     }
 
-    .shop-suggested-section .shop-section-title {
-        padding: 0 12px;
+    .shop-section-title {
         margin-bottom: 8px;
     }
 
-    .shop-suggested-section .shop-section-title h4 {
-        font-size: 0.88rem;
-        padding-left: 12px;
+    .shop-section-title h4 {
+        font-size: 0.95rem;
+        padding-left: 11px;
     }
 
-    .shop-suggested-section .shop-section-title h4::before {
-        width: 3.5px;
+    .shop-section-title h4::before {
+        width: 4px;
     }
 
-    .shop-suggested-section .viewALL {
-        width: 30px;
-        height: 30px;
-        font-size: 0.85rem;
-        border-radius: 11px;
+    .viewALL {
+        width: 34px;
+        height: 34px;
+        font-size: 0.92rem;
+    }
+
+    .shop-suggested-scroll {
+        padding: 12px 3px 16px;
     }
 
     .shop-suggested-grid {
-        gap: 9px;
-        padding: 4px 12px;
+        gap: 10px;
     }
 
     .shop-suggested-card {
-        flex: 0 0 114px;
-        width: 114px;
-        gap: 5px;
+        width: 124px;
+        padding: 9px;
+        border-radius: 16px;
+        gap: 7px;
+        transform: translateY(-5px);
+    }
+
+    .shop-suggested-card:hover {
+        transform: translateY(-10px) scale(1.02);
     }
 
     .shop-suggested-image {
-        width: 114px;
-        height: 114px;
-        border-radius: 16px;
-    }
-
-    .shop-suggested-image::before {
-        border-radius: 16px;
+        border-radius: 13px;
     }
 
     .shop-suggested-image img {
-        padding: 5px;
+        border-radius: 12px;
     }
 
     .shop-suggested-rating {
-        font-size: 0.54rem;
         padding: 3px 6px;
+        font-size: 0.52rem;
         top: 5px;
         right: 5px;
     }
 
     .shop-suggested-name {
-        font-size: 0.62rem;
+        font-size: 0.72rem;
     }
 
     .shop-suggested-price {
-        font-size: 0.56rem;
-    }
-
-    .shop-suggested-price strong {
         font-size: 0.66rem;
     }
 }
 
-/* ============================================
-   RESPONSIVE — SMALL PHONE
-   ============================================ */
-
+/* Phones */
 @media (max-width: 480px) {
     .shop-suggested-section {
+        padding: 0 10px 4px;
         margin-bottom: 12px;
     }
 
-    .shop-suggested-section .shop-section-title {
-        padding: 0 10px;
+    .shop-section-title {
         margin-bottom: 7px;
     }
 
-    .shop-suggested-section .shop-section-title h4 {
+    .shop-section-title h4 {
+        font-size: 0.88rem;
+        padding-left: 10px;
+        letter-spacing: 0.15px;
+    }
+
+    .shop-section-title h4::before {
+        width: 3.5px;
+        height: 75%;
+    }
+
+    .viewALL {
+        width: 30px;
+        height: 30px;
         font-size: 0.82rem;
-        padding-left: 11px;
+
+        box-shadow:
+            3px 4px 10px rgba(91, 110, 225, 0.5),
+            2px 2px 6px rgba(91, 110, 225, 0.35),
+            -2px -2px 6px rgba(255, 255, 255, 1),
+            2px -2px 5px rgba(255, 255, 255, 0.75),
+            inset 1px 1px 2.5px rgba(255, 255, 255, 0.5),
+            inset -1px -1px 2.5px rgba(60, 70, 160, 0.45);
     }
 
-    .shop-suggested-section .shop-section-title h4::before {
-        width: 3px;
-    }
-
-    .shop-suggested-section .viewALL {
-        width: 28px;
-        height: 28px;
-        font-size: 0.78rem;
-        border-radius: 10px;
+    .shop-suggested-scroll {
+        padding: 10px 3px 14px;
     }
 
     .shop-suggested-grid {
-        gap: 8px;
-        padding: 3px 10px;
+        gap: 9px;
     }
 
     .shop-suggested-card {
-        flex: 0 0 104px;
-        width: 104px;
-        gap: 5px;
+        width: 112px;
+        padding: 8px;
+        border-radius: 14px;
+        gap: 6px;
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 9px 18px rgba(140, 150, 180, 0.45),
+            0 5px 10px rgba(140, 150, 180, 0.3),
+            7px 7px 16px rgba(140, 150, 180, 0.2),
+            -7px -7px 16px rgba(255, 255, 255, 1),
+            5px -5px 12px rgba(255, 255, 255, 0.8),
+            -5px 5px 12px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
     }
 
     .shop-suggested-image {
-        width: 104px;
-        height: 104px;
-        border-radius: 14px;
-    }
+        border-radius: 12px;
 
-    .shop-suggested-image::before {
-        border-radius: 14px;
+        box-shadow:
+            4px 5px 10px rgba(140, 150, 180, 0.45),
+            2px 3px 6px rgba(140, 150, 180, 0.28),
+            -3px -3px 8px rgba(255, 255, 255, 1),
+            2px -2px 6px rgba(255, 255, 255, 0.75),
+            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
+            inset -1px -1px 2.5px rgba(155, 165, 190, 0.35);
     }
 
     .shop-suggested-image img {
-        padding: 4px;
+        border-radius: 11px;
     }
 
     .shop-suggested-rating {
-        font-size: 0.5rem;
         padding: 2px 5px;
+        font-size: 0.48rem;
         top: 4px;
         right: 4px;
+
+        box-shadow:
+            0 3px 8px rgba(224, 165, 46, 0.55),
+            0 2px 4px rgba(224, 165, 46, 0.4),
+            2px 2px 6px rgba(224, 165, 46, 0.28),
+            -2px -2px 5px rgba(255, 255, 255, 1),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+            inset -1px -1px 2px rgba(140, 90, 20, 0.4);
+    }
+
+    .rating-star {
+        font-size: 0.52rem;
     }
 
     .shop-suggested-name {
-        font-size: 0.58rem;
+        font-size: 0.66rem;
+        padding: 1px 1px 0;
     }
 
     .shop-suggested-price {
-        font-size: 0.52rem;
+        font-size: 0.6rem;
         gap: 4px;
-    }
-
-    .shop-suggested-price del {
-        font-size: 0.5rem;
-    }
-
-    .shop-suggested-price strong {
-        font-size: 0.62rem;
     }
 }
 
-/* ============================================
-   RESPONSIVE — EXTRA SMALL
-   ============================================ */
-
-@media (max-width: 380px) {
+/* Small phones */
+@media (max-width: 360px) {
     .shop-suggested-section {
+        padding: 0 8px 4px;
         margin-bottom: 10px;
-        padding: 2px 0 5px;
     }
 
-    .shop-suggested-section .shop-section-title {
-        padding: 0 8px;
-        margin-bottom: 6px;
-        gap: 8px;
+    .shop-section-title h4 {
+        font-size: 0.8rem;
+        padding-left: 9px;
     }
 
-    .shop-suggested-section .shop-section-title h4 {
-        font-size: 0.76rem;
-        padding-left: 10px;
+    .shop-section-title h4::before {
+        width: 3px;
     }
 
-    .shop-suggested-section .shop-section-title h4::before {
-        width: 2.5px;
+    .viewALL {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
     }
 
-    .shop-suggested-section .viewALL {
-        width: 26px;
-        height: 26px;
-        font-size: 0.72rem;
-        border-radius: 9px;
+    .shop-suggested-scroll {
+        padding: 9px 2px 12px;
     }
 
     .shop-suggested-grid {
-        gap: 7px;
-        padding: 3px 8px;
+        gap: 8px;
     }
 
     .shop-suggested-card {
-        flex: 0 0 96px;
-        width: 96px;
-        gap: 4px;
+        width: 98px;
+        padding: 7px;
+        border-radius: 12px;
+        gap: 5px;
+        transform: translateY(-3px);
     }
 
     .shop-suggested-image {
-        width: 96px;
-        height: 96px;
-        border-radius: 13px;
-    }
-
-    .shop-suggested-image::before {
-        border-radius: 13px;
+        border-radius: 10px;
     }
 
     .shop-suggested-image img {
-        padding: 3px;
+        border-radius: 9px;
     }
 
     .shop-suggested-rating {
-        font-size: 0.46rem;
-        padding: 2px 5px;
+        padding: 2px 4px;
+        font-size: 0.42rem;
         top: 3px;
         right: 3px;
     }
 
-    .shop-suggested-name {
-        font-size: 0.54rem;
-    }
-
-    .shop-suggested-price {
-        font-size: 0.48rem;
-        gap: 3px;
-    }
-
-    .shop-suggested-price del {
+    .rating-star {
         font-size: 0.46rem;
     }
 
-    .shop-suggested-price strong {
-        font-size: 0.58rem;
+    .shop-suggested-name {
+        font-size: 0.6rem;
+    }
+
+    .shop-suggested-price {
+        font-size: 0.54rem;
+        gap: 3px;
     }
 }
 
 /* ============================================
    ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
 
     .shop-suggested-section,
+    .shop-suggested-card {
+        animation: none;
+    }
+
     .shop-suggested-card,
     .shop-suggested-image,
-    .shop-suggested-image::before,
     .shop-suggested-image img,
     .shop-suggested-rating,
-    .shop-suggested-name,
-    .shop-suggested-price,
-    .shop-suggested-section .viewALL,
-    .shop-suggested-section .viewALL svg {
-        animation: none !important;
-        transition: none !important;
-    }
-
-    .shop-suggested-card:active,
-    .shop-suggested-card:active .shop-suggested-image img,
-    .shop-suggested-section .viewALL:hover,
-    .shop-suggested-section .viewALL:hover svg {
-        transform: none;
-    }
-}
-
-/* ============================================
-   iOS SAFE AREA
-   ============================================ */
-
-@supports (padding: max(0px)) {
-    .shop-suggested-grid {
-        padding-left: max(14px, env(safe-area-inset-left));
-        padding-right: max(14px, env(safe-area-inset-right));
-    }
-
-    .shop-suggested-section .shop-section-title {
-        padding-left: max(14px, env(safe-area-inset-left));
-        padding-right: max(14px, env(safe-area-inset-right));
+    .viewALL,
+    .viewALL svg {
+        transition: none;
     }
 }

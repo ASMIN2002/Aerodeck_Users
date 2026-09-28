@@ -763,38 +763,6 @@ function Details({
                                     </svg>
                                 </button>
                             )}
-
-                            <button
-                                className="dt-top-video-fullscreen"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    openFullscreenImage(activeImage);
-                                }}
-                                aria-label="Fullscreen"
-                            >
-                                ⛶
-                            </button>
-
-                            <div
-                                className="dt-top-video-progress"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleTopVideoSeek(e);
-                                }}
-                                onTouchStart={(e) => {
-                                    e.stopPropagation();
-                                    handleTopVideoSeek(e);
-                                }}
-                                onTouchMove={(e) => {
-                                    e.stopPropagation();
-                                    handleTopVideoSeek(e);
-                                }}
-                            >
-                                <div
-                                    className="dt-top-video-progress-fill"
-                                    style={{ width: `${topVideoProgress}%` }}
-                                />
-                            </div>
                         </div>
                     ) : (
                         <img

@@ -1,4 +1,4 @@
-/* Details.css */
+/* Details.css — FULL 3D + FULLSCREEN FIX */
 
 .dt-page,
 .dt-page * {
@@ -10,50 +10,99 @@
    ============================================ */
 .dt-page {
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-
     width: 100%;
     min-height: 100vh;
 
-    padding-bottom: 110px;
+    margin: 0 0 40px;
+    padding: 14px 14px 24px;
 
-    background: #eef1f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
 
-    animation: dtPageFade 0.5s ease both;
+    -webkit-tap-highlight-color: transparent;
+
+    animation: dtPageIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes dtPageIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ============================================
-   IMAGE WRAPPER (Main Media Stage)
+   🔥 IMAGE WRAPPER — 3D UTHA HUA FRAME
    ============================================ */
 .dt-image-wrapper {
     position: relative;
-
     width: 100%;
-    max-width: 720px;
-    margin: 0 auto;
 
-    border-radius: 0 0 28px 28px;
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 24px;
 
-    background: #f0f2f7;
-
-    box-shadow:
-        10px 10px 26px rgba(174, 181, 199, 0.55),
-        -6px -6px 20px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
 
     overflow: hidden;
 
-    animation: dtImageIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    box-shadow:
+        0 18px 36px rgba(140, 150, 180, 0.5),
+        0 9px 18px rgba(140, 150, 180, 0.35),
+        14px 14px 30px rgba(140, 150, 180, 0.25),
+        -14px -14px 30px rgba(255, 255, 255, 1),
+        11px -11px 24px rgba(255, 255, 255, 0.85),
+        -11px 11px 24px rgba(140, 150, 180, 0.12),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.28);
+
+    transform: translateY(-4px);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dt-image-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.dt-image-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 15%;
+    right: 15%;
+    height: 6px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.35) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: 0;
 }
 
 /* ============================================
-   MAIN IMAGE / VIDEO BOX
+   IMAGE BOX
    ============================================ */
 .dt-image-box {
     position: relative;
-
     width: 100%;
     aspect-ratio: 1 / 1;
 
@@ -61,282 +110,317 @@
     align-items: center;
     justify-content: center;
 
-    background: #eef1f7;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.6), transparent 55%),
+        linear-gradient(145deg, #f0f3fb 0%, #dde4f0 100%);
 
     overflow: hidden;
+    border-radius: 22px;
 
-    user-select: none;
     touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .dt-image-box img {
+    display: block;
     width: 100%;
     height: 100%;
 
     object-fit: cover;
+    object-position: center;
 
-    display: block;
+    border-radius: 22px;
 
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    animation: dtImageFade 0.4s ease both;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dt-image-box img:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 /* ============================================
-   TOP VIDEO
+   TOP VIDEO CONTAINER
    ============================================ */
 .dt-top-video-container {
     position: relative;
-
     width: 100%;
     height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #0a0a14;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
 .dt-top-video {
+    display: block;
     width: 100%;
     height: 100%;
 
-    object-fit: cover;
-
-    display: block;
-
-    background: #000;
+    object-fit: contain;
+    background: #0a0a14;
 }
 
-/* ---- Play / Pause Button (bottom-left) ---- */
-.dt-top-video-play,
-.dt-top-video-pause {
+.dt-top-video-play {
     position: absolute;
-
-    bottom: 18px;
-    left: 14px;
-    top: auto;
-
-    transform: none;
-
-    z-index: 4;
-    pointer-events: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     display: grid;
     place-items: center;
 
-    width: 44px;
-    height: 44px;
+    width: 68px;
+    height: 68px;
 
-    cursor: pointer;
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.98);
     border-radius: 50%;
 
-    background: rgba(240, 242, 247, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.35), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    cursor: pointer;
 
     box-shadow:
-        4px 4px 12px rgba(0, 0, 0, 0.3),
-        -3px -3px 8px rgba(255, 255, 255, 0.4),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+        0 12px 28px rgba(91, 110, 225, 0.6),
+        0 6px 14px rgba(91, 110, 225, 0.45),
+        8px 8px 18px rgba(91, 110, 225, 0.3),
+        -6px -6px 14px rgba(255, 255, 255, 0.35),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: dtPlayPulse 2s ease-in-out infinite;
+}
+
+@keyframes dtPlayPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+}
+
+.dt-top-video-play:hover {
+    transform: translate(-50%, -50%) scale(1.12);
+}
+
+.dt-top-video-play:active {
+    transform: translate(-50%, -50%) scale(0.94);
+    box-shadow:
+        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
+}
+
+.dt-top-video-pause {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    display: grid;
+    place-items: center;
+
+    width: 40px;
+    height: 40px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 18px rgba(91, 110, 225, 0.55),
+        0 4px 10px rgba(91, 110, 225, 0.4),
+        5px 5px 12px rgba(91, 110, 225, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 0.3),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
 
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dt-top-video-play svg,
-.dt-top-video-pause svg {
-    fill: #5b6ee1;
-    margin-left: 2px;
-}
-
-.dt-top-video-pause svg {
-    margin-left: 0;
-    fill: #ef4d6a;
-}
-
-.dt-top-video-play:hover,
 .dt-top-video-pause:hover {
-    transform: scale(1.08);
+    transform: scale(1.1);
 }
 
-.dt-top-video-play:active,
 .dt-top-video-pause:active {
     transform: scale(0.92);
 }
 
-/* ---- Fullscreen Button (bottom-right) ---- */
-.dt-top-video-fullscreen {
-    display: none;
-}
 
-.dt-top-video-fullscreen:hover {
-    transform: scale(1.08);
-    color: #5b6ee1;
-}
-
-.dt-top-video-fullscreen:active {
-    transform: scale(0.92);
-}
-
-/* ---- Progress Bar ---- */
-.dt-top-video-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-    height: 6px;
-
-    cursor: pointer;
-
-    background: rgba(255, 255, 255, 0.25);
-
-    backdrop-filter: blur(4px);
-
-    transition: height 0.25s ease;
-
-    z-index: 3;
-}
-
-.dt-top-video-progress:hover {
-    height: 10px;
-}
-
-.dt-top-video-progress-fill {
-    height: 100%;
-
-    border-radius: 0 4px 4px 0;
-
-    background: linear-gradient(90deg, #6a7bf0, #9b5de5, #f15bb5);
-
-    box-shadow: 0 0 12px rgba(124, 140, 248, 0.7);
-
-    transition: width 0.15s linear;
-}
-
-/* ============================================
-   OVERLAY (Back / Like / Save / Share)
-   ============================================ */
 .dt-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 14px;
+    left: 14px;
+    right: 14px;
 
-    width: 100%;
-    z-index: 99999;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 8px;
 
-    padding: 14px 14px;
-
-    background: linear-gradient(180deg,
-            rgba(238, 241, 247, 0.7) 0%,
-            rgba(238, 241, 247, 0) 100%);
-
+    z-index: 15;
+    pointer-events: none;
 }
 
-/* ---- Back Button ---- */
-.dt-back {
-    flex-shrink: 0;
+.dt-overlay>* {
+    pointer-events: auto;
+}
 
+.dt-back {
     display: grid;
     place-items: center;
 
     width: 42px;
     height: 42px;
 
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #4b5170;
-
-    cursor: pointer;
-    border: none;
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
     border-radius: 50%;
 
-    background: #f0f2f7;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    color: #3f4664;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    margin-right: auto;
 }
 
 .dt-back:hover {
-    transform: translateY(-2px) scale(1.08);
+    transform: translateX(-3px) scale(1.06);
     color: #5b6ee1;
 }
 
 .dt-back:active {
-    transform: translateY(1px) scale(0.94);
+    transform: translateX(0) scale(0.94);
     box-shadow:
-        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
-        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+        inset 5px 5px 10px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 10px rgba(255, 255, 255, 1);
 }
 
-/* ---- Action Buttons (Like, Save, Share) ---- */
-.dt-overlay>button.dt-action-btn {
-    display: inline-flex;
+.dt-action-btn {
+    display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 
-    padding: 8px 14px;
+    padding: 6px 12px;
+    height: 42px;
 
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    color: #3f4664;
     font-size: 0.85rem;
-    font-weight: 700;
-    color: #4b5170;
-
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1;
     cursor: pointer;
-    border: none;
-    border-radius: 20px;
-
-    background: #f0f2f7;
-
-    box-shadow:
-        5px 5px 12px rgba(174, 181, 199, 0.6),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
-
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dt-overlay>button.dt-action-btn svg {
+.dt-action-btn svg {
     font-size: 1rem;
+    filter: drop-shadow(0 1px 1px rgba(140, 150, 180, 0.3));
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dt-overlay>button.dt-action-btn:hover {
-    transform: translateY(-2px);
+.dt-action-btn span {
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.dt-action-btn:hover {
+    transform: translateY(-3px);
     color: #5b6ee1;
-
     box-shadow:
-        8px 8px 18px rgba(124, 140, 248, 0.3),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+        0 12px 24px rgba(124, 140, 248, 0.45),
+        0 6px 12px rgba(124, 140, 248, 0.3),
+        7px 7px 16px rgba(124, 140, 248, 0.22),
+        -5px -5px 14px rgba(255, 255, 255, 1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
 }
 
-.dt-overlay>button.dt-action-btn:active {
+.dt-action-btn:hover svg {
+    transform: scale(1.15);
+}
+
+.dt-action-btn:active {
     transform: translateY(1px) scale(0.96);
     box-shadow:
-        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
-        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+        inset 5px 5px 10px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 10px rgba(255, 255, 255, 1);
 }
 
-/* ---- Image Counter Badge ---- */
+/* ============================================
+   IMAGE COUNT BADGE
+   ============================================ */
 .dt-image-count {
     position: absolute;
     bottom: 14px;
     right: 14px;
 
-    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
 
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    color: #4b5170;
+    padding: 6px 12px;
 
-    background: #f0f2f7;
-    border-radius: 20px;
-    z-index: 5;
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(145deg, rgba(63, 70, 100, 0.85), rgba(30, 30, 50, 0.9));
+
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    line-height: 1;
+
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.35),
+        0 4px 10px rgba(0, 0, 0, 0.25),
+        4px 4px 10px rgba(0, 0, 0, 0.2),
+        -3px -3px 8px rgba(255, 255, 255, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.2),
+        inset -1.5px -1.5px 3px rgba(0, 0, 0, 0.4);
+
+    z-index: 15;
 }
 
 /* ============================================
-   THUMBNAILS STRIP
+   THUMBNAILS ROW
    ============================================ */
 .dt-images {
     display: flex;
@@ -344,341 +428,319 @@
     gap: 10px;
 
     width: 100%;
-    max-width: 720px;
-    margin: 16px auto 0;
 
-    padding: 6px 14px;
+    margin: 18px 0 20px;
+    padding: 12px 10px;
 
     overflow-x: auto;
+    overflow-y: visible;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    box-shadow:
+        0 12px 26px rgba(140, 150, 180, 0.45),
+        0 6px 14px rgba(140, 150, 180, 0.32),
+        9px 9px 20px rgba(140, 150, 180, 0.22),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        7px -7px 16px rgba(255, 255, 255, 0.85),
+        -7px 7px 16px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
+
+    transform: translateY(-3px);
+
     scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
 }
 
 .dt-images::-webkit-scrollbar {
     display: none;
 }
 
-/* ---- Thumbnails ---- */
 .dt-thumb {
+    position: relative;
     flex-shrink: 0;
 
-    width: 64px;
-    height: 64px;
+    width: 68px;
+    height: 68px;
 
-    cursor: pointer;
-    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
 
     object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    overflow: hidden;
 
-    background: #f0f2f7;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 
     box-shadow:
-        5px 5px 12px rgba(174, 181, 199, 0.55),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+        0 6px 14px rgba(140, 150, 180, 0.5),
+        0 3px 8px rgba(140, 150, 180, 0.35),
+        4px 4px 10px rgba(140, 150, 180, 0.25),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.75),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
 
-    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dt-thumb:hover {
+    transform: translateY(-4px) scale(1.05);
+}
+
+.dt-thumb:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 4px 4px 10px rgba(155, 165, 190, 0.6),
+        inset -4px -4px 10px rgba(255, 255, 255, 1);
 }
 
 .dt-thumb.active {
+    border-color: #7c8cf8;
+    transform: translateY(-6px) scale(1.06);
+
     box-shadow:
-        0 0 0 2px #6a7bf0,
-        8px 8px 18px rgba(124, 140, 248, 0.5),
-        -4px -4px 12px rgba(255, 255, 255, 1);
+        0 12px 24px rgba(124, 140, 248, 0.6),
+        0 6px 12px rgba(124, 140, 248, 0.45),
+        7px 7px 16px rgba(124, 140, 248, 0.3),
+        -6px -6px 14px rgba(255, 255, 255, 1),
+        4px -4px 12px rgba(255, 255, 255, 0.85),
+        -4px 4px 12px rgba(124, 140, 248, 0.2),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 0 0 3px rgba(124, 140, 248, 0.25);
 }
 
-/* ---- Video thumbnail wrapper ---- */
 .dt-thumb-video {
     position: relative;
 
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    width: 64px;
-    height: 64px;
-
-    border-radius: 16px;
-
-    background: #f0f2f7;
-
-    overflow: hidden;
-
-    box-shadow:
-        5px 5px 12px rgba(174, 181, 199, 0.55),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
-
-    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: pointer;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.2), transparent 55%),
+        linear-gradient(145deg, #1a1a2e 0%, #0a0a14 100%);
 }
 
-.dt-thumb-video img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-}
-
-.dt-thumb-video.active {
-    box-shadow:
-        0 0 0 2px #6a7bf0,
-        8px 8px 18px rgba(124, 140, 248, 0.5),
-        -4px -4px 12px rgba(255, 255, 255, 1);
-}
-
-/* ---- Video element fallback (agar thumbnail fail ho) ---- */
+.dt-thumb-video img,
 .dt-thumb-video-preview {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 16px;
-    pointer-events: none;
+    border-radius: 12px;
 }
 
-/* ---- Video play icon overlay ---- */
 .dt-thumb-play {
     position: absolute;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
 
     display: grid;
     place-items: center;
 
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
 
-    font-size: 0.7rem;
-    color: #ffffff;
-    padding-left: 2px;
-
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
     border-radius: 50%;
 
-    background: rgba(91, 110, 225, 0.85);
-    backdrop-filter: blur(4px);
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding-left: 2px;
 
     box-shadow:
-        0 4px 10px rgba(91, 110, 225, 0.5),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+        0 4px 10px rgba(91, 110, 225, 0.55),
+        0 2px 6px rgba(91, 110, 225, 0.4),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 2px rgba(60, 70, 160, 0.5);
 
     pointer-events: none;
 }
 
-/* ---- Placeholder (if no thumbnail) ---- */
-.dt-thumb-placeholder {
-    width: 100%;
-    height: 100%;
-
-    border-radius: 16px;
-
-    background: linear-gradient(135deg, #e6e9f2, #f0f2f7);
-
-    animation: dtShimmer 1.6s ease-in-out infinite;
-}
-
 /* ============================================
-   FULLSCREEN IMAGE / VIDEO OVERLAY
+   🔥 FULLSCREEN OVERLAY — POORA SCREEN (FIXED)
    ============================================ */
 .dt-fullscreen-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    /* mobile browser fix */
+
+    z-index: 99999;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 20px;
+    margin: 0;
+    padding: 0;
 
-    background: rgba(20, 22, 32, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 10, 20, 0.96);
 
-    animation: dtFsFade 0.35s ease both;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: none;
+
+    animation: dtFullscreenIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ---- Close button ---- */
-.dt-fullscreen-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+@keyframes dtFullscreenIn {
+    from {
+        opacity: 0;
+    }
 
-    display: grid;
-    place-items: center;
-
-    width: 44px;
-    height: 44px;
-
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #ffffff;
-
-    cursor: pointer;
-    border: none;
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
-    box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.35),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.25);
-
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 10000;
+    to {
+        opacity: 1;
+    }
 }
 
-.dt-fullscreen-close:hover {
-    transform: rotate(90deg) scale(1.08);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.dt-fullscreen-close:active {
-    transform: rotate(90deg) scale(0.94);
-}
-
-/* ---- Image box (fullscreen stage) ---- */
+/* ---- Image box — poori screen ---- */
 .dt-fullscreen-image-box {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
 
-    width: 100%;
-    height: 100%;
-    max-width: 1000px;
-    max-height: 90vh;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin: 0;
+    padding: 16px;
 
     overflow: hidden;
 
-    border-radius: 24px;
-
-    animation: dtFsImageIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-
     touch-action: none;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 .dt-fullscreen-image-box img {
+    display: block;
+
+    width: auto;
+    height: auto;
+
     max-width: 100%;
     max-height: 100%;
 
     object-fit: contain;
+    object-position: center;
 
-    border-radius: 16px;
+    border-radius: 12px;
 
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-
-    pointer-events: none;
+    user-select: none;
     -webkit-user-drag: none;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.7),
+        0 10px 30px rgba(0, 0, 0, 0.5);
+
+    transition: transform 0.2s ease-out;
 }
 
-/* ---- Fullscreen video ---- */
 .dt-fullscreen-video {
-    width: 100%;
-    height: 100%;
+    display: block;
+
+    width: auto;
+    height: auto;
+
     max-width: 100%;
-    max-height: 90vh;
+    max-height: 100%;
 
     object-fit: contain;
+    object-position: center;
 
-    border-radius: 16px;
+    border-radius: 12px;
 
-    background: #000;
-
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-
-    animation: dtFsImageIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.7),
+        0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes dtPageFade {
-    from {
-        opacity: 0;
-    }
+/* ---- Close button — hamesha top-right ---- */
+.dt-fullscreen-close {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    left: auto;
+    bottom: auto;
 
-    to {
-        opacity: 1;
-    }
+    z-index: 100000;
+
+    display: grid;
+    place-items: center;
+
+    width: 48px;
+    height: 48px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    color: #3f4664;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.55),
+        0 6px 14px rgba(0, 0, 0, 0.4),
+        6px 6px 14px rgba(0, 0, 0, 0.3),
+        -5px -5px 12px rgba(255, 255, 255, 0.2),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes dtImageIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.97);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.dt-fullscreen-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    color: #5b6ee1;
 }
 
-@keyframes dtImageFade {
-    from {
-        opacity: 0;
-        transform: scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes dtThumbPop {
-    0% {
-        transform: translateY(0) scale(1);
-    }
-
-    50% {
-        transform: translateY(-6px) scale(1.12);
-    }
-
-    100% {
-        transform: translateY(-4px) scale(1.06);
-    }
-}
-
-@keyframes dtShimmer {
-
-    0%,
-    100% {
-        opacity: 0.7;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-@keyframes dtFsFade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes dtFsImageIn {
-    from {
-        opacity: 0;
-        transform: scale(0.88);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.dt-fullscreen-close:active {
+    transform: scale(0.92);
 }
 
 /* ============================================
@@ -687,8 +749,25 @@
 
 /* Tablets */
 @media (max-width: 768px) {
+    .dt-page {
+        padding: 12px 12px 20px;
+        margin-bottom: 36px;
+    }
+
     .dt-image-wrapper {
-        border-radius: 0 0 24px 24px;
+        border-radius: 20px;
+    }
+
+    .dt-image-box,
+    .dt-image-box img {
+        border-radius: 18px;
+    }
+
+    .dt-overlay {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        gap: 7px;
     }
 
     .dt-back {
@@ -697,155 +776,233 @@
         font-size: 1.05rem;
     }
 
-    .dt-overlay>button.dt-action-btn {
-        padding: 7px 12px;
-        font-size: 0.8rem;
+    .dt-action-btn {
+        height: 40px;
+        padding: 5px 10px;
     }
 
-    .dt-thumb,
-    .dt-thumb-video {
-        width: 58px;
-        height: 58px;
-        border-radius: 14px;
+    .dt-action-btn svg {
+        font-size: 0.95rem;
+    }
+
+    .dt-action-btn span {
+        font-size: 0.78rem;
+    }
+
+    .dt-image-count {
+        bottom: 12px;
+        right: 12px;
+        padding: 5px 10px;
+        font-size: 0.68rem;
+    }
+
+    .dt-images {
+        padding: 10px 8px;
+        gap: 9px;
+        border-radius: 18px;
+        margin: 16px 0 18px;
+    }
+
+    .dt-thumb {
+        width: 62px;
+        height: 62px;
+        border-radius: 12px;
+    }
+
+    .dt-top-video-play {
+        width: 60px;
+        height: 60px;
+    }
+
+    .dt-top-video-pause,
+    .dt-top-video-fullscreen {
+        width: 38px;
+        height: 38px;
+        font-size: 1.05rem;
+    }
+
+    .dt-fullscreen-image-box {
+        padding: 12px;
+    }
+
+    .dt-fullscreen-close {
+        top: 14px;
+        right: 14px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.05rem;
     }
 }
 
 /* Phones */
 @media (max-width: 480px) {
     .dt-page {
-        padding-bottom: 100px;
+        padding: 10px 10px 18px;
+        margin-bottom: 32px;
     }
 
     .dt-image-wrapper {
-        border-radius: 0 0 22px 22px;
+        border-radius: 18px;
+    }
 
-        box-shadow:
-            6px 6px 18px rgba(174, 181, 199, 0.5),
-            -4px -4px 14px rgba(255, 255, 255, 0.95);
+    .dt-image-box,
+    .dt-image-box img {
+        border-radius: 16px;
     }
 
     .dt-overlay {
-        padding: 12px 12px;
+        top: 10px;
+        left: 10px;
+        right: 10px;
         gap: 6px;
     }
 
     .dt-back {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         font-size: 1rem;
+        border-width: 1px;
     }
 
-    .dt-overlay>button.dt-action-btn {
-        padding: 6px 10px;
-        font-size: 0.75rem;
-        border-radius: 16px;
+    .dt-action-btn {
+        height: 36px;
+        padding: 4px 9px;
         gap: 4px;
+        border-width: 1px;
+     
     }
 
-    .dt-overlay>button.dt-action-btn svg {
+    .dt-action-btn svg {
         font-size: 0.9rem;
+    }
+
+    .dt-action-btn span {
+        font-size: 0.72rem;
     }
 
     .dt-image-count {
         bottom: 10px;
         right: 10px;
-        padding: 5px 12px;
-        font-size: 0.7rem;
+        padding: 4px 9px;
+        font-size: 0.62rem;
     }
 
     .dt-images {
+        padding: 9px 7px;
         gap: 8px;
-        padding: 6px 10px;
-        margin-top: 14px;
+        border-radius: 16px;
+        margin: 14px 0 16px;
     }
 
-    .dt-thumb,
-    .dt-thumb-video {
+    .dt-thumb {
+        width: 56px;
+        height: 56px;
+        border-radius: 11px;
+        border-width: 1.5px;
+    }
+
+    .dt-thumb.active {
+        box-shadow:
+            0 8px 18px rgba(124, 140, 248, 0.55),
+            0 4px 10px rgba(124, 140, 248, 0.4),
+            5px 5px 12px rgba(124, 140, 248, 0.28),
+            -4px -4px 10px rgba(255, 255, 255, 1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3),
+            0 0 0 2px rgba(124, 140, 248, 0.22);
+    }
+
+    .dt-top-video-play {
         width: 54px;
         height: 54px;
-        border-radius: 13px;
     }
 
-    .dt-top-video-play,
     .dt-top-video-pause,
     .dt-top-video-fullscreen {
-        width: 40px;
-        height: 40px;
-        bottom: 14px;
-    }
-
-    .dt-top-video-play,
-    .dt-top-video-pause {
-        left: 12px;
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
     }
 
     .dt-top-video-fullscreen {
-        right: 12px;
+        bottom: 22px;
     }
 
-    .dt-top-video-play svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    .dt-top-video-pause svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .dt-fullscreen-overlay {
+    .dt-fullscreen-image-box {
         padding: 10px;
     }
 
     .dt-fullscreen-close {
-        top: 14px;
-        right: 14px;
+        top: 12px;
+        right: 12px;
         width: 40px;
         height: 40px;
-    }
-
-    .dt-fullscreen-image-box {
-        border-radius: 18px;
+        font-size: 0.98rem;
     }
 }
 
 /* Small phones */
 @media (max-width: 360px) {
     .dt-page {
-        padding-bottom: 90px;
+        padding: 8px 8px 16px;
+        margin-bottom: 28px;
     }
 
-    .dt-overlay {
-        padding: 10px;
-        gap: 4px;
+    .dt-image-wrapper {
+        border-radius: 16px;
+        border-width: 1.5px;
     }
 
-    .dt-back {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
-    }
-
-    .dt-overlay>button.dt-action-btn {
-        padding: 5px 8px;
-        font-size: 0.7rem;
+    .dt-image-box,
+    .dt-image-box img {
         border-radius: 14px;
     }
 
-    .dt-overlay>button.dt-action-btn svg {
-        font-size: 0.8rem;
+    .dt-overlay {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        gap: 5px;
+    }
+
+    .dt-back {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .dt-action-btn {
+        height: 32px;
+        padding: 3px 8px;
+        gap: 3px;
+    }
+
+    .dt-action-btn svg {
+        font-size: 0.82rem;
+    }
+
+    .dt-action-btn span {
+        font-size: 0.66rem;
     }
 
     .dt-image-count {
-        padding: 4px 10px;
-        font-size: 0.65rem;
+        bottom: 8px;
+        right: 8px;
+        padding: 3px 8px;
+        font-size: 0.58rem;
     }
 
-    .dt-thumb,
-    .dt-thumb-video {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+    .dt-images {
+        padding: 8px 6px;
+        gap: 7px;
+        border-radius: 14px;
+        margin: 12px 0 14px;
+    }
+
+    .dt-thumb {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
     }
 
     .dt-thumb-play {
@@ -854,27 +1011,28 @@
         font-size: 0.6rem;
     }
 
-    .dt-top-video-play,
+    .dt-top-video-play {
+        width: 48px;
+        height: 48px;
+    }
+
     .dt-top-video-pause,
     .dt-top-video-fullscreen {
-        width: 36px;
-        height: 36px;
-        bottom: 12px;
+        width: 30px;
+        height: 30px;
+        font-size: 0.85rem;
     }
 
-    .dt-top-video-play,
-    .dt-top-video-pause {
-        left: 10px;
-    }
-
-    .dt-top-video-fullscreen {
-        right: 10px;
+    .dt-fullscreen-image-box {
+        padding: 8px;
     }
 
     .dt-fullscreen-close {
+        top: 10px;
+        right: 10px;
         width: 36px;
         height: 36px;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -884,27 +1042,21 @@
 @media (prefers-reduced-motion: reduce) {
 
     .dt-page,
-    .dt-image-wrapper,
-    .dt-image-box img,
-    .dt-thumb.active,
-    .dt-thumb-video.active,
-    .dt-thumb-placeholder,
-    .dt-fullscreen-overlay,
-    .dt-fullscreen-image-box,
-    .dt-fullscreen-video {
+    .dt-top-video-play,
+    .dt-fullscreen-overlay {
         animation: none;
     }
 
+    .dt-image-wrapper,
     .dt-image-box img,
     .dt-back,
-    .dt-overlay>button.dt-action-btn,
+    .dt-action-btn,
+    .dt-action-btn svg,
     .dt-thumb,
-    .dt-thumb-video,
     .dt-fullscreen-close,
     .dt-top-video-play,
     .dt-top-video-pause,
-    .dt-top-video-fullscreen,
-    .dt-top-video-progress {
+    .dt-top-video-fullscreen {
         transition: none;
     }
 }

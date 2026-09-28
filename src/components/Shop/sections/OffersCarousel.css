@@ -1,52 +1,26 @@
-/* ==========================================================================
-   OFFERS CAROUSEL — HEAVY WHITE CLAYMORPHISM
-   ========================================================================== */
+/* OffersCarousel.css — 3D UTHA HUA + PROPER LAYOUT */
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
-
-/* ============================================
-   ROOT VARIABLES
-   ============================================ */
-
-:root {
-    --oc-bg: #e4e7ef;
-    --oc-bg-dark: #ccd0db;
-    --oc-shadow-dark: rgba(160, 165, 180, 0.9);
-    --oc-shadow-light: #ffffff;
-    --oc-purple: #6c5ce7;
-    --oc-purple-light: #a29bfe;
-    --oc-purple-deep: #4834d4;
-    --oc-green: #00d97f;
-    --oc-red: #ff4757;
-    --oc-gold: #feca57;
-    --oc-text: #2d3436;
-    --oc-text-soft: #4a5568;
+.shop-offer-carousel-section,
+.shop-offer-carousel-section * {
+    box-sizing: border-box;
 }
 
 /* ============================================
    SECTION
    ============================================ */
-
 .shop-offer-carousel-section {
     position: relative;
     width: 100%;
-    margin: 10px 0 16px;
-    padding: 0 12px;
-    box-sizing: border-box;
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    animation: ocEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: 0 0 16px;
+    padding: 0 14px 6px;
+
+    animation: shopOfferIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.shop-offer-carousel-section * {
-    box-sizing: border-box;
-}
-
-@keyframes ocEnter {
+@keyframes shopOfferIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(14px);
     }
 
     to {
@@ -56,21 +30,27 @@
 }
 
 /* ============================================
-   CAROUSEL WRAPPER
+   CAROUSEL
    ============================================ */
-
 .shop-offer-carousel {
     display: flex;
+    align-items: stretch;
+    gap: 12px;
+
     width: 100%;
+
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
+
+    padding: 16px 4px 20px;
+    /* 🔥 vertical space for shadow */
+
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
     scrollbar-width: none;
     -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 22px;
-    gap: 0;
 }
 
 .shop-offer-carousel::-webkit-scrollbar {
@@ -78,498 +58,705 @@
 }
 
 /* ============================================
-   SLIDE — HEAVY CLAY CARD + VISIBLE BORDER
+   🔥 SLIDE — 3D UTHA HUA CARD
    ============================================ */
-
 .shop-offer-slide {
     position: relative;
-    flex: 0 0 100%;
-    min-width: 100%;
+    flex-shrink: 0;
+
     display: flex;
     align-items: stretch;
-    gap: 10px;
-    padding: 10px;
-    scroll-snap-align: start;
-    background: linear-gradient(145deg, #e4e7ef, #ccd0db);
+    gap: 12px;
+
+    width: 100%;
+    min-width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.98);
     border-radius: 22px;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥 HEAVY OUTSET — utha hua */
     box-shadow:
-        10px 10px 24px rgba(160, 165, 180, 0.7),
-        -10px -10px 24px rgba(255, 255, 255, 0.95),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.05),
-        inset 0 3px 6px rgba(255, 255, 255, 0.85);
+        0 16px 32px rgba(140, 150, 180, 0.55),
+        0 8px 16px rgba(140, 150, 180, 0.38),
+        12px 12px 26px rgba(140, 150, 180, 0.28),
+        -12px -12px 26px rgba(255, 255, 255, 1),
+        10px -10px 22px rgba(255, 255, 255, 0.85),
+        -10px 10px 22px rgba(140, 150, 180, 0.15),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.28);
+
+    scroll-snap-align: center;
+
+    cursor: pointer;
+
+    transform: translateY(-6px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
-    user-select: none;
+    overflow: hidden;
 }
 
-/* VISIBLE BORDER — animated gradient */
+/* Top highlight */
 .shop-offer-slide::before {
-    content: '';
+    content: "";
     position: absolute;
-    inset: 0;
-    border-radius: 22px;
-    padding: 1.5px;
-    background: linear-gradient(135deg,
-            #a29bfe, #6c5ce7, #00cec9, #fd79a8, #a29bfe);
-    background-size: 400% 400%;
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: ocBorderFlow 6s linear infinite;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
     pointer-events: none;
     z-index: 3;
-    opacity: 0.7;
 }
 
-.shop-offer-slide.active::before {
-    opacity: 1;
+/* Bottom shadow hint */
+.shop-offer-slide::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 15%;
+    right: 15%;
+    height: 4px;
+    background: radial-gradient(ellipse at center,
+            rgba(140, 150, 180, 0.3) 0%,
+            transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+    z-index: 0;
 }
 
-@keyframes ocBorderFlow {
-    0% {
-        background-position: 0% 50%;
-    }
+.shop-offer-slide:hover {
+    transform: translateY(-12px) scale(1.01);
 
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    box-shadow:
+        0 26px 48px rgba(124, 140, 248, 0.45),
+        0 14px 26px rgba(124, 140, 248, 0.32),
+        16px 16px 34px rgba(124, 140, 248, 0.22),
+        -16px -16px 34px rgba(255, 255, 255, 1),
+        12px -12px 28px rgba(255, 255, 255, 0.9),
+        -12px 12px 28px rgba(124, 140, 248, 0.15),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.22);
 }
 
 .shop-offer-slide:active {
-    transform: scale(0.99);
+    transform: translateY(-2px) scale(0.985);
+
     box-shadow:
-        inset 8px 8px 18px rgba(160, 165, 180, 0.8),
-        inset -8px -8px 18px rgba(255, 255, 255, 0.9);
+        0 6px 14px rgba(155, 165, 190, 0.5),
+        0 3px 8px rgba(155, 165, 190, 0.35),
+        inset 6px 6px 14px rgba(155, 165, 190, 0.5),
+        inset -6px -6px 14px rgba(255, 255, 255, 1);
 }
 
 /* ============================================
-   LEFT — IMAGE (FULL SIZE)
+   🔥 LEFT — IMAGE + COUNTDOWN (stacked)
    ============================================ */
+.shop-offer-image-wrap {
+    flex-shrink: 0;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    width: 118px;
+}
+
+/* ---- Image — 3D WOOL FRAME ---- */
 .shop-offer-image {
     position: relative;
-    flex: 0 0 42%;
-    max-width: 42%;
-    aspect-ratio: 1 / 1;
-    border-radius: 16px;
+    width: 118px;
+    height: 118px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
     overflow: hidden;
-    background: #ffffff;
-    border: 1px solid rgb(40, 35, 35);
+
+    /* 🔥 utha hua */
     box-shadow:
-        inset 3px 3px 6px rgba(160, 165, 180, 0.5),
-        inset -3px -3px 6px rgba(255, 255, 255, 0.95),
-        3px 3px 8px rgba(160, 165, 180, 0.35),
-        -3px -3px 8px rgba(255, 255, 255, 0.9);
-    z-index: 2;
+        6px 8px 16px rgba(140, 150, 180, 0.55),
+        3px 4px 10px rgba(140, 150, 180, 0.35),
+        -5px -5px 14px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.8),
+        -4px 4px 10px rgba(140, 150, 180, 0.15),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
+
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-offer-slide:hover .shop-offer-image {
+    transform: scale(1.04) rotate(-2deg);
 }
 
 .shop-offer-image img {
-    position: absolute;
-    inset: 0;
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+
+    object-fit: cover;
     object-position: center;
-    display: block;
-    padding: 6px;
-    background: #ffffff;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    user-select: none;
-    -webkit-user-drag: none;
+
+    border-radius: 16px;
+
     image-rendering: -webkit-optimize-contrast;
-    transform: scale(1.4);
+    image-rendering: crisp-edges;
+
+    transform: scale(1.08);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
-.shop-offer-time {
-    position: absolute;
-    bottom: 6px;
-    left: 6px;
-    right: 6px;
-    z-index: 4;
+.shop-offer-slide:hover .shop-offer-image img {
+    transform: scale(1.2);
 }
 
+/* ============================================
+   🔥 COUNTDOWN — full-width 3D pill (below image)
+   ============================================ */
 .shop-offer-countdown {
-    display: block;
-    padding: 4px 8px;
-    font-size: 0.58rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: 0.03em;
-    line-height: 1.3;
-    text-align: center;
-    background: linear-gradient(135deg, #ff6b7a, #e8344a);
-    border-radius: 50px;
-    box-shadow:
-        0 4px 10px rgba(200, 40, 60, 0.5),
-        inset 0 -1px 2px rgba(150, 20, 30, 0.4),
-        inset 0 1px 2px rgba(255, 255, 255, 0.3);
-    text-shadow: 0 1px 2px rgba(150, 20, 30, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    width: 100%;
+    padding: 5px 8px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #000000;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    animation: ocCountdownPulse 2s ease-in-out infinite;
+
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.55),
+        0 0 6px rgba(255, 255, 255, 0.4);
+
+    /* 🔥 utha hua */
+    box-shadow:
+        0 6px 14px rgba(91, 110, 225, 0.6),
+        0 3px 8px rgba(91, 110, 225, 0.45),
+        4px 4px 10px rgba(91, 110, 225, 0.3),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.7),
+        -3px 3px 8px rgba(91, 110, 225, 0.2),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-2px);
+
+    animation: shopOfferFloat 2.4s ease-in-out infinite;
 }
 
-@keyframes ocCountdownPulse {
+@keyframes shopOfferFloat {
 
     0%,
     100% {
+        transform: translateY(-2px);
         box-shadow:
-            0 4px 10px rgba(200, 40, 60, 0.5),
-            inset 0 -1px 2px rgba(150, 20, 30, 0.4),
-            inset 0 1px 2px rgba(255, 255, 255, 0.3);
+            0 6px 14px rgba(91, 110, 225, 0.6),
+            0 3px 8px rgba(91, 110, 225, 0.45),
+            4px 4px 10px rgba(91, 110, 225, 0.3),
+            -3px -3px 8px rgba(255, 255, 255, 1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+            inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
     }
 
     50% {
+        transform: translateY(-5px);
         box-shadow:
-            0 6px 14px rgba(200, 40, 60, 0.7),
-            inset 0 -1px 2px rgba(150, 20, 30, 0.4),
-            inset 0 1px 2px rgba(255, 255, 255, 0.4),
-            0 0 16px rgba(255, 71, 87, 0.5);
+            0 10px 20px rgba(91, 110, 225, 0.65),
+            0 6px 12px rgba(91, 110, 225, 0.5),
+            6px 6px 14px rgba(91, 110, 225, 0.35),
+            -4px -4px 10px rgba(255, 255, 255, 1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+            inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
     }
 }
 
 .shop-offer-countdown.expired {
-    background: linear-gradient(135deg, #6a6a7a, #4a4a5a);
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
+
     box-shadow:
-        0 4px 10px rgba(0, 0, 0, 0.4),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+        0 6px 14px rgba(226, 90, 90, 0.55),
+        0 3px 8px rgba(226, 90, 90, 0.4),
+        4px 4px 10px rgba(226, 90, 90, 0.28),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(160, 50, 50, 0.5);
+
     animation: none;
+    transform: translateY(-2px);
 }
 
 /* ============================================
-   RIGHT — DETAILS + ANIMATED TEXT
+   RIGHT — DETAILS
    ============================================ */
-
 .shop-offer-details {
     flex: 1;
     min-width: 0;
+
     display: flex;
     align-items: center;
-    padding: 4px 4px 4px 2px;
-    z-index: 2;
 }
 
 .shop-offer-content {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
+
     width: 100%;
     min-width: 0;
 }
 
-/* ANIMATION — jab card active ho */
-.shop-offer-slide.active .shop-offer-name,
-.shop-offer-slide.active .shop-offer-category,
-.shop-offer-slide.active .shop-offer-percent,
-.shop-offer-slide.active .shop-offer-description,
-.shop-offer-slide.active .shop-offer-price,
-.shop-offer-slide.active .shop-offer-rating {
-    animation: ocTextSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-}
-
-.shop-offer-slide.active .shop-offer-name {
-    animation-delay: 0.1s;
-}
-
-.shop-offer-slide.active .shop-offer-category {
-    animation-delay: 0.15s;
-}
-
-.shop-offer-slide.active .shop-offer-percent {
-    animation-delay: 0.2s;
-}
-
-.shop-offer-slide.active .shop-offer-description {
-    animation-delay: 0.25s;
-}
-
-.shop-offer-slide.active .shop-offer-price {
-    animation-delay: 0.3s;
-}
-
-.shop-offer-slide.active .shop-offer-rating {
-    animation-delay: 0.35s;
-}
-
-@keyframes ocTextSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Shop name */
+/* ---- Shop name ---- */
 .shop-offer-name {
-    font-size: 0.88rem;
+    font-size: clamp(0.85rem, 2.4vw, 0.98rem);
     font-weight: 900;
-    color: var(--oc-text);
-    letter-spacing: -0.01em;
+    letter-spacing: 0.2px;
     line-height: 1.2;
-    white-space: nowrap;
+    color: #3f4664;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
     overflow: hidden;
     text-overflow: ellipsis;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
 }
 
-/* Category */
+/* ---- Category chip ---- */
 .shop-offer-category {
     display: inline-block;
     align-self: flex-start;
-    font-size: 0.6rem;
+
+    padding: 3px 9px;
+
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    color: #8a90ac;
+    font-size: 0.58rem;
     font-weight: 800;
-    color: var(--oc-purple);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.4px;
     text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 50px;
-    background: linear-gradient(145deg, #e0e3eb, #f4f6fa);
+    line-height: 1.4;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.95);
+
     box-shadow:
-        inset 2px 2px 5px rgba(160, 165, 180, 0.5),
-        inset -2px -2px 5px rgba(255, 255, 255, 0.9),
-        1px 1px 3px rgba(160, 165, 180, 0.3),
-        -1px -1px 3px rgba(255, 255, 255, 0.8);
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+        3px 4px 8px rgba(140, 150, 180, 0.4),
+        -2px -2px 6px rgba(255, 255, 255, 1),
+        2px -2px 6px rgba(255, 255, 255, 0.7),
+        -2px 2px 6px rgba(140, 150, 180, 0.12),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
+
     max-width: 100%;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* Percent badge */
+/* ---- Offer percent ---- */
 .shop-offer-percent {
     display: inline-block;
-    align-self: flex-start;
-    font-size: 0.72rem;
+
+    margin-top: 2px;
+    padding: 5px 12px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #000000;
+    font-size: clamp(0.82rem, 2.2vw, 0.94rem);
     font-weight: 900;
-    color: #ffffff;
-    letter-spacing: 0.04em;
-    padding: 4px 12px;
-    border-radius: 50px;
-    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.55),
+        0 0 10px rgba(255, 255, 255, 0.35);
+
     box-shadow:
-        4px 4px 10px rgba(108, 92, 231, 0.5),
-        -3px -3px 8px rgba(255, 255, 255, 0.9),
-        inset 0 -2px 4px rgba(72, 52, 212, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4);
-    text-shadow: 0 1px 2px rgba(72, 52, 212, 0.4);
+        0 6px 14px rgba(91, 110, 225, 0.5),
+        0 3px 8px rgba(91, 110, 225, 0.35),
+        4px 4px 10px rgba(91, 110, 225, 0.25),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.75),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+
+    align-self: flex-start;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
+
+    transform: translateY(-2px);
 }
 
-/* Description */
+/* ---- Description ---- */
 .shop-offer-description {
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--oc-text-soft);
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Price */
-.shop-offer-price {
-    font-size: 0.85rem;
-    font-weight: 900;
-    color: var(--oc-text);
-    letter-spacing: -0.01em;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
-}
-
-/* Rating */
-.shop-offer-rating {
-    font-size: 0.62rem;
+    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
     font-weight: 700;
-    color: var(--oc-text-soft);
+    letter-spacing: 0.1px;
     line-height: 1.3;
-    white-space: nowrap;
+    color: #8a90ac;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-clamp: 1;
+}
+
+/* ---- Price ---- */
+.shop-offer-price {
+    font-size: clamp(0.74rem, 2vw, 0.82rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    color: #3f4664;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---- Rating ---- */
+.shop-offer-rating {
+    font-size: clamp(0.64rem, 1.8vw, 0.72rem);
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    color: #e0a52e;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.95);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ============================================
-   DOTS
+   DOTS — 3D UTHA HUA
    ============================================ */
-
 .shop-offer-dots {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    margin-top: 12px;
-    padding: 6px 14px;
+
     width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 50px;
-    background: linear-gradient(145deg, #e4e7ef, #ccd0db);
+    margin: 6px auto 0;
+    padding: 7px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.98);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
     box-shadow:
-        5px 5px 12px rgba(160, 165, 180, 0.7),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.03),
-        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+        0 10px 22px rgba(140, 150, 180, 0.5),
+        0 5px 12px rgba(140, 150, 180, 0.35),
+        6px 6px 14px rgba(140, 150, 180, 0.25),
+        -6px -6px 14px rgba(255, 255, 255, 1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-2px);
 }
 
 .shop-offer-dot {
-    width: 7px;
-    height: 7px;
+    display: block;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #d0d3dc, #b8bac4);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9), transparent 55%),
+        linear-gradient(145deg, #d6ddef 0%, #c2cbe0 100%);
+
     box-shadow:
-        inset 2px 2px 4px rgba(0, 0, 0, 0.1),
-        inset -2px -2px 4px rgba(255, 255, 255, 0.7);
-    cursor: pointer;
+        inset 1px 1px 2px rgba(255, 255, 255, 0.9),
+        inset -1px -1px 2px rgba(155, 165, 190, 0.5),
+        1px 2px 4px rgba(140, 150, 180, 0.4);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .shop-offer-dot.active {
     width: 22px;
-    border-radius: 50px;
-    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
     box-shadow:
-        3px 3px 8px rgba(108, 92, 231, 0.5),
-        -2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 0 -1px 2px rgba(72, 52, 212, 0.4),
-        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+        0 3px 8px rgba(91, 110, 225, 0.6),
+        0 2px 4px rgba(91, 110, 225, 0.45),
+        2px 2px 6px rgba(91, 110, 225, 0.35),
+        -2px -2px 5px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 2px rgba(60, 70, 160, 0.45);
+
+    transform: translateY(-1px);
 }
 
 /* ============================================
-   RESPONSIVE — TABLET
+   RESPONSIVE
    ============================================ */
 
 @media (max-width: 768px) {
     .shop-offer-carousel-section {
-        padding: 0 10px;
-        margin: 8px 0 14px;
+        padding: 0 12px 4px;
+        margin-bottom: 14px;
+    }
+
+    .shop-offer-carousel {
+        gap: 10px;
+        padding: 14px 3px 18px;
     }
 
     .shop-offer-slide {
-        padding: 9px;
-        gap: 9px;
+        padding: 12px;
         border-radius: 20px;
+        gap: 11px;
+        transform: translateY(-5px);
     }
 
-    .shop-offer-slide::before {
-        border-radius: 20px;
+    .shop-offer-slide:hover {
+        transform: translateY(-10px) scale(1.01);
+    }
+
+    .shop-offer-image-wrap {
+        width: 104px;
+        gap: 7px;
     }
 
     .shop-offer-image {
-        border-radius: 14px;
+        width: 104px;
+        height: 104px;
+        border-radius: 16px;
     }
 
     .shop-offer-image img {
-        padding: 5px;
+        border-radius: 14px;
     }
 
-    .shop-offer-name {
-        font-size: 0.82rem;
+    .shop-offer-countdown {
+        padding: 4px 7px;
+        font-size: 0.56rem;
     }
 
     .shop-offer-percent {
-        font-size: 0.68rem;
-        padding: 3px 10px;
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .shop-offer-carousel-section {
+        padding: 0 10px 4px;
+        margin-bottom: 12px;
     }
 
-    .shop-offer-price {
+    .shop-offer-carousel {
+        gap: 9px;
+        padding: 12px 3px 16px;
+    }
+
+    .shop-offer-slide {
+        padding: 10px;
+        border-radius: 18px;
+        gap: 9px;
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 12px 24px rgba(140, 150, 180, 0.5),
+            0 6px 12px rgba(140, 150, 180, 0.32),
+            8px 8px 18px rgba(140, 150, 180, 0.22),
+            -8px -8px 18px rgba(255, 255, 255, 1),
+            6px -6px 14px rgba(255, 255, 255, 0.8),
+            -6px 6px 14px rgba(140, 150, 180, 0.12),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
+    }
+
+    .shop-offer-image-wrap {
+        width: 88px;
+        gap: 6px;
+    }
+
+    .shop-offer-image {
+        width: 88px;
+        height: 88px;
+        border-radius: 14px;
+        border-width: 1.5px;
+    }
+
+    .shop-offer-image img {
+        border-radius: 12px;
+    }
+
+    .shop-offer-countdown {
+        padding: 4px 6px;
+        font-size: 0.52rem;
+        gap: 2px;
+        border-width: 1px;
+
+        box-shadow:
+            0 4px 10px rgba(91, 110, 225, 0.55),
+            0 2px 6px rgba(91, 110, 225, 0.4),
+            3px 3px 8px rgba(91, 110, 225, 0.25),
+            -2px -2px 6px rgba(255, 255, 255, 1),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+            inset -1px -1px 2px rgba(60, 70, 160, 0.5);
+    }
+
+    .shop-offer-name {
         font-size: 0.8rem;
     }
 
+    .shop-offer-category {
+        padding: 2px 7px;
+        font-size: 0.52rem;
+    }
+
+    .shop-offer-percent {
+        padding: 3px 9px;
+        font-size: 0.74rem;
+        border-radius: 10px;
+    }
+
     .shop-offer-description {
-        font-size: 0.64rem;
+        font-size: 0.62rem;
+    }
+
+    .shop-offer-price {
+        font-size: 0.7rem;
     }
 
     .shop-offer-rating {
         font-size: 0.58rem;
     }
 
-    .shop-offer-countdown {
-        font-size: 0.54rem;
-        padding: 3px 7px;
+    .shop-offer-dots {
+        padding: 6px 11px;
+        gap: 5px;
+        margin-top: 4px;
+    }
+
+    .shop-offer-dot {
+        width: 7px;
+        height: 7px;
+    }
+
+    .shop-offer-dot.active {
+        width: 18px;
     }
 }
 
-/* ============================================
-   RESPONSIVE — SMALL PHONE
-   ============================================ */
-
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     .shop-offer-carousel-section {
-        padding: 0 8px;
-        margin: 6px 0 12px;
+        padding: 0 8px 4px;
+        margin-bottom: 10px;
+    }
+
+    .shop-offer-carousel {
+        gap: 8px;
+        padding: 10px 2px 14px;
     }
 
     .shop-offer-slide {
         padding: 8px;
+        border-radius: 16px;
         gap: 8px;
-        border-radius: 18px;
+        transform: translateY(-3px);
     }
 
-    .shop-offer-slide::before {
-        border-radius: 18px;
+    .shop-offer-image-wrap {
+        width: 74px;
+        gap: 5px;
     }
 
     .shop-offer-image {
-        flex: 0 0 40%;
-        max-width: 40%;
+        width: 74px;
+        height: 74px;
         border-radius: 12px;
     }
 
     .shop-offer-image img {
-        padding: 4px;
-    }
-
-    .shop-offer-content {
-        gap: 5px;
-    }
-
-    .shop-offer-name {
-        font-size: 0.76rem;
-    }
-
-    .shop-offer-category {
-        font-size: 0.54rem;
-        padding: 2px 6px;
-    }
-
-    .shop-offer-percent {
-        font-size: 0.62rem;
-        padding: 3px 9px;
-    }
-
-    .shop-offer-description {
-        font-size: 0.58rem;
-    }
-
-    .shop-offer-price {
-        font-size: 0.74rem;
-    }
-
-    .shop-offer-rating {
-        font-size: 0.54rem;
+        border-radius: 10px;
     }
 
     .shop-offer-countdown {
-        font-size: 0.5rem;
-        padding: 3px 6px;
+        padding: 3px 5px;
+        font-size: 0.46rem;
+        gap: 2px;
+    }
+
+    .shop-offer-name {
+        font-size: 0.72rem;
+    }
+
+    .shop-offer-category {
+        padding: 1px 6px;
+        font-size: 0.46rem;
+    }
+
+    .shop-offer-percent {
+        padding: 3px 8px;
+        font-size: 0.68rem;
+        border-radius: 9px;
+    }
+
+    .shop-offer-description {
+        font-size: 0.56rem;
+    }
+
+    .shop-offer-price {
+        font-size: 0.62rem;
+    }
+
+    .shop-offer-rating {
+        font-size: 0.52rem;
     }
 
     .shop-offer-dots {
-        margin-top: 10px;
-        padding: 5px 12px;
-        gap: 5px;
+        padding: 5px 10px;
+        gap: 4px;
     }
 
     .shop-offer-dot {
@@ -578,128 +765,21 @@
     }
 
     .shop-offer-dot.active {
-        width: 18px;
+        width: 14px;
     }
 }
-
-/* ============================================
-   RESPONSIVE — EXTRA SMALL
-   ============================================ */
-
-@media (max-width: 380px) {
-    .shop-offer-carousel-section {
-        padding: 0 6px;
-        margin: 5px 0 10px;
-    }
-
-    .shop-offer-slide {
-        padding: 7px;
-        gap: 7px;
-        border-radius: 16px;
-    }
-
-    .shop-offer-slide::before {
-        border-radius: 16px;
-    }
-
-    .shop-offer-image {
-        flex: 0 0 38%;
-        max-width: 38%;
-        border-radius: 11px;
-    }
-
-    .shop-offer-image img {
-        padding: 3px;
-    }
-
-    .shop-offer-content {
-        gap: 4px;
-    }
-
-    .shop-offer-name {
-        font-size: 0.7rem;
-    }
-
-    .shop-offer-category {
-        font-size: 0.5rem;
-        padding: 2px 5px;
-    }
-
-    .shop-offer-percent {
-        font-size: 0.58rem;
-        padding: 2px 8px;
-    }
-
-    .shop-offer-description {
-        font-size: 0.54rem;
-    }
-
-    .shop-offer-price {
-        font-size: 0.68rem;
-    }
-
-    .shop-offer-rating {
-        font-size: 0.5rem;
-    }
-
-    .shop-offer-countdown {
-        font-size: 0.46rem;
-        padding: 2px 5px;
-    }
-
-    .shop-offer-dots {
-        margin-top: 8px;
-        padding: 4px 10px;
-        gap: 4px;
-    }
-
-    .shop-offer-dot {
-        width: 5px;
-        height: 5px;
-    }
-
-    .shop-offer-dot.active {
-        width: 16px;
-    }
-}
-
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
 
     .shop-offer-carousel-section,
+    .shop-offer-countdown {
+        animation: none;
+    }
+
     .shop-offer-slide,
-    .shop-offer-slide::before,
     .shop-offer-image,
     .shop-offer-image img,
-    .shop-offer-countdown,
-    .shop-offer-name,
-    .shop-offer-category,
-    .shop-offer-percent,
-    .shop-offer-description,
-    .shop-offer-price,
-    .shop-offer-rating,
-    .shop-offer-dot,
-    .shop-offer-dot.active {
-        animation: none !important;
-        transition: none !important;
-    }
-
-    .shop-offer-slide:active,
-    .shop-offer-slide:active .shop-offer-image img {
-        transform: none;
-    }
-}
-
-/* ============================================
-   iOS SAFE AREA
-   ============================================ */
-
-@supports (padding: max(0px)) {
-    .shop-offer-carousel-section {
-        padding-left: max(12px, env(safe-area-inset-left));
-        padding-right: max(12px, env(safe-area-inset-right));
+    .shop-offer-dot {
+        transition: none;
     }
 }

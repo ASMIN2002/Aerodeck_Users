@@ -1,4 +1,4 @@
-/* Information.css */
+/* Information.css — 3D UTHA HUA ROWS */
 
 .dt-information,
 .dt-information * {
@@ -6,133 +6,327 @@
 }
 
 /* ============================================
-   MAIN CONTAINER (Clay card)
+   WRAPPER — 3D UTHA HUA PANEL
    ============================================ */
 .dt-information {
+  position: relative;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 14px;
 
-  width: 100%;
-  padding: 18px 16px;
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  border-radius: 20px;
 
-  background: #f0f2f7;
-  border-radius: 24px;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+    linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
 
+  /* 🔥 HEAVY 3D OUTSET — chaaro taraf */
   box-shadow:
-    8px 8px 20px rgba(174, 181, 199, 0.55),
-    -8px -8px 20px rgba(255, 255, 255, 0.95),
-    inset 1px 1px 2px rgba(255, 255, 255, 1),
-    inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+    0 14px 28px rgba(140, 150, 180, 0.5),
+    0 7px 14px rgba(140, 150, 180, 0.35),
+    11px 11px 24px rgba(140, 150, 180, 0.25),
+    -11px -11px 24px rgba(255, 255, 255, 1),
+    9px -9px 20px rgba(255, 255, 255, 0.85),
+    -9px 9px 20px rgba(140, 150, 180, 0.12),
+    inset 2px 2px 4px rgba(255, 255, 255, 1),
+    inset -2px -2px 4px rgba(155, 165, 190, 0.28);
+
+  transform: translateY(-4px);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 
   animation: dtInfoIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@keyframes dtInfoIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-4px) scale(1);
+  }
+}
+
+/* Top highlight line */
+.dt-information::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 1) 50%,
+      transparent 100%);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Bottom ground ellipse */
+.dt-information::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 15%;
+  right: 15%;
+  height: 6px;
+  background: radial-gradient(ellipse at center,
+      rgba(140, 150, 180, 0.35) 0%,
+      transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(3px);
+  z-index: 0;
+}
+
 /* ============================================
-   INFO ROW (Clay inset pill)
+   🔥 INFO ROW — 3D UTHA HUA PILL
    ============================================ */
 .dt-info-row {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 
   width: 100%;
-  padding: 11px 14px;
+  padding: 12px 14px;
 
-  background: #f0f2f7;
+  border: 1.5px solid rgba(255, 255, 255, 1);
   border-radius: 14px;
 
-  box-shadow:
-    inset 3px 3px 8px rgba(174, 181, 199, 0.45),
-    inset -3px -3px 8px rgba(255, 255, 255, 0.95);
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+    linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
 
-  transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  /* 🔥 3D UTHA HUA ROW — chaaro taraf shadow */
+  box-shadow:
+    0 8px 18px rgba(140, 150, 180, 0.45),
+    0 4px 10px rgba(140, 150, 180, 0.32),
+    6px 6px 14px rgba(140, 150, 180, 0.22),
+    -6px -6px 14px rgba(255, 255, 255, 1),
+    4px -4px 10px rgba(255, 255, 255, 0.85),
+    -4px 4px 10px rgba(140, 150, 180, 0.12),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+    inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
+
+  transform: translateY(-2px);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Top highlight */
+.dt-info-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 1) 50%,
+      transparent 100%);
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Bottom shadow */
+.dt-info-row::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 18%;
+  right: 18%;
+  height: 4px;
+  background: radial-gradient(ellipse at center,
+      rgba(140, 150, 180, 0.28) 0%,
+      transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(2px);
+  z-index: 0;
 }
 
 .dt-info-row:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
 
   box-shadow:
-    5px 5px 14px rgba(174, 181, 199, 0.5),
-    -5px -5px 14px rgba(255, 255, 255, 1),
-    inset 2px 2px 6px rgba(174, 181, 199, 0.35),
-    inset -2px -2px 6px rgba(255, 255, 255, 0.9);
+    0 14px 26px rgba(124, 140, 248, 0.4),
+    0 7px 14px rgba(124, 140, 248, 0.28),
+    9px 9px 20px rgba(124, 140, 248, 0.2),
+    -9px -9px 20px rgba(255, 255, 255, 1),
+    6px -6px 14px rgba(255, 255, 255, 0.9),
+    -6px 6px 14px rgba(124, 140, 248, 0.12),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+    inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.25);
 }
 
 /* ============================================
-   LABEL (left)
+   🔥 LABEL — left side (grey, uppercase)
    ============================================ */
-.dt-info-row > span:first-child {
+.dt-info-row>span:first-child {
   flex-shrink: 0;
 
-  font-size: clamp(0.82rem, 2.1vw, 0.92rem);
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  color: #6a7090;
+  font-size: clamp(0.72rem, 1.9vw, 0.82rem);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.3;
 
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: #8a90ac;
+
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 1),
+    0 1px 2px rgba(140, 150, 180, 0.15);
+
+  /* 🔥 small accent bar before label */
+  position: relative;
+  padding-left: 10px;
+}
+
+.dt-info-row>span:first-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 3.5px;
+  height: 70%;
+
+  border-radius: 3px;
+
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+    linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+  box-shadow:
+    1.5px 2px 4px rgba(91, 110, 225, 0.45),
+    -1px -1px 3px rgba(255, 255, 255, 1),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.5),
+    inset -1px -1px 1.5px rgba(60, 70, 160, 0.45);
 }
 
 /* ============================================
-   VALUE (right)
+   🔥 VALUE — right side (dark, bold)
    ============================================ */
-.dt-info-row > span:last-child {
+.dt-info-row>span:last-child {
   flex: 1;
   min-width: 0;
 
-  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  font-size: clamp(0.76rem, 2vw, 0.86rem);
   font-weight: 800;
-  color: #3a3f55;
-
+  letter-spacing: 0.15px;
+  line-height: 1.35;
   text-align: right;
-  word-break: break-word;
 
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+  color: #3f4664;
+
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 1),
+    0 2px 4px rgba(140, 150, 180, 0.15);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 /* ============================================
-   DELIVERY DATE
+   🔥 DELIVERY DATE — accent + open-box badge
    ============================================ */
 .delidate {
-  color: #2e9e6b !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  color: #5b6ee1 !important;
+
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 1),
+    0 0 8px rgba(124, 140, 248, 0.3) !important;
 }
 
-/* Open Box badge */
+/* ---- Open Box badge — green 3D pill ---- */
 .open-box {
-  display: inline-block;
-  margin-left: 4px;
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  font-size: 0.68rem;
-  font-weight: 800;
+  padding: 3px 8px;
+
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  border-radius: 999px;
+
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+    linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+
+  color: #1a4a1a;
+  font-size: 0.56rem;
+  font-weight: 900;
   letter-spacing: 0.3px;
-  color: #ffffff;
-  white-space: nowrap;
-  vertical-align: middle;
+  text-transform: uppercase;
+  line-height: 1;
 
-  border-radius: 8px;
-
-  background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.7),
+    0 0 4px rgba(255, 255, 255, 0.4);
 
   box-shadow:
-    2px 2px 6px rgba(124, 140, 248, 0.45),
-    inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+    0 4px 10px rgba(95, 187, 90, 0.55),
+    0 2px 6px rgba(95, 187, 90, 0.4),
+    3px 3px 8px rgba(95, 187, 90, 0.28),
+    -2px -2px 6px rgba(255, 255, 255, 1),
+    2px -2px 6px rgba(255, 255, 255, 0.7),
+    -2px 2px 6px rgba(95, 187, 90, 0.18),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+    inset -1px -1px 2px rgba(40, 100, 40, 0.4);
+
+  transform: translateY(-1px);
+
+  animation: openBoxPulse 2.4s ease-in-out infinite;
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes dtInfoIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@keyframes openBoxPulse {
+
+  0%,
+  100% {
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 10px rgba(95, 187, 90, 0.55),
+      0 2px 6px rgba(95, 187, 90, 0.4),
+      3px 3px 8px rgba(95, 187, 90, 0.28),
+      -2px -2px 6px rgba(255, 255, 255, 1),
+      2px -2px 6px rgba(255, 255, 255, 0.7),
+      -2px 2px 6px rgba(95, 187, 90, 0.18),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+      inset -1px -1px 2px rgba(40, 100, 40, 0.4);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  50% {
+    transform: translateY(-3px);
+    box-shadow:
+      0 6px 14px rgba(95, 187, 90, 0.7),
+      0 4px 10px rgba(95, 187, 90, 0.5),
+      5px 5px 12px rgba(95, 187, 90, 0.35),
+      -3px -3px 8px rgba(255, 255, 255, 1),
+      3px -3px 8px rgba(255, 255, 255, 0.85),
+      -3px 3px 8px rgba(95, 187, 90, 0.22),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.55),
+      inset -1px -1px 2px rgba(40, 100, 40, 0.45);
   }
 }
 
@@ -143,50 +337,83 @@
 /* Tablets */
 @media (max-width: 768px) {
   .dt-information {
-    padding: 16px 14px;
+    padding: 12px;
     gap: 9px;
-    border-radius: 22px;
+    border-radius: 18px;
   }
 
   .dt-info-row {
-    padding: 10px 12px;
+    padding: 11px 12px;
     border-radius: 13px;
+    gap: 10px;
+  }
+
+  .dt-info-row>span:first-child {
+    font-size: 0.76rem;
+    padding-left: 9px;
+  }
+
+  .dt-info-row>span:first-child::before {
+    width: 3px;
+  }
+
+  .dt-info-row>span:last-child {
+    font-size: 0.8rem;
   }
 }
 
 /* Phones */
 @media (max-width: 480px) {
   .dt-information {
-    padding: 14px 12px;
+    padding: 10px;
     gap: 8px;
-    border-radius: 20px;
+    border-radius: 16px;
   }
 
   .dt-info-row {
     padding: 10px 11px;
     border-radius: 12px;
     gap: 8px;
+
+    box-shadow:
+      0 6px 14px rgba(140, 150, 180, 0.4),
+      0 3px 8px rgba(140, 150, 180, 0.28),
+      4px 4px 10px rgba(140, 150, 180, 0.2),
+      -4px -4px 10px rgba(255, 255, 255, 1),
+      3px -3px 8px rgba(255, 255, 255, 0.8),
+      -3px 3px 8px rgba(140, 150, 180, 0.1),
+      inset 1px 1px 2.5px rgba(255, 255, 255, 1),
+      inset -1px -1px 2.5px rgba(155, 165, 190, 0.26);
   }
 
-  .dt-info-row > span:first-child {
-    font-size: 0.82rem;
+  .dt-info-row>span:first-child {
+    font-size: 0.7rem;
+    padding-left: 8px;
+    letter-spacing: 0.4px;
   }
 
-  .dt-info-row > span:last-child {
-    font-size: 0.85rem;
+  .dt-info-row>span:first-child::before {
+    width: 3px;
+    height: 65%;
+  }
+
+  .dt-info-row>span:last-child {
+    font-size: 0.74rem;
   }
 
   .open-box {
     padding: 2px 6px;
-    font-size: 0.62rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.2px;
   }
 }
 
 /* Small phones */
 @media (max-width: 360px) {
   .dt-information {
-    padding: 12px 10px;
-    border-radius: 18px;
+    padding: 8px;
+    gap: 7px;
+    border-radius: 14px;
   }
 
   .dt-info-row {
@@ -195,12 +422,23 @@
     gap: 6px;
   }
 
-  .dt-info-row > span:first-child {
-    font-size: 0.78rem;
+  .dt-info-row>span:first-child {
+    font-size: 0.64rem;
+    padding-left: 7px;
+    letter-spacing: 0.3px;
   }
 
-  .dt-info-row > span:last-child {
-    font-size: 0.8rem;
+  .dt-info-row>span:first-child::before {
+    width: 2.5px;
+  }
+
+  .dt-info-row>span:last-child {
+    font-size: 0.68rem;
+  }
+
+  .open-box {
+    padding: 2px 5px;
+    font-size: 0.44rem;
   }
 }
 
@@ -208,11 +446,15 @@
    ACCESSIBILITY
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .dt-information {
+
+  .dt-information,
+  .open-box {
     animation: none;
   }
 
-  .dt-info-row {
+  .dt-information,
+  .dt-info-row,
+  .open-box {
     transition: none;
   }
 }
