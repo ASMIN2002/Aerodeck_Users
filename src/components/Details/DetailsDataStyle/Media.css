@@ -1,585 +1,469 @@
-/* ============================================
-   MEDIA SECTION - PREMIUM RESPONSIVE STYLES
-   ============================================ */
+/* Media.css */
 
-/* --- Base Container --- */
-.dt-media {
-    width: 100%;
-    padding: 24px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+.dt-media,
+.dt-media * {
+    box-sizing: border-box;
 }
 
-/* --- Section Header --- */
+/* ============================================
+   MAIN CONTAINER (Clay card)
+   ============================================ */
+.dt-media {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    width: 100%;
+    padding: 18px 16px;
+
+    background: #f0f2f7;
+    border-radius: 24px;
+
+    box-shadow:
+        8px 8px 20px rgba(174, 181, 199, 0.55),
+        -8px -8px 20px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+    animation: dtMediaIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ============================================
+   SECTION HEADER
+   ============================================ */
 .dt-section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 0 4px;
+    gap: 12px;
+
+    width: 100%;
 }
 
 .dt-section-header h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
     margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    position: relative;
-    padding-left: 14px;
+
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #3a3f55;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.dt-section-header h3::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 70%;
-    background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-    border-radius: 4px;
-}
-
-/* --- View All Button --- */
+/* ---- View All button (Clay pill) ---- */
 .dt-view-all {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1.5px solid #e0e0e8;
-    color: #6c5ce7;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-    font-family: inherit;
-    position: relative;
-    overflow: hidden;
-}
+    flex-shrink: 0;
 
-.dt-view-all::after {
-    content: '→';
-    font-size: 0.9rem;
-    transition: transform 0.3s ease;
-    display: inline-block;
+    padding: 8px 16px;
+
+    font-size: clamp(0.72rem, 1.9vw, 0.82rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #5b6ee1;
+    white-space: nowrap;
+
+    cursor: pointer;
+    border: none;
+    border-radius: 14px;
+
+    background: #f0f2f7;
+
+    box-shadow:
+        4px 4px 10px rgba(174, 181, 199, 0.55),
+        -4px -4px 10px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .dt-view-all:hover {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    border-color: transparent;
-    color: #ffffff;
-    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.35);
     transform: translateY(-2px);
-}
+    color: #4553d6;
 
-.dt-view-all:hover::after {
-    transform: translateX(3px);
+    box-shadow:
+        7px 7px 16px rgba(124, 140, 248, 0.3),
+        -6px -6px 14px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
 .dt-view-all:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
+    transform: translateY(1px) scale(0.96);
+
+    box-shadow:
+        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
 }
 
 .dt-view-all:focus-visible {
-    outline: 2px solid #6c5ce7;
-    outline-offset: 2px;
+    outline: 2px solid #7c8cf8;
+    outline-offset: 3px;
 }
 
-/* --- Media Scroll Container --- */
+/* ============================================
+   MEDIA SCROLL STRIP
+   ============================================ */
 .dt-media-scroll {
     display: flex;
-    gap: 14px;
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 4px 4px 8px;
+
     overflow-x: auto;
-    padding: 4px 4px 16px 4px;
-    scroll-behavior: smooth;
+    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #d0d0e0 transparent;
+
+    scroll-snap-type: x mandatory;
 }
 
-/* Custom Scrollbar - Webkit */
 .dt-media-scroll::-webkit-scrollbar {
-    height: 6px;
+    display: none;
 }
 
-.dt-media-scroll::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 10px;
-}
-
-.dt-media-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #d0d0e0, #c0c0d0);
-    border-radius: 10px;
-    transition: background 0.3s ease;
-}
-
-.dt-media-scroll::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
-}
-
-/* --- Media Card --- */
+/* ============================================
+   MEDIA CARD (Clay wrapper)
+   ============================================ */
 .dt-media-card {
     position: relative;
-    flex: 0 0 auto;
-    width: 140px;
-    height: 140px;
-    border-radius: 16px;
+    flex-shrink: 0;
+
+    width: 110px;
+    aspect-ratio: 1 / 1;
+
+    border-radius: 18px;
+
+    background: #f0f2f7;
+
+    box-shadow:
+        6px 6px 14px rgba(174, 181, 199, 0.5),
+        -5px -5px 14px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.25);
+
     overflow: hidden;
-    background: #f5f5fa;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border: 2px solid transparent;
+
+    scroll-snap-align: start;
+
+    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+    animation: dtMediaCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .dt-media-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 32px rgba(108, 92, 231, 0.2);
-    border-color: rgba(108, 92, 231, 0.3);
+    transform: translateY(-4px) scale(1.03);
+
+    box-shadow:
+        10px 10px 22px rgba(174, 181, 199, 0.6),
+        -8px -8px 20px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
 .dt-media-card:active {
-    transform: translateY(-2px) scale(1.01);
+    transform: translateY(0) scale(0.97);
 }
 
-/* --- Media Image --- */
+/* ============================================
+   MEDIA IMAGE
+   ============================================ */
 .dt-media-image {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     display: block;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dt-media-card:hover .dt-media-image {
     transform: scale(1.08);
 }
 
-/* --- Overlay (+N) --- */
+/* ============================================
+   +N OVERLAY (last image badge)
+   ============================================ */
 .dt-media-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(26, 26, 46, 0.72);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+    display: grid;
+    place-items: center;
+
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-weight: 900;
+    letter-spacing: 0.5px;
     color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+
+    background: rgba(20, 22, 32, 0.62);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    border-radius: 18px;
+
     cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 2;
+
+    box-shadow:
+        inset 0 0 30px rgba(0, 0, 0, 0.4),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.15);
+
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+    z-index: 3;
 }
 
 .dt-media-overlay:hover {
-    background: rgba(108, 92, 231, 0.82);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(20, 22, 32, 0.72);
+    transform: scale(1.02);
+}
+
+.dt-media-overlay:active {
+    transform: scale(0.97);
 }
 
 /* ============================================
-   NO MEDIA STATE
+   EMPTY STATE CARD (No Customer Images Yet)
    ============================================ */
-
 .dt-no-media-card {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 120px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 28px 32px;
-    background: linear-gradient(135deg, #fafafe 0%, #f0f0ff 100%);
-    border: 2px dashed #d8d8f0;
-    border-radius: 20px;
-    cursor: default;
-    box-shadow: none;
-}
+    gap: 14px;
 
-.dt-no-media-card:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: #c0c0e8;
-}
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: unset;
+    flex-shrink: 1;
 
-/* --- No Media Icon --- */
-.dt-no-media-icon {
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    padding: 20px 18px;
+
     border-radius: 18px;
-    font-size: 1.75rem;
-    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.3);
-    transition: transform 0.3s ease;
+
+    box-shadow:
+        inset 4px 4px 10px rgba(174, 181, 199, 0.45),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
 }
 
-.dt-no-media-card:hover .dt-no-media-icon {
-    transform: rotate(-6deg) scale(1.05);
+.dt-no-media-icon {
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 52px;
+    height: 52px;
+
+    font-size: 1.4rem;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+
+    box-shadow:
+        4px 4px 12px rgba(124, 140, 248, 0.45),
+        -3px -3px 8px rgba(255, 255, 255, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+
+    animation: dtCameraFloat 3s ease-in-out infinite;
 }
 
-/* --- No Media Content --- */
 .dt-no-media-content {
     flex: 1;
     min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .dt-no-media-content h4 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0 0 6px 0;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+    margin: 0;
+
+    font-size: clamp(0.88rem, 2.3vw, 0.98rem);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: #4b5170;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .dt-no-media-content p {
-    font-size: 0.875rem;
-    color: #6b6b80;
     margin: 0;
+
+    font-size: clamp(0.78rem, 2vw, 0.86rem);
+    font-weight: 500;
     line-height: 1.5;
-    font-weight: 400;
+    color: #6a7090;
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   ANIMATIONS
+   ============================================ */
+@keyframes dtMediaIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dtMediaCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes dtCameraFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-4px) rotate(-6deg);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
-    .dt-media-card {
-        width: 160px;
-        height: 160px;
-    }
-
-    .dt-section-header h3 {
-        font-size: 1.4rem;
-    }
-}
-
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .dt-media-card {
-        width: 150px;
-        height: 150px;
-    }
-}
-
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
+/* Tablets */
+@media (max-width: 768px) {
     .dt-media {
-        padding: 20px 0;
-    }
-
-    .dt-media-card {
-        width: 130px;
-        height: 130px;
-        border-radius: 14px;
-    }
-
-    .dt-section-header h3 {
-        font-size: 1.15rem;
-    }
-
-    .dt-no-media-card {
-        padding: 24px 28px;
-        gap: 16px;
-    }
-
-    .dt-no-media-icon {
-        width: 56px;
-        height: 56px;
-        min-width: 56px;
-        font-size: 1.5rem;
-        border-radius: 14px;
-    }
-
-    .dt-no-media-content h4 {
-        font-size: 1rem;
-    }
-
-    .dt-no-media-content p {
-        font-size: 0.825rem;
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .dt-media {
-        padding: 16px 0;
-    }
-
-    .dt-section-header {
-        margin-bottom: 16px;
-        padding: 0 2px;
-    }
-
-    .dt-section-header h3 {
-        font-size: 1.05rem;
-        padding-left: 12px;
-    }
-
-    .dt-section-header h3::before {
-        width: 3px;
-    }
-
-    .dt-view-all {
-        font-size: 0.8rem;
-        padding: 7px 14px;
-        border-radius: 40px;
+        padding: 16px 14px;
+        gap: 12px;
+        border-radius: 22px;
     }
 
     .dt-media-scroll {
-        gap: 12px;
-        padding: 2px 2px 14px 2px;
+        gap: 10px;
     }
 
     .dt-media-card {
-        width: 115px;
-        height: 115px;
-        border-radius: 12px;
-    }
-
-    .dt-media-overlay {
-        font-size: 1.3rem;
-    }
-
-    .dt-no-media-card {
-        padding: 22px 24px;
-        gap: 14px;
         border-radius: 16px;
-        flex-direction: column;
-        text-align: center;
-        min-height: auto;
     }
 
-    .dt-no-media-icon {
-        width: 52px;
-        height: 52px;
-        min-width: 52px;
-        font-size: 1.4rem;
-        border-radius: 12px;
-    }
-
-    .dt-no-media-content h4 {
-        font-size: 0.95rem;
-    }
-
-    .dt-no-media-content p {
-        font-size: 0.8rem;
+    .dt-media-image,
+    .dt-media-overlay {
+        border-radius: 16px;
     }
 }
 
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
+/* Phones */
+@media (max-width: 480px) {
     .dt-media {
-        padding: 14px 0;
-    }
-
-    .dt-section-header {
-        margin-bottom: 14px;
-        flex-wrap: wrap;
+        padding: 14px 12px;
         gap: 10px;
-    }
-
-    .dt-section-header h3 {
-        font-size: 1rem;
-    }
-
-    .dt-view-all {
-        font-size: 0.75rem;
-        padding: 6px 12px;
+        border-radius: 20px;
     }
 
     .dt-media-scroll {
         gap: 10px;
-        padding: 2px 2px 12px 2px;
+        padding: 4px 2px 6px;
     }
 
     .dt-media-card {
-        width: 100px;
-        height: 100px;
-        border-radius: 10px;
+        border-radius: 14px;
     }
 
+    .dt-media-image,
     .dt-media-overlay {
-        font-size: 1.15rem;
+        border-radius: 14px;
+    }
+
+    .dt-view-all {
+        padding: 6px 12px;
+        border-radius: 12px;
     }
 
     .dt-no-media-card {
-        padding: 20px 18px;
+        padding: 16px 14px;
         gap: 12px;
-        border-radius: 14px;
+        border-radius: 16px;
     }
 
     .dt-no-media-icon {
         width: 46px;
         height: 46px;
-        min-width: 46px;
         font-size: 1.25rem;
-        border-radius: 10px;
-    }
-
-    .dt-no-media-content h4 {
-        font-size: 0.9rem;
-    }
-
-    .dt-no-media-content p {
-        font-size: 0.75rem;
     }
 }
 
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
+/* Small phones */
+@media (max-width: 360px) {
+    .dt-media {
+        padding: 12px 10px;
+        border-radius: 18px;
+    }
+
     .dt-media-card {
-        width: 88px;
-        height: 88px;
-        border-radius: 9px;
+        border-radius: 12px;
+    }
+
+    .dt-media-image,
+    .dt-media-overlay {
+        border-radius: 12px;
     }
 
     .dt-section-header h3 {
-        font-size: 0.9rem;
-        padding-left: 10px;
+        font-size: 0.95rem;
     }
 
     .dt-view-all {
-        font-size: 0.7rem;
         padding: 5px 10px;
-    }
-
-    .dt-media-scroll {
-        gap: 8px;
-    }
-
-    .dt-no-media-card {
-        padding: 16px 14px;
+        font-size: 0.68rem;
     }
 
     .dt-no-media-icon {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        font-size: 1.1rem;
-        border-radius: 9px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
     }
 
     .dt-no-media-content h4 {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
     }
 
     .dt-no-media-content p {
-        font-size: 0.7rem;
+        font-size: 0.74rem;
     }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
+
+    .dt-media,
+    .dt-media-card,
+    .dt-no-media-icon {
+        animation: none;
+    }
+
     .dt-media-card,
     .dt-media-image,
-    .dt-view-all,
-    .dt-no-media-icon,
-    .dt-media-overlay {
-        transition: none !important;
-        animation: none !important;
-    }
-
-    .dt-media-card:hover {
-        transform: none;
-    }
-
-    .dt-media-card:hover .dt-media-image {
-        transform: none;
-    }
-
-    .dt-view-all:hover {
-        transform: none;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
+    .dt-media-overlay,
     .dt-view-all {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-media-card {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-media-overlay {
-        background: Canvas;
-        color: CanvasText;
-    }
-
-    .dt-no-media-card {
-        border: 2px dashed ButtonText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .dt-section-header h3 {
-        color: #f0f0f5;
-    }
-
-    .dt-view-all {
-        border-color: #3a3a50;
-        color: #a29bfe;
-    }
-
-    .dt-view-all:hover {
-        color: #ffffff;
-        border-color: transparent;
-    }
-
-    .dt-media-card {
-        background: #1e1e30;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .dt-media-card:hover {
-        box-shadow: 0 12px 32px rgba(108, 92, 231, 0.3);
-    }
-
-    .dt-no-media-card {
-        background: linear-gradient(135deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-    }
-
-    .dt-no-media-card:hover {
-        border-color: #3e3e58;
-    }
-
-    .dt-no-media-content h4 {
-        color: #f0f0f5;
-    }
-
-    .dt-no-media-content p {
-        color: #8888a0;
-    }
-
-    .dt-media-scroll::-webkit-scrollbar-thumb {
-        background: #2e2e48;
-    }
-
-    .dt-media-scroll::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+        transition: none;
     }
 }

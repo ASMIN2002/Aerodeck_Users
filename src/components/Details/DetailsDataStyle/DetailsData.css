@@ -1,257 +1,242 @@
-.dt-data{
+/* DetailsData.css */
 
-    width:100%;
-    display:flex;
-
-    flex-direction:column;
-
-    gap:22px;
-
-    padding:0;
-
-    margin:0;
-
+.dt-data,
+.dt-data * {
+    box-sizing: border-box;
 }
 
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.dt-data {
+    display: flex;
+    flex-direction: column;
 
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
 
-/*==============================
-SECTIONS
-==============================*/
+    padding: 18px 14px 30px;
 
-.dt-data>*{
+    gap: 18px;
 
-    width:100%;
-    padding:16px;
+    background: #eef1f7;
+
+    animation: dtDataFade 0.5s ease both;
+}
+
+/* ============================================
+   COMMON CLAY SECTION (har child ko apply hoga)
+   ============================================ */
+.dt-data>* {
+    width: 100%;
+
+    background: #f0f2f7;
+    border-radius: 24px;
+
+    box-shadow:
+        8px 8px 20px rgba(174, 181, 199, 0.55),
+        -8px -8px 20px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
     transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease;
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.35s ease;
 
+    animation: dtDataSectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/*==============================
-FIRST CARD
-==============================*/
-
-.dt-data>*:first-child{
-
-    padding:18px;
-
+/* Staggered entrance */
+.dt-data>*:nth-child(1) {
+    animation-delay: 0.04s;
 }
 
-
-
-/*==============================
-LAST CARD
-==============================*/
-
-.dt-data>*:last-child{
-
-    margin-bottom:60px;
-
+.dt-data>*:nth-child(2) {
+    animation-delay: 0.08s;
 }
 
-
-
-/*==============================
-SPACING
-==============================*/
-
-.dt-data>*+*{
-
-    margin-top:-35px;
-
+.dt-data>*:nth-child(3) {
+    animation-delay: 0.12s;
 }
 
-
-
-/*==============================
-FOCUS
-==============================*/
-
-.dt-data>*:focus-within{
-
-    border-color:#111;
-
+.dt-data>*:nth-child(4) {
+    animation-delay: 0.16s;
 }
 
-
-
-/*=========================================================
-  375px+
-=========================================================*/
-
-@media (min-width:375px){
-
-    .dt-data{
-
-        gap:24px;
-
-    }
-
+.dt-data>*:nth-child(5) {
+    animation-delay: 0.20s;
 }
 
-
-
-/*=========================================================
-  576px+
-=========================================================*/
-
-@media (min-width:576px){
-
-    .dt-data>*{
-
-        padding:18px;
-
-        border-radius:22px;
-
-    }
-
+.dt-data>*:nth-child(6) {
+    animation-delay: 0.24s;
 }
 
-
-
-/*=========================================================
-  768px+
-=========================================================*/
-
-@media (min-width:768px){
-
-    .dt-data{
-
-        gap:26px;
-
-    }
-
-    .dt-data>*{
-
-        padding:22px;
-
-        border-radius:24px;
-
-    }
-
+.dt-data>*:nth-child(7) {
+    animation-delay: 0.28s;
 }
 
-
-
-/*=========================================================
-  1024px+
-=========================================================*/
-
-@media (min-width:1024px){
-
-    .dt-data{
-
-        position:relative;
-
-        gap:28px;
-
-    }
-
-    .dt-data>*{
-
-        padding:24px;
-
-        border-radius:24px;
-
-    }
-
+.dt-data>*:nth-child(8) {
+    animation-delay: 0.32s;
 }
 
+/* Hover — very subtle lift */
+.dt-data>*:hover {
+    transform: translateY(-2px);
 
-
-/*=========================================================
-  1200px+
-=========================================================*/
-
-@media (min-width:1200px){
-
-    .dt-data{
-
-        gap:30px;
-
-    }
-
+    box-shadow:
+        12px 12px 28px rgba(174, 181, 199, 0.6),
+        -12px -12px 28px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.3);
 }
 
+/* ============================================
+   COMMON HEADINGS (agar kisi child mein h2/h3 ho)
+   ============================================ */
+.dt-data h2 {
+    margin: 0 0 12px;
 
+    font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #3a3f55;
 
-/*=========================================================
-  1440px+
-=========================================================*/
-
-@media (min-width:1440px){
-
-    .dt-data>*{
-
-        padding:28px;
-
-    }
-
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+.dt-data h3 {
+    margin: 0 0 10px;
 
+    font-size: clamp(0.95rem, 2.3vw, 1.1rem);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #4b5170;
 
-/*=========================================================
-  1920px+
-=========================================================*/
-
-@media (min-width:1920px){
-
-    .dt-data{
-
-        gap:34px;
-
-    }
-
-    .dt-data>*{
-
-        padding:32px;
-
-        border-radius:28px;
-
-    }
-
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-
-
-/*=========================================================
-  2560px+
-=========================================================*/
-
-@media (min-width:2560px){
-
-    .dt-data{
-
-        gap:40px;
-
-    }
-
-    .dt-data>*{
-
-        padding:36px;
-
-        border-radius:32px;
-
-    }
-
+/* Paragraphs default */
+.dt-data p {
+    margin: 0;
+    font-size: clamp(0.85rem, 2.1vw, 0.95rem);
+    line-height: 1.6;
+    color: #5a6080;
 }
 
+/* ============================================
+   DIVIDER (agar kabhi use karo)
+   ============================================ */
+.dt-data hr {
+    border: none;
+    height: 2px;
+    margin: 6px 0;
 
+    border-radius: 2px;
 
-/*=========================================================
-  REDUCED MOTION
-=========================================================*/
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(174, 181, 199, 0.5),
+            transparent);
+}
 
-@media (prefers-reduced-motion:reduce){
+/* ============================================
+   SCROLLBAR (agar koi section scroll ho)
+   ============================================ */
+.dt-data ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
 
-    .dt-data>*{
+.dt-data ::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-        transition:none;
+.dt-data ::-webkit-scrollbar-thumb {
+    background: rgba(174, 181, 199, 0.6);
+    border-radius: 10px;
+}
 
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes dtDataFade {
+    from {
+        opacity: 0;
     }
 
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dtDataSectionIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .dt-data {
+        padding: 16px 12px 26px;
+        gap: 16px;
+    }
+
+    .dt-data>* {
+        border-radius: 22px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .dt-data {
+        padding: 14px 12px 90px;
+        gap: 14px;
+    }
+
+    .dt-data>* {
+        border-radius: 20px;
+
+        box-shadow:
+            6px 6px 16px rgba(174, 181, 199, 0.5),
+            -6px -6px 16px rgba(255, 255, 255, 0.95),
+            inset 1px 1px 2px rgba(255, 255, 255, 1);
+    }
+
+    .dt-data>*:hover {
+        transform: none;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .dt-data {
+        padding: 12px 10px 85px;
+        gap: 12px;
+    }
+
+    .dt-data>* {
+        border-radius: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dt-data,
+    .dt-data>* {
+        animation: none;
+    }
+    .dt-data>* {
+        transition: none;
+    }
 }

@@ -1,691 +1,555 @@
-/* ==========================================================================
-   HEADER — SUPER WHITE CLAYMORPHISM
-   ========================================================================== */
+/* Header.css */
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
-
-/* ============================================
-   HEADER CONTAINER
-   ============================================ */
-
-.hd-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    width: 100%;
-    background: linear-gradient(145deg, #eef0f6, #d8dae2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow:
-        8px 8px 24px rgba(184, 186, 196, 0.7),
-        -8px -8px 24px rgba(255, 255, 255, 0.95),
-        0 4px 20px rgba(108, 92, 231, 0.08);
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
-    overflow: visible;
-    animation: hdSlideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
+.hd-header,
 .hd-header * {
     box-sizing: border-box;
 }
 
-@keyframes hdSlideDown {
-    from { opacity: 0; transform: translateY(-100%); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Top accent line */
-.hd-header::before {
-    content: '';
-    position: absolute;
+/* ============================================
+   HEADER WRAPPER — 3D WOOL PANEL
+   ============================================ */
+.hd-header {
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        #a29bfe 25%,
-        #6c5ce7 50%,
-        #00cec9 75%,
-        transparent 100%);
-    background-size: 200% 100%;
-    animation: hdAccentSlide 4s linear infinite;
-    z-index: 1;
-    border-radius: 0 0 4px 4px;
-}
+    z-index: 100;
 
-@keyframes hdAccentSlide {
-    0%   { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
+    width: 100%;
+    padding: 12px 14px 14px;
+
+    background:
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.95), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
+
+    border-bottom-left-radius: 26px;
+    border-bottom-right-radius: 26px;
+
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-top: none;
+
+    box-shadow:0 0 1pcx black;
+    animation: hdHeaderIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* ============================================
-   TOP ROW
+   TOP ROW (brand + bell)
    ============================================ */
-
 .hd-top-row {
-    position: relative;
-    z-index: 2;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 14px 20px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
-/* ============================================
-   TOP LINE — Brand + Bell
-   ============================================ */
+    width: 100%;
+}
 
 .hd-top-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+
     width: 100%;
 }
 
 /* ============================================
-   BRAND + VERSION
+   BRAND (HEEPIT + version) — 3D WOOL PILL
    ============================================ */
-
 .hd-center {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
-    animation: hdCenterFadeIn 0.6s ease 0.1s backwards;
+
+    padding: 8px 16px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
+
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        6px 8px 16px rgba(140, 150, 180, 0.6),
+        2px 3px 8px rgba(140, 150, 180, 0.4),
+        -5px -6px 14px rgba(255, 255, 255, 1),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
 }
 
-@keyframes hdCenterFadeIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* --- Brand Name --- */
 .hd-brand-name {
-    position: relative;
-    font-size: 1.65rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    background: linear-gradient(135deg,
-        #2d3436 0%,
-        #6c5ce7 30%,
-        #4834d4 60%,
-        #6c5ce7 80%,
-        #2d3436 100%);
-    background-size: 300% 300%;
+    font-size: clamp(1.05rem, 3vw, 1.3rem);
+    font-weight: 900;
+    letter-spacing: 2px;
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: hdBrandShimmer 5s ease infinite;
-    user-select: none;
-    padding: 4px 0 10px 0;
-    cursor: default;
-    transition: transform 0.3s ease;
+    color: #5b6ee1;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 4px rgba(124, 140, 248, 0.25);
 }
 
-.hd-brand-name:hover {
-    transform: scale(1.04);
-}
-
-@keyframes hdBrandShimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50%      { background-position: 100% 50%; }
-}
-
-/* Brand underline accent — CLAY */
-.hd-brand-name::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    width: 40px;
-    height: 4px;
-    background: linear-gradient(90deg, #a29bfe, #6c5ce7);
-    border-radius: 50px;
-    box-shadow:
-        2px 2px 6px rgba(108, 92, 231, 0.4),
-        -2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 0 -1px 2px rgba(72, 52, 212, 0.5),
-        inset 0 1px 2px rgba(255, 255, 255, 0.5);
-    animation: hdBrandUnderline 3s ease-in-out infinite;
-}
-
-@keyframes hdBrandUnderline {
-    0%, 100% { width: 40px; opacity: 1; }
-    50%      { width: 56px; opacity: 0.8; }
-}
-
-/* --- Version Badge — CLAY --- */
 .hd-version {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.66rem;
+    padding: 3px 9px;
+
+    font-size: clamp(0.62rem, 1.7vw, 0.72rem);
     font-weight: 800;
-    color: var(--clay-purple, #6c5ce7);
-    background: linear-gradient(145deg, #f0f2f8, #d8dae2);
-    padding: 5px 14px;
-    border-radius: 50px;
-    letter-spacing: 0.06em;
-    line-height: 1.4;
-    white-space: nowrap;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.4px;
+    color: #5b6ee1;
+
+    background: linear-gradient(145deg, #eef1f8, #dfe4f0);
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
     box-shadow:
-        4px 4px 10px rgba(184, 186, 196, 0.6),
-        -4px -4px 10px rgba(255, 255, 255, 0.95),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.05),
-        inset 0 1px 2px rgba(255, 255, 255, 0.7);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    cursor: default;
-}
+        inset 2px 2px 4px rgba(155, 165, 190, 0.5),
+        inset -2px -2px 4px rgba(255, 255, 255, 1);
 
-.hd-version::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
-    border-radius: 50%;
-    box-shadow:
-        1px 1px 3px rgba(108, 92, 231, 0.5),
-        0 0 8px rgba(162, 155, 254, 0.7);
-    animation: hdVersionDot 2s ease-in-out infinite;
-}
-
-@keyframes hdVersionDot {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50%      { transform: scale(1.3); opacity: 0.7; }
-}
-
-.hd-version:hover {
-    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
-    color: #ffffff;
-    transform: translateY(-2px) scale(1.05);
-    border-color: transparent;
-    box-shadow:
-        6px 6px 16px rgba(108, 92, 231, 0.4),
-        -4px -4px 12px rgba(255, 255, 255, 0.9),
-        inset 0 -1px 2px rgba(72, 52, 212, 0.3);
-}
-
-.hd-version:hover::before {
-    background: #ffffff;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* ============================================
-   NOTIFICATION BUTTON — CLAY
+   NOTIFICATION BELL — 3D WOOL BALL
    ============================================ */
-
 .hd-notif-btn {
     position: relative;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
     width: 46px;
     height: 46px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 16px;
-    background: linear-gradient(145deg, #f0f2f8, #d0d3dc);
-    color: var(--clay-gold-deep, #d97706);
-    font-size: 1.4rem;
+
+    font-size: 1.3rem;
+    color: #3f4664;
+
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #dde2ee 100%);
+
     box-shadow:
-        5px 5px 12px rgba(184, 186, 196, 0.7),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.05),
-        inset 0 2px 4px rgba(255, 255, 255, 0.7);
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    flex-shrink: 0;
+        7px 9px 16px rgba(140, 150, 180, 0.7),
+        3px 4px 8px rgba(140, 150, 180, 0.45),
+        -6px -7px 14px rgba(255, 255, 255, 1),
+        -2px -3px 6px rgba(255, 255, 255, 0.9),
+        inset 2.5px 2.5px 5px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -2.5px -2.5px 5px rgba(155, 165, 190, 0.5),
+        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
+}
+
+.hd-notif-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    color: #5b6ee1;
+
+    box-shadow:
+        10px 12px 22px rgba(124, 140, 248, 0.55),
+        5px 6px 12px rgba(124, 140, 248, 0.35),
+        -8px -8px 18px rgba(255, 255, 255, 1),
+        inset 2.5px 2.5px 5px rgba(255, 255, 255, 1),
+        inset -2.5px -2.5px 5px rgba(124, 140, 248, 0.35);
 }
 
 .hd-notif-btn:active {
-    transform: scale(0.92);
+    transform: translateY(1px) scale(0.94);
+
     box-shadow:
-        inset 5px 5px 12px rgba(184, 186, 196, 0.8),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
+        inset 5px 5px 12px rgba(155, 165, 190, 0.85),
+        inset -5px -5px 12px rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.4);
 }
 
-.hd-notif-btn svg {
-    filter: drop-shadow(1px 1px 2px rgba(217, 119, 6, 0.3));
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.hd-notif-btn:hover svg {
-    transform: rotate(-15deg) scale(1.1);
+.hd-notif-btn:focus-visible {
+    outline: 2px solid #7c8cf8;
+    outline-offset: 3px;
 }
 
 /* ============================================
-   RED DOT — notification indicator
+   RED NOTIFICATION DOT — Pulsing 3D
    ============================================ */
-
 .hd-notif-dot {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 11px;
-    height: 11px;
+    top: 4px;
+    right: 4px;
+
+    width: 13px;
+    height: 13px;
+
     border-radius: 50%;
-    background: linear-gradient(145deg, #ff6b7a, #e8344a);
-    border: 1.5px solid #eef0f6;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.7), transparent 55%),
+        linear-gradient(145deg, #ff5470, #d81e3a);
+
+    border: 2px solid #ffffff;
+
     box-shadow:
-        2px 2px 5px rgba(200, 40, 60, 0.5),
-        -1px -1px 3px rgba(255, 255, 255, 0.9),
-        0 0 12px rgba(255, 71, 87, 0.8),
-        inset 0 -1px 2px rgba(150, 20, 30, 0.4),
-        inset 0 1px 2px rgba(255, 255, 255, 0.4);
-    animation: hdNotifDotPulse 2s ease-in-out infinite;
+        0 0 0 2px rgba(216, 30, 58, 0.25),
+        3px 4px 8px rgba(216, 30, 58, 0.55),
+        -2px -2px 4px rgba(255, 255, 255, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.6);
+
+    animation: hdNotifPulse 1.6s ease-in-out infinite;
 }
 
-@keyframes hdNotifDotPulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow:
-            2px 2px 5px rgba(200, 40, 60, 0.5),
-            -1px -1px 3px rgba(255, 255, 255, 0.9),
-            0 0 12px rgba(255, 71, 87, 0.8);
-    }
-    50% {
-        transform: scale(1.2);
-        box-shadow:
-            2px 2px 6px rgba(200, 40, 60, 0.7),
-            -1px -1px 3px rgba(255, 255, 255, 0.9),
-            0 0 20px rgba(255, 71, 87, 1);
-    }
+.hd-notif-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+
+    border-radius: 50%;
+    border: 2px solid rgba(216, 30, 58, 0.5);
+
+    animation: hdNotifRing 1.6s ease-out infinite;
 }
 
 /* ============================================
-   TABS — CLAY
+   TABS ROW — 3D WOOL SEGMENTED CONTROL
    ============================================ */
-
 .hd-tabs {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 6px;
+
     width: 100%;
-    animation: hdTabsFadeIn 0.6s ease 0.2s backwards;
-}
+    padding: 6px;
 
-@keyframes hdTabsFadeIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+    background:
+        linear-gradient(145deg, #dfe4f0 0%, #f2f5fa 100%);
 
-/* --- Tab Button --- */
-.hd-tab {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 11px 26px;
-    background: linear-gradient(145deg, #f0f2f8, #d8dae2);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 16px;
-    color: var(--clay-text-soft, #636e72);
-    font-family: inherit;
-    font-size: 0.86rem;
-    font-weight: 800;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    white-space: nowrap;
-    user-select: none;
-    overflow: hidden;
-    -webkit-tap-highlight-color: transparent;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
     box-shadow:
-        5px 5px 12px rgba(184, 186, 196, 0.65),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.04),
-        inset 0 1px 2px rgba(255, 255, 255, 0.7);
+        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 1),
+        0 1px 2px rgba(255, 255, 255, 0.9);
 }
 
-.hd-tab::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-    transition: left 0.7s ease;
-    pointer-events: none;
-}
+/* ---- Individual tab ---- */
+.hd-tab {
+    flex: 1;
 
-.hd-tab:hover::before {
-    left: 100%;
+    display: grid;
+    place-items: center;
+
+    padding: 11px 12px;
+
+    font-size: clamp(0.78rem, 2.1vw, 0.9rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #5a6180;
+    white-space: nowrap;
+
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 15px;
+
+    background: transparent;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hd-tab:hover:not(.hd-tab-active) {
-    color: var(--clay-purple, #6c5ce7);
-    transform: translateY(-2px);
+    color: #5b6ee1;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9), transparent 55%),
+        linear-gradient(145deg, #f0f3fa 0%, #e2e7f2 100%);
+
+    border-color: rgba(255, 255, 255, 0.9);
+
     box-shadow:
-        7px 7px 18px rgba(184, 186, 196, 0.7),
-        -7px -7px 18px rgba(255, 255, 255, 0.95),
-        inset 0 -1px 2px rgba(108, 92, 231, 0.15),
-        inset 0 1px 2px rgba(255, 255, 255, 0.7);
+        4px 5px 10px rgba(140, 150, 180, 0.5),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
 }
 
-.hd-tab:active:not(.hd-tab-active) {
-    transform: translateY(0) scale(0.96);
-    box-shadow:
-        inset 5px 5px 12px rgba(184, 186, 196, 0.8),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
-}
-
-/* --- Active Tab --- */
-.hd-tab-active {
-    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
-    color: #ffffff;
-    transform: translateY(-2px);
-    border-color: transparent;
-    text-shadow: 0 1px 2px rgba(72, 52, 212, 0.4);
-    box-shadow:
-        8px 8px 20px rgba(108, 92, 231, 0.4),
-        -6px -6px 16px rgba(255, 255, 255, 0.9),
-        inset 0 -3px 6px rgba(72, 52, 212, 0.4),
-        inset 0 3px 6px rgba(255, 255, 255, 0.4);
-    animation: hdTabActivePulse 3s ease-in-out infinite;
-}
-
-@keyframes hdTabActivePulse {
-    0%, 100% {
-        box-shadow:
-            8px 8px 20px rgba(108, 92, 231, 0.4),
-            -6px -6px 16px rgba(255, 255, 255, 0.9),
-            inset 0 -3px 6px rgba(72, 52, 212, 0.4),
-            inset 0 3px 6px rgba(255, 255, 255, 0.4);
-    }
-    50% {
-        box-shadow:
-            10px 10px 26px rgba(108, 92, 231, 0.55),
-            -8px -8px 20px rgba(255, 255, 255, 0.9),
-            inset 0 -3px 6px rgba(72, 52, 212, 0.4),
-            inset 0 3px 6px rgba(255, 255, 255, 0.5);
-    }
-}
-
-.hd-tab-active:hover {
-    transform: translateY(-3px) scale(1.03);
-    background: linear-gradient(145deg, #b8b2ff, #7c6ff0);
+.hd-tab:active {
+    transform: scale(0.97);
 }
 
 .hd-tab:focus-visible {
-    outline: 3px solid var(--clay-purple, #6c5ce7);
+    outline: 2px solid #7c8cf8;
     outline-offset: 2px;
 }
 
-/* ============================================
-   TOAST
-   ============================================ */
+/* ---- Active tab (pressed-in gradient clay) ---- */
+.hd-tab.hd-tab-active {
+    color: #ffffff;
 
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.45), transparent 55%),
+        linear-gradient(145deg, #7a8af5, #8e52d9);
+
+    border-color: rgba(255, 255, 255, 0.5);
+
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+
+    box-shadow:
+        inset 4px 4px 10px rgba(45, 55, 120, 0.55),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.25),
+        0 0 0 2.5px rgba(124, 140, 248, 0.35),
+        6px 8px 16px rgba(124, 140, 248, 0.5);
+
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   TOAST — 3D WOOL FLOATING
+   ============================================ */
 .hd-toast {
     position: fixed;
-    top: 100px;
     left: 50%;
+    bottom: 110px;
     transform: translateX(-50%);
-    z-index: 2147483647;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+
+    z-index: 9999;
+
     padding: 14px 26px;
-    background: linear-gradient(145deg, #a29bfe, #6c5ce7);
-    color: #ffffff;
-    animation: hdToastDropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50px;
-    font-family: inherit;
-    font-size: 0.88rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    line-height: 1.4;
+
+    font-size: clamp(0.82rem, 2.1vw, 0.92rem);
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: #2f3450;
     white-space: nowrap;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.98), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
+
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+
     box-shadow:
-        8px 8px 20px rgba(108, 92, 231, 0.4),
-        -6px -6px 16px rgba(255, 255, 255, 0.9),
-        inset 0 -3px 6px rgba(72, 52, 212, 0.3),
-        inset 0 3px 6px rgba(255, 255, 255, 0.4);
-    pointer-events: none;
-    overflow: hidden;
-    max-width: calc(100vw - 32px);
-    text-shadow: 0 1px 2px rgba(72, 52, 212, 0.3);
+        12px 14px 28px rgba(140, 150, 180, 0.75),
+        6px 8px 16px rgba(140, 150, 180, 0.5),
+        -8px -8px 20px rgba(255, 255, 255, 1),
+        inset 3px 3px 6px rgba(255, 255, 255, 1),
+        inset -3px -3px 8px rgba(155, 165, 190, 0.45);
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        2px 2px 4px rgba(155, 165, 190, 0.3);
+
+    animation: hdToastIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hd-toast::before {
-    content: '✨';
-    font-size: 1.1rem;
-    animation: hdSparkleSpin 1.5s ease-in-out infinite;
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
-}
-
-@keyframes hdSparkleSpin {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    50%      { transform: rotate(20deg) scale(1.2); }
-}
-
-@keyframes hdToastDropIn {
-    0% {
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes hdHeaderIn {
+    from {
         opacity: 0;
-        transform: translateX(-50%) translateY(-30px) scale(0.85);
+        transform: translateY(-30px);
     }
-    60% {
-        transform: translateX(-50%) translateY(4px) scale(1.05);
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
+
+@keyframes hdNotifPulse {
+
+    0%,
     100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes hdNotifRing {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+@keyframes hdToastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.9);
+    }
+
+    to {
         opacity: 1;
         transform: translateX(-50%) translateY(0) scale(1);
     }
 }
 
 /* ============================================
-   RESPONSIVE — DESKTOP
+   RESPONSIVE
    ============================================ */
 
-@media (min-width: 1024px) {
-    .hd-top-row {
-        padding: 18px 32px;
-        gap: 14px;
-    }
-
-    .hd-brand-name {
-        font-size: 1.95rem;
-    }
-
-    .hd-tab {
-        padding: 12px 32px;
-        font-size: 0.95rem;
+/* Tablets */
+@media (max-width: 768px) {
+    .hd-header {
+        padding: 10px 12px 12px;
+        border-bottom-left-radius: 22px;
+        border-bottom-right-radius: 22px;
     }
 
     .hd-notif-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-
-    .hd-toast {
-        top: 120px;
-        padding: 16px 32px;
-        font-size: 0.95rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE — TABLET
-   ============================================ */
-
-@media (max-width: 767px) {
-    .hd-top-row {
-        padding: 12px 16px;
-        gap: 10px;
-    }
-
-    .hd-brand-name {
-        font-size: 1.35rem;
-    }
-
-    .hd-version {
-        font-size: 0.6rem;
-        padding: 4px 10px;
-    }
-
-    .hd-tabs {
-        gap: 7px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
     }
 
     .hd-tab {
-        padding: 9px 18px;
-        font-size: 0.78rem;
-        border-radius: 14px;
+        padding: 10px 10px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .hd-header {
+        padding: 10px 10px 12px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .hd-top-row {
+        gap: 10px;
+    }
+
+    .hd-center {
+        padding: 7px 14px;
+        border-radius: 16px;
+        gap: 8px;
+    }
+
+    .hd-brand-name {
+        letter-spacing: 1.6px;
+    }
+
+    .hd-version {
+        padding: 2px 8px;
+        font-size: 0.62rem;
     }
 
     .hd-notif-btn {
         width: 42px;
         height: 42px;
-        font-size: 1.25rem;
-        border-radius: 14px;
+        font-size: 1.15rem;
+    }
+
+    .hd-notif-dot {
+        width: 12px;
+        height: 12px;
+        top: 3px;
+        right: 3px;
+    }
+
+    .hd-tabs {
+        padding: 5px;
+        border-radius: 18px;
+        gap: 5px;
+    }
+
+    .hd-tab {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+        border-radius: 13px;
     }
 
     .hd-toast {
-        top: 96px;
-        padding: 12px 22px;
+        bottom: 100px;
+        padding: 12px 20px;
         font-size: 0.82rem;
     }
 }
 
-/* ============================================
-   RESPONSIVE — SMALL PHONE
-   ============================================ */
+/* Small phones */
+@media (max-width: 360px) {
+    .hd-header {
+        padding: 8px 8px 10px;
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 18px;
+    }
 
-@media (max-width: 480px) {
-    .hd-top-row {
-        padding: 10px 14px;
-        gap: 8px;
+    .hd-center {
+        padding: 6px 12px;
+        border-radius: 14px;
+        gap: 7px;
     }
 
     .hd-brand-name {
-        font-size: 1.25rem;
+        font-size: 1rem;
+        letter-spacing: 1.2px;
     }
 
     .hd-version {
+        padding: 2px 6px;
         font-size: 0.58rem;
-        padding: 3px 9px;
-    }
-
-    .hd-tabs {
-        gap: 6px;
-    }
-
-    .hd-tab {
-        padding: 8px 14px;
-        font-size: 0.72rem;
-        border-radius: 12px;
+        border-radius: 6px;
     }
 
     .hd-notif-btn {
         width: 38px;
         height: 38px;
-        font-size: 1.15rem;
-        border-radius: 12px;
+        font-size: 1.05rem;
     }
 
     .hd-notif-dot {
-        width: 9px;
-        height: 9px;
-        top: 6px;
-        right: 6px;
-    }
-
-    .hd-toast {
-        top: 88px;
-        padding: 10px 18px;
-        font-size: 0.76rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE — EXTRA SMALL
-   ============================================ */
-
-@media (max-width: 380px) {
-    .hd-top-row {
-        padding: 9px 12px;
-        gap: 7px;
-    }
-
-    .hd-brand-name {
-        font-size: 1.15rem;
-    }
-
-    .hd-version {
-        font-size: 0.54rem;
-        padding: 3px 8px;
+        width: 11px;
+        height: 11px;
+        border-width: 1.5px;
     }
 
     .hd-tabs {
-        gap: 5px;
+        padding: 4px;
+        border-radius: 16px;
+        gap: 4px;
     }
 
     .hd-tab {
-        padding: 7px 12px;
-        font-size: 0.68rem;
-        flex: 1;
-        min-width: 0;
-    }
-
-    .hd-notif-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
+        padding: 9px 6px;
+        font-size: 0.74rem;
         border-radius: 11px;
+        letter-spacing: 0.3px;
     }
 
     .hd-toast {
-        top: 82px;
-        padding: 9px 16px;
-        font-size: 0.72rem;
-        max-width: calc(100vw - 24px);
+        bottom: 90px;
+        padding: 11px 18px;
+        font-size: 0.78rem;
+        border-radius: 16px;
     }
 }
 
 /* ============================================
    ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
+
     .hd-header,
-    .hd-header::before,
-    .hd-brand-name,
-    .hd-brand-name::after,
-    .hd-version::before,
-    .hd-tab-active,
-    .hd-tab::before,
-    .hd-toast,
-    .hd-toast::before,
     .hd-notif-dot,
-    .hd-notif-btn svg {
-        animation: none !important;
-        transition: none !important;
+    .hd-notif-dot::after,
+    .hd-toast {
+        animation: none;
     }
-}
 
-/* ============================================
-   iOS SAFE AREA
-   ============================================ */
-
-@supports (padding: max(0px)) {
-    .hd-top-row {
-        padding-left: max(20px, env(safe-area-inset-left));
-        padding-right: max(20px, env(safe-area-inset-right));
+    .hd-notif-btn,
+    .hd-tab {
+        transition: none;
     }
 }

@@ -31,13 +31,11 @@ function Details({
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState(0);
-    const [touchEnd, setTouchEnd] = useState(0);
 
     const [fullscreenImage, setFullscreenImage] = useState(null);
     const [imageZoom, setImageZoom] = useState(1);
     const [pinchDistance, setPinchDistance] = useState(null);
 
-    /* Pan state — fullscreen image drag */
     const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
     const [panStart, setPanStart] = useState(null);
 
@@ -66,52 +64,44 @@ function Details({
     };
 
     const images = [
-
-        details?.product_image1 ||
-        details?.gift_image1 ||
-        details?.shop_image1 ||
-        details?.premium_image1,
-
-        details?.product_image2 ||
-        details?.gift_image2 ||
-        details?.shop_image2 ||
-        details?.premium_image2,
-
-        details?.product_image3 ||
-        details?.gift_image3 ||
-        details?.shop_image3 ||
-        details?.premium_image3,
-
-        details?.product_image4 ||
-        details?.gift_image4 ||
-        details?.shop_image4 ||
-        details?.premium_image4,
-
+        details?.product_image1 || details?.gift_image1 || details?.shop_image1 || details?.premium_image1,
+        details?.product_image2 || details?.gift_image2 || details?.shop_image2 || details?.premium_image2,
+        details?.product_image3 || details?.gift_image3 || details?.shop_image3 || details?.premium_image3,
+        details?.product_image4 || details?.gift_image4 || details?.shop_image4 || details?.premium_image4,
         details?.productDetail?.vdo1,
-
     ].filter(Boolean);
 
-    const [selectedImage, setSelectedImage] = useState(
-        images[0] || null
-    );
-
-    useEffect(() => {
-
-        if (!details) return;
-
-        setSelectedImage(
-            details.product_image1 ||
-            details.gift_image1 ||
-            details.shop_image1 ||
-            details.premium_image1
-        );
-
-        setCurrentIndex(0);
-
-    }, [details]);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     /* ============================================
-       TOP VIDEO THUMBNAIL GENERATE
+       🔥 AUTO SELECT FIRST IMAGE
+       ============================================ */
+    useEffect(() => {
+        const source = details || product?.data;
+        if (!source) return;
+
+        const firstImage =
+            source.product_image1 ||
+            source.gift_image1 ||
+            source.shop_image1 ||
+            source.premium_image1 ||
+            source.productDetail?.vdo1 ||
+            null;
+
+        setSelectedImage(firstImage);
+        setCurrentIndex(0);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        product,
+        details?.product_image1,
+        details?.gift_image1,
+        details?.shop_image1,
+        details?.premium_image1
+    ]);
+
+    /* ============================================
+       TOP VIDEO THUMBNAIL GENERATE (with fallback)
        ============================================ */
     useEffect(() => {
 
@@ -123,25 +113,55 @@ function Details({
         videoEl.crossOrigin = "anonymous";
         videoEl.muted = true;
         videoEl.playsInline = true;
-        videoEl.preload = "metadata";
+        videoEl.preload = "auto";
 
-        videoEl.addEventListener("loadeddata", () => {
-            videoEl.currentTime = 1;
-        }, { once: true });
+        let thumbnailSet = false;
 
-        videoEl.addEventListener("seeked", () => {
+        const tryCapture = (time) => {
+            videoEl.currentTime = time;
+        };
+
+        const onLoadedData = () => {
+            tryCapture(1);
+        };
+
+        const onSeeked = () => {
+            if (thumbnailSet) return;
             try {
                 const canvas = document.createElement("canvas");
-                canvas.width = videoEl.videoWidth;
-                canvas.height = videoEl.videoHeight;
+                canvas.width = videoEl.videoWidth || 320;
+                canvas.height = videoEl.videoHeight || 240;
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
                 const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
                 setTopVideoThumbnail(dataUrl);
+                thumbnailSet = true;
             } catch (err) {
-                console.error("Thumbnail error:", err);
+                console.error("Thumbnail error (CORS?):", err);
+                setTopVideoThumbnail(null);
             }
-        }, { once: true });
+        };
+
+        const onError = () => {
+            console.error("Video load error for thumbnail");
+        };
+
+        videoEl.addEventListener("loadeddata", onLoadedData, { once: true });
+        videoEl.addEventListener("seeked", onSeeked);
+        videoEl.addEventListener("error", onError, { once: true });
+
+        const timeout = setTimeout(() => {
+            if (!thumbnailSet) {
+                tryCapture(0.5);
+            }
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeout);
+            videoEl.removeEventListener("seeked", onSeeked);
+            videoEl.removeEventListener("error", onError);
+            videoEl.src = "";
+        };
 
     }, [details?.productDetail?.vdo1]);
 
@@ -149,24 +169,18 @@ function Details({
        TOP VIDEO — PLAY/PAUSE
        ============================================ */
     const handleTopVideoPlayPause = () => {
-
         const videoEl = topVideoRef.current;
         if (!videoEl) return;
 
         if (topVideoPlaying) {
-
             videoEl.pause();
             setTopVideoPlaying(false);
-
         } else {
-
             videoEl.muted = false;
             videoEl.play()
                 .then(() => setTopVideoPlaying(true))
                 .catch((err) => console.error("Play error:", err));
-
         }
-
     };
 
     const handleTopVideoTimeUpdate = () => {
@@ -203,7 +217,6 @@ function Details({
        TOP VIDEO — SCROLL PAUSE / RESUME
        ============================================ */
     useEffect(() => {
-
         if (!topVideoCardRef.current) return;
 
         const observer = new IntersectionObserver(
@@ -213,7 +226,6 @@ function Details({
                     if (!videoEl) return;
 
                     if (entry.isIntersecting) {
-                        /* scroll in */
                         if (topVideoWasPlaying) {
                             videoEl.muted = false;
                             videoEl.play()
@@ -224,7 +236,6 @@ function Details({
                                 .catch(() => { });
                         }
                     } else {
-                        /* scroll out */
                         if (topVideoPlaying && !videoEl.paused) {
                             videoEl.pause();
                             setTopVideoWasPlaying(true);
@@ -238,16 +249,12 @@ function Details({
 
         observer.observe(topVideoCardRef.current);
         return () => observer.disconnect();
-
     }, [topVideoPlaying, topVideoWasPlaying]);
 
-    /* ============================================
-       TOP VIDEO — pause when switching away
-       ============================================ */
+    /* Pause when switching away from video */
     useEffect(() => {
         const videoEl = topVideoRef.current;
         if (!videoEl) return;
-
         if (!isVideo(selectedImage) && topVideoPlaying) {
             videoEl.pause();
             setTopVideoPlaying(false);
@@ -658,11 +665,9 @@ function Details({
        BACK BUTTON — fullscreen close first
        ============================================ */
     useEffect(() => {
-
         const handlePopState = () => {
             if (fullscreenImage) {
                 closeFullscreenImage();
-                /* history wapas push karo taaki app exit na ho */
                 window.history.pushState(null, "", window.location.href);
                 return;
             }
@@ -676,22 +681,25 @@ function Details({
         return () => {
             window.removeEventListener("popstate", handlePopState);
         };
-
     }, [fullscreenImage]);
 
-    return (
+    /* ============================================
+       🔥 FALLBACK — agar selectedImage null ho toh images[0] dikhe
+       ============================================ */
+    const activeImage = selectedImage || images[0] || null;
 
+    return (
         <div className="dt-page">
             <div className="dt-image-wrapper" ref={topVideoCardRef}>
 
                 <div
                     className="dt-image-box"
                     onTouchStart={(e) => {
-                        if (isVideo(selectedImage)) return;
+                        if (isVideo(activeImage)) return;
                         setTouchStart(e.touches[0].clientX);
                     }}
                     onTouchEnd={(e) => {
-                        if (isVideo(selectedImage)) return;
+                        if (isVideo(activeImage)) return;
 
                         const touchEndX = e.changedTouches[0].clientX;
                         const distance = touchEndX - touchStart;
@@ -712,24 +720,20 @@ function Details({
                         }
                     }}
                 >
-
-                    {isVideo(selectedImage) ? (
-
+                    {isVideo(activeImage) ? (
                         <div className="dt-top-video-container">
-
                             <video
                                 ref={topVideoRef}
-                                src={selectedImage}
+                                src={activeImage}
                                 className="dt-top-video"
                                 playsInline
                                 preload="metadata"
-                                poster={topVideoThumbnail}
+                                poster={topVideoThumbnail || undefined}
                                 onTimeUpdate={handleTopVideoTimeUpdate}
                                 onEnded={handleTopVideoEnded}
                                 onClick={handleTopVideoPlayPause}
                             />
 
-                            {/* PLAY BUTTON */}
                             {!topVideoPlaying && (
                                 <button
                                     className="dt-top-video-play"
@@ -745,7 +749,6 @@ function Details({
                                 </button>
                             )}
 
-                            {/* PAUSE BUTTON */}
                             {topVideoPlaying && (
                                 <button
                                     className="dt-top-video-pause"
@@ -761,7 +764,17 @@ function Details({
                                 </button>
                             )}
 
-                            {/* PROGRESS BAR */}
+                            <button
+                                className="dt-top-video-fullscreen"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    openFullscreenImage(activeImage);
+                                }}
+                                aria-label="Fullscreen"
+                            >
+                                ⛶
+                            </button>
+
                             <div
                                 className="dt-top-video-progress"
                                 onClick={(e) => {
@@ -782,14 +795,12 @@ function Details({
                                     style={{ width: `${topVideoProgress}%` }}
                                 />
                             </div>
-
                         </div>
-
                     ) : (
                         <img
-                            src={selectedImage}
+                            src={activeImage}
                             alt={product?.product_name}
-                            onClick={() => openFullscreenImage(selectedImage)}
+                            onClick={() => openFullscreenImage(activeImage)}
                             style={{ cursor: "zoom-in" }}
                         />
                     )}
@@ -828,9 +839,8 @@ function Details({
                 </div>
 
                 <div className="dt-image-count">
-                    {images.indexOf(selectedImage) + 1} / {images.length}
+                    {(images.indexOf(activeImage) === -1 ? 0 : images.indexOf(activeImage)) + 1} / {images.length}
                 </div>
-
             </div>
 
             {/* Thumbnails */}
@@ -845,7 +855,7 @@ function Details({
                                 setCurrentIndex(index);
                             }}
                             className={
-                                selectedImage === image
+                                activeImage === image
                                     ? "dt-thumb dt-thumb-video active"
                                     : "dt-thumb dt-thumb-video"
                             }
@@ -853,7 +863,13 @@ function Details({
                             {topVideoThumbnail ? (
                                 <img src={topVideoThumbnail} alt="" />
                             ) : (
-                                <div className="dt-thumb-placeholder" />
+                                <video
+                                    src={image}
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    className="dt-thumb-video-preview"
+                                />
                             )}
                             <span className="dt-thumb-play">▶</span>
                         </div>
@@ -867,7 +883,7 @@ function Details({
                                 setCurrentIndex(index);
                             }}
                             className={
-                                selectedImage === image
+                                activeImage === image
                                     ? "dt-thumb active"
                                     : "dt-thumb"
                             }
@@ -897,8 +913,6 @@ function Details({
                     className="dt-fullscreen-overlay"
                     onClick={closeFullscreenImage}
                 >
-
-                    {/* CLOSE BUTTON */}
                     <button
                         className="dt-fullscreen-close"
                         onClick={(e) => {
@@ -914,7 +928,6 @@ function Details({
                         onClick={(e) => e.stopPropagation()}
 
                         onTouchStart={(e) => {
-
                             if (e.touches.length === 2) {
                                 const dx = e.touches[0].clientX - e.touches[1].clientX;
                                 const dy = e.touches[0].clientY - e.touches[1].clientY;
@@ -936,7 +949,6 @@ function Details({
                         }}
 
                         onTouchMove={(e) => {
-
                             if (e.touches.length === 2 && pinchDistance) {
                                 const dx = e.touches[0].clientX - e.touches[1].clientX;
                                 const dy = e.touches[0].clientY - e.touches[1].clientY;
@@ -963,7 +975,6 @@ function Details({
                         }}
 
                         onTouchEnd={(e) => {
-
                             setPinchDistance(null);
                             setPanStart(null);
 
@@ -989,24 +1000,32 @@ function Details({
                                 setPanOffset({ x: 0, y: 0 });
                             }
                         }}
-
                     >
-                        <img
-                            src={fullscreenImage}
-                            alt="Fullscreen Preview"
-                            style={{
-                                transform: `scale(${imageZoom}) translate(${panOffset.x / imageZoom}px, ${panOffset.y / imageZoom}px)`,
-                                transformOrigin: "center center",
-                                transition: pinchDistance || panStart ? "none" : "transform 0.2s ease-out",
-                                maxWidth: "100%",
-                                maxHeight: "100%",
-                                objectFit: "contain",
-                                userSelect: "none",
-                                WebkitUserDrag: "none"
-                            }}
-                        />
+                        {isVideo(fullscreenImage) ? (
+                            <video
+                                src={fullscreenImage}
+                                controls
+                                autoPlay
+                                playsInline
+                                className="dt-fullscreen-video"
+                            />
+                        ) : (
+                            <img
+                                src={fullscreenImage}
+                                alt="Fullscreen Preview"
+                                style={{
+                                    transform: `scale(${imageZoom}) translate(${panOffset.x / imageZoom}px, ${panOffset.y / imageZoom}px)`,
+                                    transformOrigin: "center center",
+                                    transition: pinchDistance || panStart ? "none" : "transform 0.2s ease-out",
+                                    maxWidth: "100%",
+                                    maxHeight: "100%",
+                                    objectFit: "contain",
+                                    userSelect: "none",
+                                    WebkitUserDrag: "none"
+                                }}
+                            />
+                        )}
                     </div>
-
                 </div>
             )}
         </div>

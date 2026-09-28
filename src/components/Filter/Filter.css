@@ -1,98 +1,351 @@
+/* Filter.css */
+
+.fl-dropdown,
+.fl-dropdown * {
+    box-sizing: border-box;
+}
+
+/* ============================================
+   DROPDOWN PANEL — 3D WOOL PANEL
+   ============================================ */
 .fl-dropdown {
     position: absolute;
-    top: 100%;
+    width: 60%;
+    top: calc(100% + 10px);
     right: 0;
-    margin-top: 10px;
-    width: 170px;
-    max-height: 420px;
-    overflow-y: auto;
-    background: white;
-    border-radius: 18px;
-    padding: 14px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, .18);
-    border: 1px solid #ececec;
-    z-index: 9999;
+    z-index: 200;
+
     display: flex;
     flex-direction: column;
-    gap: 7px;
-    animation: filterPopup .25s ease;
+    gap: 6px;
+
+    padding: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+
+    background:
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #e4e9f5 100%);
+
+    animation: flDropIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 165, 190, 0.5) transparent;
 }
 
-.fl-title {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 10px;
-    text-shadow: 0 0 0.5px black;
-}
-
+/* ---- Scrollbar ---- */
 .fl-dropdown::-webkit-scrollbar {
+    width: 5px;
+}
 
-    width: 6px;
-
+.fl-dropdown::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .fl-dropdown::-webkit-scrollbar-thumb {
-
-    background: #d5d5d5;
-
-    border-radius: 20px;
-
+    background: rgba(155, 165, 190, 0.4);
+    border-radius: 5px;
 }
 
-.fl-item {
-
-    width: 100%;
-
-    border: 1px solid black;
-    padding: 6px 16px;
-
-    border-radius: 12px;
-
-    text-align: left;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-    color: #333;
-
-    cursor: pointer;
-
-    transition: .25s;
-
+.fl-dropdown::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 140, 248, 0.5);
 }
 
-.fl-item:hover {
-
-    background: #eef4ff;
-
-    color: #0f62fe;
-
-}
-
-.fl-item.active {
-
-    background: #0f62fe;
-
-    color: #fff;
-
-}
-
-@keyframes filterPopup {
-
+@keyframes flDropIn {
     from {
-
         opacity: 0;
-
-        transform: translateY(-12px);
-
+        transform: translateY(-8px) scale(0.97);
     }
 
     to {
-
         opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
-        transform: translateY(0);
+/* ============================================
+   TITLE — section heading
+   ============================================ */
+.fl-title {
+    margin: 4px 0 2px;
+    padding: 0 4px;
 
+    font-size: clamp(0.72rem, 1.9vw, 0.8rem);
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+
+    color: #8a90ac;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================
+   DIVIDER — soft inset line
+   ============================================ */
+.fl-divider {
+    width: 100%;
+    height: 2px;
+    margin: 8px 0;
+
+    border: none;
+    border-radius: 2px;
+
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(155, 165, 190, 0.35) 20%,
+            rgba(155, 165, 190, 0.35) 80%,
+            transparent 100%);
+
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 1px 1px rgba(155, 165, 190, 0.2);
+}
+
+/* ============================================
+   FILTER ITEM — 3D WOOL PILL BUTTON
+   ============================================ */
+.fl-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    padding: 10px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.98), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-size: clamp(0.76rem, 2vw, 0.85rem);
+    font-weight: 700;
+    letter-spacing: 0.15px;
+    text-align: left;
+    line-height: 1.35;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    cursor: pointer;
+
+    box-shadow:
+        5px 6px 12px rgba(140, 150, 180, 0.45),
+        2px 3px 6px rgba(140, 150, 180, 0.3),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fl-item:hover {
+    transform: translateY(-2px);
+    color: #5b6ee1;
+
+    box-shadow:
+        7px 8px 16px rgba(124, 140, 248, 0.4),
+        3px 4px 8px rgba(124, 140, 248, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+}
+
+.fl-item:active {
+    transform: translateY(1px) scale(0.98);
+
+    box-shadow:
+        inset 4px 4px 8px rgba(155, 165, 190, 0.7),
+        inset -4px -4px 8px rgba(255, 255, 255, 1),
+        0 1px 3px rgba(140, 150, 180, 0.3);
+}
+
+.fl-item:focus-visible {
+    outline: 2px solid #7c8cf8;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   ACTIVE STATE — pressed 3D wool
+   ============================================ */
+.fl-item.active {
+    color: #5b6ee1;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.9), transparent 55%),
+        linear-gradient(145deg, #e8ecfa 0%, #d6ddf5 100%);
+
+    box-shadow:
+        inset 4px 4px 10px rgba(124, 140, 248, 0.45),
+        inset -4px -4px 10px rgba(255, 255, 255, 1),
+        0 1px 2px rgba(140, 150, 180, 0.25),
+        0 0 0 1.5px rgba(124, 140, 248, 0.35);
+
+    transform: translateY(0) scale(0.99);
+}
+
+.fl-item.active::before {
+    content: "✓";
+    display: inline-grid;
+    place-items: center;
+
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #7c8cf8 0%, #5b6ee1 100%);
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 900;
+    line-height: 1;
+
+    box-shadow:
+        2px 3px 6px rgba(91, 110, 225, 0.5),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 2px rgba(60, 70, 160, 0.4);
+
+    flex-shrink: 0;
+
+    animation: flCheckIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes flCheckIn {
+    from {
+        opacity: 0;
+        transform: scale(0.4) rotate(-90deg);
     }
 
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .fl-dropdown {
+        top: calc(100% + 9px);
+        padding: 10px;
+        border-radius: 17px;
+        gap: 5px;
+    }
+
+    .fl-item {
+        padding: 9px 12px;
+        border-radius: 13px;
+    }
+
+    .fl-divider {
+        margin: 6px 0;
+    }
+
+    .fl-title {
+        margin: 3px 0 1px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .fl-dropdown {
+        top: calc(100% + 8px);
+        padding: 8px;
+        border-radius: 15px;
+        gap: 5px;
+        max-height: 65vh;
+    }
+
+    .fl-item {
+        padding: 9px 11px;
+        font-size: 0.74rem;
+        border-radius: 12px;
+    }
+
+    .fl-item.active::before {
+        width: 16px;
+        height: 16px;
+        margin-right: 7px;
+        font-size: 0.58rem;
+    }
+
+    .fl-title {
+        font-size: 0.7rem;
+        padding: 0 3px;
+    }
+
+    .fl-divider {
+        margin: 6px 0;
+        height: 1.5px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .fl-dropdown {
+        padding: 6px;
+        border-radius: 13px;
+        gap: 4px;
+        max-height: 60vh;
+    }
+
+    .fl-item {
+        padding: 8px 10px;
+        font-size: 0.7rem;
+        border-radius: 11px;
+        letter-spacing: 0.05px;
+    }
+
+    .fl-item.active::before {
+        width: 15px;
+        height: 15px;
+        margin-right: 6px;
+        font-size: 0.55rem;
+    }
+
+    .fl-title {
+        font-size: 0.66rem;
+        letter-spacing: 0.4px;
+    }
+
+    .fl-divider {
+        margin: 5px 0;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    .fl-dropdown,
+    .fl-item.active::before {
+        animation: none;
+    }
+
+    .fl-item {
+        transition: none;
+    }
 }

@@ -1,813 +1,528 @@
-/* ============================================
-   PRODUCT SUMMARY SECTION - PREMIUM RESPONSIVE STYLES
-   ============================================ */
+/* ProductSummary.css */
 
-/* --- Base Container --- */
+.ps-section,
+.ps-section * {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   MAIN SECTION (Clay card)
+   ============================================ */
 .ps-section {
-    width: 100%;
-    padding: 20px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  width: 100%;
+  padding: 18px 16px 20px;
+
+  background: #f0f2f7;
+  border-radius: 24px;
+
+  box-shadow:
+    8px 8px 20px rgba(174, 181, 199, 0.55),
+    -8px -8px 20px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1),
+    inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+  animation: psSectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* ============================================
-   TOP BAR (Price + Rating)
+   TOP BAR (Price + Discount + Rating)
    ============================================ */
-
 .tobbardet {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  width: 100%;
 }
 
-/* --- Price Row --- */
 .ps-price-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-wrap: wrap;
 }
 
 .pridisc {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  flex-wrap: wrap;
 }
 
-/* --- Demo Price (Strikethrough) --- */
+/* ---- Demo (old) price ---- */
 .ps-demo-price {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #9a9ab0;
-    text-decoration: line-through;
-    text-decoration-thickness: 1.5px;
-    text-decoration-color: #c0c0d0;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
+  font-size: clamp(0.78rem, 2vw, 0.88rem);
+  font-weight: 600;
+  color: #8a90b0;
+
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+
+  opacity: 0.9;
 }
 
-/* --- Discount Badge --- */
+/* ---- Discount badge (clay pill) ---- */
 .ps-discount {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #ffffff;
-    background: linear-gradient(135deg, #00b894, #00cec9);
-    padding: 4px 10px;
-    border-radius: 50px;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    line-height: 1.4;
-    white-space: nowrap;
-    box-shadow: 0 3px 10px rgba(0, 184, 148, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 10px;
+
+  font-size: clamp(0.68rem, 1.8vw, 0.76rem);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #2e9e6b, #1f8a58);
+
+  box-shadow:
+    3px 3px 8px rgba(46, 158, 107, 0.4),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+
+  animation: psBadgePulse 2.5s ease-in-out infinite;
 }
 
-.ps-discount:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 16px rgba(0, 184, 148, 0.45);
-}
-
-/* --- Main Price --- */
+/* ---- Main price ---- */
 .ps-price {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #1a1a2e;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-    transition: color 0.3s ease;
+  font-size: clamp(1.2rem, 3.4vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.3px;
+
+  background: linear-gradient(135deg, #4a5070, #2f3350);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-/* --- Rating Badge --- */
+/* ---- Rating pill ---- */
 .ps-rating {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    background: linear-gradient(145deg, #fff9e6, #fff3d4);
-    padding: 6px 12px;
-    border-radius: 50px;
-    border: 1.5px solid #ffeaa7;
-    letter-spacing: 0.01em;
-    line-height: 1.3;
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    flex-shrink: 0;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 6px 12px;
+
+  font-size: clamp(0.78rem, 2vw, 0.88rem);
+  font-weight: 800;
+  color: #4b5170;
+
+  background: #f0f2f7;
+  border-radius: 14px;
+
+  box-shadow:
+    inset 3px 3px 8px rgba(174, 181, 199, 0.4),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.95);
+
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ps-rating:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 14px rgba(255, 193, 7, 0.3);
+  transform: translateY(-2px);
+  color: #d18c1e;
+
+  box-shadow:
+    4px 4px 10px rgba(209, 140, 30, 0.25),
+    -4px -4px 10px rgba(255, 255, 255, 1),
+    inset 3px 3px 8px rgba(174, 181, 199, 0.4);
 }
 
 /* ============================================
    HEADER (Product Name)
    ============================================ */
-
 .ps-header {
-    width: 100%;
+  width: 100%;
 }
 
 .ps-name {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.35;
-    word-break: break-word;
-    transition: color 0.3s ease;
+  margin: 0;
+
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.2px;
+  color: #3a3f55;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* ============================================
    DESCRIPTION
    ============================================ */
-
 .ps-desc {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: #5a5a70;
-    line-height: 1.65;
-    margin: 0;
-    letter-spacing: 0.005em;
-    word-break: break-word;
-    transition: color 0.3s ease;
+  margin: 0;
+
+  font-size: clamp(0.85rem, 2.1vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1.65;
+  color: #5a6080;
+  letter-spacing: 0.1px;
+
+  transition: color 0.3s ease;
 }
 
 .ps-more {
-    color: #6c5ce7;
-    font-weight: 700;
-    cursor: pointer;
-    margin-left: 4px;
-    transition: color 0.25s ease, text-decoration 0.25s ease;
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    display: inline-block;
-    white-space: nowrap;
+  display: inline-block;
+  margin-left: 6px;
+
+  font-weight: 800;
+  color: #5b6ee1;
+  cursor: pointer;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .ps-more:hover {
-    color: #5648c4;
-    border-bottom-color: #5648c4;
+  color: #4553d6;
+  transform: translateX(2px);
 }
 
 .ps-more:active {
-    color: #4538a8;
+  transform: translateX(0) scale(0.96);
 }
 
 /* ============================================
-   ACTION ROW (Cart + Buy Now)
+   BOTTOM ACTION ROW
    ============================================ */
-
 .downcartbuy {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    flex-wrap: wrap;
-    padding-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+
+  margin-top: 4px;
 }
 
-/* --- Cart Row --- */
+/* ---- Cart row (left) ---- */
 .ps-cart-row {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
 }
 
-/* --- Quantity Selector --- */
-.ps-qty {
-    display: inline-flex;
-    align-items: center;
-    background: linear-gradient(145deg, #fafafe, #f0f0ff);
-    border: 1.5px solid #e0e0f0;
-    border-radius: 50px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.08);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+/* ---- Buy Now (right) ---- */
+.ps-buy-now {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
 }
 
-.ps-qty:hover {
-    border-color: rgba(108, 92, 231, 0.35);
-    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.15);
-}
-
-.ps-qty button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 44px;
-    background: transparent;
-    border: none;
-    color: #6c5ce7;
-    font-size: 1.25rem;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    line-height: 1;
-    user-select: none;
-    position: relative;
-}
-
-.ps-qty button:hover {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: #ffffff;
-}
-
-.ps-qty button:active {
-    transform: scale(0.92);
-}
-
-.ps-qty button:focus-visible {
-    outline: 2px solid #6c5ce7;
-    outline-offset: -2px;
-}
-
-.ps-qty span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    height: 44px;
-    padding: 0 4px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    letter-spacing: -0.01em;
-    user-select: none;
-    border-left: 1.5px solid #e0e0f0;
-    border-right: 1.5px solid #e0e0f0;
-    background: #ffffff;
+/* Single action full-width */
+.downcartbuy > .ps-buy-now:only-child {
+  flex: 1;
+  width: 100%;
 }
 
 /* ============================================
-   BUTTONS
+   ADD TO CART BUTTON (Clay)
    ============================================ */
-
-/* --- Base Button (Add to Cart / Buy Now) --- */
 .ps-cart-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 0 24px;
-    height: 46px;
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: #ffffff;
-    border: none;
-    border-radius: 50px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.3);
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
-/* Shine sweep effect */
-.ps-cart-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.25),
-        transparent
-    );
-    transition: left 0.6s ease;
-    pointer-events: none;
-}
+  width: 100%;
+  padding: 12px 14px;
 
-.ps-cart-btn:hover::before {
-    left: 100%;
+  font-size: clamp(0.82rem, 2.2vw, 0.92rem);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+  white-space: nowrap;
+
+  cursor: pointer;
+  border: none;
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+
+  box-shadow:
+    6px 6px 16px rgba(124, 140, 248, 0.4),
+    -4px -4px 12px rgba(255, 255, 255, 0.9),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.35),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .ps-cart-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(108, 92, 231, 0.45);
-    background: linear-gradient(135deg, #5b4cd6, #9188f0);
+  transform: translateY(-3px);
+
+  box-shadow:
+    9px 9px 22px rgba(124, 140, 248, 0.5),
+    -6px -6px 16px rgba(255, 255, 255, 1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.35);
 }
 
 .ps-cart-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+  transform: translateY(1px) scale(0.97);
+
+  box-shadow:
+    inset 5px 5px 12px rgba(60, 70, 140, 0.4),
+    inset -5px -5px 12px rgba(255, 255, 255, 0.2);
 }
 
 .ps-cart-btn:focus-visible {
-    outline: 2px solid #6c5ce7;
-    outline-offset: 3px;
+  outline: 2px solid #7c8cf8;
+  outline-offset: 3px;
 }
 
-/* --- Buy Now Wrapper --- */
-.ps-buy-now {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-}
-
+/* Buy Now variant — green gradient */
 .ps-buy-now .ps-cart-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
-    box-shadow: 0 6px 20px rgba(26, 26, 46, 0.3);
+  background: linear-gradient(135deg, #2e9e6b, #1f8a58);
+
+  box-shadow:
+    6px 6px 16px rgba(46, 158, 107, 0.4),
+    -4px -4px 12px rgba(255, 255, 255, 0.9),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.35),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .ps-buy-now .ps-cart-btn:hover {
-    background: linear-gradient(135deg, #2d2d4a, #3d3d5c);
-    box-shadow: 0 10px 28px rgba(26, 26, 46, 0.45);
+  box-shadow:
+    9px 9px 22px rgba(46, 158, 107, 0.5),
+    -6px -6px 16px rgba(255, 255, 255, 1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.35);
 }
 
-/* --- Total Price in Buy Button --- */
 .ps-total-price {
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    font-size: 0.95rem;
-}
-
-/* --- ORDER NOW Button (Non-shop/gift) --- */
-.ps-buy-now .ps-cart-btn:only-child {
-    background: blue;
-    box-shadow: 0 6px 20px rgba(0, 184, 148, 0.3);
-    font-size: 0.95rem;
-    letter-spacing: 0.06em;
-}
-
-.ps-buy-now .ps-cart-btn:only-child:hover {
-    background: linear-gradient(135deg, #00a884, #00bdb8);
-    box-shadow: 0 10px 28px rgba(0, 184, 148, 0.45);
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   QUANTITY SELECTOR (Clay)
    ============================================ */
+.ps-qty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
-    .ps-section {
-        padding: 24px 0;
-        gap: 16px;
-    }
+  width: 100%;
+  padding: 6px 8px;
 
-    .ps-price {
-        font-size: 2rem;
-    }
+  background: #f0f2f7;
+  border-radius: 16px;
 
-    .ps-name {
-        font-size: 1.5rem;
-    }
-
-    .ps-desc {
-        font-size: 0.95rem;
-    }
-
-    .ps-cart-btn {
-        height: 50px;
-        padding: 0 28px;
-        font-size: 0.95rem;
-    }
-
-    .ps-qty button,
-    .ps-qty span {
-        height: 48px;
-    }
-
-    .ps-qty button {
-        width: 44px;
-    }
-
-    .ps-qty span {
-        min-width: 48px;
-        font-size: 1rem;
-    }
+  box-shadow:
+    inset 4px 4px 10px rgba(174, 181, 199, 0.5),
+    inset -4px -4px 10px rgba(255, 255, 255, 0.95);
 }
 
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .ps-price {
-        font-size: 1.85rem;
-    }
+.ps-qty button {
+  display: grid;
+  place-items: center;
 
-    .ps-name {
-        font-size: 1.4rem;
-    }
+  width: 34px;
+  height: 34px;
+
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #4b5170;
+  line-height: 1;
+
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+
+  background: #f0f2f7;
+
+  box-shadow:
+    3px 3px 8px rgba(174, 181, 199, 0.55),
+    -3px -3px 8px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1);
+
+  transition: all 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
-    .ps-section {
-        padding: 18px 0;
-        gap: 13px;
-    }
+.ps-qty button:hover {
+  color: #5b6ee1;
+  transform: translateY(-2px);
 
-    .ps-price {
-        font-size: 1.65rem;
-    }
-
-    .ps-name {
-        font-size: 1.25rem;
-    }
-
-    .ps-desc {
-        font-size: 0.87rem;
-    }
-
-    .ps-cart-btn {
-        height: 44px;
-        padding: 0 22px;
-        font-size: 0.87rem;
-    }
-
-    .ps-qty button,
-    .ps-qty span {
-        height: 42px;
-    }
-
-    .ps-qty button {
-        width: 38px;
-        font-size: 1.15rem;
-    }
-
-    .ps-qty span {
-        min-width: 42px;
-        font-size: 0.92rem;
-    }
+  box-shadow:
+    5px 5px 12px rgba(124, 140, 248, 0.3),
+    -5px -5px 12px rgba(255, 255, 255, 1),
+    inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .ps-section {
-        padding: 16px 0;
-        gap: 12px;
-    }
+.ps-qty button:active {
+  transform: translateY(1px) scale(0.94);
 
-    .tobbardet {
-        gap: 10px;
-    }
-
-    .ps-price-row {
-        gap: 10px;
-    }
-
-    .pridisc {
-        gap: 8px;
-    }
-
-    .ps-demo-price {
-        font-size: 0.88rem;
-    }
-
-    .ps-discount {
-        font-size: 0.68rem;
-        padding: 3px 8px;
-    }
-
-    .ps-price {
-        font-size: 1.5rem;
-    }
-
-    .ps-rating {
-        font-size: 0.78rem;
-        padding: 5px 10px;
-    }
-
-    .ps-name {
-        font-size: 1.15rem;
-    }
-
-    .ps-desc {
-        font-size: 0.84rem;
-        line-height: 1.6;
-    }
-
-    .downcartbuy {
-        gap: 10px;
-    }
-
-    .ps-cart-btn {
-        height: 42px;
-        padding: 0 18px;
-        font-size: 0.84rem;
-    }
-
-    .ps-qty button,
-    .ps-qty span {
-        height: 40px;
-    }
-
-    .ps-qty button {
-        width: 36px;
-        font-size: 1.1rem;
-    }
-
-    .ps-qty span {
-        min-width: 40px;
-        font-size: 0.88rem;
-    }
-
-    .ps-total-price {
-        font-size: 0.88rem;
-    }
+  box-shadow:
+    inset 4px 4px 8px rgba(174, 181, 199, 0.6),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.95);
 }
 
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .ps-section {
-        padding: 14px 0;
-        gap: 11px;
-    }
+.ps-qty span {
+  flex: 1;
 
-    .tobbardet {
-        gap: 8px;
-    }
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+  font-weight: 800;
+  text-align: center;
+  color: #3a3f55;
 
-    .ps-price-row {
-        gap: 8px;
-    }
-
-    .pridisc {
-        gap: 7px;
-    }
-
-    .ps-demo-price {
-        font-size: 0.82rem;
-    }
-
-    .ps-discount {
-        font-size: 0.65rem;
-        padding: 3px 7px;
-    }
-
-    .ps-price {
-        font-size: 1.35rem;
-    }
-
-    .ps-rating {
-        font-size: 0.74rem;
-        padding: 4px 9px;
-    }
-
-    .ps-name {
-        font-size: 1.05rem;
-    }
-
-    .ps-desc {
-        font-size: 0.8rem;
-    }
-
-    .downcartbuy {
-        gap: 8px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .ps-cart-row,
-    .ps-buy-now {
-        width: 100%;
-    }
-
-    .ps-cart-btn {
-        height: 44px;
-        padding: 0 16px;
-        font-size: 0.82rem;
-        width: 100%;
-    }
-
-    .ps-qty {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .ps-qty button {
-        width: 44px;
-        height: 44px;
-        font-size: 1.15rem;
-    }
-
-    .ps-qty span {
-        flex: 1;
-        height: 44px;
-        min-width: 0;
-        font-size: 0.9rem;
-    }
-
-    .ps-total-price {
-        font-size: 0.85rem;
-    }
-}
-
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .ps-section {
-        padding: 12px 0;
-        gap: 10px;
-    }
-
-    .tobbardet {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .ps-demo-price {
-        font-size: 0.78rem;
-    }
-
-    .ps-discount {
-        font-size: 0.6rem;
-        padding: 2px 6px;
-    }
-
-    .ps-price {
-        font-size: 1.25rem;
-    }
-
-    .ps-rating {
-        font-size: 0.7rem;
-        padding: 4px 8px;
-    }
-
-    .ps-name {
-        font-size: 0.95rem;
-    }
-
-    .ps-desc {
-        font-size: 0.76rem;
-    }
-
-    .ps-more {
-        font-size: 0.76rem;
-    }
-
-    .downcartbuy {
-        gap: 7px;
-    }
-
-    .ps-cart-btn {
-        height: 42px;
-        padding: 0 14px;
-        font-size: 0.78rem;
-    }
-
-    .ps-qty button {
-        width: 40px;
-        height: 42px;
-        font-size: 1.05rem;
-    }
-
-    .ps-qty span {
-        height: 42px;
-        font-size: 0.85rem;
-    }
-
-    .ps-total-price {
-        font-size: 0.8rem;
-    }
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ANIMATIONS
+   ============================================ */
+@keyframes psSectionIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes psBadgePulse {
+  0%, 100% {
+    box-shadow:
+      3px 3px 8px rgba(46, 158, 107, 0.4),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(46, 158, 107, 0.15),
+      3px 3px 8px rgba(46, 158, 107, 0.4),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+  }
+}
+
+/* ============================================
+   RESPONSIVE
    ============================================ */
 
+/* Tablets */
+@media (max-width: 768px) {
+  .ps-section {
+    padding: 16px 14px 18px;
+    gap: 12px;
+    border-radius: 22px;
+  }
+
+  .downcartbuy {
+    gap: 10px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .ps-section {
+    padding: 14px 12px 16px;
+    gap: 10px;
+    border-radius: 20px;
+  }
+
+  .tobbardet {
+    gap: 8px;
+  }
+
+  .ps-price-row {
+    gap: 8px;
+  }
+
+  .ps-rating {
+    padding: 5px 10px;
+    border-radius: 12px;
+  }
+
+  .downcartbuy {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ps-cart-row,
+  .ps-buy-now {
+    width: 100%;
+    flex: none;
+  }
+
+  .ps-cart-btn {
+    padding: 12px 12px;
+    border-radius: 14px;
+  }
+
+  .ps-qty button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.05rem;
+  }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+  .ps-section {
+    padding: 12px 10px 14px;
+    border-radius: 18px;
+  }
+
+  .ps-discount {
+    padding: 3px 8px;
+    font-size: 0.66rem;
+  }
+
+  .ps-rating {
+    padding: 4px 8px;
+    font-size: 0.72rem;
+  }
+
+  .ps-cart-btn {
+    padding: 11px 10px;
+    font-size: 0.78rem;
+    border-radius: 12px;
+  }
+
+  .ps-qty button {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-    .ps-section *,
-    .ps-section *::before,
-    .ps-section *::after {
-        transition: none !important;
-        animation: none !important;
-    }
+  .ps-section,
+  .ps-discount {
+    animation: none;
+  }
 
-    .ps-cart-btn:hover {
-        transform: none;
-    }
-
-    .ps-discount:hover,
-    .ps-rating:hover {
-        transform: none;
-    }
-
-    .ps-cart-btn:hover::before {
-        left: -100%;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
-    .ps-cart-btn {
-        border: 2px solid ButtonText;
-    }
-
-    .ps-qty {
-        border: 2px solid ButtonText;
-    }
-
-    .ps-rating {
-        border: 2px solid ButtonText;
-    }
-
-    .ps-discount {
-        border: 1px solid ButtonText;
-    }
-
-    .ps-more {
-        color: LinkText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .ps-demo-price {
-        color: #6a6a80;
-        text-decoration-color: #4a4a60;
-    }
-
-    .ps-price {
-        color: #f0f0f5;
-    }
-
-    .ps-rating {
-        background: linear-gradient(145deg, #2a2515, #3a3018);
-        border-color: #4a3a1a;
-        color: #ffd93d;
-        box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
-    }
-
-    .ps-rating:hover {
-        box-shadow: 0 4px 14px rgba(255, 193, 7, 0.3);
-    }
-
-    .ps-name {
-        color: #f0f0f5;
-    }
-
-    .ps-desc {
-        color: #a0a0b8;
-    }
-
-    .ps-more {
-        color: #a29bfe;
-    }
-
-    .ps-more:hover {
-        color: #b8b0ff;
-        border-bottom-color: #b8b0ff;
-    }
-
-    .ps-qty {
-        background: linear-gradient(145deg, #1e1e35, #252545);
-        border-color: #2e2e48;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .ps-qty:hover {
-        border-color: rgba(108, 92, 231, 0.45);
-        box-shadow: 0 4px 14px rgba(108, 92, 231, 0.25);
-    }
-
-    .ps-qty span {
-        color: #f0f0f5;
-        background: #1a1a2e;
-        border-color: #2e2e48;
-    }
-
-    .ps-cart-btn {
-        box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
-    }
-
-    .ps-cart-btn:hover {
-        box-shadow: 0 10px 28px rgba(108, 92, 231, 0.55);
-    }
-
-    .ps-buy-now .ps-cart-btn {
-        background: linear-gradient(135deg, #2d2d4a, #3d3d5c);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    .ps-buy-now .ps-cart-btn:hover {
-        background: linear-gradient(135deg, #3d3d5c, #4d4d6c);
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
-    }
+  .ps-cart-btn,
+  .ps-qty button,
+  .ps-rating,
+  .ps-more {
+    transition: none;
+  }
 }

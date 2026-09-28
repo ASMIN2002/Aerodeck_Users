@@ -94,9 +94,8 @@ function OffersCarousel() {
                 {openOffers.map((offer, index) => (
                     <div
                         key={offer.id}
-                        className={`shop-offer-slide ${
-                            index === activeOfferIndex ? "active" : ""
-                        }`}
+                        className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""
+                            }`}
                         onClick={() =>
                             toast("Feature Coming Soon 🚀", {
                                 duration: 2500,
@@ -123,9 +122,8 @@ function OffersCarousel() {
                                     if (!cd) return null;
                                     return (
                                         <div
-                                            className={`shop-offer-countdown ${
-                                                cd.expired ? "expired" : ""
-                                            }`}
+                                            className={`shop-offer-countdown ${cd.expired ? "expired" : ""
+                                                }`}
                                         >
                                             {cd.expired
                                                 ? "⏰ Expired"
@@ -171,9 +169,8 @@ function OffersCarousel() {
                 {openOffers.map((offer, index) => (
                     <span
                         key={offer.id}
-                        className={`shop-offer-dot ${
-                            index === activeOfferIndex ? "active" : ""
-                        }`}
+                        className={`shop-offer-dot ${index === activeOfferIndex ? "active" : ""
+                            }`}
                     />
                 ))}
             </div>

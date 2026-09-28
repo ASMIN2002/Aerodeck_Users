@@ -1,8 +1,25 @@
 /* ==========================================================================
-   VALUE DEALS — PREMIUM DARK ANIMATED
+   VALUE DEALS — HEAVY WHITE CLAYMORPHISM
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   ROOT VARIABLES
+   ============================================ */
+
+:root {
+    --vd-bg: #e4e7ef;
+    --vd-bg-dark: #ccd0db;
+    --vd-shadow-dark: rgba(160, 165, 180, 0.9);
+    --vd-shadow-light: #ffffff;
+    --vd-purple: #6c5ce7;
+    --vd-purple-light: #a29bfe;
+    --vd-gold: #feca57;
+    --vd-green: #00d97f;
+    --vd-text: #2d3436;
+    --vd-text-soft: #4a5568;
+}
 
 /* ============================================
    SECTION CONTAINER
@@ -11,10 +28,10 @@
 .shop-value-deals-section {
     position: relative;
     width: 100%;
-    margin: 0 0 24px 0;
+    margin: 0 0 16px 0;
     padding: 4px 0 8px 0;
-    background: #0a0a0f;
-    animation: valueSectionEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+    background: transparent;
+    animation: vdEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -25,16 +42,9 @@
     box-sizing: border-box;
 }
 
-@keyframes valueSectionEnter {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes vdEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
@@ -44,34 +54,20 @@
 .shop-value-deals-section .likeheader {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
+    padding: 0 14px;
+    margin-bottom: 10px;
 }
 
 .shop-value-deals-section .likeheader h3 {
     position: relative;
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #ffffff;
     margin: 0;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--vd-text);
     letter-spacing: -0.01em;
     line-height: 1.3;
-    display: flex;
-    align-items: center;
-    animation: valueTitleFadeIn 0.6s ease 0.3s backwards;
-}
-
-@keyframes valueTitleFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    padding-left: 14px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .shop-value-deals-section .likeheader h3::before {
@@ -80,11 +76,13 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 3px;
+    width: 4px;
     height: 70%;
-    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
+    background: linear-gradient(180deg, #feca57, #ff9f43);
     border-radius: 4px;
-    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
+    box-shadow:
+        2px 2px 6px rgba(255, 159, 67, 0.4),
+        -1px -1px 3px rgba(255, 255, 255, 0.9);
 }
 
 /* ============================================
@@ -108,82 +106,82 @@
 
 .shop-value-deals-grid {
     display: flex;
-    gap: 12px;
-    padding: 4px 16px;
+    gap: 10px;
+    padding: 4px 14px;
 }
 
 /* ============================================
-   VALUE CARD — FLEX, FIXED SIZE
+   VALUE CARD — COMPACT CLAY
    ============================================ */
 
 .shop-value-card {
-    flex: 0 0 140px;
-    width: 140px;
+    flex: 0 0 130px;
+    width: 130px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     scroll-snap-align: start;
-    animation: valueCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation: vdCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
-@keyframes valueCardEnter {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.92);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+@keyframes vdCardEnter {
+    from { opacity: 0; transform: translateY(16px) scale(0.94); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .shop-value-card:active {
-    transform: translateY(-3px) scale(0.97);
+    transform: scale(0.96);
 }
 
 /* ============================================
-   VALUE IMAGE — FIXED SIZE + ANIMATED BORDER
+   IMAGE — CLAY
    ============================================ */
 
 .shop-value-image {
     position: relative;
-    width: 140px;
-    height: 140px;
-    border-radius: 14px;
+    width: 130px;
+    height: 130px;
+    border-radius: 18px;
     overflow: hidden;
-    background: linear-gradient(145deg, #1c1c24 0%, #232330 100%);
+    background: #ffffff;
     box-shadow:
-        0 4px 14px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(162, 155, 254, 0.15) inset;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        7px 7px 16px rgba(160, 165, 180, 0.7),
+        -7px -7px 16px rgba(255, 255, 255, 0.95),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.04),
+        inset 0 3px 6px rgba(255, 255, 255, 0.85);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     isolation: isolate;
 }
 
-/* ANIMATED RAINBOW BORDER */
+.shop-value-card:active .shop-value-image {
+    box-shadow:
+        inset 5px 5px 12px rgba(160, 165, 180, 0.85),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
+}
+
+/* Animated gradient border */
 .shop-value-image::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 14px;
+    border-radius: 18px;
     padding: 1.5px;
     background: linear-gradient(135deg,
-            #a29bfe, #6c5ce7, #00cec9,
-            #fd79a8, #ffeaa7, #a29bfe);
+        #feca57, #ff9f43, #00d97f, #a29bfe, #feca57);
     background-size: 400% 400%;
     -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    animation: valueBorderRotate 6s linear infinite;
+    animation: vdBorderFlow 6s linear infinite;
     pointer-events: none;
     z-index: 3;
-    opacity: 0.7;
+    opacity: 0.6;
     transition: opacity 0.3s ease;
 }
 
@@ -191,246 +189,221 @@
     opacity: 1;
 }
 
-@keyframes valueBorderRotate {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Outer glow */
-.shop-value-image::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 16px;
-    background: linear-gradient(135deg,
-            rgba(162, 155, 254, 0.4),
-            rgba(108, 92, 231, 0.3),
-            rgba(0, 206, 201, 0.3),
-            rgba(253, 121, 168, 0.3));
-    background-size: 400% 400%;
-    animation: valueBorderRotate 6s linear infinite;
-    z-index: -1;
-    filter: blur(8px);
-    opacity: 0.4;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.shop-value-card:active .shop-value-image::after {
-    opacity: 0.9;
+@keyframes vdBorderFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Image */
 .shop-value-image img {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     display: block;
+    padding: 6px;
+    background: #ffffff;
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
     -webkit-user-drag: none;
+    image-rendering: -webkit-optimize-contrast;
+    position: relative;
     z-index: 1;
+    transform: scale(1.4);
 }
-
-.shop-value-card:active .shop-value-image img {
-    transform: scale(1.1);
-}
-
-/* ============================================
-   HIGHLIGHT BADGE
-   ============================================ */
 
 .shop-value-highlight {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 4px 8px;
-    background: linear-gradient(135deg,
-            rgba(162, 155, 254, 0.95),
-            rgba(108, 92, 231, 0.95));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50px;
-    color: #ffffff;
-    font-size: 0.6rem;
-    font-weight: 800;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    color: #1a1a2e;
+    font-size: 0.56rem;
+    font-weight: 900;
     letter-spacing: 0.02em;
-    line-height: 1.4;
+    line-height: 1.3;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow:
+        3px 3px 8px rgba(255, 159, 67, 0.5),
+        -2px -2px 6px rgba(255, 255, 255, 0.9),
+        inset 0 -2px 3px rgba(217, 119, 6, 0.4),
+        inset 0 2px 3px rgba(255, 255, 255, 0.5);
+    z-index: 4;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-shadow:
-        0 4px 14px rgba(108, 92, 231, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-    z-index: 4;
-    transition: all 0.3s ease;
-}
-
-.shop-value-card:active .shop-value-highlight {
-    transform: scale(1.05);
 }
 
 /* ============================================
-   VALUE NAME — 1 LINE + ...
+   NAME
    ============================================ */
 
 .shop-value-name {
     display: block;
     width: 100%;
-    padding: 0 4px;
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: #ffffff;
+    padding: 0 2px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--vd-text);
     letter-spacing: -0.005em;
     line-height: 1.3;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.3s ease;
-}
-
-.shop-value-card:active .shop-value-name {
-    color: #a29bfe;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
+    transition: color 0.25s ease;
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE — TABLET
    ============================================ */
 
-@media (min-width: 1440px) {
-
+@media (max-width: 768px) {
     .shop-value-deals-section {
-        margin-bottom: 32px;
-    }
-
-    .shop-value-deals-section .likeheader {
-        margin-bottom: 18px;
-    }
-
-    .shop-value-deals-section .likeheader h3 {
-        font-size: 1.2rem;
-    }
-
-    .shop-value-deals-grid {
-        gap: 16px;
-        padding: 4px 24px;
-    }
-
-    .shop-value-card {
-        flex: 0 0 170px;
-        width: 170px;
-        gap: 10px;
-    }
-
-    .shop-value-image {
-        width: 170px;
-        height: 170px;
-        border-radius: 16px;
-    }
-
-    .shop-value-image::before {
-        border-radius: 16px;
-    }
-
-    .shop-value-image::after {
-        border-radius: 18px;
-    }
-
-    .shop-value-highlight {
-        font-size: 0.66rem;
-        padding: 5px 12px;
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-    }
-
-    .shop-value-name {
-        font-size: 0.82rem;
-    }
-}
-
-@media (max-width: 1023px) {
-
-    .shop-value-deals-section {
-        margin-bottom: 20px;
-    }
-
-    .shop-value-deals-section .likeheader {
-        margin-bottom: 12px;
-    }
-
-    .shop-value-deals-section .likeheader h3 {
-        font-size: 1rem;
-    }
-
-    .shop-value-deals-grid {
-        gap: 11px;
-        padding: 4px 14px;
-    }
-
-    .shop-value-card {
-        flex: 0 0 130px;
-        width: 130px;
-        gap: 7px;
-    }
-
-    .shop-value-image {
-        width: 130px;
-        height: 130px;
-        border-radius: 13px;
-    }
-
-    .shop-value-image::before {
-        border-radius: 13px;
-    }
-
-    .shop-value-image::after {
-        border-radius: 15px;
-    }
-
-    .shop-value-highlight {
-        font-size: 0.56rem;
-        padding: 3px 9px;
-    }
-
-    .shop-value-name {
-        font-size: 0.7rem;
-    }
-}
-
-@media (max-width: 767px) {
-
-    .shop-value-deals-section {
-        margin-bottom: 18px;
+        margin-bottom: 14px;
         padding: 3px 0 6px;
     }
 
     .shop-value-deals-section .likeheader {
-        margin-bottom: 11px;
+        padding: 0 12px;
+        margin-bottom: 8px;
     }
 
     .shop-value-deals-section .likeheader h3 {
-        font-size: 0.94rem;
+        font-size: 0.88rem;
         padding-left: 12px;
+    }
+
+    .shop-value-deals-section .likeheader h3::before {
+        width: 3.5px;
+    }
+
+    .shop-value-deals-grid {
+        gap: 9px;
+        padding: 4px 12px;
+    }
+
+    .shop-value-card {
+        flex: 0 0 114px;
+        width: 114px;
+        gap: 5px;
+    }
+
+    .shop-value-image {
+        width: 114px;
+        height: 114px;
+        border-radius: 16px;
+    }
+
+    .shop-value-image::before {
+        border-radius: 16px;
+    }
+
+    .shop-value-image img {
+        padding: 5px;
+    }
+
+    .shop-value-highlight {
+        font-size: 0.52rem;
+        padding: 3px 7px;
+        bottom: 5px;
+        left: 5px;
+        right: 5px;
+    }
+
+    .shop-value-name {
+        font-size: 0.62rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL PHONE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .shop-value-deals-section {
+        margin-bottom: 12px;
+    }
+
+    .shop-value-deals-section .likeheader {
+        padding: 0 10px;
+        margin-bottom: 7px;
+    }
+
+    .shop-value-deals-section .likeheader h3 {
+        font-size: 0.82rem;
+        padding-left: 11px;
+    }
+
+    .shop-value-deals-section .likeheader h3::before {
+        width: 3px;
+    }
+
+    .shop-value-deals-grid {
+        gap: 8px;
+        padding: 3px 10px;
+    }
+
+    .shop-value-card {
+        flex: 0 0 104px;
+        width: 104px;
+        gap: 5px;
+    }
+
+    .shop-value-image {
+        width: 104px;
+        height: 104px;
+        border-radius: 14px;
+    }
+
+    .shop-value-image::before {
+        border-radius: 14px;
+    }
+
+    .shop-value-image img {
+        padding: 4px;
+    }
+
+    .shop-value-highlight {
+        font-size: 0.48rem;
+        padding: 3px 6px;
+        bottom: 4px;
+        left: 4px;
+        right: 4px;
+    }
+
+    .shop-value-name {
+        font-size: 0.58rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — EXTRA SMALL
+   ============================================ */
+
+@media (max-width: 380px) {
+    .shop-value-deals-section {
+        margin-bottom: 10px;
+        padding: 2px 0 5px;
+    }
+
+    .shop-value-deals-section .likeheader {
+        padding: 0 8px;
+        margin-bottom: 6px;
+    }
+
+    .shop-value-deals-section .likeheader h3 {
+        font-size: 0.76rem;
+        padding-left: 10px;
     }
 
     .shop-value-deals-section .likeheader h3::before {
@@ -438,136 +411,40 @@
     }
 
     .shop-value-deals-grid {
-        gap: 10px;
-        padding: 4px 12px;
-    }
-
-    .shop-value-card {
-        flex: 0 0 125px;
-        width: 125px;
         gap: 7px;
-    }
-
-    .shop-value-image {
-        width: 125px;
-        height: 125px;
-        border-radius: 12px;
-    }
-
-    .shop-value-image::before {
-        border-radius: 12px;
-    }
-
-    .shop-value-image::after {
-        border-radius: 14px;
-    }
-
-    .shop-value-highlight {
-        font-size: 0.54rem;
-        padding: 3px 8px;
-        bottom: 6px;
-        left: 6px;
-        right: 6px;
-    }
-
-    .shop-value-name {
-        font-size: 0.68rem;
-    }
-
-    .shop-value-card:active {
-        transform: translateY(-2px) scale(0.97);
-    }
-}
-
-@media (max-width: 480px) {
-
-    .shop-value-deals-section {
-        margin-bottom: 16px;
-    }
-
-    .shop-value-deals-section .likeheader {
-        margin-bottom: 10px;
-    }
-
-    .shop-value-deals-section .likeheader h3 {
-        font-size: 0.88rem;
-    }
-
-    .shop-value-deals-grid {
-        gap: 9px;
-        padding: 4px 10px;
-    }
-
-    .shop-value-card {
-        flex: 0 0 118px;
-        width: 118px;
-    }
-
-    .shop-value-image {
-        width: 118px;
-        height: 118px;
-    }
-
-    .shop-value-highlight {
-        font-size: 0.52rem;
-        padding: 3px 7px;
-    }
-
-    .shop-value-name {
-        font-size: 0.64rem;
-    }
-}
-
-@media (max-width: 360px) {
-
-    .shop-value-deals-section {
-        margin-bottom: 14px;
-    }
-
-    .shop-value-deals-section .likeheader {
-        margin-bottom: 9px;
-    }
-
-    .shop-value-deals-section .likeheader h3 {
-        font-size: 0.82rem;
-    }
-
-    .shop-value-deals-section .likeheader h3::before {
-        width: 2px;
-    }
-
-    .shop-value-deals-grid {
-        gap: 8px;
         padding: 3px 8px;
     }
 
     .shop-value-card {
-        flex: 0 0 110px;
-        width: 110px;
-        gap: 6px;
+        flex: 0 0 96px;
+        width: 96px;
+        gap: 4px;
     }
 
     .shop-value-image {
-        width: 110px;
-        height: 110px;
-        border-radius: 11px;
-    }
-
-    .shop-value-image::before {
-        border-radius: 11px;
-    }
-
-    .shop-value-image::after {
+        width: 96px;
+        height: 96px;
         border-radius: 13px;
     }
 
+    .shop-value-image::before {
+        border-radius: 13px;
+    }
+
+    .shop-value-image img {
+        padding: 3px;
+    }
+
     .shop-value-highlight {
-        font-size: 0.48rem;
-        padding: 2px 6px;
+        font-size: 0.44rem;
+        padding: 2px 5px;
+        bottom: 3px;
+        left: 3px;
+        right: 3px;
     }
 
     .shop-value-name {
-        font-size: 0.6rem;
+        font-size: 0.54rem;
     }
 }
 
@@ -576,24 +453,35 @@
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-
     .shop-value-deals-section,
     .shop-value-card,
     .shop-value-image,
     .shop-value-image::before,
-    .shop-value-image::after,
     .shop-value-image img,
     .shop-value-highlight,
-    .shop-value-name,
-    .shop-value-deals-section .likeheader h3 {
+    .shop-value-name {
         animation: none !important;
         transition: none !important;
     }
 
     .shop-value-card:active,
-    .shop-value-card:active .shop-value-image img,
-    .shop-value-card:active .shop-value-highlight {
+    .shop-value-card:active .shop-value-image img {
         transform: none;
     }
 }
 
+/* ============================================
+   iOS SAFE AREA
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .shop-value-deals-grid {
+        padding-left: max(14px, env(safe-area-inset-left));
+        padding-right: max(14px, env(safe-area-inset-right));
+    }
+
+    .shop-value-deals-section .likeheader {
+        padding-left: max(14px, env(safe-area-inset-left));
+        padding-right: max(14px, env(safe-area-inset-right));
+    }
+}

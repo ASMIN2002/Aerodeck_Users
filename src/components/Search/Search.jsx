@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./Search.css";
 import Filter from "../Filter/Filter";
 import { FaSearch } from "react-icons/fa";
@@ -20,6 +20,10 @@ function Search({
     const [categories, setCategories] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+    /* ============================================
+       LOAD CATEGORIES
+       ============================================ */
     useEffect(() => {
         const loadCategories = async () => {
             try {
@@ -33,7 +37,6 @@ function Search({
                         )
                         .filter(item => item.category?.trim());
 
-                    // Random order
                     const shuffled = [...shopCategories].sort(
                         () => Math.random() - 0.5
                     );
@@ -47,127 +50,69 @@ function Search({
 
         loadCategories();
     }, []);
+
     const shopCategories = (categories || [])
         .map(item => item.category?.trim())
         .filter(Boolean);
-    useEffect(() => {
 
-        if (
-            categoryName ||
-            search.trim() ||
-            shopCategories.length === 0
-        ) {
-            return;
-        }
+    /* ============================================
+       ANIMATED PLACEHOLDER
+       ============================================ */
+    useEffect(() => {
+        if (categoryName || search.trim() || shopCategories.length === 0) return;
 
         const interval = setInterval(() => {
-
-            setPlaceholderIndex(prev =>
-                (prev + 1) % shopCategories.length
-            );
-
+            setPlaceholderIndex(prev => (prev + 1) % shopCategories.length);
         }, 2200);
 
         return () => clearInterval(interval);
-
-    }, [
-        categories,
-        search,
-        shopCategories.length,
-        categoryName
-    ]);
+    }, [categories, search, shopCategories.length, categoryName]);
 
     const srRef = useRef(null);
 
+    /* ============================================
+       OUTSIDE CLICK — close filter
+       ============================================ */
     useEffect(() => {
-
         function handleOutsideClick(event) {
-
-            if (
-                srRef.current &&
-                !srRef.current.contains(event.target)
-            ) {
-
+            if (srRef.current && !srRef.current.contains(event.target)) {
                 setShowFilter(false);
-                setSearchSuggestions([]);
-
             }
-
         }
 
-        document.addEventListener(
-            "mousedown",
-            handleOutsideClick
-        );
-
-        return () => {
-
-            document.removeEventListener(
-                "mousedown",
-                handleOutsideClick
-            );
-
-        };
-
+        document.addEventListener("click", handleOutsideClick);
+        return () => document.removeEventListener("click", handleOutsideClick);
     }, []);
+
+    /* ============================================
+       CONFIG
+       ============================================ */
     const config = {
-        Cards: {
-            data: cards,
-            name: "card_name",
-            category: "card_category"
-        },
-
-        Gifts: {
-            data: gifts,
-            name: "gift_name",
-            category: "gift_category"
-        },
-
-        Shop: {
-            data: shops,
-            name: "shop_name",
-            category: "shop_category"
-        },
-
-        Premium: {
-            data: premiums,
-            name: "premium_name",
-            category: "premium_category"
-        }
+        Cards: { data: cards, name: "card_name", category: "card_category" },
+        Gifts: { data: gifts, name: "gift_name", category: "gift_category" },
+        Shop: { data: shops, name: "shop_name", category: "shop_category" },
+        Premium: { data: premiums, name: "premium_name", category: "premium_category" }
     };
-    const [searchSuggestions, setSearchSuggestions] = useState([]);
 
-    useEffect(() => {
-
+    /* ============================================
+       SUGGESTIONS — derived (useMemo)
+       ============================================ */
+    const searchSuggestions = useMemo(() => {
         const current = config[selectedMenu];
 
-        if (!current || !search.trim()) {
-            setSearchSuggestions([]);
-            return;
-        }
+        if (!current || !search.trim()) return [];
 
         const data = current.data || [];
         const keyword = search.toLowerCase().trim();
 
         const names = data
-            .filter(item =>
-                item[current.name]
-                    ?.toLowerCase()
-                    .includes(keyword)
-            )
-            .map(item => ({
-                type: "name",
-                value: item[current.name]
-            }));
+            .filter(item => item[current.name]?.toLowerCase().includes(keyword))
+            .map(item => ({ type: "name", value: item[current.name] }));
 
         const categoryValues = [
             ...new Set(
                 data
-                    .filter(item =>
-                        item[current.category]
-                            ?.toLowerCase()
-                            .includes(keyword)
-                    )
+                    .filter(item => item[current.category]?.toLowerCase().includes(keyword))
                     .map(item => item[current.category])
                     .filter(Boolean)
             )
@@ -178,136 +123,115 @@ function Search({
             value: category
         }));
 
-        const combined = [
-            ...names,
-            ...categorySuggestions
-        ];
+        const combined = [...names, ...categorySuggestions];
 
-        const unique = combined.filter(
-            (item, index, self) =>
+        return combined
+            .filter((item, index, self) =>
                 index === self.findIndex(
-                    x =>
-                        x.value.toLowerCase() ===
-                        item.value.toLowerCase()
+                    x => x.value.toLowerCase() === item.value.toLowerCase()
                 )
-        );
+            )
+            .slice(0, 6);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [search, selectedMenu, cards, gifts, shops, premiums]);
 
-        setSearchSuggestions(unique.slice(0, 6));
-
-    }, [
-        search,
-        selectedMenu,
-        cards,
-        gifts,
-        shops,
-        premiums
-    ]);
+    const hasSuggestions = searchSuggestions.length > 0;
 
     return (
+        <div className="sr-container" ref={srRef}>
 
-        <div
-            className="sr-container"
-            ref={srRef}
-        >
+            {/* ============================================
+                TOP ROW — search box + filter button
+                ============================================ */}
+            <div className="sr-top-row">
 
-            <div className="sr-search-box">
-                {!search.trim() && (
-                    categoryName ? (
-                        <span className="sr-static-placeholder">
-                            Search {categoryName}...
-                        </span>
-                    ) : (
-                        shopCategories.length > 0 && (
-                            <span
-                                key={shopCategories[placeholderIndex]}
-                                className="sr-animated-placeholder"
-                            >
-                                Search {shopCategories[placeholderIndex]}...
+                {/* ---- SEARCH BOX ---- */}
+                <div className="sr-search-box">
+
+                    {!search.trim() && (
+                        categoryName ? (
+                            <span className="sr-static-placeholder">
+                                Search {categoryName}...
                             </span>
+                        ) : (
+                            shopCategories.length > 0 && (
+                                <span
+                                    key={shopCategories[placeholderIndex]}
+                                    className="sr-animated-placeholder"
+                                >
+                                    Search {shopCategories[placeholderIndex]}...
+                                </span>
+                            )
                         )
-                    )
-                )}
+                    )}
 
-                <input
-                    type="text"
-                    className="sr-input"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") setSearchSuggestions([]);
-                    }}
-                />
+                    <input
+                        type="text"
+                        className="sr-input"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
 
-                {/* ✅ SEARCH ICON — Right side mein */}
+                    <button
+                        type="button"
+                        className="sr-search-icon-btn"
+                        aria-label="Search"
+                    >
+                        <FaSearch />
+                    </button>
+
+                </div>
+
+                {/* ---- FILTER BUTTON ---- */}
                 <button
+                    className="sr-filter-btn"
                     type="button"
-                    className="sr-search-icon-btn"
-                    aria-label="Search"
-                    onClick={() => setSearchSuggestions([])}
+                    onClick={() => setShowFilter(!showFilter)}
+                    aria-label="Filter"
                 >
-                    <FaSearch />
+                    ⚙
                 </button>
+
             </div>
-            {
-                searchSuggestions.length > 0 && (
 
-                    <div className="sr-suggestions">
-
-                        {searchSuggestions.map((item, index) => (
-
-                            <button
-                                key={`${item.type}-${item.value}-${index}`}
-                                type="button"
-                                className="sr-suggestion"
-                                onClick={() => {
-
-                                    setSearch(item.value);
-                                    setSearchSuggestions([]);
-
-                                }}
-                            >
-
-                                <span className="sr-suggestion-icon">
-                                    {item.type === "category" ? "●" : "⌕"}
-                                </span>
-
-                                <span>
-                                    {item.value}
-                                </span>
-
-                            </button>
-
-                        ))}
-
-                    </div>
-
-                )
-            }
-
-            {/* <button
-                className="sr-filter-btn"
-                type="button"
-                onClick={() =>
-                    setShowFilter(!showFilter)
-                }
+            {/* ============================================
+                SUGGESTIONS — search box ke neeche
+                ============================================ */}
+            <div
+                className={`sr-suggestions ${hasSuggestions ? "sr-suggestions-show" : ""}`}
             >
-                ⚙
-            </button> */}
+                {searchSuggestions.map((item, index) => (
+                    <button
+                        key={`${item.type}-${item.value}-${index}`}
+                        type="button"
+                        className="sr-suggestion"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => {
+                            setSearch(item.value);
+                        }}
+                    >
+                        <span className="sr-suggestion-icon">
+                            {item.type === "category" ? "●" : "⌕"}
+                        </span>
+                        <span>{item.value}</span>
+                    </button>
+                ))}
+            </div>
 
-            {
-                showFilter &&
+            {/* ============================================
+                FILTER PANEL
+                ============================================ */}
+            {showFilter && (
                 <Filter
                     selectedMenu={selectedMenu}
                     filter={filter}
                     setFilter={setFilter}
                     categories={categories}
                 />
-            }
+            )}
 
         </div>
-
     );
-
 }
 
 export default Search;

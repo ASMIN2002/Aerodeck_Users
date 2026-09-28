@@ -6,29 +6,42 @@ function CategoriesSection({
     onCategoryClick,
     onOpenAllShopCategories
 }) {
+
     return (
-        <section className="shop-category-section">
-            <div className="shop-category-scroll">
+        <section className="heep-shop-cat-section">
+            <div className="heep-shop-cat-scroll">
                 {categories.map((item) => (
                     <button
                         key={item.catid}
-                        className="shop-category-box"
+                        className="heep-shop-cat-box"
                         onClick={() => onCategoryClick(item.category)}
                     >
-                        <div>
-                            <div className="shop-category-icon">
-                                <img src={item.image} alt={item.category} />
-                            </div>
+                        <div className="heep-shop-cat-icon">
+                            {item.image ? (
+                                <img
+                                    src={item.image}
+                                    alt={item.category}
+                                    onLoad={() => console.log("✅ LOADED:", item.category)}
+                                    onError={() => console.log("❌ FAILED:", item.category, item.image)}
+
+                                />
+                            ) : (
+                                <span className="heep-shop-cat-fallback-letter">
+                                    {item.category?.charAt(0)?.toUpperCase() || "?"}
+                                </span>
+                            )}
                         </div>
-                        <span>{item.category}</span>
+                        <span className="heep-shop-cat-name">
+                            {item.category}
+                        </span>
                     </button>
                 ))}
             </div>
 
-            <div className="shop-section-title">
+            <div className="heep-shop-cat-viewall-wrap">
                 <button
                     type="button"
-                    className="viewALL"
+                    className="heep-shop-cat-viewall-btn"
                     onClick={onOpenAllShopCategories}
                 >
                     <FiArrowRight />

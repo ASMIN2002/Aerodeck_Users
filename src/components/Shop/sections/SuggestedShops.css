@@ -1,8 +1,26 @@
 /* ==========================================================================
-   SUGGESTED SHOPS — PREMIUM DARK ANIMATED STYLES
+   SUGGESTED SHOPS — HEAVY WHITE CLAYMORPHISM
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   ROOT VARIABLES
+   ============================================ */
+
+:root {
+    --ss-bg: #e4e7ef;
+    --ss-bg-dark: #ccd0db;
+    --ss-shadow-dark: rgba(160, 165, 180, 0.9);
+    --ss-shadow-light: #ffffff;
+    --ss-purple: #6c5ce7;
+    --ss-purple-light: #a29bfe;
+    --ss-gold: #feca57;
+    --ss-green: #00d97f;
+    --ss-red: #ff4757;
+    --ss-text: #2d3436;
+    --ss-text-soft: #4a5568;
+}
 
 /* ============================================
    SECTION CONTAINER
@@ -11,10 +29,10 @@
 .shop-suggested-section {
     position: relative;
     width: 100%;
-    margin: 0 0 24px 0;
+    margin: 0 0 16px 0;
     padding: 4px 0 8px 0;
-    background: #0a0a0f;
-    animation: suggestedSectionEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s backwards;
+    background: transparent;
+    animation: ssEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -25,10 +43,10 @@
     box-sizing: border-box;
 }
 
-@keyframes suggestedSectionEnter {
+@keyframes ssEnter {
     from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(12px);
     }
 
     to {
@@ -45,35 +63,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 0 16px;
-    margin-bottom: 14px;
+    gap: 10px;
+    padding: 0 14px;
+    margin-bottom: 10px;
 }
 
 .shop-suggested-section .shop-section-title h4 {
     position: relative;
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #ffffff;
     margin: 0;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--ss-text);
     letter-spacing: -0.01em;
     line-height: 1.3;
     padding-left: 14px;
-    display: flex;
-    align-items: center;
-    animation: titleFadeIn 0.6s ease 0.35s backwards;
-}
-
-@keyframes titleFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .shop-suggested-section .shop-section-title h4::before {
@@ -82,120 +86,55 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 3px;
+    width: 4px;
     height: 70%;
     background: linear-gradient(180deg, #a29bfe, #6c5ce7);
     border-radius: 4px;
-    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
+    box-shadow:
+        2px 2px 6px rgba(108, 92, 231, 0.4),
+        -1px -1px 3px rgba(255, 255, 255, 0.9);
 }
 
-/* ============================================
-   VIEW ALL BUTTON
-   ============================================ */
-
+/* View All Button */
 .shop-suggested-section .viewALL {
-    display: inline-flex;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    background: linear-gradient(145deg, #1c1c24, #232330);
-    border: 1.5px solid #2a2a35;
-    border-radius: 50%;
-    color: #a29bfe;
-    font-size: 1.05rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #e4e7ef, #ccd0db);
+    color: var(--ss-text);
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    font-family: inherit;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.shop-suggested-section .viewALL svg {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    z-index: 2;
-}
-
-/* Shine sweep */
-.shop-suggested-section .viewALL::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.35),
-            transparent);
-    transition: left 0.6s ease;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.shop-suggested-section .viewALL:hover::before {
-    left: 100%;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow:
+        5px 5px 12px rgba(160, 165, 180, 0.7),
+        -5px -5px 12px rgba(255, 255, 255, 0.95),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 2px 4px rgba(255, 255, 255, 0.85);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .shop-suggested-section .viewALL:hover {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    color: #ffffff;
-    border-color: transparent;
-    transform: translateX(4px) scale(1.08);
-    box-shadow:
-        0 8px 22px rgba(162, 155, 254, 0.5),
-        0 0 24px rgba(108, 92, 231, 0.35);
-}
-
-.shop-suggested-section .viewALL:hover svg {
-    transform: scale(1.2) translateX(1px);
+    transform: translateY(-2px);
 }
 
 .shop-suggested-section .viewALL:active {
-    transform: translateX(2px) scale(0.95);
+    transform: scale(0.94);
+    box-shadow:
+        inset 5px 5px 12px rgba(160, 165, 180, 0.85),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
 }
 
-.shop-suggested-section .viewALL:focus-visible {
-    outline: 2px solid #a29bfe;
-    outline-offset: 3px;
+.shop-suggested-section .viewALL svg {
+    transition: transform 0.3s ease;
 }
 
-/* Pulsing ring on hover */
-.shop-suggested-section .viewALL::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 2px solid rgba(162, 155, 254, 0.5);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.shop-suggested-section .viewALL:hover::after {
-    opacity: 1;
-    animation: suggestedViewAllPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes suggestedViewAllPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-
-    50% {
-        transform: scale(1.15);
-        opacity: 0;
-    }
+.shop-suggested-section .viewALL:hover svg {
+    transform: translateX(2px);
 }
 
 /* ============================================
@@ -219,40 +158,32 @@
 
 .shop-suggested-grid {
     display: flex;
-    gap: 12px;
-    padding: 4px 16px;
+    gap: 10px;
+    padding: 4px 14px;
 }
 
 /* ============================================
-   SUGGESTED CARD
+   SUGGESTED CARD — COMPACT CLAY
    ============================================ */
 
 .shop-suggested-card {
-    flex: 0 0 155px;
+    flex: 0 0 130px;
+    width: 130px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 8px;
-    background: linear-gradient(145deg, #14141a 0%, #1c1c24 100%);
-    border: 1.5px solid #2a2a35;
-    border-radius: 16px;
+    gap: 6px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.4),
-        0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     scroll-snap-align: start;
-    position: relative;
-    overflow: hidden;
-    animation: suggestedCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation: ssCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
-@keyframes suggestedCardEnter {
+@keyframes ssCardEnter {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.92);
+        transform: translateY(16px) scale(0.94);
     }
 
     to {
@@ -261,103 +192,97 @@
     }
 }
 
-/* Animated gradient top border */
-.shop-suggested-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            #a29bfe 50%,
-            transparent 100%);
-    background-size: 200% 100%;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    animation: suggestedBorderSlide 3s linear infinite;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.shop-suggested-card:hover::before {
-    opacity: 1;
-}
-
-@keyframes suggestedBorderSlide {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    100% {
-        background-position: 200% 50%;
-    }
-}
-
-/* Radial glow */
-.shop-suggested-card::after {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -30%;
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, rgba(162, 155, 254, 0.1) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    border-radius: 50%;
-    z-index: 0;
-}
-
-.shop-suggested-card:hover::after {
-    opacity: 1;
-}
-
-.shop-suggested-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(162, 155, 254, 0.4);
-    box-shadow:
-        0 12px 32px rgba(162, 155, 254, 0.2),
-        0 0 0 1px rgba(162, 155, 254, 0.1) inset;
-    background: linear-gradient(145deg, #1a1a22 0%, #232330 100%);
-}
-
 .shop-suggested-card:active {
-    transform: translateY(-2px) scale(0.98);
+    transform: scale(0.96);
 }
 
 /* ============================================
-   SUGGESTED IMAGE
+   IMAGE — CLAY
    ============================================ */
 
 .shop-suggested-image {
     position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 12px;
+    width: 130px;
+    height: 130px;
+    border-radius: 18px;
     overflow: hidden;
-    background: #0a0a0f;
-    z-index: 1;
+    background: #ffffff;
+    box-shadow:
+        7px 7px 16px rgba(160, 165, 180, 0.7),
+        -7px -7px 16px rgba(255, 255, 255, 0.95),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.04),
+        inset 0 3px 6px rgba(255, 255, 255, 0.85);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    isolation: isolate;
 }
 
+.shop-suggested-card:active .shop-suggested-image {
+    box-shadow:
+        inset 5px 5px 12px rgba(160, 165, 180, 0.85),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
+}
+
+/* Animated gradient border */
+.shop-suggested-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 1.5px;
+    background: linear-gradient(135deg,
+            #a29bfe, #6c5ce7, #00cec9, #fd79a8, #a29bfe);
+    background-size: 400% 400%;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: ssBorderFlow 6s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.shop-suggested-card:active .shop-suggested-image::before {
+    opacity: 1;
+}
+
+@keyframes ssBorderFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Image */
 .shop-suggested-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     display: block;
+    padding: 6px;
+    background: #ffffff;
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
     -webkit-user-drag: none;
+    image-rendering: -webkit-optimize-contrast;
+    position: relative;
+    z-index: 1;
+    transform: scale(1.4);
 }
 
-.shop-suggested-card:hover .shop-suggested-image img {
-    transform: scale(1.1);
-}
 
 /* ============================================
-   RATING BADGE
+   RATING BADGE — GREEN CLAY
    ============================================ */
 
 .shop-suggested-rating {
@@ -366,287 +291,261 @@
     right: 6px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 2px;
-    padding: 3px 8px;
-    background: rgba(10, 10, 15, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(253, 203, 110, 0.4);
+    padding: 3px 7px;
     border-radius: 50px;
+    background: linear-gradient(145deg, #00d97f, #00a85e);
     color: #ffffff;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 90, 50, 0.4);
     box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    z-index: 2;
-    transition: all 0.3s ease;
-}
-
-.shop-suggested-card:hover .shop-suggested-rating {
-    transform: scale(1.08);
-    border-color: rgba(253, 203, 110, 0.6);
-    box-shadow:
-        0 4px 14px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        3px 3px 8px rgba(0, 217, 127, 0.5),
+        -2px -2px 6px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(0, 90, 50, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    z-index: 4;
+    white-space: nowrap;
 }
 
 .rating-star {
-    color: #fdcb6e;
-    font-size: 0.7rem;
-    line-height: 1;
-    filter: drop-shadow(0 0 6px rgba(253, 203, 110, 0.6));
-    animation: starTwinkle 2.5s ease-in-out infinite;
-}
-
-@keyframes starTwinkle {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.15);
-        opacity: 0.85;
-    }
+    font-size: 0.6rem;
+    color: #ffffff;
+    filter: drop-shadow(0 1px 1px rgba(0, 90, 50, 0.5));
 }
 
 /* ============================================
-   SUGGESTED INFO
+   INFO — NAME + PRICE
    ============================================ */
 
 .shop-suggested-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 0 4px;
-    position: relative;
-    z-index: 1;
+    gap: 3px;
+    padding: 0 2px;
 }
 
 .shop-suggested-name {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #ffffff;
+    display: block;
+    width: 100%;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--ss-text);
     letter-spacing: -0.005em;
-    line-height: 1.35;
+    line-height: 1.3;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 120px;
-    max-width: 100%;
-    transition: color 0.3s ease;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
 }
-
-.shop-suggested-card:hover .shop-suggested-name {
-    color: #a29bfe;
-}
-
-/* ============================================
-   SUGGESTED PRICE
-   ============================================ */
 
 .shop-suggested-price {
     display: flex;
-    align-items: baseline;
-    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.62rem;
+    line-height: 1.2;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .shop-suggested-price del {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #6b6b7a;
-    text-decoration-thickness: 1.2px;
-    text-decoration-color: #6b6b7a;
-    line-height: 1.4;
-    transition: color 0.3s ease;
+    color: var(--ss-text-soft);
+    font-weight: 600;
+    text-decoration: line-through;
+    font-size: 0.56rem;
+    opacity: 0.7;
 }
 
 .shop-suggested-price strong {
-    font-size: 0.88rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    text-shadow: 0 0 12px rgba(162, 155, 254, 0.3);
-    transition: all 0.3s ease;
-}
-
-.shop-suggested-card:hover .shop-suggested-price strong {
-    color: #a29bfe;
-    text-shadow: 0 0 16px rgba(162, 155, 254, 0.6);
+    color: var(--ss-purple);
+    font-weight: 900;
+    font-size: 0.72rem;
+    letter-spacing: -0.01em;
+    text-shadow:
+        1px 1px 1px rgba(255, 255, 255, 0.9),
+        0 0 6px rgba(108, 92, 231, 0.3);
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE — TABLET
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
+@media (max-width: 768px) {
     .shop-suggested-section {
-        margin-bottom: 32px;
-    }
-
-    .shop-suggested-section .shop-section-title {
-        padding: 0 24px;
-        margin-bottom: 18px;
-    }
-
-    .shop-suggested-section .shop-section-title h4 {
-        font-size: 1.2rem;
-        padding-left: 16px;
-    }
-
-    .shop-suggested-section .shop-section-title h4::before {
-        width: 3.5px;
-        height: 20px;
-    }
-
-    .shop-suggested-section .viewALL {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        font-size: 1.15rem;
-    }
-
-    .shop-suggested-section .viewALL svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .shop-suggested-grid {
-        gap: 16px;
-        padding: 4px 24px;
-    }
-
-    .shop-suggested-card {
-        flex: 0 0 180px;
-        padding: 10px;
-        gap: 10px;
-        border-radius: 18px;
-    }
-
-    .shop-suggested-image {
-        border-radius: 14px;
-    }
-
-    .shop-suggested-rating {
-        font-size: 0.74rem;
-        padding: 4px 10px;
-        top: 8px;
-        right: 8px;
-    }
-
-    .shop-suggested-name {
-        font-size: 0.86rem;
-    }
-
-    .shop-suggested-price del {
-        font-size: 0.78rem;
-    }
-
-    .shop-suggested-price strong {
-        font-size: 0.98rem;
-    }
-}
-
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .shop-suggested-grid {
-        gap: 14px;
-        padding: 4px 20px;
-    }
-
-    .shop-suggested-section .shop-section-title {
-        padding: 0 20px;
-    }
-}
-
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
-    .shop-suggested-section {
-        margin-bottom: 20px;
-    }
-
-    .shop-suggested-section .shop-section-title {
-        padding: 0 14px;
-        margin-bottom: 12px;
-    }
-
-    .shop-suggested-section .shop-section-title h4 {
-        font-size: 1rem;
-    }
-
-    .shop-suggested-section .viewALL {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        font-size: 1rem;
-    }
-
-    .shop-suggested-section .viewALL svg {
-        width: 15px;
-        height: 15px;
-    }
-
-    .shop-suggested-grid {
-        gap: 11px;
-        padding: 4px 14px;
-    }
-
-    .shop-suggested-card {
-        flex: 0 0 145px;
-        padding: 7px;
-        gap: 7px;
-        border-radius: 15px;
-    }
-
-    .shop-suggested-image {
-        border-radius: 11px;
-    }
-
-    .shop-suggested-rating {
-        font-size: 0.62rem;
-        padding: 3px 8px;
-        top: 5px;
-        right: 5px;
-    }
-
-    .shop-suggested-name {
-        font-size: 0.74rem;
-    }
-
-    .shop-suggested-price del {
-        font-size: 0.66rem;
-    }
-
-    .shop-suggested-price strong {
-        font-size: 0.82rem;
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .shop-suggested-section {
-        margin-bottom: 18px;
+        margin-bottom: 14px;
         padding: 3px 0 6px;
     }
 
     .shop-suggested-section .shop-section-title {
         padding: 0 12px;
-        margin-bottom: 11px;
+        margin-bottom: 8px;
     }
 
     .shop-suggested-section .shop-section-title h4 {
-        font-size: 0.94rem;
+        font-size: 0.88rem;
         padding-left: 12px;
+    }
+
+    .shop-suggested-section .shop-section-title h4::before {
+        width: 3.5px;
+    }
+
+    .shop-suggested-section .viewALL {
+        width: 30px;
+        height: 30px;
+        font-size: 0.85rem;
+        border-radius: 11px;
+    }
+
+    .shop-suggested-grid {
+        gap: 9px;
+        padding: 4px 12px;
+    }
+
+    .shop-suggested-card {
+        flex: 0 0 114px;
+        width: 114px;
+        gap: 5px;
+    }
+
+    .shop-suggested-image {
+        width: 114px;
+        height: 114px;
+        border-radius: 16px;
+    }
+
+    .shop-suggested-image::before {
+        border-radius: 16px;
+    }
+
+    .shop-suggested-image img {
+        padding: 5px;
+    }
+
+    .shop-suggested-rating {
+        font-size: 0.54rem;
+        padding: 3px 6px;
+        top: 5px;
+        right: 5px;
+    }
+
+    .shop-suggested-name {
+        font-size: 0.62rem;
+    }
+
+    .shop-suggested-price {
+        font-size: 0.56rem;
+    }
+
+    .shop-suggested-price strong {
+        font-size: 0.66rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL PHONE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .shop-suggested-section {
+        margin-bottom: 12px;
+    }
+
+    .shop-suggested-section .shop-section-title {
+        padding: 0 10px;
+        margin-bottom: 7px;
+    }
+
+    .shop-suggested-section .shop-section-title h4 {
+        font-size: 0.82rem;
+        padding-left: 11px;
+    }
+
+    .shop-suggested-section .shop-section-title h4::before {
+        width: 3px;
+    }
+
+    .shop-suggested-section .viewALL {
+        width: 28px;
+        height: 28px;
+        font-size: 0.78rem;
+        border-radius: 10px;
+    }
+
+    .shop-suggested-grid {
+        gap: 8px;
+        padding: 3px 10px;
+    }
+
+    .shop-suggested-card {
+        flex: 0 0 104px;
+        width: 104px;
+        gap: 5px;
+    }
+
+    .shop-suggested-image {
+        width: 104px;
+        height: 104px;
+        border-radius: 14px;
+    }
+
+    .shop-suggested-image::before {
+        border-radius: 14px;
+    }
+
+    .shop-suggested-image img {
+        padding: 4px;
+    }
+
+    .shop-suggested-rating {
+        font-size: 0.5rem;
+        padding: 2px 5px;
+        top: 4px;
+        right: 4px;
+    }
+
+    .shop-suggested-name {
+        font-size: 0.58rem;
+    }
+
+    .shop-suggested-price {
+        font-size: 0.52rem;
+        gap: 4px;
+    }
+
+    .shop-suggested-price del {
+        font-size: 0.5rem;
+    }
+
+    .shop-suggested-price strong {
+        font-size: 0.62rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — EXTRA SMALL
+   ============================================ */
+
+@media (max-width: 380px) {
+    .shop-suggested-section {
+        margin-bottom: 10px;
+        padding: 2px 0 5px;
+    }
+
+    .shop-suggested-section .shop-section-title {
+        padding: 0 8px;
+        margin-bottom: 6px;
+        gap: 8px;
+    }
+
+    .shop-suggested-section .shop-section-title h4 {
+        font-size: 0.76rem;
+        padding-left: 10px;
     }
 
     .shop-suggested-section .shop-section-title h4::before {
@@ -654,205 +553,87 @@
     }
 
     .shop-suggested-section .viewALL {
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-        font-size: 0.95rem;
-    }
-
-    .shop-suggested-section .viewALL svg {
-        width: 14px;
-        height: 14px;
-    }
-
-    .shop-suggested-grid {
-        gap: 10px;
-        padding: 4px 12px;
-    }
-
-    .shop-suggested-card {
-        flex: 0 0 140px;
-        padding: 7px;
-        gap: 7px;
-    }
-
-    .shop-suggested-name {
+        width: 26px;
+        height: 26px;
         font-size: 0.72rem;
-    }
-
-    .shop-suggested-price del {
-        font-size: 0.64rem;
-    }
-
-    .shop-suggested-price strong {
-        font-size: 0.8rem;
-    }
-
-    .shop-suggested-card:hover {
-        transform: translateY(-4px);
-    }
-}
-
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .shop-suggested-section {
-        margin-bottom: 16px;
-    }
-
-    .shop-suggested-section .shop-section-title {
-        padding: 0 10px;
-        margin-bottom: 10px;
-    }
-
-    .shop-suggested-section .shop-section-title h4 {
-        font-size: 0.88rem;
-    }
-
-    .shop-suggested-section .viewALL {
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
-        font-size: 0.9rem;
-    }
-
-    .shop-suggested-section .viewALL svg {
-        width: 13px;
-        height: 13px;
+        border-radius: 9px;
     }
 
     .shop-suggested-grid {
-        gap: 9px;
-        padding: 4px 10px;
-    }
-
-    .shop-suggested-card {
-        flex: 0 0 132px;
-        padding: 6px;
-        gap: 6px;
-    }
-
-    .shop-suggested-rating {
-        font-size: 0.58rem;
-        padding: 2px 7px;
-    }
-
-    .shop-suggested-name {
-        font-size: 0.68rem;
-    }
-
-    .shop-suggested-price del {
-        font-size: 0.6rem;
-    }
-
-    .shop-suggested-price strong {
-        font-size: 0.76rem;
-    }
-}
-
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .shop-suggested-section {
-        margin-bottom: 14px;
-    }
-
-    .shop-suggested-section .shop-section-title {
-        padding: 0 8px;
-        margin-bottom: 9px;
-    }
-
-    .shop-suggested-section .shop-section-title h4 {
-        font-size: 0.82rem;
-        padding-left: 10px;
-    }
-
-    .shop-suggested-section .shop-section-title h4::before {
-        width: 2px;
-    }
-
-    .shop-suggested-section .viewALL {
-        width: 30px;
-        height: 30px;
-        min-width: 30px;
-        font-size: 0.85rem;
-    }
-
-    .shop-suggested-section .viewALL svg {
-        width: 12px;
-        height: 12px;
-    }
-
-    .shop-suggested-grid {
-        gap: 8px;
+        gap: 7px;
         padding: 3px 8px;
     }
 
     .shop-suggested-card {
-        flex: 0 0 122px;
-        padding: 6px;
-        gap: 6px;
+        flex: 0 0 96px;
+        width: 96px;
+        gap: 4px;
     }
 
     .shop-suggested-image {
-        border-radius: 10px;
+        width: 96px;
+        height: 96px;
+        border-radius: 13px;
+    }
+
+    .shop-suggested-image::before {
+        border-radius: 13px;
+    }
+
+    .shop-suggested-image img {
+        padding: 3px;
     }
 
     .shop-suggested-rating {
-        font-size: 0.54rem;
-        padding: 2px 6px;
+        font-size: 0.46rem;
+        padding: 2px 5px;
+        top: 3px;
+        right: 3px;
     }
 
     .shop-suggested-name {
-        font-size: 0.64rem;
+        font-size: 0.54rem;
+    }
+
+    .shop-suggested-price {
+        font-size: 0.48rem;
+        gap: 3px;
     }
 
     .shop-suggested-price del {
-        font-size: 0.56rem;
+        font-size: 0.46rem;
     }
 
     .shop-suggested-price strong {
-        font-size: 0.72rem;
+        font-size: 0.58rem;
     }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION
+   ACCESSIBILITY
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
 
     .shop-suggested-section,
     .shop-suggested-card,
-    .shop-suggested-card::before,
-    .shop-suggested-card::after,
+    .shop-suggested-image,
+    .shop-suggested-image::before,
     .shop-suggested-image img,
     .shop-suggested-rating,
-    .rating-star,
+    .shop-suggested-name,
+    .shop-suggested-price,
     .shop-suggested-section .viewALL,
-    .shop-suggested-section .viewALL::before,
-    .shop-suggested-section .viewALL::after,
-    .shop-suggested-section .viewALL svg,
-    .shop-suggested-section .shop-section-title h4 {
+    .shop-suggested-section .viewALL svg {
         animation: none !important;
         transition: none !important;
     }
 
-    .shop-suggested-card:hover,
-    .shop-suggested-card:hover .shop-suggested-image img,
-    .shop-suggested-card:hover .shop-suggested-rating,
+    .shop-suggested-card:active,
+    .shop-suggested-card:active .shop-suggested-image img,
     .shop-suggested-section .viewALL:hover,
     .shop-suggested-section .viewALL:hover svg {
         transform: none;
-    }
-}
-
-@media (forced-colors: active) {
-    .shop-suggested-card {
-        border: 2px solid ButtonText;
-    }
-
-    .shop-suggested-rating,
-    .shop-suggested-section .viewALL {
-        border: 2px solid ButtonText;
     }
 }
 
@@ -862,36 +643,12 @@
 
 @supports (padding: max(0px)) {
     .shop-suggested-grid {
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
+        padding-left: max(14px, env(safe-area-inset-left));
+        padding-right: max(14px, env(safe-area-inset-right));
     }
 
     .shop-suggested-section .shop-section-title {
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
-    }
-
-    @media (max-width: 767px) {
-        .shop-suggested-grid {
-            padding-left: max(12px, env(safe-area-inset-left));
-            padding-right: max(12px, env(safe-area-inset-right));
-        }
-
-        .shop-suggested-section .shop-section-title {
-            padding-left: max(12px, env(safe-area-inset-left));
-            padding-right: max(12px, env(safe-area-inset-right));
-        }
-    }
-
-    @media (max-width: 379px) {
-        .shop-suggested-grid {
-            padding-left: max(8px, env(safe-area-inset-left));
-            padding-right: max(8px, env(safe-area-inset-right));
-        }
-
-        .shop-suggested-section .shop-section-title {
-            padding-left: max(8px, env(safe-area-inset-left));
-            padding-right: max(8px, env(safe-area-inset-right));
-        }
+        padding-left: max(14px, env(safe-area-inset-left));
+        padding-right: max(14px, env(safe-area-inset-right));
     }
 }

@@ -243,7 +243,7 @@ function MyOrders({
                                             setShowCancelModal(true);
                                         }}
                                     >
-                                        Cancel
+                                        Cancel Order
                                     </button>
                                 )}
 

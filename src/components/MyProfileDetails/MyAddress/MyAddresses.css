@@ -1,1207 +1,948 @@
-/* ============================================
-   MY ADDRESSES - PREMIUM DARK THEME
-   Fully responsive + Super attractive
-   ============================================ */
+/* MyAddresses.css */
 
-/* --- Base Page --- */
-.address-page {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background: #0a0a0f;
-    color: #ffffff;
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 16px 16px 100px;
-    box-sizing: border-box;
-}
-
+.address-page,
 .address-page * {
     box-sizing: border-box;
 }
 
 /* ============================================
+   PAGE WRAPPER
+   ============================================ */
+.address-page {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 18px 14px 110px;
+
+    background: #eef1f7;
+
+    animation: addrPageFade 0.5s ease both;
+}
+
+/* ============================================
    SUCCESS MESSAGE
    ============================================ */
-
 .address-success-message {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2000;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+
+    z-index: 9999;
+
     padding: 12px 22px;
-    background: linear-gradient(135deg, #00b894, #00cec9);
-    border-radius: 50px;
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    white-space: nowrap;
-    box-shadow:
-        0 12px 32px rgba(0, 184, 148, 0.45),
-        0 0 24px rgba(0, 206, 201, 0.3);
-    animation: successToastIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
 
-.address-success-message::before {
-    content: '✓';
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    font-size: 0.75rem;
+    font-size: clamp(0.82rem, 2.1vw, 0.92rem);
     font-weight: 800;
-    line-height: 1;
-}
+    letter-spacing: 0.3px;
+    color: #ffffff;
+    white-space: nowrap;
 
-@keyframes successToastIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px) scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
-    }
+    border-radius: 16px;
+
+    background: linear-gradient(135deg, #2e9e6b, #1f8a58);
+
+    box-shadow:
+        8px 8px 20px rgba(46, 158, 107, 0.4),
+        -6px -6px 16px rgba(255, 255, 255, 0.9),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
+
+    animation: addrToastIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* ============================================
    HEADER
    ============================================ */
-
 .address-header {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 16px;
-    margin-bottom: 4px;
-    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
-    border: 1.5px solid #2a2a35;
-    border-radius: 18px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    position: relative;
-    overflow: hidden;
+    gap: 12px;
+
+    width: 100%;
+    padding: 14px 16px;
+
+    background: #f0f2f7;
+    border-radius: 22px;
+
+    box-shadow:
+        8px 8px 20px rgba(174, 181, 199, 0.55),
+        -8px -8px 20px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+    animation: addrHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.address-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #a29bfe, #6c5ce7, #a29bfe);
-    background-size: 200% 100%;
-    animation: headerShimmer 3s linear infinite;
-}
-
-@keyframes headerShimmer {
-    0%   { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
-.address-header > div {
+.address-header>div {
     flex: 1;
     min-width: 0;
 }
 
 .address-header h2 {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: #ffffff;
     margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+    font-size: clamp(1rem, 2.6vw, 1.2rem);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #3a3f55;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .address-header p {
-    font-size: 0.72rem;
+    margin: 3px 0 0;
+
+    font-size: clamp(0.72rem, 1.9vw, 0.8rem);
     font-weight: 600;
-    color: #ff6b81;
-    margin: 4px 0 0 0;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    letter-spacing: 0.2px;
+    color: #8a90b0;
 }
 
-.address-header p::before {
-    content: '⚠';
-    font-size: 0.75rem;
-    line-height: 1;
-}
-
-/* --- Back Button --- */
+/* ---- Back button ---- */
 .back-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    background: linear-gradient(145deg, #1c1c24, #232330);
-    border: 1.5px solid #2a2a35;
-    border-radius: 50%;
-    color: #ffffff;
-    font-size: 1.05rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0;
     flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    font-size: 1.15rem;
+    color: #4b5170;
+
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+
+    background: #f0f2f7;
+
+    box-shadow:
+        5px 5px 12px rgba(174, 181, 199, 0.6),
+        -5px -5px 12px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .back-btn:hover {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    border-color: transparent;
-    transform: translateX(-3px);
-    box-shadow: 0 6px 20px rgba(162, 155, 254, 0.45);
+    transform: translateY(-2px) translateX(-2px);
+    color: #5b6ee1;
+
+    box-shadow:
+        8px 8px 18px rgba(124, 140, 248, 0.3),
+        -6px -6px 14px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
 .back-btn:active {
-    transform: translateX(-1px) scale(0.95);
+    transform: translateY(1px) scale(0.94);
+
+    box-shadow:
+        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
 }
 
-.back-btn:focus-visible {
-    outline: 2px solid #a29bfe;
-    outline-offset: 2px;
-}
-
-/* --- Add Button --- */
+/* ---- Add button (Clay pill) ---- */
 .add-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 0 18px;
-    height: 40px;
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    border: none;
-    border-radius: 50px;
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
     flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(162, 155, 254, 0.4);
+
+    padding: 10px 18px;
+
+    font-size: clamp(0.78rem, 2vw, 0.88rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #ffffff;
+    white-space: nowrap;
+
+    cursor: pointer;
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+
+    box-shadow:
+        5px 5px 12px rgba(124, 140, 248, 0.4),
+        -4px -4px 10px rgba(255, 255, 255, 0.9),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.35),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
-.add-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.6s ease;
-    pointer-events: none;
-}
-
-.add-btn:hover::before {
-    left: 100%;
-}
-
-.add-btn:hover {
+.add-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(162, 155, 254, 0.55);
-    background: linear-gradient(135deg, #9188f0, #5b4cd6);
+
+    box-shadow:
+        8px 8px 18px rgba(124, 140, 248, 0.5),
+        -5px -5px 14px rgba(255, 255, 255, 1),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
 }
 
-.add-btn:active {
-    transform: translateY(0) scale(0.97);
+.add-btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.96);
+
+    box-shadow:
+        inset 5px 5px 12px rgba(60, 70, 140, 0.4),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.2);
 }
 
 .add-btn:disabled {
-    opacity: 0.4;
     cursor: not-allowed;
-    transform: none !important;
-    box-shadow: 0 4px 12px rgba(162, 155, 254, 0.15) !important;
-}
+    opacity: 0.45;
 
-.add-btn:disabled::before {
-    display: none;
+    background: linear-gradient(135deg, #a0a8d0, #b8a0d0);
+    box-shadow:
+        inset 3px 3px 8px rgba(174, 181, 199, 0.5),
+        inset -3px -3px 8px rgba(255, 255, 255, 0.9);
 }
 
 .add-btn:focus-visible {
-    outline: 2px solid #a29bfe;
-    outline-offset: 2px;
+    outline: 2px solid #7c8cf8;
+    outline-offset: 3px;
 }
 
 /* ============================================
    EMPTY STATE
    ============================================ */
-
 .empty-address {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 60px 24px;
-    background: linear-gradient(135deg, #14141a 0%, #1a1a22 100%);
-    border: 2px dashed #2a2a35;
-    border-radius: 20px;
-    color: #6b6b7a;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
+    display: grid;
+    place-items: center;
+
+    padding: 60px 20px;
+
+    font-size: clamp(0.9rem, 2.3vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #8a90b0;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-    margin-top: 20px;
-    animation: cardFadeIn 0.5s ease;
-}
 
-.empty-address::before {
-    content: '📍';
-    font-size: 3rem;
-    line-height: 1;
-    filter: grayscale(0.4);
-    animation: emptyIconPulse 2.5s ease-in-out infinite;
-}
+    background: #f0f2f7;
+    border-radius: 22px;
 
-@keyframes emptyIconPulse {
-    0%, 100% {
-        transform: scale(1) translateY(0);
-        filter: grayscale(0.4);
-    }
-    50% {
-        transform: scale(1.1) translateY(-4px);
-        filter: grayscale(0);
-    }
-}
+    box-shadow:
+        inset 4px 4px 10px rgba(174, 181, 199, 0.45),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
 
-.empty-address::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(162, 155, 254, 0.08),
-        transparent
-    );
-    animation: emptyShimmer 3s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes emptyShimmer {
-    0%   { left: -100%; }
-    50%  { left: 100%; }
-    100% { left: 100%; }
+    animation: addrHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* ============================================
-   ADDRESS CARD
+   ADDRESS CARD (Clay)
    ============================================ */
-
 .address-card {
     position: relative;
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 16px 18px;
-    background: linear-gradient(145deg, #14141a 0%, #1a1a22 100%);
-    border: 1.5px solid #2a2a35;
-    border-radius: 18px;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    gap: 8px;
+
+    width: 100%;
+    padding: 16px 16px;
+
+    background: #f0f2f7;
+    border-radius: 22px;
+
+    /* 🔥 menu ke liye — overflow visible */
     overflow: visible;
-    animation: cardFadeIn 0.5s ease backwards;
-}
 
-.address-card:nth-child(1) { animation-delay: 0.04s; }
-.address-card:nth-child(2) { animation-delay: 0.08s; }
-.address-card:nth-child(3) { animation-delay: 0.12s; }
-.address-card:nth-child(4) { animation-delay: 0.16s; }
+    /* 🔥 default z-index low rakho */
+    z-index: 1;
 
-@keyframes cardFadeIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Left accent bar */
-.address-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleY(0);
-    width: 3px;
-    height: 60%;
-    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
-    border-radius: 0 4px 4px 0;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 12px rgba(162, 155, 254, 0.6);
-}
-
-.address-card:hover::before {
-    transform: translateY(-50%) scaleY(1);
-}
-
-/* Radial glow on hover */
-.address-card::after {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -30%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(162, 155, 254, 0.08) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    border-radius: 50%;
-}
-
-.address-card:hover::after {
-    opacity: 1;
-}
-
-.address-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(162, 155, 254, 0.4);
-    box-shadow: 0 12px 32px rgba(162, 155, 254, 0.15);
-    background: linear-gradient(145deg, #1a1a22 0%, #232330 100%);
-}
-
-/* --- Selected State --- */
-.address-card.selected {
-    border-color: #a29bfe;
-    background: linear-gradient(145deg, #1c1c24 0%, #2a2a45 100%);
     box-shadow:
-        0 0 0 2px rgba(162, 155, 254, 0.2),
-        0 12px 32px rgba(162, 155, 254, 0.3);
+        8px 8px 20px rgba(174, 181, 199, 0.55),
+        -8px -8px 20px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+    transition: box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+    animation: addrCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.address-card.selected::before {
-    transform: translateY(-50%) scaleY(1);
-    height: 80%;
+/* Staggered */
+.address-card:nth-of-type(1) {
+    animation-delay: 0.06s;
+}
+
+.address-card:nth-of-type(2) {
+    animation-delay: 0.12s;
+}
+
+.address-card:nth-of-type(3) {
+    animation-delay: 0.18s;
+}
+
+.address-card:nth-of-type(4) {
+    animation-delay: 0.24s;
+}
+
+/* 🔥 hover pe transform mat lagao, sirf shadow change karo */
+.address-card:hover {
+    box-shadow:
+        12px 12px 26px rgba(174, 181, 199, 0.6),
+        -10px -10px 24px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+}
+
+/* 🔥 jab menu khula ho, woh card sabse upar ho */
+.address-card:has(.address-menu) {
+    z-index: 100;
+}
+
+/* ---- Selected State (Blue outline glow) ---- */
+.address-card.selected {
+    box-shadow:
+        0 0 0 2px #6a7bf0,
+        10px 10px 24px rgba(124, 140, 248, 0.35),
+        -8px -8px 20px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+
+    animation: addrSelectedPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ============================================
-   ADDRESS CARD TOP (Type + Menu)
+   ADDRESS TOP ROW
    ============================================ */
-
 .address-top {
     position: relative;
+
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
-    z-index: 2;
+    gap: 10px;
 }
 
-.address-top > div {
+.address-top>div {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+
     flex-wrap: wrap;
-    min-width: 0;
 }
 
 .address-top h3 {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: #ffffff;
     margin: 0;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+
+    font-size: clamp(0.92rem, 2.3vw, 1rem);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #3a3f55;
+
     text-transform: capitalize;
-    transition: color 0.3s ease;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.address-card:hover .address-top h3 {
-    color: #a29bfe;
-}
-
-/* --- Primary Badge --- */
+/* ---- Primary badge ---- */
 .primary-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+
     padding: 3px 10px;
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    border-radius: 50px;
-    color: #ffffff;
-    font-size: 0.62rem;
+
+    font-size: clamp(0.62rem, 1.6vw, 0.7rem);
     font-weight: 800;
-    letter-spacing: 0.08em;
-    line-height: 1.4;
-    text-transform: uppercase;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(162, 155, 254, 0.4);
-    animation: badgePulse 2.5s ease-in-out infinite;
+    letter-spacing: 0.6px;
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #2e9e6b, #1f8a58);
+
+    box-shadow:
+        3px 3px 8px rgba(46, 158, 107, 0.4),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+
+    animation: addrBadgePulse 2.5s ease-in-out infinite;
 }
 
-.primary-badge::before {
-    content: '★';
-    font-size: 0.68rem;
-    line-height: 1;
-}
-
-@keyframes badgePulse {
-    0%, 100% { box-shadow: 0 4px 12px rgba(162, 155, 254, 0.4); }
-    50%      { box-shadow: 0 4px 20px rgba(162, 155, 254, 0.7); }
-}
-
-/* --- Menu Button --- */
+/* ---- Menu button (⋮) ---- */
 .menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
     width: 34px;
     height: 34px;
-    min-width: 34px;
-    background: linear-gradient(145deg, #1c1c24, #232330);
-    border: 1.5px solid #2a2a35;
-    border-radius: 50%;
-    color: #b8b8c5;
+
     font-size: 1.2rem;
     font-weight: 800;
-    font-family: inherit;
+    color: #4b5170;
     line-height: 1;
+
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0;
-    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+
+    background: #f0f2f7;
+
+    box-shadow:
+        4px 4px 10px rgba(174, 181, 199, 0.55),
+        -4px -4px 10px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .menu-btn:hover {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-    border-color: transparent;
-    color: #ffffff;
     transform: scale(1.08);
-    box-shadow: 0 6px 18px rgba(162, 155, 254, 0.45);
+    color: #5b6ee1;
+
+    box-shadow:
+        6px 6px 14px rgba(124, 140, 248, 0.3),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
 .menu-btn:active {
-    transform: scale(0.95);
-}
+    transform: scale(0.92);
 
-.menu-btn:focus-visible {
-    outline: 2px solid #a29bfe;
-    outline-offset: 2px;
+    box-shadow:
+        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
 }
 
 /* ============================================
-   ADDRESS MENU (Dropdown)
+   DROPDOWN MENU (Clay — opens UPWARD)
    ============================================ */
-
 .address-menu {
     position: absolute;
-    top: calc(100% + 8px);
+
+    /* 🔥 Menu button ke UPAR khule */
+    top: 42px;
+    bottom: auto;
     right: 0;
-    z-index: 100;
+
+    z-index: 200;
+
     display: flex;
     flex-direction: column;
-    gap: 3px;
+
     min-width: 180px;
-    padding: 6px;
-    background: linear-gradient(145deg, #1a1a22 0%, #232330 100%);
-    border: 1.5px solid #2a2a35;
-    border-radius: 14px;
+    padding: 8px;
+
+    background: #f0f2f7;
+    border-radius: 16px;
+
     box-shadow:
-        0 20px 48px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(162, 155, 254, 0.15) inset;
-    animation: menuFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        10px 10px 26px rgba(174, 181, 199, 0.7),
+        -8px -8px 20px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.3);
+
+    animation: addrMenuIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+
     transform-origin: top right;
 }
 
-@keyframes menuFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9) translateY(-8px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
 .address-menu button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: block;
     width: 100%;
     padding: 10px 14px;
-    background: transparent;
-    border: none;
-    border-radius: 10px;
-    color: #c8c8dc;
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.005em;
-    line-height: 1.4;
+    font-size: clamp(0.8rem, 2vw, 0.88rem);
+    font-weight: 700;
+    letter-spacing: 0.2px;
     text-align: left;
+    color: #4b5170;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-}
-
-.address-menu button::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleY(0);
-    width: 3px;
-    height: 60%;
-    background: linear-gradient(180deg, #a29bfe, #6c5ce7);
-    border-radius: 0 4px 4px 0;
-    transition: transform 0.3s ease;
-}
-
-.address-menu button:hover::before {
-    transform: translateY(-50%) scaleY(1);
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .address-menu button:hover {
-    background: linear-gradient(145deg, #252545, #2e2e4e);
-    color: #a29bfe;
-    transform: translateX(4px);
+    color: #5b6ee1;
+    background: #f0f2f7;
+    box-shadow:
+        3px 3px 8px rgba(174, 181, 199, 0.45),
+        -3px -3px 8px rgba(255, 255, 255, 0.95);
 }
 
 .address-menu button:active {
-    transform: translateX(2px) scale(0.98);
+    transform: scale(0.97);
 }
 
-.address-menu button:focus-visible {
-    outline: 2px solid #a29bfe;
-    outline-offset: -2px;
+.address-menu .delete-btn {
+    color: #ef4d6a;
 }
 
-/* Delete button special color */
-.address-menu button.delete-btn {
-    color: #ff6b81;
-}
-
-.address-menu button.delete-btn::before {
-    background: linear-gradient(180deg, #ff6b81, #ff2d55);
-}
-
-.address-menu button.delete-btn:hover {
-    background: linear-gradient(145deg, #3a1a22, #4a2028);
-    color: #ff2d55;
+.address-menu .delete-btn:hover {
+    color: #d84a6a;
+    background: rgba(239, 77, 106, 0.08);
 }
 
 /* ============================================
-   NAME + NUMBER
+   NAME + MOBILE ROW
    ============================================ */
-
 .namnum {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+
     flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
 }
 
 .namnum h4 {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #ffffff;
     margin: 0;
-    letter-spacing: -0.005em;
-    line-height: 1.4;
-    word-break: break-word;
+
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: #4b5170;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .namnum p {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #a29bfe;
     margin: 0;
-    letter-spacing: 0.005em;
-    line-height: 1.4;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
 
-.namnum p::before {
-    content: '📞';
-    font-size: 0.75rem;
-    line-height: 1;
-    filter: grayscale(0.2);
+    font-size: clamp(0.78rem, 2vw, 0.86rem);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #6a7090;
 }
 
 /* ============================================
    ADDRESS TEXT
    ============================================ */
-
-.address-card > p {
-    font-size: 0.82rem;
-    font-weight: 400;
-    color: #b8b8c5;
+.address-card>p {
     margin: 0;
-    letter-spacing: 0.005em;
+
+    font-size: clamp(0.82rem, 2.1vw, 0.9rem);
+    font-weight: 500;
     line-height: 1.6;
-    word-break: break-word;
-    position: relative;
-    z-index: 1;
-    padding-left: 4px;
-    border-left: 2px solid rgba(162, 155, 254, 0.2);
-    padding-left: 10px;
+    color: #5a6080;
 }
 
 /* ============================================
-   DELETE CONFIRM MODAL
+   DELETE CONFIRM OVERLAY
    ============================================ */
-
 .delete-confirm-overlay {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 99999;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    animation: overlayFadeIn 0.3s ease;
-}
 
-@keyframes overlayFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    padding: 20px;
+
+    background: rgba(230, 233, 242, 0.55);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+
+    animation: addrPageFade 0.3s ease both;
 }
 
 .delete-confirm-box {
-    width: 100%;
-    max-width: 380px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 32px 26px 22px;
-    background: linear-gradient(145deg, #1a1a22 0%, #232330 100%);
-    border: 1.5px solid #2a2a35;
-    border-radius: 22px;
-    text-align: center;
+    gap: 14px;
+
+    width: 100%;
+    max-width: 340px;
+    padding: 24px 22px;
+
+    background: #f0f2f7;
+    border-radius: 26px;
+
     box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(255, 45, 85, 0.15) inset;
-    animation: modalZoom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    overflow: hidden;
+        14px 14px 32px rgba(174, 181, 199, 0.65),
+        -14px -14px 32px rgba(255, 255, 255, 0.95),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(174, 181, 199, 0.35);
+
+    animation: addrBoxPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes modalZoom {
-    0% {
+.delete-confirm-box h3 {
+    margin: 0;
+
+    font-size: clamp(1rem, 2.6vw, 1.15rem);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #3a3f55;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.delete-confirm-box p {
+    margin: 0;
+
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+    font-weight: 500;
+    line-height: 1.55;
+    color: #6a7090;
+}
+
+/* ---- Confirm actions ---- */
+.delete-confirm-actions {
+    display: flex;
+    gap: 12px;
+
+    margin-top: 6px;
+}
+
+.delete-confirm-actions button {
+    flex: 1;
+
+    padding: 11px 14px;
+
+    font-size: clamp(0.82rem, 2.1vw, 0.9rem);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+    border: none;
+    border-radius: 14px;
+
+    background: #f0f2f7;
+
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.delete-confirm-actions button:first-child {
+    color: #4b5170;
+
+    box-shadow:
+        4px 4px 10px rgba(174, 181, 199, 0.55),
+        -4px -4px 10px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+}
+
+.delete-confirm-actions button:first-child:hover {
+    transform: translateY(-2px);
+    color: #5b6ee1;
+
+    box-shadow:
+        7px 7px 16px rgba(124, 140, 248, 0.3),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1);
+}
+
+.delete-confirm-actions button:first-child:active {
+    transform: translateY(1px) scale(0.96);
+
+    box-shadow:
+        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+}
+
+.confirm-delete-btn {
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #ef4d6a, #d84a6a) !important;
+
+    box-shadow:
+        5px 5px 12px rgba(239, 77, 106, 0.4),
+        -4px -4px 10px rgba(255, 255, 255, 0.9),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
+}
+
+.confirm-delete-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        8px 8px 18px rgba(239, 77, 106, 0.5),
+        -5px -5px 14px rgba(255, 255, 255, 1),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
+}
+
+.confirm-delete-btn:active {
+    transform: translateY(1px) scale(0.96);
+
+    box-shadow:
+        inset 5px 5px 12px rgba(140, 30, 50, 0.5),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes addrPageFade {
+    from {
         opacity: 0;
-        transform: scale(0.85) translateY(20px);
     }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes addrHeaderIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes addrCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes addrSelectedPop {
+    0% {
+        transform: scale(0.98);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
     100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes addrBadgePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            3px 3px 8px rgba(46, 158, 107, 0.4),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 5px rgba(46, 158, 107, 0.15),
+            3px 3px 8px rgba(46, 158, 107, 0.4),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+    }
+}
+
+@keyframes addrMenuIn {
+    from {
+        opacity: 0;
+        transform: scale(0.85) translateY(-8px);
+    }
+
+    to {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
 }
 
-/* Warning icon */
-.delete-confirm-box::before {
-    content: '🗑️';
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 8px;
-    font-size: 2rem;
-    background: linear-gradient(135deg, #3a1a22, #4a2028);
-    border: 1.5px solid rgba(255, 45, 85, 0.3);
-    border-radius: 20px;
-    box-shadow: 0 10px 24px rgba(255, 45, 85, 0.25);
-    animation: trashShake 1.5s ease-in-out infinite;
+@keyframes addrToastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-24px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
 }
 
-@keyframes trashShake {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    25%      { transform: rotate(-8deg) scale(1.05); }
-    75%      { transform: rotate(8deg) scale(1.05); }
-}
+@keyframes addrBoxPop {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
 
-.delete-confirm-box h3 {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.35;
-}
-
-.delete-confirm-box > p {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #b8b8c5;
-    margin: 0 0 12px 0;
-    line-height: 1.55;
-    letter-spacing: 0.005em;
-}
-
-/* --- Confirm Actions --- */
-.delete-confirm-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 4px;
-}
-
-.delete-confirm-actions button {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 13px 18px;
-    border-radius: 50px;
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-    border: none;
-    user-select: none;
-}
-
-.delete-confirm-actions button:first-child {
-    background: #252545;
-    color: #c8c8dc;
-    border: 1.5px solid #3e3e58;
-}
-
-.delete-confirm-actions button:first-child:hover {
-    background: #2e2e52;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-.delete-confirm-actions .confirm-delete-btn {
-    background: linear-gradient(135deg, #ff2d55, #ff6b81);
-    color: #ffffff;
-    box-shadow: 0 6px 20px rgba(255, 45, 85, 0.4);
-}
-
-.delete-confirm-actions .confirm-delete-btn:hover {
-    background: linear-gradient(135deg, #e6204a, #ff5c73);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(255, 45, 85, 0.6);
-}
-
-.delete-confirm-actions button:active {
-    transform: translateY(0) scale(0.97);
-}
-
-.delete-confirm-actions button:focus-visible {
-    outline: 2px solid #a29bfe;
-    outline-offset: 2px;
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
+/* Tablets */
+@media (max-width: 768px) {
     .address-page {
-        padding: 24px 32px 120px;
-        gap: 16px;
-        max-width: 900px;
-        margin: 0 auto;
+        padding: 16px 12px 100px;
+        gap: 12px;
     }
 
     .address-header {
-        padding: 16px 22px;
+        padding: 12px 14px;
         border-radius: 20px;
     }
-
-    .address-header h2 { font-size: 1.3rem; }
-    .back-btn { width: 44px; height: 44px; font-size: 1.15rem; }
-    .add-btn { height: 44px; padding: 0 22px; font-size: 0.88rem; }
 
     .address-card {
-        padding: 20px 22px;
+        padding: 14px 14px;
         border-radius: 20px;
-        gap: 12px;
-    }
-
-    .address-top h3 { font-size: 1.05rem; }
-    .primary-badge { padding: 4px 12px; font-size: 0.68rem; }
-    .menu-btn { width: 38px; height: 38px; font-size: 1.3rem; }
-
-    .namnum h4 { font-size: 0.95rem; }
-    .namnum p { font-size: 0.85rem; }
-    .address-card > p { font-size: 0.88rem; }
-
-    .address-menu { min-width: 200px; padding: 8px; }
-    .address-menu button { padding: 12px 16px; font-size: 0.88rem; }
-}
-
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .address-page {
-        max-width: 800px;
-        margin: 0 auto;
     }
 }
 
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
+/* Phones */
+@media (max-width: 480px) {
     .address-page {
-        padding: 14px 14px 100px;
+        padding: 14px 12px 100px;
         gap: 12px;
     }
 
     .address-header {
-        padding: 11px 14px;
-        gap: 12px;
-    }
-
-    .address-header h2 { font-size: 1.08rem; }
-    .back-btn { width: 38px; height: 38px; font-size: 1rem; }
-    .add-btn { height: 38px; padding: 0 16px; font-size: 0.8rem; }
-
-    .address-card { padding: 15px 16px; border-radius: 16px; gap: 9px; }
-    .address-top h3 { font-size: 0.92rem; }
-    .menu-btn { width: 32px; height: 32px; font-size: 1.15rem; }
-
-    .namnum h4 { font-size: 0.85rem; }
-    .namnum p { font-size: 0.78rem; }
-    .address-card > p { font-size: 0.8rem; }
-
-    .address-menu { min-width: 170px; padding: 5px; }
-    .address-menu button { padding: 9px 12px; font-size: 0.78rem; }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .address-page {
-        padding: 12px 12px 96px;
-        gap: 11px;
-    }
-
-    .address-header {
-        padding: 10px 12px;
-        gap: 11px;
-        border-radius: 16px;
-    }
-
-    .address-header h2 { font-size: 1rem; }
-    .address-header p { font-size: 0.68rem; }
-    .back-btn { width: 36px; height: 36px; font-size: 0.95rem; }
-    .add-btn { height: 36px; padding: 0 14px; font-size: 0.76rem; }
-
-    .address-card {
-        padding: 14px 15px;
-        border-radius: 15px;
-        gap: 8px;
-    }
-
-    .address-top { gap: 10px; }
-    .address-top h3 { font-size: 0.88rem; }
-    .primary-badge { font-size: 0.58rem; padding: 2px 8px; }
-    .menu-btn { width: 30px; height: 30px; font-size: 1.1rem; }
-
-    .namnum { gap: 10px; }
-    .namnum h4 { font-size: 0.82rem; }
-    .namnum p { font-size: 0.74rem; }
-    .address-card > p { font-size: 0.76rem; line-height: 1.55; }
-
-    .address-menu { min-width: 160px; }
-    .address-menu button { padding: 9px 11px; font-size: 0.76rem; }
-
-    .delete-confirm-box {
-        padding: 28px 22px 20px;
-        border-radius: 20px;
-    }
-
-    .delete-confirm-box::before {
-        width: 62px;
-        height: 62px;
-        font-size: 1.8rem;
-    }
-
-    .delete-confirm-box h3 { font-size: 1.05rem; }
-    .delete-confirm-box > p { font-size: 0.8rem; }
-    .delete-confirm-actions button { padding: 12px 16px; font-size: 0.82rem; }
-}
-
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .address-page {
-        padding: 10px 10px 92px;
+        padding: 12px 12px;
+        border-radius: 18px;
         gap: 10px;
     }
 
-    .address-header {
-        padding: 10px 11px;
-        gap: 10px;
-        border-radius: 14px;
+    .back-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
     }
 
-    .address-header h2 { font-size: 0.95rem; }
-    .address-header p { font-size: 0.64rem; }
-    .back-btn { width: 34px; height: 34px; font-size: 0.9rem; }
-    .add-btn { height: 34px; padding: 0 12px; font-size: 0.72rem; }
-
-    .address-card {
-        padding: 13px 14px;
-        border-radius: 14px;
-        gap: 7px;
-    }
-
-    .address-top h3 { font-size: 0.85rem; }
-    .primary-badge { font-size: 0.56rem; padding: 2px 7px; }
-    .menu-btn { width: 28px; height: 28px; font-size: 1.05rem; }
-
-    .namnum h4 { font-size: 0.8rem; }
-    .namnum p { font-size: 0.72rem; }
-    .address-card > p { font-size: 0.74rem; line-height: 1.5; padding-left: 8px; }
-
-    .address-menu {
-        min-width: 150px;
-        padding: 5px;
+    .add-btn {
+        padding: 9px 14px;
+        font-size: 0.78rem;
         border-radius: 12px;
     }
 
+    .address-card {
+        padding: 14px 13px;
+        border-radius: 18px;
+    }
+
+    .menu-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    .address-menu {
+        min-width: 160px;
+        padding: 6px;
+        border-radius: 14px;
+    }
+
     .address-menu button {
-        padding: 8px 10px;
-        font-size: 0.74rem;
-        gap: 8px;
+        padding: 9px 12px;
+        font-size: 0.82rem;
+        border-radius: 10px;
     }
 
-    .empty-address {
-        padding: 48px 18px;
-        border-radius: 16px;
-        font-size: 0.85rem;
+    .delete-confirm-box {
+        padding: 20px 18px;
+        border-radius: 22px;
     }
 
-    .empty-address::before { font-size: 2.5rem; }
-
-    .delete-confirm-overlay { padding: 16px; }
-    .delete-confirm-box { padding: 24px 18px 18px; border-radius: 18px; }
-    .delete-confirm-box::before { width: 56px; height: 56px; font-size: 1.65rem; border-radius: 16px; }
-    .delete-confirm-box h3 { font-size: 1rem; }
-    .delete-confirm-box > p { font-size: 0.76rem; }
-    .delete-confirm-actions { gap: 10px; }
-    .delete-confirm-actions button { padding: 11px 14px; font-size: 0.78rem; }
+    .delete-confirm-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
+/* Small phones */
+@media (max-width: 360px) {
     .address-page {
-        padding: 9px 9px 88px;
-        gap: 9px;
+        padding: 12px 10px 95px;
+        gap: 10px;
     }
 
     .address-header {
-        padding: 9px 10px;
-        gap: 9px;
-        border-radius: 13px;
+        padding: 10px 10px;
     }
 
-    .address-header h2 { font-size: 0.88rem; }
-    .back-btn { width: 32px; height: 32px; font-size: 0.85rem; }
-    .add-btn { height: 32px; padding: 0 11px; font-size: 0.68rem; }
+    .address-header h2 {
+        font-size: 0.95rem;
+    }
+
+    .back-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+    }
+
+    .add-btn {
+        padding: 8px 12px;
+        font-size: 0.72rem;
+    }
 
     .address-card {
         padding: 12px 12px;
-        border-radius: 13px;
-        gap: 6px;
+        border-radius: 16px;
     }
 
-    .address-top { gap: 8px; }
-    .address-top h3 { font-size: 0.8rem; }
-    .primary-badge { font-size: 0.52rem; padding: 2px 6px; }
-    .menu-btn { width: 26px; height: 26px; font-size: 1rem; }
-
-    .namnum { gap: 8px; }
-    .namnum h4 { font-size: 0.76rem; }
-    .namnum p { font-size: 0.68rem; }
-    .address-card > p { font-size: 0.7rem; line-height: 1.5; padding-left: 7px; }
-
-    .address-menu {
-        min-width: 140px;
-        padding: 4px;
-        border-radius: 11px;
+    .address-top h3 {
+        font-size: 0.85rem;
     }
 
-    .address-menu button {
-        padding: 7px 9px;
-        font-size: 0.7rem;
-        border-radius: 8px;
+    .primary-badge {
+        padding: 2px 8px;
+        font-size: 0.58rem;
     }
 
-    .empty-address {
-        padding: 40px 14px;
-        border-radius: 14px;
+    .menu-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+
+    .namnum h4 {
+        font-size: 0.82rem;
+    }
+
+    .namnum p {
+        font-size: 0.74rem;
+    }
+
+    .address-card>p {
         font-size: 0.78rem;
     }
 
-    .empty-address::before { font-size: 2.2rem; }
+    .delete-confirm-box h3 {
+        font-size: 0.95rem;
+    }
 
-    .delete-confirm-box { padding: 22px 14px 16px; border-radius: 16px; gap: 10px; }
-    .delete-confirm-box::before { width: 50px; height: 50px; font-size: 1.5rem; border-radius: 14px; }
-    .delete-confirm-box h3 { font-size: 0.92rem; }
-    .delete-confirm-box > p { font-size: 0.72rem; }
-    .delete-confirm-actions { gap: 8px; }
-    .delete-confirm-actions button { padding: 10px 12px; font-size: 0.74rem; }
+    .delete-confirm-box p {
+        font-size: 0.8rem;
+    }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
-    .address-page *,
-    .address-page *::before,
-    .address-page *::after {
-        transition: none !important;
-        animation: none !important;
-    }
 
-    .address-card:hover {
-        transform: none;
-    }
-
-    .address-card:hover::before {
-        transform: translateY(-50%) scaleY(0);
-    }
-
-    .address-menu {
-        animation: none;
-    }
-
-    .primary-badge {
-        animation: none;
-    }
-
-    .delete-confirm-box::before {
-        animation: none;
-    }
-
-    .empty-address::before {
-        animation: none;
-    }
-
-    .back-btn:hover,
-    .add-btn:hover,
-    .menu-btn:hover {
-        transform: none;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
+    .address-page,
     .address-header,
     .address-card,
+    .address-card.selected,
+    .primary-badge,
+    .address-menu,
+    .address-success-message,
+    .delete-confirm-overlay,
     .delete-confirm-box {
-        border: 2px solid ButtonText;
-    }
-
-    .back-btn,
-    .add-btn,
-    .menu-btn {
-        border: 2px solid ButtonText;
-    }
-
-    .address-menu {
-        border: 2px solid ButtonText;
-    }
-
-    .address-menu button {
-        border: 1px solid ButtonText;
-    }
-
-    .primary-badge {
-        border: 1px solid ButtonText;
-    }
-}
-
-/* ============================================
-   iOS SAFE AREA
-   ============================================ */
-
-@supports (padding: max(0px)) {
-    .address-page {
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
-        padding-bottom: max(100px, calc(100px + env(safe-area-inset-bottom)));
-    }
-
-    .address-success-message {
-        top: max(20px, env(safe-area-inset-top));
-    }
-
-    @media (max-width: 767px) {
-        .address-page {
-            padding-left: max(12px, env(safe-area-inset-left));
-            padding-right: max(12px, env(safe-area-inset-right));
-        }
-    }
-
-    @media (max-width: 379px) {
-        .address-page {
-            padding-left: max(9px, env(safe-area-inset-left));
-            padding-right: max(9px, env(safe-area-inset-right));
-        }
-    }
-}
-
-/* ============================================
-   PRINT STYLES
-   ============================================ */
-
-@media print {
-    .address-page {
-        background: #ffffff;
-        color: #000000;
+        animation: none;
     }
 
     .back-btn,
     .add-btn,
     .menu-btn,
-    .address-menu,
-    .delete-confirm-overlay {
-        display: none;
-    }
-
-    .address-card {
-        border: 1px solid #000;
-        page-break-inside: avoid;
+    .address-card,
+    .address-menu button,
+    .delete-confirm-actions button {
+        transition: none;
     }
 }

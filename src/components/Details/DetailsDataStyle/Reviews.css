@@ -1,802 +1,439 @@
-/* ============================================
-   REVIEWS SECTION - PREMIUM RESPONSIVE STYLES
-   ============================================ */
+/* Reviews.css */
 
-/* --- Base Container --- */
-.dt-reviews {
-    width: 100%;
-    padding: 24px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+.dt-reviews,
+.dt-reviews * {
+  box-sizing: border-box;
 }
 
-/* --- Section Header --- */
+/* ============================================
+   MAIN CONTAINER (Clay card)
+   ============================================ */
+.dt-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  width: 100%;
+  padding: 18px 16px;
+
+  background: #f0f2f7;
+  border-radius: 24px;
+
+  box-shadow:
+    8px 8px 20px rgba(174, 181, 199, 0.55),
+    -8px -8px 20px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1),
+    inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+  animation: dtReviewsIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ============================================
+   SECTION HEADER
+   ============================================ */
 .dts-section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  width: 100%;
 }
 
 .dts-section-header h4 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    position: relative;
-    padding-left: 14px;
+  margin: 0;
+
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #3a3f55;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.dts-section-header h4::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 70%;
-    background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-    border-radius: 4px;
-}
-
-/* --- View All Button --- */
+/* ---- View All button (Clay pill) ---- */
 .dt-view-all {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1.5px solid #e0e0e8;
-    color: #6c5ce7;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-    font-family: inherit;
-    position: relative;
-    overflow: hidden;
-}
+  flex-shrink: 0;
 
-.dt-view-all::after {
-    content: '→';
-    font-size: 0.9rem;
-    transition: transform 0.3s ease;
-    display: inline-block;
+  padding: 8px 16px;
+
+  font-size: clamp(0.72rem, 1.9vw, 0.82rem);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #5b6ee1;
+  white-space: nowrap;
+
+  cursor: pointer;
+  border: none;
+  border-radius: 14px;
+
+  background: #f0f2f7;
+
+  box-shadow:
+    4px 4px 10px rgba(174, 181, 199, 0.55),
+    -4px -4px 10px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1);
+
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .dt-view-all:hover {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    border-color: transparent;
-    color: #ffffff;
-    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.35);
-    transform: translateY(-2px);
-}
+  transform: translateY(-2px);
+  color: #4553d6;
 
-.dt-view-all:hover::after {
-    transform: translateX(3px);
+  box-shadow:
+    7px 7px 16px rgba(124, 140, 248, 0.3),
+    -6px -6px 14px rgba(255, 255, 255, 1),
+    inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
 .dt-view-all:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
+  transform: translateY(1px) scale(0.96);
+
+  box-shadow:
+    inset 4px 4px 8px rgba(174, 181, 199, 0.6),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.95);
 }
 
 .dt-view-all:focus-visible {
-    outline: 2px solid #6c5ce7;
-    outline-offset: 2px;
+  outline: 2px solid #7c8cf8;
+  outline-offset: 3px;
 }
 
 /* ============================================
-   REVIEW SCROLL CONTAINER
+   REVIEWS SCROLL STRIP
    ============================================ */
-
 .dt-review-scroll {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    padding: 4px 4px 16px 4px;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #d0d0e0 transparent;
+  display: flex;
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 4px 4px 8px;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  scroll-snap-type: x mandatory;
 }
 
-/* Custom Scrollbar - Webkit */
 .dt-review-scroll::-webkit-scrollbar {
-    height: 6px;
-}
-
-.dt-review-scroll::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 10px;
-}
-
-.dt-review-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #d0d0e0, #c0c0d0);
-    border-radius: 10px;
-    transition: background 0.3s ease;
-}
-
-.dt-review-scroll::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+  display: none;
 }
 
 /* ============================================
-   REVIEW CARD
+   REVIEW CARD (Clay)
    ============================================ */
-
 .dt-review-card {
-    position: relative;
-    flex: 0 0 auto;
-    width: 290px;
-    padding: 20px;
-    background: linear-gradient(145deg, #ffffff 0%, #fafafe 100%);
-    border: 1.5px solid #ebebf5;
-    border-radius: 18px;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.04);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    cursor: pointer;
-}
+  flex-shrink: 0;
 
-/* Top gradient accent */
-.dt-review-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #6c5ce7, #a29bfe, #6c5ce7);
-    background-size: 200% 100%;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-.dt-review-card:hover::before {
-    opacity: 1;
-    animation: shimmer 2s linear infinite;
-}
+  width: 220px;
+  padding: 14px 14px;
 
-@keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
+  background: #f0f2f7;
+  border-radius: 18px;
 
-/* Radial glow */
-.dt-review-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -30%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(108, 92, 231, 0.06) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
+  box-shadow:
+    6px 6px 14px rgba(174, 181, 199, 0.5),
+    -5px -5px 14px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1),
+    inset -1px -1px 2px rgba(174, 181, 199, 0.25);
 
-.dt-review-card:hover::after {
-    opacity: 1;
+  scroll-snap-align: start;
+
+  transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+  animation: dtReviewCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .dt-review-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(108, 92, 231, 0.35);
-    box-shadow: 0 16px 40px rgba(108, 92, 231, 0.18);
-    background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
+  transform: translateY(-4px) scale(1.02);
+
+  box-shadow:
+    10px 10px 22px rgba(174, 181, 199, 0.6),
+    -8px -8px 20px rgba(255, 255, 255, 1),
+    inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
 .dt-review-card:active {
-    transform: translateY(-3px) scale(0.99);
+  transform: translateY(0) scale(0.98);
 }
 
 /* ============================================
-   REVIEW CARD TOP (Avatar + Name + Stars)
+   REVIEW TOP (Avatar + Name + Stars)
    ============================================ */
-
 .dt-review-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-    z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
 }
 
-/* --- Avatar Image --- */
+/* ---- Avatar image ---- */
 .dt-review-avatar-img {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    border: 2.5px solid #ffffff;
-    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.18);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.35s ease;
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  background: #f0f2f7;
+
+  box-shadow:
+    3px 3px 8px rgba(174, 181, 199, 0.55),
+    -3px -3px 8px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1);
 }
 
-.dt-review-card:hover .dt-review-avatar-img {
-    transform: scale(1.08);
-    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.3);
-    border-color: #ede9ff;
-}
-
-/* --- Avatar Initial Circle --- */
+/* ---- Avatar fallback (letter or ⭐) ---- */
 .dt-review-avatar {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: #ffffff;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.3);
-    border: 2.5px solid #ffffff;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.35s ease;
-    user-select: none;
-    flex-shrink: 0;
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+
+  box-shadow:
+    4px 4px 10px rgba(124, 140, 248, 0.4),
+    -3px -3px 8px rgba(255, 255, 255, 0.9),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.35);
+
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
 
-.dt-review-card:hover .dt-review-avatar {
-    transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.45);
-}
-
-/* --- Name + Stars Wrapper --- */
+/* ---- Name + Stars ---- */
 .dt-review-top > div {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .dt-review-top h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color 0.3s ease;
-}
+  margin: 0;
 
-.dt-review-card:hover .dt-review-top h4 {
-    color: #6c5ce7;
+  font-size: clamp(0.85rem, 2.2vw, 0.92rem);
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #3a3f55;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .dt-review-top span {
-    font-size: 0.82rem;
-    line-height: 1;
-    letter-spacing: 0.05em;
-    display: inline-flex;
-    align-items: center;
-    gap: 1px;
-    filter: drop-shadow(0 1px 3px rgba(255, 193, 7, 0.3));
-    transition: transform 0.3s ease;
-}
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  color: #f5b731;
+  line-height: 1;
 
-.dt-review-card:hover .dt-review-top span {
-    transform: scale(1.05);
+  text-shadow: 0 1px 2px rgba(245, 183, 49, 0.3);
 }
 
 /* ============================================
    REVIEW MESSAGE
    ============================================ */
-
 .dt-review-card p {
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: #5a5a70;
-    line-height: 1.6;
-    margin: 0;
-    letter-spacing: 0.005em;
-    position: relative;
-    z-index: 1;
+  margin: 0;
 
-    /* Clamp to 3 lines */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    transition: color 0.3s ease;
-}
+  font-size: clamp(0.82rem, 2.1vw, 0.9rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: #5a6080;
 
-.dt-review-card:hover p {
-    color: #3a3a50;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  min-height: 42px;
 }
 
 /* ============================================
-   EMPTY STATE (No Reviews)
+   EMPTY STATE CARD (No Reviews Yet)
    ============================================ */
-
 .dt-review-card:only-child {
-    width: 100%;
-    max-width: 100%;
-    background: linear-gradient(135deg, #fafafe 0%, #f0f0ff 100%);
-    border: 2px dashed #d8d8f0;
-    box-shadow: none;
-    cursor: default;
+  width: 100%;
+  max-width: 100%;
+  flex-shrink: 1;
+
+  align-items: center;
+  text-align: center;
+
+  padding: 26px 20px;
 }
 
-.dt-review-card:only-child:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: #c0c0e8;
-    background: linear-gradient(135deg, #f5f3ff 0%, #ebe8ff 100%);
-}
+.dt-review-card:only-child .dt-review-top {
+  flex-direction: column;
+  gap: 12px;
 
-.dt-review-card:only-child::before,
-.dt-review-card:only-child::after {
-    display: none;
+  text-align: center;
 }
-
 
 .dt-review-card:only-child .dt-review-avatar {
-    background: black;
-    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.35);
-    font-size: 1.4rem;
-    animation: emptyStarPulse 2.5s ease-in-out infinite;
+  width: 52px;
+  height: 52px;
+  font-size: 1.5rem;
 }
 
-@keyframes emptyStarPulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 6px 20px rgba(255, 193, 7, 0.35);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 8px 28px rgba(255, 193, 7, 0.55);
-    }
-}
-
-.dt-review-card:only-child:hover .dt-review-avatar {
-    transform: scale(1.05);
-}
-
-.dt-review-card:only-child .dt-review-top h4 {
-    color: #3a3a50;
-    font-size: 1rem;
-}
-
-.dt-review-card:only-child:hover .dt-review-top h4 {
-    color: #6c5ce7;
+.dt-review-card:only-child h4 {
+  font-size: 1rem;
+  color: #4b5170;
 }
 
 .dt-review-card:only-child p {
-    color: #6b6b80;
-    font-size: 0.9rem;
-    -webkit-line-clamp: unset;
-    display: block;
-    overflow: visible;
+  -webkit-line-clamp: unset;
+  min-height: auto;
+  font-size: 0.88rem;
+  color: #6a7090;
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   ANIMATIONS
    ============================================ */
-
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
-    .dt-reviews {
-        padding: 28px 0;
-    }
-
-    .dts-section-header h4 {
-        font-size: 1.4rem;
-    }
-
-    .dt-review-card {
-        width: 320px;
-        padding: 24px;
-        border-radius: 20px;
-    }
-
-    .dt-review-avatar-img,
-    .dt-review-avatar {
-        width: 52px;
-        height: 52px;
-        min-width: 52px;
-        font-size: 1.25rem;
-    }
-
-    .dt-review-top h4 {
-        font-size: 1rem;
-    }
-
-    .dt-review-card p {
-        font-size: 0.92rem;
-    }
+@keyframes dtReviewsIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .dt-review-card {
-        width: 300px;
-        padding: 20px;
-    }
-}
-
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
-    .dt-reviews {
-        padding: 20px 0;
-    }
-
-    .dts-section-header h4 {
-        font-size: 1.15rem;
-    }
-
-    .dt-review-card {
-        width: 270px;
-        padding: 18px;
-        border-radius: 16px;
-    }
-
-    .dt-review-avatar-img,
-    .dt-review-avatar {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        font-size: 1.05rem;
-        border-width: 2px;
-    }
-
-    .dt-review-top h4 {
-        font-size: 0.9rem;
-    }
-
-    .dt-review-card p {
-        font-size: 0.84rem;
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .dt-reviews {
-        padding: 16px 0;
-    }
-
-    .dts-section-header {
-        margin-bottom: 16px;
-        padding: 0 2px;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .dts-section-header h4 {
-        font-size: 1.05rem;
-        padding-left: 12px;
-    }
-
-    .dts-section-header h4::before {
-        width: 3px;
-    }
-
-    .dt-view-all {
-        font-size: 0.8rem;
-        padding: 7px 14px;
-        border-radius: 40px;
-    }
-
-    .dt-review-scroll {
-        gap: 12px;
-        padding: 2px 2px 14px 2px;
-    }
-
-    .dt-review-card {
-        width: 250px;
-        padding: 16px;
-        border-radius: 14px;
-        gap: 12px;
-    }
-
-    .dt-review-avatar-img,
-    .dt-review-avatar {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        font-size: 1rem;
-    }
-
-    .dt-review-top {
-        gap: 10px;
-    }
-
-    .dt-review-top h4 {
-        font-size: 0.88rem;
-    }
-
-    .dt-review-top span {
-        font-size: 0.76rem;
-    }
-
-    .dt-review-card p {
-        font-size: 0.82rem;
-        -webkit-line-clamp: 3;
-    }
-
-    .dt-review-card:hover {
-        transform: translateY(-4px);
-    }
-}
-
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .dt-reviews {
-        padding: 14px 0;
-    }
-
-    .dts-section-header h4 {
-        font-size: 1rem;
-    }
-
-    .dt-view-all {
-        font-size: 0.75rem;
-        padding: 6px 12px;
-    }
-
-    .dt-review-scroll {
-        gap: 10px;
-        padding: 2px 2px 12px 2px;
-    }
-
-    .dt-review-card {
-        width: 230px;
-        padding: 15px;
-        border-radius: 13px;
-        gap: 11px;
-    }
-
-    .dt-review-avatar-img,
-    .dt-review-avatar {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        font-size: 0.95rem;
-    }
-
-    .dt-review-top h4 {
-        font-size: 0.85rem;
-    }
-
-    .dt-review-top span {
-        font-size: 0.72rem;
-    }
-
-    .dt-review-card p {
-        font-size: 0.8rem;
-    }
-
-    .dt-review-card:only-child .dt-review-avatar {
-        font-size: 1.25rem;
-    }
-}
-
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .dts-section-header h4 {
-        font-size: 0.9rem;
-        padding-left: 10px;
-    }
-
-    .dt-view-all {
-        font-size: 0.7rem;
-        padding: 5px 10px;
-    }
-
-    .dt-review-scroll {
-        gap: 8px;
-    }
-
-    .dt-review-card {
-        width: 210px;
-        padding: 13px;
-        border-radius: 12px;
-        gap: 10px;
-    }
-
-    .dt-review-avatar-img,
-    .dt-review-avatar {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        font-size: 0.88rem;
-    }
-
-    .dt-review-top {
-        gap: 8px;
-    }
-
-    .dt-review-top h4 {
-        font-size: 0.8rem;
-    }
-
-    .dt-review-top span {
-        font-size: 0.68rem;
-    }
-
-    .dt-review-card p {
-        font-size: 0.75rem;
-        -webkit-line-clamp: 3;
-    }
-
-    .dt-review-card:only-child .dt-review-avatar {
-        font-size: 1.15rem;
-    }
-
-    .dt-review-card:only-child .dt-review-top h4 {
-        font-size: 0.9rem;
-    }
-
-    .dt-review-card:only-child p {
-        font-size: 0.8rem;
-    }
+@keyframes dtReviewCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   RESPONSIVE
    ============================================ */
 
+/* Tablets */
+@media (max-width: 768px) {
+  .dt-reviews {
+    padding: 16px 14px;
+    gap: 12px;
+    border-radius: 22px;
+  }
+
+  .dt-review-card {
+    width: 200px;
+    padding: 13px 13px;
+    border-radius: 16px;
+  }
+
+  .dt-review-avatar,
+  .dt-review-avatar-img {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .dt-reviews {
+    padding: 14px 12px;
+    gap: 10px;
+    border-radius: 20px;
+  }
+
+  .dt-review-scroll {
+    gap: 10px;
+    padding: 4px 2px 6px;
+  }
+
+  .dt-review-card {
+    width: 180px;
+    padding: 12px 12px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+
+  .dt-review-avatar,
+  .dt-review-avatar-img {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .dt-view-all {
+    padding: 6px 12px;
+    border-radius: 12px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+  .dt-reviews {
+    padding: 12px 10px;
+    border-radius: 18px;
+  }
+
+  .dt-review-card {
+    width: 165px;
+    padding: 11px 11px;
+    border-radius: 14px;
+  }
+
+  .dts-section-header h4 {
+    font-size: 0.95rem;
+  }
+
+  .dt-view-all {
+    padding: 5px 10px;
+    font-size: 0.68rem;
+  }
+
+  .dt-review-card p {
+    font-size: 0.78rem;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-    .dt-review-card,
-    .dt-review-card::before,
-    .dt-review-card::after,
-    .dt-review-avatar,
-    .dt-review-avatar-img,
-    .dt-review-top h4,
-    .dt-review-top span,
-    .dt-review-card p,
-    .dt-view-all {
-        transition: none !important;
-        animation: none !important;
-    }
+  .dt-reviews,
+  .dt-review-card {
+    animation: none;
+  }
 
-    .dt-review-card:hover {
-        transform: none;
-    }
-
-    .dt-review-card:hover .dt-review-avatar,
-    .dt-review-card:hover .dt-review-avatar-img {
-        transform: none;
-    }
-
-    .dt-view-all:hover {
-        transform: none;
-    }
-
-    .dt-review-card:only-child .dt-review-avatar {
-        animation: none;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
-    .dt-review-card {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-review-avatar,
-    .dt-review-avatar-img {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-view-all {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-review-top h4,
-    .dt-review-card p {
-        color: ButtonText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .dts-section-header h4 {
-        color: #f0f0f5;
-    }
-
-    .dt-view-all {
-        border-color: #3a3a50;
-        color: #a29bfe;
-    }
-
-    .dt-view-all:hover {
-        color: #ffffff;
-        border-color: transparent;
-    }
-
-    .dt-review-card {
-        background: linear-gradient(145deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .dt-review-card:hover {
-        background: linear-gradient(145deg, #1e1e35 0%, #252545 100%);
-        border-color: rgba(108, 92, 231, 0.45);
-        box-shadow: 0 16px 40px rgba(108, 92, 231, 0.25);
-    }
-
-    .dt-review-card::after {
-        background: radial-gradient(circle, rgba(108, 92, 231, 0.12) 0%, transparent 70%);
-    }
-
-    .dt-review-avatar-img {
-        border-color: #2e2e48;
-    }
-
-    .dt-review-card:hover .dt-review-avatar-img {
-        border-color: #3e3e58;
-    }
-
-    .dt-review-avatar {
-        border-color: #2e2e48;
-    }
-
-    .dt-review-top h4 {
-        color: #f0f0f5;
-    }
-
-    .dt-review-card:hover .dt-review-top h4 {
-        color: #a29bfe;
-    }
-
-    .dt-review-card p {
-        color: #a0a0b8;
-    }
-
-    .dt-review-card:hover p {
-        color: #c8c8dc;
-    }
-
-    /* Empty state dark */
-    .dt-review-card:only-child {
-        background: linear-gradient(135deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-    }
-
-    .dt-review-card:only-child:hover {
-        background: linear-gradient(135deg, #1e1e35 0%, #252545 100%);
-        border-color: rgba(108, 92, 231, 0.45);
-    }
-
-    .dt-review-card:only-child .dt-review-top h4 {
-        color: #c8c8dc;
-    }
-
-    .dt-review-card:only-child p {
-        color: #8888a0;
-    }
-
-    .dt-review-scroll::-webkit-scrollbar-thumb {
-        background: #2e2e48;
-    }
-
-    .dt-review-scroll::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(90deg, #6c5ce7, #a29bfe);
-    }
+  .dt-review-card,
+  .dt-view-all {
+    transition: none;
+  }
 }

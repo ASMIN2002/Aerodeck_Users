@@ -1,13 +1,20 @@
 import "./TOPHEADER.css";
+import { useNavigate } from "react-router-dom";
 
-function TOPHEADER({ title, onBack }) {
+function TOPHEADER({ title }) {
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate(-1);
+    };
+
     return (
         <header className="top-header">
             <div className="top-header-info">
                 <button
                     type="button"
                     className="top-header-back"
-                    onClick={onBack}
+                    onClick={handleBack}
                 >
                     ←
                 </button>

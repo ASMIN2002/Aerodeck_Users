@@ -1,11 +1,14 @@
 import "./MyWishlist.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../../services/api";
 
 function MyWishlist({
     setProfilePage,
     onOpenDetails
 }) {
+
+    const navigate = useNavigate();
 
     const [wishlist, setWishlist] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -71,6 +74,12 @@ function MyWishlist({
 
     };
 
+    /* 🔥 Back button handler */
+    const handleBack = () => {
+        setProfilePage("profile");
+        navigate(-1);
+    };
+
     return (
 
         <div className="mywishlist">
@@ -79,7 +88,7 @@ function MyWishlist({
 
                 <button
                     className="wishlist-back"
-                    onClick={() => setProfilePage("profile")}
+                    onClick={handleBack}
                 >
                     ←
                 </button>

@@ -323,19 +323,19 @@ function AddAddress({ setProfilePage }) {
             }
 
 
-            <div className="add-address">
+            <div className="heep-add-addr-page">
 
-                <div className="add-address-header">
+                <div className="heep-add-addr-header">
 
                     <button
-                        className="back-btn"
+                        className="heep-add-addr-back-btn"
                         onClick={() => setProfilePage("address")}
                     >
                         <FiArrowLeft />
                     </button>
                     <button
                         type="button"
-                        className="current-location-btn"
+                        className="heep-add-addr-location-btn"
                         onClick={handleCurrentLocation}
                     >
                         📍 Set Current Location
@@ -346,7 +346,7 @@ function AddAddress({ setProfilePage }) {
                 </div>
 
                 <form
-                    className="address-form"
+                    className="heep-add-addr-form"
                     onSubmit={handleSubmit}
                 >
 
@@ -399,7 +399,6 @@ function AddAddress({ setProfilePage }) {
                                 ...prev,
                                 pincode: pin,
 
-                                /* ✅ PIN hatane pe city/state/country/area clear karo */
                                 ...(pin.length < 6 && {
                                     city: "",
                                     state: "",
@@ -408,13 +407,11 @@ function AddAddress({ setProfilePage }) {
                                 })
                             }));
 
-                            /* ✅ PIN 6 se kam ho gaya toh areas clear karo */
                             if (pin.length < 6) {
                                 setAreas([]);
                                 setDeliveryAvailable(true);
                             }
 
-                            /* ✅ PIN 6 digit ka ho gaya toh fetch karo */
                             if (pin.length === 6) {
                                 fetchPincode(pin);
                             }
@@ -430,7 +427,7 @@ function AddAddress({ setProfilePage }) {
                             }))
                         }
                         disabled={areas.length === 0}
-                        className={areas.length === 0 ? "empty-select" : ""}
+                        className={areas.length === 0 ? "heep-add-addr-empty-select" : ""}
                     >
 
                         <option value="">
@@ -442,7 +439,7 @@ function AddAddress({ setProfilePage }) {
                         {areas.map((area, index) => (
 
                             <option
-                                key={`${formData.pincode}-${area}`} 
+                                key={`${formData.pincode}-${area}`}
                                 value={area}
                             >
                                 {area}
@@ -487,7 +484,7 @@ function AddAddress({ setProfilePage }) {
                     />
 
 
-                    <div className="address-type">
+                    <div className="heep-add-addr-type">
 
                         <label>
                             <input
@@ -541,7 +538,7 @@ function AddAddress({ setProfilePage }) {
 
                     <button
                         type="submit"
-                        className="save-address-btn"
+                        className="heep-add-addr-save-btn"
                     >
                         Save Address
                     </button>

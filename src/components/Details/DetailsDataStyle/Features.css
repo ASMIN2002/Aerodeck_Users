@@ -1,333 +1,247 @@
+/* Features.css */
+
+.dt-features,
+.dt-features * {
+    box-sizing: border-box;
+}
+
 /* ============================================
-   FEATURES SECTION - PREMIUM RESPONSIVE STYLES
+   MAIN CONTAINER (Clay card)
    ============================================ */
-
-/* --- Base Container --- */
 .dt-features {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
     width: 100%;
-    padding: 24px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    padding: 18px 16px;
+
+    background: #f0f2f7;
+    border-radius: 24px;
+
+    box-shadow:
+        8px 8px 20px rgba(174, 181, 199, 0.55),
+        -8px -8px 20px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+    animation: dtFeaturesIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* --- Section Title --- */
+/* ============================================
+   HEADING
+   ============================================ */
 .dt-features h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0 0 20px 0;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    position: relative;
-    padding-left: 14px;
+    margin: 0;
+
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #3a3f55;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.dt-features h3::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 70%;
-    background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-    border-radius: 4px;
-}
-
-/* --- Feature Grid --- */
+/* ============================================
+   FEATURE GRID
+   ============================================ */
 .dt-feature-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+
     width: 100%;
 }
 
-/* --- Feature Card --- */
+/* ============================================
+   FEATURE CARD (Clay)
+   ============================================ */
 .dt-feature-card {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 22px 16px;
-    background: linear-gradient(145deg, #ffffff 0%, #fafafe 100%);
-    border: 1.5px solid #ebebf5;
-    border-radius: 16px;
-    font-size: 1.6rem;
+    gap: 8px;
+
+    padding: 16px 10px;
+
+    font-size: clamp(1.3rem, 3.4vw, 1.6rem);
     line-height: 1;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.04);
     text-align: center;
-    user-select: none;
+
+    background: #f0f2f7;
+    border-radius: 18px;
+
+    box-shadow:
+        6px 6px 14px rgba(174, 181, 199, 0.5),
+        -5px -5px 14px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.25);
+
+    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+
+    animation: dtFeatureCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Subtle gradient glow on hover */
-.dt-feature-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
+/* Staggered entry */
+.dt-feature-card:nth-child(1) {
+    animation-delay: 0.06s;
 }
 
-.dt-feature-card:hover::before {
-    opacity: 1;
+.dt-feature-card:nth-child(2) {
+    animation-delay: 0.12s;
 }
 
-.dt-feature-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(108, 92, 231, 0.35);
-    box-shadow: 0 16px 40px rgba(108, 92, 231, 0.18);
-    background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
+.dt-feature-card:nth-child(3) {
+    animation-delay: 0.18s;
 }
 
-.dt-feature-card:active {
-    transform: translateY(-3px) scale(0.98);
-    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.15);
+.dt-feature-card:nth-child(4) {
+    animation-delay: 0.24s;
 }
 
-/* --- Feature Card Span (Text) --- */
+
+
+/* ============================================
+   FEATURE LABEL
+   ============================================ */
 .dt-feature-card span {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #3a3a50;
-    letter-spacing: 0.01em;
-    line-height: 1.35;
+    font-size: clamp(0.78rem, 2vw, 0.88rem);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    color: #4b5170;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
     transition: color 0.3s ease;
-    position: relative;
-    z-index: 1;
-    word-break: break-word;
 }
 
 .dt-feature-card:hover span {
-    color: #6c5ce7;
+    color: rgb(218, 221, 221);
+    font-weight: 600;
+}
+
+.dt-feature-card:hover {
+    background-color: rgb(20, 28, 186);
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   ANIMATIONS
+   ============================================ */
+@keyframes dtFeaturesIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dtFeatureCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
-    .dt-feature-grid {
-        gap: 18px;
-    }
-
-    .dt-feature-card {
-        padding: 28px 20px;
-        font-size: 1.8rem;
-        border-radius: 18px;
-    }
-
-    .dt-feature-card span {
-        font-size: 0.88rem;
-    }
-
-    .dt-features h3 {
-        font-size: 1.4rem;
-    }
-}
-
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .dt-feature-grid {
-        gap: 16px;
-    }
-
-    .dt-feature-card {
-        padding: 24px 18px;
-    }
-}
-
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
+/* Tablets */
+@media (max-width: 768px) {
     .dt-features {
-        padding: 20px 0;
-    }
-
-    .dt-feature-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-    }
-
-    .dt-feature-card {
-        padding: 22px 16px;
-        font-size: 1.5rem;
-        border-radius: 14px;
-        flex-direction: row;
-        gap: 14px;
-        justify-content: flex-start;
-        text-align: left;
-    }
-
-    .dt-feature-card span {
-        font-size: 0.85rem;
-    }
-
-    .dt-features h3 {
-        font-size: 1.15rem;
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .dt-features {
-        padding: 16px 0;
-    }
-
-    .dt-features h3 {
-        font-size: 1.05rem;
-        margin-bottom: 16px;
-        padding-left: 12px;
-    }
-
-    .dt-features h3::before {
-        width: 3px;
-    }
-
-    .dt-feature-grid {
-        grid-template-columns: repeat(2, 1fr);
+        padding: 16px 14px;
         gap: 12px;
-    }
-
-    .dt-feature-card {
-        padding: 18px 14px;
-        font-size: 1.35rem;
-        border-radius: 12px;
-        gap: 12px;
-        flex-direction: column;
-        text-align: center;
-        justify-content: center;
-    }
-
-    .dt-feature-card span {
-        font-size: 0.8rem;
-    }
-
-    .dt-feature-card:hover {
-        transform: translateY(-4px);
-    }
-}
-
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .dt-features {
-        padding: 14px 0;
-    }
-
-    .dt-features h3 {
-        font-size: 1rem;
-        margin-bottom: 14px;
+        border-radius: 22px;
     }
 
     .dt-feature-grid {
         gap: 10px;
-    }
-
-    .dt-feature-card {
-        padding: 16px 12px;
-        font-size: 1.25rem;
-        border-radius: 12px;
-        gap: 10px;
-    }
-
-    .dt-feature-card span {
-        font-size: 0.75rem;
-        line-height: 1.3;
-    }
-
-    .dt-feature-card:hover {
-        transform: translateY(-3px);
-    }
-}
-
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .dt-features h3 {
-        font-size: 0.9rem;
-        padding-left: 10px;
-    }
-
-    .dt-feature-grid {
-        gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     }
 
     .dt-feature-card {
         padding: 14px 10px;
-        font-size: 1.1rem;
-        border-radius: 10px;
-        gap: 8px;
+        border-radius: 16px;
+        gap: 6px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .dt-features {
+        padding: 14px 12px;
+        gap: 10px;
+        border-radius: 20px;
+    }
+
+    .dt-feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .dt-feature-card {
+        padding: 14px 8px;
+        border-radius: 16px;
+        gap: 6px;
     }
 
     .dt-feature-card span {
-        font-size: 0.7rem;
+        font-size: 0.82rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .dt-features {
+        padding: 12px 10px;
+        border-radius: 18px;
+    }
+
+    .dt-feature-grid {
+        gap: 8px;
+    }
+
+    .dt-feature-card {
+        padding: 12px 6px;
+        border-radius: 14px;
+        gap: 5px;
+        font-size: 1.2rem;
+    }
+
+    .dt-feature-card span {
+        font-size: 0.76rem;
+    }
+
+    .dt-features h3 {
+        font-size: 0.95rem;
     }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
+
+    .dt-features,
+    .dt-feature-card {
+        animation: none;
+    }
+
     .dt-feature-card,
-    .dt-feature-card::before,
     .dt-feature-card span {
-        transition: none !important;
-        animation: none !important;
-    }
-
-    .dt-feature-card:hover {
-        transform: none;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
-    .dt-feature-card {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-feature-card span {
-        color: ButtonText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .dt-features h3 {
-        color: #f0f0f5;
-    }
-
-    .dt-feature-card {
-        background: linear-gradient(145deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .dt-feature-card:hover {
-        background: linear-gradient(145deg, #1e1e35 0%, #252545 100%);
-        border-color: rgba(108, 92, 231, 0.45);
-        box-shadow: 0 16px 40px rgba(108, 92, 231, 0.25);
-    }
-
-    .dt-feature-card::before {
-        background: radial-gradient(circle, rgba(108, 92, 231, 0.15) 0%, transparent 70%);
-    }
-
-    .dt-feature-card span {
-        color: #c8c8dc;
-    }
-
-    .dt-feature-card:hover span {
-        color: #a29bfe;
+        transition: none;
     }
 }

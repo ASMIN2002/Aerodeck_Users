@@ -1,8 +1,26 @@
 /* ==========================================================================
-   PRODUCT SHOP — PREMIUM DARK ANIMATED
+   SHOP CARD — HEAVY WHITE CLAYMORPHISM
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================
+   ROOT VARIABLES
+   ============================================ */
+
+:root {
+    --sc-bg: #e4e7ef;
+    --sc-bg-dark: #ccd0db;
+    --sc-shadow-dark: rgba(160, 165, 180, 0.9);
+    --sc-shadow-light: #ffffff;
+    --sc-purple: #6c5ce7;
+    --sc-purple-light: #a29bfe;
+    --sc-green: #00d97f;
+    --sc-red: #ff4757;
+    --sc-gold: #feca57;
+    --sc-text: #2d3436;
+    --sc-text-soft: #4a5568;
+}
 
 /* ============================================
    CARD CONTAINER
@@ -13,52 +31,56 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(155deg, #13131a 0%, #0e0e14 100%);
-    border-radius: 14px;
-    overflow: hidden;
+    gap: 8px;
+    padding: 8px;
+    background: linear-gradient(145deg, #e4e7ef, #ccd0db);
+    border-radius: 18px;
     cursor: pointer;
-    transition:
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.35s ease;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow:
-        0 4px 14px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(162, 155, 254, 0.15) inset;
+        7px 7px 16px rgba(160, 165, 180, 0.7),
+        -7px -7px 16px rgba(255, 255, 255, 0.95),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.05),
+        inset 0 3px 6px rgba(255, 255, 255, 0.85);
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     isolation: isolate;
+    box-sizing: border-box;
+}
+
+.heepit-shop-card * {
+    box-sizing: border-box;
 }
 
 .heepit-shop-card:active {
     transform: scale(0.97);
+    box-shadow:
+        inset 5px 5px 12px rgba(160, 165, 180, 0.85),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.9);
 }
 
-/* ============================================
-   ANIMATED RAINBOW BORDER
-   ============================================ */
-
+/* Animated gradient border */
 .heepit-shop-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 14px;
+    border-radius: 18px;
     padding: 1.5px;
-    background: linear-gradient(
-        135deg,
-        #a29bfe, #6c5ce7, #00cec9,
-        #fd79a8, #ffeaa7, #a29bfe
-    );
+    background: linear-gradient(135deg,
+        #a29bfe, #6c5ce7, #00cec9, #fd79a8, #a29bfe);
     background-size: 400% 400%;
     -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    animation: heepitShopBorderGlow 6s linear infinite;
+    animation: scBorderFlow 6s linear infinite;
     pointer-events: none;
     z-index: 3;
-    opacity: 0.7;
+    opacity: 0.6;
     transition: opacity 0.3s ease;
 }
 
@@ -66,75 +88,86 @@
     opacity: 1;
 }
 
-@keyframes heepitShopBorderGlow {
+@keyframes scBorderFlow {
     0%   { background-position: 0% 50%; }
     50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* Outer glow */
-.heepit-shop-card::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 16px;
-    background: linear-gradient(
-        135deg,
-        rgba(162, 155, 254, 0.45),
-        rgba(108, 92, 231, 0.35),
-        rgba(0, 206, 201, 0.35),
-        rgba(253, 121, 168, 0.35)
-    );
-    background-size: 400% 400%;
-    animation: heepitShopBorderGlow 6s linear infinite;
-    z-index: -1;
-    filter: blur(10px);
-    opacity: 0.45;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.heepit-shop-card:active::after {
-    opacity: 0.9;
-}
-
 /* ============================================
-   IMAGE BOX
+   TOP ROW — STATUS + LIKE
    ============================================ */
+
+.heepit-shop-top {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    z-index: 5;
+}
+
+.heepit-shop-status {
+    padding: 3px 8px;
+    font-size: 0.5rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    border-radius: 50px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.heepit-shop-status.available {
+    color: #ffffff;
+    background: linear-gradient(145deg, #00d97f, #00a85e);
+    box-shadow:
+        2px 2px 6px rgba(0, 217, 127, 0.5),
+        -1px -1px 3px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(0, 90, 50, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 1px 1px rgba(0, 90, 50, 0.4);
+}
+
+.heepit-shop-status.unavailable {
+    color: #ffffff;
+    background: linear-gradient(145deg, #ff6b7a, #e8344a);
+    box-shadow:
+        2px 2px 6px rgba(200, 40, 60, 0.5),
+        -1px -1px 3px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(150, 20, 30, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 1px 1px rgba(150, 20, 30, 0.4);
+}
+
+/* LIKE BUTTON */
+.heepit-shop-like {
+   display: none;
+}
+
+.heepit-shop-like svg {
+    font-size: 0.7rem;
+    color: var(--sc-text-soft);
+    transition: all 0.25s ease;
+}
 
 .heepit-shop-image-box {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    background: radial-gradient(circle at 50% 30%, #1f1f2a 0%, #0f0f15 100%);
+    aspect-ratio: 5 / 4;
+    border-radius: 14px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Shimmer sweep */
-.heepit-shop-image-box::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(162, 155, 254, 0.18),
-        transparent
-    );
-    animation: heepitShopShimmer 4s ease-in-out infinite;
-    pointer-events: none;
+    background: #ffffff;
+    box-shadow:
+        inset 3px 3px 6px rgba(160, 165, 180, 0.4),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.95),
+        3px 3px 8px rgba(160, 165, 180, 0.35),
+        -3px -3px 8px rgba(255, 255, 255, 0.9);
     z-index: 2;
-}
-
-@keyframes heepitShopShimmer {
-    0%, 100% { left: -100%; }
-    50%      { left: 100%; }
 }
 
 .heepit-shop-image-grid {
@@ -143,45 +176,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 6px;
 }
 
 .heepit-shop-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    object-position: center;
     display: block;
+    background: #ffffff;
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
     -webkit-user-drag: none;
+    image-rendering: -webkit-optimize-contrast;
+    transform: scale(1.1);
 }
-
-.heepit-shop-card:active .heepit-shop-image {
-    transform: scale(1.08);
-}
-
-/* ============================================
-   HIDE LIKE, SAVE, ADD TO CART
-   ============================================ */
-
-.heepit-shop-top {
-    display: none !important;
-}
-
-.heepit-shop-footer {
-    display: none !important;
-}
-
-/* ============================================
-   BODY
-   ============================================ */
 
 .heepit-shop-body {
-    padding: 8px 10px 12px;
     display: flex;
     flex-direction: column;
     gap: 5px;
-    flex: 1;
+    padding: 0 2px;
+    z-index: 2;
 }
 
 /* HIGHLIGHT */
@@ -189,211 +206,265 @@
     display: inline-block;
     align-self: flex-start;
     padding: 2px 7px;
-    background: linear-gradient(
-        135deg,
-        rgba(162, 155, 254, 0.25),
-        rgba(108, 92, 231, 0.25)
-    );
-    border: 1px solid rgba(162, 155, 254, 0.4);
-    border-radius: 4px;
-    color: #c9c2ff;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-size: 0.52rem;
+    font-weight: 900;
+    color: var(--sc-purple);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #e0e3eb, #f4f6fa);
+    box-shadow:
+        inset 2px 2px 5px rgba(160, 165, 180, 0.5),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.9),
+        1px 1px 3px rgba(160, 165, 180, 0.3),
+        -1px -1px 3px rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
 }
 
-/* ============================================
-   RATING + PRICE ROW
-   ============================================ */
-
+/* RATING + PRICE ROW */
 .heepit-shop-rating-row {
-    display: flex !important;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 4px;
-    font-size: 0.62rem;
+    gap: 5px;
 }
 
 .heepit-shop-rating-row > span {
-    display: inline-flex !important;
+    display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 2px 7px;
-    background: linear-gradient(
-        135deg,
-        rgba(0, 206, 201, 0.15),
-        rgba(0, 206, 201, 0.08)
-    );
-    border: 1px solid rgba(0, 206, 201, 0.4);
-    border-radius: 4px;
-    color: #00e0d9;
-    font-weight: 800;
-    font-size: 0.6rem;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+    padding: 2px 6px;
+    font-size: 0.55rem;
+    font-weight: 900;
+    color: #ffffff;
+    background: linear-gradient(145deg, #feca57, #ff9f43);
+    border-radius: 50px;
     box-shadow:
-        0 0 8px rgba(0, 206, 201, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    animation: heepitRatingPulse 3s ease-in-out infinite;
-}
-
-@keyframes heepitRatingPulse {
-    0%, 100% {
-        box-shadow:
-            0 0 8px rgba(0, 206, 201, 0.25),
-            0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-    }
-    50% {
-        box-shadow:
-            0 0 14px rgba(0, 206, 201, 0.5),
-            0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-    }
+        2px 2px 5px rgba(255, 159, 67, 0.5),
+        -1px -1px 3px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(217, 119, 6, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 1px rgba(217, 119, 6, 0.4);
+    white-space: nowrap;
 }
 
 .heepit-shop-final-price {
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 800;
+    font-size: 0.78rem;
+    font-weight: 900;
+    color: var(--sc-purple);
     letter-spacing: -0.01em;
+    text-shadow:
+        1px 1px 1px rgba(255, 255, 255, 0.9),
+        0 0 8px rgba(108, 92, 231, 0.3);
     white-space: nowrap;
-    text-shadow: 0 0 10px rgba(162, 155, 254, 0.3);
 }
 
-/* ============================================
-   PRODUCT NAME — 1 LINE + ...
-   ============================================ */
-
+/* NAME */
 .heepit-shop-name {
     margin: 0;
     width: 100%;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #f0f0f5;
-    line-height: 1.3;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--sc-text);
     letter-spacing: -0.005em;
+    line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
 }
 
-/* ============================================
-   PRICE ROW
-   ============================================ */
-
+/* PRICE ROW */
 .heepit-shop-price-row {
     display: flex;
     align-items: center;
+    gap: 5px;
     flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 2px;
 }
 
 .heepit-shop-demo-price {
-    color: #6a6a7a;
-    font-size: 0.62rem;
-    font-weight: 600;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--sc-text-soft);
     text-decoration: line-through;
+    opacity: 0.7;
 }
 
 .heepit-shop-discount {
-    color: #00d97f;
-    font-size: 0.6rem;
-    font-weight: 800;
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 0.5rem;
+    font-weight: 900;
+    color: #ffffff;
     letter-spacing: 0.02em;
-    padding: 1px 6px;
-    background: linear-gradient(
-        135deg,
-        rgba(0, 217, 127, 0.15),
-        rgba(0, 217, 127, 0.08)
-    );
-    border: 1px solid rgba(0, 217, 127, 0.3);
-    border-radius: 3px;
-    box-shadow: 0 0 8px rgba(0, 217, 127, 0.2);
+    border-radius: 50px;
+    background: linear-gradient(145deg, #00d97f, #00a85e);
+    box-shadow:
+        2px 2px 5px rgba(0, 217, 127, 0.5),
+        -1px -1px 3px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px rgba(0, 90, 50, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 1px 1px rgba(0, 90, 50, 0.4);
+    white-space: nowrap;
 }
 
 /* ============================================
-   360px — SMALL PHONE (2 COLUMN GRID BODY)
+   FOOTER — CART + SAVE
    ============================================ */
 
-@media (max-width: 380px) {
+.heepit-shop-footer {
+    display: none;
+}
+
+
+/* ============================================
+   RESPONSIVE — TABLET
+   ============================================ */
+
+@media (max-width: 768px) {
+    .heepit-shop-card {
+        padding: 7px;
+        gap: 7px;
+        border-radius: 16px;
+    }
+
+    .heepit-shop-card::before {
+        border-radius: 16px;
+    }
+
+    .heepit-shop-image-box {
+        border-radius: 12px;
+    }
 
     .heepit-shop-body {
-        padding: 6px 8px 10px;
         gap: 4px;
     }
 
     .heepit-shop-name {
-        font-size: 0.68rem;
-    }
-
-    .heepit-shop-final-price {
-        font-size: 0.7rem;
-    }
-
-    .heepit-shop-highlight {
-        font-size: 0.55rem;
-        padding: 1px 5px;
-    }
-
-    .heepit-shop-rating-row > span {
-        font-size: 0.55rem;
-        padding: 1px 5px;
-    }
-
-    .heepit-shop-discount {
-        font-size: 0.55rem;
-    }
-}
-
-@media (max-width: 360px) {
-
-    .heepit-shop-card {
-        border-radius: 12px;
-    }
-
-    .heepit-shop-card::before {
-        border-radius: 12px;
-    }
-
-    .heepit-shop-body {
-        padding: 5px 6px 8px;
-        gap: 3px;
-    }
-
-    .heepit-shop-name {
-        font-size: 0.62rem;
-    }
-
-    .heepit-shop-final-price {
         font-size: 0.64rem;
     }
 
-    .heepit-shop-highlight {
-        font-size: 0.5rem;
-        padding: 1px 4px;
-    }
-
-    .heepit-shop-rating-row {
-        font-size: 0.55rem;
+    .heepit-shop-final-price {
+        font-size: 0.72rem;
     }
 
     .heepit-shop-rating-row > span {
-        font-size: 0.5rem;
-        padding: 1px 4px;
+        font-size: 0.52rem;
+        padding: 2px 5px;
     }
 
-    .heepit-shop-discount {
-        font-size: 0.5rem;
-        padding: 1px 4px;
+   
+   
+    .heepit-shop-status {
+        font-size: 0.46rem;
+        padding: 3px 7px;
+    }
+
+}
+
+/* ============================================
+   RESPONSIVE — SMALL PHONE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .heepit-shop-card {
+        padding: 6px;
+        gap: 6px;
+        border-radius: 14px;
+    }
+
+    .heepit-shop-card::before {
+        border-radius: 14px;
+    }
+
+    .heepit-shop-image-box {
+        border-radius: 11px;
+    }
+
+    .heepit-shop-image-grid {
+        padding: 5px;
+    }
+
+    .heepit-shop-top {
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        gap: 4px;
+    }
+
+    .heepit-shop-name {
+        font-size: 0.6rem;
+    }
+
+    .heepit-shop-final-price {
+        font-size: 0.68rem;
+    }
+
+    .heepit-shop-rating-row > span {
+        font-size: 0.48rem;
+        padding: 2px 5px;
     }
 
     .heepit-shop-demo-price {
-        font-size: 0.55rem;
+        font-size: 0.54rem;
+    }
+
+    .heepit-shop-discount {
+        font-size: 0.46rem;
+        padding: 1px 5px;
+    }
+    .heepit-shop-status {
+        font-size: 0.42rem;
+        padding: 2px 6px;
+    }
+    .heepit-shop-highlight {
+        font-size: 0.48rem;
+        padding: 2px 6px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — EXTRA SMALL
+   ============================================ */
+
+@media (max-width: 380px) {
+    .heepit-shop-card {
+        padding: 5px;
+        gap: 5px;
+        border-radius: 13px;
+    }
+
+    .heepit-shop-card::before {
+        border-radius: 13px;
+    }
+
+    .heepit-shop-image-box {
+        border-radius: 10px;
+    }
+
+    .heepit-shop-image-grid {
+        padding: 4px;
+    }
+
+    .heepit-shop-name {
+        font-size: 0.56rem;
+    }
+
+    .heepit-shop-final-price {
+        font-size: 0.62rem;
+    }
+
+    .heepit-shop-rating-row > span {
+        font-size: 0.44rem;
+        padding: 1px 4px;
+    }
+    .heepit-shop-status {
+        font-size: 0.4rem;
+        padding: 2px 5px;
     }
 }
 
@@ -402,19 +473,24 @@
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-
     .heepit-shop-card,
     .heepit-shop-card::before,
-    .heepit-shop-card::after,
-    .heepit-shop-image-box::after,
     .heepit-shop-image,
-    .heepit-shop-rating-row > span {
+    .heepit-shop-cart-btn,
+    .heepit-shop-cart-btn::before,
+    .heepit-shop-qty-btn,
+    .heepit-shop-save,
+    .heepit-shop-like {
         animation: none !important;
         transition: none !important;
     }
 
     .heepit-shop-card:active,
-    .heepit-shop-card:active .heepit-shop-image {
+    .heepit-shop-card:active .heepit-shop-image,
+    .heepit-shop-cart-btn:active,
+    .heepit-shop-qty-btn:active,
+    .heepit-shop-save:active,
+    .heepit-shop-like:active {
         transform: none;
     }
 }

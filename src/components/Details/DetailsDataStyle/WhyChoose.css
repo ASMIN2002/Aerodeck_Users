@@ -1,344 +1,280 @@
+/* WhyChoose.css */
+
+.dt-why,
+.dt-why * {
+    box-sizing: border-box;
+}
+
 /* ============================================
-   WHY CHOOSE SECTION - PREMIUM RESPONSIVE STYLES
+   MAIN CONTAINER (Clay card)
    ============================================ */
-
-/* --- Base Container --- */
 .dt-why {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
     width: 100%;
-    padding: 24px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    padding: 18px 16px;
+
+    background: #f0f2f7;
+    border-radius: 24px;
+
+    box-shadow:
+        8px 8px 20px rgba(174, 181, 199, 0.55),
+        -8px -8px 20px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+    animation: dtWhyIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* --- Section Title --- */
+/* ============================================
+   HEADING
+   ============================================ */
 .dt-why h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin: 0 0 20px 0;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    position: relative;
-    padding-left: 14px;
+    margin: 0;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    background: linear-gradient(135deg, #0015ff, #000000, #000000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-.dt-why h3::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 70%;
-    background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-    border-radius: 4px;
-}
-
-/* --- Why Choose Grid --- */
+/* ============================================
+   WHY CHOOSE GRID
+   ============================================ */
 .dt-why-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+
     width: 100%;
 }
 
-/* --- Why Choose Card --- */
+/* ============================================
+   WHY CARD (Clay)
+   ============================================ */
 .dt-why-card {
     position: relative;
+
     display: flex;
-    align-items: stretch;
-    background: linear-gradient(145deg, #ffffff 0%, #fafafe 100%);
-    border: 1.5px solid #ebebf5;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 12px;
+
+    background: #f0f2f7;
     border-radius: 18px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.04);
+
+    box-shadow:
+        6px 6px 14px rgba(174, 181, 199, 0.5),
+        -5px -5px 14px rgba(255, 255, 255, 0.95),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(174, 181, 199, 0.25);
+
+    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+
+    animation: dtWhyCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Gradient top accent line */
-.dt-why-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #6c5ce7, #a29bfe, #6c5ce7);
-    background-size: 200% 100%;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+/* Staggered entry */
+.dt-why-card:nth-child(1) {
+    animation-delay: 0.06s;
 }
 
-.dt-why-card:hover::after {
-    opacity: 1;
-    animation: shimmer 2s linear infinite;
+.dt-why-card:nth-child(2) {
+    animation-delay: 0.12s;
 }
 
-@keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+.dt-why-card:nth-child(3) {
+    animation-delay: 0.18s;
 }
 
-/* Subtle radial glow */
-.dt-why-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(108, 92, 231, 0.07) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.dt-why-card:hover::before {
-    opacity: 1;
+.dt-why-card:nth-child(4) {
+    animation-delay: 0.24s;
 }
 
 .dt-why-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(108, 92, 231, 0.35);
-    box-shadow: 0 16px 40px rgba(108, 92, 231, 0.18);
-    background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
+    transform: translateY(-5px) scale(1.03);
+
+    box-shadow:
+        10px 10px 22px rgba(124, 140, 248, 0.3),
+        -8px -8px 18px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(124, 140, 248, 0.1);
 }
 
 .dt-why-card:active {
-    transform: translateY(-3px) scale(0.98);
-    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.15);
+    transform: translateY(0) scale(0.97);
+
+    box-shadow:
+        inset 4px 4px 10px rgba(174, 181, 199, 0.6),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
 }
 
-/* --- Inner Wrapper --- */
+/* ============================================
+   INNER WRAPPER (Icon + Text)
+   ============================================ */
 .detwhy {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 24px 16px;
+    gap: 10px;
+
     width: 100%;
     text-align: center;
-    position: relative;
-    z-index: 1;
-}
-
-/* --- Icon Circle --- */
-.dt-why-icon {
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    line-height: 1;
-    background: linear-gradient(145deg, #f0edff, #e8e3ff);
-    border-radius: 16px;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.1);
-    flex-shrink: 0;
-}
-
-.dt-why-card:hover .dt-why-icon {
-    background: linear-gradient(145deg, #6c5ce7, #a29bfe);
-    transform: translateY(-4px) rotate(-6deg) scale(1.08);
-    box-shadow: 0 10px 24px rgba(108, 92, 231, 0.35);
-}
-
-/* --- Card Heading --- */
-.dt-why-card h4 {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #3a3a50;
-    margin: 0;
-    letter-spacing: 0.01em;
-    line-height: 1.35;
-    transition: color 0.3s ease;
-    word-break: break-word;
-}
-
-.dt-why-card:hover h4 {
-    color: #6c5ce7;
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   ICON (Clay Circle)
+   ============================================ */
+.dt-why-icon {
+    display: grid;
+    place-items: center;
+
+    width: 52px;
+    height: 52px;
+
+    font-size: 1.5rem;
+    line-height: 1;
+
+    border-radius: 50%;
+
+    background: #f0f2f7;
+
+    box-shadow:
+        inset 4px 4px 10px rgba(174, 181, 199, 0.5),
+        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
+
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dt-why-card:hover .dt-why-icon {
+    transform: scale(1.1) rotate(-6deg);
+}
+
+.dt-why-card:active .dt-why-icon {
+    transform: scale(0.94) rotate(0deg);
+}
+
+/* ============================================
+   TEXT
+   ============================================ */
+.detwhy h4 {
+    margin: 0;
+
+    font-size: clamp(0.82rem, 2.1vw, 0.92rem);
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+
+    color: #4b5170;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    transition: color 0.3s ease;
+}
+
+.dt-why-card:hover .detwhy h4 {
+    color: #5b6ee1;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes dtWhyIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dtWhyCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
+/* Tablets */
+@media (max-width: 768px) {
+    .dt-why {
+        padding: 16px 14px;
+        gap: 12px;
+        border-radius: 22px;
+    }
+
     .dt-why-grid {
-        gap: 18px;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 
     .dt-why-card {
-        border-radius: 20px;
-    }
-
-    .detwhy {
-        padding: 30px 22px;
-        gap: 16px;
-    }
-
-    .dt-why-icon {
-        width: 64px;
-        height: 64px;
-        font-size: 1.85rem;
-        border-radius: 18px;
-    }
-
-    .dt-why-card h4 {
-        font-size: 0.95rem;
-    }
-
-    .dt-why h3 {
-        font-size: 1.4rem;
-    }
-}
-
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .dt-why-grid {
-        gap: 16px;
-    }
-
-    .detwhy {
-        padding: 26px 18px;
-    }
-}
-
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
-    .dt-why {
-        padding: 20px 0;
-    }
-
-    .dt-why-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-    }
-
-    .detwhy {
-        flex-direction: row;
-        justify-content: flex-start;
-        text-align: left;
-        padding: 22px 20px;
-        gap: 16px;
-    }
-
-    .dt-why-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.4rem;
-        border-radius: 14px;
-    }
-
-    .dt-why-card h4 {
-        font-size: 0.9rem;
-    }
-
-    .dt-why h3 {
-        font-size: 1.15rem;
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .dt-why {
-        padding: 16px 0;
-    }
-
-    .dt-why h3 {
-        font-size: 1.05rem;
-        margin-bottom: 16px;
-        padding-left: 12px;
-    }
-
-    .dt-why h3::before {
-        width: 3px;
-    }
-
-    .dt-why-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .dt-why-card {
-        border-radius: 14px;
-    }
-
-    .detwhy {
-        flex-direction: column;
-        text-align: center;
-        justify-content: center;
-        padding: 20px 14px;
-        gap: 12px;
+        padding: 12px 10px;
+        border-radius: 16px;
     }
 
     .dt-why-icon {
         width: 48px;
         height: 48px;
         font-size: 1.35rem;
-        border-radius: 12px;
-    }
-
-    .dt-why-card h4 {
-        font-size: 0.82rem;
-    }
-
-    .dt-why-card:hover {
-        transform: translateY(-4px);
     }
 }
 
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
+/* Phones */
+@media (max-width: 480px) {
     .dt-why {
-        padding: 14px 0;
-    }
-
-    .dt-why h3 {
-        font-size: 1rem;
-        margin-bottom: 14px;
+        padding: 14px 12px;
+        gap: 10px;
+        border-radius: 20px;
     }
 
     .dt-why-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
 
     .dt-why-card {
-        border-radius: 12px;
-    }
-
-    .detwhy {
-        padding: 16px 12px;
-        gap: 10px;
+        padding: 12px 8px;
+        border-radius: 16px;
     }
 
     .dt-why-icon {
         width: 44px;
         height: 44px;
         font-size: 1.25rem;
-        border-radius: 11px;
     }
 
-    .dt-why-card h4 {
-        font-size: 0.78rem;
-        line-height: 1.3;
-    }
-
-    .dt-why-card:hover {
-        transform: translateY(-3px);
+    .detwhy h4 {
+        font-size: 0.82rem;
     }
 }
 
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .dt-why h3 {
-        font-size: 0.9rem;
-        padding-left: 10px;
+/* Small phones */
+@media (max-width: 360px) {
+    .dt-why {
+        padding: 12px 10px;
+        border-radius: 18px;
     }
 
     .dt-why-grid {
@@ -346,101 +282,38 @@
     }
 
     .dt-why-card {
-        border-radius: 10px;
-    }
-
-    .detwhy {
-        padding: 14px 10px;
-        gap: 8px;
+        padding: 10px 6px;
+        border-radius: 14px;
     }
 
     .dt-why-icon {
-        width: 38px;
-        height: 38px;
-        font-size: 1.1rem;
-        border-radius: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
     }
 
-    .dt-why-card h4 {
-        font-size: 0.7rem;
+    .detwhy h4 {
+        font-size: 0.75rem;
+    }
+
+    .dt-why h3 {
+        font-size: 0.95rem;
     }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
+
+    .dt-why,
+    .dt-why-card {
+        animation: none;
+    }
+
     .dt-why-card,
-    .dt-why-card::before,
-    .dt-why-card::after,
     .dt-why-icon,
-    .dt-why-card h4 {
-        transition: none !important;
-        animation: none !important;
-    }
-
-    .dt-why-card:hover {
-        transform: none;
-    }
-
-    .dt-why-card:hover .dt-why-icon {
-        transform: none;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
-    .dt-why-card {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-why-icon {
-        border: 1px solid ButtonText;
-    }
-
-    .dt-why-card h4 {
-        color: ButtonText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .dt-why h3 {
-        color: #f0f0f5;
-    }
-
-    .dt-why-card {
-        background: linear-gradient(145deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .dt-why-card:hover {
-        background: linear-gradient(145deg, #1e1e35 0%, #252545 100%);
-        border-color: rgba(108, 92, 231, 0.45);
-        box-shadow: 0 16px 40px rgba(108, 92, 231, 0.25);
-    }
-
-    .dt-why-card::before {
-        background: radial-gradient(circle, rgba(108, 92, 231, 0.15) 0%, transparent 70%);
-    }
-
-    .dt-why-icon {
-        background: linear-gradient(145deg, #252545, #2a2a4a);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .dt-why-card:hover .dt-why-icon {
-        background: linear-gradient(145deg, #6c5ce7, #a29bfe);
-        box-shadow: 0 10px 24px rgba(108, 92, 231, 0.45);
-    }
-
-    .dt-why-card h4 {
-        color: #c8c8dc;
-    }
-
-    .dt-why-card:hover h4 {
-        color: #a29bfe;
+    .detwhy h4 {
+        transition: none;
     }
 }

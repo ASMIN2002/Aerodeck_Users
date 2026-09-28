@@ -27,13 +27,13 @@ function EditAddress({ setProfilePage }) {
         address_type: "Home"
     });
 
+    const [originalData, setOriginalData] = useState(null);
     const [areas, setAreas] = useState([]);
     const [loadingPin, setLoadingPin] = useState(false);
     const [savingAddress, setSavingAddress] = useState(false);
+    const [isChanged, setIsChanged] = useState(false);
 
     const fetchPincode = async (pin) => {
-
-
 
         if (pin.length !== 6) return;
 
@@ -56,12 +56,21 @@ function EditAddress({ setProfilePage }) {
                     city: data.location.city,
                     state: data.location.state,
                     country: data.location.country
-                    // area_street: ""
                 }));
 
+                /* 🔥 originalData bhi mirror karo */
+                setOriginalData(orig => {
+                    if (!orig) return orig;
+                    return {
+                        ...orig,
+                        pincode: pin,
+                        city: data.location.city,
+                        state: data.location.state,
+                        country: data.location.country
+                    };
+                });
+
                 setAreas(data.areas);
-
-
 
             }
 
@@ -85,19 +94,54 @@ function EditAddress({ setProfilePage }) {
 
             const data = JSON.parse(savedAddress);
 
-            setFormData({
+            const initial = {
                 ...data,
                 session_token: sessionToken
-            });
+            };
+
+            setFormData(initial);
+            setOriginalData(initial);
+            setIsChanged(false);
+
             fetchPincode(data.pincode);
 
         }
 
     }, []);
 
+    useEffect(() => {
+
+        if (!originalData) return;
+        if (loadingPin) return;
+
+        const fieldsToCompare = [
+            "full_name",
+            "mobile_number",
+            "house_flat",
+            "area_street",
+            "landmark",
+            "city",
+            "state",
+            "pincode",
+            "country",
+            "address_type"
+        ];
+
+        const changed = fieldsToCompare.some(
+            (key) =>
+                String(formData[key] ?? "").trim() !==
+                String(originalData[key] ?? "").trim()
+        );
+
+        setIsChanged(changed);
+
+    }, [formData, originalData, loadingPin]);
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        if (!isChanged) return;
 
         setSavingAddress(true);
 
@@ -155,13 +199,19 @@ function EditAddress({ setProfilePage }) {
 
     };
 
+    /* 🔥 Back button handler */
+    const handleBack = () => {
+        setProfilePage("address");
+        navigate(-1);
+    };
+
     if (!formData.address_id) {
         return <h2>Loading...</h2>;
     }
 
     return (
 
-        <div className="edit-address-page">
+        <div className="heep-edit-addr-page">
             {
                 savingAddress && (
                     <Loading
@@ -171,23 +221,23 @@ function EditAddress({ setProfilePage }) {
                 )
             }
 
-            <div className="edit-address-header">
+            <div className="heep-edit-addr-header">
 
                 <button
-                    className="back-btn"
-                    onClick={() => setProfilePage("address")}
+                    className="heep-edit-addr-back-btn"
+                    onClick={handleBack}
                 >
                     <FiArrowLeft />
                 </button>
 
-                <h2 className="page-title">
+                <h2 className="heep-edit-addr-title">
                     Edit Address
                 </h2>
 
             </div>
 
             <form
-                className="address-form"
+                className="heep-edit-addr-form"
                 onSubmit={handleSubmit}
             >
 
@@ -300,7 +350,7 @@ function EditAddress({ setProfilePage }) {
                     readOnly
                 />
 
-                <div className="address-type">
+                <div className="heep-edit-addr-type">
 
                     <label>
                         <input
@@ -354,7 +404,8 @@ function EditAddress({ setProfilePage }) {
 
                 <button
                     type="submit"
-                    className="save-address-btn"
+                    className="heep-edit-addr-save-btn"
+                    disabled={!isChanged}
                 >
                     Update Address
                 </button>

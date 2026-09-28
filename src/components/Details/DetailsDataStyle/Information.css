@@ -1,408 +1,218 @@
-/* ==========================================================================
-   INFORMATION — PREMIUM DARK ANIMATED STYLES
-   ========================================================================== */
+/* Information.css */
 
+.dt-information,
+.dt-information * {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   MAIN CONTAINER (Clay card)
+   ============================================ */
 .dt-information {
-    width: 100%;
-    padding: 20px 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  padding: 18px 16px;
+
+  background: #f0f2f7;
+  border-radius: 24px;
+
+  box-shadow:
+    8px 8px 20px rgba(174, 181, 199, 0.55),
+    -8px -8px 20px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 1),
+    inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+
+  animation: dtInfoIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* --- Info Row --- */
+/* ============================================
+   INFO ROW (Clay inset pill)
+   ============================================ */
 .dt-info-row {
-    display: flex;
-    align-items: flex-start;       /* ✅ Top-aligned for multi-line */
-    justify-content: space-between;
-    gap: 16px;
-    padding: 14px 18px;
-    background: linear-gradient(145deg, #ffffff 0%, #fafafe 100%);
-    border: 1.5px solid #ebebf5;
-    border-radius: 12px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 8px;
-}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 
-/* Left accent bar */
-.dt-info-row::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleY(0);
-    width: 3px;
-    height: 60%;
-    background: linear-gradient(180deg, #6c5ce7, #a29bfe);
-    border-radius: 0 4px 4px 0;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  width: 100%;
+  padding: 11px 14px;
 
-.dt-info-row:hover::before {
-    transform: translateY(-50%) scaleY(1);
-}
+  background: #f0f2f7;
+  border-radius: 14px;
 
-/* Subtle radial glow */
-.dt-info-row::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -30%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(108, 92, 231, 0.06) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
+  box-shadow:
+    inset 3px 3px 8px rgba(174, 181, 199, 0.45),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.95);
 
-.dt-info-row:hover::after {
-    opacity: 1;
+  transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dt-info-row:hover {
-    background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
-    border-color: rgba(108, 92, 231, 0.3);
-    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.1);
-    transform: translateX(4px);
+  transform: translateY(-2px);
+
+  box-shadow:
+    5px 5px 14px rgba(174, 181, 199, 0.5),
+    -5px -5px 14px rgba(255, 255, 255, 1),
+    inset 2px 2px 6px rgba(174, 181, 199, 0.35),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.9);
 }
 
 /* ============================================
-   FIRST SPAN (LABEL) — FIXED WIDTH
+   LABEL (left)
    ============================================ */
-
 .dt-info-row > span:first-child {
-    flex: 0 0 auto;               /* ✅ Label shrink nahi hoga */
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #6b6b80;
-    letter-spacing: 0.01em;
-    line-height: 1.5;
-    white-space: nowrap;
-    transition: color 0.3s ease;
-    position: relative;
-    z-index: 1;
+  flex-shrink: 0;
+
+  font-size: clamp(0.82rem, 2.1vw, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #6a7090;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.dt-info-row:hover > span:first-child {
-    color: #6c5ce7;
-}
-
+/* ============================================
+   VALUE (right)
+   ============================================ */
 .dt-info-row > span:last-child {
-    flex: 1;                       
-    min-width: 0;                 
-    max-width: 65%;               
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #1a1a2e;
-    letter-spacing: -0.01em;
-    line-height: 1.5;
-    text-align: right;
-    word-wrap: break-word;        
-    word-break: break-word;        
-    overflow-wrap: break-word;    
-    white-space: normal;
-    transition: color 0.3s ease;
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 6px;
-    flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  font-weight: 800;
+  color: #3a3f55;
+
+  text-align: right;
+  word-break: break-word;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 /* ============================================
-   DELIVERY DATE HIGHLIGHT
+   DELIVERY DATE
    ============================================ */
-
 .delidate {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+  color: #2e9e6b !important;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) !important;
 }
 
-/* ============================================
-   OPEN BOX BADGE
-   ============================================ */
-
+/* Open Box badge */
 .open-box {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #ffffff;
-    background: linear-gradient(135deg, #00b894, #00cec9);
-    padding: 3px 8px;
-    border-radius: 50px;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    line-height: 1.4;
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0, 184, 148, 0.3);
-    animation: badgePulse 2.5s ease-in-out infinite;
-}
+  display: inline-block;
+  margin-left: 4px;
+  padding: 2px 8px;
 
-@keyframes badgePulse {
-    0%, 100% {
-        box-shadow: 0 2px 8px rgba(0, 184, 148, 0.3);
-    }
-    50% {
-        box-shadow: 0 2px 16px rgba(0, 184, 148, 0.5);
-    }
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  border-radius: 8px;
+
+  background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+
+  box-shadow:
+    2px 2px 6px rgba(124, 140, 248, 0.45),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.35);
 }
 
 /* ============================================
-   RETURN POLICY SPECIAL STYLING
+   ANIMATIONS
    ============================================ */
-
-.dt-info-row:last-child > span:last-child {
-    color: #6c5ce7;
-    font-weight: 700;
+@keyframes dtInfoIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ============================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
    ============================================ */
 
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
-    .dt-information {
-        padding: 24px 0;
-        gap: 4px;
-    }
+/* Tablets */
+@media (max-width: 768px) {
+  .dt-information {
+    padding: 16px 14px;
+    gap: 9px;
+    border-radius: 22px;
+  }
 
-    .dt-info-row {
-        padding: 16px 22px;
-        border-radius: 14px;
-        margin-bottom: 10px;
-    }
-
-    .dt-info-row > span:first-child {
-        font-size: 0.9rem;
-    }
-
-    .dt-info-row > span:last-child {
-        font-size: 0.95rem;
-        max-width: 65%;
-    }
-
-    .open-box {
-        font-size: 0.72rem;
-        padding: 4px 10px;
-    }
+  .dt-info-row {
+    padding: 10px 12px;
+    border-radius: 13px;
+  }
 }
 
-/* --- Desktop (1024px - 1439px) --- */
-@media (max-width: 1439px) and (min-width: 1024px) {
-    .dt-info-row {
-        padding: 15px 20px;
-    }
+/* Phones */
+@media (max-width: 480px) {
+  .dt-information {
+    padding: 14px 12px;
+    gap: 8px;
+    border-radius: 20px;
+  }
 
-    .dt-info-row > span:last-child {
-        max-width: 65%;
-    }
+  .dt-info-row {
+    padding: 10px 11px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+
+  .dt-info-row > span:first-child {
+    font-size: 0.82rem;
+  }
+
+  .dt-info-row > span:last-child {
+    font-size: 0.85rem;
+  }
+
+  .open-box {
+    padding: 2px 6px;
+    font-size: 0.62rem;
+  }
 }
 
-/* --- Tablet (768px - 1023px) --- */
-@media (max-width: 1023px) {
-    .dt-information {
-        padding: 18px 0;
-    }
+/* Small phones */
+@media (max-width: 360px) {
+  .dt-information {
+    padding: 12px 10px;
+    border-radius: 18px;
+  }
 
-    .dt-info-row {
-        padding: 14px 16px;
-        border-radius: 11px;
-        margin-bottom: 7px;
-        gap: 14px;
-    }
+  .dt-info-row {
+    padding: 9px 10px;
+    border-radius: 11px;
+    gap: 6px;
+  }
 
-    .dt-info-row > span:first-child {
-        font-size: 0.83rem;
-    }
+  .dt-info-row > span:first-child {
+    font-size: 0.78rem;
+  }
 
-    .dt-info-row > span:last-child {
-        font-size: 0.86rem;
-        max-width: 62%;
-    }
-
-    .dt-info-row:hover {
-        transform: translateX(3px);
-    }
-}
-
-/* --- Small Tablet / Large Phone (600px - 767px) --- */
-@media (max-width: 767px) {
-    .dt-information {
-        padding: 14px 0;
-        gap: 2px;
-    }
-
-    .dt-info-row {
-        padding: 12px 14px;
-        border-radius: 10px;
-        margin-bottom: 6px;
-        gap: 12px;
-    }
-
-    .dt-info-row > span:first-child {
-        font-size: 0.8rem;
-    }
-
-    .dt-info-row > span:last-child {
-        font-size: 0.83rem;
-        max-width: 62%;
-    }
-
-    .dt-info-row:hover {
-        transform: translateX(2px);
-    }
-
-    .open-box {
-        font-size: 0.65rem;
-        padding: 3px 7px;
-    }
-}
-
-/* --- Small Phone (480px - 599px) --- */
-@media (max-width: 599px) {
-    .dt-information {
-        padding: 12px 0;
-    }
-
-    .dt-info-row {
-        padding: 11px 12px;
-        border-radius: 10px;
-        margin-bottom: 6px;
-        gap: 10px;
-    }
-
-    .dt-info-row > span:first-child {
-        font-size: 0.78rem;
-    }
-
-    .dt-info-row > span:last-child {
-        font-size: 0.8rem;
-        max-width: 60%;
-    }
-
-    .open-box {
-        font-size: 0.62rem;
-        padding: 2px 6px;
-    }
-}
-
-/* --- Extra Small Phone (below 380px) --- */
-@media (max-width: 379px) {
-    .dt-information {
-        padding: 10px 0;
-    }
-
-    .dt-info-row {
-        padding: 10px 12px;
-        border-radius: 10px;
-        margin-bottom: 6px;
-        gap: 10px;
-        flex-direction: row;         /* ✅ ROW layout — right pe hi rahega */
-        align-items: flex-start;
-    }
-
-    .dt-info-row > span:first-child {
-        font-size: 0.74rem;
-        flex-shrink: 0;
-        max-width: 40%;
-    }
-
-    .dt-info-row > span:last-child {
-        font-size: 0.76rem;
-        max-width: 58%;
-        text-align: right;
-        justify-content: flex-end;
-    }
-
-    .open-box {
-        font-size: 0.58rem;
-        padding: 2px 5px;
-    }
+  .dt-info-row > span:last-child {
+    font-size: 0.8rem;
+  }
 }
 
 /* ============================================
-   ACCESSIBILITY & MOTION PREFERENCES
+   ACCESSIBILITY
    ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
-    .dt-info-row,
-    .dt-info-row::before,
-    .dt-info-row::after,
-    .dt-info-row > span,
-    .open-box {
-        transition: none !important;
-        animation: none !important;
-    }
+  .dt-information {
+    animation: none;
+  }
 
-    .dt-info-row:hover {
-        transform: none;
-    }
-}
-
-/* --- High Contrast Mode --- */
-@media (forced-colors: active) {
-    .dt-info-row {
-        border: 2px solid ButtonText;
-    }
-
-    .dt-info-row > span:first-child,
-    .dt-info-row > span:last-child {
-        color: ButtonText;
-    }
-
-    .open-box {
-        border: 1px solid ButtonText;
-    }
-}
-
-/* --- Dark Mode Support --- */
-@media (prefers-color-scheme: dark) {
-    .dt-info-row {
-        background: linear-gradient(145deg, #1a1a2e 0%, #1e1e35 100%);
-        border-color: #2e2e48;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .dt-info-row:hover {
-        background: linear-gradient(145deg, #1e1e35 0%, #252545 100%);
-        border-color: rgba(108, 92, 231, 0.45);
-        box-shadow: 0 6px 20px rgba(108, 92, 231, 0.2);
-    }
-
-    .dt-info-row::after {
-        background: radial-gradient(circle, rgba(108, 92, 231, 0.12) 0%, transparent 70%);
-    }
-
-    .dt-info-row > span:first-child {
-        color: #8888a0;
-    }
-
-    .dt-info-row:hover > span:first-child {
-        color: #a29bfe;
-    }
-
-    .dt-info-row > span:last-child {
-        color: #f0f0f5;
-    }
-
-    .dt-info-row:last-child > span:last-child {
-        color: #a29bfe;
-    }
-
-    .open-box {
-        box-shadow: 0 2px 8px rgba(0, 184, 148, 0.4);
-    }
+  .dt-info-row {
+    transition: none;
+  }
 }
