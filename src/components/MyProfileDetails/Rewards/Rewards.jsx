@@ -3,7 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./Rewards.css";
 import { API } from "../../../services/api";
 
-const SCRATCH_NUMBERS = [1, 2, 3, 4, 5, "Better Luck"];
+const SCRATCH_WEIGHTS = [
+    { value: 1, weight: 30 },
+    { value: 2, weight: 25 },
+    { value: 3, weight: 20 },
+    { value: 4, weight: 12 },
+    { value: 5, weight: 8 },
+    { value: 6, weight: 5 },
+];
 
 /* ============================================
    SCRATCH BOX
@@ -47,6 +54,24 @@ function ScratchBox({ number, onReveal, disabled }) {
 }
 
 /* ============================================
+   WEIGHTED RANDOM PICKER
+   ============================================ */
+function getWeightedRandom() {
+
+    const totalWeight = SCRATCH_WEIGHTS.reduce((sum, item) => sum + item.weight, 0);
+    let random = Math.random() * totalWeight;
+
+    for (const item of SCRATCH_WEIGHTS) {
+        if (random < item.weight) {
+            return item.value;
+        }
+        random -= item.weight;
+    }
+
+    return SCRATCH_WEIGHTS[0].value;
+}
+
+/* ============================================
    REWARDS PAGE
    ============================================ */
 function Rewards({ setProfilePage }) {
@@ -70,7 +95,6 @@ function Rewards({ setProfilePage }) {
     const [demoShowCongrats, setDemoShowCongrats] = useState(null);
     const [demoResetKey, setDemoResetKey] = useState(0);
 
-    /* Redeem */
     const [promoInput, setPromoInput] = useState("");
     const [sendMsg, setSendMsg] = useState("");
     const [sendMsgType, setSendMsgType] = useState("");
@@ -114,12 +138,14 @@ function Rewards({ setProfilePage }) {
     }, []);
 
     /* ============================================
-       GENERATE BOXES
+       GENERATE BOXES — 6 boxes with weighted values
        ============================================ */
     const generateBoxes = () => {
-        return [...SCRATCH_NUMBERS]
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 6);
+        const arr = [];
+        for (let i = 0; i < 6; i++) {
+            arr.push(getWeightedRandom());
+        }
+        return arr;
     };
 
     useEffect(() => {
@@ -190,8 +216,7 @@ function Rewards({ setProfilePage }) {
         if (count <= 0) return;
         if (Object.keys(revealed).length > 0) return;
 
-        const pointsToAdd =
-            typeof number === "number" ? number : 0;
+        const pointsToAdd = Number(number) || 0;
 
         setRevealed({ [index]: true });
 
@@ -235,8 +260,7 @@ function Rewards({ setProfilePage }) {
         if (demoRevealed[index]) return;
         if (Object.keys(demoRevealed).length > 0) return;
 
-        const pointsToAdd =
-            typeof number === "number" ? number : 0;
+        const pointsToAdd = Number(number) || 0;
 
         setDemoRevealed({ [index]: true });
         setDemoPoints((prev) => prev + pointsToAdd);
@@ -286,7 +310,6 @@ function Rewards({ setProfilePage }) {
 
                 setPromoInput("");
 
-                /* Reload rewards */
                 const rewardRes = await fetch(
                     `${API}/api/user/rewards?session_token=${sessionToken}`
                 );
@@ -325,7 +348,6 @@ function Rewards({ setProfilePage }) {
 
         <div className={`my-rewards ${activeTab === "demo" ? "demo-mode" : ""}`}>
 
-            {/* HEADER */}
             <div className="my-rewards-header">
                 <button className="my-rewards-back" onClick={handleBack}>
                     ←
@@ -333,7 +355,6 @@ function Rewards({ setProfilePage }) {
                 <h2>HYPO REWARD</h2>
             </div>
 
-            {/* TABS */}
             <div className="my-rewards-tabs">
                 <button
                     className={`my-rewards-tab ${activeTab === "rewards" ? "active" : ""}`}
@@ -355,9 +376,6 @@ function Rewards({ setProfilePage }) {
                 </button>
             </div>
 
-            {/* ============================================
-                REWARDS TAB
-               ============================================ */}
             {activeTab === "rewards" && (
 
                 <div className="rewards-section">
@@ -385,27 +403,27 @@ function Rewards({ setProfilePage }) {
                             <div className="rewards-help-title">🎯 Reward Chances</div>
                             <div className="rewards-help-row">
                                 <span className="help-num">1</span>
-                                <span>1 point</span>
+                                <span>30% chance — 1 point</span>
                             </div>
                             <div className="rewards-help-row">
                                 <span className="help-num">2</span>
-                                <span>2 points</span>
+                                <span>25% chance — 2 points</span>
                             </div>
                             <div className="rewards-help-row">
                                 <span className="help-num">3</span>
-                                <span>3 points</span>
+                                <span>20% chance — 3 points</span>
                             </div>
                             <div className="rewards-help-row">
                                 <span className="help-num">4</span>
-                                <span>4 points</span>
+                                <span>12% chance — 4 points</span>
                             </div>
                             <div className="rewards-help-row">
                                 <span className="help-num">5</span>
-                                <span>5 points</span>
+                                <span>8% chance — 5 points</span>
                             </div>
                             <div className="rewards-help-row">
-                                <span className="help-num">😢</span>
-                                <span>Better luck</span>
+                                <span className="help-num">6</span>
+                                <span>5% chance — 6 points</span>
                             </div>
                         </div>
                     )}
@@ -461,7 +479,8 @@ function Rewards({ setProfilePage }) {
                             <div className="terms-item">
                                 <span className="terms-dot" />
                                 <span>
-                                    <strong>Every 100 points</strong> converts to <strong>₹1</strong>.
+                                    <strong>Every 10 points</strong> converts to
+                                    <strong> ₹1</strong> (100 points = ₹10).
                                 </span>
                             </div>
 
@@ -476,14 +495,16 @@ function Rewards({ setProfilePage }) {
                             <div className="terms-item">
                                 <span className="terms-dot" />
                                 <span>
-                                    <strong>Every referral</strong> gives you <strong>40 points</strong>.
+                                    <strong>Every referral</strong> gives you
+                                    <strong> 40 points</strong>.
                                 </span>
                             </div>
 
                             <div className="terms-item">
                                 <span className="terms-dot" />
                                 <span>
-                                    <strong>New users</strong> get <strong>10 points free</strong>.
+                                    <strong>New users</strong> get
+                                    <strong> 10 points free</strong>.
                                 </span>
                             </div>
 
@@ -507,19 +528,11 @@ function Rewards({ setProfilePage }) {
                     {showCongrats && (
                         <div className="rewards-congrats">
                             <div className="rewards-congrats-inner">
-                                <div className="rewards-congrats-emoji">
-                                    {typeof showCongrats.number === "number" ? "🎉" : "😢"}
-                                </div>
-                                <h3>
-                                    {typeof showCongrats.number === "number"
-                                        ? "Congratulations!"
-                                        : "Better Luck Next Time!"}
-                                </h3>
-                                {showCongrats.points > 0 && (
-                                    <p className="rewards-congrats-points">
-                                        +{showCongrats.points}
-                                    </p>
-                                )}
+                                <div className="rewards-congrats-emoji">🎉</div>
+                                <h3>Congratulations!</h3>
+                                <p className="rewards-congrats-points">
+                                    +{showCongrats.points}
+                                </p>
                             </div>
                         </div>
                     )}
@@ -528,9 +541,6 @@ function Rewards({ setProfilePage }) {
 
             )}
 
-            {/* ============================================
-                DEMO TAB
-               ============================================ */}
             {activeTab === "demo" && (
 
                 <div className="demo-section">
@@ -584,19 +594,11 @@ function Rewards({ setProfilePage }) {
                     {demoShowCongrats && (
                         <div className="rewards-congrats demo-congrats">
                             <div className="rewards-congrats-inner">
-                                <div className="rewards-congrats-emoji">
-                                    {typeof demoShowCongrats.number === "number" ? "🎉" : "😢"}
-                                </div>
-                                <h3>
-                                    {typeof demoShowCongrats.number === "number"
-                                        ? "Nice!"
-                                        : "Better Luck!"}
-                                </h3>
-                                {demoShowCongrats.points > 0 && (
-                                    <p className="rewards-congrats-points">
-                                        +{demoShowCongrats.points}
-                                    </p>
-                                )}
+                                <div className="rewards-congrats-emoji">🎉</div>
+                                <h3>Nice!</h3>
+                                <p className="rewards-congrats-points">
+                                    +{demoShowCongrats.points}
+                                </p>
                             </div>
                         </div>
                     )}
@@ -605,18 +607,12 @@ function Rewards({ setProfilePage }) {
 
             )}
 
-            {/* ============================================
-                REDEEM TAB
-               ============================================ */}
             {activeTab === "redeem" && (
 
                 <div className="redeem-section">
 
                     {reqUserId > 0 && redeemed ? (
 
-                        /* ============================================
-                           ALREADY REDEEMED
-                           ============================================ */
                         <div className="redeem-redeemed-box">
                             <div className="redeem-redeemed-icon">🎉</div>
 
@@ -635,9 +631,6 @@ function Rewards({ setProfilePage }) {
 
                     ) : (
 
-                        /* ============================================
-                           INPUT BOX
-                           ============================================ */
                         <div className="redeem-input-box">
 
                             <label className="redeem-label">

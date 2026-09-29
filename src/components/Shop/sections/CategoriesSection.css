@@ -155,14 +155,6 @@
         inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
 }
 
-.heep-shop-cat-box:active {
-    transform: translateY(1px) scale(0.96);
-
-    box-shadow:
-        inset 3px 3px 8px rgba(155, 165, 190, 0.7),
-        inset -3px -3px 8px rgba(255, 255, 255, 1),
-        0 1px 3px rgba(140, 150, 180, 0.3);
-}
 
 .heep-shop-cat-box:focus-visible {
     outline: 2px solid #7c8cf8;
@@ -427,7 +419,7 @@
     }
 
     .heep-shop-cat-box {
-        width: 54px;
+        width: 60px;
         padding: 5px 3px;
         border-radius: 12px;
         gap: 3px;
@@ -443,8 +435,8 @@
     }
 
     .heep-shop-cat-icon {
-        width: 30px;
-        height: 30px;
+        width: 45px;
+        height: 45px;
         border-width: 1px;
 
         box-shadow:
@@ -499,7 +491,7 @@
     }
 
     .heep-shop-cat-box {
-        width: 48px;
+        width: 55px;
         padding: 4px 3px;
         border-radius: 10px;
         gap: 3px;
@@ -507,16 +499,8 @@
     }
 
     .heep-shop-cat-icon {
-        width: 26px;
-        height: 26px;
-
-        box-shadow:
-            2px 2px 5px rgba(140, 150, 180, 0.45),
-            -2px -2px 4px rgba(255, 255, 255, 1),
-            1.5px -1.5px 4px rgba(140, 150, 180, 0.1),
-            -1.5px 1.5px 4px rgba(140, 150, 180, 0.1),
-            inset 1px 1px 1.5px rgba(255, 255, 255, 1),
-            inset -1px -1px 1.5px rgba(155, 165, 190, 0.3);
+        width: 30px;
+        height: 30px;
     }
 
     .heep-shop-cat-fallback-letter {
@@ -554,4 +538,8 @@
     .heep-shop-cat-viewall-btn svg {
         transition: none;
     }
+}
+.heepit-intro span{
+    font-size: 1.5rem;
+    color: orange;
 }

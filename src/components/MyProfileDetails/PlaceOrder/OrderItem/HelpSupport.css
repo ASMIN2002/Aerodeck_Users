@@ -1,65 +1,221 @@
+/* HelpSupport.css — 3D UTHA HUA CLAYMORPHISM */
+
+.help-support,
+.help-support * {
+    box-sizing: border-box;
+}
+
+/* ============================================
+   🔥 MAIN WRAPPER — 3D UTHA HUA PANEL
+   ============================================ */
 .help-support {
-    padding: 10px;
-}
+    position: relative;
 
-.help-support h3 {
-    margin: 0 0 8px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #222;
-}
-
-.help-note {
-    margin: 0 0 18px;
-    font-size: 14px;
-    color: #666;
-    line-height: 1.5;
-}
-
-.support-options {
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
 
-.support-btn {
     width: 100%;
-    padding: 11px;
-    border: none;
-    border-radius: 10px;
-    background: #0b84ff;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
+
+    margin: 0;
+    padding: 16px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 20px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    /* 🔥 3D UTHA HUA PANEL */
+    box-shadow:
+        0 14px 28px rgba(140, 150, 180, 0.5),
+        0 7px 14px rgba(140, 150, 180, 0.35),
+        0 4px 10px rgba(140, 150, 180, 0.25),
+        11px 11px 22px rgba(140, 150, 180, 0.22),
+        -11px -11px 22px rgba(255, 255, 255, 1),
+        9px -9px 20px rgba(255, 255, 255, 0.9),
+        -9px 9px 20px rgba(140, 150, 180, 0.12),
+        7px -7px 16px rgba(255, 255, 255, 0.85),
+        -7px 7px 16px rgba(140, 150, 180, 0.1),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-4px);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+    animation: helpSupportIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes helpSupportIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-4px) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT */
+.help-support::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+    z-index: 3;
+    filter: blur(0.5px);
+}
+
+/* ============================================
+   HEADING
+   ============================================ */
+.help-support h3 {
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.12);
+}
+
+/* 🛟 emoji before heading */
+.help-support h3::before {
+    content: "🛟";
+    font-size: 1em;
+    filter: drop-shadow(0 2px 3px rgba(124, 140, 248, 0.35));
+}
+
+/* ============================================
+   SUPPORT OPTIONS
+   ============================================ */
+.support-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 100%;
+}
+
+/* ============================================
+   🔥 SUPPORT BUTTON — 3D wool pill
+   ============================================ */
+.support-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 18px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: clamp(0.8rem, 2.15vw, 0.9rem);
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    text-align: center;
+
     cursor: pointer;
-    transition: .3s;
 
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 12px 24px rgba(91, 110, 225, 0.55),
+        0 6px 14px rgba(91, 110, 225, 0.4),
+        8px 8px 18px rgba(91, 110, 225, 0.28),
+        -8px -8px 18px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.85),
+        -6px 6px 14px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
-.support-btn:hover {
-    background: #086fd6;
+.support-btn:hover:not(:disabled) {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 32px rgba(91, 110, 225, 0.65),
+        0 9px 18px rgba(91, 110, 225, 0.5),
+        11px 11px 22px rgba(91, 110, 225, 0.35),
+        -10px -10px 22px rgba(255, 255, 255, 1),
+        8px -8px 18px rgba(255, 255, 255, 0.95),
+        -8px 8px 18px rgba(91, 110, 225, 0.22),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
 }
 
-.support-btn:active {
-    transform: scale(.98);
+.support-btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.97);
+    box-shadow:
+        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
 }
 
-.return-expired-btn {
-    opacity: 0.45;
-    color: #888;
-    background: #f1f1f1;
-    cursor: not-allowed;
-}
-
+/* ---- DISABLED state (no return / expired) ---- */
 .support-btn:disabled {
-    opacity: 0.45;
+    opacity: 0.6;
     cursor: not-allowed;
+    transform: translateY(-2px);
+    filter: grayscale(0.4);
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #d0d6e3 0%, #a8b0c5 100%);
+
+    color: #5a6180;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 4px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 6px 14px rgba(140, 150, 180, 0.4),
+        0 3px 8px rgba(140, 150, 180, 0.3),
+        4px 4px 10px rgba(140, 150, 180, 0.22),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
 }
 
-/* =========================
-   RETURN POPUP
-========================= */
-
+/* ============================================
+   🔥 RETURN POPUP OVERLAY
+   ============================================ */
 .return-popup-overlay {
     position: fixed;
     inset: 0;
@@ -71,109 +227,12 @@
 
     padding: 20px;
 
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(5px);
+    background: rgba(10, 10, 20, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
-    animation: returnOverlayIn 0.2s ease;
+    animation: returnOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
-.return-popup {
-    width: 100%;
-    max-width: 360px;
-
-    background: #ffffff;
-    border-radius: 18px;
-
-    padding: 22px;
-
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
-
-    animation: returnPopupIn 0.25s ease;
-}
-
-.return-popup h3 {
-    margin: 0 0 8px;
-
-    font-size: 20px;
-    font-weight: 700;
-
-    color: #111;
-}
-
-.return-popup p {
-    margin: 0 0 16px;
-
-    font-size: 14px;
-    line-height: 1.5;
-
-    color: #666;
-}
-
-.return-popup textarea {
-    width: 100%;
-    min-height: 90px;
-
-    padding: 12px;
-
-    border: 1px solid #ddd;
-    border-radius: 12px;
-
-    outline: none;
-    resize: none;
-
-    font-family: inherit;
-    font-size: 14px;
-
-    box-sizing: border-box;
-}
-
-.return-popup textarea:focus {
-    border-color: #222;
-}
-
-.return-popup textarea::placeholder {
-    color: #aaa;
-}
-
-.return-popup-buttons {
-    display: flex;
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-.return-popup-buttons button {
-    flex: 1;
-
-    height: 44px;
-
-    border: none;
-    border-radius: 10px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-.return-popup-buttons button:first-child {
-    background: #f1f1f1;
-    color: #333;
-}
-
-.return-popup-buttons button:last-child {
-    background: #111;
-    color: #fff;
-}
-
-.return-popup-buttons button:active {
-    transform: scale(0.97);
-}
-
-
-/* =========================
-   ANIMATION
-========================= */
 
 @keyframes returnOverlayIn {
     from {
@@ -185,14 +244,482 @@
     }
 }
 
-@keyframes returnPopupIn {
+/* ============================================
+   🔥 RETURN POPUP — 3D UTHA HUA MODAL
+   ============================================ */
+.return-popup {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+    max-width: 380px;
+
+    padding: 22px 20px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    text-align: left;
+
+    /* 🔥 3D MODAL */
+    box-shadow:
+        0 28px 56px rgba(140, 150, 180, 0.6),
+        0 14px 28px rgba(140, 150, 180, 0.45),
+        0 8px 16px rgba(140, 150, 180, 0.3),
+        18px 18px 36px rgba(140, 150, 180, 0.3),
+        -18px -18px 36px rgba(255, 255, 255, 1),
+        14px -14px 30px rgba(255, 255, 255, 0.95),
+        -14px 14px 30px rgba(140, 150, 180, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-6px);
+
+    animation: returnPopupPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes returnPopupPop {
     from {
         opacity: 0;
-        transform: scale(0.92) translateY(10px);
+        transform: translateY(20px) scale(0.9);
     }
 
     to {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: translateY(-6px) scale(1);
+    }
+}
+
+/* 🔥 TOP HIGHLIGHT */
+.return-popup::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.return-popup h3 {
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 6px rgba(140, 150, 180, 0.15);
+}
+
+/* 🔄 emoji before popup title */
+.return-popup h3::before {
+    content: "🔄";
+    font-size: 1em;
+    filter: drop-shadow(0 2px 3px rgba(124, 140, 248, 0.35));
+}
+
+.return-popup p {
+    margin: 0;
+
+    font-size: clamp(0.76rem, 2vw, 0.86rem);
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.45;
+
+    color: #8a90ac;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ---- Return textarea — 3D INSET ---- */
+.return-popup textarea {
+    width: 100%;
+    min-height: 90px;
+
+    padding: 12px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-family: inherit;
+    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.5;
+
+    resize: vertical;
+
+    outline: none;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 4px 10px rgba(140, 150, 180, 0.25),
+        0 2px 6px rgba(140, 150, 180, 0.18),
+        3px 3px 8px rgba(140, 150, 180, 0.15),
+        -3px -3px 8px rgba(255, 255, 255, 1);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.return-popup textarea:focus {
+    border-color: rgba(124, 140, 248, 0.5);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 6px 14px rgba(124, 140, 248, 0.35),
+        0 3px 8px rgba(124, 140, 248, 0.25),
+        4px 4px 10px rgba(124, 140, 248, 0.2),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        0 0 0 3px rgba(124, 140, 248, 0.15);
+}
+
+.return-popup textarea::placeholder {
+    color: #b8bdcf;
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* ---- Return popup buttons row ---- */
+.return-popup-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 6px;
+}
+
+.return-popup-buttons button {
+    flex: 1;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 46px;
+    padding: 0 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    font-size: clamp(0.74rem, 2vw, 0.82rem);
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ---- Cancel — neutral 3D pill ---- */
+.return-popup-buttons button:first-child {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    color: #3f4664;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 8px 18px rgba(140, 150, 180, 0.5),
+        0 4px 10px rgba(140, 150, 180, 0.35),
+        5px 5px 12px rgba(140, 150, 180, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-3px);
+}
+
+.return-popup-buttons button:first-child:hover {
+    transform: translateY(-6px);
+    color: #5b6ee1;
+}
+
+.return-popup-buttons button:first-child:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+/* ---- Confirm Return — accent 3D pill ---- */
+.return-popup-buttons button:last-child {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 10px 22px rgba(91, 110, 225, 0.55),
+        0 5px 14px rgba(91, 110, 225, 0.4),
+        7px 7px 16px rgba(91, 110, 225, 0.28),
+        -7px -7px 16px rgba(255, 255, 255, 1),
+        5px -5px 12px rgba(255, 255, 255, 0.85),
+        -5px 5px 12px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
+}
+
+.return-popup-buttons button:last-child:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 16px 30px rgba(91, 110, 225, 0.65),
+        0 8px 18px rgba(91, 110, 225, 0.5),
+        10px 10px 22px rgba(91, 110, 225, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        7px -7px 16px rgba(255, 255, 255, 0.9),
+        -7px 7px 16px rgba(91, 110, 225, 0.22),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+}
+
+.return-popup-buttons button:last-child:active {
+    transform: translateY(1px) scale(0.96);
+    box-shadow:
+        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .help-support {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 11px;
+        transform: translateY(-3px);
+    }
+
+    .help-support h3 {
+        font-size: 0.86rem;
+    }
+
+    .support-btn {
+        min-height: 46px;
+        padding: 11px 16px;
+        font-size: 0.84rem;
+        border-radius: 13px;
+    }
+
+    .return-popup {
+        padding: 20px 18px;
+        border-radius: 20px;
+        gap: 11px;
+    }
+
+    .return-popup h3 {
+        font-size: 1.05rem;
+    }
+
+    .return-popup p {
+        font-size: 0.82rem;
+    }
+
+    .return-popup textarea {
+        padding: 11px 13px;
+        border-radius: 13px;
+        font-size: 0.84rem;
+        min-height: 80px;
+    }
+
+    .return-popup-buttons button {
+        height: 44px;
+        font-size: 0.78rem;
+        border-radius: 13px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .help-support {
+        padding: 12px;
+        border-radius: 16px;
+        gap: 10px;
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 20px rgba(140, 150, 180, 0.45),
+            0 5px 10px rgba(140, 150, 180, 0.32),
+            0 3px 8px rgba(140, 150, 180, 0.25),
+            8px 8px 18px rgba(140, 150, 180, 0.2),
+            -8px -8px 18px rgba(255, 255, 255, 1),
+            6px -6px 14px rgba(255, 255, 255, 0.9),
+            -6px 6px 14px rgba(140, 150, 180, 0.12),
+            5px -5px 12px rgba(255, 255, 255, 0.85),
+            -5px 5px 12px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+    }
+
+    .help-support h3 {
+        font-size: 0.8rem;
+        letter-spacing: 0.2px;
+    }
+
+    .support-btn {
+        min-height: 42px;
+        padding: 10px 14px;
+        font-size: 0.78rem;
+        border-radius: 12px;
+        letter-spacing: 0.2px;
+    }
+
+    .return-popup-overlay {
+        padding: 16px;
+    }
+
+    .return-popup {
+        padding: 18px 16px;
+        border-radius: 18px;
+        max-width: 320px;
+        gap: 10px;
+    }
+
+    .return-popup h3 {
+        font-size: 0.98rem;
+    }
+
+    .return-popup p {
+        font-size: 0.76rem;
+    }
+
+    .return-popup textarea {
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 0.78rem;
+        min-height: 70px;
+    }
+
+    .return-popup-buttons {
+        gap: 9px;
+        margin-top: 4px;
+    }
+
+    .return-popup-buttons button {
+        height: 42px;
+        font-size: 0.74rem;
+        border-radius: 12px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .help-support {
+        padding: 10px;
+        border-radius: 14px;
+        gap: 9px;
+        transform: translateY(-1px);
+    }
+
+    .help-support h3 {
+        font-size: 0.72rem;
+    }
+
+    .support-btn {
+        min-height: 38px;
+        padding: 9px 12px;
+        font-size: 0.72rem;
+        border-radius: 11px;
+    }
+
+    .return-popup-overlay {
+        padding: 12px;
+    }
+
+    .return-popup {
+        padding: 16px 14px;
+        border-radius: 16px;
+        max-width: 280px;
+        gap: 9px;
+    }
+
+    .return-popup h3 {
+        font-size: 0.9rem;
+    }
+
+    .return-popup p {
+        font-size: 0.7rem;
+    }
+
+    .return-popup textarea {
+        padding: 9px 11px;
+        border-radius: 11px;
+        font-size: 0.72rem;
+        min-height: 60px;
+    }
+
+    .return-popup-buttons {
+        gap: 8px;
+    }
+
+    .return-popup-buttons button {
+        height: 38px;
+        font-size: 0.68rem;
+        border-radius: 11px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    .help-support,
+    .return-popup-overlay,
+    .return-popup {
+        animation: none;
+    }
+
+    .support-btn,
+    .return-popup textarea,
+    .return-popup-buttons button {
+        transition: none;
     }
 }

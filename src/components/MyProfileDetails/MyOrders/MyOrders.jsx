@@ -13,6 +13,7 @@ function MyOrders({
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userRewardCount, setUserRewardCount] = useState(null);
 
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [cancelOrderData, setCancelOrderData] = useState(null);
@@ -53,6 +54,36 @@ function MyOrders({
 
     }, []);
 
+    useEffect(() => {
+
+        const fetchUserRewards = async () => {
+
+            try {
+
+                const sessionToken = localStorage.getItem("session_token");
+
+                const res = await fetch(
+                    `${API}/api/user/rewards?session_token=${encodeURIComponent(sessionToken)}`
+                );
+
+                const data = await res.json();
+
+                if (data.success) {
+                    setUserRewardCount(data.data?.count ?? 0);
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
+        };
+
+        fetchUserRewards();
+
+    }, []);
+
     const formatOrderDate = (date) => {
         return new Date(date)
             .toLocaleDateString("en-GB", {
@@ -63,9 +94,48 @@ function MyOrders({
             .toUpperCase();
     };
 
-    /* ============================================
-       CANCEL WHOLE ORDER
-       ============================================ */
+    const getRewardInfo = (order) => {
+
+        const amount = Number(order.total_amount) || 0;
+
+        if (order.order_status === "CANCELLED") {
+
+            if (amount < 250) {
+                return { type: "no-chance", text: "No chance — Min ₹250" };
+            }
+
+            const lost = Math.floor(amount / 250);
+
+            return {
+                type: "lost",
+                text: `Lost ${lost} chance${lost > 1 ? "s" : ""}`
+            };
+        }
+
+        if (amount < 250) {
+            return { type: "no-chance", text: "No chance for reward — Min ₹250" };
+        }
+
+        const chances = Math.floor(amount / 250);
+
+        if (order.order_status === "DELIVERED") {
+
+            if (userRewardCount === 0) {
+                return { type: "redeemed", text: "Already Redeemed" };
+            }
+
+            return {
+                type: "got",
+                text: `Got ${chances} chance${chances > 1 ? "s" : ""} — Check in Rewards`
+            };
+        }
+
+        return {
+            type: "on-way",
+            text: `${chances} chance${chances > 1 ? "s" : ""} on the way`
+        };
+
+    };
     const handleCancelOrder = async () => {
 
         if (!cancelReason) return;
@@ -95,7 +165,6 @@ function MyOrders({
                 setCancelReason("");
                 setCancelOrderData(null);
 
-                /* reload orders */
                 const refreshRes = await fetch(
                     `${API}/api/user/orders?session_token=${encodeURIComponent(sessionToken)}`
                 );
@@ -162,104 +231,117 @@ function MyOrders({
                         new Date(b.created_at) -
                         new Date(a.created_at)
                 )
-                .map((order) => (
+                .map((order) => {
 
-                    <div
-                        className="order-card"
-                        key={order.order_id}
-                        onClick={() => {
+                    const reward = getRewardInfo(order);
 
-                            setSelectedOrder(order);
+                    return (
 
-                            navigateWithLoading(
-                                () => {
-                                    setProfilePage("order-details");
-                                    navigate(
-                                        `/profile/orders/order/${order.order_id}`
-                                    );
-                                },
-                                "Loading Order Details...",
-                                500
-                            );
+                        <div
+                            className="order-card"
+                            key={order.order_id}
+                            onClick={() => {
 
-                        }}
-                    >
+                                setSelectedOrder(order);
 
-                        <div className="order-info">
+                                navigateWithLoading(
+                                    () => {
+                                        setProfilePage("order-details");
+                                        navigate(
+                                            `/profile/orders/order/${order.order_id}`
+                                        );
+                                    },
+                                    "Loading Order Details...",
+                                    500
+                                );
 
-                            <div className="top-order-number">
-                                <h3>Order #{order.order_number}</h3>
-                                <p>Items : {order.total_items}</p>
-                            </div>
+                            }}
+                        >
 
-                            <div className="myOrder-price-status">
-                                <h4>₹ {order.total_amount}</h4>
-                                <span
-                                    className={`order-status ${order.order_status.toLowerCase()}`}
-                                >
-                                    {order.order_status === "REQUESTED"
-                                        ? "REQUESTED"
-                                        : order.order_status === "PROCESSING"
-                                            ? "PROCESSING"
-                                            : order.order_status === "CANCELLED"
-                                                ? "CANCELLED"
-                                                : order.order_status === "DELIVERED"
-                                                    ? "DELIVERED"
-                                                    : formatOrderDate(order.created_at)}
-                                </span>
-                            </div>
+                            <div className="order-info">
 
-                        </div>
-
-                        <div className="order-bottom-row">
-
-                            {order.order_status === "DELIVERED" && (
-                                <div className="order-delivered-badge">
-                                    <span className="delivered-icon">✓</span>
-                                    <span className="delivered-text">Delivered</span>
+                                <div className="top-order-number">
+                                    <h3>Order #{order.order_number}</h3>
+                                    <p>Items : {order.total_items}</p>
                                 </div>
-                            )}
 
-                            {order.is_hypo_used === 1 ? (
-                                <div className="order-hypo-badge">
-                                    <span className="hypo-badge-icon">⚡</span>
-                                    <span className="hypo-badge-text">HYPO USED</span>
-                                </div>
-                            ) : (
-                                <div className="order-hypo-hint">
-                                    <span className="hypo-hint-icon">⚡</span>
-                                    <span className="hypo-hint-text">HYPO NOT USED</span>
-                                </div>
-                            )}
-
-                            {order.order_status !== "DELIVERED" &&
-                                order.order_status !== "CANCELLED" &&
-                                order.order_status !== "REQUESTED" && (
-                                    <button
-                                        className="order-cancel-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setCancelOrderData(order);
-                                            setShowCancelModal(true);
-                                        }}
+                                <div className="myOrder-price-status">
+                                    <h4>₹ {order.total_amount}</h4>
+                                    <span
+                                        className={`order-status ${order.order_status.toLowerCase()}`}
                                     >
-                                        Cancel Order
-                                    </button>
+                                        {order.order_status === "REQUESTED"
+                                            ? "REQUESTED"
+                                            : order.order_status === "PROCESSING"
+                                                ? "PROCESSING"
+                                                : order.order_status === "CANCELLED"
+                                                    ? "CANCELLED"
+                                                    : order.order_status === "DELIVERED"
+                                                        ? "DELIVERED"
+                                                        : formatOrderDate(order.created_at)}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div className="order-bottom-row">
+
+                                {order.order_status === "DELIVERED" && (
+                                    <div className="order-delivered-badge">
+                                        <span className="delivered-icon">✓</span>
+                                        <span className="delivered-text">Delivered</span>
+                                    </div>
                                 )}
 
-                            <div className="order-card-arrow">
-                                &gt;
+                                <div className={`order-reward-badge ${reward.type}`}>
+                                    <span className="reward-icon">
+                                        {reward.type === "got" ? "🎁" :
+                                            reward.type === "on-way" ? "⏳" :
+                                                reward.type === "redeemed" ? "✓" :
+                                                    reward.type === "lost" ? "💔" : "🚫"}
+                                    </span>
+                                    <span className="reward-text">{reward.text}</span>
+                                </div>
+
+                                {order.is_hypo_used === 1 ? (
+                                    <div className="order-hypo-badge">
+                                        <span className="hypo-badge-icon">⚡</span>
+                                        <span className="hypo-badge-text">HYPO USED</span>
+                                    </div>
+                                ) : (
+                                    <div className="order-hypo-hint">
+                                        <span className="hypo-hint-icon">⚡</span>
+                                        <span className="hypo-hint-text">HYPO NOT USED</span>
+                                    </div>
+                                )}
+
+                                {order.order_status !== "DELIVERED" &&
+                                    order.order_status !== "CANCELLED" &&
+                                    order.order_status !== "REQUESTED" && (
+                                        <button
+                                            className="order-cancel-btn"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setCancelOrderData(order);
+                                                setShowCancelModal(true);
+                                            }}
+                                        >
+                                            Cancel Order
+                                        </button>
+                                    )}
+
+                                <div className="order-card-arrow">
+                                    &gt;
+                                </div>
+
                             </div>
 
                         </div>
 
-                    </div>
+                    );
 
-                ))}
+                })}
 
-            {/* ============================================
-                CANCEL MODAL
-               ============================================ */}
             {showCancelModal && (
                 <div
                     className="cancel-modal-overlay"

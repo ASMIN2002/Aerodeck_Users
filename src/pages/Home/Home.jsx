@@ -660,6 +660,8 @@ function Home({
     const [premiumSuggestionsData, setPremiumSuggestionsData] = useState([]);
     const [profileImageRefresh, setProfileImageRefresh] = useState(0);
 
+    const [navKey, setNavKey] = useState(0);
+
     useEffect(() => {
 
         localStorage.setItem("selectedMenu", selectedMenu);
@@ -975,6 +977,7 @@ function Home({
                             isDetailsOpen={isDetailsOpen}
                             closeDetails={handleCloseDetails}
                             userId={user?.user_id}
+                            onReloadHome={() => setNavKey((prev) => prev + 1)}
                             onOpenCart={() => {
                                 setIsDetailsOpen(false);
                                 setSelectedProduct(null);
@@ -1154,6 +1157,7 @@ function Home({
 
                             <>
                                 <Cards
+                                    key={`cards-${navKey}`}
                                     setCartCount={setCartCount}
                                     onOpenDetails={handleOpenDetails}
                                     search={search}
@@ -1170,6 +1174,7 @@ function Home({
                             selectedMenu === "Gifts" &&
 
                             <Gift
+                                key={`gift-${navKey}`}
                                 user={user}
                                 setCartCount={setCartCount}
                                 onOpenDetails={handleOpenDetails}
@@ -1192,6 +1197,7 @@ function Home({
                         {
                             selectedMenu === "Shop" &&
                             <Shop
+                                key={`shop-${navKey}`}
                                 user={user}
                                 setCartCount={setCartCount}
                                 onOpenDetails={handleOpenDetails}

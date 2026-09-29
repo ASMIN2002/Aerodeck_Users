@@ -199,6 +199,9 @@ function VideoHero() {
 
     return (
         <section className="shop-video-section">
+            <div className="heepit-intro">
+                <h2>Hey! Welcome to Heepit</h2>
+            </div>
 
             {videos.length === 0 ? (
 

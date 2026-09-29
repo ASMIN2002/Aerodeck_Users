@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { FiChevronDown } from "react-icons/fi";
 import Notification from "./Notification";
 import { API } from "../../services/api";
 import "./Header.css";
@@ -13,15 +14,20 @@ function Header({
     setSelectedBottomTab,
     isDetailsOpen,
     closeDetails,
-    userId
+    userId,
+    onReloadHome
 }) {
     const dropdownRef = useRef(null);
+    const menuDropdownRef = useRef(null);
     const navigate = useNavigate();
     const [version, setVersion] = useState("");
     const [toastMessage, setToastMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
     const [showNotifOverlay, setShowNotifOverlay] = useState(false);
     const [hasNotification, setHasNotification] = useState(false);
+
+    const [showMenuDropdown, setShowMenuDropdown] = useState(false);
+    const [selectedLabel, setSelectedLabel] = useState("Products");
 
     /* ============================================
        LOAD APP VERSION
@@ -47,7 +53,7 @@ function Header({
     }, [userId]);
 
     /* ============================================
-       CHECK NOTIFICATION — red dot ke liye
+       CHECK NOTIFICATION
        ============================================ */
     useEffect(() => {
 
@@ -80,8 +86,37 @@ function Header({
     }, [userId, showNotifOverlay]);
 
     /* ============================================
-       BELL CLICK — notification overlay kholo
+       CLICK OUTSIDE — MENU DROPDOWN CLOSE
        ============================================ */
+    useEffect(() => {
+
+        function handleClickOutside(e) {
+            if (
+                menuDropdownRef.current &&
+                !menuDropdownRef.current.contains(e.target)
+            ) {
+                setShowMenuDropdown(false);
+            }
+        }
+
+        if (showMenuDropdown) {
+            document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("touchstart", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("touchstart", handleClickOutside);
+        };
+
+    }, [showMenuDropdown]);
+
+    useEffect(() => {
+        if (selectedMenu === "Shop") setSelectedLabel("Products");
+        else if (selectedMenu === "Gifts") setSelectedLabel("Gift");
+        else if (selectedMenu === "Cards") setSelectedLabel("Card");
+    }, [selectedMenu]);
+
     const handleNotifOpen = () => {
         setShowNotifOverlay(true);
         window.history.pushState({}, "", "/notification");
@@ -95,9 +130,39 @@ function Header({
         }, 500);
     };
 
-    /* ============================================
-       TAB CLICK
-       ============================================ */
+    const handleComingSoon = (feature) => {
+        setToastMessage(`${feature} Coming Soon!`);
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 2000);
+    };
+
+    const menuOptions = [
+        { key: "Shop", label: "Products", comingSoon: false },
+        { key: "Gifts", label: "Gift", comingSoon: true },
+        { key: "Cards", label: "Card", comingSoon: true }
+    ];
+
+    const handleMenuOptionClick = (option) => {
+        setShowMenuDropdown(false);
+
+        if (option.comingSoon) {
+            handleComingSoon(option.label);
+            return;
+        }
+
+        setSelectedLabel(option.label);
+        handleTabClick(option.key);
+
+        /* 🔥 Parent ko bolo reload karo */
+        if (onReloadHome) {
+            onReloadHome();
+        }
+
+        navigate("/home/shop", { replace: true });
+    };
+
     const handleTabClick = (menu) => {
         if (isDetailsOpen) {
             closeDetails();
@@ -105,14 +170,6 @@ function Header({
         setSelectedBottomTab("Home");
         setSelectedMenu(menu);
         setIsMenuOpen(false);
-    };
-
-    const handleComingSoon = (feature) => {
-        setToastMessage(`${feature} Coming Soon!`);
-        setShowToast(true);
-        setTimeout(() => {
-            setShowToast(false);
-        }, 2000);
     };
 
     const toastElement = showToast ? (
@@ -138,55 +195,58 @@ function Header({
                             </div>
                         </div>
 
-                        <button
-                            className="hd-notif-btn"
-                            onClick={() => {
-                                setHasNotification(false);
-                                handleNotifOpen();
-                            }}
-                        >
-                            <IoNotificationsOutline />
-                            {hasNotification && <span className="hd-notif-dot" />}
-                        </button>
+                        <div className="hd-right-actions">
 
-                    </div>
+                            <div
+                                className="hd-menu-wrap"
+                                ref={menuDropdownRef}
+                            >
+                                <button
+                                    type="button"
+                                    className={`hd-menu-trigger ${showMenuDropdown ? "open" : ""}`}
+                                    onClick={() => setShowMenuDropdown((prev) => !prev)}
+                                >
+                                    <span className="hd-menu-label">
+                                        {selectedLabel}
+                                    </span>
+                                    <FiChevronDown className="hd-menu-chevron" />
+                                </button>
 
-                    <div className="hd-tabs">
-                        <button
-                            type="button"
-                            className={`hd-tab ${selectedMenu === "Shop" ? "hd-tab-active" : ""}`}
-                            onClick={() => {
-                                handleTabClick("Shop");
-                                navigate("/home/shop");
-                            }}
-                        >
-                            Products
-                        </button>
+                                {showMenuDropdown && (
+                                    <div className="hd-menu-dropdown">
+                                        {menuOptions.map((option) => (
+                                            <button
+                                                key={option.key}
+                                                type="button"
+                                                className={`hd-menu-option ${selectedMenu === option.key ? "active" : ""}`}
+                                                onClick={() => handleMenuOptionClick(option)}
+                                            >
+                                                {option.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
 
-                        <button
-                            type="button"
-                            className={`hd-tab ${selectedMenu === "Gifts" ? "hd-tab-active" : ""}`}
-                            onClick={() => handleComingSoon("Gifts")}
-                        >
-                            Gifts
-                        </button>
+                            <button
+                                className="hd-notif-btn"
+                                onClick={() => {
+                                    setHasNotification(false);
+                                    handleNotifOpen();
+                                }}
+                            >
+                                <IoNotificationsOutline />
+                                {hasNotification && <span className="hd-notif-dot" />}
+                            </button>
 
-                        <button
-                            type="button"
-                            className={`hd-tab ${selectedMenu === "Cards" ? "hd-tab-active" : ""}`}
-                            onClick={() => handleComingSoon("Cards")}
-                        >
-                            Cards
-                        </button>
+                        </div>
+
                     </div>
 
                 </div>
 
             </header>
 
-            {/* ============================================
-                NOTIFICATION OVERLAY — Notification.jsx se
-               ============================================ */}
             {showNotifOverlay && (
                 <Notification onClose={handleNotifClose} />
             )}

@@ -1,4 +1,4 @@
-/* AddAddress.css */
+/* AddAddress.css — 3D UTHA HUA CLAYMORPHISM */
 
 .heep-add-addr-page,
 .heep-add-addr-page * {
@@ -10,58 +10,97 @@
    ============================================ */
 .heep-add-addr-page {
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
     width: 100%;
     min-height: 100vh;
 
-    padding: 18px 14px 110px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 
-    background: #eef1f7;
+    margin-bottom: 100px;
+    padding: 14px 14px 40px;
 
-    animation: heepAddAddrPageFade 0.5s ease both;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    -webkit-tap-highlight-color: transparent;
+
+    animation: addAddressIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes addAddressIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ============================================
-   HEADER (Clay card)
+   🔥 HEADER — 3D UTHA HUA
    ============================================ */
 .heep-add-addr-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
 
     width: 100%;
-    padding: 14px 16px;
 
-    background: #f0f2f7;
-    border-radius: 22px;
+    margin: 0 0 4px;
+    padding: 12px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 0 0 20px 20px;
+
+    background:
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
 
     box-shadow:
-        8px 8px 20px rgba(174, 181, 199, 0.55),
-        -8px -8px 20px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
-
-    animation: heepAddAddrHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        0 12px 28px rgba(140, 150, 180, 0.5),
+        0 6px 14px rgba(140, 150, 180, 0.35),
+        0 3px 8px rgba(140, 150, 180, 0.25),
+        0 -3px 10px rgba(140, 150, 180, 0.15),
+        0 -1px 4px rgba(140, 150, 180, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
 }
 
 .heep-add-addr-header h2 {
-    margin: 0;
     flex: 1;
+    min-width: 0;
 
-    font-size: clamp(1rem, 2.6vw, 1.2rem);
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    color: #3a3f55;
-    text-align: right;
+    order: 3;
+    width: 100%;
+    margin: 4px 0 0;
 
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+    font-size: clamp(1rem, 2.8vw, 1.15rem);
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    text-align: center;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.15);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* ---- Back button ---- */
+/* ---- Back button — 3D wool ball ---- */
 .heep-add-addr-back-btn {
     flex-shrink: 0;
 
@@ -71,121 +110,178 @@
     width: 42px;
     height: 42px;
 
-    font-size: 1.15rem;
-    color: #4b5170;
-
-    cursor: pointer;
-    border: none;
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
     border-radius: 50%;
 
-    background: #f0f2f7;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    color: #5b6ee1;
+    font-size: 1.05rem;
+    line-height: 1;
+
+    cursor: pointer;
 
     box-shadow:
-        5px 5px 12px rgba(174, 181, 199, 0.6),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+        0 6px 14px rgba(140, 150, 180, 0.55),
+        0 3px 8px rgba(140, 150, 180, 0.4),
+        4px 4px 10px rgba(140, 150, 180, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
 
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .heep-add-addr-back-btn:hover {
-    transform: translateY(-2px) translateX(-2px);
-    color: #5b6ee1;
+    transform: translateX(-3px) scale(1.06);
+    color: #7c8cf8;
 
     box-shadow:
-        8px 8px 18px rgba(124, 140, 248, 0.3),
-        -6px -6px 14px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+        0 8px 18px rgba(124, 140, 248, 0.5),
+        0 4px 10px rgba(124, 140, 248, 0.35),
+        5px 5px 12px rgba(124, 140, 248, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.9),
+        -4px 4px 10px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
 }
 
 .heep-add-addr-back-btn:active {
-    transform: translateY(1px) scale(0.94);
-
+    transform: translateX(0) scale(0.94);
     box-shadow:
-        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
-        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
 }
 
-.heep-add-addr-back-btn:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 3px;
-}
-
-/* ---- Current location button (Clay pill) ---- */
+/* ---- Location button — accent 3D pill ---- */
 .heep-add-addr-location-btn {
-    flex-shrink: 0;
+    flex: 1;
+    min-width: 0;
 
-    padding: 9px 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 
-    font-size: clamp(0.72rem, 1.9vw, 0.82rem);
-    font-weight: 800;
-    letter-spacing: 0.3px;
+    padding: 10px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
     color: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
     white-space: nowrap;
 
     cursor: pointer;
-    border: none;
-    border-radius: 14px;
 
-    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.3);
 
     box-shadow:
-        5px 5px 12px rgba(124, 140, 248, 0.4),
-        -4px -4px 10px rgba(255, 255, 255, 0.9),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35),
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+        0 8px 18px rgba(91, 110, 225, 0.55),
+        0 4px 10px rgba(91, 110, 225, 0.4),
+        5px 5px 12px rgba(91, 110, 225, 0.28),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.85),
+        -4px 4px 10px rgba(91, 110, 225, 0.18),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
 
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
 }
 
 .heep-add-addr-location-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-6px);
 
     box-shadow:
-        8px 8px 18px rgba(124, 140, 248, 0.5),
-        -5px -5px 14px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
+        0 14px 26px rgba(91, 110, 225, 0.65),
+        0 7px 14px rgba(91, 110, 225, 0.5),
+        9px 9px 20px rgba(91, 110, 225, 0.35),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        6px -6px 14px rgba(255, 255, 255, 0.9),
+        -6px 6px 14px rgba(91, 110, 225, 0.22),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
 }
 
 .heep-add-addr-location-btn:active {
     transform: translateY(1px) scale(0.96);
-
     box-shadow:
-        inset 5px 5px 12px rgba(60, 70, 140, 0.4),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.2);
-}
-
-.heep-add-addr-location-btn:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 3px;
+        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
 }
 
 /* ============================================
-   FORM (Clay card)
+   🔥 FORM — 3D UTHA HUA CARD
    ============================================ */
 .heep-add-addr-form {
+    position: relative;
+
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
 
     width: 100%;
-    padding: 20px 18px;
 
-    background: #f0f2f7;
-    border-radius: 24px;
+    padding: 18px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 22px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
 
     box-shadow:
-        10px 10px 24px rgba(174, 181, 199, 0.6),
-        -10px -10px 24px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
+        0 18px 36px rgba(140, 150, 180, 0.5),
+        0 9px 18px rgba(140, 150, 180, 0.35),
+        0 5px 12px rgba(140, 150, 180, 0.25),
+        14px 14px 28px rgba(140, 150, 180, 0.22),
+        -14px -14px 28px rgba(255, 255, 255, 1),
+        11px -11px 24px rgba(255, 255, 255, 0.9),
+        -11px 11px 24px rgba(140, 150, 180, 0.12),
+        9px -9px 20px rgba(255, 255, 255, 0.85),
+        -9px 9px 20px rgba(140, 150, 180, 0.1),
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
 
-    animation: heepAddAddrFormIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+    transform: translateY(-5px);
+}
+
+/* 🔥 TOP HIGHLIGHT */
+.heep-add-addr-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 1) 50%,
+            transparent 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+    z-index: 3;
 }
 
 /* ============================================
-   INPUTS (Clay inset)
+   🔥 INPUT / SELECT — 3D INSET FEEL
    ============================================ */
 .heep-add-addr-form input[type="text"],
 .heep-add-addr-form input[type="tel"],
@@ -193,97 +289,223 @@
     width: 100%;
     padding: 13px 16px;
 
-    font-size: clamp(0.85rem, 2.1vw, 0.95rem);
-    font-weight: 600;
-    letter-spacing: 0.2px;
-    color: #3a3f55;
-
-    background: #f0f2f7;
-
-    border: none;
+    border: 1.5px solid rgba(255, 255, 255, 1);
     border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-size: clamp(0.8rem, 2.1vw, 0.9rem);
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
 
     outline: none;
 
-    box-shadow:
-        inset 4px 4px 10px rgba(174, 181, 199, 0.45),
-        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-appearance: none;
-    appearance: none;
+    /* 🔥 3D INSET FEEL */
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
+        0 4px 10px rgba(140, 150, 180, 0.25),
+        0 2px 6px rgba(140, 150, 180, 0.18),
+        3px 3px 8px rgba(140, 150, 180, 0.15),
+        -3px -3px 8px rgba(255, 255, 255, 1);
+
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.heep-add-addr-form input[type="text"]:focus,
+.heep-add-addr-form input[type="tel"]:focus,
+.heep-add-addr-form select:focus {
+    border-color: rgba(124, 140, 248, 0.5);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
+        0 6px 14px rgba(124, 140, 248, 0.35),
+        0 3px 8px rgba(124, 140, 248, 0.25),
+        4px 4px 10px rgba(124, 140, 248, 0.2),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        0 0 0 3px rgba(124, 140, 248, 0.15);
 }
 
 .heep-add-addr-form input::placeholder {
-    color: #a0a5c0;
-    font-weight: 500;
+    color: #b8bdcf;
+    font-weight: 700;
+    font-style: italic;
 }
 
-.heep-add-addr-form input:focus,
-.heep-add-addr-form select:focus {
-    box-shadow:
-        0 0 0 2px #7c8cf8,
-        inset 4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
+/* ---- Read-only inputs (city, state, country) ---- */
+.heep-add-addr-form input[readonly] {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
+
+    color: #8a90ac;
+    font-style: italic;
+    cursor: not-allowed;
 }
 
-.heep-add-addr-form input[readOnly] {
-    color: #8a90b0;
-    background: #eaedf4;
-
-    box-shadow:
-        inset 3px 3px 8px rgba(174, 181, 199, 0.4),
-        inset -3px -3px 8px rgba(255, 255, 255, 0.9);
-}
-
-.heep-add-addr-form input[readOnly]:focus {
-    box-shadow:
-        inset 3px 3px 8px rgba(174, 181, 199, 0.4),
-        inset -3px -3px 8px rgba(255, 255, 255, 0.9);
-}
-
-/* ============================================
-   SELECT
-   ============================================ */
+/* ---- Select ---- */
 .heep-add-addr-form select {
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
     padding-right: 40px;
 
     background-image:
-        linear-gradient(45deg, transparent 50%, #6a7090 50%),
-        linear-gradient(135deg, #6a7090 50%, transparent 50%);
-    background-position:
-        calc(100% - 20px) calc(50% + 2px),
-        calc(100% - 14px) calc(50% + 2px);
-    background-size: 6px 6px, 6px 6px;
-    background-repeat: no-repeat;
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b6ee1' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: 0 0, 0 0, right 16px center;
+    background-size: auto, auto, 14px;
 }
 
 .heep-add-addr-form select:disabled,
-.heep-add-addr-form select.heep-add-addr-empty-select {
-    color: #a0a5c0;
+.heep-add-addr-form .heep-add-addr-empty-select {
+    color: #b8bdcf;
+    font-style: italic;
     cursor: not-allowed;
-    opacity: 0.75;
-}
 
-.heep-add-addr-form select option {
-    padding: 12px;
-    color: #3a3f55;
-    background: #f0f2f7;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
+        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b8bdcf' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: 0 0, 0 0, right 16px center;
+    background-size: auto, auto, 14px;
 }
 
 /* ============================================
-   ADDRESS TYPE (Radios)
+   🔥 ADDRESS TYPE — radio buttons
    ============================================ */
 .heep-add-addr-type {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    align-items: center;
     gap: 10px;
 
-    margin-top: 4px;
+    flex-wrap: wrap;
+
+    width: 100%;
+
+    margin-top: 6px;
+    padding: 12px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 1),
+        inset -2px -2px 4px rgba(155, 165, 190, 0.3),
+        0 4px 10px rgba(140, 150, 180, 0.22),
+        0 2px 6px rgba(140, 150, 180, 0.15),
+        3px 3px 8px rgba(140, 150, 180, 0.12),
+        -3px -3px 8px rgba(255, 255, 255, 1);
 }
 
+/* ---- Radio label — 3D wool pill ---- */
 .heep-add-addr-type label {
+    flex: 1;
+    min-width: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 10px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 6px 14px rgba(140, 150, 180, 0.45),
+        0 3px 8px rgba(140, 150, 180, 0.32),
+        4px 4px 10px rgba(140, 150, 180, 0.25),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-2px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.heep-add-addr-type label:hover {
+    transform: translateY(-4px);
+    color: #5b6ee1;
+}
+
+/* Hide the actual radio input */
+.heep-add-addr-type input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---- CHECKED state ---- */
+.heep-add-addr-type label:has(input:checked) {
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.5),
+        0 0 8px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 10px 20px rgba(91, 110, 225, 0.55),
+        0 5px 12px rgba(91, 110, 225, 0.4),
+        7px 7px 16px rgba(91, 110, 225, 0.28),
+        -7px -7px 16px rgba(255, 255, 255, 1),
+        5px -5px 12px rgba(255, 255, 255, 0.85),
+        -5px 5px 12px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    transform: translateY(-3px);
+}
+
+/* Fallback for older browsers without :has() */
+.heep-add-addr-type label input[type="radio"]:checked~span,
+.heep-add-addr-type label input[type="radio"]:checked {
+    /* handled by :has() */
+}
+
+/* ============================================
+   🔥 SAVE BUTTON — BIG accent 3D pill
+   ============================================ */
+.heep-add-addr-save-btn {
     position: relative;
 
     display: flex;
@@ -291,150 +513,86 @@
     justify-content: center;
     gap: 6px;
 
-    padding: 11px 8px;
+    width: 100%;
+    height: 54px;
+    padding: 0 22px;
 
-    font-size: clamp(0.78rem, 2vw, 0.86rem);
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    color: #4b5170;
+    margin-top: 10px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 16px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: clamp(0.88rem, 2.4vw, 0.98rem);
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    line-height: 1;
 
     cursor: pointer;
-    user-select: none;
 
-    background: #f0f2f7;
-    border-radius: 14px;
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
 
     box-shadow:
-        4px 4px 10px rgba(174, 181, 199, 0.5),
-        -4px -4px 10px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+        0 14px 28px rgba(91, 110, 225, 0.55),
+        0 7px 16px rgba(91, 110, 225, 0.4),
+        9px 9px 20px rgba(91, 110, 225, 0.28),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        7px -7px 16px rgba(255, 255, 255, 0.9),
+        -7px 7px 16px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
 
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(-3px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Hide the actual radio circle */
-.heep-add-addr-type label input[type="radio"] {
+/* 🔥 TOP HIGHLIGHT */
+.heep-add-addr-save-btn::before {
+    content: "";
     position: absolute;
-    opacity: 0;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.9) 50%,
+            transparent 100%);
+    border-radius: 16px 16px 0 0;
     pointer-events: none;
 }
 
-.heep-add-addr-type label:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        6px 6px 14px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
-}
-
-/* Checked state */
-.heep-add-addr-type label:has(input[type="radio"]:checked) {
-    color: #ffffff;
-
-    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
-
-    box-shadow:
-        6px 6px 16px rgba(124, 140, 248, 0.5),
-        -4px -4px 12px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35),
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1);
-
-    transform: translateY(-2px);
-}
-
-.heep-add-addr-type label:active {
-    transform: translateY(0) scale(0.97);
-}
-
-/* ============================================
-   SAVE BUTTON (Clay gradient)
-   ============================================ */
-.heep-add-addr-save-btn {
-    width: 100%;
-
-    margin-top: 8px;
-    padding: 15px 20px;
-
-    font-size: clamp(0.9rem, 2.4vw, 1rem);
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    color: #ffffff;
-
-    cursor: pointer;
-    border: none;
-    border-radius: 16px;
-
-    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
-
-    box-shadow:
-        6px 6px 16px rgba(124, 140, 248, 0.45),
-        -4px -4px 12px rgba(255, 255, 255, 0.9),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35),
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1);
-
-    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
 .heep-add-addr-save-btn:hover {
-    transform: translateY(-3px);
+    transform: translateY(-6px);
 
     box-shadow:
-        10px 10px 22px rgba(124, 140, 248, 0.55),
-        -6px -6px 16px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
+        0 20px 38px rgba(91, 110, 225, 0.65),
+        0 10px 20px rgba(91, 110, 225, 0.5),
+        12px 12px 24px rgba(91, 110, 225, 0.35),
+        -11px -11px 22px rgba(255, 255, 255, 1),
+        9px -9px 20px rgba(255, 255, 255, 0.95),
+        -9px 9px 20px rgba(91, 110, 225, 0.22),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
 }
 
 .heep-add-addr-save-btn:active {
-    transform: translateY(1px) scale(0.98);
-
+    transform: translateY(1px) scale(0.97);
     box-shadow:
-        inset 5px 5px 12px rgba(60, 70, 140, 0.45),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.2);
+        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
+        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
 }
 
 .heep-add-addr-save-btn:focus-visible {
     outline: 2px solid #7c8cf8;
     outline-offset: 3px;
-}
-
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes heepAddAddrPageFade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes heepAddAddrHeaderIn {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes heepAddAddrFormIn {
-    from {
-        opacity: 0;
-        transform: translateY(24px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* ============================================
@@ -444,42 +602,13 @@
 /* Tablets */
 @media (max-width: 768px) {
     .heep-add-addr-page {
-        padding: 16px 12px 100px;
-        gap: 14px;
-    }
-
-    .heep-add-addr-header {
-        padding: 12px 14px;
-        border-radius: 20px;
-    }
-
-    .heep-add-addr-form {
-        padding: 18px 16px;
-        border-radius: 22px;
-        gap: 12px;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .heep-add-addr-page {
-        padding: 14px 12px 100px;
+        padding: 12px 12px 34px;
         gap: 12px;
     }
 
     .heep-add-addr-header {
-        padding: 12px 12px;
-        border-radius: 18px;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .heep-add-addr-header h2 {
-        font-size: 0.95rem;
-        order: 3;
-        flex-basis: 100%;
-        text-align: left;
-        margin-top: 4px;
+        padding: 11px 12px;
+        gap: 9px;
     }
 
     .heep-add-addr-back-btn {
@@ -489,93 +618,187 @@
     }
 
     .heep-add-addr-location-btn {
-        padding: 8px 12px;
+        padding: 9px 12px;
         font-size: 0.72rem;
-        border-radius: 12px;
+        border-radius: 11px;
+    }
+
+    .heep-add-addr-header h2 {
+        font-size: 1.05rem;
     }
 
     .heep-add-addr-form {
-        padding: 16px 14px;
+        padding: 16px;
         border-radius: 20px;
-        gap: 12px;
+        gap: 11px;
+        transform: translateY(-4px);
     }
 
     .heep-add-addr-form input[type="text"],
     .heep-add-addr-form input[type="tel"],
     .heep-add-addr-form select {
         padding: 12px 14px;
-        border-radius: 12px;
-        font-size: 0.85rem;
+        border-radius: 13px;
+        font-size: 0.86rem;
     }
 
     .heep-add-addr-type {
+        padding: 11px;
+        border-radius: 13px;
+        gap: 9px;
+    }
+
+    .heep-add-addr-type label {
+        padding: 9px 12px;
+        font-size: 0.74rem;
+        border-radius: 11px;
+    }
+
+    .heep-add-addr-save-btn {
+        height: 50px;
+        font-size: 0.92rem;
+        border-radius: 15px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .heep-add-addr-page {
+        padding: 10px 10px 30px;
+        gap: 10px;
+    }
+
+    .heep-add-addr-header {
+        padding: 10px 11px;
+        gap: 8px;
+    }
+
+    .heep-add-addr-back-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+        border-width: 1.5px;
+    }
+
+    .heep-add-addr-location-btn {
+        padding: 8px 11px;
+        font-size: 0.68rem;
+        border-radius: 10px;
+    }
+
+    .heep-add-addr-header h2 {
+        font-size: 0.96rem;
+    }
+
+    .heep-add-addr-form {
+        padding: 14px;
+        border-radius: 18px;
+        gap: 10px;
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 14px 28px rgba(140, 150, 180, 0.5),
+            0 7px 16px rgba(140, 150, 180, 0.35),
+            0 4px 10px rgba(140, 150, 180, 0.25),
+            11px 11px 22px rgba(140, 150, 180, 0.22),
+            -11px -11px 22px rgba(255, 255, 255, 1),
+            9px -9px 20px rgba(255, 255, 255, 0.9),
+            -9px 9px 20px rgba(140, 150, 180, 0.12),
+            7px -7px 16px rgba(255, 255, 255, 0.85),
+            -7px 7px 16px rgba(140, 150, 180, 0.1),
+            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+    }
+
+    .heep-add-addr-form input[type="text"],
+    .heep-add-addr-form input[type="tel"],
+    .heep-add-addr-form select {
+        padding: 11px 13px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+
+    .heep-add-addr-type {
+        padding: 10px;
+        border-radius: 12px;
         gap: 8px;
     }
 
     .heep-add-addr-type label {
-        padding: 12px 10px;
-        justify-content: flex-start;
-        border-radius: 12px;
+        padding: 9px 10px;
+        font-size: 0.7rem;
+        border-radius: 10px;
+        gap: 5px;
     }
 
     .heep-add-addr-save-btn {
-        padding: 14px 16px;
+        height: 48px;
+        font-size: 0.86rem;
         border-radius: 14px;
+        margin-top: 8px;
     }
 }
 
 /* Small phones */
 @media (max-width: 360px) {
     .heep-add-addr-page {
-        padding: 12px 10px 95px;
-        gap: 10px;
+        padding: 8px 8px 26px;
+        gap: 9px;
     }
 
     .heep-add-addr-header {
-        padding: 10px 10px;
-        border-radius: 16px;
-    }
-
-    .heep-add-addr-header h2 {
-        font-size: 0.9rem;
+        padding: 9px 10px;
+        gap: 7px;
     }
 
     .heep-add-addr-back-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
     }
 
     .heep-add-addr-location-btn {
         padding: 7px 10px;
-        font-size: 0.68rem;
-        border-radius: 10px;
+        font-size: 0.62rem;
+        border-radius: 9px;
+    }
+
+    .heep-add-addr-header h2 {
+        font-size: 0.88rem;
     }
 
     .heep-add-addr-form {
-        padding: 14px 12px;
-        border-radius: 18px;
-        gap: 10px;
+        padding: 12px;
+        border-radius: 16px;
+        gap: 9px;
+        transform: translateY(-2px);
     }
 
     .heep-add-addr-form input[type="text"],
     .heep-add-addr-form input[type="tel"],
     .heep-add-addr-form select {
-        padding: 11px 12px;
+        padding: 10px 12px;
         border-radius: 11px;
-        font-size: 0.82rem;
+        font-size: 0.74rem;
+    }
+
+    .heep-add-addr-type {
+        padding: 9px;
+        border-radius: 11px;
+        gap: 7px;
     }
 
     .heep-add-addr-type label {
-        padding: 10px 8px;
-        font-size: 0.78rem;
-        border-radius: 10px;
+        padding: 8px 9px;
+        font-size: 0.64rem;
+        border-radius: 9px;
+        gap: 4px;
     }
 
     .heep-add-addr-save-btn {
-        padding: 13px 14px;
-        font-size: 0.85rem;
-        border-radius: 12px;
+        height: 44px;
+        font-size: 0.78rem;
+        border-radius: 13px;
     }
 }
 
@@ -583,10 +806,7 @@
    ACCESSIBILITY
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-
-    .heep-add-addr-page,
-    .heep-add-addr-header,
-    .heep-add-addr-form {
+    .heep-add-addr-page {
         animation: none;
     }
 

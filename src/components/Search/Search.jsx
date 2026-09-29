@@ -20,6 +20,7 @@ function Search({
     const [categories, setCategories] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
+    const [hideSuggestions, setHideSuggestions] = useState(false); // 👈 NAYA STATE
 
     /* ============================================
        LOAD CATEGORIES
@@ -71,12 +72,13 @@ function Search({
     const srRef = useRef(null);
 
     /* ============================================
-       OUTSIDE CLICK — close filter
+       OUTSIDE CLICK — close filter AND suggestions
        ============================================ */
     useEffect(() => {
         function handleOutsideClick(event) {
             if (srRef.current && !srRef.current.contains(event.target)) {
                 setShowFilter(false);
+                setHideSuggestions(true); // 👈 bahar click pe suggestions hide
             }
         }
 
@@ -98,6 +100,8 @@ function Search({
        SUGGESTIONS — derived (useMemo)
        ============================================ */
     const searchSuggestions = useMemo(() => {
+        if (hideSuggestions) return []; // 👈 hidden ho to kuch mat do
+
         const current = config[selectedMenu];
 
         if (!current || !search.trim()) return [];
@@ -133,7 +137,7 @@ function Search({
             )
             .slice(0, 6);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [search, selectedMenu, cards, gifts, shops, premiums]);
+    }, [search, selectedMenu, cards, gifts, shops, premiums, hideSuggestions]);
 
     const hasSuggestions = searchSuggestions.length > 0;
 
@@ -169,7 +173,10 @@ function Search({
                         type="text"
                         className="sr-input"
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setHideSuggestions(false); // 👈 typing pe wapas show
+                        }}
                     />
 
                     <button
@@ -208,6 +215,7 @@ function Search({
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => {
                             setSearch(item.value);
+                            setHideSuggestions(true); // 👈 suggestion click pe hide
                         }}
                     >
                         <span className="sr-suggestion-icon">

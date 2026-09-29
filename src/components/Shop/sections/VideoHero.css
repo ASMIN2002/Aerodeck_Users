@@ -269,18 +269,8 @@
         linear-gradient(145deg, #7c8cf8 0%, #5b6ee1 100%);
 
     border: 1px solid rgba(255, 255, 255, 0.95);
-
-    box-shadow:
-        4px 5px 12px rgba(91, 110, 225, 0.55),
-        2px 3px 8px rgba(91, 110, 225, 0.4),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.4),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.45);
 }
 
-.shop-video-control-btn.purple:hover {
-    transform: translateY(-2px) scale(1.08);
-}
 
 .shop-video-control-btn.purple:active {
     transform: translateY(1px) scale(0.94);
@@ -706,4 +696,9 @@
     .shop-video-dot {
         transition: none;
     }
+}
+.heepit-intro{
+    margin-bottom: 10px;
+    margin-left: 5px;
+    font-size: 12px;
 }

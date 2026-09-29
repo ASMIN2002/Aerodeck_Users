@@ -1,4 +1,4 @@
-/* Header.css */
+/* Header.css — 3D UTHA HUA CLAYMORPHISM */
 
 .hd-header,
 .hd-header * {
@@ -6,352 +6,44 @@
 }
 
 /* ============================================
-   HEADER WRAPPER — 3D WOOL PANEL
+   🔥 HEADER — 3D UTHA HUA STICKY
    ============================================ */
 .hd-header {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 50;
 
-    width: 100%;
-    padding: 12px 14px 14px;
-
-    background:
-        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.95), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    border-bottom-left-radius: 26px;
-    border-bottom-right-radius: 26px;
-
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-top: none;
-
-    box-shadow:0 0 1pcx black;
-    animation: hdHeaderIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* ============================================
-   TOP ROW (brand + bell)
-   ============================================ */
-.hd-top-row {
     display: flex;
     flex-direction: column;
-    gap: 12px;
 
     width: 100%;
-}
 
-.hd-top-line {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    margin: 0 0 10px;
+    padding: 12px 14px 0;
 
-    width: 100%;
-}
-
-/* ============================================
-   BRAND (HEEPIT + version) — 3D WOOL PILL
-   ============================================ */
-.hd-center {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 8px 16px;
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 0 0 20px 20px;
 
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
         linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
 
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-
     box-shadow:
-        6px 8px 16px rgba(140, 150, 180, 0.6),
-        2px 3px 8px rgba(140, 150, 180, 0.4),
-        -5px -6px 14px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
+        0 12px 28px rgba(140, 150, 180, 0.5),
+        0 6px 14px rgba(140, 150, 180, 0.35),
+        0 3px 8px rgba(140, 150, 180, 0.25),
+        0 -3px 10px rgba(140, 150, 180, 0.15),
+        0 -1px 4px rgba(140, 150, 180, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 1),
+        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
+
+    animation: hdHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hd-brand-name {
-    font-size: clamp(1.05rem, 3vw, 1.3rem);
-    font-weight: 900;
-    letter-spacing: 2px;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: #5b6ee1;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 4px rgba(124, 140, 248, 0.25);
-}
-
-.hd-version {
-    padding: 3px 9px;
-
-    font-size: clamp(0.62rem, 1.7vw, 0.72rem);
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    color: #5b6ee1;
-
-    background: linear-gradient(145deg, #eef1f8, #dfe4f0);
-
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(155, 165, 190, 0.5),
-        inset -2px -2px 4px rgba(255, 255, 255, 1);
-
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-}
-
-/* ============================================
-   NOTIFICATION BELL — 3D WOOL BALL
-   ============================================ */
-.hd-notif-btn {
-    position: relative;
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 46px;
-    height: 46px;
-
-    font-size: 1.3rem;
-    color: #3f4664;
-
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dde2ee 100%);
-
-    box-shadow:
-        7px 9px 16px rgba(140, 150, 180, 0.7),
-        3px 4px 8px rgba(140, 150, 180, 0.45),
-        -6px -7px 14px rgba(255, 255, 255, 1),
-        -2px -3px 6px rgba(255, 255, 255, 0.9),
-        inset 2.5px 2.5px 5px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -2.5px -2.5px 5px rgba(155, 165, 190, 0.5),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.hd-notif-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    color: #5b6ee1;
-
-    box-shadow:
-        10px 12px 22px rgba(124, 140, 248, 0.55),
-        5px 6px 12px rgba(124, 140, 248, 0.35),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        inset 2.5px 2.5px 5px rgba(255, 255, 255, 1),
-        inset -2.5px -2.5px 5px rgba(124, 140, 248, 0.35);
-}
-
-.hd-notif-btn:active {
-    transform: translateY(1px) scale(0.94);
-
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.85),
-        inset -5px -5px 12px rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.4);
-}
-
-.hd-notif-btn:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 3px;
-}
-
-/* ============================================
-   RED NOTIFICATION DOT — Pulsing 3D
-   ============================================ */
-.hd-notif-dot {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-
-    width: 13px;
-    height: 13px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.7), transparent 55%),
-        linear-gradient(145deg, #ff5470, #d81e3a);
-
-    border: 2px solid #ffffff;
-
-    box-shadow:
-        0 0 0 2px rgba(216, 30, 58, 0.25),
-        3px 4px 8px rgba(216, 30, 58, 0.55),
-        -2px -2px 4px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.6);
-
-    animation: hdNotifPulse 1.6s ease-in-out infinite;
-}
-
-.hd-notif-dot::after {
-    content: "";
-    position: absolute;
-    inset: -4px;
-
-    border-radius: 50%;
-    border: 2px solid rgba(216, 30, 58, 0.5);
-
-    animation: hdNotifRing 1.6s ease-out infinite;
-}
-
-/* ============================================
-   TABS ROW — 3D WOOL SEGMENTED CONTROL
-   ============================================ */
-.hd-tabs {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    width: 100%;
-    padding: 6px;
-
-    background:
-        linear-gradient(145deg, #dfe4f0 0%, #f2f5fa 100%);
-
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 1),
-        0 1px 2px rgba(255, 255, 255, 0.9);
-}
-
-/* ---- Individual tab ---- */
-.hd-tab {
-    flex: 1;
-
-    display: grid;
-    place-items: center;
-
-    padding: 11px 12px;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.9rem);
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    color: #5a6180;
-    white-space: nowrap;
-
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 15px;
-
-    background: transparent;
-
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.hd-tab:hover:not(.hd-tab-active) {
-    color: #5b6ee1;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9), transparent 55%),
-        linear-gradient(145deg, #f0f3fa 0%, #e2e7f2 100%);
-
-    border-color: rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        4px 5px 10px rgba(140, 150, 180, 0.5),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
-}
-
-.hd-tab:active {
-    transform: scale(0.97);
-}
-
-.hd-tab:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 2px;
-}
-
-/* ---- Active tab (pressed-in gradient clay) ---- */
-.hd-tab.hd-tab-active {
-    color: #ffffff;
-
-    background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.45), transparent 55%),
-        linear-gradient(145deg, #7a8af5, #8e52d9);
-
-    border-color: rgba(255, 255, 255, 0.5);
-
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-
-    box-shadow:
-        inset 4px 4px 10px rgba(45, 55, 120, 0.55),
-        inset -4px -4px 10px rgba(255, 255, 255, 0.25),
-        0 0 0 2.5px rgba(124, 140, 248, 0.35),
-        6px 8px 16px rgba(124, 140, 248, 0.5);
-
-    transform: translateY(-1px);
-}
-
-/* ============================================
-   TOAST — 3D WOOL FLOATING
-   ============================================ */
-.hd-toast {
-    position: fixed;
-    left: 50%;
-    bottom: 110px;
-    transform: translateX(-50%);
-
-    z-index: 9999;
-
-    padding: 14px 26px;
-
-    font-size: clamp(0.82rem, 2.1vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    color: #2f3450;
-    white-space: nowrap;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-
-    box-shadow:
-        12px 14px 28px rgba(140, 150, 180, 0.75),
-        6px 8px 16px rgba(140, 150, 180, 0.5),
-        -8px -8px 20px rgba(255, 255, 255, 1),
-        inset 3px 3px 6px rgba(255, 255, 255, 1),
-        inset -3px -3px 8px rgba(155, 165, 190, 0.45);
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        2px 2px 4px rgba(155, 165, 190, 0.3);
-
-    animation: hdToastIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* ============================================
-   ANIMATIONS
-   ============================================ */
 @keyframes hdHeaderIn {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-14px);
     }
 
     to {
@@ -360,31 +52,493 @@
     }
 }
 
+/* ============================================
+   TOP ROW WRAPPER
+   ============================================ */
+.hd-top-row {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1.5px dashed rgba(155, 165, 190, 0.35);
+
+    position: relative;
+}
+
+.hd-top-row::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.9) 50%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+/* ============================================
+   TOP LINE — brand + right actions
+   ============================================ */
+.hd-top-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+}
+
+/* ---- Center — brand name + version ---- */
+.hd-center {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hd-brand-name {
+    font-size: clamp(0.98rem, 2.8vw, 1.15rem);
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    line-height: 1.15;
+
+    color: #3f4664;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 2px 4px rgba(140, 150, 180, 0.18);
+}
+
+.hd-version {
+    font-size: clamp(0.56rem, 1.6vw, 0.64rem);
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.2;
+
+    color: #5b6ee1;
+
+    text-shadow:
+        1px 1px 0 rgba(255, 255, 255, 1),
+        0 0 6px rgba(124, 140, 248, 0.25);
+}
+
+/* ---- Right actions — menu + bell ---- */
+.hd-right-actions {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ============================================
+   🔥 MENU DROPDOWN WRAP
+   ============================================ */
+.hd-menu-wrap {
+    position: relative;
+}
+
+/* ---- Menu trigger button ---- */
+.hd-menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 14px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    color: #3f4664;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 6px 14px rgba(140, 150, 180, 0.5),
+        0 3px 8px rgba(140, 150, 180, 0.35),
+        4px 4px 10px rgba(140, 150, 180, 0.25),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+
+    transform: translateY(-2px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hd-menu-trigger:hover {
+    transform: translateY(-4px);
+    color: #5b6ee1;
+
+    box-shadow:
+        0 10px 22px rgba(124, 140, 248, 0.42),
+        0 5px 12px rgba(124, 140, 248, 0.3),
+        7px 7px 16px rgba(124, 140, 248, 0.22),
+        -7px -7px 16px rgba(255, 255, 255, 1),
+        5px -5px 12px rgba(255, 255, 255, 0.9),
+        -5px 5px 12px rgba(124, 140, 248, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
+}
+
+.hd-menu-trigger:active {
+    transform: translateY(1px) scale(0.97);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+.hd-menu-trigger.open {
+    color: #5b6ee1;
+
+    border-color: rgba(124, 140, 248, 0.4);
+
+    box-shadow:
+        0 8px 18px rgba(124, 140, 248, 0.5),
+        0 4px 10px rgba(124, 140, 248, 0.35),
+        5px 5px 12px rgba(124, 140, 248, 0.25),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.9),
+        -4px 4px 10px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+}
+
+.hd-menu-label {
+    line-height: 1;
+}
+
+.hd-menu-chevron {
+    font-size: 0.9rem;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hd-menu-trigger.open .hd-menu-chevron {
+    transform: rotate(180deg);
+}
+
+/* ============================================
+   🔥 MENU DROPDOWN — 3D UTHA HUA
+   ============================================ */
+.hd-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 200;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    min-width: 148px;
+    padding: 8px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+
+    box-shadow:
+        0 20px 40px rgba(140, 150, 180, 0.55),
+        0 10px 20px rgba(140, 150, 180, 0.4),
+        0 5px 12px rgba(140, 150, 180, 0.3),
+        14px 14px 28px rgba(140, 150, 180, 0.28),
+        -14px -14px 28px rgba(255, 255, 255, 1),
+        11px -11px 24px rgba(255, 255, 255, 0.95),
+        -11px 11px 24px rgba(140, 150, 180, 0.15),
+        9px -9px 20px rgba(255, 255, 255, 0.9),
+        -9px 9px 20px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
+
+    animation: hdMenuDropIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: top right;
+}
+
+@keyframes hdMenuDropIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hd-menu-option {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    padding: 9px 12px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 10px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
+
+    color: #3f4664;
+    font-family: inherit;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    text-align: left;
+
+    cursor: pointer;
+
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 4px 10px rgba(140, 150, 180, 0.4),
+        0 2px 6px rgba(140, 150, 180, 0.3),
+        3px 3px 8px rgba(140, 150, 180, 0.22),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        2px -2px 6px rgba(255, 255, 255, 0.85),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(155, 165, 190, 0.3);
+
+    transform: translateY(-1px);
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hd-menu-option:hover {
+    transform: translateY(-3px);
+    color: #5b6ee1;
+
+    box-shadow:
+        0 8px 16px rgba(124, 140, 248, 0.42),
+        0 4px 10px rgba(124, 140, 248, 0.3),
+        5px 5px 12px rgba(124, 140, 248, 0.22),
+        -5px -5px 12px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.9),
+        inset 1px 1px 2px rgba(255, 255, 255, 1),
+        inset -1px -1px 2px rgba(124, 140, 248, 0.3);
+}
+
+.hd-menu-option:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow:
+        inset 4px 4px 8px rgba(155, 165, 190, 0.55),
+        inset -4px -4px 8px rgba(255, 255, 255, 1);
+}
+
+.hd-menu-option.active {
+    color: #ffffff;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    text-shadow:
+        0 1px 2px rgba(60, 70, 160, 0.5),
+        0 0 6px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 6px 14px rgba(91, 110, 225, 0.55),
+        0 3px 8px rgba(91, 110, 225, 0.4),
+        4px 4px 10px rgba(91, 110, 225, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
+        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+}
+
+/* ============================================
+   🔥 NOTIFICATION BELL — 3D WOOL BALL
+   ============================================ */
+.hd-notif-btn {
+    position: relative;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+
+    color: #5b6ee1;
+    font-size: 1.15rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 14px rgba(140, 150, 180, 0.55),
+        0 3px 8px rgba(140, 150, 180, 0.4),
+        4px 4px 10px rgba(140, 150, 180, 0.28),
+        -4px -4px 10px rgba(255, 255, 255, 1),
+        3px -3px 8px rgba(255, 255, 255, 0.85),
+        -3px 3px 8px rgba(140, 150, 180, 0.12),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
+
+    transform: translateY(-2px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hd-notif-btn:hover {
+    transform: translateY(-4px) scale(1.06);
+    color: #7c8cf8;
+
+    box-shadow:
+        0 10px 22px rgba(124, 140, 248, 0.5),
+        0 5px 12px rgba(124, 140, 248, 0.35),
+        6px 6px 14px rgba(124, 140, 248, 0.25),
+        -6px -6px 14px rgba(255, 255, 255, 1),
+        4px -4px 10px rgba(255, 255, 255, 0.9),
+        -4px 4px 10px rgba(124, 140, 248, 0.15),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
+        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+}
+
+.hd-notif-btn:active {
+    transform: translateY(1px) scale(0.94);
+    box-shadow:
+        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
+        inset -5px -5px 12px rgba(255, 255, 255, 1);
+}
+
+/* ---- Notification dot — pulsing red ball ---- */
+.hd-notif-dot {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+
+    display: block;
+
+    width: 12px;
+    height: 12px;
+
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
+
+    box-shadow:
+        0 3px 8px rgba(226, 90, 90, 0.7),
+        0 2px 4px rgba(226, 90, 90, 0.5),
+        -1.5px -1.5px 4px rgba(255, 255, 255, 1),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+        inset -1px -1px 2px rgba(160, 50, 50, 0.5);
+
+    animation: hdNotifPulse 1.6s ease-in-out infinite;
+}
+
 @keyframes hdNotifPulse {
 
     0%,
     100% {
         transform: scale(1);
+        box-shadow:
+            0 3px 8px rgba(226, 90, 90, 0.7),
+            0 2px 4px rgba(226, 90, 90, 0.5),
+            -1.5px -1.5px 4px rgba(255, 255, 255, 1),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+            inset -1px -1px 2px rgba(160, 50, 50, 0.5);
     }
 
     50% {
-        transform: scale(1.15);
+        transform: scale(1.2);
+        box-shadow:
+            0 0 0 5px rgba(226, 90, 90, 0.25),
+            0 4px 10px rgba(226, 90, 90, 0.8),
+            0 2px 4px rgba(226, 90, 90, 0.6),
+            -1.5px -1.5px 4px rgba(255, 255, 255, 1),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+            inset -1px -1px 2px rgba(160, 50, 50, 0.5);
     }
 }
 
-@keyframes hdNotifRing {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
+/* ============================================
+   🔥 TOAST — 3D accent pill
+   ============================================ */
+.hd-toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
 
-    100% {
-        transform: scale(2.2);
-        opacity: 0;
-    }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 22px;
+
+    border: 1.5px solid rgba(255, 255, 255, 1);
+    border-radius: 999px;
+
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
+        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    white-space: nowrap;
+
+    text-shadow:
+        0 1px 3px rgba(60, 70, 160, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+
+    box-shadow:
+        0 14px 28px rgba(91, 110, 225, 0.55),
+        0 7px 16px rgba(91, 110, 225, 0.4),
+        9px 9px 20px rgba(91, 110, 225, 0.28),
+        -9px -9px 20px rgba(255, 255, 255, 1),
+        7px -7px 16px rgba(255, 255, 255, 0.9),
+        -7px 7px 16px rgba(91, 110, 225, 0.18),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+    animation: hdToastPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes hdToastIn {
+@keyframes hdToastPop {
     from {
         opacity: 0;
         transform: translateX(-50%) translateY(20px) scale(0.9);
@@ -397,110 +551,44 @@
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE — TABLETS
    ============================================ */
-
-/* Tablets */
 @media (max-width: 768px) {
     .hd-header {
-        padding: 10px 12px 12px;
-        border-bottom-left-radius: 22px;
-        border-bottom-right-radius: 22px;
-    }
-
-    .hd-notif-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 1.2rem;
-    }
-
-    .hd-tab {
-        padding: 10px 10px;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .hd-header {
-        padding: 10px 10px 12px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
+        padding: 11px 12px 0;
+        margin-bottom: 9px;
+        border-radius: 0 0 18px 18px;
     }
 
     .hd-top-row {
-        gap: 10px;
+        padding-bottom: 9px;
     }
 
-    .hd-center {
-        padding: 7px 14px;
-        border-radius: 16px;
-        gap: 8px;
-    }
-
-    .hd-brand-name {
-        letter-spacing: 1.6px;
-    }
-
-    .hd-version {
-        padding: 2px 8px;
-        font-size: 0.62rem;
-    }
-
-    .hd-notif-btn {
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
-    }
-
-    .hd-notif-dot {
-        width: 12px;
-        height: 12px;
-        top: 3px;
-        right: 3px;
-    }
-
-    .hd-tabs {
-        padding: 5px;
-        border-radius: 18px;
-        gap: 5px;
-    }
-
-    .hd-tab {
-        padding: 10px 8px;
-        font-size: 0.8rem;
-        border-radius: 13px;
-    }
-
-    .hd-toast {
-        bottom: 100px;
-        padding: 12px 20px;
-        font-size: 0.82rem;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .hd-header {
-        padding: 8px 8px 10px;
-        border-bottom-left-radius: 18px;
-        border-bottom-right-radius: 18px;
-    }
-
-    .hd-center {
-        padding: 6px 12px;
-        border-radius: 14px;
-        gap: 7px;
+    .hd-top-line {
+        gap: 9px;
     }
 
     .hd-brand-name {
         font-size: 1rem;
-        letter-spacing: 1.2px;
+        letter-spacing: 2px;
     }
 
     .hd-version {
-        padding: 2px 6px;
-        font-size: 0.58rem;
-        border-radius: 6px;
+        font-size: 0.6rem;
+    }
+
+    .hd-right-actions {
+        gap: 7px;
+    }
+
+    .hd-menu-trigger {
+        padding: 7px 12px;
+        font-size: 0.74rem;
+        border-radius: 11px;
+    }
+
+    .hd-menu-chevron {
+        font-size: 0.84rem;
     }
 
     .hd-notif-btn {
@@ -512,27 +600,187 @@
     .hd-notif-dot {
         width: 11px;
         height: 11px;
-        border-width: 1.5px;
     }
 
-    .hd-tabs {
-        padding: 4px;
-        border-radius: 16px;
+    .hd-menu-dropdown {
+        min-width: 140px;
+        padding: 7px;
+        border-radius: 13px;
         gap: 4px;
     }
 
-    .hd-tab {
-        padding: 9px 6px;
-        font-size: 0.74rem;
-        border-radius: 11px;
-        letter-spacing: 0.3px;
+    .hd-menu-option {
+        padding: 8px 11px;
+        font-size: 0.7rem;
+        border-radius: 9px;
     }
 
     .hd-toast {
-        bottom: 90px;
-        padding: 11px 18px;
+        padding: 11px 20px;
         font-size: 0.78rem;
-        border-radius: 16px;
+        bottom: 84px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — PHONES
+   ============================================ */
+@media (max-width: 480px) {
+    .hd-header {
+        padding: 10px 10px 0;
+        margin-bottom: 8px;
+        border-radius: 0 0 16px 16px;
+    }
+
+    .hd-top-row {
+        padding-bottom: 8px;
+    }
+
+    .hd-top-line {
+        gap: 8px;
+    }
+
+    .hd-brand-name {
+        font-size: 0.94rem;
+        letter-spacing: 1.8px;
+    }
+
+    .hd-version {
+        font-size: 0.54rem;
+        letter-spacing: 0.8px;
+    }
+
+    .hd-right-actions {
+        gap: 6px;
+    }
+
+    .hd-menu-trigger {
+        padding: 7px 11px;
+        font-size: 0.7rem;
+        border-radius: 10px;
+        gap: 5px;
+    }
+
+    .hd-menu-chevron {
+        font-size: 0.78rem;
+    }
+
+    .hd-notif-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
+        border-width: 1.5px;
+
+        box-shadow:
+            0 5px 12px rgba(140, 150, 180, 0.5),
+            0 3px 8px rgba(140, 150, 180, 0.35),
+            3px 3px 8px rgba(140, 150, 180, 0.25),
+            -3px -3px 8px rgba(255, 255, 255, 1),
+            2px -2px 6px rgba(255, 255, 255, 0.85),
+            -2px 2px 6px rgba(140, 150, 180, 0.1),
+            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
+            inset -1px -1px 2.5px rgba(155, 165, 190, 0.4);
+    }
+
+    .hd-notif-dot {
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 2px;
+        border-width: 1.5px;
+    }
+
+    .hd-menu-dropdown {
+        min-width: 128px;
+        padding: 6px;
+        border-radius: 12px;
+        gap: 3px;
+    }
+
+    .hd-menu-option {
+        padding: 8px 10px;
+        font-size: 0.66rem;
+        border-radius: 8px;
+    }
+
+    .hd-toast {
+        padding: 10px 18px;
+        font-size: 0.72rem;
+        bottom: 80px;
+        border-radius: 999px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — SMALL PHONES
+   ============================================ */
+@media (max-width: 360px) {
+    .hd-header {
+        padding: 9px 8px 0;
+        border-radius: 0 0 14px 14px;
+    }
+
+    .hd-top-row {
+        padding-bottom: 7px;
+    }
+
+    .hd-top-line {
+        gap: 7px;
+    }
+
+    .hd-brand-name {
+        font-size: 0.84rem;
+        letter-spacing: 1.5px;
+    }
+
+    .hd-version {
+        font-size: 0.5rem;
+    }
+
+    .hd-right-actions {
+        gap: 5px;
+    }
+
+    .hd-menu-trigger {
+        padding: 6px 10px;
+        font-size: 0.64rem;
+        border-radius: 9px;
+        gap: 4px;
+    }
+
+    .hd-menu-chevron {
+        font-size: 0.72rem;
+    }
+
+    .hd-notif-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.88rem;
+    }
+
+    .hd-notif-dot {
+        width: 8px;
+        height: 8px;
+        top: 2px;
+        right: 2px;
+    }
+
+    .hd-menu-dropdown {
+        min-width: 116px;
+        padding: 5px;
+        border-radius: 11px;
+    }
+
+    .hd-menu-option {
+        padding: 7px 9px;
+        font-size: 0.6rem;
+        border-radius: 7px;
+    }
+
+    .hd-toast {
+        padding: 9px 16px;
+        font-size: 0.66rem;
+        bottom: 76px;
     }
 }
 
@@ -542,14 +790,15 @@
 @media (prefers-reduced-motion: reduce) {
 
     .hd-header,
+    .hd-menu-dropdown,
     .hd-notif-dot,
-    .hd-notif-dot::after,
     .hd-toast {
         animation: none;
     }
 
-    .hd-notif-btn,
-    .hd-tab {
+    .hd-menu-trigger,
+    .hd-menu-option,
+    .hd-notif-btn {
         transition: none;
     }
 }

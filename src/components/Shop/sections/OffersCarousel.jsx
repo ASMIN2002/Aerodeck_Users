@@ -79,6 +79,10 @@ function OffersCarousel() {
 
     return (
         <section className="shop-offer-carousel-section">
+            <div className="heepit-intro1">
+                <h2>Special Offers</h2>
+            </div>
+
 
             <div
                 className="shop-offer-carousel"

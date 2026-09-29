@@ -166,7 +166,7 @@
     align-items: stretch;
     gap: 8px;
 
-    width: 132px;
+    width: 120px;
     padding: 10px;
 
     border: 1px solid rgba(255, 255, 255, 0.98);
@@ -243,33 +243,7 @@
     z-index: 0;
 }
 
-.shop-liked-card:hover {
-    transform: translateY(-12px) scale(1.02);
 
-    box-shadow:
-        0 22px 42px rgba(226, 90, 138, 0.35),
-        0 12px 22px rgba(226, 90, 138, 0.25),
-        14px 14px 30px rgba(226, 90, 138, 0.18),
-        -14px -14px 30px rgba(255, 255, 255, 1),
-        10px -10px 24px rgba(255, 255, 255, 0.9),
-        -10px 10px 24px rgba(226, 90, 138, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(226, 90, 138, 0.2);
-}
-
-.shop-liked-card:active {
-    transform: translateY(-2px) scale(0.98);
-
-    box-shadow:
-        0 4px 10px rgba(155, 165, 190, 0.5),
-        0 2px 6px rgba(155, 165, 190, 0.35),
-        inset 5px 5px 12px rgba(155, 165, 190, 0.5),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ============================================
-   IMAGE WRAPPER — 3D WOOL FRAME
-   ============================================ */
 .shop-liked-image {
     position: relative;
 
@@ -295,10 +269,6 @@
         inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
 
     transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.shop-liked-card:hover .shop-liked-image {
-    transform: scale(1.03);
 }
 
 .shop-liked-image img {
@@ -521,7 +491,6 @@
     }
 
     .shop-liked-card {
-        width: 118px;
         padding: 9px;
         border-radius: 16px;
         gap: 7px;
@@ -584,21 +553,10 @@
     }
 
     .shop-liked-card {
-        width: 108px;
         padding: 8px;
         border-radius: 14px;
         gap: 6px;
         transform: translateY(-4px);
-
-        box-shadow:
-            0 9px 18px rgba(140, 150, 180, 0.45),
-            0 5px 10px rgba(140, 150, 180, 0.3),
-            7px 7px 16px rgba(140, 150, 180, 0.2),
-            -7px -7px 16px rgba(255, 255, 255, 1),
-            5px -5px 12px rgba(255, 255, 255, 0.8),
-            -5px 5px 12px rgba(140, 150, 180, 0.1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
     }
 
     .shop-liked-image {
@@ -678,7 +636,6 @@
     }
 
     .shop-liked-card {
-        width: 96px;
         padding: 7px;
         border-radius: 12px;
         gap: 5px;

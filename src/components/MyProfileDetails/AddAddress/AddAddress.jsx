@@ -329,7 +329,9 @@ function AddAddress({ setProfilePage }) {
 
                     <button
                         className="heep-add-addr-back-btn"
-                        onClick={() => setProfilePage("address")}
+                        onClick={() => {
+                            navigate(-1);
+                        }}
                     >
                         <FiArrowLeft />
                     </button>
