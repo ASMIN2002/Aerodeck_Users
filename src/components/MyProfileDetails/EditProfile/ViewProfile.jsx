@@ -1,5 +1,7 @@
 import "./ViewProfile.css";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API } from "../../../services/api";
 import NODP from "../../../assets/NODP.png";
 
 function ViewProfile({
@@ -8,6 +10,42 @@ function ViewProfile({
     navigateWithLoading
 }) {
     const navigate = useNavigate();
+
+    const [promoCode, setPromoCode] = useState(null);
+    const [isRedeemed, setIsRedeemed] = useState(false);
+    const [loadingPromo, setLoadingPromo] = useState(true);
+
+    /* ============================================
+       FETCH USER REWARDS (PROMO CODE)
+       ============================================ */
+    useEffect(() => {
+        async function loadPromo() {
+            try {
+                const sessionToken = localStorage.getItem("session_token");
+
+                const res = await fetch(
+                    `${API}/api/user/rewards?session_token=${sessionToken}`
+                );
+                const data = await res.json();
+
+                if (data.success && data.data) {
+                    setPromoCode(data.data.promo_code || null);
+                    setIsRedeemed(Number(data.data.redeemed) === 1);
+                } else {
+                    setPromoCode(null);
+                }
+
+            } catch (err) {
+                console.error(err);
+                setPromoCode(null);
+            } finally {
+                setLoadingPromo(false);
+            }
+        }
+
+        loadPromo();
+    }, []);
+
     function formatJoinedDate(date) {
         if (!date) return "NOT SET";
         const d = new Date(date);
@@ -20,6 +58,7 @@ function ViewProfile({
             })
             .toUpperCase();
     }
+
     return (
 
         <div className="viewprofile">
@@ -60,6 +99,7 @@ function ViewProfile({
                         />
                     </div>
                 </div>
+
                 <div className="view-info">
 
                     <div className="view-row">
@@ -67,12 +107,9 @@ function ViewProfile({
                         <p>{profile?.full_name || "-"}</p>
                     </div>
 
-
                     <div className="view-row">
                         <span>Mobile</span>
-                        <p>
-                            {profile?.mobile_number || "-"}
-                        </p>
+                        <p>{profile?.mobile_number || "-"}</p>
                     </div>
 
                     <div className="view-row">
@@ -81,11 +118,33 @@ function ViewProfile({
                             {profile?.email || "NOT SET"}
                         </p>
                     </div>
+
+                    {/* 🔥 PROMO CODE ROW */}
+                    <div className="view-row">
+                        <span>Promo Code</span>
+                        <p className={`promo-row ${!promoCode ? "promo-na" : isRedeemed ? "promo-redeemed" : "promo-active"}`}>
+                            {loadingPromo ? (
+                                "..."
+                            ) : !promoCode ? (
+                                "N/A"
+                            ) : (
+                                <>
+                                    <span className="promo-code-value">
+                                        {promoCode}
+                                    </span>
+                                    {isRedeemed && (
+                                        <span className="promo-badge">
+                                            REDEEMED
+                                        </span>
+                                    )}
+                                </>
+                            )}
+                        </p>
+                    </div>
+
                     <div className="view-row">
                         <span>Joined</span>
-                        <p>
-                            {formatJoinedDate(profile?.created_at)}
-                        </p>
+                        <p>{formatJoinedDate(profile?.created_at)}</p>
                     </div>
 
                 </div>
