@@ -25,6 +25,7 @@ function Header({
     const [showToast, setShowToast] = useState(false);
     const [showNotifOverlay, setShowNotifOverlay] = useState(false);
     const [hasNotification, setHasNotification] = useState(false);
+    const [notifCount, setNotifCount] = useState(0);
 
     const [showMenuDropdown, setShowMenuDropdown] = useState(false);
     const [selectedLabel, setSelectedLabel] = useState("Products");
@@ -53,21 +54,27 @@ function Header({
     }, [userId]);
 
     /* ============================================
-       CHECK NOTIFICATION
+       CHECK NOTIFICATION COUNT + RED DOT
        ============================================ */
     useEffect(() => {
 
         async function checkNotifications() {
             try {
-                const sessionToken = localStorage.getItem("session_token");
-
                 const res = await fetch(
-                    `${API}/api/user/rewards?session_token=${sessionToken}`
+                    `${API}/api/user/notification/count`
                 );
                 const data = await res.json();
 
-                if (data.success && data.data) {
-                    if (data.data.req_userid && data.data.req_userid > 0) {
+                if (data.success) {
+                    const currentCount = data.count || 0;
+                    setNotifCount(currentCount);
+
+                    const lastSeenCount = parseInt(
+                        localStorage.getItem("lastSeenCount") || "0",
+                        10
+                    );
+
+                    if (currentCount > lastSeenCount) {
                         setHasNotification(true);
                     } else {
                         setHasNotification(false);
@@ -117,7 +124,13 @@ function Header({
         else if (selectedMenu === "Cards") setSelectedLabel("Card");
     }, [selectedMenu]);
 
+    /* ============================================
+       NOTIF OPEN / CLOSE
+       ============================================ */
     const handleNotifOpen = () => {
+        localStorage.setItem("lastSeenCount", String(notifCount));
+        setHasNotification(false);
+
         setShowNotifOverlay(true);
         window.history.pushState({}, "", "/notification");
     };
@@ -125,8 +138,15 @@ function Header({
     const handleNotifClose = () => {
         setShowNotifOverlay(false);
         navigate(-1);
+
         setTimeout(() => {
-            checkNotifications();
+            setHasNotification(prev => {
+                const lastSeenCount = parseInt(
+                    localStorage.getItem("lastSeenCount") || "0",
+                    10
+                );
+                return notifCount > lastSeenCount;
+            });
         }, 500);
     };
 
@@ -155,7 +175,6 @@ function Header({
         setSelectedLabel(option.label);
         handleTabClick(option.key);
 
-        /* 🔥 Parent ko bolo reload karo */
         if (onReloadHome) {
             onReloadHome();
         }
@@ -230,10 +249,7 @@ function Header({
 
                             <button
                                 className="hd-notif-btn"
-                                onClick={() => {
-                                    setHasNotification(false);
-                                    handleNotifOpen();
-                                }}
+                                onClick={handleNotifOpen}
                             >
                                 <IoNotificationsOutline />
                                 {hasNotification && <span className="hd-notif-dot" />}

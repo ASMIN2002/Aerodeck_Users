@@ -159,8 +159,8 @@
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #7c8cf8 0%, #5b6ee1 100%);
+        radial-gradient(circle at 30% 25%, rgb(0, 174, 255), transparent 55%),
+        linear-gradient(145deg, #0022ff 0%, #0026ff 100%);
 
     box-shadow:
         5px 6px 14px rgba(91, 110, 225, 0.5),

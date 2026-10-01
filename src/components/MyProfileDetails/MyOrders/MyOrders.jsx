@@ -263,6 +263,7 @@ function MyOrders({
                                 <div className="top-order-number">
                                     <h3>Order #{order.order_number}</h3>
                                     <p>Items : {order.total_items}</p>
+                                    <p>Placed on : {formatOrderDate(order.created_at)}</p>
                                 </div>
 
                                 <div className="myOrder-price-status">

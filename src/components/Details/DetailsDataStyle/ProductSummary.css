@@ -434,8 +434,8 @@
   border-radius: 12px;
 
   background:
-    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-    linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+    radial-gradient(circle at 30% 25%, #5669d7, transparent 55%),
+    linear-gradient(145deg, #6371ce 0%, #5669d7 100%);
 
   color: #ffffff;
   font-size: 1.4rem;

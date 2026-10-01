@@ -246,8 +246,8 @@
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+        radial-gradient(circle at 30% 25%, rgb(0, 13, 255), transparent 55%),
+        linear-gradient(145deg, #0022ff 0%, #0026ff 100%);
 
     color: #ffffff;
     font-size: 0.66rem;
@@ -319,8 +319,8 @@
     border-radius: 14px;
 
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+        radial-gradient(circle at 30% 25%, rgb(21, 0, 255), transparent 55%),
+        linear-gradient(145deg, #0022ff 0%, #0026fd 100%);
 
     color: #ffffff;
     font-size: clamp(0.78rem, 2.1vw, 0.88rem);

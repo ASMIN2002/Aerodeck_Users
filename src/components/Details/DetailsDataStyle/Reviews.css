@@ -131,8 +131,8 @@
   border-radius: 999px;
 
   background:
-    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-    linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+    radial-gradient(circle at 30% 25%, #5669d7, transparent 55%),
+    linear-gradient(145deg, #1c30b6 0%, #5b6ee1 100%);
 
   color: #ffffff;
   font-size: 0.78rem;
@@ -145,8 +145,6 @@
   text-shadow:
     0 1px 2px rgba(60, 70, 160, 0.5),
     0 0 8px rgba(255, 255, 255, 0.3);
-
-  /* 🔥 HEAVY 3D UTHA HUA */
   box-shadow:
     0 10px 22px rgba(91, 110, 225, 0.55),
     0 5px 14px rgba(91, 110, 225, 0.4),
@@ -162,35 +160,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.dt-view-all:hover {
-  transform: translateY(-6px);
 
-  box-shadow:
-    0 16px 30px rgba(91, 110, 225, 0.65),
-    0 8px 18px rgba(91, 110, 225, 0.5),
-    10px 10px 22px rgba(91, 110, 225, 0.35),
-    -9px -9px 20px rgba(255, 255, 255, 1),
-    7px -7px 16px rgba(255, 255, 255, 0.9),
-    -7px 7px 16px rgba(91, 110, 225, 0.22),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-    inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-}
-
-.dt-view-all:active {
-  transform: translateY(0) scale(0.96);
-  box-shadow:
-    inset 6px 6px 14px rgba(60, 70, 160, 0.7),
-    inset -6px -6px 14px rgba(255, 255, 255, 0.3);
-}
-
-.dt-view-all:focus-visible {
-  outline: 2px solid #7c8cf8;
-  outline-offset: 3px;
-}
-
-/* ============================================
-   SCROLL ROW — horizontal
-   ============================================ */
 .dt-review-scroll {
   display: flex;
   align-items: stretch;

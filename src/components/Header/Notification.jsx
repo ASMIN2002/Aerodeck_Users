@@ -8,8 +8,12 @@ function Notification({ onClose }) {
     const [reqUserId, setReqUserId] = useState(0);
     const [requesterName, setRequesterName] = useState("");
 
+    const [notifications, setNotifications] = useState([]);
+    const [loadingNotifs, setLoadingNotifs] = useState(true);
+    const [expandedId, setExpandedId] = useState(null); // 👈 naya
+
     /* ============================================
-       FETCH — meri row ka data
+       FETCH — rewards row (redeem wala)
        ============================================ */
     useEffect(() => {
 
@@ -32,7 +36,6 @@ function Notification({ onClose }) {
                     setReqUserId(myReqUserId);
                     setRedeemed(isRedeemed);
 
-                    /* Requester name fetch */
                     if (myReqUserId > 0) {
                         try {
                             const userRes = await fetch(`${API}/api/users`);
@@ -60,6 +63,34 @@ function Notification({ onClose }) {
         }
 
         loadData();
+
+    }, []);
+
+    /* ============================================
+       FETCH — heepit_notification list
+       ============================================ */
+    useEffect(() => {
+
+        async function loadNotifications() {
+            try {
+
+                const res = await fetch(
+                    `${API}/api/user/notification/all`
+                );
+                const data = await res.json();
+
+                if (data.success) {
+                    setNotifications(data.data || []);
+                }
+
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setLoadingNotifs(false);
+            }
+        }
+
+        loadNotifications();
 
     }, []);
 
@@ -96,6 +127,23 @@ function Notification({ onClose }) {
 
     };
 
+    /* ============================================
+       ITEM CLICK — toggle expand
+       ============================================ */
+    const handleItemClick = (id, e) => {
+        e.stopPropagation(); // box ke andar ka click, overlay tak na jaye
+        setExpandedId(prev => (prev === id ? null : id));
+    };
+
+    /* ============================================
+       BOX KE ANDAR CLICK — sirf expand collapse
+       ============================================ */
+    const handleBoxClick = (e) => {
+        e.stopPropagation();
+        // agar kisi expanded item ke bahar click hua to collapse
+        setExpandedId(null);
+    };
+
     return (
 
         <div
@@ -105,79 +153,120 @@ function Notification({ onClose }) {
 
             <div
                 className="hd-notif-box"
-                onClick={(e) => e.stopPropagation()}
+                onClick={handleBoxClick}
             >
 
                 <div className="hd-notif-header">
+
                     <h3>Notifications</h3>
-                    <button
-                        className="hd-notif-close"
-                        onClick={onClose}
-                    >
-                        ✕
-                    </button>
+
+                    <div className="hd-notif-header-right">
+
+                        <div className="hd-notif-count-badge">
+                            <span className="hd-notif-count-label">Total</span>
+                            <span className="hd-notif-count-value">
+                                {notifications.length}
+                            </span>
+                        </div>
+
+                        <button
+                            className="hd-notif-close"
+                            onClick={onClose}
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
                 </div>
 
                 {/* ============================================
-                   CASE 1: req_userid > 0 AND redeemed = 0
-                   → Accept / Ignore
+                   REDEEM SECTION — pinned
                    ============================================ */}
-                {reqUserId > 0 && !redeemed && (
+                {(reqUserId > 0) && (
+                    <div className="hd-notif-pinned">
 
-                    <div className="hd-notif-action-box">
+                        {!redeemed && (
+                            <div className="hd-notif-action-box">
 
-                        <div className="hd-notif-message">
-                            <strong>{requesterName || "Someone"}</strong>
-                            {" "}wants to redeem your promo code.
-                        </div>
+                                <div className="hd-notif-message">
+                                    <strong>{requesterName || "Someone"}</strong>
+                                    {" "}wants to redeem your promo code.
+                                </div>
 
-                        <div className="hd-notif-actions">
+                                <div className="hd-notif-actions">
 
-                            <button
-                                className="hd-notif-accept"
-                                onClick={() => handleRedeemAction("APPROVED")}
-                            >
-                                ✓ Accept
-                            </button>
+                                    <button
+                                        className="hd-notif-accept"
+                                        onClick={() => handleRedeemAction("APPROVED")}
+                                    >
+                                        ✓ Accept
+                                    </button>
 
-                            <button
-                                className="hd-notif-ignore"
-                                onClick={() => handleRedeemAction("REJECTED")}
-                            >
-                                ✕ Ignore
-                            </button>
+                                    <button
+                                        className="hd-notif-ignore"
+                                        onClick={() => handleRedeemAction("REJECTED")}
+                                    >
+                                        ✕ Ignore
+                                    </button>
 
-                        </div>
+                                </div>
+
+                            </div>
+                        )}
+
+                        {redeemed && (
+                            <div className="hd-notif-line">
+                                Your promo code was used by{" "}
+                                <strong>{requesterName || "User"}</strong>
+                            </div>
+                        )}
 
                     </div>
-
                 )}
 
                 {/* ============================================
-                   CASE 2: req_userid > 0 AND redeemed = 1
-                   → Simple message
+                   NOTIFICATION LIST — scroll yahan
                    ============================================ */}
-                {reqUserId > 0 && redeemed && (
+                <div className="hd-notif-list-wrap">
 
-                    <div className="hd-notif-line">
-                        Your promo code was used by{" "}
-                        <strong>{requesterName || "User"}</strong>
-                    </div>
+                    {loadingNotifs && (
+                        <div className="hd-notif-empty">
+                            <p>Loading...</p>
+                        </div>
+                    )}
 
-                )}
+                    {!loadingNotifs && notifications.length > 0 && (
+                        <div className="hd-notif-list">
+                            {notifications.map((item) => {
+                                const isExpanded = expandedId === item.id;
 
-                {/* ============================================
-                   CASE 3: req_userid = 0
-                   → No Notifications
-                   ============================================ */}
-                {reqUserId === 0 && (
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className={`hd-notif-item ${item.status ? "active" : "inactive"} ${isExpanded ? "expanded" : ""}`}
+                                        onClick={(e) => handleItemClick(item.id, e)}
+                                    >
+                                        <div className="hd-notif-item-text">
+                                            {item.notification}
+                                        </div>
+                                        <div className="hd-notif-item-time">
+                                            {new Date(item.created_at).toLocaleString()}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
 
-                    <div className="hd-notif-empty">
-                        <span>🔕</span>
-                        <p>No Notifications</p>
-                    </div>
+                    {!loadingNotifs && notifications.length === 0 && reqUserId === 0 && (
+                        <div className="hd-notif-empty">
+                            <span>🔕</span>
+                            <p>No Notifications</p>
+                        </div>
+                    )}
 
-                )}
+                </div>
 
             </div>
 

@@ -451,8 +451,8 @@
 
 .order-status.delivered {
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+        radial-gradient(circle at 30% 25%, rgb(9, 255, 0), transparent 55%),
+        linear-gradient(145deg, #15ff00 0%, #0dff00 100%);
     color: #1a4a1a;
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
     box-shadow:
@@ -467,8 +467,8 @@
 
 .order-status.cancelled {
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
+        radial-gradient(circle at 30% 25%, rgb(255, 0, 0), transparent 55%),
+        linear-gradient(145deg, #ff0000 0%, #ff0000 100%);
     color: #ffffff;
     text-shadow: 0 1px 2px rgba(140, 40, 40, 0.5);
     box-shadow:
@@ -539,8 +539,8 @@
     border-radius: 999px;
 
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+        radial-gradient(circle at 30% 25%, rgb(13, 255, 0), transparent 55%),
+        linear-gradient(145deg, #17ec04 0%, #14da0a 100%);
 
     color: #1a4a1a;
     font-size: 0.6rem;
@@ -593,8 +593,8 @@
 
 .order-hypo-badge {
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
+        radial-gradient(circle at 30% 25%, #ffbb00, transparent 55%),
+        linear-gradient(145deg, #ffbb00 0%, #ffab02 100%);
     color: #4a3200;
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
     box-shadow:
@@ -717,15 +717,12 @@
 /* ---- Redeemed — gold ---- */
 .order-reward-badge.redeemed {
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
+        radial-gradient(circle at 30% 25%, rgba(251, 255, 0, 0.293), transparent 55%),
+        linear-gradient(145deg, #eaff004b 0%, #ddff0046 100%);
     color: #4a3200;
-
     text-shadow:
         1px 1px 0 rgba(255, 255, 255, 0.7),
         0 0 6px rgba(255, 255, 255, 0.4);
-
     box-shadow:
         0 6px 14px rgba(224, 165, 46, 0.55),
         0 3px 8px rgba(224, 165, 46, 0.4),
@@ -736,7 +733,6 @@
         inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.4);
 }
 
-/* ---- No chance — grey ---- */
 .order-reward-badge.no-chance {
     background:
         radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
@@ -1570,8 +1566,8 @@
 
 .order-reward-badge.lost {
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
+        radial-gradient(circle at 30% 25%, rgb(207, 8, 8), transparent 55%),
+        linear-gradient(145deg, #ce0e0e 0%, #b80909 100%);
 
     color: #ffffff;
 
