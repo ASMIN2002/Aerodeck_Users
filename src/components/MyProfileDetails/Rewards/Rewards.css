@@ -1,680 +1,312 @@
-/* Rewards.css — 3D UTHA HUA CLAYMORPHISM */
+/* ============================================================
+   Rewards.css — COMPLETE
+   ============================================================ */
 
 .my-rewards,
 .my-rewards * {
     box-sizing: border-box;
 }
 
-/* ============================================
-   PAGE WRAPPER
-   ============================================ */
 .my-rewards {
-    position: relative;
     width: 100%;
     min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
+    padding: 14px 16px 32px;
     margin: 0;
-    margin-bottom: 50px;
-    padding: 14px 14px 40px;
-
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-
+    margin-bottom: 100px;
+    background: #f7f8fa;
+    font-family: inherit;
     -webkit-tap-highlight-color: transparent;
-
-    animation: rewardsIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes rewardsIn {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Demo mode tint */
-.my-rewards.demo-mode {
-    background:
-        radial-gradient(circle at 50% 0%, rgba(124, 140, 248, 0.08), transparent 60%);
-}
-
-/* ============================================
-   🔥 HEADER — 3D UTHA HUA
-   ============================================ */
+/* ============================================================
+   HEADER
+   ============================================================ */
 .my-rewards-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-
     display: flex;
     align-items: center;
     gap: 12px;
-
     width: 100%;
-
-    margin: 0 0 4px;
-    padding: 12px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 0 0 20px 20px;
-
-    background:
-        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    box-shadow:
-        0 12px 28px rgba(140, 150, 180, 0.5),
-        0 6px 14px rgba(140, 150, 180, 0.35),
-        0 3px 8px rgba(140, 150, 180, 0.25),
-        0 -3px 10px rgba(140, 150, 180, 0.15),
-        0 -1px 4px rgba(140, 150, 180, 0.1),
-        inset 0 2px 4px rgba(255, 255, 255, 1),
-        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
+    padding: 4px 0 14px;
+    margin-bottom: 4px;
 }
 
-.my-rewards-header h2 {
-    flex: 1;
-    min-width: 0;
-
-    margin: 0;
-
-    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
-    font-weight: 900;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* ---- Back button ---- */
 .my-rewards-back {
     flex-shrink: 0;
-
     display: grid;
     place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #eee;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
-    font-size: 1.05rem;
-    font-weight: 900;
+    color: #333;
+    font-size: 1.15rem;
+    font-weight: 700;
     line-height: 1;
-
     cursor: pointer;
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.55),
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .my-rewards-back:hover {
-    transform: translateX(-3px) scale(1.06);
-    color: #7c8cf8;
-
-    box-shadow:
-        0 8px 18px rgba(124, 140, 248, 0.5),
-        0 4px 10px rgba(124, 140, 248, 0.35),
-        5px 5px 12px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+    background: #f2f2f2;
 }
 
 .my-rewards-back:active {
-    transform: translateX(0) scale(0.94);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
+    transform: scale(0.94);
 }
 
-/* ============================================
-   🔥 TABS — 3D UTHA HUA
-   ============================================ */
+.my-rewards-header h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    color: #222;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
 .my-rewards-tabs {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-
+    gap: 6px;
     width: 100%;
-
-    padding: 6px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3),
-        0 4px 10px rgba(140, 150, 180, 0.22),
-        0 2px 6px rgba(140, 150, 180, 0.15),
-        3px 3px 8px rgba(140, 150, 180, 0.12),
-        -3px -3px 8px rgba(255, 255, 255, 1);
+    padding: 4px;
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
 }
 
-/* ---- Tab button ---- */
 .my-rewards-tab {
     flex: 1;
-    min-width: 0;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 11px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    color: #8a90ac;
-    font-size: clamp(0.66rem, 1.9vw, 0.74rem);
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    padding: 10px 8px;
+    background: transparent;
+    border: none;
+    border-radius: 9px;
+    color: #888;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
     line-height: 1;
-
+    text-transform: uppercase;
     cursor: pointer;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.45),
-        0 3px 8px rgba(140, 150, 180, 0.32),
-        4px 4px 10px rgba(140, 150, 180, 0.25),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-2px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
 .my-rewards-tab:hover {
-    transform: translateY(-4px);
-    color: #5b6ee1;
+    color: #555;
+    background: #f7f7f7;
 }
 
-.my-rewards-tab:active {
-    transform: translateY(1px) scale(0.97);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ---- ACTIVE tab — accent 3D pill ---- */
 .my-rewards-tab.active {
-    color: #ffffff;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 10px 20px rgba(91, 110, 225, 0.55),
-        0 5px 12px rgba(91, 110, 225, 0.4),
-        7px 7px 16px rgba(91, 110, 225, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
 }
 
-/* ============================================
-   REWARDS SECTION
-   ============================================ */
-.rewards-section,
-.demo-section,
-.redeem-section {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    width: 100%;
-
-    animation: rewardsSectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes rewardsSectionIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   🔥 TOPBAR — Stats row
-   ============================================ */
+/* ============================================================
+   TOP BAR (Stats)
+   ============================================================ */
 .rewards-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 12px;
 
     width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 14px;
 
-    padding: 14px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 10px 20px rgba(140, 150, 180, 0.45),
-        0 5px 12px rgba(140, 150, 180, 0.32),
-        7px 7px 14px rgba(140, 150, 180, 0.25),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-3px);
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
 }
 
-/* ---- Stat item ---- */
 .rewards-stat {
     display: flex;
     align-items: center;
     gap: 8px;
-
-    min-width: 0;
 }
 
 .rewards-stat.right {
     justify-content: flex-end;
+    position: relative;
 }
 
 .rewards-label {
-    font-size: clamp(0.66rem, 1.85vw, 0.74rem);
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    line-height: 1.2;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* ---- Stat value — big accent ---- */
-.rewards-value {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 44px;
-    padding: 4px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-    font-size: clamp(0.84rem, 2.3vw, 0.94rem);
-    font-weight: 900;
+    font-size: 0.72rem;
+    font-weight: 600;
     letter-spacing: 0.3px;
     line-height: 1;
+    color: #888;
+    text-transform: uppercase;
+}
 
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 6px 14px rgba(91, 110, 225, 0.5),
-        0 3px 8px rgba(91, 110, 225, 0.4),
-        4px 4px 10px rgba(91, 110, 225, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(91, 110, 225, 0.18),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-1px);
+.rewards-value {
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 1;
 }
 
 .rewards-value.chances {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
+    color: #7c8cf8;
+}
 
-    color: #4a3200;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 6px 14px rgba(224, 165, 46, 0.55),
-        0 3px 8px rgba(224, 165, 46, 0.4),
-        4px 4px 10px rgba(224, 165, 46, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(140, 90, 20, 0.4);
+.rewards-value.points {
+    color: #ff6b00;
 }
 
 .rewards-value.demo-points {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 6px 14px rgba(95, 187, 90, 0.55),
-        0 3px 8px rgba(95, 187, 90, 0.4),
-        4px 4px 10px rgba(95, 187, 90, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(40, 100, 40, 0.4);
+    color: #16a34a;
 }
 
-/* ---- Help button — 3D wool ball ---- */
 .rewards-help-btn {
     flex-shrink: 0;
 
     display: grid;
     place-items: center;
 
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
+    background: #f2f4f8;
+    border: 1px solid #e5e7ec;
     border-radius: 50%;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
-    font-size: 0.92rem;
+    color: #666;
+    font-size: 0.7rem;
     font-weight: 900;
     line-height: 1;
 
     cursor: pointer;
 
-    box-shadow:
-        0 5px 12px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.25),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .rewards-help-btn:hover {
-    transform: scale(1.12) rotate(-8deg);
-    color: #7c8cf8;
+    background: #ff6b00;
+    border-color: #ff6b00;
+    color: #fff;
 }
 
-.rewards-help-btn:active {
-    transform: scale(0.92);
-}
-
-/* ============================================
-   🔥 HELP BOX — 3D dropdown
-   ============================================ */
+/* ============================================================
+   HELP BOX
+   ============================================================ */
 .rewards-help-box {
     position: absolute;
-    top: 130px;
-    right: 14px;
-    z-index: 100;
+    z-index: 10;
+    top: 115px;
+    right: 0;
+    width: 50%;
+    padding: 14px 16px;
+    margin-bottom: 14px;
 
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    background: #fff;
+    border: 1px solid #ffd9b3;
+    border-radius: 12px;
 
-    min-width: 200px;
-    padding: 12px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 20px 40px rgba(140, 150, 180, 0.6),
-        0 10px 20px rgba(140, 150, 180, 0.45),
-        0 5px 12px rgba(140, 150, 180, 0.3),
-        14px 14px 28px rgba(140, 150, 180, 0.3),
-        -14px -14px 28px rgba(255, 255, 255, 1),
-        11px -11px 24px rgba(255, 255, 255, 0.95),
-        -11px 11px 24px rgba(140, 150, 180, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-
-    animation: rewardsHelpPop 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: helpIn 0.22s ease;
 }
 
-@keyframes rewardsHelpPop {
+@keyframes helpIn {
     from {
         opacity: 0;
-        transform: translateY(-4px) scale(0.9);
+        transform: translateY(-6px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(-4px) scale(1);
+        transform: translateY(0);
     }
 }
 
 .rewards-help-title {
-    margin: 0 0 4px;
-
-    padding: 6px 10px;
-
-    border-radius: 10px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    font-size: 0.76rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    text-align: center;
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        0 2px 4px rgba(140, 150, 180, 0.25),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.3);
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+    color: #222;
+    margin-bottom: 10px;
 }
 
 .rewards-help-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 
-    padding: 6px 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid #f5f5f5;
 
-    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #555;
+}
 
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.1px;
-    line-height: 1.3;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+.rewards-help-row:last-child {
+    border-bottom: none;
 }
 
 .help-num {
+    flex-shrink: 0;
+
     display: grid;
     place-items: center;
 
-    min-width: 24px;
+    width: 24px;
     height: 24px;
-    padding: 0 6px;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    color: #fff;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+    border-radius: 50%;
 
-    color: #ffffff;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 900;
     line-height: 1;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 4px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 3px 6px rgba(91, 110, 225, 0.5),
-        0 2px 4px rgba(91, 110, 225, 0.4),
-        -2px -2px 5px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(60, 70, 160, 0.5);
 }
 
-/* ============================================
-   🔥 SCRATCH NOTICE — small 3D pill
-   ============================================ */
+/* ============================================================
+   SCRATCH NOTICE
+   ============================================================ */
 .scratch-notice {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
+    gap: 8px;
 
-    align-self: center;
+    padding: 7px 14px;
+    margin: 0 auto 14px;
 
-    padding: 6px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
+    background: #fff8ec;
+    border: 1px solid #ffe0b2;
     border-radius: 999px;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    font-size: clamp(0.66rem, 1.85vw, 0.74rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
+    color: #b26a00;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
     line-height: 1;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.45),
-        0 3px 8px rgba(140, 150, 180, 0.32),
-        4px 4px 10px rgba(140, 150, 180, 0.25),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-2px);
 }
 
 .notice-dot {
-    display: block;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
+    background: #ff6b00;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        0 0 8px rgba(124, 140, 248, 0.7),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5);
-
-    animation: noticeDotPulse 1.6s ease-in-out infinite;
+    animation: dotPulse 1.4s ease-in-out infinite;
 }
 
-@keyframes noticeDotPulse {
+@keyframes dotPulse {
 
     0%,
     100% {
@@ -683,175 +315,91 @@
     }
 
     50% {
-        transform: scale(1.3);
-        opacity: 0.7;
+        transform: scale(1.4);
+        opacity: 0.6;
     }
 }
 
-.demo-notice {
-    color: #5fbb5a;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(95, 187, 90, 0.25);
+/* Center the notice */
+.rewards-section>.scratch-notice,
+.demo-section>.scratch-notice {
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.demo-notice .notice-dot {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    box-shadow:
-        0 0 8px rgba(95, 187, 90, 0.7),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5);
-}
-
-/* ============================================
-   🔥 SCRATCH CARD — 3D UTHA HUA
-   ============================================ */
+/* ============================================================
+   SCRATCH CARD
+   ============================================================ */
 .scratch-card {
     position: relative;
 
     width: 100%;
+    padding: 20px 16px;
+    margin-bottom: 16px;
 
-    padding: 16px;
+    background: linear-gradient(160deg, #ffffff 0%, #fff8ec 100%);
+    border: 1px solid #ffe0b2;
+    border-radius: 18px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 16px 32px rgba(140, 150, 180, 0.5),
-        0 8px 16px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        12px 12px 26px rgba(140, 150, 180, 0.22),
-        -12px -12px 26px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-5px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.scratch-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-    z-index: 3;
+    box-shadow: 0 8px 24px rgba(255, 107, 0, 0.1);
 }
 
 .scratch-card.locked {
-    filter: grayscale(0.2);
+    filter: grayscale(0.5);
+    opacity: 0.85;
 }
 
-.scratch-card.demo-scratch {
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f4fff4 0%, #e2f3e2 100%);
-
-    box-shadow:
-        0 16px 32px rgba(95, 187, 90, 0.35),
-        0 8px 16px rgba(95, 187, 90, 0.25),
-        0 4px 10px rgba(95, 187, 90, 0.18),
-        12px 12px 26px rgba(95, 187, 90, 0.15),
-        -12px -12px 26px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(95, 187, 90, 0.1),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(95, 187, 90, 0.2);
+.demo-scratch {
+    background: linear-gradient(160deg, #ffffff 0%, #f0fdf4 100%);
+    border-color: #c6ebd3;
+    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.1);
 }
 
-/* ============================================
-   🔥 SCRATCH GRID
-   ============================================ */
 .scratch-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 12px;
-
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     width: 100%;
 }
 
-/* ============================================
-   🔥 SCRATCH BOX — 3D UTHA HUA
-   ============================================ */
+/* ============================================================
+   SCRATCH BOX
+   ============================================================ */
 .scratch-box {
     position: relative;
 
-    width: 100%;
     aspect-ratio: 1 / 1;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    border-radius: 12px;
 
     overflow: hidden;
-
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
 
     box-shadow:
-        0 10px 20px rgba(140, 150, 180, 0.5),
-        0 5px 12px rgba(140, 150, 180, 0.35),
-        7px 7px 14px rgba(140, 150, 180, 0.28),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(140, 150, 180, 0.15),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
+        0 4px 10px rgba(255, 107, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 
-    transform: translateY(-4px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.scratch-box:hover {
-    transform: translateY(-8px);
+.scratch-box:hover:not(.revealed) {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 16px rgba(255, 107, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.scratch-box.scratching {
-    animation: scratchShake 0.4s ease-in-out infinite;
+.scratch-box:active:not(.revealed) {
+    transform: scale(0.96);
 }
 
-@keyframes scratchShake {
-
-    0%,
-    100% {
-        transform: translateY(-4px) rotate(0deg);
-    }
-
-    25% {
-        transform: translateY(-4px) rotate(-3deg);
-    }
-
-    75% {
-        transform: translateY(-4px) rotate(3deg);
-    }
-}
-
-/* ---- Number layer (revealed content) ---- */
+/* Number Layer (underneath) */
 .scratch-number-layer {
     position: absolute;
     inset: 0;
@@ -859,27 +407,37 @@
     display: grid;
     place-items: center;
 
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+    background: #fff8ec;
+    border-radius: 12px;
 }
 
 .scratch-number {
-    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-size: 2rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     line-height: 1;
 
-    color: #ffffff;
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 
-    text-shadow:
-        0 2px 4px rgba(60, 70, 160, 0.6),
-        0 0 12px rgba(255, 255, 255, 0.4);
+    animation: numPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ---- Scratch cover (before reveal) ---- */
+@keyframes numPop {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Cover (top layer) */
 .scratch-cover {
     position: absolute;
     inset: 0;
@@ -887,46 +445,79 @@
     display: grid;
     place-items: center;
 
-    border-radius: 14px;
-
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4fc 0%, #d8dfef 100%);
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.35), transparent 55%),
+        linear-gradient(135deg, #ff8a3d 0%, #ff6b00 100%);
 
-    /* silver texture */
-    background-image:
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8), transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.6), transparent 30%),
-        linear-gradient(145deg, #f0f4fc 0%, #d8dfef 100%);
+    border-radius: 12px;
 
-    cursor: pointer;
-
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scratch-box.revealed .scratch-cover {
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(1.1);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scratch-cover-text {
-    font-size: clamp(0.62rem, 1.8vw, 0.72rem);
+    color: #fff;
+    font-size: 0.7rem;
     font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    letter-spacing: 1px;
     line-height: 1;
 
-    color: #8a90ac;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
 
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.3);
+    animation: coverShine 2s ease-in-out infinite;
 }
 
-/* ============================================
-   🔥 LOCKED OVERLAY
-   ============================================ */
+@keyframes coverShine {
+
+    0%,
+    100% {
+        opacity: 0.85;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+/* Revealed state */
+.scratch-box.revealed .scratch-cover {
+    opacity: 0;
+    transform: scale(1.2) rotate(8deg);
+    pointer-events: none;
+}
+
+.scratch-box.scratching .scratch-cover {
+    animation: coverShake 0.9s ease;
+}
+
+@keyframes coverShake {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.05) rotate(-3deg);
+    }
+
+    50% {
+        transform: scale(1.08) rotate(3deg);
+    }
+
+    75% {
+        transform: scale(1.1) rotate(-2deg);
+    }
+
+    100% {
+        transform: scale(1.15) rotate(0deg);
+        opacity: 0.4;
+    }
+}
+
+/* ============================================================
+   LOCKED OVERLAY
+   ============================================================ */
 .scratch-locked-overlay {
     position: absolute;
     inset: 0;
@@ -934,14 +525,15 @@
     display: grid;
     place-items: center;
 
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.5), transparent 55%),
-        linear-gradient(145deg, rgba(240, 244, 252, 0.9), rgba(216, 223, 239, 0.95));
-
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    text-align: center;
 
     z-index: 5;
 }
@@ -950,117 +542,138 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-
-    padding: 18px 22px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    text-align: center;
-
-    box-shadow:
-        0 16px 32px rgba(140, 150, 180, 0.5),
-        0 8px 16px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        12px 12px 26px rgba(140, 150, 180, 0.2),
-        -12px -12px 26px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    animation: lockContentPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes lockContentPop {
-    from {
-        opacity: 0;
-        transform: scale(0.85);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    gap: 6px;
 }
 
 .lock-icon {
-    font-size: 2rem;
+    font-size: 2.4rem;
     line-height: 1;
-
-    filter: drop-shadow(0 3px 6px rgba(140, 150, 180, 0.4));
-    animation: lockIconWiggle 2.2s ease-in-out infinite;
-}
-
-@keyframes lockIconWiggle {
-
-    0%,
-    100% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(-8deg);
-    }
-
-    75% {
-        transform: rotate(8deg);
-    }
+    filter: drop-shadow(0 4px 8px rgba(255, 107, 0, 0.3));
 }
 
 .lock-text {
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
     line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
+    color: #222;
 }
 
 .lock-sub {
-    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.15px;
+    font-size: 0.78rem;
+    font-weight: 500;
     line-height: 1.35;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    color: #888;
 }
 
-/* ============================================
-   🔥 CONGRATS POPUP — 3D modal
-   ============================================ */
+/* ============================================================
+   TERMS / RULES
+   ============================================================ */
+.rewards-terms {
+    width: 100%;
+    padding: 16px;
+
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+}
+
+.rewards-terms-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 12px;
+
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: #222;
+}
+
+.terms-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.rewards-terms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.terms-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 1.5;
+    color: #666;
+}
+
+.terms-item strong {
+    color: #222;
+    font-weight: 700;
+}
+
+.terms-dot {
+    flex-shrink: 0;
+
+    width: 6px;
+    height: 6px;
+
+    margin-top: 7px;
+
+    background: #ff6b00;
+    border-radius: 50%;
+}
+
+.rewards-terms-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+
+    border-top: 1px solid #f2f2f2;
+
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
+    color: #888;
+    text-align: center;
+}
+
+.rewards-terms-footer strong {
+    color: #ff6b00;
+    font-weight: 800;
+}
+
+/* ============================================================
+   CONGRATS POPUP
+   ============================================================ */
 .rewards-congrats {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 999;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
 
     padding: 20px;
 
-    background: rgba(10, 10, 20, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    animation: congratsOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
+
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+    animation: congratsFade 0.3s ease;
 }
 
-@keyframes congratsOverlayIn {
+@keyframes congratsFade {
     from {
         opacity: 0;
     }
@@ -1071,556 +684,243 @@
 }
 
 .rewards-congrats-inner {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 
-    padding: 26px 30px;
+    padding: 28px 32px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 22px;
+    background: #fff;
+    border-radius: 20px;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+    box-shadow:
+        0 20px 60px rgba(255, 107, 0, 0.3),
+        0 8px 24px rgba(0, 0, 0, 0.15);
 
     text-align: center;
 
-    box-shadow:
-        0 28px 56px rgba(140, 150, 180, 0.6),
-        0 14px 28px rgba(140, 150, 180, 0.45),
-        0 8px 16px rgba(140, 150, 180, 0.3),
-        18px 18px 36px rgba(140, 150, 180, 0.3),
-        -18px -18px 36px rgba(255, 255, 255, 1),
-        14px -14px 30px rgba(255, 255, 255, 0.95),
-        -14px 14px 30px rgba(140, 150, 180, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-6px);
-
-    animation: congratsPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: congratsPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes congratsPop {
-    0% {
+    from {
         opacity: 0;
-        transform: translateY(-6px) scale(0.7);
+        transform: scale(0.4) rotate(-10deg);
     }
 
-    60% {
-        transform: translateY(-6px) scale(1.08);
-    }
-
-    100% {
+    to {
         opacity: 1;
-        transform: translateY(-6px) scale(1);
+        transform: scale(1) rotate(0deg);
     }
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.rewards-congrats-inner::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 22px 22px 0 0;
-    pointer-events: none;
 }
 
 .rewards-congrats-emoji {
     font-size: 3rem;
     line-height: 1;
-
-    filter: drop-shadow(0 4px 8px rgba(224, 165, 46, 0.4));
-
-    animation: congratsEmojiBounce 1.2s ease-in-out infinite;
+    animation: emojiBounce 0.7s ease infinite alternate;
 }
 
-@keyframes congratsEmojiBounce {
-
-    0%,
-    100% {
+@keyframes emojiBounce {
+    from {
         transform: translateY(0) scale(1);
     }
 
-    50% {
-        transform: translateY(-8px) scale(1.08);
+    to {
+        transform: translateY(-8px) scale(1.05);
     }
 }
 
 .rewards-congrats-inner h3 {
     margin: 0;
-
-    font-size: clamp(1rem, 2.8vw, 1.15rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    color: #222;
 }
 
 .rewards-congrats-points {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 4px 0 0;
-    padding: 6px 16px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
-    color: #4a3200;
-    font-size: 1.1rem;
+    margin: 0;
+    font-size: 2rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     line-height: 1;
 
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 
-    box-shadow:
-        0 8px 16px rgba(224, 165, 46, 0.6),
-        0 4px 10px rgba(224, 165, 46, 0.45),
-        5px 5px 12px rgba(224, 165, 46, 0.3),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.6),
-        inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.4);
-
-    transform: translateY(-2px);
+    animation: pointsZoom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.demo-congrats .rewards-congrats-points {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
+@keyframes pointsZoom {
+    from {
+        transform: scale(0.3);
+        opacity: 0;
+    }
 
-    color: #1a4a1a;
-
-    box-shadow:
-        0 8px 16px rgba(95, 187, 90, 0.6),
-        0 4px 10px rgba(95, 187, 90, 0.45),
-        5px 5px 12px rgba(95, 187, 90, 0.3),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.6),
-        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.4);
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-/* ============================================
-   🔥 TERMS SECTION
-   ============================================ */
-.rewards-terms {
-    position: relative;
-
+/* ============================================================
+   DEMO SECTION
+   ============================================================ */
+.demo-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-
     width: 100%;
-
-    padding: 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.45),
-        0 6px 12px rgba(140, 150, 180, 0.32),
-        0 3px 8px rgba(140, 150, 180, 0.25),
-        9px 9px 20px rgba(140, 150, 180, 0.2),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(140, 150, 180, 0.12),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-3px);
 }
 
-/* 🔥 TOP HIGHLIGHT */
-.rewards-terms::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 18px 18px 0 0;
-    pointer-events: none;
+.demo-notice {
+    background: #f0fdf4;
+    border-color: #c6ebd3;
+    color: #166534;
 }
 
-.rewards-terms-title {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
+.demo-notice .notice-dot {
+    background: #16a34a;
 }
 
-.terms-icon {
-    font-size: 1em;
-    filter: drop-shadow(0 2px 3px rgba(124, 140, 248, 0.35));
-}
-
-.rewards-terms-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.terms-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-
-    padding: 8px 10px;
-
-    border: 1px solid rgba(255, 255, 255, 1);
-    border-radius: 10px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
-
-    font-size: clamp(0.66rem, 1.85vw, 0.74rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.45;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
-
-    box-shadow:
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.25),
-        0 2px 6px rgba(140, 150, 180, 0.15),
-        2px 2px 4px rgba(140, 150, 180, 0.1),
-        -2px -2px 4px rgba(255, 255, 255, 1);
-}
-
-.terms-item strong {
-    color: #3f4664;
-    font-weight: 900;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
-}
-
-.terms-dot {
-    flex-shrink: 0;
-
-    display: block;
-    width: 6px;
-    height: 6px;
-
-    margin-top: 6px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        0 0 6px rgba(124, 140, 248, 0.6),
-        inset 1px 1px 1px rgba(255, 255, 255, 0.5);
-}
-
-.rewards-terms-footer {
-    margin-top: 4px;
-
-    text-align: center;
-
-    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    line-height: 1.4;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.rewards-terms-footer strong {
-    color: #5b6ee1;
-    font-weight: 900;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
-}
-
-/* ============================================
-   🔥 DEMO NOTICE BOX
-   ============================================ */
 .demo-notice-box {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
     width: 100%;
-
     padding: 16px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f4fff4 0%, #e2f3e2 100%);
-
-    box-shadow:
-        0 12px 24px rgba(95, 187, 90, 0.35),
-        0 6px 12px rgba(95, 187, 90, 0.25),
-        0 3px 8px rgba(95, 187, 90, 0.18),
-        9px 9px 20px rgba(95, 187, 90, 0.15),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(95, 187, 90, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(95, 187, 90, 0.2);
-
-    transform: translateY(-3px);
+    background: #f0fdf4;
+    border: 1px solid #c6ebd3;
+    border-radius: 14px;
 }
 
 .demo-notice-title {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
+    margin-bottom: 10px;
 
-    color: #1a4a1a;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.9),
-        0 0 6px rgba(255, 255, 255, 0.4);
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: #166534;
 }
 
 .demo-notice-icon {
-    font-size: 1em;
-    filter: drop-shadow(0 2px 3px rgba(95, 187, 90, 0.4));
+    font-size: 1rem;
+    line-height: 1;
 }
 
 .demo-notice-box p {
     margin: 0;
 
-    font-size: clamp(0.7rem, 1.9vw, 0.78rem);
-    font-weight: 700;
+    font-size: 0.8rem;
+    font-weight: 500;
     letter-spacing: 0.1px;
-    line-height: 1.5;
-
-    color: #4a6a4a;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    line-height: 1.55;
+    color: #166534;
 }
 
-.demo-notice-box p strong {
-    color: #1a4a1a;
-    font-weight: 900;
+.demo-notice-box strong {
+    font-weight: 800;
 }
 
 .demo-notice-footer {
-    padding-top: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
 
-    border-top: 1px dashed rgba(95, 187, 90, 0.35);
+    border-top: 1px solid #c6ebd3;
 
-    text-align: center;
-
-    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
-    font-weight: 800;
-    letter-spacing: 0.2px;
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
     line-height: 1.4;
-
-    color: #5fbb5a;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    color: #166534;
+    text-align: center;
 }
 
-/* ============================================
-   🔥 REDEEM SECTION
-   ============================================ */
-.redeem-input-box,
-.redeem-redeemed-box {
-    position: relative;
+.demo-notice-footer strong {
+    color: #15803d;
+    font-weight: 800;
+}
 
+/* ============================================================
+   REDEEM SECTION
+   ============================================================ */
+.redeem-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.redeem-input-box {
     display: flex;
     flex-direction: column;
     gap: 12px;
 
     width: 100%;
-
     padding: 20px 18px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 16px 32px rgba(140, 150, 180, 0.5),
-        0 8px 16px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        12px 12px 26px rgba(140, 150, 180, 0.22),
-        -12px -12px 26px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-
-    animation: redeemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
 }
 
-@keyframes redeemIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.96);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-4px) scale(1);
-    }
-}
-
-.redeem-input-box::before,
-.redeem-redeemed-box::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-}
-
-/* ---- Redeem label ---- */
 .redeem-label {
-    font-size: clamp(0.72rem, 2vw, 0.82rem);
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    line-height: 1.3;
-
-    color: #8a90ac;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 1px 2px rgba(140, 150, 180, 0.15);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: #222;
 }
 
-/* ---- Redeem input — 3D INSET ---- */
 .redeem-input {
     width: 100%;
-    padding: 13px 16px;
+    height: 52px;
+    padding: 0 16px;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
+    background: #fafafa;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 12px;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    color: #3f4664;
+    color: #222;
     font-family: inherit;
-    font-size: clamp(0.84rem, 2.3vw, 0.94rem);
-    font-weight: 800;
+    font-size: 1rem;
+    font-weight: 700;
     letter-spacing: 2px;
+    line-height: 1.2;
     text-align: center;
-    line-height: 1.4;
+    text-transform: uppercase;
 
     outline: none;
 
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
 
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        0 2px 6px rgba(140, 150, 180, 0.18),
-        3px 3px 8px rgba(140, 150, 180, 0.15),
-        -3px -3px 8px rgba(255, 255, 255, 1);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.redeem-input:focus {
-    border-color: rgba(124, 140, 248, 0.5);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
-        0 6px 14px rgba(124, 140, 248, 0.35),
-        0 3px 8px rgba(124, 140, 248, 0.25),
-        4px 4px 10px rgba(124, 140, 248, 0.2),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        0 0 0 3px rgba(124, 140, 248, 0.15);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .redeem-input::placeholder {
-    color: #b8bdcf;
-    font-weight: 800;
+    color: #ccc;
+    font-weight: 500;
     letter-spacing: 1px;
-    font-style: italic;
 }
 
-/* ---- Redeem send button — accent 3D pill ---- */
-.redeem-send-btn {
-    position: relative;
+.redeem-input:focus {
+    background: #fff;
+    border-color: #ff6b00;
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+}
 
-    display: flex;
+.redeem-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.redeem-send-btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -1629,79 +929,56 @@
     height: 52px;
     padding: 0 20px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    color: #fff;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+    border: none;
+    border-radius: 12px;
 
-    color: #ffffff;
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    line-height: 1;
+    font-family: inherit;
+    font-size: 0.94rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
 
     cursor: pointer;
 
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-
     box-shadow:
-        0 12px 24px rgba(91, 110, 225, 0.55),
-        0 6px 14px rgba(91, 110, 225, 0.4),
-        8px 8px 18px rgba(91, 110, 225, 0.28),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.85),
-        -6px 6px 14px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+        0 8px 22px rgba(255, 107, 0, 0.35),
+        0 2px 8px rgba(255, 107, 0, 0.2);
 
-    transform: translateY(-3px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+
     -webkit-tap-highlight-color: transparent;
 }
 
 .redeem-send-btn:hover:not(:disabled) {
-    transform: translateY(-6px);
-
+    background: linear-gradient(135deg, #ff7a26, #e85f00);
     box-shadow:
-        0 18px 32px rgba(91, 110, 225, 0.65),
-        0 9px 18px rgba(91, 110, 225, 0.5),
-        11px 11px 22px rgba(91, 110, 225, 0.35),
-        -10px -10px 22px rgba(255, 255, 255, 1),
-        8px -8px 18px rgba(255, 255, 255, 0.95),
-        -8px 8px 18px rgba(91, 110, 225, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+        0 10px 26px rgba(255, 107, 0, 0.45),
+        0 3px 10px rgba(255, 107, 0, 0.25);
 }
 
 .redeem-send-btn:active:not(:disabled) {
-    transform: translateY(1px) scale(0.97);
-    box-shadow:
-        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+    transform: scale(0.98);
 }
 
 .redeem-send-btn:disabled,
 .redeem-send-btn.checking {
     opacity: 0.75;
     cursor: not-allowed;
-    transform: translateY(-3px);
 }
 
-/* ---- Button spinner ---- */
 .btn-spinner {
     display: inline-block;
+
     width: 16px;
     height: 16px;
 
-    border: 2.5px solid rgba(255, 255, 255, 0.4);
-    border-top-color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
     border-radius: 50%;
 
-    animation: btnSpin 0.8s linear infinite;
+    animation: btnSpin 0.7s linear infinite;
 }
 
 @keyframes btnSpin {
@@ -1710,179 +987,105 @@
     }
 }
 
-/* ---- Redeem message ---- */
 .redeem-msg {
-    margin: 4px 0 0;
-
+    margin: 0;
     padding: 10px 14px;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
+    border-radius: 10px;
 
-    font-size: clamp(0.72rem, 2vw, 0.8rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
     line-height: 1.35;
     text-align: center;
-
-    animation: redeemMsgPop 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes redeemMsgPop {
-    from {
-        opacity: 0;
-        transform: translateY(-4px) scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-3px) scale(1);
-    }
-}
-
-.redeem-msg.success {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 8px 18px rgba(95, 187, 90, 0.55),
-        0 4px 10px rgba(95, 187, 90, 0.4),
-        5px 5px 12px rgba(95, 187, 90, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.45);
-
-    transform: translateY(-3px);
 }
 
 .redeem-msg.error {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
-    color: #ffffff;
-
-    text-shadow:
-        0 1px 3px rgba(140, 40, 40, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 8px 18px rgba(226, 90, 90, 0.55),
-        0 4px 10px rgba(226, 90, 90, 0.4),
-        5px 5px 12px rgba(226, 90, 90, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(160, 50, 50, 0.5);
-
-    transform: translateY(-3px);
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
 }
 
-/* ============================================
-   🔥 REDEEMED BOX
-   ============================================ */
+.redeem-msg.success {
+    background: #e7f7ec;
+    border: 1px solid #c6ebd3;
+    color: #166534;
+}
+
+/* ============================================================
+   REDEEMED BOX
+   ============================================================ */
 .redeem-redeemed-box {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    padding: 40px 24px;
+
+    background: linear-gradient(160deg, #ffffff 0%, #fff8ec 100%);
+    border: 1px solid #ffe0b2;
+    border-radius: 16px;
+
     text-align: center;
 }
 
 .redeem-redeemed-icon {
-    font-size: 3.5rem;
+    font-size: 3rem;
     line-height: 1;
-
-    filter: drop-shadow(0 6px 12px rgba(224, 165, 46, 0.5));
-    animation: redeemedEmojiBounce 1.4s ease-in-out infinite;
-}
-
-@keyframes redeemedEmojiBounce {
-
-    0%,
-    100% {
-        transform: translateY(0) scale(1);
-    }
-
-    50% {
-        transform: translateY(-10px) scale(1.08);
-    }
+    animation: emojiBounce 0.7s ease infinite alternate;
 }
 
 .redeem-redeemed-title {
-    margin: 0;
-
-    font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+    margin: 4px 0 0;
+    font-size: 1.2rem;
     font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    color: #222;
 }
 
 .redeem-redeemed-text {
     margin: 0;
-
-    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 500;
     letter-spacing: 0.1px;
-    line-height: 1.45;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    color: #666;
 }
 
 .redeem-redeemed-text strong {
-    color: #5b6ee1;
-    font-weight: 900;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 8px rgba(124, 140, 248, 0.3);
+    color: #ff6b00;
+    font-weight: 800;
 }
 
 .redeem-redeemed-footer {
-    margin: 4px 0 0;
-
-    font-size: clamp(0.72rem, 2vw, 0.8rem);
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1.4;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+    color: #b26a00;
 }
 
-/* ============================================
+/* ============================================================
    RESPONSIVE
-   ============================================ */
+   ============================================================ */
 
-/* Tablets */
-@media (max-width: 768px) {
+@media (max-width: 360px) {
     .my-rewards {
-        padding: 12px 12px 34px;
-        gap: 12px;
+        padding: 12px 12px 24px;
     }
 
     .my-rewards-header {
-        padding: 11px 12px;
         gap: 10px;
+        padding: 2px 0 12px;
     }
 
     .my-rewards-back {
-        width: 38px;
-        height: 38px;
+        width: 34px;
+        height: 34px;
         font-size: 1rem;
     }
 
@@ -1891,241 +1094,71 @@
     }
 
     .my-rewards-tabs {
-        padding: 5px;
-        gap: 7px;
-        border-radius: 14px;
+        padding: 3px;
+        gap: 4px;
+        margin-bottom: 12px;
     }
 
     .my-rewards-tab {
-        padding: 10px 10px;
-        font-size: 0.68rem;
-        border-radius: 11px;
+        padding: 9px 6px;
+        font-size: 0.66rem;
     }
 
     .rewards-topbar {
         padding: 12px;
-        border-radius: 14px;
-        gap: 8px;
-    }
-
-    .rewards-value {
-        min-width: 40px;
-        padding: 3px 10px;
-        font-size: 0.86rem;
-    }
-
-    .rewards-help-box {
-        top: 116px;
-        right: 12px;
-        min-width: 180px;
-        padding: 10px;
-        border-radius: 14px;
-    }
-
-    .scratch-card {
-        padding: 14px;
-        border-radius: 18px;
-    }
-
-    .scratch-grid {
-        gap: 10px;
-    }
-
-    .scratch-box {
-        border-radius: 14px;
-    }
-
-    .scratch-number {
-        font-size: 1.9rem;
-    }
-
-    .lock-content {
-        padding: 16px 18px;
-        border-radius: 16px;
-        gap: 7px;
-    }
-
-    .lock-icon {
-        font-size: 1.8rem;
-    }
-
-    .lock-text {
-        font-size: 0.94rem;
-    }
-
-    .lock-sub {
-        font-size: 0.72rem;
-    }
-
-    .rewards-congrats-inner {
-        padding: 22px 26px;
-        border-radius: 20px;
-    }
-
-    .rewards-congrats-emoji {
-        font-size: 2.6rem;
-    }
-
-    .rewards-congrats-inner h3 {
-        font-size: 1.05rem;
-    }
-
-    .rewards-congrats-points {
-        font-size: 1rem;
-        padding: 5px 14px;
-    }
-
-    .rewards-terms {
-        padding: 14px;
-        border-radius: 16px;
-        gap: 9px;
-    }
-
-    .terms-item {
-        padding: 7px 9px;
-        border-radius: 9px;
-        font-size: 0.7rem;
-    }
-
-    .demo-notice-box {
-        padding: 14px;
-        border-radius: 16px;
-        gap: 9px;
-    }
-
-    .redeem-input-box,
-    .redeem-redeemed-box {
-        padding: 18px 16px;
-        border-radius: 18px;
-        gap: 11px;
-    }
-
-    .redeem-input {
-        padding: 12px 14px;
-        font-size: 0.88rem;
-        border-radius: 13px;
-    }
-
-    .redeem-send-btn {
-        height: 48px;
-        font-size: 0.86rem;
-        border-radius: 13px;
-    }
-
-    .redeem-redeemed-icon {
-        font-size: 3rem;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .my-rewards {
-        padding: 10px 10px 30px;
-        gap: 11px;
-    }
-
-    .my-rewards-header {
-        padding: 10px 11px;
-        gap: 9px;
-    }
-
-    .my-rewards-back {
-        width: 36px;
-        height: 36px;
-        font-size: 0.95rem;
-        border-width: 1.5px;
-    }
-
-    .my-rewards-header h2 {
-        font-size: 0.92rem;
-        letter-spacing: 0.8px;
-    }
-
-    .my-rewards-tabs {
-        padding: 4px;
-        gap: 6px;
-        border-radius: 13px;
-    }
-
-    .my-rewards-tab {
-        padding: 9px 8px;
-        font-size: 0.62rem;
-        border-radius: 10px;
-        letter-spacing: 0.4px;
-    }
-
-    .rewards-topbar {
-        padding: 11px;
-        border-radius: 13px;
-        gap: 7px;
+        border-radius: 12px;
+        margin-bottom: 12px;
     }
 
     .rewards-label {
-        font-size: 0.6rem;
+        font-size: 0.64rem;
     }
 
     .rewards-value {
-        min-width: 36px;
-        padding: 3px 9px;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .rewards-help-btn {
-        width: 26px;
-        height: 26px;
-        font-size: 0.82rem;
+        width: 20px;
+        height: 20px;
+        font-size: 0.62rem;
     }
 
     .rewards-help-box {
-        top: 102px;
-        right: 10px;
-        min-width: 160px;
-        padding: 9px;
-        border-radius: 13px;
-        gap: 5px;
+        padding: 12px;
     }
 
     .rewards-help-title {
-        font-size: 0.7rem;
-        padding: 5px 8px;
+        font-size: 0.78rem;
+        margin-bottom: 8px;
     }
 
     .rewards-help-row {
-        font-size: 0.66rem;
-        padding: 5px 7px;
+        padding: 6px 0;
+        font-size: 0.72rem;
+        gap: 8px;
     }
 
     .help-num {
-        min-width: 22px;
-        height: 22px;
-        font-size: 0.62rem;
+        width: 20px;
+        height: 20px;
+        font-size: 0.64rem;
     }
 
     .scratch-notice {
-        padding: 5px 12px;
-        font-size: 0.62rem;
-        border-width: 1.5px;
-    }
-
-    .notice-dot {
-        width: 7px;
-        height: 7px;
+        font-size: 0.66rem;
+        padding: 6px 12px;
+        margin-bottom: 12px;
     }
 
     .scratch-card {
-        padding: 12px;
+        padding: 14px 12px;
         border-radius: 16px;
-        transform: translateY(-4px);
+        margin-bottom: 14px;
     }
 
     .scratch-grid {
         gap: 8px;
-    }
-
-    .scratch-box {
-        border-radius: 12px;
-        border-width: 1.5px;
-        transform: translateY(-3px);
     }
 
     .scratch-number {
@@ -2133,36 +1166,46 @@
     }
 
     .scratch-cover-text {
-        font-size: 0.58rem;
-        letter-spacing: 1.5px;
-    }
-
-    .lock-content {
-        padding: 14px 16px;
-        border-radius: 14px;
-        gap: 6px;
+        font-size: 0.6rem;
+        letter-spacing: 0.8px;
     }
 
     .lock-icon {
-        font-size: 1.6rem;
+        font-size: 2rem;
     }
 
     .lock-text {
-        font-size: 0.86rem;
+        font-size: 0.88rem;
     }
 
     .lock-sub {
-        font-size: 0.66rem;
+        font-size: 0.7rem;
     }
 
-    .rewards-congrats {
-        padding: 16px;
+    .rewards-terms {
+        padding: 14px 12px;
+        border-radius: 12px;
+    }
+
+    .rewards-terms-title {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .terms-item {
+        font-size: 0.72rem;
+        gap: 6px;
+    }
+
+    .rewards-terms-footer {
+        font-size: 0.7rem;
+        margin-top: 12px;
+        padding-top: 10px;
     }
 
     .rewards-congrats-inner {
-        padding: 20px 22px;
-        border-radius: 18px;
-        gap: 6px;
+        padding: 22px 24px;
+        border-radius: 16px;
     }
 
     .rewards-congrats-emoji {
@@ -2170,95 +1213,49 @@
     }
 
     .rewards-congrats-inner h3 {
-        font-size: 0.98rem;
+        font-size: 1rem;
     }
 
     .rewards-congrats-points {
-        font-size: 0.92rem;
-        padding: 5px 12px;
+        font-size: 1.6rem;
     }
 
-    .rewards-terms {
-        padding: 12px;
-        border-radius: 14px;
-        gap: 8px;
-    }
-
-    .rewards-terms-title {
-        font-size: 0.82rem;
-    }
-
-    .rewards-terms-list {
-        gap: 7px;
-    }
-
-    .terms-item {
-        padding: 6px 8px;
-        border-radius: 8px;
-        font-size: 0.66rem;
-        gap: 6px;
-    }
-
-    .rewards-terms-footer {
-        font-size: 0.7rem;
-    }
-
-    .demo-notice-box {
-        padding: 12px;
-        border-radius: 14px;
-        gap: 8px;
-    }
-
-    .demo-notice-title {
-        font-size: 0.82rem;
-    }
-
-    .demo-notice-box p {
-        font-size: 0.7rem;
-    }
-
-    .demo-notice-footer {
-        font-size: 0.7rem;
-    }
-
-    .redeem-input-box,
-    .redeem-redeemed-box {
+    .redeem-input-box {
         padding: 16px 14px;
-        border-radius: 16px;
-        gap: 10px;
-        transform: translateY(-3px);
+        border-radius: 14px;
     }
 
     .redeem-label {
-        font-size: 0.7rem;
+        font-size: 0.76rem;
     }
 
     .redeem-input {
-        padding: 11px 13px;
-        font-size: 0.82rem;
-        border-radius: 12px;
+        height: 46px;
+        font-size: 0.9rem;
         letter-spacing: 1.5px;
     }
 
     .redeem-send-btn {
-        height: 44px;
-        font-size: 0.82rem;
-        border-radius: 12px;
-        letter-spacing: 0.3px;
+        height: 46px;
+        font-size: 0.86rem;
     }
 
     .redeem-msg {
-        padding: 9px 12px;
         font-size: 0.72rem;
-        border-radius: 11px;
+        padding: 9px 12px;
+    }
+
+    .redeem-redeemed-box {
+        padding: 32px 18px;
+        border-radius: 14px;
     }
 
     .redeem-redeemed-icon {
-        font-size: 2.8rem;
+        font-size: 2.4rem;
     }
 
     .redeem-redeemed-title {
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
 
     .redeem-redeemed-text {
@@ -2266,194 +1263,293 @@
     }
 
     .redeem-redeemed-footer {
-        font-size: 0.72rem;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .my-rewards {
-        padding: 8px 8px 26px;
-        gap: 10px;
-    }
-
-    .my-rewards-header {
-        padding: 9px 10px;
-        gap: 8px;
-    }
-
-    .my-rewards-back {
-        width: 32px;
-        height: 32px;
-        font-size: 0.85rem;
-    }
-
-    .my-rewards-header h2 {
-        font-size: 0.84rem;
-        letter-spacing: 0.6px;
-    }
-
-    .my-rewards-tabs {
-        padding: 4px;
-        gap: 5px;
-        border-radius: 12px;
-    }
-
-    .my-rewards-tab {
-        padding: 8px 6px;
-        font-size: 0.56rem;
-        border-radius: 9px;
-    }
-
-    .rewards-topbar {
-        padding: 10px;
-        border-radius: 12px;
-        gap: 6px;
-    }
-
-    .rewards-label {
-        font-size: 0.56rem;
-    }
-
-    .rewards-value {
-        min-width: 32px;
-        padding: 3px 8px;
-        font-size: 0.74rem;
-    }
-
-    .rewards-help-btn {
-        width: 24px;
-        height: 24px;
         font-size: 0.76rem;
-    }
-
-    .scratch-notice {
-        padding: 5px 10px;
-        font-size: 0.58rem;
-    }
-
-    .scratch-card {
-        padding: 10px;
-        border-radius: 14px;
-    }
-
-    .scratch-grid {
-        gap: 7px;
-    }
-
-    .scratch-box {
-        border-radius: 11px;
-    }
-
-    .scratch-number {
-        font-size: 1.4rem;
-    }
-
-    .scratch-cover-text {
-        font-size: 0.52rem;
-        letter-spacing: 1.2px;
-    }
-
-    .rewards-congrats-inner {
-        padding: 18px 20px;
-        border-radius: 16px;
-    }
-
-    .rewards-congrats-emoji {
-        font-size: 2.2rem;
-    }
-
-    .rewards-congrats-inner h3 {
-        font-size: 0.92rem;
-    }
-
-    .rewards-congrats-points {
-        font-size: 0.86rem;
-        padding: 4px 11px;
-    }
-
-    .rewards-terms {
-        padding: 10px;
-        border-radius: 13px;
-        gap: 7px;
-    }
-
-    .rewards-terms-title {
-        font-size: 0.76rem;
-    }
-
-    .terms-item {
-        padding: 6px 7px;
-        font-size: 0.6rem;
     }
 
     .demo-notice-box {
-        padding: 10px;
-        border-radius: 13px;
-    }
-
-    .redeem-input-box,
-    .redeem-redeemed-box {
         padding: 14px 12px;
-        border-radius: 14px;
-        gap: 9px;
+        border-radius: 12px;
     }
 
-    .redeem-input {
-        padding: 10px 12px;
-        font-size: 0.76rem;
-        border-radius: 11px;
+    .demo-notice-title {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
     }
 
-    .redeem-send-btn {
-        height: 40px;
-        font-size: 0.76rem;
-        border-radius: 11px;
+    .demo-notice-box p {
+        font-size: 0.74rem;
     }
 
-    .redeem-redeemed-icon {
-        font-size: 2.4rem;
-    }
-
-    .redeem-redeemed-title {
-        font-size: 0.9rem;
-    }
-
-    .redeem-redeemed-text {
-        font-size: 0.72rem;
+    .demo-notice-footer {
+        font-size: 0.7rem;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .my-rewards,
-    .rewards-section,
-    .demo-section,
-    .redeem-section,
-    .rewards-help-box,
-    .notice-dot,
-    .lock-icon,
-    .lock-content,
-    .rewards-congrats,
-    .rewards-congrats-inner,
-    .rewards-congrats-emoji,
-    .redeemedEmojiBounce,
-    .redeem-redeemed-icon,
-    .redeem-msg,
-    .btn-spinner {
-        animation: none;
+@media (min-width: 600px) {
+    .my-rewards {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 20px 24px 40px;
     }
+
+    .my-rewards-header {
+        gap: 14px;
+        padding: 4px 0 18px;
+    }
+
+    .my-rewards-back {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+    }
+
+    .my-rewards-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .my-rewards-tabs {
+        padding: 5px;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .my-rewards-tab {
+        padding: 12px 12px;
+        font-size: 0.82rem;
+        border-radius: 10px;
+    }
+
+    .rewards-topbar {
+        padding: 18px 22px;
+        border-radius: 16px;
+        margin-bottom: 18px;
+    }
+
+    .rewards-label {
+        font-size: 0.8rem;
+    }
+
+    .rewards-value {
+        font-size: 1.4rem;
+    }
+
+    .rewards-help-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 0.8rem;
+    }
+
+    .rewards-help-box {
+        padding: 18px 20px;
+        border-radius: 14px;
+        margin-bottom: 18px;
+    }
+
+    .rewards-help-title {
+        font-size: 0.98rem;
+        margin-bottom: 12px;
+    }
+
+    .rewards-help-row {
+        padding: 9px 0;
+        font-size: 0.88rem;
+        gap: 12px;
+    }
+
+    .help-num {
+        width: 28px;
+        height: 28px;
+        font-size: 0.82rem;
+    }
+
+    .scratch-notice {
+        font-size: 0.82rem;
+        padding: 9px 18px;
+        margin-bottom: 18px;
+    }
+
+    .scratch-card {
+        padding: 28px 24px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .scratch-grid {
+        gap: 14px;
+    }
+
+    .scratch-number {
+        font-size: 2.6rem;
+    }
+
+    .scratch-cover-text {
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+    }
+
+    .lock-icon {
+        font-size: 3rem;
+    }
+
+    .lock-text {
+        font-size: 1.15rem;
+    }
+
+    .lock-sub {
+        font-size: 0.9rem;
+    }
+
+    .rewards-terms {
+        padding: 22px;
+        border-radius: 16px;
+    }
+
+    .rewards-terms-title {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .terms-item {
+        font-size: 0.88rem;
+        gap: 10px;
+    }
+
+    .rewards-terms-footer {
+        font-size: 0.82rem;
+        margin-top: 18px;
+        padding-top: 14px;
+    }
+
+    .rewards-congrats-inner {
+        padding: 36px 44px;
+        border-radius: 24px;
+    }
+
+    .rewards-congrats-emoji {
+        font-size: 4rem;
+    }
+
+    .rewards-congrats-inner h3 {
+        font-size: 1.4rem;
+    }
+
+    .rewards-congrats-points {
+        font-size: 2.6rem;
+    }
+
+    .redeem-input-box {
+        padding: 28px 24px;
+        border-radius: 18px;
+        gap: 14px;
+    }
+
+    .redeem-label {
+        font-size: 0.95rem;
+    }
+
+    .redeem-input {
+        height: 58px;
+        font-size: 1.15rem;
+        letter-spacing: 3px;
+        border-radius: 14px;
+    }
+
+    .redeem-send-btn {
+        height: 58px;
+        font-size: 1.05rem;
+        border-radius: 14px;
+    }
+
+    .redeem-msg {
+        font-size: 0.86rem;
+        padding: 12px 16px;
+        border-radius: 12px;
+    }
+
+    .redeem-redeemed-box {
+        padding: 60px 32px;
+        border-radius: 20px;
+        gap: 12px;
+    }
+
+    .redeem-redeemed-icon {
+        font-size: 4rem;
+    }
+
+    .redeem-redeemed-title {
+        font-size: 1.5rem;
+    }
+
+    .redeem-redeemed-text {
+        font-size: 1rem;
+    }
+
+    .redeem-redeemed-footer {
+        font-size: 0.92rem;
+    }
+
+    .demo-notice-box {
+        padding: 22px;
+        border-radius: 16px;
+    }
+
+    .demo-notice-title {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .demo-notice-box p {
+        font-size: 0.9rem;
+    }
+
+    .demo-notice-footer {
+        font-size: 0.82rem;
+        margin-top: 18px;
+        padding-top: 14px;
+    }
+}
+
+@media (min-width: 900px) {
+    .my-rewards {
+        max-width: 700px;
+    }
+
+    .my-rewards-header h2 {
+        font-size: 1.55rem;
+    }
+
+    .scratch-grid {
+        gap: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
 
     .my-rewards-back,
     .my-rewards-tab,
     .rewards-help-btn,
+    .rewards-help-box,
+    .notice-dot,
     .scratch-box,
     .scratch-cover,
+    .scratch-cover-text,
+    .scratch-number,
     .redeem-input,
-    .redeem-send-btn {
+    .redeem-send-btn,
+    .btn-spinner,
+    .rewards-congrats,
+    .rewards-congrats-inner,
+    .rewards-congrats-emoji,
+    .rewards-congrats-points,
+    .redeem-redeemed-icon {
         transition: none;
+        animation: none;
+    }
+
+    .my-rewards-back:active,
+    .scratch-box:hover:not(.revealed),
+    .scratch-box:active:not(.revealed),
+    .redeem-send-btn:active:not(:disabled) {
+        transform: none;
     }
 }

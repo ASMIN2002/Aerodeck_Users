@@ -1,462 +1,183 @@
-/* Address.css */
-
-.ad-container,
-.ad-container * {
-    box-sizing: border-box;
-}
-
-/* ============================================
-   CONTAINER — 3D WOOL ROW
-   ============================================ */
 .ad-container {
     display: flex;
     align-items: center;
     gap: 10px;
-
     width: 100%;
-
-    /* 🔥 top pe extra spacing */
-    margin-top: 6px;
-    padding: 0 14px;
-
-    animation: adContainerIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    background: #fff;
 }
 
-/* ============================================
-   ADDRESS BUTTON — 3D WOOL PILL
-   ============================================ */
 .ad-button {
     flex: 1;
-    min-width: 0;
-
     display: flex;
     align-items: center;
-    gap: 10px;
-
-    padding: 11px 14px;
-
+    gap: 8px;
+    min-width: 0;
+    /* allows text truncation */
+    padding: 10px 12px;
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    box-shadow:
-        9px 11px 22px rgba(140, 150, 180, 0.7),
-        4px 5px 12px rgba(140, 150, 180, 0.45),
-        -7px -7px 18px rgba(255, 255, 255, 1),
-        -3px -3px 9px rgba(255, 255, 255, 0.9),
-        inset 2.5px 2.5px 5px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -2.5px -2.5px 5px rgba(155, 165, 190, 0.45),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.3);
-
     text-align: left;
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    font-family: inherit;
 }
 
 .ad-button:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        13px 15px 28px rgba(140, 150, 180, 0.8),
-        6px 7px 16px rgba(140, 150, 180, 0.5),
-        -9px -9px 22px rgba(255, 255, 255, 1),
-        -4px -4px 11px rgba(255, 255, 255, 0.95),
-        inset 2.5px 2.5px 5px rgba(255, 255, 255, 1),
-        inset -2.5px -2.5px 5px rgba(155, 165, 190, 0.45);
+    background: #f0f0f0;
+    border-color: #d5d5d5;
 }
 
 .ad-button:active {
-    transform: translateY(1px) scale(0.98);
-
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.75),
-        inset -5px -5px 12px rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.4);
+    transform: scale(0.99);
 }
 
-.ad-button:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 3px;
-}
-
-/* ---- Icon (3D wool ball) ---- */
 .ad-icon {
     flex-shrink: 0;
-
-    width: 34px;
-    height: 34px;
-
-    padding: 8px;
-
-    font-size: 1rem;
-    color: #5b6ee1;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    border: 1px solid rgba(255, 255, 255, 0.95);
-
-    box-shadow:
-        4px 5px 10px rgba(140, 150, 180, 0.6),
-        1.5px 2px 4px rgba(140, 150, 180, 0.4),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    font-size: 18px;
+    color: #ff6b00;
 }
 
-.ad-button:hover .ad-icon {
-    transform: scale(1.1) rotate(-8deg);
-}
-
-.ad-button:active .ad-icon {
-    transform: scale(0.94) rotate(0deg);
-}
-
-/* ---- Text ---- */
 .ad-text {
     flex: 1;
     min-width: 0;
-
-    font-size: clamp(0.76rem, 2vw, 0.86rem);
-    font-weight: 700;
-    letter-spacing: 0.15px;
-    line-height: 1.35;
-    color: #3f4664;
-
+    font-size: 13px;
+    font-weight: 500;
+    color: #222;
+    line-height: 1.3;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .ad-no-address {
-    color: #8a90ac;
-    font-weight: 800;
-    font-style: italic;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+    color: #888;
+    font-weight: 400;
 }
 
-/* ---- Arrow (3D chevron circle) ---- */
 .ad-arrow {
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 28px;
-    height: 28px;
-
-    font-size: 1.05rem;
-    font-weight: 900;
-    color: #7a82a0;
+    font-size: 20px;
+    color: #999;
     line-height: 1;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dde2ee 100%);
-
-    border: 1px solid rgba(255, 255, 255, 0.95);
-
-    box-shadow:
-        3px 4px 8px rgba(140, 150, 180, 0.55),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.ad-button:hover .ad-arrow {
-    transform: translateX(4px);
-    color: #5b6ee1;
-
-    box-shadow:
-        5px 6px 12px rgba(124, 140, 248, 0.5),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
-}
-
-/* ============================================
-   MONEY / HYPO BOX — 3D WOOL PILL
-   ============================================ */
 .ad-money-box {
-    flex-shrink: 0;
-
     display: flex;
     align-items: center;
-    gap: 7px;
-
-    padding: 9px 14px 9px 9px;
-
+    gap: 6px;
+    flex-shrink: 0;
+    padding: 8px 12px;
+    background: #fff8ec;
+    border: 1px solid #ffe0b2;
+    border-radius: 10px;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.5), transparent 55%),
-        linear-gradient(145deg, #f5c04d 0%, #e0a52e 100%);
-
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-
-    box-shadow:
-        8px 10px 20px rgba(224, 165, 46, 0.55),
-        4px 5px 12px rgba(224, 165, 46, 0.4),
-        -6px -6px 16px rgba(255, 255, 255, 0.95),
-        -2px -3px 8px rgba(255, 255, 255, 0.9),
-        inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.55),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.45),
-        inset -2.5px -2.5px 5px rgba(140, 90, 20, 0.4),
-        inset -1px -1px 2px rgba(140, 90, 20, 0.3);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease;
+    font-family: inherit;
 }
 
 .ad-money-box:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        11px 13px 24px rgba(224, 165, 46, 0.7),
-        5px 6px 14px rgba(224, 165, 46, 0.5),
-        -8px -8px 20px rgba(255, 255, 255, 1),
-        -3px -4px 10px rgba(255, 255, 255, 0.95),
-        inset 2.5px 2.5px 5px rgba(255, 255, 255, 0.6),
-        inset -2.5px -2.5px 5px rgba(140, 90, 20, 0.4);
+    background: #fff1d6;
 }
 
 .ad-money-box:active {
-    transform: translateY(1px) scale(0.96);
-
-    box-shadow:
-        inset 5px 5px 12px rgba(140, 90, 20, 0.55),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.25),
-        0 2px 4px rgba(224, 165, 46, 0.3);
+    transform: scale(0.98);
 }
 
-.ad-money-box:focus-visible {
-    outline: 2px solid #e0a52e;
-    outline-offset: 3px;
-}
-
-/* ---- Money icon circle ---- */
 .money-icon-circle {
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
-
-    border: 1px solid rgba(255, 255, 255, 1);
+    background: #ffb300;
+    flex-shrink: 0;
 }
 
 .money-icon {
-    font-size: 0.9rem;
-    color: #e0a52e;
-
-    filter: drop-shadow(0 1px 2px rgba(140, 90, 20, 0.3));
+    font-size: 11px;
+    color: #fff;
 }
 
-/* ---- Money amount ---- */
 .money-amount {
-    font-size: clamp(0.88rem, 2.3vw, 1rem);
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    color: #ffffff;
-
-    text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.25),
-        0 0 10px rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+    font-weight: 700;
+    color: #b26a00;
+    white-space: nowrap;
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes adContainerIn {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Tablets */
-@media (max-width: 768px) {
+@media (max-width: 360px) {
     .ad-container {
-        padding: 0 12px;
-        gap: 9px;
-        margin-top: 4px;
+        gap: 8px;
+        padding: 8px 10px;
     }
 
     .ad-button {
-        padding: 10px 13px;
-        border-radius: 17px;
-        gap: 9px;
-    }
-
-    .ad-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 0.95rem;
-        padding: 7px;
-    }
-
-    .ad-money-box {
-        padding: 8px 13px 8px 8px;
-        border-radius: 17px;
+        padding: 8px 10px;
         gap: 6px;
     }
 
-    .money-icon-circle {
-        width: 28px;
-        height: 28px;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .ad-container {
-        padding: 0 10px;
-        gap: 7px;
-        margin-top: 4px;
-    }
-
-    .ad-button {
-        padding: 6px 11px;
-        border-radius: 15px;
-        gap: 7px;
-    }
-
     .ad-icon {
-        width: 28px;
-        height: 28px;
-        font-size: 0.88rem;
-        padding: 6px;
+        font-size: 16px;
     }
 
     .ad-text {
-        font-size: 0.74rem;
-        line-height: 1.3;
-    }
-
-    .ad-arrow {
-        width: 24px;
-        height: 24px;
-        font-size: 0.92rem;
+        font-size: 12px;
     }
 
     .ad-money-box {
-        padding: 7px 11px 7px 7px;
-        border-radius: 15px;
-        gap: 5px;
+        padding: 6px 10px;
+    }
+
+    .money-amount {
+        font-size: 12px;
     }
 
     .money-icon-circle {
         width: 20px;
         height: 20px;
     }
-
-    .money-icon {
-        font-size: 0.8rem;
-    }
-
-    .money-amount {
-        font-size: 0.84rem;
-        letter-spacing: 0.3px;
-    }
 }
 
-/* Small phones */
-@media (max-width: 360px) {
+@media (min-width: 600px) {
     .ad-container {
-        padding: 0 8px;
-        gap: 6px;
-        margin-top: 3px;
+        padding: 12px 16px;
+        gap: 12px;
     }
 
     .ad-button {
-        padding: 5px 10px;
-        border-radius: 14px;
-        gap: 6px;
+        padding: 12px 16px;
+        gap: 10px;
+        border-radius: 12px;
     }
 
     .ad-icon {
-        width: 26px;
-        height: 26px;
-        font-size: 0.82rem;
-        padding: 5px;
+        font-size: 20px;
     }
 
     .ad-text {
-        font-size: 0.7rem;
-        line-height: 1.3;
-        letter-spacing: 0.1px;
-    }
-
-    .ad-arrow {
-        width: 22px;
-        height: 22px;
-        font-size: 0.85rem;
+        font-size: 14px;
     }
 
     .ad-money-box {
-        padding: 6px 9px 6px 6px;
-        border-radius: 13px;
-        gap: 5px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        gap: 8px;
     }
 
     .money-icon-circle {
-        width: 24px;
-        height: 24px;
+        width: 26px;
+        height: 26px;
     }
 
     .money-icon {
-        font-size: 0.75rem;
+        font-size: 13px;
     }
 
     .money-amount {
-        font-size: 0.78rem;
-        letter-spacing: 0.2px;
-    }
-}
-
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .ad-container,
-    .money-icon-circle {
-        animation: none;
-    }
-
-    .ad-button,
-    .ad-icon,
-    .ad-arrow,
-    .ad-money-box {
-        transition: none;
+        font-size: 15px;
     }
 }

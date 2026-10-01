@@ -3,15 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./Rewards.css";
 import { API } from "../../../services/api";
 
-const SCRATCH_WEIGHTS = [
-    { value: 1, weight: 30 },
-    { value: 2, weight: 25 },
-    { value: 3, weight: 20 },
-    { value: 4, weight: 12 },
-    { value: 5, weight: 8 },
-    { value: 6, weight: 5 },
-];
-
 /* ============================================
    SCRATCH BOX
    ============================================ */
@@ -54,21 +45,19 @@ function ScratchBox({ number, onReveal, disabled }) {
 }
 
 /* ============================================
-   WEIGHTED RANDOM PICKER
+   GENERATE BOXES — 1 to 6, all different, shuffled
    ============================================ */
-function getWeightedRandom() {
+function generateBoxes() {
 
-    const totalWeight = SCRATCH_WEIGHTS.reduce((sum, item) => sum + item.weight, 0);
-    let random = Math.random() * totalWeight;
+    const values = [1, 2, 3, 4, 5, 6];
 
-    for (const item of SCRATCH_WEIGHTS) {
-        if (random < item.weight) {
-            return item.value;
-        }
-        random -= item.weight;
+    // Fisher-Yates shuffle
+    for (let i = values.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [values[i], values[j]] = [values[j], values[i]];
     }
 
-    return SCRATCH_WEIGHTS[0].value;
+    return values;
 }
 
 /* ============================================
@@ -138,16 +127,8 @@ function Rewards({ setProfilePage }) {
     }, []);
 
     /* ============================================
-       GENERATE BOXES — 6 boxes with weighted values
+       INITIAL BOXES
        ============================================ */
-    const generateBoxes = () => {
-        const arr = [];
-        for (let i = 0; i < 6; i++) {
-            arr.push(getWeightedRandom());
-        }
-        return arr;
-    };
-
     useEffect(() => {
         setBoxes(generateBoxes());
         setDemoBoxes(generateBoxes());
@@ -177,7 +158,7 @@ function Rewards({ setProfilePage }) {
     }, [showHelp]);
 
     /* ============================================
-       RESET AFTER SCRATCH
+       RESET AFTER SCRATCH — REAL
        ============================================ */
     useEffect(() => {
 
@@ -193,6 +174,9 @@ function Rewards({ setProfilePage }) {
 
     }, [revealed]);
 
+    /* ============================================
+       RESET AFTER SCRATCH — DEMO
+       ============================================ */
     useEffect(() => {
 
         if (Object.keys(demoRevealed).length === 0) return;

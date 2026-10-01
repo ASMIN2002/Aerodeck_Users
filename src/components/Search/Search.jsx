@@ -235,6 +235,7 @@ function Search({
                     filter={filter}
                     setFilter={setFilter}
                     categories={categories}
+                    onClose={() => setShowFilter(false)}
                 />
             )}
 

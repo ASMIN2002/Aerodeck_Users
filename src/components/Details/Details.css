@@ -497,31 +497,8 @@
     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dt-thumb:hover {
-    transform: translateY(-4px) scale(1.05);
-}
-
-.dt-thumb:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 4px 4px 10px rgba(155, 165, 190, 0.6),
-        inset -4px -4px 10px rgba(255, 255, 255, 1);
-}
-
 .dt-thumb.active {
-    border-color: #7c8cf8;
-    transform: translateY(-6px) scale(1.06);
-
-    box-shadow:
-        0 12px 24px rgba(124, 140, 248, 0.6),
-        0 6px 12px rgba(124, 140, 248, 0.45),
-        7px 7px 16px rgba(124, 140, 248, 0.3),
-        -6px -6px 14px rgba(255, 255, 255, 1),
-        4px -4px 12px rgba(255, 255, 255, 0.85),
-        -4px 4px 12px rgba(124, 140, 248, 0.2),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
-        0 0 0 3px rgba(124, 140, 248, 0.25);
+    border: 2px solid #7c8cf8;
 }
 
 .dt-thumb-video {
@@ -899,17 +876,6 @@
         height: 56px;
         border-radius: 11px;
         border-width: 1.5px;
-    }
-
-    .dt-thumb.active {
-        box-shadow:
-            0 8px 18px rgba(124, 140, 248, 0.55),
-            0 4px 10px rgba(124, 140, 248, 0.4),
-            5px 5px 12px rgba(124, 140, 248, 0.28),
-            -4px -4px 10px rgba(255, 255, 255, 1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3),
-            0 0 0 2px rgba(124, 140, 248, 0.22);
     }
 
     .dt-top-video-play {

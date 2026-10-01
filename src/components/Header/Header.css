@@ -189,28 +189,6 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-.hd-menu-trigger:hover {
-    transform: translateY(-4px);
-    color: #5b6ee1;
-
-    box-shadow:
-        0 10px 22px rgba(124, 140, 248, 0.42),
-        0 5px 12px rgba(124, 140, 248, 0.3),
-        7px 7px 16px rgba(124, 140, 248, 0.22),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(124, 140, 248, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
-}
-
-.hd-menu-trigger:active {
-    transform: translateY(1px) scale(0.97);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
 .hd-menu-trigger.open {
     color: #5b6ee1;
 
@@ -251,7 +229,7 @@
 
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 
     min-width: 148px;
     padding: 8px;
@@ -296,83 +274,31 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
     width: 100%;
     padding: 9px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
     border-radius: 10px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
-
     color: #3f4664;
     font-family: inherit;
     font-size: 0.74rem;
     font-weight: 900;
-    letter-spacing: 0.2px;
+    letter-spacing: 1px;
     line-height: 1.2;
     text-align: left;
-
     cursor: pointer;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 4px 10px rgba(140, 150, 180, 0.4),
-        0 2px 6px rgba(140, 150, 180, 0.3),
-        3px 3px 8px rgba(140, 150, 180, 0.22),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.85),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.3);
-
+    box-shadow: 0 0 1px black;
     transform: translateY(-1px);
     transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
 }
 
-.hd-menu-option:hover {
-    transform: translateY(-3px);
-    color: #5b6ee1;
-
-    box-shadow:
-        0 8px 16px rgba(124, 140, 248, 0.42),
-        0 4px 10px rgba(124, 140, 248, 0.3),
-        5px 5px 12px rgba(124, 140, 248, 0.22),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(124, 140, 248, 0.3);
-}
-
-.hd-menu-option:active {
-    transform: translateY(1px) scale(0.98);
-    box-shadow:
-        inset 4px 4px 8px rgba(155, 165, 190, 0.55),
-        inset -4px -4px 8px rgba(255, 255, 255, 1);
-}
 
 .hd-menu-option.active {
-    color: #ffffff;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
+    color: #fdfdfd;
     text-shadow:
         0 1px 2px rgba(60, 70, 160, 0.5),
         0 0 6px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 6px 14px rgba(91, 110, 225, 0.55),
-        0 3px 8px rgba(91, 110, 225, 0.4),
-        4px 4px 10px rgba(91, 110, 225, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+    background: blue;
+    letter-spacing: 1px;
 }
 
 /* ============================================
@@ -491,50 +417,30 @@
     }
 }
 
-/* ============================================
-   🔥 TOAST — 3D accent pill
-   ============================================ */
 .hd-toast {
     position: fixed;
     bottom: 90px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10000;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     padding: 12px 22px;
-
     border: 1.5px solid rgba(255, 255, 255, 1);
     border-radius: 999px;
-
     background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
+        radial-gradient(circle at 30% 25%, rgb(72, 0, 255), transparent 55%),
+        linear-gradient(145deg, #0022ff 0%, #0127ff 100%);
     color: #ffffff;
     font-size: 0.82rem;
     font-weight: 900;
-    letter-spacing: 0.3px;
+    letter-spacing: 1px;
     line-height: 1;
     white-space: nowrap;
-
     text-shadow:
         0 1px 3px rgba(60, 70, 160, 0.5),
         0 0 10px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 14px 28px rgba(91, 110, 225, 0.55),
-        0 7px 16px rgba(91, 110, 225, 0.4),
-        9px 9px 20px rgba(91, 110, 225, 0.28),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
     animation: hdToastPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -606,7 +512,6 @@
         min-width: 140px;
         padding: 7px;
         border-radius: 13px;
-        gap: 4px;
     }
 
     .hd-menu-option {
@@ -694,7 +599,6 @@
         min-width: 128px;
         padding: 6px;
         border-radius: 12px;
-        gap: 3px;
     }
 
     .hd-menu-option {

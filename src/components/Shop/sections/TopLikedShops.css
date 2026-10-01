@@ -1,27 +1,126 @@
-/* TopLikedShops.css */
+/* ============================================================
+   TopLikedShops.css — COMPLETE
+   2 rows × horizontally scroll
+   ============================================================ */
 
 .shop-top-liked-section,
 .shop-top-liked-section * {
     box-sizing: border-box;
 }
 
-/* ============================================
+/* ============================================================
    SECTION WRAPPER
-   ============================================ */
+   ============================================================ */
 .shop-top-liked-section {
-    position: relative;
     width: 100%;
-
-    margin: 0 0 16px;
-    padding: 0 14px 6px;
-
-    animation: shopTopLikedIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    padding: 10px 0 14px;
+    margin: 0 0 8px 0;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes shopTopLikedIn {
+/* ============================================================
+   HEADER — "Top Liked"
+   ============================================================ */
+.likeheader {
+    width: 100%;
+    padding: 4px 14px 10px;
+
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+
+    color: #222;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* small heart accent before title */
+.likeheader::before {
+    content: "♥";
+    font-size: 0.95em;
+    color: #ff4757;
+}
+
+/* ============================================================
+   HORIZONTAL SCROLL WRAPPER
+   ============================================================ */
+.shop-liked-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 4px 12px 8px;
+
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 8px,
+            #000 calc(100% - 8px),
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 8px,
+            #000 calc(100% - 8px),
+            transparent 100%);
+}
+
+.shop-liked-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* ============================================================
+   GRID — 2 ROWS, horizontal scroll
+   ============================================================ */
+.shop-liked-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-columns: 155px;
+    gap: 12px;
+
+    width: max-content;
+}
+
+/* ============================================================
+   CARD
+   ============================================================ */
+.shop-liked-card {
+    display: flex;
+    flex-direction: column;
+
+    width: 155px;
+    height: 100%;
+
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+
+    overflow: hidden;
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+    animation: likedFadeIn 0.4s ease both;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes likedFadeIn {
     from {
         opacity: 0;
-        transform: translateY(14px);
+        transform: translateY(8px);
     }
 
     to {
@@ -30,670 +129,309 @@
     }
 }
 
-/* ============================================
-   HEADER — "Top Liked" with 3D accent bar
-   ============================================ */
-.likeheader {
-    display: inline-flex;
-    align-items: center;
-
-    margin: 0 0 10px;
-    padding-left: 12px;
-
-    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
-
-    position: relative;
+.shop-liked-card:hover {
+    transform: translateY(-3px);
+    border-color: #ffd9b3;
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.15);
 }
 
-/* 🔥 accent bar on left of header */
-.likeheader::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 5px;
-    height: 80%;
-
-    border-radius: 4px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        2px 3px 6px rgba(91, 110, 225, 0.5),
-        -1.5px -1.5px 4px rgba(255, 255, 255, 1),
-        1.5px -1.5px 4px rgba(255, 255, 255, 0.7),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(60, 70, 160, 0.45);
+.shop-liked-card:active {
+    transform: scale(0.98);
 }
 
-/* 🔥 heart icon before text */
-.likeheader::after {
-    content: "❤";
-    margin-left: 6px;
-    font-size: 0.85em;
-    color: #e25a8a;
-    filter: drop-shadow(0 2px 3px rgba(226, 90, 138, 0.35));
-    animation: likeHeaderBeat 1.8s ease-in-out infinite;
-}
-
-@keyframes likeHeaderBeat {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    30% {
-        transform: scale(1.15);
-    }
-
-    50% {
-        transform: scale(1);
-    }
-
-    70% {
-        transform: scale(1.1);
-    }
-}
-
-/* ============================================
-   SCROLL WRAPPER
-   ============================================ */
-.shop-liked-scroll {
-    width: 100%;
-
-    overflow-x: auto;
-    overflow-y: visible;
-
-    padding: 14px 4px 18px;
-
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    mask-image: linear-gradient(90deg,
-            transparent 0,
-            #000 10px,
-            #000 calc(100% - 10px),
-            transparent 100%);
-    -webkit-mask-image: linear-gradient(90deg,
-            transparent 0,
-            #000 10px,
-            #000 calc(100% - 10px),
-            transparent 100%);
-}
-
-.shop-liked-scroll::-webkit-scrollbar {
-    display: none;
-}
-
-/* ============================================
-   GRID
-   ============================================ */
-.shop-liked-grid {
-    display: flex;
-    align-items: stretch;
-    gap: 12px;
-
-    width: max-content;
-    min-width: 100%;
-}
-
-/* ============================================
-   🔥 CARD — 3D UTHA HUA
-   ============================================ */
-.shop-liked-card {
-    position: relative;
-    flex-shrink: 0;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-
-    width: 120px;
-    padding: 10px;
-
-    border: 1px solid rgba(255, 255, 255, 0.98);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 HEAVY OUTSET */
-    box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.5),
-        0 6px 12px rgba(140, 150, 180, 0.35),
-        10px 10px 22px rgba(140, 150, 180, 0.25),
-        -10px -10px 22px rgba(255, 255, 255, 1),
-        8px -8px 18px rgba(255, 255, 255, 0.85),
-        -8px 8px 18px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
-
-    cursor: pointer;
-
-    transform: translateY(-6px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-    overflow: hidden;
-
-    animation: shopLikedCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes shopLikedCardIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-6px) scale(1);
-    }
-}
-
-/* Top highlight */
-.shop-liked-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 12%;
-    right: 12%;
-    height: 1.5px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 18px 18px 0 0;
-    pointer-events: none;
-    z-index: 3;
-}
-
-/* Bottom ground shadow */
-.shop-liked-card::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 18%;
-    right: 18%;
-    height: 4px;
-    background: radial-gradient(ellipse at center,
-            rgba(140, 150, 180, 0.3) 0%,
-            transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(2px);
-    z-index: 0;
-}
-
-
+/* ============================================================
+   IMAGE WRAPPER
+   ============================================================ */
 .shop-liked-image {
     position: relative;
 
     width: 100%;
     aspect-ratio: 1 / 1;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
+    background: #f5f5f5;
     overflow: hidden;
 
-    box-shadow:
-        5px 6px 14px rgba(140, 150, 180, 0.5),
-        2px 3px 8px rgba(140, 150, 180, 0.3),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.75),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    flex-shrink: 0;
 }
 
 .shop-liked-image img {
-    display: block;
     width: 100%;
     height: 100%;
-
     object-fit: cover;
     object-position: center;
 
-    border-radius: 13px;
+    display: block;
 
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-
-    transform: scale(1.08);
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.35s ease;
 }
 
 .shop-liked-card:hover .shop-liked-image img {
-    transform: scale(1.2);
+    transform: scale(1.06);
 }
 
-/* ============================================
-   LIKE COUNT BADGE — pink 3D pill (top-left)
-   ============================================ */
+/* ============================================================
+   LIKES BADGE (bottom-left on image)
+   ============================================================ */
 .shop-liked-count {
     position: absolute;
-    top: 6px;
-    left: 6px;
+    bottom: 8px;
+    left: 8px;
 
     display: inline-flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
 
-    padding: 3px 8px 3px 6px;
+    padding: 4px 9px;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff85a8 0%, #e25a8a 100%);
+    color: #fff;
 
-    color: #ffffff;
-    font-size: 0.56rem;
-    font-weight: 900;
+    font-size: 0.68rem;
+    font-weight: 700;
     letter-spacing: 0.2px;
-    line-height: 1;
+    line-height: 1.2;
+
+    border-radius: 999px;
     white-space: nowrap;
-
-    text-shadow:
-        0 1px 2px rgba(140, 40, 80, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.35);
-
-    /* 🔥 utha hua */
-    box-shadow:
-        0 4px 10px rgba(226, 90, 138, 0.6),
-        0 2px 6px rgba(226, 90, 138, 0.45),
-        3px 3px 8px rgba(226, 90, 138, 0.3),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.7),
-        -2px 2px 6px rgba(226, 90, 138, 0.2),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(140, 40, 80, 0.45);
-
-    transform: translateY(-2px);
-    z-index: 2;
 }
 
 .shop-liked-icon {
-    font-size: 0.7rem;
+    font-size: 0.75em;
+    color: #ff4757;
     line-height: 1;
-    filter: drop-shadow(0 1px 1px rgba(140, 40, 80, 0.4));
-    animation: likeIconBeat 1.6s ease-in-out infinite;
 }
 
-@keyframes likeIconBeat {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    25% {
-        transform: scale(1.25);
-    }
-
-    45% {
-        transform: scale(1);
-    }
-
-    65% {
-        transform: scale(1.15);
-    }
-}
-
-/* ============================================
-   INFO SECTION
-   ============================================ */
+/* ============================================================
+   INFO (name + price row)
+   ============================================================ */
 .shop-liked-info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+
+    padding: 9px 10px 11px;
 
     width: 100%;
-    padding: 2px 2px 0;
 }
 
+/* ---- NAME — full width, single line, ellipsis ---- */
 .shop-liked-name {
     display: block;
 
     width: 100%;
+    max-width: 100%;
 
-    font-size: clamp(0.7rem, 1.95vw, 0.8rem);
-    font-weight: 800;
+    font-size: 0.72rem;
+    font-weight: 600;
     letter-spacing: 0.1px;
-    line-height: 1.25;
-    text-align: center;
+    line-height: 1.3;
+    text-align: left;
 
-    color: #3f4664;
+    color: #333;
 
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-/* ---- Price row ---- */
+/* ---- PRICE ROW ---- */
 .shop-liked-price {
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: space-between;
+    gap: 6px;
+
     width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+
+    font-size: 0.75rem;
+    line-height: 1.2;
 }
 
-/* ---- Discount badge ---- */
 .shop-liked-discount {
-    display: inline-block;
-
-    padding: 2px 6px;
-
-    border: 1px solid rgba(255, 255, 255, 0.98);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-    font-size: 0.5rem;
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 4px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        2px 3px 6px rgba(95, 187, 90, 0.55),
-        1px 1.5px 4px rgba(95, 187, 90, 0.4),
-        1.5px 1.5px 4px rgba(95, 187, 90, 0.28),
-        -1px -1px 4px rgba(255, 255, 255, 1),
-        1px -1px 4px rgba(255, 255, 255, 0.7),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(40, 100, 40, 0.4);
-
-    transform: translateY(-1px);
     flex-shrink: 0;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+
+    color: #16a34a;
 }
 
-/* ---- Price ---- */
 .shop-liked-price strong {
-    color: #5b6ee1;
-    font-size: clamp(0.62rem, 1.75vw, 0.72rem);
-    font-weight: 900;
-    letter-spacing: 0.1px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #ff6b00;
 
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
-
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* ============================================
+/* ============================================================
    RESPONSIVE
-   ============================================ */
+   ============================================================ */
 
-/* Tablets */
-@media (max-width: 768px) {
-    .shop-top-liked-section {
-        padding: 0 12px 4px;
-        margin-bottom: 14px;
-    }
-
+/* Small mobile (≤ 360px) */
+@media (max-width: 360px) {
     .likeheader {
-        margin-bottom: 8px;
+        padding: 4px 10px 8px;
         font-size: 0.95rem;
-        padding-left: 11px;
-    }
-
-    .likeheader::before {
-        width: 4px;
     }
 
     .shop-liked-scroll {
-        padding: 12px 3px 16px;
+        padding: 4px 10px 8px;
     }
 
     .shop-liked-grid {
+        grid-auto-columns: 130px;
         gap: 10px;
     }
 
     .shop-liked-card {
-        padding: 9px;
-        border-radius: 16px;
-        gap: 7px;
-        transform: translateY(-5px);
-    }
-
-    .shop-liked-card:hover {
-        transform: translateY(-10px) scale(1.02);
-    }
-
-    .shop-liked-image {
-        border-radius: 13px;
-    }
-
-    .shop-liked-image img {
+        width: 130px;
         border-radius: 12px;
     }
 
-    .shop-liked-count {
-        padding: 3px 7px 3px 5px;
-        font-size: 0.52rem;
-        top: 5px;
-        left: 5px;
-    }
-
-    .shop-liked-name {
-        font-size: 0.72rem;
-    }
-
-    .shop-liked-price {
-        font-size: 0.66rem;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .shop-top-liked-section {
-        padding: 0 10px 4px;
-        margin-bottom: 12px;
-    }
-
-    .likeheader {
-        margin-bottom: 7px;
-        font-size: 0.88rem;
-        padding-left: 10px;
-        letter-spacing: 0.15px;
-    }
-
-    .likeheader::before {
-        width: 3.5px;
-        height: 75%;
-    }
-
-    .shop-liked-scroll {
-        padding: 10px 3px 14px;
-    }
-
-    .shop-liked-grid {
-        gap: 9px;
-    }
-
-    .shop-liked-card {
-        padding: 8px;
-        border-radius: 14px;
-        gap: 6px;
-        transform: translateY(-4px);
-    }
-
-    .shop-liked-image {
-        border-radius: 12px;
-
-        box-shadow:
-            4px 5px 10px rgba(140, 150, 180, 0.45),
-            2px 3px 6px rgba(140, 150, 180, 0.28),
-            -3px -3px 8px rgba(255, 255, 255, 1),
-            2px -2px 6px rgba(255, 255, 255, 0.75),
-            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
-            inset -1px -1px 2.5px rgba(155, 165, 190, 0.35);
-    }
-
-    .shop-liked-image img {
-        border-radius: 11px;
-    }
-
-    .shop-liked-count {
-        padding: 2px 6px 2px 5px;
-        font-size: 0.48rem;
-        top: 4px;
-        left: 4px;
-        gap: 2px;
-
-        box-shadow:
-            0 3px 8px rgba(226, 90, 138, 0.55),
-            0 2px 4px rgba(226, 90, 138, 0.4),
-            2px 2px 6px rgba(226, 90, 138, 0.28),
-            -2px -2px 5px rgba(255, 255, 255, 1),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-            inset -1px -1px 2px rgba(140, 40, 80, 0.45);
-    }
-
-    .shop-liked-icon {
-        font-size: 0.6rem;
-    }
-
-    .shop-liked-name {
-        font-size: 0.66rem;
-        padding: 1px 1px 0;
-    }
-
-    .shop-liked-price {
-        font-size: 0.6rem;
+    .shop-liked-info {
+        padding: 7px 8px 9px;
         gap: 4px;
     }
 
-    .shop-liked-discount {
-        padding: 2px 5px;
-        font-size: 0.46rem;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .shop-top-liked-section {
-        padding: 0 8px 4px;
-        margin-bottom: 10px;
-    }
-
-    .likeheader {
-        font-size: 0.8rem;
-        padding-left: 9px;
-    }
-
-    .likeheader::before {
-        width: 3px;
-    }
-
-    .shop-liked-scroll {
-        padding: 9px 2px 12px;
-    }
-
-    .shop-liked-grid {
-        gap: 8px;
-    }
-
-    .shop-liked-card {
-        padding: 7px;
-        border-radius: 12px;
-        gap: 5px;
-        transform: translateY(-3px);
-    }
-
-    .shop-liked-image {
-        border-radius: 10px;
-    }
-
-    .shop-liked-image img {
-        border-radius: 9px;
-    }
-
-    .shop-liked-count {
-        padding: 2px 5px 2px 4px;
-        font-size: 0.44rem;
-        top: 3px;
-        left: 3px;
-        gap: 2px;
-    }
-
-    .shop-liked-icon {
-        font-size: 0.55rem;
-    }
-
     .shop-liked-name {
-        font-size: 0.6rem;
+        font-size: 0.66rem;
     }
 
     .shop-liked-price {
-        font-size: 0.54rem;
-        gap: 3px;
+        font-size: 0.7rem;
     }
 
     .shop-liked-discount {
-        padding: 1px 4px;
-        font-size: 0.42rem;
+        font-size: 0.6rem;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.76rem;
+    }
+
+    .shop-liked-count {
+        bottom: 6px;
+        left: 6px;
+        padding: 3px 7px;
+        font-size: 0.62rem;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
+/* Mobile (≤ 480px) */
+@media (max-width: 480px) {
+    .shop-liked-grid {
+        grid-auto-columns: 145px;
+        gap: 11px;
+    }
 
-    .shop-top-liked-section,
-    .shop-liked-card,
-    .likeheader::after,
-    .shop-liked-icon {
+    .shop-liked-card {
+        width: 145px;
+    }
+}
+
+/* Tablet (≥ 600px) */
+@media (min-width: 600px) {
+    .shop-top-liked-section {
+        max-width: 1200px;
+        margin: 0 auto 12px;
+        padding: 12px 0 16px;
+    }
+
+    .likeheader {
+        padding: 4px 20px 12px;
+        font-size: 1.25rem;
+    }
+
+    .shop-liked-scroll {
+        padding: 4px 20px 10px;
+    }
+
+    .shop-liked-grid {
+        grid-auto-columns: 175px;
+        gap: 14px;
+    }
+
+    .shop-liked-card {
+        width: 175px;
+        border-radius: 16px;
+    }
+
+    .shop-liked-info {
+        padding: 10px 12px 12px;
+        gap: 6px;
+    }
+
+    .shop-liked-name {
+        font-size: 0.78rem;
+    }
+
+    .shop-liked-price {
+        font-size: 0.82rem;
+    }
+
+    .shop-liked-discount {
+        font-size: 0.7rem;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.9rem;
+    }
+
+    .shop-liked-count {
+        padding: 5px 11px;
+        font-size: 0.74rem;
+    }
+}
+
+/* Desktop (≥ 900px) */
+@media (min-width: 900px) {
+    .likeheader {
+        font-size: 1.4rem;
+    }
+
+    .shop-liked-grid {
+        grid-auto-columns: 190px;
+        gap: 16px;
+    }
+
+    .shop-liked-card {
+        width: 190px;
+    }
+
+    .shop-liked-name {
+        font-size: 0.82rem;
+    }
+
+    .shop-liked-price strong {
+        font-size: 0.95rem;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .shop-liked-card {
         animation: none;
     }
 
     .shop-liked-card,
-    .shop-liked-image,
-    .shop-liked-image img,
-    .shop-liked-count,
-    .shop-liked-discount {
+    .shop-liked-image img {
         transition: none;
+    }
+
+    .shop-liked-card:hover {
+        transform: none;
+    }
+
+    .shop-liked-card:hover .shop-liked-image img {
+        transform: none;
     }
 }

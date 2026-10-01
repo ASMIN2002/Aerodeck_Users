@@ -160,8 +160,8 @@ function Header({
 
     const menuOptions = [
         { key: "Shop", label: "Products", comingSoon: false },
-        { key: "Gifts", label: "Gift", comingSoon: true },
-        { key: "Cards", label: "Card", comingSoon: true }
+        { key: "Gifts", label: "Gifts", comingSoon: true },
+        { key: "Cards", label: "Cards", comingSoon: true }
     ];
 
     const handleMenuOptionClick = (option) => {

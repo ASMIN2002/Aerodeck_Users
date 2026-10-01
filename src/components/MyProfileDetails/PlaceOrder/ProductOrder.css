@@ -1,37 +1,324 @@
-/* ProductOrder.css — 3D UTHA HUA CLAYMORPHISM */
-
 .product-order-page,
 .product-order-page * {
     box-sizing: border-box;
 }
 
-/* ============================================
-   PAGE WRAPPER
-   ============================================ */
 .product-order-page {
-    position: relative;
     width: 100%;
     min-height: 100vh;
+    padding: 14px 16px 100px;
+    margin: 0;
+    margin-bottom: 50px;
+    background: #f7f8fa;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.product-order-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 4px 0 14px;
+    margin-bottom: 4px;
+}
+
+.product-order-back {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    color: #333;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.product-order-back:hover {
+    background: #f2f2f2;
+}
+
+.product-order-back:active {
+    transform: scale(0.94);
+}
+
+.product-order-header h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: #222;
+}
+
+.order-section {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+}
+
+.order-section h3 {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: #222;
+}
+
+.address-card-card {
+    width: 100%;
+}
+
+.addplacepro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+}
+
+.addplacepro>div {
+    flex: 1;
+    min-width: 0;
+}
+
+.nameadtype {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.nameadtype h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    color: #222;
+}
+
+.nameadtype span {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #fff1e0;
+    color: #ff6b00;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    border-radius: 999px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.addplacepro p {
+    margin: 0 0 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #666;
+}
+
+.addplacepro p:last-child {
+    margin-bottom: 0;
+}
+
+.change-address-btn {
+    flex-shrink: 0;
+    align-self: flex-start;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid #ff6b00;
+    border-radius: 999px;
+    color: #ff6b00;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.change-address-btn:hover {
+    background: #ff6b00;
+    color: #fff;
+}
+
+.change-address-btn:active {
+    transform: scale(0.96);
+}
+
+.add-address-btn {
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    border: 1.5px dashed #ff6b00;
+    border-radius: 12px;
+    color: #ff6b00;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.add-address-btn:hover {
+    background: #fff8ec;
+}
+
+.add-address-btn:active {
+    transform: scale(0.98);
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.product-list>p {
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.86rem;
+    color: #999;
+}
+
+.product-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.product-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.order-product-image {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    object-position: center;
+    background: #f5f5f5;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.product-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.product-info h4 {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.3;
+    color: #222;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.order-cart-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 5px 10px;
+    background: #f5f5f5;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.order-cart-box:hover {
+    background: #ececec;
+}
+
+.order-cart-icon {
+    font-size: 0.78rem;
+    line-height: 1;
+}
+
+.order-cart-quantity {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1;
+}
+
+.order-cart-arrow {
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 0.6rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.order-cart-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20;
 
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 2px;
 
-    margin: 0;
-    padding: 14px 14px 40px;
+    margin-top: 6px;
+    padding: 6px;
 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
 
-    -webkit-tap-highlight-color: transparent;
-    margin-bottom: 100px;
-    animation: productOrderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    animation: cartDrop 0.18s ease;
 }
 
-@keyframes productOrderIn {
+@keyframes cartDrop {
     from {
         opacity: 0;
-        transform: translateY(14px);
+        transform: translateY(-6px);
     }
 
     to {
@@ -40,910 +327,113 @@
     }
 }
 
-/* ============================================
-   HEADER — back + title
-   ============================================ */
-.product-order-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    width: 100%;
-
-    margin: 0 0 4px;
-    padding: 12px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 0 0 20px 20px;
-
-    background:
-        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    box-shadow:
-        0 12px 28px rgba(140, 150, 180, 0.5),
-        0 6px 14px rgba(140, 150, 180, 0.35),
-        0 3px 8px rgba(140, 150, 180, 0.25),
-        0 -3px 10px rgba(140, 150, 180, 0.15),
-        0 -1px 4px rgba(140, 150, 180, 0.1),
-        inset 0 2px 4px rgba(255, 255, 255, 1),
-        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
-}
-
-.product-order-header h2 {
-    flex: 1;
-    min-width: 0;
-
-    margin: 0;
-
-    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* ---- Back button — 3D wool ball ---- */
-.product-order-back {
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
-    font-size: 1.15rem;
-    font-weight: 900;
-    line-height: 1;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.55),
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.product-order-back:hover {
-    transform: translateX(-3px) scale(1.06);
-    color: #7c8cf8;
-
-    box-shadow:
-        0 8px 18px rgba(124, 140, 248, 0.5),
-        0 4px 10px rgba(124, 140, 248, 0.35),
-        5px 5px 12px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
-}
-
-.product-order-back:active {
-    transform: translateX(0) scale(0.94);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ============================================
-   🔥 ORDER SECTION — 3D UTHA HUA CARD
-   ============================================ */
-.order-section {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    width: 100%;
-
-    padding: 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 HEAVY 3D — CHAARO TARAF */
-    box-shadow:
-        0 16px 32px rgba(140, 150, 180, 0.5),
-        0 8px 16px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        12px 12px 26px rgba(140, 150, 180, 0.22),
-        -12px -12px 26px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-5px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.order-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
-}
-
-.order-section h3 {
-    margin: 0;
-
-    font-size: clamp(0.86rem, 2.3vw, 0.98rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
-}
-
-/* ============================================
-   ADDRESS CARD
-   ============================================ */
-.address-card-card {
-    width: 100%;
-}
-
-/* ---- When address exists ---- */
-.addplacepro {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-
-    width: 100%;
-    padding: 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
-
-    /* 🔥 3D inset panel */
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
-        0 6px 14px rgba(140, 150, 180, 0.25),
-        0 3px 8px rgba(140, 150, 180, 0.18),
-        4px 4px 10px rgba(140, 150, 180, 0.15),
-        -4px -4px 10px rgba(255, 255, 255, 1);
-}
-
-.addplacepro>div {
-    flex: 1;
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-/* ---- Name + address type ---- */
-.nameadtype {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 4px;
-}
-
-.nameadtype h4 {
-    margin: 0;
-
-    font-size: clamp(0.82rem, 2.2vw, 0.94rem);
-    font-weight: 900;
-    letter-spacing: 0.15px;
-    line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-}
-
-/* ---- Address type badge — accent 3D pill ---- */
-.nameadtype span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 3px 9px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-    font-size: 0.58rem;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    line-height: 1;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 4px 10px rgba(91, 110, 225, 0.55),
-        0 2px 6px rgba(91, 110, 225, 0.4),
-        3px 3px 8px rgba(91, 110, 225, 0.28),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-1px);
-}
-
-.addplacepro p {
-    margin: 0;
-
-    font-size: clamp(0.72rem, 1.9vw, 0.8rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.45;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
-
-    word-break: break-word;
-}
-
-/* ---- Change button — accent 3D pill ---- */
-.change-address-btn {
-    flex-shrink: 0;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 9px 16px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-    font-size: 0.72rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
-
-    cursor: pointer;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 8px 18px rgba(91, 110, 225, 0.55),
-        0 4px 10px rgba(91, 110, 225, 0.4),
-        5px 5px 12px rgba(91, 110, 225, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        -4px 4px 10px rgba(91, 110, 225, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-3px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.change-address-btn:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 14px 26px rgba(91, 110, 225, 0.65),
-        0 7px 14px rgba(91, 110, 225, 0.5),
-        9px 9px 20px rgba(91, 110, 225, 0.35),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.9),
-        -6px 6px 14px rgba(91, 110, 225, 0.22),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.55),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
-}
-
-.change-address-btn:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 5px 5px 12px rgba(60, 70, 160, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.3);
-}
-
-/* ---- Add address button ---- */
-.add-address-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    padding: 16px;
-
-    border: 2px dashed rgba(124, 140, 248, 0.5);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    color: #5b6ee1;
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-
-    cursor: pointer;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 8px rgba(124, 140, 248, 0.3);
-
-    box-shadow:
-        0 10px 20px rgba(124, 140, 248, 0.35),
-        0 5px 12px rgba(124, 140, 248, 0.25),
-        7px 7px 14px rgba(124, 140, 248, 0.2),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(124, 140, 248, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
-
-    transform: translateY(-3px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.add-address-btn:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 16px 30px rgba(124, 140, 248, 0.45),
-        0 8px 18px rgba(124, 140, 248, 0.35),
-        10px 10px 20px rgba(124, 140, 248, 0.25),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.95),
-        -7px 7px 16px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
-}
-
-.add-address-btn:active {
-    transform: translateY(1px) scale(0.98);
-    box-shadow:
-        inset 5px 5px 12px rgba(124, 140, 248, 0.5),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ============================================
-   PRODUCT LIST — Product rows
-   ============================================ */
-.product-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    width: 100%;
-}
-
-.product-row {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    width: 100%;
-    padding: 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    box-shadow:
-        0 8px 18px rgba(140, 150, 180, 0.45),
-        0 4px 10px rgba(140, 150, 180, 0.32),
-        6px 6px 12px rgba(140, 150, 180, 0.22),
-        -6px -6px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(140, 150, 180, 0.1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
-
-    transform: translateY(-3px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.product-row:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 14px 26px rgba(124, 140, 248, 0.4),
-        0 7px 14px rgba(124, 140, 248, 0.28),
-        9px 9px 20px rgba(124, 140, 248, 0.2),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.95),
-        -6px 6px 14px rgba(124, 140, 248, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.22);
-}
-
-/* ---- Product image ---- */
-.order-product-image {
-    flex-shrink: 0;
-
-    display: block;
-
-    width: 72px;
-    height: 72px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    object-fit: cover;
-    object-position: center;
-
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-
-    box-shadow:
-        0 8px 16px rgba(140, 150, 180, 0.5),
-        0 4px 10px rgba(140, 150, 180, 0.35),
-        5px 5px 12px rgba(140, 150, 180, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(140, 150, 180, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.product-row:hover .order-product-image {
-    transform: scale(1.04) rotate(-2deg);
-}
-
-/* ---- Product info ---- */
-.product-info {
-    flex: 1;
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.product-info h4 {
-    margin: 0;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
-    font-weight: 900;
-    letter-spacing: 0.15px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-}
-
-/* ---- Cart box (quantity dropdown trigger) ---- */
-.order-cart-box {
-    position: relative;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    width: fit-content;
-    padding: 6px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    cursor: pointer;
-
-    box-shadow:
-        0 6px 12px rgba(140, 150, 180, 0.45),
-        0 3px 8px rgba(140, 150, 180, 0.32),
-        4px 4px 10px rgba(140, 150, 180, 0.22),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.9),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-2px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.order-cart-box:hover {
-    transform: translateY(-4px);
-    color: #5b6ee1;
-}
-
-.order-cart-icon {
-    font-size: 0.92rem;
-    line-height: 1;
-}
-
-.order-cart-quantity {
-    font-size: 0.82rem;
-    font-weight: 900;
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.order-cart-arrow {
-    display: grid;
-    place-items: center;
-
-    width: 20px;
-    height: 20px;
-
-    padding: 0;
-    border: none;
-    background: transparent;
-
-    color: #5b6ee1;
-    font-size: 0.7rem;
-    font-weight: 900;
-    line-height: 1;
-
-    cursor: pointer;
-
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ---- Cart dropdown (quantity selector) ---- */
-.order-cart-dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    z-index: 100;
-
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    padding: 8px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.55),
-        0 7px 14px rgba(140, 150, 180, 0.4),
-        9px 9px 18px rgba(140, 150, 180, 0.28),
-        -9px -9px 18px rgba(255, 255, 255, 1),
-        7px -7px 14px rgba(255, 255, 255, 0.95),
-        -7px 7px 14px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
-
-    animation: cartDropdownIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes cartDropdownIn {
-    from {
-        opacity: 0;
-        transform: translateY(-6px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
 .order-cart-dropdown button {
-    display: grid;
-    place-items: center;
+    min-width: 40px;
+    padding: 7px 12px;
 
-    width: 34px;
-    height: 34px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
 
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 9px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #3f4664;
-    font-size: 0.86rem;
-    font-weight: 900;
+    color: #333;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
     line-height: 1;
+    text-align: center;
 
     cursor: pointer;
 
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 4px 10px rgba(140, 150, 180, 0.4),
-        0 2px 6px rgba(140, 150, 180, 0.28),
-        3px 3px 8px rgba(140, 150, 180, 0.22),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.85),
-        -2px 2px 6px rgba(140, 150, 180, 0.12),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
 .order-cart-dropdown button:hover {
-    transform: translateY(-2px);
-    color: #5b6ee1;
+    background: #f5f5f5;
 }
 
 .order-cart-dropdown button.selected {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 6px 14px rgba(91, 110, 225, 0.55),
-        0 3px 8px rgba(91, 110, 225, 0.4),
-        4px 4px 10px rgba(91, 110, 225, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(91, 110, 225, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-2px) scale(1.05);
+    background: #ff6b00;
+    color: #fff;
 }
 
-/* ---- Product price ---- */
 .product-price {
     flex-shrink: 0;
-
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 3px;
 
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    color: #222;
     text-align: right;
-
-    font-size: clamp(0.86rem, 2.3vw, 0.96rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 8px rgba(124, 140, 248, 0.3);
+    white-space: nowrap;
 }
 
 .product-price small {
-    font-size: 0.62rem;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-
-    color: #5fbb5a;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.9),
-        0 0 6px rgba(95, 187, 90, 0.25);
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #16a34a;
+    white-space: nowrap;
 }
 
-/* ============================================
-   🔥 PRICE BOX — Price details section
-   ============================================ */
 .price-box {
     display: flex;
     flex-direction: column;
     gap: 10px;
-
     width: 100%;
-    padding: 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
-        0 6px 14px rgba(140, 150, 180, 0.25),
-        0 3px 8px rgba(140, 150, 180, 0.18),
-        4px 4px 10px rgba(140, 150, 180, 0.15),
-        -4px -4px 10px rgba(255, 255, 255, 1);
 }
 
-/* ---- Row ---- */
 .price-box .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
 
-    font-size: clamp(0.76rem, 2vw, 0.86rem);
-    font-weight: 800;
+    font-size: 0.82rem;
+    font-weight: 500;
     letter-spacing: 0.1px;
-    line-height: 1.35;
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.price-box .row span:first-child {
-    color: #8a90ac;
-    font-weight: 800;
+    color: #555;
 }
 
 .price-box .row span:last-child {
-    font-weight: 900;
-    color: #3f4664;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
 }
 
-/* ---- Divider ---- */
 .price-box hr {
-    width: 100%;
-    height: 1.5px;
+    height: 1px;
     margin: 4px 0;
-
+    background: #f0f0f0;
     border: none;
-    border-radius: 2px;
-
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(155, 165, 190, 0.4) 20%,
-            rgba(155, 165, 190, 0.4) 80%,
-            transparent 100%);
-
-    box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.95),
-        inset 0 1px 1px rgba(155, 165, 190, 0.2);
 }
 
-/* ---- Grand total row ---- */
 .price-box .grand-total {
-    padding: 8px 0;
+    font-size: 0.95rem;
 }
 
 .price-box .grand-total strong:first-child {
-    font-size: clamp(0.86rem, 2.3vw, 0.96rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
-
-    color: #3f4664;
+    font-weight: 800;
+    color: #222;
 }
 
 .price-box .grand-total strong:last-child {
-    font-size: clamp(1.05rem, 2.8vw, 1.2rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 12px rgba(124, 140, 248, 0.35),
-        0 2px 4px rgba(91, 110, 225, 0.15);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #ff6b00;
 }
 
-/* ============================================
-   🔥 HYPO SECTION
-   ============================================ */
 .hypo-section {
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    width: 100%;
     padding: 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.6), transparent 55%),
-        linear-gradient(145deg, #fffbee 0%, #fff5d6 100%);
-
-    box-shadow:
-        0 6px 14px rgba(224, 165, 46, 0.3),
-        0 3px 8px rgba(224, 165, 46, 0.22),
-        4px 4px 10px rgba(224, 165, 46, 0.15),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.95),
-        -3px 3px 8px rgba(224, 165, 46, 0.1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(224, 165, 46, 0.2);
-
-    transform: translateY(-2px);
+    margin: 4px 0;
+    background: linear-gradient(145deg, #fff8ec, #fff1e0);
+    border: 1px solid #ffe0b2;
+    border-radius: 12px;
 }
 
 .hypo-header {
@@ -951,326 +441,185 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-
-    width: 100%;
+    flex-wrap: wrap;
 }
 
 .hypo-title {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
-    color: #4a3200;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.9),
-        0 0 6px rgba(255, 255, 255, 0.5);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    color: #b26a00;
 }
 
 .hypo-icon {
-    font-size: 1rem;
-    color: #e0a52e;
-    filter: drop-shadow(0 2px 3px rgba(224, 165, 46, 0.5));
-    animation: hypoIconPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes hypoIconPulse {
-
-    0%,
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
-
-    50% {
-        transform: scale(1.15) rotate(-6deg);
-    }
+    color: #ff6b00;
+    font-size: 0.9rem;
 }
 
 .hypo-balance {
     display: inline-flex;
     align-items: baseline;
     gap: 4px;
-
-    padding: 4px 10px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
+    padding: 3px 10px;
+    background: #fff;
+    border: 1px solid #ffe0b2;
     border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
-    color: #4a3200;
-
-    box-shadow:
-        0 4px 10px rgba(224, 165, 46, 0.55),
-        0 2px 6px rgba(224, 165, 46, 0.4),
-        3px 3px 8px rgba(224, 165, 46, 0.28),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(140, 90, 20, 0.4);
-
-    transform: translateY(-1px);
 }
 
 .hypo-balance-value {
-    font-size: 0.92rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #ff6b00;
+    line-height: 1;
 }
 
 .hypo-balance-label {
-    font-size: 0.58rem;
-    font-weight: 900;
-    letter-spacing: 0.4px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #b26a00;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
-    opacity: 0.85;
 }
 
-/* ---- Checkbox label ---- */
+.hypo-usable {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 .hypo-checkbox-label {
     display: flex;
     align-items: center;
     gap: 8px;
-
     cursor: pointer;
-
-    font-size: clamp(0.74rem, 2vw, 0.84rem);
-    font-weight: 800;
-    letter-spacing: 0.1px;
-    line-height: 1.4;
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hypo-checkbox {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .hypo-checkbox-custom {
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 22px;
-    height: 22px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 8px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    box-shadow:
-        0 4px 10px rgba(140, 150, 180, 0.45),
-        0 2px 6px rgba(140, 150, 180, 0.32),
-        3px 3px 8px rgba(140, 150, 180, 0.25),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #ffb84d;
+    border-radius: 6px;
+    transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .hypo-checkbox:checked+.hypo-checkbox-custom {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
-    box-shadow:
-        0 6px 14px rgba(224, 165, 46, 0.6),
-        0 3px 8px rgba(224, 165, 46, 0.45),
-        4px 4px 10px rgba(224, 165, 46, 0.3),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.9),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.6),
-        inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.45);
-
-    transform: scale(1.05);
+    background: #ff6b00;
+    border-color: #ff6b00;
 }
 
 .hypo-checkbox:checked+.hypo-checkbox-custom::after {
     content: "✓";
-    color: #4a3200;
-    font-size: 0.85rem;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 0.72rem;
     font-weight: 900;
     line-height: 1;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.hypo-checkbox-text {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: #6b4a00;
+    line-height: 1.35;
 }
 
 .hypo-checkbox-text strong {
-    color: #e0a52e;
-    font-weight: 900;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.95),
-        0 0 6px rgba(224, 165, 46, 0.3);
+    color: #b26a00;
+    font-weight: 800;
 }
 
-.hypo-remaining,
-.hypo-message {
-    margin: 4px 0 0;
-
-    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
-    font-weight: 700;
+.hypo-remaining {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #8b6b3a;
     letter-spacing: 0.1px;
+}
+
+.hypo-remaining strong {
+    color: #b26a00;
+    font-weight: 800;
+}
+
+.hypo-message {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 500;
     line-height: 1.4;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    color: #8b6b3a;
+    letter-spacing: 0.1px;
 }
 
 .hypo-message strong {
-    color: #e0a52e;
-    font-weight: 900;
+    color: #b26a00;
+    font-weight: 800;
 }
 
-/* ---- HYPO discount row ---- */
 .hypo-discount-row {
-    padding: 8px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a !important;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4) !important;
-
-    box-shadow:
-        0 8px 16px rgba(95, 187, 90, 0.5),
-        0 4px 10px rgba(95, 187, 90, 0.4),
-        5px 5px 12px rgba(95, 187, 90, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(95, 187, 90, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.45);
-
-    transform: translateY(-2px);
-
-    animation: hypoDiscountPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes hypoDiscountPop {
-    from {
-        opacity: 0;
-        transform: translateY(-2px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-2px) scale(1);
-    }
-}
-
-.hypo-discount-row span:first-child {
-    color: #1a4a1a !important;
-    font-weight: 900 !important;
+    color: #16a34a !important;
+    font-weight: 700 !important;
 }
 
 .hypo-discount-value {
-    color: #1a4a1a !important;
-    font-weight: 900 !important;
+    color: #16a34a !important;
+    font-weight: 800 !important;
 }
 
-/* ============================================
-   🔥 TOTAL SAVINGS
-   ============================================ */
 .total-savings {
     display: flex;
     align-items: center;
     gap: 10px;
-
-    width: 100%;
     padding: 10px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-    font-size: clamp(0.72rem, 2vw, 0.8rem);
-    font-weight: 800;
-    letter-spacing: 0.1px;
-    line-height: 1.35;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 8px 18px rgba(95, 187, 90, 0.5),
-        0 4px 10px rgba(95, 187, 90, 0.4),
-        5px 5px 12px rgba(95, 187, 90, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(95, 187, 90, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.4);
-
-    transform: translateY(-2px);
+    margin-top: 4px;
+    background: #e7f7ec;
+    border: 1px solid #c6ebd3;
+    border-radius: 10px;
 }
 
 .total-savings>div:first-child {
     flex-shrink: 0;
-
     display: grid;
     place-items: center;
-
-    width: 32px;
-    height: 32px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
+    width: 30px;
+    height: 30px;
+    background: #16a34a;
+    color: #fff;
     border-radius: 50%;
+    font-size: 0.95rem;
+}
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    color: #5fbb5a;
-    font-size: 1rem;
-
-    box-shadow:
-        0 4px 10px rgba(40, 100, 40, 0.35),
-        0 2px 6px rgba(40, 100, 40, 0.25),
-        3px 3px 8px rgba(40, 100, 40, 0.2),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(40, 100, 40, 0.35);
+.saveprice {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    line-height: 1.35;
+    color: #166534;
 }
 
 .saveprice span {
-    color: #1a4a1a;
-    font-weight: 900;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
+    font-weight: 800;
+    color: #15803d;
 }
 
-/* ============================================
-   🔥 PAYMENT METHOD — COD card
-   ============================================ */
 .payment-card {
     display: flex;
     align-items: center;
@@ -1280,253 +629,124 @@
     width: 100%;
     padding: 14px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
+    background: #fff;
+    border: 1.5px solid #eee;
+    border-radius: 12px;
 
     cursor: pointer;
 
-    box-shadow:
-        0 8px 18px rgba(140, 150, 180, 0.45),
-        0 4px 10px rgba(140, 150, 180, 0.32),
-        6px 6px 12px rgba(140, 150, 180, 0.22),
-        -6px -6px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(140, 150, 180, 0.1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
-
-    transform: translateY(-3px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .payment-card:hover {
-    transform: translateY(-6px);
+    border-color: #ffd9b3;
 }
 
 .payment-card.selected {
-    border-color: rgba(124, 140, 248, 0.6);
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    box-shadow:
-        0 14px 26px rgba(124, 140, 248, 0.45),
-        0 7px 14px rgba(124, 140, 248, 0.32),
-        9px 9px 20px rgba(124, 140, 248, 0.25),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.95),
-        -6px 6px 14px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35),
-        0 0 0 3px rgba(124, 140, 248, 0.15);
+    border-color: #ff6b00;
+    background: #fff8ec;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.12);
 }
 
-.payment-card>div {
+.payment-card>div:first-child {
     flex: 1;
     min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
 }
 
 .payment-card h4 {
-    margin: 0;
-
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
+    margin: 0 0 3px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+    color: #222;
 }
 
 .payment-card p {
     margin: 0;
-
-    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    line-height: 1.3;
-
-    color: #5fbb5a;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.9),
-        0 0 6px rgba(95, 187, 90, 0.25);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #888;
+    letter-spacing: 0.1px;
 }
 
-.payment-card>strong {
+.payment-card strong {
     flex-shrink: 0;
-
-    font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 10px rgba(124, 140, 248, 0.3);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ff6b00;
+    white-space: nowrap;
 }
 
-/* ============================================
-   ADDRESS ERROR
-   ============================================ */
 .address-error {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     width: 100%;
-    padding: 11px 16px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
-    color: #ffffff;
-    font-size: clamp(0.72rem, 2vw, 0.82rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    text-align: center;
+    margin: 4px 0 8px;
+    padding: 10px 12px;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    color: #b91c1c;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
     line-height: 1.35;
-
-    text-shadow:
-        0 1px 3px rgba(140, 40, 40, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 10px 22px rgba(226, 90, 90, 0.55),
-        0 5px 14px rgba(226, 90, 90, 0.4),
-        7px 7px 16px rgba(226, 90, 90, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(226, 90, 90, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
-
-    transform: translateY(-3px);
-
-    animation: addressErrorPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    text-align: center;
 }
 
-@keyframes addressErrorPop {
-    from {
-        opacity: 0;
-        transform: translateY(-10px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-3px) scale(1);
-    }
-}
-
-/* ============================================
-   🔥 CONTINUE / PLACE ORDER — BIG accent pill
-   ============================================ */
 .continue-payment-btn {
-    position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
 
-    width: 100%;
-    height: 58px;
+    height: 52px;
     padding: 0 24px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    color: #fff;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
+    border: none;
+    border-radius: 14px;
 
-    color: #ffffff;
-    font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    line-height: 1;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
 
     cursor: pointer;
-
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-
+    width: 100%;
     box-shadow:
-        0 16px 32px rgba(91, 110, 225, 0.55),
-        0 8px 18px rgba(91, 110, 225, 0.4),
-        10px 10px 22px rgba(91, 110, 225, 0.28),
-        -10px -10px 22px rgba(255, 255, 255, 1),
-        8px -8px 18px rgba(255, 255, 255, 0.9),
-        -8px 8px 18px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+        0 8px 22px rgba(255, 107, 0, 0.4),
+        0 2px 8px rgba(255, 107, 0, 0.25);
 
-    transform: translateY(-4px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+
     -webkit-tap-highlight-color: transparent;
 }
 
-.continue-payment-btn:hover {
-    transform: translateY(-8px);
-    box-shadow:
-        0 24px 44px rgba(91, 110, 225, 0.65),
-        0 12px 24px rgba(91, 110, 225, 0.5),
-        14px 14px 28px rgba(91, 110, 225, 0.35),
-        -13px -13px 26px rgba(255, 255, 255, 1),
-        10px -10px 22px rgba(255, 255, 255, 0.95),
-        -10px 10px 22px rgba(91, 110, 225, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+
+.continue-payment-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.continue-payment-btn:active {
-    transform: translateY(1px) scale(0.98);
-    box-shadow:
-        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
-}
-
-/* ============================================
-   🔥 ORDER CONFIRM — MODAL
-   ============================================ */
 .order-confirm-overlay {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 999;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
 
     padding: 20px;
 
-    background: rgba(10, 10, 20, 0.6);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 
-    animation: orderConfirmOverlay 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: confirmFade 0.2s ease;
 }
 
-@keyframes orderConfirmOverlay {
+@keyframes confirmFade {
     from {
         opacity: 0;
     }
@@ -1537,311 +757,159 @@
 }
 
 .order-confirm-box {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
     width: 100%;
-    max-width: 380px;
+    max-width: 340px;
 
-    padding: 24px 22px;
+    padding: 24px 20px 20px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 24px;
+    background: #fff;
+    border-radius: 18px;
 
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 
     text-align: center;
 
-    box-shadow:
-        0 28px 56px rgba(140, 150, 180, 0.6),
-        0 14px 28px rgba(140, 150, 180, 0.45),
-        0 8px 16px rgba(140, 150, 180, 0.3),
-        18px 18px 36px rgba(140, 150, 180, 0.3),
-        -18px -18px 36px rgba(255, 255, 255, 1),
-        14px -14px 30px rgba(255, 255, 255, 0.95),
-        -14px 14px 30px rgba(140, 150, 180, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-6px);
-
-    animation: orderConfirmPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: confirmPop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes orderConfirmPop {
+@keyframes confirmPop {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.9);
+        transform: scale(0.92);
     }
 
     to {
         opacity: 1;
-        transform: translateY(-6px) scale(1);
+        transform: scale(1);
     }
 }
 
-/* 🔥 TOP HIGHLIGHT */
-.order-confirm-box::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 24px 24px 0 0;
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* ---- Confirm icon — 3D accent ball ---- */
 .order-confirm-icon {
-    align-self: center;
-
     display: grid;
     place-items: center;
 
-    width: 68px;
-    height: 68px;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 12px;
 
-    border: 2px solid rgba(255, 255, 255, 1);
+    background: linear-gradient(135deg, #fff1e0, #ffe0b2);
     border-radius: 50%;
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     line-height: 1;
-
-    box-shadow:
-        0 12px 24px rgba(91, 110, 225, 0.55),
-        0 6px 14px rgba(91, 110, 225, 0.4),
-        8px 8px 18px rgba(91, 110, 225, 0.28),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.9),
-        -6px 6px 14px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    animation: orderConfirmIcon 2s ease-in-out infinite;
-}
-
-@keyframes orderConfirmIcon {
-
-    0%,
-    100% {
-        transform: scale(1) translateY(0);
-    }
-
-    50% {
-        transform: scale(1.06) translateY(-3px);
-    }
 }
 
 .order-confirm-box h3 {
-    margin: 0;
-
-    font-size: clamp(1.05rem, 2.8vw, 1.2rem);
-    font-weight: 900;
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+    font-weight: 800;
     letter-spacing: 0.2px;
     line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
+    color: #222;
 }
 
 .order-confirm-box>p {
-    margin: 0;
+    margin: 0 0 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #666;
+}
 
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
+.order-confirm-hypo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 12px;
+    margin-bottom: 14px;
+
+    background: #fff8ec;
+    border: 1px solid #ffe0b2;
+    border-radius: 999px;
+
+    color: #b26a00;
+    font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.1px;
-    line-height: 1.45;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    line-height: 1;
 }
 
-/* ---- Confirm HYPO info ---- */
-.order-confirm-hypo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    width: 100%;
-    padding: 10px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
-    color: #4a3200;
-    font-size: clamp(0.72rem, 2vw, 0.82rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.3;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 8px 18px rgba(224, 165, 46, 0.55),
-        0 4px 10px rgba(224, 165, 46, 0.4),
-        5px 5px 12px rgba(224, 165, 46, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(224, 165, 46, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.4);
-
-    transform: translateY(-2px);
+.order-confirm-hypo svg {
+    color: #ff6b00;
+    font-size: 0.82rem;
 }
 
-/* ---- Actions row ---- */
 .order-confirm-actions {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
-
     width: 100%;
-
-    margin-top: 6px;
 }
 
 .order-confirm-cancel,
 .order-confirm-submit {
     flex: 1;
+    height: 46px;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    border-radius: 12px;
 
-    height: 48px;
-    padding: 0 16px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
 
     cursor: pointer;
 
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ---- Cancel — neutral ---- */
 .order-confirm-cancel {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 8px 18px rgba(140, 150, 180, 0.5),
-        0 4px 10px rgba(140, 150, 180, 0.35),
-        5px 5px 12px rgba(140, 150, 180, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-3px);
+    background: #f5f5f5;
+    color: #555;
+    border: 1px solid #e5e5e5;
 }
 
 .order-confirm-cancel:hover {
-    transform: translateY(-6px);
-    color: #5b6ee1;
+    background: #ebebeb;
+    color: #333;
 }
 
 .order-confirm-cancel:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
+    transform: scale(0.97);
 }
 
-/* ---- Confirm — accent ---- */
 .order-confirm-submit {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 10px 22px rgba(91, 110, 225, 0.55),
-        0 5px 14px rgba(91, 110, 225, 0.4),
-        7px 7px 16px rgba(91, 110, 225, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(255, 107, 0, 0.35);
 }
 
 .order-confirm-submit:hover {
-    transform: translateY(-6px);
+    background: linear-gradient(135deg, #ff7a26, #e85f00);
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.45);
 }
 
 .order-confirm-submit:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+    transform: scale(0.97);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
+@media (max-width: 360px) {
     .product-order-page {
-        padding: 12px 12px 34px;
-        gap: 14px;
+        padding: 12px 12px 100px;
     }
 
     .product-order-header {
-        padding: 11px 12px;
+        padding: 2px 0 12px;
         gap: 10px;
-        border-radius: 0 0 18px 18px;
     }
 
     .product-order-back {
-        width: 38px;
-        height: 38px;
+        width: 34px;
+        height: 34px;
         font-size: 1.05rem;
     }
 
@@ -1850,338 +918,47 @@
     }
 
     .order-section {
-        padding: 14px;
-        border-radius: 18px;
-        gap: 11px;
-        transform: translateY(-4px);
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 12px;
     }
 
     .order-section h3 {
-        font-size: 0.92rem;
+        font-size: 0.86rem;
+        margin-bottom: 10px;
     }
 
     .addplacepro {
-        padding: 12px;
-        border-radius: 14px;
-        gap: 10px;
+        gap: 8px;
     }
 
     .nameadtype h4 {
-        font-size: 0.86rem;
+        font-size: 0.82rem;
     }
 
     .nameadtype span {
-        font-size: 0.54rem;
-        padding: 3px 8px;
+        font-size: 0.56rem;
+        padding: 2px 6px;
     }
 
     .addplacepro p {
-        font-size: 0.74rem;
-    }
-
-    .change-address-btn {
-        padding: 8px 14px;
-        font-size: 0.68rem;
-        border-radius: 11px;
-    }
-
-    .add-address-btn {
-        padding: 14px;
-        font-size: 0.84rem;
-        border-radius: 14px;
-    }
-
-    .product-list {
-        gap: 11px;
-    }
-
-    .product-row {
-        padding: 11px;
-        border-radius: 14px;
-        gap: 11px;
-    }
-
-    .order-product-image {
-        width: 64px;
-        height: 64px;
-        border-radius: 12px;
-    }
-
-    .product-info h4 {
-        font-size: 0.82rem;
-    }
-
-    .order-cart-box {
-        padding: 5px 10px;
-        border-radius: 11px;
-        gap: 5px;
-    }
-
-    .order-cart-icon {
-        font-size: 0.86rem;
-    }
-
-    .order-cart-quantity {
-        font-size: 0.76rem;
-    }
-
-    .order-cart-arrow {
-        width: 18px;
-        height: 18px;
-        font-size: 0.62rem;
-    }
-
-    .order-cart-dropdown {
-        padding: 7px;
-        border-radius: 11px;
-        gap: 5px;
-    }
-
-    .order-cart-dropdown button {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        font-size: 0.82rem;
-    }
-
-    .product-price {
-        font-size: 0.86rem;
-    }
-
-    .product-price small {
-        font-size: 0.58rem;
-    }
-
-    .price-box {
-        padding: 12px;
-        border-radius: 14px;
-        gap: 9px;
-    }
-
-    .price-box .row {
-        font-size: 0.8rem;
-    }
-
-    .price-box .grand-total strong:first-child {
-        font-size: 0.86rem;
-    }
-
-    .price-box .grand-total strong:last-child {
-        font-size: 1.05rem;
-    }
-
-    .hypo-section {
-        padding: 11px;
-        border-radius: 12px;
-        gap: 9px;
-    }
-
-    .hypo-title {
-        font-size: 0.82rem;
-    }
-
-    .hypo-balance {
-        padding: 3px 9px;
-    }
-
-    .hypo-balance-value {
-        font-size: 0.86rem;
-    }
-
-    .hypo-balance-label {
-        font-size: 0.54rem;
-    }
-
-    .hypo-checkbox-label {
-        font-size: 0.78rem;
-    }
-
-    .hypo-checkbox-custom {
-        width: 20px;
-        height: 20px;
-        border-radius: 7px;
-    }
-
-    .hypo-checkbox:checked+.hypo-checkbox-custom::after {
-        font-size: 0.78rem;
-    }
-
-    .hypo-remaining,
-    .hypo-message {
-        font-size: 0.7rem;
-    }
-
-    .total-savings {
-        padding: 9px 11px;
-        border-radius: 11px;
-        font-size: 0.74rem;
-        gap: 9px;
-    }
-
-    .total-savings>div:first-child {
-        width: 28px;
-        height: 28px;
-        font-size: 0.9rem;
-    }
-
-    .payment-card {
-        padding: 12px;
-        border-radius: 14px;
-        gap: 10px;
-    }
-
-    .payment-card h4 {
-        font-size: 0.86rem;
-    }
-
-    .payment-card p {
         font-size: 0.72rem;
     }
 
-    .payment-card>strong {
-        font-size: 0.95rem;
-    }
-
-    .address-error {
-        padding: 10px 14px;
-        font-size: 0.76rem;
-        border-radius: 12px;
-    }
-
-    .continue-payment-btn {
-        height: 54px;
-        padding: 0 20px;
-        font-size: 0.96rem;
-        border-radius: 16px;
-    }
-
-    .order-confirm-box {
-        padding: 22px 20px;
-        border-radius: 22px;
-        gap: 13px;
-    }
-
-    .order-confirm-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.55rem;
-    }
-
-    .order-confirm-box h3 {
-        font-size: 1.08rem;
-    }
-
-    .order-confirm-box>p {
-        font-size: 0.82rem;
-    }
-
-    .order-confirm-hypo {
-        padding: 9px 12px;
-        font-size: 0.76rem;
-        border-radius: 11px;
-    }
-
-    .order-confirm-actions {
-        gap: 9px;
-    }
-
-    .order-confirm-cancel,
-    .order-confirm-submit {
-        height: 44px;
-        font-size: 0.82rem;
-        border-radius: 13px;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .product-order-page {
-        padding: 10px 10px 30px;
-        gap: 12px;
-    }
-
-    .product-order-header {
-        padding: 10px 11px;
-        gap: 9px;
-        border-radius: 0 0 16px 16px;
-        margin-bottom: 2px;
-    }
-
-    .product-order-back {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        border-width: 1.5px;
-    }
-
-    .product-order-header h2 {
-        font-size: 0.92rem;
-    }
-
-    .order-section {
-        padding: 13px;
-        border-radius: 16px;
-        gap: 10px;
-        transform: translateY(-3px);
-    }
-
-    .order-section h3 {
-        font-size: 0.86rem;
-    }
-
-    .addplacepro {
-        padding: 11px;
-        border-radius: 13px;
-        gap: 9px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .addplacepro>div {
-        width: 100%;
-    }
-
-    .nameadtype h4 {
-        font-size: 0.8rem;
-    }
-
-    .nameadtype span {
-        font-size: 0.5rem;
-        padding: 2px 7px;
-    }
-
-    .addplacepro p {
-        font-size: 0.68rem;
-    }
-
     .change-address-btn {
-        align-self: flex-start;
-        padding: 7px 13px;
-        font-size: 0.64rem;
-        border-radius: 10px;
+        padding: 5px 10px;
+        font-size: 0.66rem;
     }
 
     .add-address-btn {
-        padding: 13px;
-        font-size: 0.78rem;
-        border-radius: 13px;
-    }
-
-    .product-list {
-        gap: 10px;
-    }
-
-    .product-row {
-        padding: 10px;
-        border-radius: 13px;
-        gap: 10px;
+        padding: 12px;
+        font-size: 0.8rem;
     }
 
     .order-product-image {
-        width: 56px;
-        height: 56px;
-        border-radius: 11px;
-        border-width: 1.5px;
+        width: 62px;
+        height: 62px;
+        border-radius: 8px;
     }
 
     .product-info h4 {
@@ -2189,124 +966,79 @@
     }
 
     .order-cart-box {
-        padding: 5px 9px;
-        border-radius: 10px;
-        gap: 4px;
+        padding: 4px 8px;
     }
 
-    .order-cart-icon {
+    .order-cart-icon,
+    .order-cart-quantity {
+        font-size: 0.72rem;
+    }
+
+    .product-price {
         font-size: 0.8rem;
     }
 
-    .order-cart-quantity {
-        font-size: 0.7rem;
+    .product-price small {
+        font-size: 0.6rem;
     }
 
-    .order-cart-arrow {
-        width: 16px;
-        height: 16px;
+    .price-box .row {
+        font-size: 0.76rem;
+    }
+
+    .price-box .grand-total {
+        font-size: 0.88rem;
+    }
+
+    .price-box .grand-total strong:last-child {
+        font-size: 0.98rem;
+    }
+
+    .hypo-section {
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .hypo-title {
+        font-size: 0.76rem;
+    }
+
+    .hypo-balance {
+        padding: 2px 8px;
+    }
+
+    .hypo-balance-value {
+        font-size: 0.78rem;
+    }
+
+    .hypo-balance-label {
         font-size: 0.56rem;
     }
 
-    .order-cart-dropdown {
-        padding: 6px;
-        border-radius: 10px;
-        gap: 4px;
-    }
-
-    .order-cart-dropdown button {
-        width: 28px;
-        height: 28px;
-        border-radius: 7px;
-        font-size: 0.74rem;
-    }
-
-    .product-price {
-        font-size: 0.78rem;
-        gap: 2px;
-    }
-
-    .product-price small {
-        font-size: 0.54rem;
-    }
-
-    .price-box {
-        padding: 11px;
-        border-radius: 13px;
-        gap: 8px;
-    }
-
-    .price-box .row {
-        font-size: 0.74rem;
-    }
-
-    .price-box .grand-total strong:first-child {
-        font-size: 0.8rem;
-    }
-
-    .price-box .grand-total strong:last-child {
-        font-size: 0.96rem;
-    }
-
-    .hypo-section {
-        padding: 10px;
-        border-radius: 11px;
-        gap: 8px;
-    }
-
-    .hypo-title {
-        font-size: 0.76rem;
-    }
-
-    .hypo-balance {
-        padding: 3px 8px;
-    }
-
-    .hypo-balance-value {
-        font-size: 0.8rem;
-    }
-
-    .hypo-balance-label {
-        font-size: 0.5rem;
-    }
-
-    .hypo-checkbox-label {
-        font-size: 0.72rem;
-        gap: 7px;
-    }
-
-    .hypo-checkbox-custom {
-        width: 18px;
-        height: 18px;
-        border-radius: 6px;
-    }
-
-    .hypo-checkbox:checked+.hypo-checkbox-custom::after {
+    .hypo-checkbox-text {
         font-size: 0.72rem;
     }
 
-    .hypo-remaining,
-    .hypo-message {
+    .hypo-remaining {
         font-size: 0.64rem;
     }
 
-    .total-savings {
-        padding: 8px 10px;
-        border-radius: 10px;
-        font-size: 0.68rem;
-        gap: 8px;
+    .hypo-message {
+        font-size: 0.66rem;
+    }
+
+    .saveprice {
+        font-size: 0.72rem;
     }
 
     .total-savings>div:first-child {
         width: 26px;
         height: 26px;
-        font-size: 0.82rem;
+        font-size: 0.85rem;
     }
 
     .payment-card {
-        padding: 11px;
-        border-radius: 13px;
-        gap: 9px;
+        padding: 12px;
     }
 
     .payment-card h4 {
@@ -2317,43 +1049,37 @@
         font-size: 0.66rem;
     }
 
-    .payment-card>strong {
+    .payment-card strong {
         font-size: 0.88rem;
     }
 
     .address-error {
-        padding: 9px 13px;
-        font-size: 0.7rem;
-        border-radius: 11px;
+        font-size: 0.72rem;
+        padding: 8px 10px;
     }
 
     .continue-payment-btn {
-        height: 50px;
-        padding: 0 18px;
+        height: 48px;
         font-size: 0.88rem;
-        border-radius: 14px;
-        letter-spacing: 0.3px;
-    }
-
-    .order-confirm-overlay {
-        padding: 16px;
+        border-radius: 12px;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
     }
 
     .order-confirm-box {
-        padding: 20px 18px;
-        border-radius: 20px;
-        gap: 12px;
-        max-width: 340px;
+        padding: 20px 16px 16px;
+        border-radius: 16px;
     }
 
     .order-confirm-icon {
-        width: 56px;
-        height: 56px;
-        font-size: 1.45rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
     }
 
     .order-confirm-box h3 {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .order-confirm-box>p {
@@ -2361,323 +1087,241 @@
     }
 
     .order-confirm-hypo {
-        padding: 8px 11px;
-        font-size: 0.7rem;
-        border-radius: 10px;
-    }
-
-    .order-confirm-actions {
-        gap: 8px;
+        font-size: 0.68rem;
+        padding: 6px 10px;
     }
 
     .order-confirm-cancel,
     .order-confirm-submit {
         height: 42px;
-        font-size: 0.76rem;
-        border-radius: 12px;
+        font-size: 0.8rem;
     }
 }
 
-/* Small phones */
-@media (max-width: 360px) {
+@media (min-width: 600px) {
     .product-order-page {
-        padding: 8px 8px 26px;
-        gap: 11px;
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 20px 24px 120px;
     }
 
     .product-order-header {
-        padding: 9px 10px;
-        gap: 8px;
+        padding: 4px 0 18px;
+        gap: 14px;
     }
 
     .product-order-back {
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
-    }
-
-    .product-order-header h2 {
-        font-size: 0.84rem;
-    }
-
-    .order-section {
-        padding: 11px;
-        border-radius: 14px;
-        gap: 9px;
-        transform: translateY(-2px);
-    }
-
-    .order-section h3 {
-        font-size: 0.8rem;
-    }
-
-    .addplacepro {
-        padding: 10px;
-        border-radius: 12px;
-        gap: 8px;
-    }
-
-    .nameadtype h4 {
-        font-size: 0.74rem;
-    }
-
-    .nameadtype span {
-        font-size: 0.46rem;
-        padding: 2px 6px;
-    }
-
-    .addplacepro p {
-        font-size: 0.62rem;
-    }
-
-    .change-address-btn {
-        padding: 6px 11px;
-        font-size: 0.58rem;
-        border-radius: 9px;
-    }
-
-    .add-address-btn {
-        padding: 11px;
-        font-size: 0.72rem;
-        border-radius: 12px;
-    }
-
-    .product-list {
-        gap: 8px;
-    }
-
-    .product-row {
-        padding: 9px;
-        border-radius: 12px;
-        gap: 9px;
-    }
-
-    .order-product-image {
-        width: 50px;
-        height: 50px;
-        border-radius: 10px;
-    }
-
-    .product-info h4 {
-        font-size: 0.7rem;
-    }
-
-    .order-cart-box {
-        padding: 4px 8px;
-        border-radius: 9px;
-        gap: 3px;
-    }
-
-    .order-cart-icon {
-        font-size: 0.74rem;
-    }
-
-    .order-cart-quantity {
-        font-size: 0.64rem;
-    }
-
-    .order-cart-arrow {
-        width: 14px;
-        height: 14px;
-        font-size: 0.5rem;
-    }
-
-    .order-cart-dropdown {
-        padding: 5px;
-        border-radius: 9px;
-        gap: 3px;
-    }
-
-    .order-cart-dropdown button {
-        width: 26px;
-        height: 26px;
-        border-radius: 6px;
-        font-size: 0.68rem;
-    }
-
-    .product-price {
-        font-size: 0.72rem;
-    }
-
-    .product-price small {
-        font-size: 0.5rem;
-    }
-
-    .price-box {
-        padding: 10px;
-        border-radius: 12px;
-        gap: 7px;
-    }
-
-    .price-box .row {
-        font-size: 0.7rem;
-    }
-
-    .price-box .grand-total strong:first-child {
-        font-size: 0.74rem;
-    }
-
-    .price-box .grand-total strong:last-child {
-        font-size: 0.9rem;
-    }
-
-    .hypo-section {
-        padding: 9px;
-        border-radius: 10px;
-        gap: 7px;
-    }
-
-    .hypo-title {
-        font-size: 0.7rem;
-    }
-
-    .hypo-balance {
-        padding: 2px 7px;
-    }
-
-    .hypo-balance-value {
-        font-size: 0.74rem;
-    }
-
-    .hypo-balance-label {
-        font-size: 0.46rem;
-    }
-
-    .hypo-checkbox-label {
-        font-size: 0.66rem;
-        gap: 6px;
-    }
-
-    .hypo-checkbox-custom {
-        width: 16px;
-        height: 16px;
-        border-radius: 5px;
-    }
-
-    .hypo-checkbox:checked+.hypo-checkbox-custom::after {
-        font-size: 0.66rem;
-    }
-
-    .hypo-remaining,
-    .hypo-message {
-        font-size: 0.58rem;
-    }
-
-    .total-savings {
-        padding: 7px 9px;
-        border-radius: 9px;
-        font-size: 0.62rem;
-        gap: 7px;
-    }
-
-    .total-savings>div:first-child {
-        width: 24px;
-        height: 24px;
-        font-size: 0.76rem;
-    }
-
-    .payment-card {
-        padding: 10px;
-        border-radius: 12px;
-        gap: 8px;
-    }
-
-    .payment-card h4 {
-        font-size: 0.74rem;
-    }
-
-    .payment-card p {
-        font-size: 0.6rem;
-    }
-
-    .payment-card>strong {
-        font-size: 0.8rem;
-    }
-
-    .address-error {
-        padding: 8px 11px;
-        font-size: 0.64rem;
-        border-radius: 10px;
-    }
-
-    .continue-payment-btn {
-        height: 46px;
-        padding: 0 16px;
-        font-size: 0.8rem;
-        border-radius: 13px;
-    }
-
-    .order-confirm-overlay {
-        padding: 12px;
-    }
-
-    .order-confirm-box {
-        padding: 18px 16px;
-        border-radius: 18px;
-        gap: 11px;
-        max-width: 300px;
-    }
-
-    .order-confirm-icon {
-        width: 50px;
-        height: 50px;
+        width: 44px;
+        height: 44px;
         font-size: 1.3rem;
     }
 
-    .order-confirm-box h3 {
+    .product-order-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .order-section {
+        padding: 18px;
+        margin-bottom: 16px;
+        border-radius: 16px;
+    }
+
+    .order-section h3 {
+        font-size: 1.05rem;
+        margin-bottom: 14px;
+    }
+
+    .nameadtype h4 {
+        font-size: 1rem;
+    }
+
+    .nameadtype span {
+        font-size: 0.68rem;
+        padding: 3px 10px;
+    }
+
+    .addplacepro p {
+        font-size: 0.86rem;
+    }
+
+    .change-address-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    .add-address-btn {
+        padding: 18px;
+        font-size: 0.95rem;
+    }
+
+    .order-product-image {
+        width: 86px;
+        height: 86px;
+        border-radius: 12px;
+    }
+
+    .product-info h4 {
         font-size: 0.92rem;
     }
 
+    .order-cart-icon,
+    .order-cart-quantity {
+        font-size: 0.86rem;
+    }
+
+    .product-price {
+        font-size: 0.95rem;
+    }
+
+    .product-price small {
+        font-size: 0.72rem;
+    }
+
+    .price-box .row {
+        font-size: 0.9rem;
+    }
+
+    .price-box .grand-total {
+        font-size: 1.05rem;
+    }
+
+    .price-box .grand-total strong:last-child {
+        font-size: 1.2rem;
+    }
+
+    .hypo-section {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .hypo-title {
+        font-size: 0.9rem;
+    }
+
+    .hypo-balance-value {
+        font-size: 0.95rem;
+    }
+
+    .hypo-checkbox-text {
+        font-size: 0.86rem;
+    }
+
+    .hypo-remaining {
+        font-size: 0.76rem;
+    }
+
+    .hypo-message {
+        font-size: 0.8rem;
+    }
+
+    .saveprice {
+        font-size: 0.86rem;
+    }
+
+    .payment-card {
+        padding: 18px;
+    }
+
+    .payment-card h4 {
+        font-size: 0.95rem;
+    }
+
+    .payment-card p {
+        font-size: 0.78rem;
+    }
+
+    .payment-card strong {
+        font-size: 1.05rem;
+    }
+
+    .address-error {
+        font-size: 0.86rem;
+        padding: 12px 16px;
+    }
+
+    .continue-payment-btn {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 400px;
+        height: 56px;
+        font-size: 1rem;
+        border-radius: 16px;
+        bottom: 20px;
+    }
+
+    .continue-payment-btn:active {
+        transform: translateX(-50%) scale(0.98);
+    }
+
+    .order-confirm-box {
+        max-width: 380px;
+        padding: 28px 24px 24px;
+    }
+
+    .order-confirm-box h3 {
+        font-size: 1.15rem;
+    }
+
     .order-confirm-box>p {
-        font-size: 0.7rem;
+        font-size: 0.9rem;
     }
 
     .order-confirm-hypo {
-        padding: 7px 10px;
-        font-size: 0.64rem;
-        border-radius: 9px;
-    }
-
-    .order-confirm-actions {
-        gap: 7px;
+        font-size: 0.8rem;
     }
 
     .order-confirm-cancel,
     .order-confirm-submit {
-        height: 40px;
-        font-size: 0.7rem;
-        border-radius: 11px;
+        height: 50px;
+        font-size: 0.95rem;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .product-order-page,
-    .hypo-icon,
-    .hypo-discount-row,
-    .address-error,
-    .order-confirm-overlay,
-    .order-confirm-box,
-    .order-confirm-icon,
-    .cart-dropdown-in {
-        animation: none;
+@media (min-width: 900px) {
+    .product-order-page {
+        max-width: 860px;
     }
+
+    .product-order-header h2 {
+        font-size: 1.55rem;
+    }
+
+    .order-confirm-box {
+        max-width: 420px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
 
     .product-order-back,
     .change-address-btn,
     .add-address-btn,
-    .order-product-image,
-    .product-row,
     .order-cart-box,
-    .order-cart-dropdown button,
+    .order-cart-dropdown,
     .payment-card,
     .continue-payment-btn,
+    .order-confirm-overlay,
+    .order-confirm-box,
     .order-confirm-cancel,
-    .order-confirm-submit,
-    .hypo-checkbox-custom {
+    .order-confirm-submit {
         transition: none;
+        animation: none;
+    }
+
+    .product-order-back:active,
+    .change-address-btn:active,
+    .add-address-btn:active,
+    .continue-payment-btn:active,
+    .continue-payment-btn:hover,
+    .order-confirm-cancel:active,
+    .order-confirm-submit:active {
+        transform: none;
+    }
+
+    .continue-payment-btn:active,
+    .continue-payment-btn:hover {
+        transform: translateX(-50%);
     }
 }

@@ -2,167 +2,108 @@ import { useEffect, useState } from "react";
 import { API } from "../../../services/api";
 import "../DetailsDataStyle/Reviews.css";
 
-function Reviews({
+function Reviews({ onViewAll, product_id }) {
 
-    onViewAll,
-
-    product_id
-
-}) {
     const [reviews, setReviews] = useState([]);
+
     useEffect(() => {
-
         async function loadReviews() {
-
             const response = await fetch(
-
                 `${API}/api/user/review/top/${product_id}`
-
             );
-
             const data = await response.json();
-
             if (data.success) {
-
                 setReviews(data.reviews);
-
             }
-
         }
-
         loadReviews();
-
     }, [product_id]);
 
     return (
-
         <div className="dt-reviews">
 
             <div className="dts-section-header">
-
                 <h4>Ratings and Reviews</h4>
-
-                <button
-                    className="dt-view-all"
-                    onClick={onViewAll}
-                >
+                <button className="dt-view-all" onClick={onViewAll}>
                     View All
                 </button>
             </div>
 
             <div className="dt-review-scroll">
 
-                {
+                {reviews.length > 0 ? (
 
-                    reviews.length > 0 ? (
-
-                        reviews.map((review, index) => (
-
-                            <div
-                                className="dt-review-card"
-                                key={index}
-                                onClick={onViewAll}
-                                style={{ cursor: "pointer" }}
-                            >
-
-                                <div className="dt-review-top">
-
-                                    {
-
-                                        review.profile_image ? (
-
-                                            <img
-                                                src={review.profile_image}
-                                                alt={review.full_name}
-                                                className="dt-review-avatar-img"
-                                            />
-
-                                        ) : (
-
-                                            <div className="dt-review-avatar">
-
-                                                {
-
-                                                    review.full_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-
-                                                }
-
-                                            </div>
-
-                                        )
-
-                                    }
-
-                                    <div>
-
-                                        <h4>
-
-                                            {review.full_name}
-
-                                        </h4>
-
-                                        <span>
-
-                                            {"⭐".repeat(review.rating)}
-
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                                <p>
-
-                                    {review.review_message}
-
-                                </p>
-
-                            </div>
-
-                        ))
-
-                    ) : (
-
-                        <div className="dt-review-card">
-
+                    reviews.map((review, index) => (
+                        <div
+                            className="dt-review-card"
+                            key={index}
+                            onClick={onViewAll}
+                            style={{ cursor: "pointer" }}
+                        >
                             <div className="dt-review-top">
 
-                                <div className="dt-review-avatar">
-                                    ⭐
+                                <div className="dt-review-avatar-wrap">
+                                    {review.profile_image ? (
+                                        <img
+                                            src={review.profile_image}
+                                            alt={review.full_name}
+                                            className="dt-review-avatar-img"
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = "none";
+                                                e.currentTarget.nextSibling.style.display = "grid";
+                                            }}
+                                        />
+                                    ) : null}
+
+                                    <div
+                                        className="dt-review-avatar"
+                                        style={{
+                                            display: review.profile_image ? "none" : "grid"
+                                        }}
+                                    >
+                                        NO DP
+                                    </div>
                                 </div>
 
                                 <div>
-
-                                    <h4>
-
-                                        No Reviews Yet
-
-                                    </h4>
-
+                                    <h4>{review.full_name}</h4>
+                                    <span>{"⭐".repeat(review.rating)}</span>
                                 </div>
 
                             </div>
 
-                            <p>
+                            <p>{review.review_message}</p>
+                        </div>
+                    ))
 
-                                Be the first customer to review this product.
+                ) : (
 
-                            </p>
+                    <div className="dt-review-card dt-review-empty">
+
+                        <div className="dt-review-top">
+
+                            <div className="dt-review-avatar-wrap">
+                                <div className="dt-review-star-avatar">
+                                    ⭐
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4>No Reviews Yet</h4>
+                            </div>
 
                         </div>
 
-                    )
+                        <p>Be the first customer to review this product.</p>
 
-                }
+                    </div>
+
+                )}
 
             </div>
 
         </div>
-
     );
-
 }
 
 export default Reviews;

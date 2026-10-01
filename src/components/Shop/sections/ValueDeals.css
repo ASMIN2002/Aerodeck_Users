@@ -1,27 +1,88 @@
-/* ValueDeals.css */
-
 .shop-value-deals-section,
 .shop-value-deals-section * {
     box-sizing: border-box;
 }
 
-/* ============================================
-   SECTION WRAPPER
-   ============================================ */
 .shop-value-deals-section {
-    position: relative;
     width: 100%;
-
-    margin: 0 0 16px;
-    padding: 0 14px 6px;
-
-    animation: shopValueIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    padding: 10px 0 14px;
+    margin: 0 0 8px 0;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes shopValueIn {
+.likeheader {
+    width: 100%;
+    padding: 4px 14px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.likeheader h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+    color: #222;
+}
+
+.shop-value-deals-scroll {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 12px 8px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 8px,
+            #000 calc(100% - 8px),
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg,
+            transparent 0,
+            #000 8px,
+            #000 calc(100% - 8px),
+            transparent 100%);
+}
+
+.shop-value-deals-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.shop-value-deals-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-columns: 150px;
+    gap: 12px;
+    width: max-content;
+}
+
+.shop-value-card {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    animation: valueFadeIn 0.4s ease both;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes valueFadeIn {
     from {
         opacity: 0;
-        transform: translateY(14px);
+        transform: translateY(8px);
     }
 
     to {
@@ -30,586 +91,199 @@
     }
 }
 
-/* ============================================
-   HEADER — "Top Value Deals"
-   ============================================ */
-.likeheader {
-    display: inline-flex;
-    align-items: center;
-
-    margin: 0 0 10px;
-    padding-left: 12px;
-
-    position: relative;
+.shop-value-card:hover {
+    transform: translateY(-3px);
+    border-color: #ffd9b3;
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.15);
 }
 
-.likeheader h3 {
-    margin: 0;
-
-    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
-}
-
-/* 🔥 accent bar on left of header */
-.likeheader::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 5px;
-    height: 80%;
-
-    border-radius: 4px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        2px 3px 6px rgba(91, 110, 225, 0.5),
-        -1.5px -1.5px 4px rgba(255, 255, 255, 1),
-        1.5px -1.5px 4px rgba(255, 255, 255, 0.7),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(60, 70, 160, 0.45);
-}
-
-/* 🔥 lightning bolt after text */
-.likeheader::after {
-    content: "⚡";
-    margin-left: 6px;
-    font-size: 0.9em;
-    color: #e0a52e;
-    filter: drop-shadow(0 2px 3px rgba(224, 165, 46, 0.4));
-    animation: valueZap 2s ease-in-out infinite;
-}
-
-@keyframes valueZap {
-
-    0%,
-    100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-    }
-
-    45% {
-        transform: scale(1.15) rotate(-6deg);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.2) rotate(6deg);
-        opacity: 0.85;
-    }
-
-    55% {
-        transform: scale(1.15) rotate(-6deg);
-        opacity: 1;
-    }
-}
-
-/* ============================================
-   SCROLL WRAPPER
-   ============================================ */
-.shop-value-deals-scroll {
-    width: 100%;
-
-    overflow-x: auto;
-    overflow-y: visible;
-
-    padding: 14px 4px 18px;
-
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    mask-image: linear-gradient(90deg,
-            transparent 0,
-            #000 10px,
-            #000 calc(100% - 10px),
-            transparent 100%);
-    -webkit-mask-image: linear-gradient(90deg,
-            transparent 0,
-            #000 10px,
-            #000 calc(100% - 10px),
-            transparent 100%);
-}
-
-.shop-value-deals-scroll::-webkit-scrollbar {
-    display: none;
-}
-
-/* ============================================
-   GRID
-   ============================================ */
-.shop-value-deals-grid {
-    display: flex;
-    align-items: stretch;
-    gap: 12px;
-
-    width: max-content;
-    min-width: 100%;
-}
-
-/* ============================================
-   🔥 CARD — 3D UTHA HUA
-   ============================================ */
-.shop-value-card {
-    position: relative;
-    flex-shrink: 0;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-
-    width: 120px;
-    padding: 10px;
-
-    border: 1px solid rgba(255, 255, 255, 0.98);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 HEAVY OUTSET — utha hua */
-    box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.5),
-        0 6px 12px rgba(140, 150, 180, 0.35),
-        10px 10px 22px rgba(140, 150, 180, 0.25),
-        -10px -10px 22px rgba(255, 255, 255, 1),
-        8px -8px 18px rgba(255, 255, 255, 0.85),
-        -8px 8px 18px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
-
-    cursor: pointer;
-
-    transform: translateY(-6px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-    overflow: hidden;
-
-    animation: shopValueCardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes shopValueCardIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-6px) scale(1);
-    }
-}
-
-/* Top highlight */
-.shop-value-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 12%;
-    right: 12%;
-    height: 1.5px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 18px 18px 0 0;
-    pointer-events: none;
-    z-index: 3;
-}
-
-/* Bottom ground shadow */
-.shop-value-card::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 18%;
-    right: 18%;
-    height: 4px;
-    background: radial-gradient(ellipse at center,
-            rgba(140, 150, 180, 0.3) 0%,
-            transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(2px);
-    z-index: 0;
+.shop-value-card:active {
+    transform: scale(0.98);
 }
 
 .shop-value-image {
     position: relative;
-
     width: 100%;
     aspect-ratio: 1 / 1;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
+    background: #f5f5f5;
     overflow: hidden;
-
-    box-shadow:
-        5px 6px 14px rgba(140, 150, 180, 0.5),
-        2px 3px 8px rgba(140, 150, 180, 0.3),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.75),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    flex-shrink: 0;
 }
 
 .shop-value-image img {
-    display: block;
     width: 100%;
     height: 100%;
-
     object-fit: cover;
     object-position: center;
-
-    border-radius: 13px;
-
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-
-    transform: scale(1.08);
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    display: block;
+    transition: transform 0.35s ease;
 }
 
 .shop-value-card:hover .shop-value-image img {
-    transform: scale(1.2);
+    transform: scale(1.06);
 }
 
-/* ============================================
-   HIGHLIGHT BADGE — golden 3D pill (top-left)
-   ============================================ */
 .shop-value-highlight {
     position: absolute;
-    top: 6px;
-    left: 6px;
-
+    top: 8px;
+    left: 8px;
     display: inline-flex;
     align-items: center;
-    gap: 2px;
-
-    max-width: calc(100% - 12px);
-    padding: 3px 8px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
-    color: #4a3200;
-    font-size: 0.56rem;
-    font-weight: 900;
+    gap: 4px;
+    max-width: calc(100% - 16px);
+    padding: 4px 9px;
+    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
     letter-spacing: 0.2px;
-    line-height: 1;
+    line-height: 1.2;
+    border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(255, 107, 0, 0.4);
     white-space: nowrap;
-
-    text-shadow:
-        0 1px 1px rgba(255, 255, 255, 0.65),
-        0 0 4px rgba(255, 255, 255, 0.4);
-
-    /* 🔥 utha hua */
-    box-shadow:
-        0 4px 10px rgba(224, 165, 46, 0.6),
-        0 2px 6px rgba(224, 165, 46, 0.45),
-        3px 3px 8px rgba(224, 165, 46, 0.3),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.7),
-        -2px 2px 6px rgba(224, 165, 46, 0.2),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.6),
-        inset -1px -1px 2px rgba(140, 90, 20, 0.4);
-
-    transform: translateY(-2px);
-    z-index: 2;
-
     overflow: hidden;
     text-overflow: ellipsis;
-
-    animation: valueHighlightGlow 2.4s ease-in-out infinite;
 }
 
-@keyframes valueHighlightGlow {
-
-    0%,
-    100% {
-        box-shadow:
-            0 4px 10px rgba(224, 165, 46, 0.6),
-            0 2px 6px rgba(224, 165, 46, 0.45),
-            3px 3px 8px rgba(224, 165, 46, 0.3),
-            -2px -2px 6px rgba(255, 255, 255, 1),
-            2px -2px 6px rgba(255, 255, 255, 0.7),
-            -2px 2px 6px rgba(224, 165, 46, 0.2),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
-            inset -1px -1px 2px rgba(140, 90, 20, 0.4);
-    }
-
-    50% {
-        box-shadow:
-            0 6px 14px rgba(224, 165, 46, 0.75),
-            0 4px 10px rgba(224, 165, 46, 0.55),
-            5px 5px 12px rgba(224, 165, 46, 0.4),
-            -3px -3px 8px rgba(255, 255, 255, 1),
-            3px -3px 8px rgba(255, 255, 255, 0.8),
-            -3px 3px 8px rgba(224, 165, 46, 0.25),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.65),
-            inset -1px -1px 2px rgba(140, 90, 20, 0.45);
-    }
-}
-
-/* ============================================
-   NAME — below image
-   ============================================ */
 .shop-value-name {
     display: block;
-
     width: 100%;
-    padding: 2px 2px 0;
-
-    font-size: clamp(0.7rem, 1.95vw, 0.8rem);
-    font-weight: 800;
+    max-width: 100%;
+    padding: 9px 10px 11px;
+    font-size: 0.72rem;
+    font-weight: 600;
     letter-spacing: 0.1px;
-    line-height: 1.25;
+    line-height: 1.3;
     text-align: center;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-
+    color: #333;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .shop-value-deals-section {
-        padding: 0 12px 4px;
-        margin-bottom: 14px;
-    }
-
+@media (max-width: 360px) {
     .likeheader {
-        margin-bottom: 8px;
-        padding-left: 11px;
+        padding: 4px 10px 8px;
     }
 
     .likeheader h3 {
         font-size: 0.95rem;
     }
 
-    .likeheader::before {
-        width: 4px;
-    }
-
     .shop-value-deals-scroll {
-        padding: 12px 3px 16px;
+        padding: 4px 10px 8px;
     }
 
     .shop-value-deals-grid {
+        grid-auto-columns: 128px;
         gap: 10px;
     }
 
     .shop-value-card {
-        padding: 9px;
-        border-radius: 16px;
-        gap: 7px;
-        transform: translateY(-5px);
-    }
-
- 
-    .shop-value-image {
-        border-radius: 13px;
-    }
-
-    .shop-value-image img {
+        width: 128px;
         border-radius: 12px;
     }
 
     .shop-value-highlight {
-        padding: 3px 7px;
-        font-size: 0.52rem;
-        top: 5px;
-        left: 5px;
+        top: 6px;
+        left: 6px;
+        padding: 3px 8px;
+        font-size: 0.58rem;
     }
 
     .shop-value-name {
-        font-size: 0.72rem;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .shop-value-deals-section {
-        padding: 0 10px 4px;
-        margin-bottom: 12px;
-    }
-
-    .likeheader {
-        margin-bottom: 7px;
-        padding-left: 10px;
-    }
-
-    .likeheader h3 {
-        font-size: 0.88rem;
-        letter-spacing: 0.15px;
-    }
-
-    .likeheader::before {
-        width: 3.5px;
-        height: 75%;
-    }
-
-    .shop-value-deals-scroll {
-        padding: 10px 3px 14px;
-    }
-
-    .shop-value-deals-grid {
-        gap: 9px;
-    }
-
-    .shop-value-card {
-        padding: 8px;
-        border-radius: 14px;
-        gap: 6px;
-        transform: translateY(-4px);
-    }
-
-    .shop-value-image {
-        border-radius: 12px;
-
-        box-shadow:
-            4px 5px 10px rgba(140, 150, 180, 0.45),
-            2px 3px 6px rgba(140, 150, 180, 0.28),
-            -3px -3px 8px rgba(255, 255, 255, 1),
-            2px -2px 6px rgba(255, 255, 255, 0.75),
-            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
-            inset -1px -1px 2.5px rgba(155, 165, 190, 0.35);
-    }
-
-    .shop-value-image img {
-        border-radius: 11px;
-    }
-
-    .shop-value-highlight {
-        padding: 2px 6px;
-        font-size: 0.48rem;
-        top: 4px;
-        left: 4px;
-
-        box-shadow:
-            0 3px 8px rgba(224, 165, 46, 0.55),
-            0 2px 4px rgba(224, 165, 46, 0.4),
-            2px 2px 6px rgba(224, 165, 46, 0.28),
-            -2px -2px 5px rgba(255, 255, 255, 1),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
-            inset -1px -1px 2px rgba(140, 90, 20, 0.4);
-    }
-
-    .shop-value-name {
+        padding: 7px 8px 9px;
         font-size: 0.66rem;
-        padding: 1px 1px 0;
     }
 }
 
-/* Small phones */
-@media (max-width: 360px) {
-    .shop-value-deals-section {
-        padding: 0 8px 4px;
-        margin-bottom: 10px;
-    }
-
-    .likeheader {
-        padding-left: 9px;
-    }
-
-    .likeheader h3 {
-        font-size: 0.8rem;
-    }
-
-    .likeheader::before {
-        width: 3px;
-    }
-
-    .shop-value-deals-scroll {
-        padding: 9px 2px 12px;
-    }
-
+@media (max-width: 480px) {
     .shop-value-deals-grid {
-        gap: 8px;
+        grid-auto-columns: 140px;
+        gap: 11px;
     }
 
     .shop-value-card {
-        padding: 7px;
-        border-radius: 12px;
-        gap: 5px;
-        transform: translateY(-3px);
-    }
-
-    .shop-value-image {
-        border-radius: 10px;
-    }
-
-    .shop-value-image img {
-        border-radius: 9px;
-    }
-
-    .shop-value-highlight {
-        padding: 2px 5px;
-        font-size: 0.42rem;
-        top: 3px;
-        left: 3px;
-    }
-
-    .shop-value-name {
-        font-size: 0.6rem;
+        width: 140px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
+@media (min-width: 600px) {
+    .shop-value-deals-section {
+        max-width: 1200px;
+        margin: 0 auto 12px;
+        padding: 12px 0 16px;
+    }
 
-    .shop-value-deals-section,
-    .shop-value-card,
-    .likeheader::after,
+    .likeheader {
+        padding: 4px 20px 12px;
+    }
+
+    .likeheader h3 {
+        font-size: 1.25rem;
+    }
+
+    .shop-value-deals-scroll {
+        padding: 4px 20px 10px;
+    }
+
+    .shop-value-deals-grid {
+        grid-auto-columns: 170px;
+        gap: 14px;
+    }
+
+    .shop-value-card {
+        width: 170px;
+        border-radius: 16px;
+    }
+
     .shop-value-highlight {
+        top: 10px;
+        left: 10px;
+        padding: 5px 12px;
+        font-size: 0.7rem;
+    }
+
+    .shop-value-name {
+        padding: 10px 12px 12px;
+        font-size: 0.78rem;
+    }
+}
+
+@media (min-width: 900px) {
+    .likeheader h3 {
+        font-size: 1.4rem;
+    }
+
+    .shop-value-deals-grid {
+        grid-auto-columns: 180px;
+        gap: 16px;
+    }
+
+    .shop-value-card {
+        width: 180px;
+    }
+
+    .shop-value-name {
+        font-size: 0.82rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shop-value-card {
         animation: none;
     }
 
     .shop-value-card,
-    .shop-value-image,
-    .shop-value-image img,
-    .shop-value-highlight {
+    .shop-value-image img {
         transition: none;
+    }
+
+    .shop-value-card:hover {
+        transform: none;
+    }
+
+    .shop-value-card:hover .shop-value-image img {
+        transform: none;
     }
 }

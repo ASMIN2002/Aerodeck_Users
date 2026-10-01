@@ -12,8 +12,6 @@ function Information({ productDetail }) {
             year: "numeric"
         });
     };
-
-    /* ✅ Split function — "Label~Value" → ["Label", "Value"] */
     const splitField = (field) => {
         if (!field) return ["-", "-"];
 
