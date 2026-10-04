@@ -1,249 +1,156 @@
-/* TOPHEADER.css */
+/* =========================
+   TOP HEADER — WHITE THEME
+   ========================= */
 
-.top-header,
-.top-header * {
-    box-sizing: border-box;
-}
-
-/* ============================================
-   HEADER — 3D WOOL BAR
-   ============================================ */
 .top-header {
     position: sticky;
     top: 0;
-    z-index: 300;
-
+    z-index: 100;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-
-    width: 100%;
-
-    margin: 0 0 14px;
-    padding: 10px 14px;
-
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 0 0 20px 20px;
-
-    background:
-        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    box-shadow:
-        0 9px 22px rgba(140, 150, 180, 0.55),
-        0 4px 12px rgba(140, 150, 180, 0.35),
-        0 1px 0 rgba(255, 255, 255, 1),
-        inset 0 2px 4px rgba(255, 255, 255, 1),
-        inset 0 -3px 6px rgba(155, 165, 190, 0.35);
-
-    animation: topHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-    -webkit-tap-highlight-color: transparent;
+    padding: 0 16px;
+    height: 56px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes topHeaderIn {
-    from {
-        opacity: 0;
-        transform: translateY(-14px);
-    }
+/* =========================
+   LEFT SIDE — BACK + TITLE
+   ========================= */
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   LEFT SIDE — back button + title
-   ============================================ */
 .top-header-info {
     display: flex;
     align-items: center;
     gap: 10px;
-
     min-width: 0;
     flex: 1;
+    z-index: 2;
+}
+
+.top-header-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    color: #374151;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.top-header-back:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    color: #111827;
+}
+
+.top-header-back:active {
+    transform: scale(0.94);
+    background: #e5e7eb;
 }
 
 .top-header-info h2 {
     margin: 0;
-
-    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    min-width: 0;
 }
 
-/* ============================================
-   BACK BUTTON — 3D WOOL BALL
-   ============================================ */
-.top-header-back {
-    flex-shrink: 0;
+/* =========================
+   CENTER — BRAND TITLE
+   ========================= */
 
-    display: grid;
-    place-items: center;
-
-    width: 38px;
-    height: 38px;
-
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
-    font-size: 1.1rem;
-    font-weight: 900;
-    line-height: 1;
-
-    cursor: pointer;
-
-    box-shadow:
-        4px 5px 10px rgba(140, 150, 180, 0.6),
-        1.5px 2px 4px rgba(140, 150, 180, 0.4),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.top-header-back:hover {
-    transform: translateX(-3px) scale(1.06);
-    color: #7c8cf8;
-
-    box-shadow:
-        6px 7px 14px rgba(124, 140, 248, 0.45),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
-}
-
-.top-header-back:active {
-    transform: translateX(0) scale(0.94);
-
-    box-shadow:
-        inset 4px 4px 10px rgba(155, 165, 190, 0.75),
-        inset -4px -4px 10px rgba(255, 255, 255, 1);
-}
-
-.top-header-back:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 3px;
-}
-
-/* ============================================
-   RIGHT SIDE — brand title "HEEPIT"
-   ============================================ */
 .top-header-title {
-    flex-shrink: 0;
-
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 7px 14px;
-
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgb(0, 174, 255), transparent 55%),
-        linear-gradient(145deg, #0022ff 0%, #0026ff 100%);
-
-    box-shadow:
-        5px 6px 14px rgba(91, 110, 225, 0.5),
-        2px 3px 8px rgba(91, 110, 225, 0.35),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.4),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.45);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
 }
 
 .top-header-title h3 {
     margin: 0;
-
-    font-size: clamp(0.8rem, 2.3vw, 0.9rem);
-    font-weight: 900;
-    letter-spacing: 2px;
-
-    color: #ffffff;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: 2.5px;
+    line-height: 1;
 }
 
-.top-header-title:hover {
-    transform: translateY(-2px) scale(1.03);
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
 
-    box-shadow:
-        7px 8px 18px rgba(91, 110, 225, 0.65),
-        3px 4px 10px rgba(91, 110, 225, 0.45),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.45),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
 @media (max-width: 768px) {
     .top-header {
-        padding: 9px 12px;
-        margin-bottom: 12px;
-        border-radius: 0 0 18px 18px;
-        gap: 9px;
+        height: 52px;
+        padding: 0 12px;
     }
 
     .top-header-back {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
+        width: 34px;
+        height: 34px;
+        font-size: 1.05rem;
+        border-radius: 9px;
     }
 
     .top-header-info {
-        gap: 9px;
+        gap: 8px;
     }
 
-    .top-header-title {
-        padding: 6px 12px;
-        border-radius: 13px;
+    .top-header-info h2 {
+        font-size: 0.92rem;
+    }
+
+    .top-header-title h3 {
+        font-size: 1.05rem;
+        letter-spacing: 2px;
     }
 }
 
-/* Phones */
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
+
 @media (max-width: 480px) {
     .top-header {
-        padding: 8px 10px;
-        margin-bottom: 10px;
-        border-radius: 0 0 16px 16px;
-        gap: 7px;
+        height: 50px;
+        padding: 0 10px;
     }
 
     .top-header-back {
         width: 32px;
         height: 32px;
-        font-size: 0.9rem;
-        box-shadow:
-            3px 4px 8px rgba(140, 150, 180, 0.55),
-            -2px -2px 6px rgba(255, 255, 255, 1),
-            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
-            inset -1px -1px 2.5px rgba(155, 165, 190, 0.4);
+        font-size: 1rem;
+        border-radius: 8px;
     }
 
     .top-header-info {
@@ -251,77 +158,50 @@
     }
 
     .top-header-info h2 {
-        font-size: 0.9rem;
-        letter-spacing: 0.2px;
-    }
-
-    .top-header-title {
-        padding: 5px 10px;
-        border-radius: 11px;
-        box-shadow:
-            4px 5px 10px rgba(91, 110, 225, 0.45),
-            -3px -3px 8px rgba(255, 255, 255, 1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.4),
-            inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.45);
+        font-size: 0.85rem;
+        max-width: 110px;
     }
 
     .top-header-title h3 {
-        font-size: 0.78rem;
+        font-size: 0.95rem;
         letter-spacing: 1.6px;
     }
 }
 
-/* Small phones */
+/* =========================
+   RESPONSIVE — VERY SMALL
+   ========================= */
+
 @media (max-width: 360px) {
     .top-header {
-        padding: 7px 8px;
-        margin-bottom: 8px;
-        border-radius: 0 0 14px 14px;
-        gap: 6px;
+        height: 46px;
+        padding: 0 8px;
     }
 
     .top-header-back {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-        box-shadow:
-            2px 3px 6px rgba(140, 150, 180, 0.5),
-            -2px -2px 5px rgba(255, 255, 255, 1),
-            inset 1px 1px 2px rgba(255, 255, 255, 1),
-            inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-    }
-
-    .top-header-info {
-        gap: 6px;
+        width: 30px;
+        height: 30px;
+        font-size: 0.92rem;
+        border-radius: 7px;
     }
 
     .top-header-info h2 {
-        font-size: 0.82rem;
-        letter-spacing: 0.1px;
-    }
-
-    .top-header-title {
-        padding: 4px 8px;
-        border-radius: 10px;
+        font-size: 0.78rem;
+        max-width: 90px;
     }
 
     .top-header-title h3 {
-        font-size: 0.7rem;
+        font-size: 0.85rem;
         letter-spacing: 1.2px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
+/* =========================
+   REDUCED MOTION
+   ========================= */
+
 @media (prefers-reduced-motion: reduce) {
-
-    .top-header {
-        animation: none;
-    }
-
-    .top-header-back,
-    .top-header-title {
-        transition: none;
+    .top-header-back {
+        transition: none !important;
     }
 }

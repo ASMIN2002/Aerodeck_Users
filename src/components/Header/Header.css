@@ -1,208 +1,124 @@
-/* Header.css — 3D UTHA HUA CLAYMORPHISM */
+/* =========================
+   HEADER — WHITE THEME
+   ========================= */
 
-.hd-header,
-.hd-header * {
-    box-sizing: border-box;
-}
-
-/* ============================================
-   🔥 HEADER — 3D UTHA HUA STICKY
-   ============================================ */
 .hd-header {
     position: sticky;
     top: 0;
-    z-index: 50;
-
-    display: flex;
-    flex-direction: column;
-
+    z-index: 100;
     width: 100%;
-
-    margin: 0 0 10px;
-    padding: 12px 14px 0;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 0 0 20px 20px;
-
-    background:
-        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    box-shadow:
-        0 12px 28px rgba(140, 150, 180, 0.5),
-        0 6px 14px rgba(140, 150, 180, 0.35),
-        0 3px 8px rgba(140, 150, 180, 0.25),
-        0 -3px 10px rgba(140, 150, 180, 0.15),
-        0 -1px 4px rgba(140, 150, 180, 0.1),
-        inset 0 2px 4px rgba(255, 255, 255, 1),
-        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
-
-    animation: hdHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
 }
 
-@keyframes hdHeaderIn {
-    from {
-        opacity: 0;
-        transform: translateY(-14px);
-    }
+/* =========================
+   TOP ROW
+   ========================= */
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   TOP ROW WRAPPER
-   ============================================ */
 .hd-top-row {
-    display: flex;
-    flex-direction: column;
-
     width: 100%;
-
-    padding-bottom: 10px;
-
-    border-bottom: 1.5px dashed rgba(155, 165, 190, 0.35);
-
-    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
-.hd-top-row::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.9) 50%,
-            transparent 100%);
-    pointer-events: none;
-}
-
-/* ============================================
-   TOP LINE — brand + right actions
-   ============================================ */
 .hd-top-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-
-    width: 100%;
+    height: 60px;
+    gap: 12px;
 }
 
-/* ---- Center — brand name + version ---- */
-.hd-center {
-    flex: 1;
-    min-width: 0;
+/* =========================
+   BRAND / VERSION (centered)
+   ========================= */
 
+.hd-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
 }
 
 .hd-brand-name {
-    font-size: clamp(0.98rem, 2.8vw, 1.15rem);
-    font-weight: 900;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #111827;
     letter-spacing: 2.5px;
-    text-transform: uppercase;
-    line-height: 1.15;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.18);
+    line-height: 1.1;
 }
 
 .hd-version {
-    font-size: clamp(0.56rem, 1.6vw, 0.64rem);
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    line-height: 1.2;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #9ca3af;
+    letter-spacing: 0.5px;
+    margin-top: 1px;
 }
 
-/* ---- Right actions — menu + bell ---- */
-.hd-right-actions {
-    flex-shrink: 0;
+/* =========================
+   RIGHT ACTIONS
+   ========================= */
 
+.hd-right-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    margin-left: auto;
+    position: relative;
+    z-index: 2;
 }
 
-/* ============================================
-   🔥 MENU DROPDOWN WRAP
-   ============================================ */
+/* =========================
+   MENU DROPDOWN WRAP
+   ========================= */
+
 .hd-menu-wrap {
     position: relative;
 }
 
-/* ---- Menu trigger button ---- */
 .hd-menu-trigger {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 6px;
-
-    padding: 8px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    color: #3f4664;
+    gap: 4px;
+    padding: 7px 10px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    color: #374151;
+    font-size: 0.8rem;
+    font-weight: 600;
     font-family: inherit;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
-
     cursor: pointer;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.25),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-2px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.2s ease;
+    white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
 }
 
+.hd-menu-trigger:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
 .hd-menu-trigger.open {
-    color: #5b6ee1;
-
-    border-color: rgba(124, 140, 248, 0.4);
-
-    box-shadow:
-        0 8px 18px rgba(124, 140, 248, 0.5),
-        0 4px 10px rgba(124, 140, 248, 0.35),
-        5px 5px 12px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+    background: #ffffff;
+    border-color: #16a34a;
+    color: #15803d;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
 }
 
 .hd-menu-label {
@@ -211,57 +127,38 @@
 
 .hd-menu-chevron {
     font-size: 0.9rem;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
 }
 
 .hd-menu-trigger.open .hd-menu-chevron {
     transform: rotate(180deg);
 }
 
-/* ============================================
-   🔥 MENU DROPDOWN — 3D UTHA HUA
-   ============================================ */
+/* =========================
+   DROPDOWN MENU
+   ========================= */
+
 .hd-menu-dropdown {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    z-index: 200;
-
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-
-    min-width: 148px;
-    padding: 8px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 20px 40px rgba(140, 150, 180, 0.55),
-        0 10px 20px rgba(140, 150, 180, 0.4),
-        0 5px 12px rgba(140, 150, 180, 0.3),
-        14px 14px 28px rgba(140, 150, 180, 0.28),
-        -14px -14px 28px rgba(255, 255, 255, 1),
-        11px -11px 24px rgba(255, 255, 255, 0.95),
-        -11px 11px 24px rgba(140, 150, 180, 0.15),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
-
-    animation: hdMenuDropIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-    transform-origin: top right;
+    min-width: 140px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    z-index: 50;
+    animation: hd-dropdown-in 0.18s ease;
+    box-sizing: border-box;
 }
 
-@keyframes hdMenuDropIn {
+@keyframes hd-dropdown-in {
     from {
         opacity: 0;
-        transform: translateY(-8px) scale(0.92);
+        transform: translateY(-6px) scale(0.97);
     }
 
     to {
@@ -271,183 +168,141 @@
 }
 
 .hd-menu-option {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    display: block;
     width: 100%;
     padding: 9px 12px;
-    border-radius: 10px;
-    color: #3f4664;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    color: #374151;
+    font-size: 0.82rem;
+    font-weight: 500;
     font-family: inherit;
-    font-size: 0.74rem;
-    font-weight: 900;
-    letter-spacing: 1px;
-    line-height: 1.2;
     text-align: left;
     cursor: pointer;
-    box-shadow: 0 0 1px black;
-    transform: translateY(-1px);
-    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.15s ease;
     -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
 }
 
+.hd-menu-option:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
 
 .hd-menu-option.active {
-    color: #fdfdfd;
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.3);
-    background: blue;
-    letter-spacing: 1px;
+    background: #f0fdf4;
+    color: #15803d;
+    font-weight: 700;
 }
 
-/* ============================================
-   🔥 NOTIFICATION BELL — 3D WOOL BALL
-   ============================================ */
+.hd-menu-option.active::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #16a34a;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* =========================
+   NOTIFICATION BUTTON
+   ========================= */
+
 .hd-notif-btn {
     position: relative;
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    color: #374151;
     font-size: 1.15rem;
-    line-height: 1;
-
     cursor: pointer;
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.55),
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transform: translateY(-2px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
 }
 
 .hd-notif-btn:hover {
-    transform: translateY(-4px) scale(1.06);
-    color: #7c8cf8;
-
-    box-shadow:
-        0 10px 22px rgba(124, 140, 248, 0.5),
-        0 5px 12px rgba(124, 140, 248, 0.35),
-        6px 6px 14px rgba(124, 140, 248, 0.25),
-        -6px -6px 14px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    color: #111827;
 }
 
 .hd-notif-btn:active {
-    transform: translateY(1px) scale(0.94);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
+    transform: scale(0.95);
 }
 
-/* ---- Notification dot — pulsing red ball ---- */
+/* =========================
+   NOTIFICATION RED DOT
+   ========================= */
+
 .hd-notif-dot {
     position: absolute;
-    top: 4px;
-    right: 4px;
-
-    display: block;
-
-    width: 12px;
-    height: 12px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+    top: 6px;
+    right: 6px;
+    width: 9px;
+    height: 9px;
+    background: #ef4444;
+    border: 2px solid #ffffff;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
-    box-shadow:
-        0 3px 8px rgba(226, 90, 90, 0.7),
-        0 2px 4px rgba(226, 90, 90, 0.5),
-        -1.5px -1.5px 4px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.6),
-        inset -1px -1px 2px rgba(160, 50, 50, 0.5);
-
-    animation: hdNotifPulse 1.6s ease-in-out infinite;
+    animation: hd-dot-pulse 1.8s ease-in-out infinite;
 }
 
-@keyframes hdNotifPulse {
+@keyframes hd-dot-pulse {
 
     0%,
     100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
         transform: scale(1);
-        box-shadow:
-            0 3px 8px rgba(226, 90, 90, 0.7),
-            0 2px 4px rgba(226, 90, 90, 0.5),
-            -1.5px -1.5px 4px rgba(255, 255, 255, 1),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
-            inset -1px -1px 2px rgba(160, 50, 50, 0.5);
     }
 
     50% {
-        transform: scale(1.2);
-        box-shadow:
-            0 0 0 5px rgba(226, 90, 90, 0.25),
-            0 4px 10px rgba(226, 90, 90, 0.8),
-            0 2px 4px rgba(226, 90, 90, 0.6),
-            -1.5px -1.5px 4px rgba(255, 255, 255, 1),
-            inset 1px 1px 2px rgba(255, 255, 255, 0.6),
-            inset -1px -1px 2px rgba(160, 50, 50, 0.5);
+        box-shadow: 0 0 0 5px rgba(239, 68, 68, 0);
+        transform: scale(1.08);
     }
 }
 
+/* =========================
+   TOAST
+   ========================= */
+
 .hd-toast {
     position: fixed;
-    bottom: 90px;
+    bottom: 32px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10000;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 22px;
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-    background:
-        radial-gradient(circle at 30% 25%, rgb(72, 0, 255), transparent 55%),
-        linear-gradient(145deg, #0022ff 0%, #0127ff 100%);
+    background: #111827;
     color: #ffffff;
+    padding: 11px 22px;
+    border-radius: 10px;
     font-size: 0.82rem;
-    font-weight: 900;
-    letter-spacing: 1px;
-    line-height: 1;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    animation: hd-toast-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     white-space: nowrap;
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-    animation: hdToastPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    max-width: 90vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
-@keyframes hdToastPop {
+@keyframes hd-toast-in {
     from {
         opacity: 0;
-        transform: translateX(-50%) translateY(20px) scale(0.9);
+        transform: translateX(-50%) translateY(16px) scale(0.94);
     }
 
     to {
@@ -456,185 +311,69 @@
     }
 }
 
-/* ============================================
-   RESPONSIVE — TABLETS
-   ============================================ */
-@media (max-width: 768px) {
-    .hd-header {
-        padding: 11px 12px 0;
-        margin-bottom: 9px;
-        border-radius: 0 0 18px 18px;
-    }
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
 
+@media (max-width: 768px) {
     .hd-top-row {
-        padding-bottom: 9px;
+        padding: 0 12px;
     }
 
     .hd-top-line {
-        gap: 9px;
+        height: 56px;
+        gap: 10px;
     }
 
     .hd-brand-name {
-        font-size: 1rem;
+        font-size: 1.02rem;
         letter-spacing: 2px;
     }
 
     .hd-version {
-        font-size: 0.6rem;
-    }
-
-    .hd-right-actions {
-        gap: 7px;
+        font-size: 0.55rem;
     }
 
     .hd-menu-trigger {
-        padding: 7px 12px;
-        font-size: 0.74rem;
-        border-radius: 11px;
-    }
-
-    .hd-menu-chevron {
-        font-size: 0.84rem;
-    }
-
-    .hd-notif-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1.05rem;
-    }
-
-    .hd-notif-dot {
-        width: 11px;
-        height: 11px;
-    }
-
-    .hd-menu-dropdown {
-        min-width: 140px;
-        padding: 7px;
-        border-radius: 13px;
-    }
-
-    .hd-menu-option {
-        padding: 8px 11px;
-        font-size: 0.7rem;
-        border-radius: 9px;
-    }
-
-    .hd-toast {
-        padding: 11px 20px;
-        font-size: 0.78rem;
-        bottom: 84px;
-    }
-}
-
-/* ============================================
-   RESPONSIVE — PHONES
-   ============================================ */
-@media (max-width: 480px) {
-    .hd-header {
-        padding: 10px 10px 0;
-        margin-bottom: 8px;
-        border-radius: 0 0 16px 16px;
-    }
-
-    .hd-top-row {
-        padding-bottom: 8px;
-    }
-
-    .hd-top-line {
-        gap: 8px;
-    }
-
-    .hd-brand-name {
-        font-size: 0.94rem;
-        letter-spacing: 1.8px;
-    }
-
-    .hd-version {
-        font-size: 0.54rem;
-        letter-spacing: 0.8px;
-    }
-
-    .hd-right-actions {
-        gap: 6px;
-    }
-
-    .hd-menu-trigger {
-        padding: 7px 11px;
-        font-size: 0.7rem;
-        border-radius: 10px;
-        gap: 5px;
-    }
-
-    .hd-menu-chevron {
-        font-size: 0.78rem;
+        padding: 6px 9px;
+        font-size: 0.76rem;
+        border-radius: 7px;
     }
 
     .hd-notif-btn {
         width: 34px;
         height: 34px;
-        font-size: 0.95rem;
-        border-width: 1.5px;
-
-        box-shadow:
-            0 5px 12px rgba(140, 150, 180, 0.5),
-            0 3px 8px rgba(140, 150, 180, 0.35),
-            3px 3px 8px rgba(140, 150, 180, 0.25),
-            -3px -3px 8px rgba(255, 255, 255, 1),
-            2px -2px 6px rgba(255, 255, 255, 0.85),
-            -2px 2px 6px rgba(140, 150, 180, 0.1),
-            inset 1px 1px 2.5px rgba(255, 255, 255, 1),
-            inset -1px -1px 2.5px rgba(155, 165, 190, 0.4);
-    }
-
-    .hd-notif-dot {
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 2px;
-        border-width: 1.5px;
+        font-size: 1.05rem;
+        border-radius: 9px;
     }
 
     .hd-menu-dropdown {
-        min-width: 128px;
-        padding: 6px;
-        border-radius: 12px;
+        min-width: 130px;
     }
 
     .hd-menu-option {
-        padding: 8px 10px;
-        font-size: 0.66rem;
-        border-radius: 8px;
-    }
-
-    .hd-toast {
-        padding: 10px 18px;
-        font-size: 0.72rem;
-        bottom: 80px;
-        border-radius: 999px;
+        padding: 8px 11px;
+        font-size: 0.78rem;
     }
 }
 
-/* ============================================
-   RESPONSIVE — SMALL PHONES
-   ============================================ */
-@media (max-width: 360px) {
-    .hd-header {
-        padding: 9px 8px 0;
-        border-radius: 0 0 14px 14px;
-    }
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
 
+@media (max-width: 480px) {
     .hd-top-row {
-        padding-bottom: 7px;
+        padding: 0 10px;
     }
 
     .hd-top-line {
-        gap: 7px;
+        height: 52px;
+        gap: 8px;
     }
 
     .hd-brand-name {
-        font-size: 0.84rem;
-        letter-spacing: 1.5px;
+        font-size: 0.92rem;
+        letter-spacing: 1.6px;
     }
 
     .hd-version {
@@ -646,63 +385,119 @@
     }
 
     .hd-menu-trigger {
-        padding: 6px 10px;
-        font-size: 0.64rem;
-        border-radius: 9px;
-        gap: 4px;
+        padding: 5px 8px;
+        font-size: 0.72rem;
+        gap: 3px;
+        border-radius: 7px;
     }
 
     .hd-menu-chevron {
-        font-size: 0.72rem;
+        font-size: 0.8rem;
+    }
+
+    .hd-menu-label {
+        max-width: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .hd-notif-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 0.88rem;
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+        border-radius: 8px;
     }
 
     .hd-notif-dot {
         width: 8px;
         height: 8px;
-        top: 2px;
-        right: 2px;
+        top: 5px;
+        right: 5px;
     }
 
     .hd-menu-dropdown {
-        min-width: 116px;
-        padding: 5px;
-        border-radius: 11px;
+        min-width: 120px;
+        padding: 4px;
+        border-radius: 9px;
     }
 
     .hd-menu-option {
-        padding: 7px 9px;
-        font-size: 0.6rem;
-        border-radius: 7px;
+        padding: 8px 10px;
+        font-size: 0.74rem;
+        border-radius: 6px;
     }
 
     .hd-toast {
-        padding: 9px 16px;
-        font-size: 0.66rem;
-        bottom: 76px;
+        bottom: 24px;
+        padding: 10px 18px;
+        font-size: 0.76rem;
+        border-radius: 9px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
+/* =========================
+   RESPONSIVE — VERY SMALL
+   ========================= */
 
-    .hd-header,
-    .hd-menu-dropdown,
-    .hd-notif-dot,
-    .hd-toast {
-        animation: none;
+@media (max-width: 360px) {
+    .hd-top-row {
+        padding: 0 8px;
     }
 
-    .hd-menu-trigger,
-    .hd-menu-option,
+    .hd-top-line {
+        height: 48px;
+    }
+
+    .hd-brand-name {
+        font-size: 0.82rem;
+        letter-spacing: 1.2px;
+    }
+
+    .hd-version {
+        font-size: 0.45rem;
+    }
+
+    .hd-menu-trigger {
+        padding: 4px 7px;
+        font-size: 0.68rem;
+    }
+
+    .hd-menu-label {
+        max-width: 48px;
+    }
+
     .hd-notif-btn {
-        transition: none;
+        width: 30px;
+        height: 30px;
+        font-size: 0.92rem;
+    }
+
+    .hd-notif-dot {
+        width: 7px;
+        height: 7px;
+    }
+
+    .hd-toast {
+        padding: 9px 14px;
+        font-size: 0.72rem;
+        bottom: 20px;
+    }
+}
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .hd-menu-dropdown,
+    .hd-toast,
+    .hd-notif-dot,
+    .hd-menu-chevron,
+    .hd-menu-trigger,
+    .hd-notif-btn {
+        animation: none !important;
+        transition: none !important;
     }
 }

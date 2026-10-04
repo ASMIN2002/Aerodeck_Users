@@ -1,847 +1,484 @@
-/* TrackOrder.css — 3D UTHA HUA CLAYMORPHISM */
+/* =========================
+   TRACK ORDER - WHITE THEME
+   ========================= */
 
-.track-order,
-.track-order * {
+.track-order {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 24px 32px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f0f0f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================
+   TITLE
+   ========================= */
+
+.track-title {
+    margin: 0 0 28px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    text-align: center;
+    word-break: break-word;
+}
+
+/* =========================
+   TRACK LINE (shared)
+   ========================= */
+
+.track-line {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 4px;
     box-sizing: border-box;
 }
 
-/* ============================================
-   🔥 MAIN WRAPPER — 3D UTHA HUA PANEL
-   ============================================ */
-.track-order {
-    position: relative;
+/* =========================
+   PROGRESS LINE (normal + return)
+   ========================= */
 
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    width: 100%;
-
-    margin: 0;
-    padding: 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 3D UTHA HUA PANEL */
-    box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.5),
-        0 7px 14px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        11px 11px 22px rgba(140, 150, 180, 0.22),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.track-order::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
-}
-
-/* ============================================
-   🔥 TITLE — section heading
-   ============================================ */
-.track-title {
-    margin: 0;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: clamp(0.8rem, 2.1vw, 0.9rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-}
-
-/* ============================================
-   🔥 TRACK LINE — main horizontal stepper
-   ============================================ */
-.track-line {
-    position: relative;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    gap: 4px;
-
-    width: 100%;
-
-    padding: 10px 4px;
-
-    /* base faint line */
-    --line-color: rgba(155, 165, 190, 0.35);
-}
-
-/* 🔥 BASE LINE — behind the circles */
-.track-line::before {
-    content: "";
-    position: absolute;
-
-    top: 27px;
-    left: 8%;
-    right: 8%;
-
-    height: 3px;
-
-    border-radius: 3px;
-
-    background:
-        linear-gradient(90deg,
-            rgba(155, 165, 190, 0.45) 0%,
-            rgba(155, 165, 190, 0.45) 100%);
-
-    box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.6),
-        inset 0 -1px 1px rgba(155, 165, 190, 0.3);
-
-    z-index: 1;
-}
-
-/* ============================================
-   🔥 PROGRESS LINE — animated fill
-   ============================================ */
 .track-progress-line {
     position: absolute;
-
-    top: 27px;
-    left: 8%;
-
-    width: var(--progress, 0%);
-    max-width: 84%;
-
-    height: 3px;
-
-    border-radius: 3px;
-
-    background:
-        linear-gradient(90deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        0 0 12px rgba(124, 140, 248, 0.7),
-        inset 0 1px 1px rgba(255, 255, 255, 0.6);
-
-    z-index: 2;
-
-    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    top: 15px;
+    left: calc(10% + 4px);
+    width: 0;
+    height: 4px;
+    background: #16a34a;
+    border-radius: 4px;
+    z-index: 1;
+    transition: width 0.3s ease;
+    max-width: calc(80% - 8px);
 }
 
 .track-progress-line.animate-progress {
-    animation: trackProgressGlow 2s ease-in-out infinite;
+    width: var(--progress, 0%);
+    transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes trackProgressGlow {
+/* =========================
+   TRACK STEP (normal + return)
+   ========================= */
 
-    0%,
-    100% {
-        box-shadow:
-            0 0 12px rgba(124, 140, 248, 0.7),
-            inset 0 1px 1px rgba(255, 255, 255, 0.6);
-    }
-
-    50% {
-        box-shadow:
-            0 0 20px rgba(124, 140, 248, 0.95),
-            inset 0 1px 1px rgba(255, 255, 255, 0.7);
-    }
-}
-
-/* ============================================
-   🔥 TRACK STEP — individual step
-   ============================================ */
 .track-step {
     position: relative;
-    z-index: 3;
-
-    flex: 1;
-    min-width: 0;
-
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-
+    flex: 1;
+    min-width: 0;
     text-align: center;
 }
 
-/* ---- Circle (main dot) ---- */
-.track-circle {
-    position: relative;
-
-    display: grid;
-    place-items: center;
-
-    width: 32px;
-    height: 32px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+.track-step .track-circle {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 3D WOOL BALL */
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    background: #f3f4f6;
+    border: 3px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+    flex-shrink: 0;
+    position: relative;
 }
 
-/* ---- Completed step — accent 3D ball ---- */
 .track-step.completed .track-circle {
-    border-color: rgba(255, 255, 255, 1);
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        0 8px 16px rgba(91, 110, 225, 0.6),
-        0 4px 10px rgba(91, 110, 225, 0.45),
-        5px 5px 12px rgba(91, 110, 225, 0.3),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(91, 110, 225, 0.2),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-2px) scale(1.05);
+    background: #16a34a;
+    border-color: #15803d;
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
 }
 
-/* ---- Checkmark inside completed circle ---- */
 .track-step.completed .track-circle::after {
-    content: "✓";
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 900;
-    line-height: 1;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    animation: checkPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-@keyframes checkPop {
-    from {
-        transform: scale(0.4) rotate(-90deg);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-    }
-}
-
-/* ---- Step label ---- */
-.track-step>span {
-    display: inline-block;
-
-    padding: 3px 7px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    font-size: clamp(0.5rem, 1.4vw, 0.58rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
+.track-step span {
+    margin-top: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #9ca3af;
+    letter-spacing: 0.4px;
     text-transform: uppercase;
-    line-height: 1.2;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        0 2px 4px rgba(140, 150, 180, 0.28),
-        2px 2px 6px rgba(140, 150, 180, 0.22),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        1.5px -1.5px 4px rgba(255, 255, 255, 0.85),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-1px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.track-step.completed>span {
-    color: #5b6ee1;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    box-shadow:
-        0 4px 10px rgba(124, 140, 248, 0.45),
-        0 2px 6px rgba(124, 140, 248, 0.32),
-        3px 3px 8px rgba(124, 140, 248, 0.25),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(124, 140, 248, 0.3);
-}
-
-/* ---- Small date text (if used) ---- */
-.track-step small {
-    display: block;
-
-    font-size: clamp(0.48rem, 1.3vw, 0.56rem);
-    font-weight: 800;
-    letter-spacing: 0.2px;
     line-height: 1.3;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    word-break: break-word;
+    transition: color 0.3s ease;
 }
 
-/* ============================================
-   🔥 CANCEL TRACK — special variant
-   ============================================ */
-.track-line.cancel-track::before {
-    background: linear-gradient(90deg,
-            rgba(155, 165, 190, 0.45) 0%,
-            rgba(155, 165, 190, 0.45) 100%);
+.track-step.completed span {
+    color: #15803d;
 }
 
-/* ---- Red progress (cancel steps) ---- */
+.track-step small {
+    margin-top: 3px;
+    font-size: 0.6rem;
+    color: #d1d5db;
+    font-weight: 500;
+}
+
+/* =========================
+   CANCELLED TRACK
+   ========================= */
+
+.cancel-track {
+    position: relative;
+}
+
+/* --- Red progress bar --- */
+
 .cancel-progress-red {
     position: absolute;
-
-    top: 27px;
-    left: 8%;
-
-    width: var(--cancel-progress, 0%);
-    max-width: 84%;
-
-    height: 3px;
-
-    border-radius: 3px;
-
-    background:
-        linear-gradient(90deg, #ff9a9a 0%, #e25a5a 100%);
-
-    box-shadow:
-        0 0 12px rgba(226, 90, 90, 0.7),
-        inset 0 1px 1px rgba(255, 255, 255, 0.6);
-
-    z-index: 2;
-
-    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    top: 15px;
+    left: calc(10% + 4px);
+    width: 0;
+    height: 4px;
+    background: #dc2626;
+    border-radius: 4px;
+    z-index: 1;
+    transition: width 0.3s ease;
+    max-width: calc(80% - 8px);
 }
 
 .cancel-progress-red.animate-cancel-red {
-    animation: cancelRedGlow 2s ease-in-out infinite;
+    width: var(--cancel-progress, 0%);
+    transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes cancelRedGlow {
+/* --- Green refund progress bar --- */
 
-    0%,
-    100% {
-        box-shadow:
-            0 0 12px rgba(226, 90, 90, 0.7),
-            inset 0 1px 1px rgba(255, 255, 255, 0.6);
-    }
-
-    50% {
-        box-shadow:
-            0 0 20px rgba(226, 90, 90, 0.95),
-            inset 0 1px 1px rgba(255, 255, 255, 0.7);
-    }
-}
-
-/* ---- Green refund progress ---- */
 .cancel-progress-green {
     position: absolute;
-
-    top: 27px;
-    left: 68%;
-
-    width: 26%;
-
-    height: 3px;
-
-    border-radius: 3px;
-
-    background:
-        linear-gradient(90deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    box-shadow:
-        0 0 12px rgba(95, 187, 90, 0.7),
-        inset 0 1px 1px rgba(255, 255, 255, 0.6);
-
-    z-index: 2;
-
-    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    top: 15px;
+    left: calc(10% + 4px);
+    width: 0;
+    height: 4px;
+    background: #16a34a;
+    border-radius: 4px;
+    z-index: 1;
+    transition: width 0.3s ease;
+    max-width: calc(80% - 8px);
 }
 
 .cancel-progress-green.animate-cancel-green {
-    animation: cancelGreenGlow 2s ease-in-out infinite;
+    width: 100%;
+    max-width: calc(80% - 8px);
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
 }
 
-@keyframes cancelGreenGlow {
+/* =========================
+   CANCEL STEP
+   ========================= */
 
-    0%,
-    100% {
-        box-shadow:
-            0 0 12px rgba(95, 187, 90, 0.7),
-            inset 0 1px 1px rgba(255, 255, 255, 0.6);
-    }
-
-    50% {
-        box-shadow:
-            0 0 20px rgba(95, 187, 90, 0.95),
-            inset 0 1px 1px rgba(255, 255, 255, 0.7);
-    }
-}
-
-/* ---- Cancel step circles (red) ---- */
 .cancel-step {
     position: relative;
-    z-index: 3;
-
-    flex: 1;
-    min-width: 0;
-
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-
+    flex: 1;
+    min-width: 0;
     text-align: center;
 }
 
-.cancel-dot {
-    display: grid;
-    place-items: center;
-
-    width: 32px;
-    height: 32px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+.cancel-step .track-circle.cancel-dot {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    background: #f3f4f6;
+    border: 3px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+    flex-shrink: 0;
+    position: relative;
 }
 
-.cancel-step.completed .cancel-dot {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
-    box-shadow:
-        0 8px 16px rgba(226, 90, 90, 0.6),
-        0 4px 10px rgba(226, 90, 90, 0.45),
-        5px 5px 12px rgba(226, 90, 90, 0.3),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(226, 90, 90, 0.2),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(160, 50, 50, 0.5);
-
-    transform: translateY(-2px) scale(1.05);
+.cancel-step.completed .track-circle.cancel-dot {
+    background: #dc2626;
+    border-color: #b91c1c;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
 }
 
-.cancel-step.completed .cancel-dot::after {
-    content: "✓";
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 900;
-    line-height: 1;
-
-    text-shadow:
-        0 1px 2px rgba(140, 40, 40, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.4);
-}
-
-/* ---- Refund step (green) ---- */
-.refund-step .refund-dot {
-    display: grid;
-    place-items: center;
-
-    width: 32px;
-    height: 32px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+.cancel-step.completed .track-circle.cancel-dot::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.refund-step.completed .refund-dot {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    box-shadow:
-        0 8px 16px rgba(95, 187, 90, 0.6),
-        0 4px 10px rgba(95, 187, 90, 0.45),
-        5px 5px 12px rgba(95, 187, 90, 0.3),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(95, 187, 90, 0.2),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.5);
-
-    transform: translateY(-2px) scale(1.05);
-}
-
-.refund-step.completed .refund-dot::after {
-    content: "✓";
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 900;
-    line-height: 1;
-
-    text-shadow:
-        0 1px 2px rgba(40, 100, 40, 0.5),
-        0 0 6px rgba(255, 255, 255, 0.4);
-}
-
-/* ---- Cancel step label ---- */
-.cancel-step>span {
-    display: inline-block;
-
-    padding: 3px 7px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    font-size: clamp(0.5rem, 1.4vw, 0.58rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
+.cancel-step span {
+    margin-top: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #9ca3af;
+    letter-spacing: 0.4px;
     text-transform: uppercase;
-    line-height: 1.2;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        0 2px 4px rgba(140, 150, 180, 0.28),
-        2px 2px 6px rgba(140, 150, 180, 0.22),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-1px);
+    line-height: 1.3;
+    word-break: break-word;
+    transition: color 0.3s ease;
 }
 
-.cancel-step.completed>span {
-    color: #e25a5a;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #fff5f5 0%, #f9e0e0 100%);
-
-    box-shadow:
-        0 4px 10px rgba(226, 90, 90, 0.45),
-        0 2px 6px rgba(226, 90, 90, 0.32),
-        3px 3px 8px rgba(226, 90, 90, 0.25),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(226, 90, 90, 0.3);
+.cancel-step.completed span {
+    color: #b91c1c;
 }
 
-/* ---- Refund step label (green) ---- */
-.refund-step.completed>span {
-    color: #1a4a1a;
+/* --- Refund step special --- */
 
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 4px 10px rgba(95, 187, 90, 0.45),
-        0 2px 6px rgba(95, 187, 90, 0.32),
-        3px 3px 8px rgba(95, 187, 90, 0.25),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(40, 100, 40, 0.4);
+.cancel-step.refund-step .track-circle.refund-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    border: 3px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+    flex-shrink: 0;
+    position: relative;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+.cancel-step.refund-step.completed .track-circle.refund-dot {
+    background: #16a34a;
+    border-color: #15803d;
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+}
 
-/* Tablets */
+.cancel-step.refund-step.completed .track-circle.refund-dot::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cancel-step.refund-step.completed span {
+    color: #15803d;
+}
+
+/* =========================
+   RESPONSIVE - TABLET
+   ========================= */
+
 @media (max-width: 768px) {
     .track-order {
-        padding: 14px;
-        border-radius: 18px;
-        gap: 14px;
-        transform: translateY(-3px);
+        padding: 22px 16px 26px;
+        border-radius: 16px;
+        margin: 0 8px;
     }
 
     .track-title {
-        font-size: 0.84rem;
+        font-size: 1.1rem;
+        margin-bottom: 22px;
     }
 
-    .track-line {
-        padding: 8px 2px;
-        gap: 3px;
+    .track-step .track-circle,
+    .cancel-step .track-circle.cancel-dot,
+    .cancel-step.refund-step .track-circle.refund-dot {
+        width: 26px;
+        height: 26px;
+        border-width: 2.5px;
     }
 
-    .track-line::before,
     .track-progress-line,
     .cancel-progress-red,
     .cancel-progress-green {
-        top: 23px;
+        top: 13px;
+        height: 3.5px;
+        left: calc(10% + 3px);
+        max-width: calc(80% - 6px);
     }
 
-    .track-circle,
-    .cancel-dot,
-    .refund-dot {
-        width: 28px;
-        height: 28px;
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.62rem;
+        margin-top: 6px;
+        letter-spacing: 0.3px;
     }
 
-    .track-step.completed .track-circle::after,
-    .cancel-step.completed .cancel-dot::after,
-    .refund-step.completed .refund-dot::after {
-        font-size: 0.78rem;
-    }
-
-    .track-step>span,
-    .cancel-step>span {
-        font-size: 0.52rem;
-        padding: 2px 6px;
-        letter-spacing: 0.2px;
-    }
-
-    .track-step,
-    .cancel-step {
-        gap: 6px;
+    .track-step small {
+        font-size: 0.55rem;
     }
 }
 
-/* Phones */
+/* =========================
+   RESPONSIVE - MOBILE
+   ========================= */
+
 @media (max-width: 480px) {
     .track-order {
-        padding: 12px;
-        border-radius: 16px;
-        gap: 12px;
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 10px 20px rgba(140, 150, 180, 0.45),
-            0 5px 10px rgba(140, 150, 180, 0.32),
-            0 3px 8px rgba(140, 150, 180, 0.25),
-            8px 8px 18px rgba(140, 150, 180, 0.2),
-            -8px -8px 18px rgba(255, 255, 255, 1),
-            6px -6px 14px rgba(255, 255, 255, 0.9),
-            -6px 6px 14px rgba(140, 150, 180, 0.12),
-            5px -5px 12px rgba(255, 255, 255, 0.85),
-            -5px 5px 12px rgba(140, 150, 180, 0.1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+        padding: 18px 10px 22px;
+        border-radius: 14px;
+        margin: 0 4px;
     }
 
     .track-title {
-        font-size: 0.76rem;
+        font-size: 0.95rem;
+        margin-bottom: 18px;
         letter-spacing: 0.2px;
     }
 
     .track-line {
-        padding: 6px 2px;
-        gap: 2px;
+        padding: 0;
     }
 
-    .track-line::before,
-    .track-progress-line,
-    .cancel-progress-red,
-    .cancel-progress-green {
-        top: 20px;
-        height: 2.5px;
-    }
-
-    .track-circle,
-    .cancel-dot,
-    .refund-dot {
-        width: 24px;
-        height: 24px;
-        border-width: 1.5px;
+    .track-step .track-circle,
+    .cancel-step .track-circle.cancel-dot,
+    .cancel-step.refund-step .track-circle.refund-dot {
+        width: 20px;
+        height: 20px;
+        border-width: 2px;
     }
 
     .track-step.completed .track-circle::after,
-    .cancel-step.completed .cancel-dot::after,
-    .refund-step.completed .refund-dot::after {
-        font-size: 0.68rem;
+    .cancel-step.completed .track-circle.cancel-dot::after,
+    .cancel-step.refund-step.completed .track-circle.refund-dot::after {
+        width: 6px;
+        height: 6px;
     }
 
-    .track-step>span,
-    .cancel-step>span {
-        font-size: 0.44rem;
-        padding: 2px 5px;
-        letter-spacing: 0.1px;
-        border-width: 1px;
+    .track-progress-line,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 10px;
+        height: 3px;
+        left: calc(10% + 2px);
+        max-width: calc(80% - 4px);
     }
 
-    .track-step,
-    .cancel-step {
-        gap: 5px;
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.52rem;
+        margin-top: 5px;
+        letter-spacing: 0.2px;
+        font-weight: 700;
+    }
+
+    .track-step small {
+        font-size: 0.48rem;
     }
 }
 
-/* Small phones */
+/* =========================
+   RESPONSIVE - VERY SMALL
+   ========================= */
+
 @media (max-width: 360px) {
     .track-order {
-        padding: 10px;
-        border-radius: 14px;
-        gap: 10px;
-        transform: translateY(-1px);
+        padding: 14px 6px 18px;
+        border-radius: 12px;
     }
 
     .track-title {
-        font-size: 0.7rem;
+        font-size: 0.85rem;
+        margin-bottom: 14px;
     }
 
-    .track-line {
-        padding: 5px 1px;
-        gap: 2px;
-    }
-
-    .track-line::before,
-    .track-progress-line,
-    .cancel-progress-red,
-    .cancel-progress-green {
-        top: 17px;
-        height: 2px;
-    }
-
-    .track-circle,
-    .cancel-dot,
-    .refund-dot {
-        width: 20px;
-        height: 20px;
-        border-width: 1.5px;
+    .track-step .track-circle,
+    .cancel-step .track-circle.cancel-dot,
+    .cancel-step.refund-step .track-circle.refund-dot {
+        width: 16px;
+        height: 16px;
+        border-width: 2px;
     }
 
     .track-step.completed .track-circle::after,
-    .cancel-step.completed .cancel-dot::after,
-    .refund-step.completed .refund-dot::after {
-        font-size: 0.58rem;
+    .cancel-step.completed .track-circle.cancel-dot::after,
+    .cancel-step.refund-step.completed .track-circle.refund-dot::after {
+        width: 5px;
+        height: 5px;
     }
 
-    .track-step>span,
-    .cancel-step>span {
+    .track-progress-line,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 8px;
+        height: 2.5px;
+        left: calc(10% + 1px);
+        max-width: calc(80% - 2px);
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 0.45rem;
+        margin-top: 4px;
+        letter-spacing: 0.1px;
+    }
+
+    .track-step small {
         font-size: 0.4rem;
-        padding: 1px 4px;
-        letter-spacing: 0px;
-    }
-
-    .track-step,
-    .cancel-step {
-        gap: 4px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
+/* =========================
+   SOFT PULSE ANIMATIONS
+   ========================= */
 
-    .track-progress-line.animate-progress,
-    .cancel-progress-red.animate-cancel-red,
-    .cancel-progress-green.animate-cancel-green,
-    .track-step.completed .track-circle::after,
-    .cancel-step.completed .cancel-dot::after,
-    .refund-step.completed .refund-dot::after {
-        animation: none;
+@keyframes pulse-green {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
     }
 
-    .track-circle,
-    .cancel-dot,
-    .refund-dot,
-    .track-step>span,
-    .cancel-step>span,
-    .track-progress-line,
-    .cancel-progress-red,
-    .cancel-progress-green {
-        transition: none;
+    50% {
+        box-shadow: 0 0 0 8px rgba(22, 163, 74, 0.06);
     }
+}
+
+@keyframes pulse-red {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+    }
+
+    50% {
+        box-shadow: 0 0 0 8px rgba(220, 38, 38, 0.06);
+    }
+}
+
+.track-step.completed .track-circle {
+    animation: pulse-green 2s ease-in-out infinite;
+}
+
+.cancel-step.completed .track-circle.cancel-dot {
+    animation: pulse-red 2s ease-in-out infinite;
+}
+
+.cancel-step.refund-step.completed .track-circle.refund-dot {
+    animation: pulse-green 2s ease-in-out infinite;
 }
