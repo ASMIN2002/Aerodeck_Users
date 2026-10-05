@@ -2,7 +2,7 @@ import "./BottomNav.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiGift, FiHome, FiStar, FiShoppingCart, FiUser } from "react-icons/fi";
-
+import { API } from "../../services/api";
 
 function BottomNav({
     selectedBottomTab,
@@ -29,7 +29,7 @@ function BottomNav({
                 }
 
                 const response = await fetch(
-                    `https://aerodeck-server.onrender.com/api/user/cart?user_id=${userData.user_id}`
+                    `${API}/api/user/cart?user_id=${userData.user_id}`
                 );
 
                 const data = await response.json();
@@ -47,14 +47,13 @@ function BottomNav({
         };
 
         fetchCartCount();
-    }, []);
+    }, [setCartCount]);
 
     return (
         <>
             <nav className="bn-nav">
                 <button
-                    className={`bn-item ${selectedBottomTab === "Home" ? "bn-active" : ""
-                        }`}
+                    className={`bn-item ${selectedBottomTab === "Home" ? "bn-active" : ""}`}
                     onClick={() => {
                         if (isDetailsOpen) {
                             closeDetails();
@@ -86,31 +85,14 @@ function BottomNav({
                         <FiHome />
                     </span>
                 </button>
+
                 <button
-                    className={`bn-item ${selectedBottomTab === "Offers"
-                        ? "bn-active"
-                        : ""
-                        }`}
-                    // onClick={() => {
-
-                    //     if (isDetailsOpen) {
-                    //         closeDetails();
-                    //     }
-
-                    //     setSelectedMenu(null);
-                    //     setProfilePage("profile");
-                    //     setSelectedBottomTab("Offers");
-                    //     navigate("/offers");
-
-                    // }}
+                    className={`bn-item ${selectedBottomTab === "Offers" ? "bn-active" : ""}`}
                     onClick={() => {
-
                         setShowComingSoon(true);
-
                         setTimeout(() => {
                             setShowComingSoon(false);
                         }, 2500);
-
                     }}
                 >
                     <span className="bn-iconpre">
@@ -120,26 +102,11 @@ function BottomNav({
 
                 <button
                     className={`bn-item ${selectedBottomTab === "Premium" ? "bn-active" : ""}`}
-                    // onClick={() => {
-
-                    //     if (isDetailsOpen) {
-                    //         closeDetails();
-                    //     }
-
-                    //     setSelectedMenu(null);
-                    //     setProfilePage("profile");
-                    //     setSelectedBottomTab("Premium");
-                    //     navigate("/premium");
-
-                    // }}
                     onClick={() => {
-
                         setShowComingSoon(true);
-
                         setTimeout(() => {
                             setShowComingSoon(false);
                         }, 2500);
-
                     }}
                 >
                     <span className="bn-iconpre">
@@ -148,12 +115,8 @@ function BottomNav({
                 </button>
 
                 <button
-                    className={`bn-item ${selectedBottomTab === "Cart"
-                        ? "bn-active"
-                        : ""
-                        }`}
+                    className={`bn-item ${selectedBottomTab === "Cart" ? "bn-active" : ""}`}
                     onClick={() => {
-
                         if (isDetailsOpen) {
                             closeDetails();
                         }
@@ -162,20 +125,19 @@ function BottomNav({
                         setProfilePage("cart");
                         setSelectedBottomTab("Cart");
                         navigate("/cart");
-
                     }}
                 >
                     <span className="bn-icon">
-                        <FiShoppingCart /><span className="bn-cart-count">
+                        <FiShoppingCart />
+                        <span className="bn-cart-count">
                             {cartCount}
                         </span>
                     </span>
                 </button>
-                <button
-                    className={`bn-item ${selectedBottomTab === "Profile" ? "bn-active" : ""
-                        }`}
-                    onClick={() => {
 
+                <button
+                    className={`bn-item ${selectedBottomTab === "Profile" ? "bn-active" : ""}`}
+                    onClick={() => {
                         if (isDetailsOpen) {
                             closeDetails();
                         }
@@ -184,7 +146,6 @@ function BottomNav({
                         setProfilePage("profile");
                         setSelectedBottomTab("Profile");
                         navigate("/profile");
-
                     }}
                 >
                     <span className="bn-icon">
@@ -192,11 +153,13 @@ function BottomNav({
                     </span>
                 </button>
             </nav>
+
             {showComingSoon && (
                 <div className="bn-coming-toast">
                     Available Soon
                 </div>
-            )}</>
+            )}
+        </>
     );
 }
 

@@ -15,9 +15,6 @@ function ViewProfile({
     const [isRedeemed, setIsRedeemed] = useState(false);
     const [loadingPromo, setLoadingPromo] = useState(true);
 
-    /* ============================================
-       FETCH USER REWARDS (PROMO CODE)
-       ============================================ */
     useEffect(() => {
         async function loadPromo() {
             try {
@@ -58,6 +55,24 @@ function ViewProfile({
             })
             .toUpperCase();
     }
+
+    const displayName =
+        profile?.full_name && profile.full_name !== "HEEPIT USER"
+            ? profile.full_name
+            : "NOT SET";
+
+    const displayEmail =
+        profile?.email || "NOT SET";
+
+    const displayMobile =
+        Number(profile?.is_mobile_verified) === 1 && profile?.mobile_number
+            ? profile.mobile_number
+            : "NOT SET";
+
+    const displayWhatsapp =
+        Number(profile?.is_whatsapp_verified) === 1 && profile?.whatsapp_number
+            ? profile.whatsapp_number
+            : "NOT SET";
 
     return (
 
@@ -104,22 +119,24 @@ function ViewProfile({
 
                     <div className="view-row">
                         <span>Name</span>
-                        <p>{profile?.full_name || "-"}</p>
-                    </div>
-
-                    <div className="view-row">
-                        <span>Mobile</span>
-                        <p>{profile?.mobile_number || "-"}</p>
+                        <p>{displayName}</p>
                     </div>
 
                     <div className="view-row">
                         <span>Email</span>
-                        <p className={profile?.email ? "email-set" : "email-not-set"}>
-                            {profile?.email || "NOT SET"}
-                        </p>
+                        <p>{displayEmail}</p>
                     </div>
 
-                    {/* 🔥 PROMO CODE ROW */}
+                    <div className="view-row">
+                        <span>Mobile</span>
+                        <p>{displayMobile}</p>
+                    </div>
+
+                    <div className="view-row">
+                        <span>WhatsApp</span>
+                        <p>{displayWhatsapp}</p>
+                    </div>
+
                     <div className="view-row">
                         <span>Promo Code</span>
                         <p className={`promo-row ${!promoCode ? "promo-na" : isRedeemed ? "promo-redeemed" : "promo-active"}`}>

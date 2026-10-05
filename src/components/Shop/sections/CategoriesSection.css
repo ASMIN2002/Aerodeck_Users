@@ -1,404 +1,365 @@
-/* ============================================================
-   CategoriesSection.css — SIMPLE FLAT VERSION
-   ============================================================ */
-
-.heep-shop-cat-section,
-.heep-shop-cat-section * {
+.heep-cat-sticky-wrap *,
+.heep-cat-sticky-wrap *::before,
+.heep-cat-sticky-wrap *::after {
     box-sizing: border-box;
-}
-
-/* ============================================================
-   SECTION WRAPPER — sticky simple bar
-   ============================================================ */
-.heep-shop-cat-section {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-
-    width: 100%;
-
-    padding: 8px 10px;
-    margin: 0 0 8px 0;
-
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 12px;
-
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================================
-   HORIZONTAL SCROLL ROW
-   ============================================================ */
-.heep-shop-cat-scroll {
+.heep-cat-sticky-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    width: 100%;
+    padding: 12px 0 14px;
+    background: linear-gradient(180deg,
+            rgba(10, 12, 24, 0.98) 0%,
+            rgba(10, 12, 24, 0.94) 75%,
+            rgba(10, 12, 24, 0) 100%);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.heep-cat-heading-row {
+    position: relative;
+    z-index: 1;
+    padding: 0 16px 10px;
+}
+
+.heep-cat-heading {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.heep-cat-heading span {
+    background: linear-gradient(90deg, #a5b4fc 0%, #f0abfc 55%, #f9a8d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.heep-cat-section {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
-    gap: 10px;
+    width: 100%;
+}
 
-    flex: 1;
-    min-width: 0;
-
+.heep-cat-scroll {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 4px 16px 6px;
     overflow-x: auto;
     overflow-y: hidden;
-
-    padding: 2px 2px;
-
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-width: 0;
 }
 
-.heep-shop-cat-scroll::-webkit-scrollbar {
+.heep-cat-scroll::-webkit-scrollbar {
     display: none;
+    height: 0;
 }
 
-/* ============================================================
-   CATEGORY TILE
-   ============================================================ */
-.heep-shop-cat-box {
+.heep-cat-card {
     flex-shrink: 0;
-
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-
-    width: 68px;
-    padding: 6px 4px;
-
-    background: transparent;
+    gap: 8px;
+    width: 76px;
+    padding: 0;
     border: none;
-    border-radius: 10px;
-
-    color: #333;
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.1px;
-    line-height: 1.15;
-    text-align: center;
-
+    background: transparent;
     cursor: pointer;
-
-    transition: background 0.18s ease, transform 0.15s ease;
-
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
+    outline: none;
+    font-family: inherit;
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.heep-shop-cat-box:hover {
-    background: #f7f7f7;
+.heep-cat-card:hover {
+    transform: translateY(-4px);
 }
 
-.heep-shop-cat-box:active {
-    transform: scale(0.96);
+.heep-cat-card:active {
+    transform: translateY(-1px) scale(0.96);
 }
 
-.heep-shop-cat-box:focus-visible {
-    outline: 2px solid #ff6b00;
-    outline-offset: 2px;
+.heep-cat-card:focus-visible .heep-cat-icon-wrap {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
 }
 
-/* ============================================================
-   ICON CIRCLE
-   ============================================================ */
-.heep-shop-cat-icon {
-    display: grid;
-    place-items: center;
-
-    width: 52px;
-    height: 52px;
-
-    border-radius: 50%;
-
-    background: #f2f4f8;
+.heep-cat-icon-wrap {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+    padding: 0;
     overflow: hidden;
-
-    flex-shrink: 0;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.18) 0%,
+            rgba(168, 85, 247, 0.14) 50%,
+            rgba(236, 72, 153, 0.18) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 10px 24px -12px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.heep-shop-cat-icon img {
+.heep-cat-card:hover .heep-cat-icon-wrap {
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow:
+        0 14px 30px -10px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.35) inset,
+        0 1px 0 rgba(255, 255, 255, 0.12) inset;
+    transform: rotate(-3deg) scale(1.05);
+}
+
+.heep-cat-icon-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    border-radius: 50%;
     display: block;
-
-    transform: scale(1.2);
-    transition: transform 0.25s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
-.heep-shop-cat-box:hover .heep-shop-cat-icon img {
-    transform: scale(1.35);
+.heep-cat-card:hover .heep-cat-icon-wrap img {
+    transform: scale(1.08);
 }
 
-.heep-shop-cat-box:active .heep-shop-cat-icon img {
-    transform: scale(1.15);
+.heep-cat-fallback {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #a5b4fc 0%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select: none;
+    display: none;
+    line-height: 1;
 }
 
-/* ---- Fallback Letter ---- */
-.heep-shop-cat-fallback-letter {
-    display: grid;
-    place-items: center;
+.heep-cat-icon-wrap.heep-cat-fallback-active .heep-cat-fallback,
+.heep-cat-icon-wrap:not(:has(img)) .heep-cat-fallback {
+    display: block;
+}
 
-    width: 100%;
-    height: 100%;
+.heep-cat-icon-wrap.heep-cat-fallback-active img {
+    display: none;
+}
 
-    font-size: 1.15rem;
+.heep-cat-name {
+    font-size: 11px;
     font-weight: 700;
-
-    color: #ff6b00;
-}
-
-/* ============================================================
-   CATEGORY NAME
-   ============================================================ */
-.heep-shop-cat-name {
-    display: block;
-
-    width: 100%;
-
-    font-size: 0.6rem;
-    font-weight: 600;
-    line-height: 1.15;
+    letter-spacing: 0.3px;
+    color: rgba(229, 231, 235, 0.92);
     text-align: center;
-
-    color: #333;
-
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 76px;
+    line-height: 1.2;
+    transition: color 0.25s ease;
 }
 
-/* ============================================================
-   VIEW ALL BUTTON
-   ============================================================ */
-.heep-shop-cat-viewall-wrap {
-    flex-shrink: 0;
+.heep-cat-card:hover .heep-cat-name {
+    color: #ffffff;
+}
 
+.heep-cat-viewall {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    padding-left: 8px;
-
-    border-left: 1px solid #eee;
+    justify-content: flex-end;
+    width: 74px;
+    padding: 0 14px 0 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    z-index: 2;
 }
 
-.heep-shop-cat-viewall-btn {
+.heep-cat-viewall-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            rgba(10, 12, 24, 0) 0%,
+            rgba(10, 12, 24, 0.82) 45%,
+            rgba(10, 12, 24, 0.98) 100%);
+    pointer-events: none;
+}
+
+.heep-cat-viewall-btn {
+    position: relative;
+    z-index: 1;
+    width: 42px;
+    height: 42px;
     display: grid;
     place-items: center;
-
-    width: 38px;
-    height: 38px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: #ff6b00;
-    color: #fff;
-    font-size: 1rem;
-    line-height: 1;
-
-    cursor: pointer;
-
-    transition: background 0.18s ease, transform 0.15s ease;
-
-    -webkit-tap-highlight-color: transparent;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
+    font-size: 17px;
+    box-shadow:
+        0 10px 24px -6px rgba(139, 92, 246, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.heep-shop-cat-viewall-btn:hover {
-    background: #e85f00;
+.heep-cat-viewall:hover .heep-cat-viewall-btn {
+    transform: scale(1.08) translateX(2px);
+    box-shadow:
+        0 14px 30px -6px rgba(139, 92, 246, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
-.heep-shop-cat-viewall-btn:active {
+.heep-cat-viewall:active .heep-cat-viewall-btn {
     transform: scale(0.94);
 }
 
-.heep-shop-cat-viewall-btn:focus-visible {
-    outline: 2px solid #ff6b00;
-    outline-offset: 2px;
+.heep-cat-viewall:focus-visible .heep-cat-viewall-btn {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
 }
 
-.heep-shop-cat-viewall-btn svg {
-    transition: transform 0.2s ease;
-}
-
-.heep-shop-cat-viewall-btn:hover svg {
-    transform: translateX(2px);
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-/* Tablets (≤ 768px) */
-@media (max-width: 768px) {
-    .heep-shop-cat-section {
-        padding: 6px 8px;
-        gap: 6px;
-    }
-
-    .heep-shop-cat-scroll {
-        gap: 8px;
-    }
-
-    .heep-shop-cat-box {
-        width: 64px;
-        gap: 5px;
-    }
-
-    .heep-shop-cat-icon {
-        width: 48px;
-        height: 48px;
-    }
-
-    .heep-shop-cat-viewall-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
-    }
-}
-
-/* Phones (≤ 480px) */
 @media (max-width: 480px) {
-    .heep-shop-cat-section {
-        padding: 6px 8px;
-        gap: 5px;
+    .heep-cat-sticky-wrap {
+        padding: 10px 0 12px;
     }
 
-    .heep-shop-cat-scroll {
-        gap: 8px;
-        padding: 2px 1px;
+    .heep-cat-heading-row {
+        padding: 0 14px 8px;
     }
 
-    .heep-shop-cat-box {
-        width: 62px;
-        gap: 5px;
+    .heep-cat-heading {
+        font-size: 15px;
     }
 
-    .heep-shop-cat-icon {
-        width: 46px;
-        height: 46px;
+    .heep-cat-scroll {
+        gap: 10px;
+        padding: 4px 14px 6px;
     }
 
-    .heep-shop-cat-name {
-        font-size: 0.58rem;
+    .heep-cat-card {
+        width: 68px;
+        gap: 7px;
     }
 
-    .heep-shop-cat-viewall-wrap {
-        padding-left: 6px;
+    .heep-cat-icon-wrap {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
     }
 
-    .heep-shop-cat-viewall-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 0.85rem;
+    .heep-cat-fallback {
+        font-size: 21px;
+    }
+
+    .heep-cat-name {
+        font-size: 10.5px;
+        max-width: 68px;
+    }
+
+    .heep-cat-viewall {
+        width: 66px;
+        padding-right: 12px;
+    }
+
+    .heep-cat-viewall-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        font-size: 16px;
     }
 }
 
-/* Small phones (≤ 360px) */
 @media (max-width: 360px) {
-    .heep-shop-cat-section {
-        padding: 5px 6px;
-        gap: 4px;
+    .heep-cat-sticky-wrap {
+        padding: 9px 0 11px;
     }
 
-    .heep-shop-cat-scroll {
+    .heep-cat-heading-row {
+        padding: 0 12px 7px;
+    }
+
+    .heep-cat-heading {
+        font-size: 14px;
+    }
+
+    .heep-cat-scroll {
+        gap: 9px;
+        padding: 4px 12px 6px;
+    }
+
+    .heep-cat-card {
+        width: 62px;
         gap: 6px;
     }
 
-    .heep-shop-cat-box {
-        width: 58px;
-        gap: 4px;
+    .heep-cat-icon-wrap {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
     }
 
-    .heep-shop-cat-icon {
-        width: 42px;
-        height: 42px;
+    .heep-cat-fallback {
+        font-size: 19px;
     }
 
-    .heep-shop-cat-fallback-letter {
-        font-size: 1rem;
+    .heep-cat-name {
+        font-size: 10px;
+        max-width: 62px;
     }
 
-    .heep-shop-cat-name {
-        font-size: 0.54rem;
+    .heep-cat-viewall {
+        width: 60px;
+        padding-right: 10px;
     }
 
-    .heep-shop-cat-viewall-wrap {
-        padding-left: 5px;
-    }
-
-    .heep-shop-cat-viewall-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
-}
-
-/* ============================================================
-   INTRO TEXT
-   ============================================================ */
-.heepit-intro {
-    width: 100%;
-    padding: 4px 2px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.heepit-intro h2 {
-    margin: 0;
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-    color: #222;
-}
-
-.heepit-intro h2 span {
-    font-size: inherit;
-    color: #ff6b00;
-}
-
-/* ============================================================
-   RESPONSIVE — intro text
-   ============================================================ */
-@media (max-width: 360px) {
-    .heepit-intro h2 {
-        font-size: 1rem;
+    .heep-cat-viewall-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+        font-size: 15px;
     }
 }
 
-@media (min-width: 600px) {
-    .heepit-intro h2 {
-        font-size: 1.35rem;
-    }
-}
-
-@media (min-width: 900px) {
-    .heepit-intro h2 {
-        font-size: 1.5rem;
-    }
-}
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
 
-    .heep-shop-cat-box,
-    .heep-shop-cat-icon img,
-    .heep-shop-cat-viewall-btn,
-    .heep-shop-cat-viewall-btn svg {
-        transition: none;
+    .heep-cat-sticky-wrap *,
+    .heep-cat-sticky-wrap *::before,
+    .heep-cat-sticky-wrap *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

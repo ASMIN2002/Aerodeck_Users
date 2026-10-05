@@ -1,8 +1,6 @@
-// TopEditSection.jsx - Complete working code
-
 import "./TopEditSection.css";
 import { useRef, useState, useEffect } from "react";
-import { createPortal } from "react-dom"; // 🔥 ADD THIS
+import { createPortal } from "react-dom";
 import { API } from "../../../services/api";
 import NODP from "../../../assets/NODP.png";
 import { useNavigate } from "react-router-dom";
@@ -19,11 +17,7 @@ function TopEditSection({
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [uploadAction, setUploadAction] = useState("");
-
-    // ✅ NEW: Preview image URL state
     const [previewImage, setPreviewImage] = useState(null);
-
-    // ===== STATES FOR CROP & POPUP =====
     const [showPopup, setShowPopup] = useState(false);
     const [showCropModal, setShowCropModal] = useState(false);
     const [imageForCrop, setImageForCrop] = useState(null);
@@ -60,101 +54,10 @@ function TopEditSection({
         }
     };
 
-    const getCroppedImage = () => {
-        if (!imageForCrop || !crop) {
-            alert("No image to crop");
-            return;
-        }
-
-        const image = new Image();
-        image.src = imageForCrop;
-        image.crossOrigin = "anonymous";
-
-        image.onload = () => {
-            try {
-                console.log("Image size:", image.naturalWidth, "x", image.naturalHeight);
-
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                const imgWidth = image.naturalWidth;
-                const imgHeight = image.naturalHeight;
-
-                const cropX = (crop.x / 100) * imgWidth;
-                const cropY = (crop.y / 100) * imgHeight;
-                const cropWidth = (crop.width / 100) * imgWidth;
-                const cropHeight = (crop.height / 100) * imgHeight;
-
-                canvas.width = Math.round(cropWidth);
-                canvas.height = Math.round(cropHeight);
-
-                ctx.drawImage(
-                    image,
-                    cropX,
-                    cropY,
-                    cropWidth,
-                    cropHeight,
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                );
-
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-                let hasContent = false;
-                for (let i = 0; i < imageData.data.length; i += 4) {
-                    if (imageData.data[i + 3] > 0) {
-                        hasContent = true;
-                        break;
-                    }
-                }
-
-                if (!hasContent) {
-                    alert("Cropped image is empty. Please try again.");
-                    return;
-                }
-
-                canvas.toBlob((blob) => {
-                    if (!blob || blob.size === 0) {
-                        alert("Failed to create cropped image.");
-                        return;
-                    }
-
-                    const file = new File([blob], 'profile_cropped.jpg', {
-                        type: 'image/jpeg',
-                        lastModified: Date.now()
-                    });
-
-                    const previewUrl = URL.createObjectURL(file);
-                    setPreviewImage(previewUrl);
-                    setSelectedImage(file);
-                    setSelectedFile(file);
-                    setShowCropModal(false);
-
-                    setTimeout(() => {
-                        handleUpload(file);
-                    }, 300);
-
-                }, 'image/jpeg', 0.95);
-
-            } catch (error) {
-                console.error("Crop error:", error);
-                alert("Failed to crop image: " + error.message);
-            }
-        };
-
-        image.onerror = (err) => {
-            console.error("Image load error:", err);
-            alert("Failed to load image for cropping.");
-        };
-    };
-
     const handleUpload = (file) => {
         const imageToUpload = file || selectedImage;
 
         if (!imageToUpload || uploading) {
-            console.log("Upload skipped");
             return;
         }
 
@@ -186,7 +89,6 @@ function TopEditSection({
         xhr.onload = () => {
             try {
                 const data = JSON.parse(xhr.responseText);
-                console.log("Upload Response:", data);
 
                 if (!data.success) {
                     setUploading(false);
@@ -223,7 +125,6 @@ function TopEditSection({
         };
 
         xhr.onerror = () => {
-            console.error("XHR error");
             setUploading(false);
             setUploadProgress(0);
             alert("Network error. Please try again.");
@@ -255,7 +156,6 @@ function TopEditSection({
             );
 
             const data = await response.json();
-            console.log("Remove Response:", data);
 
             if (!data.success) {
                 setUploading(false);
@@ -357,7 +257,6 @@ function TopEditSection({
                 </button>
             </div>
 
-            {/* ===== SUCCESS MESSAGE ===== */}
             {uploadSuccess && (
                 <div className="profile-upload-success">
                     {uploadSuccess === "removed"
@@ -367,7 +266,6 @@ function TopEditSection({
                 </div>
             )}
 
-            {/* ===== UPLOAD PROGRESS ===== */}
             {uploading && (
                 <div className="profile-upload-screen">
                     <div className="profile-upload-box">
@@ -392,7 +290,6 @@ function TopEditSection({
                 </div>
             )}
 
-            {/* ===== IMAGE PREVIEW ===== */}
             <div className="mypropreview-section-pro">
                 <div className="mypropreview-box-pro">
                     <img
@@ -416,7 +313,6 @@ function TopEditSection({
                 </div>
             </div>
 
-            {/* ===== HIDDEN FILE INPUT ===== */}
             <input
                 type="file"
                 ref={fileInputRef}
@@ -426,9 +322,6 @@ function TopEditSection({
                 disabled={uploading}
             />
 
-            {/* ============================================
-                🔥 POPUP MODAL — CREATE PORTAL
-                ============================================ */}
             {showPopup && createPortal(
                 <div className="profile-popup-overlay" onClick={handleClosePopup}>
                     <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
@@ -472,12 +365,9 @@ function TopEditSection({
                         </div>
                     </div>
                 </div>,
-                document.body  // 🔥 DIRECTLY BODY MEIN RENDER
+                document.body
             )}
 
-            {/* ============================================
-                🔥 CROP MODAL — CREATE PORTAL
-                ============================================ */}
             {showCropModal && imageForCrop && createPortal(
                 <div className="crop-modal-overlay">
                     <div className="crop-modal">
@@ -485,45 +375,22 @@ function TopEditSection({
                             <h3>Crop Profile Picture</h3>
                             <button
                                 className="crop-modal-close"
-                                onClick={() => {
-                                    setShowCropModal(false);
-                                    setImageForCrop(null);
-                                }}
+                                onClick={handleCropCancel}
                             >
                                 ×
                             </button>
                         </div>
 
                         <div className="crop-modal-body">
-                            {showCropModal && imageForCrop && (
-                                <ImageCropper
-                                    image={imageForCrop}
-                                    onCancel={handleCropCancel}
-                                    onCropDone={handleCropDone}
-                                />
-                            )}
-                        </div>
-
-                        <div className="crop-modal-footer">
-                            <button
-                                className="crop-btn cancel"
-                                onClick={() => {
-                                    setShowCropModal(false);
-                                    setImageForCrop(null);
-                                }}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="crop-btn apply"
-                                onClick={getCroppedImage}
-                            >
-                                Apply & Upload
-                            </button>
+                            <ImageCropper
+                                image={imageForCrop}
+                                onCancel={handleCropCancel}
+                                onCropDone={handleCropDone}
+                            />
                         </div>
                     </div>
                 </div>,
-                document.body  // 🔥 DIRECTLY BODY MEIN RENDER
+                document.body
             )}
 
         </div>

@@ -1,183 +1,247 @@
-.ad-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 12px;
+.ad-container *,
+.ad-container *::before,
+.ad-container *::after {
     box-sizing: border-box;
-    background: #fff;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ad-container {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    background: black;
 }
 
 .ad-button {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 8px;
-    min-width: 0;
-    /* allows text truncation */
-    padding: 10px 12px;
-    background: #f7f7f7;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.9) 0%,
+            rgba(14, 16, 32, 0.9) 100%);
+    color: #e5e7eb;
     font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+        0 4px 14px -6px rgba(0, 0, 0, 0.7),
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-button::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at center,
+            rgba(99, 102, 241, 0.22) 0%,
+            rgba(99, 102, 241, 0) 70%);
+    pointer-events: none;
+    opacity: 0.7;
 }
 
 .ad-button:hover {
-    background: #f0f0f0;
-    border-color: #d5d5d5;
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.18) 0%,
+            rgba(99, 102, 241, 0.06) 100%);
+    transform: translateY(-1px);
 }
 
 .ad-button:active {
-    transform: scale(0.99);
+    transform: translateY(0) scale(0.985);
 }
 
 .ad-icon {
     flex-shrink: 0;
-    font-size: 18px;
-    color: #ff6b00;
+    width: 26px;
+    height: 26px;
+    padding: 6px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
+    font-size: 14px;
+    box-shadow: 0 4px 12px -3px rgba(139, 92, 246, 0.75);
 }
 
 .ad-text {
     flex: 1;
     min-width: 0;
-    font-size: 13px;
-    font-weight: 500;
-    color: #222;
-    line-height: 1.3;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.3;
+    color: #e5e7eb;
+    font-weight: 600;
+    white-space: nowrap;
+    word-break: break-word;
 }
 
 .ad-no-address {
-    color: #888;
-    font-weight: 400;
+    color: rgba(199, 210, 254, 0.85);
+    font-style: italic;
 }
 
 .ad-arrow {
     flex-shrink: 0;
-    font-size: 20px;
-    color: #999;
+    font-size: 16px;
+    font-weight: 700;
     line-height: 1;
+    color: rgba(148, 163, 184, 0.7);
+    transition: all 0.25s ease;
+}
+
+.ad-button:hover .ad-arrow {
+    color: #ffffff;
+    transform: translateX(3px);
 }
 
 .ad-money-box {
-    display: flex;
+    flex-shrink: 0;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
-    flex-shrink: 0;
-    padding: 8px 12px;
-    background: #fff8ec;
-    border: 1px solid #ffe0b2;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.2s ease;
+    padding: 7px 11px 7px 7px;
+    border-radius: 12px;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    background: linear-gradient(135deg,
+            rgba(251, 191, 36, 0.16) 0%,
+            rgba(245, 158, 11, 0.06) 100%);
+    color: #fef3c7;
     font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow: 0 4px 14px -6px rgba(251, 191, 36, 0.55);
+    outline: none;
+    position: relative;
+    overflow: hidden;
 }
 
 .ad-money-box:hover {
-    background: #fff1d6;
+    border-color: rgba(251, 191, 36, 0.65);
+    transform: translateY(-1px);
 }
 
 .ad-money-box:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.97);
 }
 
 .money-icon-circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
     width: 22px;
     height: 22px;
-    border-radius: 50%;
-    background: #ffb300;
-    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #ea580c 100%);
+    box-shadow: 0 4px 10px -3px rgba(245, 158, 11, 0.85);
 }
 
 .money-icon {
+    color: #ffffff;
     font-size: 11px;
-    color: #fff;
 }
 
 .money-amount {
-    font-size: 13px;
-    font-weight: 700;
-    color: #b26a00;
+    position: relative;
+    z-index: 1;
+    min-width: 16px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.3px;
     white-space: nowrap;
 }
 
-@media (max-width: 360px) {
+@media (min-width: 481px) {
     .ad-container {
-        gap: 8px;
-        padding: 8px 10px;
+        gap: 10px;
+        padding: 10px 16px;
     }
 
     .ad-button {
-        padding: 8px 10px;
-        gap: 6px;
+        gap: 11px;
+        padding: 12px 14px;
+        font-size: 12.5px;
+        border-radius: 14px;
     }
 
     .ad-icon {
-        font-size: 16px;
+        width: 34px;
+        height: 34px;
+        padding: 8px;
+        font-size: 17px;
+        border-radius: 10px;
     }
 
     .ad-text {
-        font-size: 12px;
+        -webkit-line-clamp: 2;
+        white-space: normal;
     }
 
-    .ad-money-box {
-        padding: 6px 10px;
-    }
-
-    .money-amount {
-        font-size: 12px;
-    }
-
-    .money-icon-circle {
-        width: 20px;
-        height: 20px;
-    }
-}
-
-@media (min-width: 600px) {
-    .ad-container {
-        padding: 12px 16px;
-        gap: 12px;
-    }
-
-    .ad-button {
-        padding: 12px 16px;
-        gap: 10px;
-        border-radius: 12px;
-    }
-
-    .ad-icon {
+    .ad-arrow {
         font-size: 20px;
     }
 
-    .ad-text {
-        font-size: 14px;
-    }
-
     .ad-money-box {
-        padding: 10px 16px;
-        border-radius: 12px;
-        gap: 8px;
+        gap: 9px;
+        padding: 10px 14px 10px 10px;
+        font-size: 14px;
+        border-radius: 14px;
     }
 
     .money-icon-circle {
-        width: 26px;
-        height: 26px;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
     }
 
     .money-icon {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .money-amount {
-        font-size: 15px;
+        font-size: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ad-container *,
+    .ad-container *::before,
+    .ad-container *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

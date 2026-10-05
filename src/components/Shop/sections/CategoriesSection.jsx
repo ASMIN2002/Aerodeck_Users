@@ -8,51 +8,66 @@ function CategoriesSection({
 }) {
 
     return (
-        <>
-            <div className="heepit-intro">
-                <h2>Top <span>Categories</span></h2>
+        <div className="heep-cat-sticky-wrap">
+
+            <div className="heep-cat-heading-row">
+                <h2 className="heep-cat-heading">
+                    Top <span>Categories</span>
+                </h2>
             </div>
-            <section className="heep-shop-cat-section">
-                <div className="heep-shop-cat-scroll">
+
+            <section className="heep-cat-section">
+
+                <div className="heep-cat-scroll">
                     {categories.map((item) => (
                         <button
                             key={item.catid}
-                            className="heep-shop-cat-box"
+                            type="button"
+                            className="heep-cat-card"
                             onClick={() => onCategoryClick(item.category)}
+                            aria-label={item.category}
                         >
-                            <div className="heep-shop-cat-icon">
+                            <div className="heep-cat-icon-wrap">
                                 {item.image ? (
                                     <img
                                         src={item.image}
                                         alt={item.category}
-                                        onLoad={() => console.log("✅ LOADED:", item.category)}
-                                        onError={() => console.log("❌ FAILED:", item.category, item.image)}
-
+                                        loading="lazy"
+                                        draggable={false}
+                                        onError={(e) => {
+                                            e.currentTarget.style.display = "none";
+                                            e.currentTarget.parentElement.classList.add("heep-cat-fallback-active");
+                                        }}
                                     />
-                                ) : (
-                                    <span className="heep-shop-cat-fallback-letter">
-                                        {item.category?.charAt(0)?.toUpperCase() || "?"}
-                                    </span>
-                                )}
+                                ) : null}
+
+                                <span className="heep-cat-fallback">
+                                    {item.category?.charAt(0)?.toUpperCase() || "?"}
+                                </span>
                             </div>
-                            <span className="heep-shop-cat-name">
+
+                            <span className="heep-cat-name">
                                 {item.category}
                             </span>
                         </button>
                     ))}
                 </div>
 
-                <div className="heep-shop-cat-viewall-wrap">
-                    <button
-                        type="button"
-                        className="heep-shop-cat-viewall-btn"
-                        onClick={onOpenAllShopCategories}
-                    >
+                <button
+                    type="button"
+                    className="heep-cat-viewall"
+                    onClick={onOpenAllShopCategories}
+                    aria-label="View all categories"
+                >
+                    <span className="heep-cat-viewall-fade" />
+                    <span className="heep-cat-viewall-btn">
                         <FiArrowRight />
-                    </button>
-                </div>
+                    </span>
+                </button>
+
             </section>
-        </>
+
+        </div>
     );
 }
 

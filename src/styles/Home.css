@@ -1,10 +1,31 @@
 .home-container {
     width: 100%;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     background: none;
+    position: relative;
+    isolation: isolate;
+    background: black;
+}
+
+.home-container::before {
+    content: "";
+    position: fixed;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 640px;
+    height: 380px;
+    background: radial-gradient(ellipse at center,
+            rgba(99, 102, 241, 0.18) 0%,
+            rgba(236, 72, 153, 0.08) 42%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .home-content {
@@ -12,9 +33,66 @@
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
-
+    padding-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .home-content::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0;
+}
+
+@media (max-width: 768px) {
+    .home-container::before {
+        width: 420px;
+        height: 260px;
+        top: -130px;
+        filter: blur(55px);
+    }
+
+    .home-content {
+        padding-bottom: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container::before {
+        width: 320px;
+        height: 200px;
+        top: -100px;
+        filter: blur(48px);
+    }
+
+    .home-content {
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .home-container::before {
+        width: 260px;
+        height: 170px;
+        top: -80px;
+    }
+
+    .home-content {
+        padding-bottom: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .home-container *,
+    .home-container *::before,
+    .home-container *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

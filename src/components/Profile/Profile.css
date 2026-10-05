@@ -1,79 +1,45 @@
-/* Profile.css — 3D UTHA HUA CLAYMORPHISM */
-
-.profile,
-.profile * {
+.profile *,
+.profile *::before,
+.profile *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   PAGE WRAPPER
-   ============================================ */
 .profile {
     position: relative;
     width: 100%;
-    min-height: 100vh;
-
-    margin-bottom: 50px;
-    padding: 16px 14px 70px;
-
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, sans-serif;
-
-    -webkit-tap-highlight-color: transparent;
-
-    animation: profileIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    color: #e5e7eb;
 }
 
-@keyframes profileIn {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   LOADING OVERLAY
-   ============================================ */
 .profile-loading {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
-
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    gap: 12px;
+    padding: 24px;
+    border-radius: 16px;
+    background: rgba(20, 22, 40, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .profile-loader {
-    display: block;
-
-    width: 54px;
-    height: 54px;
-
-    border: 4px solid rgba(155, 165, 190, 0.3);
-    border-top-color: #5b6ee1;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-
-    animation: profileSpin 0.9s linear infinite;
-
-    box-shadow:
-        0 10px 22px rgba(91, 110, 225, 0.4),
-        0 4px 10px rgba(91, 110, 225, 0.3),
-        inset 0 0 10px rgba(124, 140, 248, 0.15);
+    border: 3px solid rgba(139, 92, 246, 0.25);
+    border-top-color: #a855f7;
+    animation: profile-spin 0.9s linear infinite;
 }
 
-@keyframes profileSpin {
+@keyframes profile-spin {
     to {
         transform: rotate(360deg);
     }
@@ -81,158 +47,94 @@
 
 .profile-loading p {
     margin: 0;
-
-    font-size: 0.9rem;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(199, 210, 254, 0.85);
     letter-spacing: 0.3px;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.2);
 }
 
-/* ============================================
-   🔥 PROFILE HEADER — 3D UTHA HUA CARD
-   ============================================ */
 .profile-header {
     position: relative;
-
     display: flex;
     align-items: center;
     gap: 16px;
-
-    width: 100%;
-
-    margin: 0 0 20px;
-    padding: 18px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 22px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg,
+            rgba(20, 22, 40, 0.96) 0%,
+            rgba(14, 16, 32, 0.96) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 18px 36px rgba(140, 150, 180, 0.55),
-        0 9px 18px rgba(140, 150, 180, 0.4),
-        0 4px 10px rgba(140, 150, 180, 0.28),
-        14px 14px 28px rgba(140, 150, 180, 0.28),
-        -14px -14px 28px rgba(255, 255, 255, 1),
-        11px -11px 24px rgba(255, 255, 255, 0.95),
-        -11px 11px 24px rgba(140, 150, 180, 0.15),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-6px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        0 20px 40px -18px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(139, 92, 246, 0.12) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    overflow: hidden;
 }
 
-/* 🔥 TOP HIGHLIGHT LINE */
 .profile-header::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 22px 22px 0 0;
-    pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
-}
-
-/* 🔥 BOTTOM GROUND SHADOW */
-.profile-header::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 15%;
-    right: 15%;
-    height: 6px;
+    top: -80px;
+    right: -60px;
+    width: 240px;
+    height: 200px;
     background: radial-gradient(ellipse at center,
-            rgba(140, 150, 180, 0.4) 0%,
-            transparent 70%);
-    border-radius: 50%;
+            rgba(99, 102, 241, 0.28) 0%,
+            rgba(236, 72, 153, 0.12) 42%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(48px);
     pointer-events: none;
-    filter: blur(3px);
-    z-index: -1;
+    z-index: 0;
 }
 
-/* ---- prohead1 — avatar side ---- */
 .prohead1 {
+    position: relative;
+    z-index: 1;
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+    padding: 3px;
+    background: linear-gradient(135deg,
+            #6366f1 0%,
+            #a855f7 50%,
+            #ec4899 100%);
+    box-shadow:
+        0 10px 26px -10px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
 
 .profile-image1 {
-    display: block;
-
-    width: 84px;
-    height: 84px;
-
-    border: 3px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
     object-fit: cover;
     object-position: center;
-
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-
-    /* 🔥 3D WOOL BALL AVATAR */
-    box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.55),
-        0 6px 14px rgba(140, 150, 180, 0.4),
-        8px 8px 18px rgba(140, 150, 180, 0.3),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.9),
-        -6px 6px 14px rgba(140, 150, 180, 0.15),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
-
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    display: block;
+    background: #0e1020;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
-.profile-header:hover .profile-image1 {
-    transform: scale(1.05) rotate(-3deg);
-}
-
-/* ---- prohead2 — name + phone + button ---- */
 .prohead2 {
+    position: relative;
+    z-index: 1;
     flex: 1;
     min-width: 0;
-
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
 .prohead2 h2 {
     margin: 0;
-
-    font-size: clamp(1.05rem, 3vw, 1.25rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
-
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+    color: #ffffff;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -240,377 +142,215 @@
 
 .prohead2 p {
     margin: 0;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.86rem);
-    font-weight: 700;
+    font-size: 12.5px;
+    font-weight: 600;
     letter-spacing: 0.4px;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    color: rgba(165, 180, 252, 0.85);
+    line-height: 1;
 }
 
-/* ---- View Profile button — 3D accent pill ---- */
 .edit-profile-btn-pro {
     align-self: flex-start;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: 6px;
-    padding: 8px 16px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgb(0, 38, 255), transparent 55%),
-        linear-gradient(145deg, #0224ff 0%, #5b6ee1 100%);
-
+    margin-top: 4px;
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.22) 0%,
+            rgba(168, 85, 247, 0.14) 55%,
+            rgba(236, 72, 153, 0.18) 100%);
     color: #ffffff;
-    font-size: 0.76rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
-    white-space: nowrap;
-
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
     cursor: pointer;
-
-    text-shadow:
-        0 1px 2px rgba(60, 70, 160, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    /* 🔥 utha hua */
-    box-shadow:
-        0 10px 22px rgba(91, 110, 225, 0.55),
-        0 5px 14px rgba(91, 110, 225, 0.4),
-        7px 7px 16px rgba(91, 110, 225, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-3px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.65);
 }
 
 .edit-profile-btn-pro:hover {
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 16px 30px rgba(91, 110, 225, 0.65),
-        0 8px 18px rgba(91, 110, 225, 0.5),
-        10px 10px 22px rgba(91, 110, 225, 0.35),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(91, 110, 225, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
+    border-color: rgba(139, 92, 246, 0.75);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px -6px rgba(139, 92, 246, 0.9);
+    filter: brightness(1.08);
 }
 
 .edit-profile-btn-pro:active {
-    transform: translateY(0) scale(0.96);
-    box-shadow:
-        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+    transform: translateY(0) scale(0.97);
 }
 
-/* ============================================
-   🔥 PROFILE MENU — 3D UTHA HUA LIST
-   ============================================ */
+.edit-profile-btn-pro:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
+}
+
 .profile-menu {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-
-    width: 100%;
-
-    margin: 0 0 20px;
-    padding: 4px 0 8px;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 18px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        0 16px 32px -18px rgba(0, 0, 0, 0.85),
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
-/* ---- Profile item — 3D wool pill ---- */
 .profile-item {
     position: relative;
-
     display: flex;
     align-items: center;
     gap: 14px;
-
-    width: 100%;
     padding: 14px 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    color: #3f4664;
-    font-size: clamp(0.86rem, 2.3vw, 0.96rem);
-    font-weight: 800;
-    letter-spacing: 0.15px;
-    line-height: 1.3;
-
+    border-radius: 12px;
     cursor: pointer;
-
-    /* 🔥🔥🔥 PURE 3D — CHAARO TARAF */
-    box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.5),
-        0 6px 12px rgba(140, 150, 180, 0.35),
-        0 3px 6px rgba(140, 150, 180, 0.25),
-        9px 9px 20px rgba(140, 150, 180, 0.22),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(140, 150, 180, 0.12),
-        6px -6px 14px rgba(255, 255, 255, 0.85),
-        -6px 6px 14px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-
+    outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #e5e7eb;
+    transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
     overflow: hidden;
 }
 
-/* 🔥 TOP HIGHLIGHT */
-.profile-item::before {
+.profile-item::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 1.5px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 18px 18px 0 0;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid rgba(148, 163, 184, 0.7);
+    border-right: 2px solid rgba(148, 163, 184, 0.7);
+    transform: translateY(-50%) rotate(45deg);
+    transition: all 0.25s ease;
     pointer-events: none;
-    z-index: 2;
+}
+
+.profile-item:hover {
+    background: linear-gradient(90deg,
+            rgba(139, 92, 246, 0.16) 0%,
+            rgba(139, 92, 246, 0.04) 100%);
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+.profile-item:hover::after {
+    border-color: #ffffff;
+    right: 12px;
+}
+
+.profile-item:active {
+    transform: translateX(3px) scale(0.99);
+}
+
+.profile-item:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
 .profile-item>span:first-child {
     flex-shrink: 0;
-
+    width: 34px;
+    height: 34px;
     display: grid;
     place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    font-size: 1.15rem;
+    border-radius: 10px;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.2) 0%,
+            rgba(236, 72, 153, 0.14) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    font-size: 16px;
     line-height: 1;
-
-    /* 🔥 3D WOOL BALL */
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 4px 12px -4px rgba(139, 92, 246, 0.45);
 }
 
-
-
-/* ---- Label ---- */
 .profile-item>span:last-child {
     flex: 1;
     min-width: 0;
-
-    font-size: clamp(0.86rem, 2.3vw, 0.96rem);
-    font-weight: 800;
-    letter-spacing: 0.15px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-right: 20px;
 }
 
-/* ---- chevron indicator ---- */
-.profile-item::after {
-    content: "›";
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 28px;
-    height: 28px;
-
-    border: 1px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #8a90ac;
-    font-size: 1.15rem;
-    font-weight: 900;
-    line-height: 1;
-
-    box-shadow:
-        0 4px 10px rgba(140, 150, 180, 0.4),
-        0 2px 6px rgba(140, 150, 180, 0.28),
-        3px 3px 8px rgba(140, 150, 180, 0.22),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.85),
-        -2px 2px 6px rgba(140, 150, 180, 0.12),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.profile-item:hover::after {
-    transform: translateX(4px);
-    color: #5b6ee1;
-
-    box-shadow:
-        0 6px 14px rgba(124, 140, 248, 0.45),
-        0 3px 8px rgba(124, 140, 248, 0.35),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(124, 140, 248, 0.35);
-}
-
-/* ============================================
-   🔥 LOGOUT BUTTON — 3D red pill
-   ============================================ */
 .logout-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    height: 54px;
+    align-self: stretch;
+    height: 48px;
     padding: 0 20px;
-
-    margin: 6px 0 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgb(255, 0, 0), transparent 55%),
-        linear-gradient(145deg, #fc0000 0%, #e25a5a 100%);
-
-    color: #ffffff;
-    font-size: clamp(0.9rem, 2.4vw, 1rem);
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    line-height: 1;
-
+    border-radius: 14px;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.18) 0%,
+            rgba(220, 38, 38, 0.08) 100%);
+    color: #fecaca;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
     cursor: pointer;
-
-    text-shadow:
-        0 1px 3px rgba(140, 40, 40, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-
-    /* 🔥 utha hua red pill */
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow:
-        0 12px 24px rgba(226, 90, 90, 0.55),
-        0 6px 14px rgba(226, 90, 90, 0.4),
-        8px 8px 18px rgba(226, 90, 90, 0.28),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.9),
-        -6px 6px 14px rgba(226, 90, 90, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
-
-    transform: translateY(-4px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+        0 8px 22px -8px rgba(239, 68, 68, 0.55),
+        0 0 0 1px rgba(239, 68, 68, 0.15) inset;
 }
 
 .logout-btn:hover {
-    transform: translateY(-8px);
-
+    border-color: rgba(239, 68, 68, 0.7);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
     box-shadow:
-        0 20px 38px rgba(226, 90, 90, 0.65),
-        0 10px 20px rgba(226, 90, 90, 0.5),
-        12px 12px 26px rgba(226, 90, 90, 0.35),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.95),
-        -9px 9px 20px rgba(226, 90, 90, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
+        0 12px 28px -8px rgba(239, 68, 68, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .logout-btn:active {
-    transform: translateY(0) scale(0.97);
-    box-shadow:
-        inset 6px 6px 14px rgba(160, 50, 50, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+    transform: translateY(0) scale(0.98);
 }
 
-/* ============================================
-   VERSION TEXT
-   ============================================ */
+.logout-btn:focus-visible {
+    outline: 2px solid rgba(239, 68, 68, 0.9);
+    outline-offset: 2px;
+}
+
 .profile-version {
-    display: block;
-
     margin: 0;
-
     text-align: center;
-
-    font-size: clamp(0.7rem, 1.9vw, 0.78rem);
-    font-weight: 800;
-    letter-spacing: 0.6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    color: rgba(148, 163, 184, 0.55);
 }
 
-/* ============================================
-   🔥 LOGOUT MODAL OVERLAY
-   ============================================ */
 .logout-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
-
-    background: rgba(10, 10, 20, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    animation: logoutOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    background: radial-gradient(ellipse at center,
+            rgba(10, 12, 24, 0.72) 0%,
+            rgba(6, 8, 18, 0.9) 100%);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    animation: profile-fade-in 0.25s ease;
 }
 
-@keyframes logoutOverlayIn {
+@keyframes profile-fade-in {
     from {
         opacity: 0;
     }
@@ -620,510 +360,302 @@
     }
 }
 
-/* ---- Logout message box — 3D utha hua ---- */
 .logout-message-box {
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
     width: 100%;
-    max-width: 340px;
-
-    padding: 22px 20px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 22px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    text-align: center;
-    transform: translateY(-6px);
-
-    animation: logoutBoxPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    max-width: 380px;
+    padding: 24px 22px 20px;
+    border-radius: 20px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.98) 0%,
+            rgba(14, 16, 32, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+        0 32px 64px -16px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(239, 68, 68, 0.14) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    animation: profile-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
 }
 
-@keyframes logoutBoxPop {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-6px) scale(1);
-    }
-}
-
-/* 🔥 TOP HIGHLIGHT */
 .logout-message-box::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 22px 22px 0 0;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 160px;
+    background: radial-gradient(ellipse at center,
+            rgba(239, 68, 68, 0.28) 0%,
+            rgba(236, 72, 153, 0.1) 45%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(46px);
     pointer-events: none;
-    z-index: 2;
+    z-index: 0;
+}
+
+@keyframes profile-pop {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .logout-message-box h3 {
-    margin: 0;
-
-    font-size: clamp(1.05rem, 3vw, 1.2rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
+    position: relative;
+    z-index: 1;
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #ffffff;
+    text-align: center;
 }
 
 .logout-message-box p {
-    margin: 0;
-
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.4;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+    margin: 0 0 20px;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(229, 231, 235, 0.85);
+    text-align: center;
 }
 
-/* ---- Modal buttons row ---- */
 .logout-box-buttons {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
-
-    margin-top: 8px;
 }
 
-.logout-box-buttons button {
+.logout-cancel-btn,
+.logout-confirm-btn {
     flex: 1;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 46px;
-    padding: 0 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    font-size: 0.84rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
-
+    height: 42px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
     cursor: pointer;
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid transparent;
 }
 
-/* ---- Cancel button — neutral 3D pill ---- */
 .logout-cancel-btn {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 8px 18px rgba(140, 150, 180, 0.5),
-        0 4px 10px rgba(140, 150, 180, 0.35),
-        5px 5px 12px rgba(140, 150, 180, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .logout-cancel-btn:hover {
-    transform: translateY(-3px);
-    color: #5b6ee1;
-
-    box-shadow:
-        0 12px 24px rgba(124, 140, 248, 0.45),
-        0 6px 14px rgba(124, 140, 248, 0.32),
-        7px 7px 16px rgba(124, 140, 248, 0.25),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
-}
-
-.logout-cancel-btn:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ---- Confirm button — red 3D pill ---- */
-.logout-confirm-btn {
-    background:red;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
     color: #ffffff;
-    text-shadow:
-        0 1px 3px rgba(140, 40, 40, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.logout-confirm-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
     box-shadow:
-        0 10px 22px rgba(226, 90, 90, 0.55),
-        0 5px 14px rgba(226, 90, 90, 0.4),
-        7px 7px 16px rgba(226, 90, 90, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
+        0 8px 22px -6px rgba(239, 68, 68, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .logout-confirm-btn:hover {
-    transform: translateY(-3px);
-
+    transform: translateY(-1px);
     box-shadow:
-        0 16px 30px rgba(226, 90, 90, 0.65),
-        0 8px 18px rgba(226, 90, 90, 0.5),
-        10px 10px 22px rgba(226, 90, 90, 0.35),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
+        0 12px 28px -6px rgba(239, 68, 68, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.08);
 }
 
+.logout-cancel-btn:active,
 .logout-confirm-btn:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 6px 6px 14px rgba(160, 50, 50, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+    transform: translateY(0) scale(0.97);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .profile {
-        padding: 14px 12px 60px;
-    }
-
-    .profile-header {
-        padding: 16px;
-        border-radius: 20px;
-        gap: 14px;
-        margin-bottom: 18px;
-        transform: translateY(-5px);
-    }
-
-    .profile-image1 {
-        width: 76px;
-        height: 76px;
-        border-width: 2.5px;
-    }
-
-    .prohead2 h2 {
-        font-size: 1.1rem;
-    }
-
-    .prohead2 p {
-        font-size: 0.82rem;
-    }
-
-    .edit-profile-btn-pro {
-        padding: 7px 14px;
-        font-size: 0.72rem;
-    }
-
-    .profile-menu {
-        gap: 11px;
-    }
-
-    .profile-item {
-        padding: 13px 14px;
-        border-radius: 16px;
-        gap: 12px;
-        transform: translateY(-3px);
-    }
-
-    .profile-item>span:first-child {
-        width: 38px;
-        height: 38px;
-        font-size: 1.05rem;
-    }
-
-    .profile-item>span:last-child {
-        font-size: 0.9rem;
-    }
-
-    .profile-item::after {
-        width: 26px;
-        height: 26px;
-        font-size: 1.05rem;
-    }
-
-    .logout-btn {
-        height: 50px;
-        border-radius: 16px;
-        font-size: 0.92rem;
-    }
-
-    .logout-message-box {
-        padding: 20px 18px;
-        border-radius: 20px;
-    }
+.logout-cancel-btn:focus-visible,
+.logout-confirm-btn:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
-/* Phones */
 @media (max-width: 480px) {
     .profile {
-        padding: 12px 10px 54px;
+        padding: 16px 14px 40px;
+        gap: 16px;
     }
 
     .profile-header {
-        padding: 14px;
+        padding: 18px;
+        gap: 14px;
         border-radius: 18px;
-        gap: 12px;
-        margin-bottom: 16px;
-        transform: translateY(-4px);
-
-        box-shadow:
-            0 12px 24px rgba(140, 150, 180, 0.5),
-            0 6px 12px rgba(140, 150, 180, 0.35),
-            0 3px 6px rgba(140, 150, 180, 0.25),
-            9px 9px 20px rgba(140, 150, 180, 0.22),
-            -9px -9px 20px rgba(255, 255, 255, 1),
-            7px -7px 16px rgba(255, 255, 255, 0.9),
-            -7px 7px 16px rgba(140, 150, 180, 0.12),
-            6px -6px 14px rgba(255, 255, 255, 0.85),
-            -6px 6px 14px rgba(140, 150, 180, 0.1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
     }
 
-    .profile-image1 {
+    .prohead1 {
         width: 68px;
         height: 68px;
-        border-width: 2px;
-    }
-
-    .prohead2 h2 {
-        font-size: 1rem;
-    }
-
-    .prohead2 p {
-        font-size: 0.76rem;
-        letter-spacing: 0.3px;
-    }
-
-    .edit-profile-btn-pro {
-        padding: 6px 12px;
-        font-size: 0.68rem;
-        margin-top: 4px;
-    }
-
-    .profile-menu {
-        gap: 10px;
-        margin-bottom: 18px;
-    }
-
-    .profile-item {
-        padding: 12px 13px;
-        border-radius: 14px;
-        gap: 11px;
-        transform: translateY(-3px);
-    }
-
-    .profile-item>span:first-child {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        border-width: 1px;
-    }
-
-    .profile-item>span:last-child {
-        font-size: 0.84rem;
-    }
-
-    .profile-item::after {
-        width: 24px;
-        height: 24px;
-        font-size: 1rem;
-    }
-
-    .logout-btn {
-        height: 48px;
-        border-radius: 14px;
-        font-size: 0.88rem;
-    }
-
-    .profile-version {
-        font-size: 0.7rem;
-    }
-
-    .logout-overlay {
-        padding: 16px;
-    }
-
-    .logout-message-box {
-        padding: 18px 16px;
-        border-radius: 18px;
-        max-width: 300px;
-    }
-
-    .logout-message-box h3 {
-        font-size: 1.05rem;
-    }
-
-    .logout-message-box p {
-        font-size: 0.82rem;
-    }
-
-    .logout-box-buttons {
-        gap: 9px;
-        margin-top: 6px;
-    }
-
-    .logout-box-buttons button {
-        height: 42px;
-        font-size: 0.78rem;
-        border-radius: 12px;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .profile {
-        padding: 10px 8px 50px;
-    }
-
-    .profile-header {
-        padding: 12px;
-        border-radius: 16px;
-        gap: 10px;
-        margin-bottom: 14px;
-        transform: translateY(-3px);
+        border-radius: 20px;
     }
 
     .profile-image1 {
-        width: 60px;
-        height: 60px;
+        border-radius: 18px;
     }
 
     .prohead2 h2 {
-        font-size: 0.92rem;
+        font-size: 17px;
     }
 
     .prohead2 p {
-        font-size: 0.7rem;
+        font-size: 12px;
     }
 
     .edit-profile-btn-pro {
-        padding: 5px 10px;
-        font-size: 0.62rem;
+        height: 30px;
+        padding: 0 12px;
+        font-size: 11.5px;
     }
 
     .profile-menu {
-        gap: 9px;
+        padding: 6px;
+        border-radius: 16px;
     }
 
     .profile-item {
-        padding: 10px 11px;
-        border-radius: 12px;
-        gap: 10px;
+        padding: 12px 14px;
+        gap: 12px;
+        font-size: 13.5px;
+        border-radius: 11px;
     }
 
     .profile-item>span:first-child {
         width: 32px;
         height: 32px;
-        font-size: 0.9rem;
-    }
-
-    .profile-item>span:last-child {
-        font-size: 0.76rem;
+        font-size: 15px;
+        border-radius: 9px;
     }
 
     .profile-item::after {
-        width: 22px;
-        height: 22px;
-        font-size: 0.92rem;
+        right: 14px;
+        width: 7px;
+        height: 7px;
     }
 
     .logout-btn {
-        height: 44px;
-        border-radius: 12px;
-        font-size: 0.82rem;
-    }
-
-    .profile-version {
-        font-size: 0.62rem;
-    }
-
-    .logout-overlay {
-        padding: 12px;
+        height: 46px;
+        font-size: 13.5px;
+        border-radius: 13px;
     }
 
     .logout-message-box {
-        padding: 16px 14px;
-        border-radius: 16px;
-        max-width: 280px;
+        padding: 22px 18px 18px;
+        border-radius: 18px;
     }
 
     .logout-message-box h3 {
-        font-size: 0.95rem;
+        font-size: 16px;
     }
 
     .logout-message-box p {
-        font-size: 0.76rem;
+        font-size: 13px;
     }
 
-    .logout-box-buttons {
-        gap: 8px;
-    }
-
-    .logout-box-buttons button {
-        height: 38px;
-        font-size: 0.72rem;
+    .logout-cancel-btn,
+    .logout-confirm-btn {
+        height: 40px;
+        font-size: 13px;
         border-radius: 11px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .profile,
-    .logout-overlay,
-    .logout-message-box,
-    .profile-loader {
-        animation: none;
+@media (max-width: 360px) {
+    .profile {
+        padding: 14px 12px 36px;
+        gap: 14px;
     }
 
-    .profile-image1,
-    .edit-profile-btn-pro,
-    .profile-item,
-    .profile-item>span:first-child,
-    .profile-item::after,
-    .logout-btn,
-    .logout-box-buttons button {
-        transition: none;
+    .profile-header {
+        padding: 16px;
+        gap: 12px;
+        border-radius: 16px;
+    }
+
+    .prohead1 {
+        width: 62px;
+        height: 62px;
+        border-radius: 18px;
+    }
+
+    .profile-image1 {
+        border-radius: 16px;
+    }
+
+    .prohead2 h2 {
+        font-size: 16px;
+    }
+
+    .prohead2 p {
+        font-size: 11.5px;
+    }
+
+    .edit-profile-btn-pro {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 11px;
+        border-radius: 9px;
+    }
+
+    .profile-item {
+        padding: 11px 12px;
+        font-size: 13px;
+        gap: 10px;
+    }
+
+    .profile-item>span:first-child {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .logout-btn {
+        height: 44px;
+        font-size: 13px;
+    }
+
+    .logout-message-box {
+        padding: 20px 16px 16px;
+    }
+
+    .logout-cancel-btn,
+    .logout-confirm-btn {
+        height: 38px;
+        font-size: 12.5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .profile *,
+    .profile *::before,
+    .profile *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

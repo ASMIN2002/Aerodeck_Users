@@ -12,9 +12,6 @@ function Notification({ onClose }) {
     const [loadingNotifs, setLoadingNotifs] = useState(true);
     const [expandedId, setExpandedId] = useState(null); // 👈 naya
 
-    /* ============================================
-       FETCH — rewards row (redeem wala)
-       ============================================ */
     useEffect(() => {
 
         async function loadData() {

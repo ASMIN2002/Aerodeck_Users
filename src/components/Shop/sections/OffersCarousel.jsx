@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./OffersCarousel.css";
 import toast from "react-hot-toast";
 import { API } from "../../../services/api";
@@ -11,13 +11,14 @@ function OffersCarousel() {
 
     const offerScrollRef = useRef(null);
 
-    /* Fetch offers */
     useEffect(() => {
         const fetchOpenOffers = async () => {
             try {
                 const res = await fetch(`${API}/api/openoffers/active`);
                 const data = await res.json();
-                if (data.success) setOpenOffers(data.data);
+                if (data.success && Array.isArray(data.data)) {
+                    setOpenOffers(data.data);
+                }
             } catch (err) {
                 console.error("Open offers fetch error:", err);
             }
@@ -25,13 +26,11 @@ function OffersCarousel() {
         fetchOpenOffers();
     }, []);
 
-    /* Live tick */
     useEffect(() => {
         const interval = setInterval(() => setNow(Date.now()), 1000);
         return () => clearInterval(interval);
     }, []);
 
-    /* Auto-scroll */
     useEffect(() => {
         if (openOffers.length <= 1) return;
 
@@ -53,7 +52,6 @@ function OffersCarousel() {
         return () => clearTimeout(timer);
     }, [activeOfferIndex, openOffers]);
 
-    /* Countdown */
     const getCountdown = (validAt) => {
         if (!validAt) return null;
 
@@ -75,14 +73,46 @@ function OffersCarousel() {
         return { expired: false, text };
     };
 
+    const countdowns = useMemo(
+        () => openOffers.map((offer) => getCountdown(offer.valid_at)),
+        [openOffers, now]
+    );
+
+    const scrollToSlide = (index) => {
+        const container = offerScrollRef.current;
+        if (!container) return;
+
+        container.scrollTo({
+            left: index * container.clientWidth,
+            behavior: "smooth"
+        });
+        setActiveOfferIndex(index);
+    };
+
+    const handleOfferClick = () => {
+        toast("Feature Coming Soon 🚀", {
+            duration: 2500,
+            style: {
+                background: "#1a1a1a",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "12px 18px",
+                fontSize: "14px",
+                fontWeight: 600
+            }
+        });
+    };
+
     if (openOffers.length === 0) return null;
 
     return (
         <section className="shop-offer-carousel-section">
-            <div className="heepit-intro1">
-                <h2>Special Offers</h2>
-            </div>
 
+            <div className="shop-offer-heading-row">
+                <h2 className="shop-offer-heading">
+                    Special <span>Offers</span>
+                </h2>
+            </div>
 
             <div
                 className="shop-offer-carousel"
@@ -96,102 +126,107 @@ function OffersCarousel() {
                 }}
             >
                 {openOffers.map((offer, index) => {
-                    const cd = getCountdown(offer.valid_at);
+                    const cd = countdowns[index];
 
                     return (
                         <div
-                            key={offer.id}
+                            key={offer.id ?? index}
                             className={`shop-offer-slide ${index === activeOfferIndex ? "active" : ""}`}
-                            onClick={() =>
-                                toast("Feature Coming Soon 🚀", {
-                                    duration: 2500,
-                                    style: {
-                                        background: "#1a1a1a",
-                                        color: "#fff",
-                                        borderRadius: "10px",
-                                        padding: "12px 18px",
-                                        fontSize: "14px",
-                                        fontWeight: 600
-                                    }
-                                })
-                            }
                         >
+                            <button
+                                type="button"
+                                className="shop-offer-card-btn"
+                                onClick={handleOfferClick}
+                                aria-label={`${offer.shop_name} offer`}
+                            >
+                                <div className="shop-offer-image-wrap">
+                                    <div className="shop-offer-image">
+                                        {offer.image_url ? (
+                                            <img
+                                                src={offer.image_url}
+                                                alt={offer.shop_name || "offer"}
+                                                loading="lazy"
+                                                draggable={false}
+                                                onError={(e) => {
+                                                    e.currentTarget.style.display = "none";
+                                                    e.currentTarget.parentElement.classList.add("shop-offer-image-fallback-active");
+                                                }}
+                                            />
+                                        ) : null}
 
-                            {/* ============================================
-                                LEFT — IMAGE + COUNTDOWN
-                                ============================================ */}
-                            <div className="shop-offer-image-wrap">
-
-                                <div className="shop-offer-image">
-                                    <img
-                                        src={offer.image_url || ""}
-                                        alt={offer.shop_name}
-                                    />
+                                        <span className="shop-offer-image-fallback">
+                                            {offer.shop_name?.charAt(0)?.toUpperCase() || "★"}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                {/* Countdown BELOW image (not overlapping) */}
-                                {cd && (
-                                    <div
-                                        className={`shop-offer-countdown ${cd.expired ? "expired" : ""}`}
-                                    >
-                                        {cd.expired
-                                            ? "⏰ Expired"
-                                            : `⏳ ${cd.text}`}
-                                    </div>
-                                )}
+                                <div className="shop-offer-details">
 
-                            </div>
-
-                            {/* ============================================
-                                RIGHT — DETAILS
-                                ============================================ */}
-                            <div className="shop-offer-details">
-                                <div className="shop-offer-content">
-
-                                    <div className="shop-offer-name">
-                                        {offer.shop_name}
+                                    <div className="shop-offer-top-row">
+                                        <div className="shop-offer-name">
+                                            {offer.shop_name}
+                                        </div>
+                                        <div className="shop-offer-percent">
+                                            {offer.offer_percent}%
+                                        </div>
                                     </div>
 
                                     <div className="shop-offer-category">
                                         {offer.category}
                                     </div>
 
-                                    <div className="shop-offer-percent">
-                                        {offer.offer_percent}% OFF
-                                    </div>
-
                                     <div className="shop-offer-description">
                                         {offer.description || "Limited time offer"}
                                     </div>
 
-                                    <div className="shop-offer-price">
-                                        Starting ₹
-                                        {Number(offer.price || 0).toLocaleString("en-IN")}
+                                    <div className="shop-offer-bottom-row">
+                                        <div className="shop-offer-price">
+                                            <span className="shop-offer-price-label">From</span>
+                                            <span className="shop-offer-price-value">
+                                                ₹{Number(offer.price || 0).toLocaleString("en-IN")}
+                                            </span>
+                                        </div>
+
+                                        <div className="shop-offer-rating">
+                                            <span className="shop-offer-rating-star">★</span>
+                                            <span>{offer.rating || "—"}</span>
+                                        </div>
                                     </div>
 
-                                    <div className="shop-offer-rating">
-                                        ★ {offer.rating || "—"} •{" "}
-                                        {Number(offer.customer_count || 0).toLocaleString("en-IN")}
-                                        + Customers
-                                    </div>
+                                    {cd && (
+                                        <div
+                                            className={`shop-offer-countdown ${cd.expired ? "expired" : ""}`}
+                                        >
+                                            <span className="shop-offer-countdown-icon">
+                                                {cd.expired ? "⏰" : "⏳"}
+                                            </span>
+                                            <span className="shop-offer-countdown-text">
+                                                {cd.expired ? "Expired" : cd.text}
+                                            </span>
+                                        </div>
+                                    )}
 
                                 </div>
-                            </div>
 
+                            </button>
                         </div>
                     );
                 })}
             </div>
 
-            {/* DOTS */}
-            <div className="shop-offer-dots">
-                {openOffers.map((offer, index) => (
-                    <span
-                        key={offer.id}
-                        className={`shop-offer-dot ${index === activeOfferIndex ? "active" : ""}`}
-                    />
-                ))}
-            </div>
+            {openOffers.length > 1 && (
+                <div className="shop-offer-dots">
+                    {openOffers.map((offer, index) => (
+                        <button
+                            key={`dot-${offer.id ?? index}`}
+                            type="button"
+                            className={`shop-offer-dot ${index === activeOfferIndex ? "active" : ""}`}
+                            onClick={() => scrollToSlide(index)}
+                            aria-label={`Go to offer ${index + 1}`}
+                        />
+                    ))}
+                </div>
+            )}
 
         </section>
     );

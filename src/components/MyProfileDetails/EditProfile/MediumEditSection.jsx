@@ -11,117 +11,68 @@ function MediumEditSection({
     const [fullName, setFullName] = useState("");
     const [originalName, setOriginalName] = useState("");
     const [email, setEmail] = useState("");
-    const [emailInput, setEmailInput] = useState("");
-    const [otp, setOtp] = useState("");
-    const [showEmailBox, setShowEmailBox] = useState(false);
-    const [otpSent, setOtpSent] = useState(false);
-    const [sendingOtp, setSendingOtp] = useState(false);
-    const [verifyingOtp, setVerifyingOtp] = useState(false);
+    const [whatsappInput, setWhatsappInput] = useState("");
+    const [mobileInput, setMobileInput] = useState("");
+    const [showWhatsappBox, setShowWhatsappBox] = useState(false);
+    const [showMobileBox, setShowMobileBox] = useState(false);
+    const [savingWhatsapp, setSavingWhatsapp] = useState(false);
+    const [savingMobile, setSavingMobile] = useState(false);
     const [message, setMessage] = useState("");
     const [messageType, setMessageType] = useState("");
-    const handleSendEmailOtp = async () => {
-        const cleanEmail = emailInput.trim().toLowerCase();
-        const emailRegex =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(cleanEmail)) {
-            setMessage("Please enter a valid email address.");
-            setMessageType("error");
-            return;
-        }
-        setSendingOtp(true);
-        setMessage("");
-        setMessageType("");
-        try {
-            const response = await fetch(
-                `${API}/api/user/send-email-otp`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        session_token:
-                            localStorage.getItem("session_token"),
 
-                        email: cleanEmail
-                    })
-                }
-            );
-            const data = await response.json();
-            if (data.success) {
-                navigateWithLoading(
-                    () => {
-                        setOtpSent(true);
-                        setMessage("OTP sent successfully.");
-                        setMessageType("success");
-                        setTimeout(() => {
-                            setMessage("");
-                            setMessageType("");
-                        }, 3000);
-                    },
-                    "Sending OTP...",
-                    500
-                );
-            } else {
-                setMessage(
-                    data.message ||
-                    "Failed to send OTP."
-                );
-                setMessageType("error");
-            }
+    const isWhatsappVerified =
+        Number(profile?.is_whatsapp_verified) === 1;
 
-        } catch (err) {
+    const isMobileVerified =
+        Number(profile?.is_mobile_verified) === 1;
 
-            console.error(err);
+    const hasWhatsappNumber =
+        !!profile?.whatsapp_number;
 
-            setMessage("Server Error.");
-            setMessageType("error");
+    const hasMobileNumber =
+        !!profile?.mobile_number;
 
-        } finally {
-
-            setSendingOtp(false);
-        }
-    };
 
     useEffect(() => {
+        let name = profile?.full_name || "";
 
-        const name = profile?.full_name || "";
+        if (name === "HEEPIT USER") {
+            name = "";
+        }
 
         setFullName(name);
         setOriginalName(name);
         setEmail(profile?.email || "");
-
     }, [profile]);
+
 
     const handleSaveName = async () => {
 
         const cleanName = fullName.trim();
-
-
 
         if (!cleanName) {
             setMessage("Please enter your name.");
             setMessageType("error");
             return;
         }
+
         if (!/^[A-Za-z ]+$/.test(cleanName)) {
             setMessage("Name can contain letters only.");
             setMessageType("error");
             return;
         }
+
         if (cleanName.length < 3) {
             setMessage("Name must be at least 3 letters.");
             setMessageType("error");
             return;
         }
 
-        // Name unchanged
         if (cleanName === originalName.trim()) {
             return;
         }
 
         try {
-
             const response = await fetch(
                 `${API}/api/user/update-name`,
                 {
@@ -140,15 +91,11 @@ function MediumEditSection({
             const data = await response.json();
 
             if (data.success) {
-
                 navigateWithLoading(
                     () => {
-
                         setProfile(data.user);
-
                         setFullName(data.user.full_name);
                         setOriginalName(data.user.full_name);
-
                         setMessage("Name updated successfully.");
                         setMessageType("success");
 
@@ -156,119 +103,168 @@ function MediumEditSection({
                             setMessage("");
                             setMessageType("");
                         }, 3000);
-
                     },
                     "Updating Name...",
                     500
                 );
-
             } else {
-
                 setMessage(
                     data.message || "Failed to update name."
                 );
-
                 setMessageType("error");
-
             }
 
         } catch (err) {
-
             console.error(err);
-
             setMessage("Server Error.");
             setMessageType("error");
-
         }
     };
 
 
-    // ===============================
-    // VERIFY EMAIL OTP
-    // ===============================
+    const handleSaveWhatsapp = async () => {
 
-    const handleVerifyEmailOtp = async () => {
+        const cleanNumber = whatsappInput.replace(/\D/g, "");
 
-        if (!otp.trim()) {
-
-            setMessage("Please enter OTP.");
+        if (cleanNumber.length !== 10) {
+            setMessage("WhatsApp number must be 10 digits.");
             setMessageType("error");
-
             return;
         }
 
-        setVerifyingOtp(true);
-
+        setSavingWhatsapp(true);
         setMessage("");
         setMessageType("");
 
         try {
-
             const response = await fetch(
-                `${API}/api/user/verify-email-otp`,
+                `${API}/api/user/update-whatsapp`,
                 {
-                    method: "POST",
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
                         session_token:
                             localStorage.getItem("session_token"),
-
-                        email: emailInput.trim(),
-
-                        otp: otp.trim()
+                        whatsapp_number: cleanNumber
                     })
                 }
             );
 
             const data = await response.json();
-            if (data.success) {
 
+            if (data.success) {
                 navigateWithLoading(
                     () => {
-
                         setProfile(data.user);
-                        setEmail(data.user.email);
-                        setEmailInput("");
-                        setOtp("");
+                        setWhatsappInput("");
+                        setShowWhatsappBox(false);
 
-                        setShowEmailBox(false);
-                        setOtpSent(false);
-
-                        setMessage("OTP verified successfully.");
+                        setMessage("WhatsApp number saved. Please send the verification message.");
                         setMessageType("success");
 
                         setTimeout(() => {
                             setMessage("");
                             setMessageType("");
-                        }, 3000);
-
+                        }, 5000);
                     },
-                    "Verifying OTP...",
+                    "Saving WhatsApp...",
                     500
                 );
-
             } else {
-
-                setMessage(data.message || "Invalid OTP.");
+                setMessage(
+                    data.message || "Failed to save WhatsApp number."
+                );
                 setMessageType("error");
-
             }
 
         } catch (err) {
-
             console.error(err);
-
             setMessage("Server Error.");
             setMessageType("error");
-
         } finally {
+            setSavingWhatsapp(false);
+        }
+    };
 
-            setVerifyingOtp(false);
 
+    const handleSaveMobile = async () => {
+
+        const cleanNumber = mobileInput.replace(/\D/g, "");
+
+        if (cleanNumber.length !== 10) {
+            setMessage("Mobile number must be 10 digits.");
+            setMessageType("error");
+            return;
         }
 
+        setSavingMobile(true);
+        setMessage("");
+        setMessageType("");
+
+        try {
+            const response = await fetch(
+                `${API}/api/user/update-mobile`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_token:
+                            localStorage.getItem("session_token"),
+                        mobile_number: cleanNumber
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                navigateWithLoading(
+                    () => {
+                        setProfile(data.user);
+                        setMobileInput("");
+                        setShowMobileBox(false);
+
+                        setMessage("Mobile number saved. Please pick up the verification call.");
+                        setMessageType("success");
+
+                        setTimeout(() => {
+                            setMessage("");
+                            setMessageType("");
+                        }, 5000);
+                    },
+                    "Saving Mobile...",
+                    500
+                );
+            } else {
+                setMessage(
+                    data.message || "Failed to save mobile number."
+                );
+                setMessageType("error");
+            }
+
+        } catch (err) {
+            console.error(err);
+            setMessage("Server Error.");
+            setMessageType("error");
+        } finally {
+            setSavingMobile(false);
+        }
+    };
+
+
+    const handleChangeWhatsapp = () => {
+        setShowWhatsappBox(true);
+        setWhatsappInput("");
+    };
+
+
+    const handleChangeMobile = () => {
+        setShowMobileBox(true);
+        setMobileInput("");
     };
 
 
@@ -277,19 +273,11 @@ function MediumEditSection({
         <div className="medium-edit-card">
 
             {message && (
-
-                <div
-                    className={`email-message ${messageType}`}
-                >
+                <div className={`email-message ${messageType}`}>
                     {message}
                 </div>
-
             )}
 
-
-            {/* =========================
-                FULL NAME
-            ========================= */}
 
             <div className="medium-field">
 
@@ -309,7 +297,7 @@ function MediumEditSection({
                                 setFullName(value);
                             }
                         }}
-                        placeholder="Enter your full name"
+                        placeholder="Set your name"
                     />
 
                     {fullName.trim() !== originalName.trim() && (
@@ -330,48 +318,41 @@ function MediumEditSection({
             </div>
 
 
-            {/* =========================
-                LOGIN MOBILE
-            ========================= */}
-
-            <div className="medium-field">
-
-                <label>
-                    Mobile Number
-                </label>
-
-                <div className="mobile-box">
-
-                    <span className="mobile-number">
-                        +91 {profile?.mobile_number}
-                    </span>
-
-                    <span className="verified">
-                        Verified
-                    </span>
-
-                </div>
-            </div>
-
-
-            {/* =========================
-                EMAIL
-            ========================= */}
-
             <div className="medium-field">
 
                 <label>
                     Email Address
                 </label>
 
+                <div className="mobile-box">
 
-                {profile?.email &&
-                    Number(profile?.is_email_verified) === 1 ? (
+                    <span className="mobile-number">
+                        {profile?.email || "NOT SET"}
+                    </span>
+
+                    {Number(profile?.is_email_verified) === 1 && (
+                        <span className="verified">
+                            Verified
+                        </span>
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div className="medium-field">
+
+                <label>
+                    WhatsApp Number
+                </label>
+
+                {isWhatsappVerified ? (
 
                     <div className="mobile-box">
 
                         <span className="mobile-number">
-                            {profile.email}
+                            +91 {profile?.whatsapp_number}
                         </span>
 
                         <span className="verified">
@@ -380,116 +361,142 @@ function MediumEditSection({
 
                     </div>
 
+                ) : (showWhatsappBox || !hasWhatsappNumber) ? (
+
+                    <div className="email-input-row">
+
+                        <input
+                            type="tel"
+                            inputMode="numeric"
+                            maxLength={10}
+                            value={whatsappInput}
+                            onChange={(e) =>
+                                setWhatsappInput(
+                                    e.target.value.replace(/\D/g, "")
+                                )
+                            }
+                            placeholder="Enter 10 digit WhatsApp number"
+                            disabled={savingWhatsapp}
+                        />
+
+                        <button
+                            className="send-otp-btn"
+                            onClick={handleSaveWhatsapp}
+                            disabled={
+                                whatsappInput.length !== 10 ||
+                                savingWhatsapp
+                            }
+                        >
+                            {savingWhatsapp ? "SAVING..." : "VERIFY"}
+                        </button>
+
+                    </div>
+
                 ) : (
 
                     <>
-                        {/* ADD BUTTON */}
 
-                        {!showEmailBox && (
+                        <div className="mobile-box">
 
-                            <div className="email-add-box">
+                            <span className="mobile-number">
+                                +91 {profile?.whatsapp_number}
+                            </span>
 
-                                <span className="email-not-set">
-                                    NOT SET
-                                </span>
+                            <button
+                                className="change-number-btn"
+                                onClick={handleChangeWhatsapp}
+                            >
+                                CHANGE
+                            </button>
 
-                                <button
-                                    className="email-add-btn"
-                                    onClick={() => {
-                                        setShowEmailBox(true);
-                                        setMessage("");
-                                    }}
-                                >
-                                    ADD
-                                </button>
+                        </div>
 
-                            </div>
+                        <div className="verify-instruction">
+                            As soon as you got a message from WhatsApp,
+                            reply <b>VERIFY</b> for verification.
+                        </div>
 
-                        )}
+                    </>
 
+                )}
 
-                        {/* EMAIL INPUT */}
-
-                        {showEmailBox && (
-
-                            <div className="email-verification-box">
-
-                                <div className="email-input-row">
-
-                                    <input
-                                        type="email"
-                                        value={emailInput}
-                                        onChange={(e) =>
-                                            setEmailInput(
-                                                e.target.value
-                                            )
-                                        }
-                                        placeholder="Enter email address"
-                                        disabled={
-                                            sendingOtp ||
-                                            verifyingOtp
-                                        }
-                                    />
-
-                                    {!sendingOtp && !otpSent && (
-                                        <button
-                                            className="send-otp-btn"
-                                            onClick={handleSendEmailOtp}
-                                            disabled={verifyingOtp}
-                                        >
-                                            SEND OTP
-                                        </button>
-                                    )}
-
-                                </div>
+            </div>
 
 
-                                {/* OTP BOX */}
+            <div className="medium-field">
 
-                                {otpSent && (
+                <label>
+                    Mobile Number
+                </label>
 
-                                    <div className="otp-verification-row">
+                {isMobileVerified ? (
 
-                                        <input
-                                            type="text"
-                                            inputMode="numeric"
-                                            maxLength="6"
-                                            value={otp}
-                                            onChange={(e) =>
-                                                setOtp(
-                                                    e.target.value
-                                                        .replace(
-                                                            /\D/g,
-                                                            ""
-                                                        )
-                                                )
-                                            }
-                                            placeholder="Enter OTP"
-                                            disabled={
-                                                verifyingOtp
-                                            }
-                                        />
+                    <div className="mobile-box">
 
-                                        <button
-                                            className="verify-email-btn"
-                                            onClick={
-                                                handleVerifyEmailOtp
-                                            }
-                                            disabled={
-                                                otp.length !== 6 ||
-                                                verifyingOtp
-                                            }
-                                        >
-                                            VERIFY
-                                        </button>
+                        <span className="mobile-number">
+                            +91 {profile?.mobile_number}
+                        </span>
 
-                                    </div>
+                        <span className="verified">
+                            Verified
+                        </span>
 
-                                )}
+                    </div>
 
-                            </div>
+                ) : (showMobileBox || !hasMobileNumber) ? (
 
-                        )}
+                    <div className="email-input-row">
+
+                        <input
+                            type="tel"
+                            inputMode="numeric"
+                            maxLength={10}
+                            value={mobileInput}
+                            onChange={(e) =>
+                                setMobileInput(
+                                    e.target.value.replace(/\D/g, "")
+                                )
+                            }
+                            placeholder="Enter 10 digit mobile number"
+                            disabled={savingMobile}
+                        />
+
+                        <button
+                            className="send-otp-btn"
+                            onClick={handleSaveMobile}
+                            disabled={
+                                mobileInput.length !== 10 ||
+                                savingMobile
+                            }
+                        >
+                            {savingMobile ? "SAVING..." : "VERIFY"}
+                        </button>
+
+                    </div>
+
+                ) : (
+
+                    <>
+
+                        <div className="mobile-box">
+
+                            <span className="mobile-number">
+                                +91 {profile?.mobile_number}
+                            </span>
+
+                            <button
+                                className="change-number-btn"
+                                onClick={handleChangeMobile}
+                            >
+                                CHANGE
+                            </button>
+
+                        </div>
+
+                        <div className="verify-instruction">
+                            As soon as you got a call from us,
+                            press <b>VERIFY</b> for verification.
+                        </div>
 
                     </>
 
