@@ -1,17 +1,17 @@
 import "./ALLGiftCategories.css";
+import { useNavigate } from "react-router-dom";
 
 function ALLGiftCategories({
     categories,
-    onBack,
     onCategoryClick
 }) {
+
+    const navigate = useNavigate();
 
     const giftCategories = categories.filter(
         item =>
             String(item.catname).toUpperCase() === "GIFT"
     );
-
-
 
     return (
 
@@ -21,7 +21,7 @@ function ALLGiftCategories({
 
                 <button
                     type="button"
-                    onClick={onBack}
+                    onClick={() => navigate(-1)}
                 >
                     ← Back
                 </button>

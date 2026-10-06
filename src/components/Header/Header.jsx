@@ -30,11 +30,16 @@ function Header({
     const [notifCount, setNotifCount] = useState(0);
 
     const [showMenuDropdown, setShowMenuDropdown] = useState(false);
-    const [selectedLabel, setSelectedLabel] = useState("Products");
 
-    /* ============================================
-       LOAD APP VERSION
-       ============================================ */
+    const menuOptions = [
+        { key: "Shop", label: "Products", icon: "🛍️", comingSoon: false },
+        { key: "Cards", label: "Cards", icon: "💳", comingSoon: false },
+        { key: "Gifts", label: "Gifts", icon: "🎁", comingSoon: true }
+    ];
+
+    const [selectedLabel, setSelectedLabel] = useState("Products");
+    const [selectedIcon, setSelectedIcon] = useState("🛍️");
+
     useEffect(() => {
         async function loadVersion() {
             try {
@@ -48,9 +53,6 @@ function Header({
         if (userId) loadVersion();
     }, [userId]);
 
-    /* ============================================
-       CHECK NOTIFICATION COUNT + RED DOT
-       ============================================ */
     useEffect(() => {
         async function checkNotifications() {
             try {
@@ -75,9 +77,6 @@ function Header({
         if (userId) checkNotifications();
     }, [userId, showNotifOverlay]);
 
-    /* ============================================
-       CLICK OUTSIDE — MENU DROPDOWN CLOSE
-       ============================================ */
     useEffect(() => {
         function handleClickOutside(e) {
             if (
@@ -98,14 +97,14 @@ function Header({
     }, [showMenuDropdown]);
 
     useEffect(() => {
-        if (selectedMenu === "Shop") setSelectedLabel("Products");
-        else if (selectedMenu === "Gifts") setSelectedLabel("Gift");
-        else if (selectedMenu === "Cards") setSelectedLabel("Card");
+        const found = menuOptions.find((opt) => opt.key === selectedMenu);
+        if (found) {
+            setSelectedLabel(found.label);
+            setSelectedIcon(found.icon);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedMenu]);
 
-    /* ============================================
-       NOTIF OPEN / CLOSE
-       ============================================ */
     const handleNotifOpen = () => {
         localStorage.setItem("lastSeenCount", String(notifCount));
         setHasNotification(false);
@@ -133,12 +132,6 @@ function Header({
         setTimeout(() => setShowToast(false), 2000);
     };
 
-    const menuOptions = [
-        { key: "Shop", label: "Products", icon: "🛍️", comingSoon: false },
-        { key: "Gifts", label: "Gifts", icon: "🎁", comingSoon: true },
-        { key: "Cards", label: "Cards", icon: "💳", comingSoon: true }
-    ];
-
     const handleMenuOptionClick = (option) => {
         setShowMenuDropdown(false);
 
@@ -148,10 +141,18 @@ function Header({
         }
 
         setSelectedLabel(option.label);
+        setSelectedIcon(option.icon);
         handleTabClick(option.key);
 
         if (onReloadHome) onReloadHome();
-        navigate("/home/shop", { replace: true });
+
+        if (option.key === "Cards") {
+            navigate("/home/cards", { replace: true });
+        } else if (option.key === "Gifts") {
+            navigate("/home/gifts", { replace: true });
+        } else {
+            navigate("/home/shop", { replace: true });
+        }
     };
 
     const handleTabClick = (menu) => {
@@ -173,13 +174,11 @@ function Header({
 
     return (
         <>
-            {/* ============ HEADER ============ */}
             <header className="hd-header" ref={dropdownRef}>
                 <div className="hd-glow" />
 
                 <div className="hd-inner">
 
-                    {/* ---- LEFT: BRAND ---- */}
                     <div className="hd-brand">
                         <div className="hd-brand-mark">
                             <span>H</span>
@@ -193,10 +192,8 @@ function Header({
                         </div>
                     </div>
 
-                    {/* ---- RIGHT: ACTIONS ---- */}
                     <div className="hd-actions">
 
-                        {/* Menu Dropdown */}
                         <div className="hd-menu-wrap" ref={menuDropdownRef}>
                             <button
                                 type="button"
@@ -205,6 +202,9 @@ function Header({
                                 aria-haspopup="true"
                                 aria-expanded={showMenuDropdown}
                             >
+                                {selectedIcon && (
+                                    <span className="hd-menu-icon">{selectedIcon}</span>
+                                )}
                                 <span className="hd-menu-label">{selectedLabel}</span>
                                 <span className={`hd-menu-chevron ${showMenuDropdown ? "rotate" : ""}`}>
                                     <FiChevronDown />
@@ -244,7 +244,6 @@ function Header({
                             )}
                         </div>
 
-                        {/* Notification Bell */}
                         <button
                             className={`hd-notif-btn ${hasNotification ? "has-dot" : ""}`}
                             onClick={handleNotifOpen}

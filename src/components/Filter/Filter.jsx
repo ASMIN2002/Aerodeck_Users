@@ -5,19 +5,17 @@ function Filter({
     selectedMenu,
     filter,
     setFilter,
-    categories,
-    onClose
+    onClose,
+    onApply,
+    onClear
 }) {
 
-    // ---- draft filter (temporary, jab tak apply na ho) ----
     const [draft, setDraft] = useState(filter);
 
-    // ---- jab bhi filter change ho (bahar se), draft sync ----
     useEffect(() => {
         setDraft(filter);
     }, [filter]);
 
-    // ---- body scroll lock ----
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -34,70 +32,42 @@ function Filter({
         return null;
     }
 
-    // ---- APPLY ----
     const handleApply = () => {
         setFilter(draft);
-
-        // sessionStorage me save (tab band hone pe auto clear)
         try {
-            sessionStorage.setItem(
-                "heep_filter",
-                JSON.stringify(draft)
-            );
+            sessionStorage.setItem("heep_filter", JSON.stringify(draft));
         } catch (e) {
             console.error("Filter save error:", e);
         }
-
+        if (onApply) onApply();
         onClose();
     };
 
-    // ---- RESET ----
     const handleReset = () => {
         const empty = {
-            category: "",
+            category: "All",
             sort: "",
             rating: 0,
             availableOnly: false
         };
-
         setDraft(empty);
         setFilter(empty);
-
         try {
             sessionStorage.removeItem("heep_filter");
         } catch (e) {
             console.error("Filter reset error:", e);
         }
+        if (onClear) onClear();
     };
 
     return (
         <>
-            {/* ---- BACKGROUND BLUR OVERLAY ---- */}
             <div className="fl-overlay" onClick={onClose} />
 
-            {/* ---- FILTER DROPDOWN ---- */}
             <div className="fl-dropdown" onClick={(e) => e.stopPropagation()}>
 
-                {/* scrollable content */}
                 <div className="fl-content">
 
-                    {selectedMenu === "Cards" && (
-                        <>
-                            {categories.map((category, index) => (
-                                <button
-                                    key={`${category}-${index}`}
-                                    className={`fl-item ${draft.category === category ? "active" : ""}`}
-                                    onClick={() =>
-                                        setDraft({ ...draft, category })
-                                    }
-                                >
-                                    {category}
-                                </button>
-                            ))}
-                        </>
-                    )}
-
-                    <hr className="fl-divider" />
                     <h4 className="fl-title">Price</h4>
 
                     <button
@@ -168,7 +138,6 @@ function Filter({
 
                 </div>
 
-                {/* ---- APPLY + RESET FOOTER ---- */}
                 <div className="fl-actions">
                     <button
                         type="button"

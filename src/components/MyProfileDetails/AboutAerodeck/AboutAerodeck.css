@@ -1,78 +1,79 @@
-/* AboutAerodeck.css — 3D UTHA HUA CLAYMORPHISM */
-
-.about-heepit,
-.about-heepit * {
+.about-heepit *,
+.about-heepit *::before,
+.about-heepit *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   PAGE WRAPPER
-   ============================================ */
 .about-heepit {
     position: relative;
     width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
-    gap: 0;
-
-    margin: 0;
-    margin-bottom: 50px;
-    padding: 0 0 40px;
-
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, sans-serif;
-
-    -webkit-tap-highlight-color: transparent;
-
-    animation: aboutHeepitIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    color: #e5e7eb;
+    overflow: hidden;
+    margin-bottom: 60px;
 }
 
-@keyframes aboutHeepitIn {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   🔥 HEADER — 3D UTHA HUA STICKY
-   ============================================ */
 .heepit-about-header {
     position: sticky;
     top: 0;
-    z-index: 50;
-
+    z-index: 40;
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 14px 16px 12px;
+    background: linear-gradient(180deg,
+            rgba(10, 12, 24, 0.98) 0%,
+            rgba(10, 12, 24, 0.92) 75%,
+            rgba(10, 12, 24, 0) 100%);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
 
-    width: 100%;
+.heepit-about-back {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-    margin: 0 0 14px;
-    padding: 12px 14px;
+.heepit-about-back:hover {
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(139, 92, 246, 0.08) 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px -8px rgba(139, 92, 246, 0.7);
+    transform: translateX(-2px);
+}
 
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 0 0 20px 20px;
+.heepit-about-back:active {
+    transform: translateX(-2px) scale(0.94);
+}
 
-    background:
-        radial-gradient(circle at 25% 15%, rgba(255, 255, 255, 0.98), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #dfe4f0 100%);
-
-    box-shadow:
-        0 12px 28px rgba(140, 150, 180, 0.5),
-        0 6px 14px rgba(140, 150, 180, 0.35),
-        0 3px 8px rgba(140, 150, 180, 0.25),
-        0 -3px 10px rgba(140, 150, 180, 0.15),
-        0 -1px 4px rgba(140, 150, 180, 0.1),
-        inset 0 2px 4px rgba(255, 255, 255, 1),
-        inset 0 -2px 4px rgba(155, 165, 190, 0.3);
+.heepit-about-back:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
 }
 
 .heepit-about-title-wrap {
@@ -82,1148 +83,650 @@
 
 .heepit-about-title-wrap h2 {
     margin: 0;
-
-    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
-    font-weight: 900;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
-
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    line-height: 1.2;
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    text-transform: uppercase;
 }
 
-/* ---- Back button — 3D wool ball ---- */
-.heepit-about-back {
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
-    font-size: 1.05rem;
-    line-height: 1;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.55),
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.heepit-about-back:hover {
-    transform: translateX(-3px) scale(1.06);
-    color: #7c8cf8;
-
-    box-shadow:
-        0 8px 18px rgba(124, 140, 248, 0.5),
-        0 4px 10px rgba(124, 140, 248, 0.35),
-        5px 5px 12px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
-}
-
-.heepit-about-back:active {
-    transform: translateX(0) scale(0.94);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ============================================
-   MAIN CONTENT WRAPPER
-   ============================================ */
 .heepit-about-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-
-    width: 100%;
-
-    padding: 0 14px;
+    gap: 20px;
+    padding: 8px 16px 24px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* ============================================
-   🔥 HERO SECTION — 3D UTHA HUA
-   ============================================ */
+.heepit-about-content::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+
 .heepit-about-hero {
     position: relative;
-
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 12px;
-
-    width: 100%;
-
-    padding: 24px 20px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+    padding: 28px 20px;
     border-radius: 22px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    text-align: center;
-
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.18) 0%,
+            rgba(168, 85, 247, 0.12) 50%,
+            rgba(236, 72, 153, 0.18) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 18px 36px rgba(140, 150, 180, 0.5),
-        0 9px 18px rgba(140, 150, 180, 0.35),
-        0 5px 12px rgba(140, 150, 180, 0.25),
-        14px 14px 28px rgba(140, 150, 180, 0.22),
-        -14px -14px 28px rgba(255, 255, 255, 1),
-        11px -11px 24px rgba(255, 255, 255, 0.9),
-        -11px 11px 24px rgba(140, 150, 180, 0.12),
-        9px -9px 20px rgba(255, 255, 255, 0.85),
-        -9px 9px 20px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-5px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        0 20px 44px -18px rgba(139, 92, 246, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    overflow: hidden;
+    isolation: isolate;
 }
 
-/* 🔥 TOP HIGHLIGHT */
 .heepit-about-hero::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2.5px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 22px 22px 0 0;
+    top: -100px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle at center,
+            rgba(236, 72, 153, 0.32) 0%,
+            rgba(139, 92, 246, 0.16) 42%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(52px);
     pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
+    z-index: 0;
 }
 
-/* ---- Logo ball ---- */
 .heepit-about-logo {
+    position: relative;
+    z-index: 1;
+    width: 62px;
+    height: 62px;
     display: grid;
     place-items: center;
-
-    width: 78px;
-    height: 78px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
+    border-radius: 18px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
     color: #ffffff;
-    font-size: 2.2rem;
+    font-size: 30px;
     font-weight: 900;
-    line-height: 1;
-
-    text-shadow:
-        0 2px 4px rgba(60, 70, 160, 0.5),
-        0 0 12px rgba(255, 255, 255, 0.4);
-
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     box-shadow:
-        0 16px 32px rgba(91, 110, 225, 0.55),
-        0 8px 16px rgba(91, 110, 225, 0.4),
-        10px 10px 20px rgba(91, 110, 225, 0.28),
-        -10px -10px 20px rgba(255, 255, 255, 1),
-        8px -8px 16px rgba(255, 255, 255, 0.9),
-        -8px 8px 16px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    animation: logoFloat 3s ease-in-out infinite;
+        0 14px 32px -8px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
-@keyframes logoFloat {
-
-    0%,
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    50% {
-        transform: translateY(-6px) rotate(-4deg);
-    }
+.heepit-about-logo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.32) 0%,
+            rgba(255, 255, 255, 0) 45%);
+    pointer-events: none;
 }
 
-/* ---- Eyebrow ---- */
 .heepit-about-eyebrow {
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
-
-    padding: 5px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
+    align-self: flex-start;
+    gap: 6px;
+    padding: 5px 11px;
     border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    font-size: 0.62rem;
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.28) 0%,
+            rgba(236, 72, 153, 0.14) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: #ddd6fe;
+    font-size: 9.5px;
     font-weight: 900;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
+    letter-spacing: 1.6px;
     line-height: 1;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
-
-    box-shadow:
-        0 6px 14px rgba(124, 140, 248, 0.4),
-        0 3px 8px rgba(124, 140, 248, 0.3),
-        4px 4px 10px rgba(124, 140, 248, 0.22),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(124, 140, 248, 0.3);
-
-    transform: translateY(-1px);
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
-/* ---- Hero heading ---- */
 .heepit-about-hero h1 {
+    position: relative;
+    z-index: 1;
     margin: 0;
-
-    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    font-size: 30px;
     font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.2;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
+    letter-spacing: -0.4px;
+    line-height: 1.15;
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 55%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* ---- Hero paragraph ---- */
 .heepit-about-hero p {
+    position: relative;
+    z-index: 1;
     margin: 0;
-    max-width: 440px;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.6;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.65;
+    color: rgba(229, 231, 235, 0.88);
+    max-width: 480px;
 }
 
-/* ============================================
-   🔥 STATS ROW — 3 stat pills
-   ============================================ */
 .heepit-about-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-
     gap: 10px;
-
-    width: 100%;
 }
 
 .heepit-about-stat {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-
-    width: 100%;
-    padding: 14px 10px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+    gap: 6px;
+    padding: 16px 10px;
     border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    text-align: center;
-
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 10px 20px rgba(140, 150, 180, 0.45),
-        0 5px 12px rgba(140, 150, 180, 0.32),
-        7px 7px 14px rgba(140, 150, 180, 0.25),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-3px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        0 12px 28px -18px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    text-align: center;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .heepit-about-stat:hover {
-    transform: translateY(-6px);
-
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-3px);
     box-shadow:
-        0 16px 30px rgba(124, 140, 248, 0.4),
-        0 8px 18px rgba(124, 140, 248, 0.28),
-        10px 10px 20px rgba(124, 140, 248, 0.22),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.95),
-        -7px 7px 16px rgba(124, 140, 248, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.25);
+        0 18px 34px -18px rgba(139, 92, 246, 0.65),
+        0 0 0 1px rgba(139, 92, 246, 0.2) inset;
 }
 
 .heepit-about-stat strong {
-    font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+    font-size: 17px;
     font-weight: 900;
     letter-spacing: 0.3px;
-    line-height: 1.2;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 10px rgba(124, 140, 248, 0.3);
+    line-height: 1;
+    background: linear-gradient(90deg, #a5b4fc 0%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .heepit-about-stat span {
-    font-size: clamp(0.58rem, 1.6vw, 0.66rem);
+    font-size: 9.5px;
     font-weight: 800;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
+    letter-spacing: 1.2px;
     line-height: 1.3;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    color: rgba(148, 163, 184, 0.75);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
-/* ============================================
-   🔥 ABOUT CARD — 3D UTHA HUA
-   ============================================ */
 .heepit-about-card {
-    position: relative;
-
     display: flex;
     align-items: flex-start;
-    gap: 14px;
-
-    width: 100%;
-
-    padding: 18px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+    gap: 16px;
+    padding: 20px;
     border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.5),
-        0 7px 14px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        11px 11px 22px rgba(140, 150, 180, 0.22),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-5px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        0 16px 36px -18px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
-.heepit-about-card:hover {
-    transform: translateY(-8px);
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.heepit-about-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-    z-index: 3;
-}
-
-/* ---- Card icon — 3D accent ball ---- */
 .heepit-about-card-icon {
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
     width: 48px;
     height: 48px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
     color: #ffffff;
-    font-size: 1.15rem;
+    font-size: 22px;
     line-height: 1;
-
     box-shadow:
-        0 10px 20px rgba(91, 110, 225, 0.55),
-        0 5px 12px rgba(91, 110, 225, 0.4),
-        7px 7px 14px rgba(91, 110, 225, 0.28),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(91, 110, 225, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
-
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        0 10px 24px -6px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
-.heepit-about-card:hover .heepit-about-card-icon {
-    transform: scale(1.08) rotate(-8deg);
-}
-
-/* ---- Card content ---- */
-.heepit-about-card>div:last-child {
-    flex: 1;
+.heepit-about-card>div {
     min-width: 0;
-
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+    padding: 10px;
 }
 
 .heepit-about-label {
     display: inline-flex;
     align-items: center;
-
     align-self: flex-start;
-
-    padding: 4px 10px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
+    padding: 4px 9px;
     border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    font-size: 0.6rem;
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(236, 72, 153, 0.1) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: #ddd6fe;
+    font-size: 9px;
     font-weight: 900;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    letter-spacing: 1.4px;
     line-height: 1;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
-
-    box-shadow:
-        0 4px 10px rgba(124, 140, 248, 0.35),
-        0 2px 6px rgba(124, 140, 248, 0.25),
-        3px 3px 8px rgba(124, 140, 248, 0.2),
-        -3px -3px 8px rgba(255, 255, 255, 1),
-        2px -2px 6px rgba(255, 255, 255, 0.9),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(124, 140, 248, 0.3);
-
-    transform: translateY(-1px);
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .heepit-about-card h3 {
     margin: 0;
-
-    font-size: clamp(0.92rem, 2.4vw, 1.05rem);
-    font-weight: 900;
+    font-size: 16px;
+    font-weight: 800;
     letter-spacing: 0.2px;
     line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
+    color: #ffffff;
 }
 
 .heepit-about-card p {
     margin: 0;
-
-    font-size: clamp(0.74rem, 2vw, 0.82rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.55;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.65;
+    color: rgba(229, 231, 235, 0.82);
 }
 
-/* ============================================
-   🔥 VALUES SECTION
-   ============================================ */
 .heepit-about-values {
     display: flex;
     flex-direction: column;
     gap: 14px;
-
-    width: 100%;
 }
 
 .heepit-about-section-heading {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-
-    padding: 0 4px;
+    gap: 6px;
 }
 
-.heepit-about-section-heading span {
-    font-size: 0.6rem;
+.heepit-about-section-heading>span {
+    font-size: 10px;
     font-weight: 900;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.8px;
+    line-height: 1;
     text-transform: uppercase;
-    line-height: 1.3;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    color: rgba(165, 180, 252, 0.85);
 }
 
 .heepit-about-section-heading h2 {
     margin: 0;
-
-    font-size: clamp(1rem, 2.7vw, 1.15rem);
+    font-size: 20px;
     font-weight: 900;
-    letter-spacing: 0.2px;
+    letter-spacing: -0.2px;
     line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* ---- Values grid ---- */
 .heepit-value-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-
     gap: 10px;
-
-    width: 100%;
 }
 
-/* ---- Value item — 3D wool card ---- */
 .heepit-value-item {
     position: relative;
-
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
-
-    width: 100%;
-
-    padding: 16px 12px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
     border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    text-align: center;
-
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.45),
-        0 6px 12px rgba(140, 150, 180, 0.32),
-        0 3px 8px rgba(140, 150, 180, 0.25),
-        9px 9px 20px rgba(140, 150, 180, 0.2),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(140, 150, 180, 0.12),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        0 12px 28px -18px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    isolation: isolate;
 }
 
-.heepit-value-item:hover {
-    transform: translateY(-8px);
-
-    box-shadow:
-        0 20px 38px rgba(124, 140, 248, 0.4),
-        0 10px 20px rgba(124, 140, 248, 0.28),
-        0 5px 12px rgba(124, 140, 248, 0.22),
-        14px 14px 28px rgba(124, 140, 248, 0.2),
-        -14px -14px 28px rgba(255, 255, 255, 1),
-        10px -10px 22px rgba(255, 255, 255, 0.95),
-        -10px 10px 22px rgba(124, 140, 248, 0.13),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(124, 140, 248, 0.22);
-}
-
-/* 🔥 TOP HIGHLIGHT */
 .heepit-value-item::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 12%;
-    right: 12%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 16px 16px 0 0;
+    top: -40px;
+    right: -30px;
+    width: 110px;
+    height: 110px;
+    background: radial-gradient(circle at center,
+            rgba(99, 102, 241, 0.22) 0%,
+            rgba(236, 72, 153, 0.1) 42%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(32px);
     pointer-events: none;
-    z-index: 3;
+    z-index: 0;
+    opacity: 0.75;
+    transition: opacity 0.3s ease;
 }
 
-/* ---- Icon — 3D accent ball ---- */
-.heepit-value-item>svg,
-.heepit-value-item>svg:first-child {
-    display: block;
-
-    width: 22px;
-    height: 22px;
-
-    padding: 12px;
-    box-sizing: content-box;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-
+.heepit-value-item:hover {
+    border-color: rgba(139, 92, 246, 0.45);
+    transform: translateY(-3px);
     box-shadow:
-        0 10px 20px rgba(91, 110, 225, 0.55),
-        0 5px 12px rgba(91, 110, 225, 0.4),
-        7px 7px 14px rgba(91, 110, 225, 0.28),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(91, 110, 225, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
+        0 18px 36px -18px rgba(139, 92, 246, 0.7),
+        0 0 0 1px rgba(139, 92, 246, 0.2) inset;
+}
 
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+.heepit-value-item:hover::before {
+    opacity: 1;
+}
+
+.heepit-value-item>svg {
+    position: relative;
+    z-index: 1;
+    width: 38px;
+    height: 38px;
+    padding: 9px;
+    border-radius: 11px;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.28) 0%,
+            rgba(236, 72, 153, 0.18) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    color: #ffffff;
+    font-size: 18px;
+    box-shadow:
+        0 8px 20px -8px rgba(139, 92, 246, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .heepit-value-item:hover>svg {
-    transform: scale(1.08) rotate(-8deg);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    transform: rotate(-6deg) scale(1.06);
+    box-shadow:
+        0 12px 26px -6px rgba(139, 92, 246, 0.95),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
 .heepit-value-item h3 {
-    margin: 4px 0 0;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-size: 14px;
     font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    color: #ffffff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .heepit-value-item p {
+    position: relative;
+    z-index: 1;
     margin: 0;
-
-    font-size: clamp(0.66rem, 1.85vw, 0.74rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.45;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    color: rgba(229, 231, 235, 0.78);
 }
 
-/* ============================================
-   🔥 CONTACT SECTION — 3D UTHA HUA
-   ============================================ */
 .heepit-about-contact {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     gap: 14px;
-
-    width: 100%;
-
-    padding: 18px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
+    padding: 20px;
     border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.16) 0%,
+            rgba(168, 85, 247, 0.1) 50%,
+            rgba(236, 72, 153, 0.14) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.5),
-        0 7px 14px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        11px 11px 22px rgba(140, 150, 180, 0.22),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-5px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        0 20px 44px -18px rgba(139, 92, 246, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
 }
 
-.heepit-about-contact:hover {
-    transform: translateY(-8px);
-}
-
-/* 🔥 TOP HIGHLIGHT */
 .heepit-about-contact::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
+    top: -80px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle at center,
+            rgba(236, 72, 153, 0.28) 0%,
+            rgba(139, 92, 246, 0.14) 42%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(46px);
     pointer-events: none;
-    z-index: 3;
+    z-index: 0;
 }
 
 .heepit-about-contact>div:first-child {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .heepit-about-contact h2 {
     margin: 0;
-
-    font-size: clamp(1rem, 2.7vw, 1.15rem);
+    font-size: 18px;
     font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.15);
+    letter-spacing: -0.2px;
+    line-height: 1.25;
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* ---- Contact list ---- */
 .heepit-contact-list {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .heepit-contact-list a {
     display: flex;
     align-items: center;
-    gap: 10px;
-
+    gap: 12px;
     padding: 12px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f8faff 0%, #eef2fa 100%);
-
-    color: #3f4664;
-    font-size: clamp(0.72rem, 2vw, 0.82rem);
-    font-weight: 800;
-    letter-spacing: 0.1px;
-    line-height: 1.3;
-
+    border-radius: 12px;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    color: #ffffff;
     text-decoration: none;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-
-    box-shadow:
-        0 8px 16px rgba(140, 150, 180, 0.45),
-        0 4px 10px rgba(140, 150, 180, 0.32),
-        5px 5px 12px rgba(140, 150, 180, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-2px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    min-width: 0;
 }
 
 .heepit-contact-list a:hover {
-    transform: translateY(-4px);
-    color: #5b6ee1;
-
-    box-shadow:
-        0 14px 26px rgba(124, 140, 248, 0.42),
-        0 7px 14px rgba(124, 140, 248, 0.3),
-        9px 9px 20px rgba(124, 140, 248, 0.22),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.9),
-        -6px 6px 14px rgba(124, 140, 248, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.18) 0%,
+            rgba(139, 92, 246, 0.06) 100%);
+    transform: translateX(3px);
+    box-shadow: 0 8px 22px -8px rgba(139, 92, 246, 0.7);
 }
 
 .heepit-contact-list a:active {
-    transform: translateY(1px) scale(0.98);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
+    transform: translateX(3px) scale(0.98);
 }
 
-/* ---- Contact icon — 3D wool ball ---- */
-.heepit-contact-list a svg {
+.heepit-contact-list a:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
+}
+
+.heepit-contact-list a>svg {
     flex-shrink: 0;
-
-    display: block;
-
-    width: 16px;
-    height: 16px;
-
+    width: 32px;
+    height: 32px;
     padding: 8px;
-    box-sizing: content-box;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
+    border-radius: 9px;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.28) 0%,
+            rgba(236, 72, 153, 0.18) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.35);
     color: #ffffff;
-
-    box-shadow:
-        0 6px 14px rgba(91, 110, 225, 0.55),
-        0 3px 8px rgba(91, 110, 225, 0.4),
-        4px 4px 10px rgba(91, 110, 225, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.9),
-        -3px 3px 8px rgba(91, 110, 225, 0.18),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 2px rgba(60, 70, 160, 0.5);
+    font-size: 16px;
+    box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.65);
 }
 
-/* ============================================
-   🔥 FOOTER — 3D UTHA HUA
-   ============================================ */
+.heepit-contact-list a>span {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .heepit-about-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-
-    width: 100%;
-
-    padding: 20px 14px 12px;
-
+    gap: 6px;
+    padding: 20px 0 8px;
     text-align: center;
 }
 
 .heepit-about-footer strong {
-    font-size: clamp(0.92rem, 2.4vw, 1rem);
+    font-size: 15px;
     font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    line-height: 1.2;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 10px rgba(124, 140, 248, 0.3);
+    letter-spacing: 3px;
+    line-height: 1;
+    background: linear-gradient(90deg, #ffffff 0%, #a855f7 55%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .heepit-about-footer span {
-    font-size: clamp(0.62rem, 1.7vw, 0.7rem);
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1.35;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    line-height: 1.3;
+    color: rgba(148, 163, 184, 0.65);
+    text-transform: uppercase;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .heepit-about-header {
-        padding: 11px 12px;
         gap: 10px;
-        margin-bottom: 12px;
+        padding: 12px 14px 10px;
     }
 
     .heepit-about-back {
         width: 38px;
         height: 38px;
-        font-size: 1rem;
+        font-size: 16px;
+        border-radius: 11px;
     }
 
     .heepit-about-title-wrap h2 {
-        font-size: 1rem;
-        letter-spacing: 1px;
+        font-size: 14px;
+        letter-spacing: 1.2px;
     }
 
     .heepit-about-content {
-        gap: 14px;
-        padding: 0 12px;
+        gap: 16px;
+        padding: 6px 14px 20px;
     }
 
     .heepit-about-hero {
-        padding: 22px 18px;
-        border-radius: 20px;
+        padding: 22px 16px;
+        border-radius: 18px;
         gap: 10px;
-        transform: translateY(-4px);
     }
 
     .heepit-about-logo {
-        width: 70px;
-        height: 70px;
-        font-size: 2rem;
-    }
-
-    .heepit-about-hero h1 {
-        font-size: 1.55rem;
-    }
-
-    .heepit-about-hero p {
-        font-size: 0.84rem;
-    }
-
-    .heepit-about-stats {
-        gap: 9px;
-    }
-
-    .heepit-about-stat {
-        padding: 12px 8px;
-        border-radius: 14px;
-    }
-
-    .heepit-about-stat strong {
-        font-size: 0.98rem;
-    }
-
-    .heepit-about-stat span {
-        font-size: 0.62rem;
-    }
-
-    .heepit-about-card {
-        padding: 16px;
-        border-radius: 18px;
-        gap: 12px;
-    }
-
-    .heepit-about-card-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 1.05rem;
-    }
-
-    .heepit-about-card h3 {
-        font-size: 1rem;
-    }
-
-    .heepit-about-card p {
-        font-size: 0.78rem;
-    }
-
-    .heepit-about-values {
-        gap: 12px;
-    }
-
-    .heepit-about-section-heading h2 {
-        font-size: 1.05rem;
-    }
-
-    .heepit-value-grid {
-        gap: 9px;
-    }
-
-    .heepit-value-item {
-        padding: 14px 10px;
-        border-radius: 14px;
-        gap: 7px;
-    }
-
-    .heepit-value-item>svg {
-        width: 20px;
-        height: 20px;
-        padding: 10px;
-    }
-
-    .heepit-value-item h3 {
-        font-size: 0.82rem;
-    }
-
-    .heepit-value-item p {
-        font-size: 0.7rem;
-    }
-
-    .heepit-about-contact {
-        padding: 16px;
-        border-radius: 18px;
-        gap: 12px;
-    }
-
-    .heepit-about-contact h2 {
-        font-size: 1.05rem;
-    }
-
-    .heepit-contact-list a {
-        padding: 11px 12px;
-        font-size: 0.78rem;
-        border-radius: 13px;
-    }
-
-    .heepit-contact-list a svg {
-        width: 15px;
-        height: 15px;
-        padding: 7px;
-    }
-
-    .heepit-about-footer {
-        padding: 18px 12px 10px;
-    }
-
-    .heepit-about-footer strong {
-        font-size: 0.95rem;
-    }
-
-    .heepit-about-footer span {
-        font-size: 0.66rem;
-    }
-}
-
-/* Phones */
-@media (max-width: 480px) {
-    .heepit-about-header {
-        padding: 10px 11px;
-        gap: 9px;
-        margin-bottom: 11px;
-    }
-
-    .heepit-about-back {
-        width: 36px;
-        height: 36px;
-        font-size: 0.95rem;
-        border-width: 1.5px;
-    }
-
-    .heepit-about-title-wrap h2 {
-        font-size: 0.92rem;
-        letter-spacing: 0.8px;
-    }
-
-    .heepit-about-content {
-        gap: 12px;
-        padding: 0 10px;
-    }
-
-    .heepit-about-hero {
-        padding: 18px 14px;
-        border-radius: 18px;
-        gap: 9px;
-        transform: translateY(-3px);
-    }
-
-    .heepit-about-logo {
-        width: 60px;
-        height: 60px;
-        font-size: 1.65rem;
-        border-width: 1.5px;
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
+        border-radius: 16px;
     }
 
     .heepit-about-eyebrow {
-        font-size: 0.56rem;
+        font-size: 9px;
+        letter-spacing: 1.3px;
         padding: 4px 10px;
     }
 
     .heepit-about-hero h1 {
-        font-size: 1.3rem;
+        font-size: 24px;
     }
 
     .heepit-about-hero p {
-        font-size: 0.76rem;
-        line-height: 1.55;
+        font-size: 13px;
+        line-height: 1.6;
     }
 
     .heepit-about-stats {
@@ -1231,276 +734,214 @@
     }
 
     .heepit-about-stat {
-        padding: 10px 7px;
-        border-radius: 13px;
-        gap: 3px;
-    }
-
-    .heepit-about-stat strong {
-        font-size: 0.88rem;
-    }
-
-    .heepit-about-stat span {
-        font-size: 0.56rem;
-        letter-spacing: 0.3px;
-    }
-
-    .heepit-about-card {
-        padding: 14px;
-        border-radius: 16px;
-        gap: 10px;
-    }
-
-    .heepit-about-card-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 0.98rem;
-        border-width: 1.5px;
-    }
-
-    .heepit-about-label {
-        font-size: 0.54rem;
-        padding: 3px 8px;
-    }
-
-    .heepit-about-card h3 {
-        font-size: 0.92rem;
-    }
-
-    .heepit-about-card p {
-        font-size: 0.72rem;
-    }
-
-    .heepit-about-values {
-        gap: 11px;
-    }
-
-    .heepit-about-section-heading span {
-        font-size: 0.54rem;
-        letter-spacing: 1px;
-    }
-
-    .heepit-about-section-heading h2 {
-        font-size: 0.95rem;
-    }
-
-    .heepit-value-grid {
-        gap: 8px;
-    }
-
-    .heepit-value-item {
-        padding: 12px 8px;
-        border-radius: 13px;
-        gap: 6px;
-        transform: translateY(-3px);
-    }
-
-    .heepit-value-item>svg {
-        width: 18px;
-        height: 18px;
-        padding: 9px;
-    }
-
-    .heepit-value-item h3 {
-        font-size: 0.76rem;
-    }
-
-    .heepit-value-item p {
-        font-size: 0.64rem;
-        line-height: 1.4;
-    }
-
-    .heepit-about-contact {
-        padding: 14px;
-        border-radius: 16px;
-        gap: 11px;
-    }
-
-    .heepit-about-contact h2 {
-        font-size: 0.95rem;
-    }
-
-    .heepit-contact-list {
-        gap: 9px;
-    }
-
-    .heepit-contact-list a {
-        padding: 10px 11px;
-        font-size: 0.72rem;
-        border-radius: 12px;
-        gap: 9px;
-    }
-
-    .heepit-contact-list a svg {
-        width: 14px;
-        height: 14px;
-        padding: 6px;
-    }
-
-    .heepit-about-footer {
-        padding: 16px 10px 8px;
-    }
-
-    .heepit-about-footer strong {
-        font-size: 0.88rem;
-        letter-spacing: 1.6px;
-    }
-
-    .heepit-about-footer span {
-        font-size: 0.6rem;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .heepit-about-header {
-        padding: 9px 10px;
-        gap: 8px;
-    }
-
-    .heepit-about-back {
-        width: 32px;
-        height: 32px;
-        font-size: 0.85rem;
-    }
-
-    .heepit-about-title-wrap h2 {
-        font-size: 0.84rem;
-        letter-spacing: 0.6px;
-    }
-
-    .heepit-about-content {
-        gap: 11px;
-        padding: 0 8px;
-    }
-
-    .heepit-about-hero {
-        padding: 16px 12px;
-        border-radius: 16px;
-        gap: 8px;
-    }
-
-    .heepit-about-logo {
-        width: 54px;
-        height: 54px;
-        font-size: 1.5rem;
-    }
-
-    .heepit-about-hero h1 {
-        font-size: 1.15rem;
-    }
-
-    .heepit-about-hero p {
-        font-size: 0.7rem;
-    }
-
-    .heepit-about-stats {
-        gap: 6px;
-    }
-
-    .heepit-about-stat {
-        padding: 9px 6px;
-        border-radius: 11px;
-    }
-
-    .heepit-about-stat strong {
-        font-size: 0.8rem;
-    }
-
-    .heepit-about-stat span {
-        font-size: 0.5rem;
-    }
-
-    .heepit-about-card {
-        padding: 12px;
+        padding: 14px 8px;
         border-radius: 14px;
-        gap: 9px;
-    }
-
-    .heepit-about-card-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 0.88rem;
-    }
-
-    .heepit-about-card h3 {
-        font-size: 0.84rem;
-    }
-
-    .heepit-about-card p {
-        font-size: 0.66rem;
-    }
-
-    .heepit-value-grid {
-        gap: 6px;
-    }
-
-    .heepit-value-item {
-        padding: 10px 6px;
-        border-radius: 11px;
         gap: 5px;
     }
 
-    .heepit-value-item>svg {
-        width: 16px;
-        height: 16px;
-        padding: 8px;
+    .heepit-about-stat strong {
+        font-size: 15px;
     }
 
-    .heepit-value-item h3 {
-        font-size: 0.7rem;
+    .heepit-about-stat span {
+        font-size: 9px;
+        letter-spacing: 1px;
     }
 
-    .heepit-value-item p {
-        font-size: 0.58rem;
+    .heepit-about-card {
+        padding: 16px;
+        border-radius: 18px;
+        gap: 14px;
     }
 
-    .heepit-about-contact {
-        padding: 12px;
-        border-radius: 14px;
-        gap: 10px;
+    .heepit-about-card-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        border-radius: 12px;
     }
 
-    .heepit-contact-list a {
-        padding: 9px 10px;
-        font-size: 0.66rem;
+    .heepit-about-label {
+        font-size: 8.5px;
+        letter-spacing: 1.2px;
+        padding: 3.5px 8px;
+    }
+
+    .heepit-about-card h3 {
+        font-size: 15px;
+    }
+
+    .heepit-about-card p {
+        font-size: 12.5px;
+        line-height: 1.6;
+    }
+
+    .heepit-about-section-heading>span {
+        font-size: 9.5px;
+        letter-spacing: 1.6px;
+    }
+
+    .heepit-about-section-heading h2 {
+        font-size: 18px;
+    }
+
+    .heepit-value-grid {
         gap: 8px;
     }
 
-    .heepit-contact-list a svg {
-        width: 13px;
-        height: 13px;
-        padding: 6px;
+    .heepit-value-item {
+        padding: 14px;
+        border-radius: 14px;
+        gap: 8px;
+    }
+
+    .heepit-value-item>svg {
+        width: 34px;
+        height: 34px;
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+    .heepit-value-item h3 {
+        font-size: 13px;
+    }
+
+    .heepit-value-item p {
+        font-size: 11.5px;
+    }
+
+    .heepit-about-contact {
+        padding: 18px 16px;
+        border-radius: 18px;
+        gap: 12px;
+    }
+
+    .heepit-about-contact h2 {
+        font-size: 16px;
+    }
+
+    .heepit-contact-list a {
+        padding: 11px 12px;
+        font-size: 12.5px;
+        gap: 10px;
+        border-radius: 11px;
+    }
+
+    .heepit-contact-list a>svg {
+        width: 30px;
+        height: 30px;
+        padding: 7px;
+        font-size: 15px;
+        border-radius: 8px;
     }
 
     .heepit-about-footer strong {
-        font-size: 0.8rem;
-        letter-spacing: 1.4px;
+        font-size: 14px;
+        letter-spacing: 2.5px;
     }
 
     .heepit-about-footer span {
-        font-size: 0.54rem;
+        font-size: 10px;
+        letter-spacing: 1.2px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .about-heepit,
-    .heepit-about-logo {
-        animation: none;
+@media (max-width: 360px) {
+    .heepit-about-back {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+        border-radius: 10px;
     }
 
-    .heepit-about-back,
-    .heepit-about-stat,
-    .heepit-about-card,
-    .heepit-about-card-icon,
-    .heepit-value-item,
-    .heepit-value-item>svg,
-    .heepit-about-contact,
+    .heepit-about-title-wrap h2 {
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    .heepit-about-hero {
+        padding: 20px 14px;
+        border-radius: 16px;
+    }
+
+    .heepit-about-logo {
+        width: 46px;
+        height: 46px;
+        font-size: 22px;
+        border-radius: 14px;
+    }
+
+    .heepit-about-hero h1 {
+        font-size: 21px;
+    }
+
+    .heepit-about-hero p {
+        font-size: 12.5px;
+    }
+
+    .heepit-about-stat strong {
+        font-size: 14px;
+    }
+
+    .heepit-about-stat span {
+        font-size: 8.5px;
+        letter-spacing: 0.8px;
+    }
+
+    .heepit-about-card {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .heepit-about-card-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+        border-radius: 11px;
+    }
+
+    .heepit-about-card h3 {
+        font-size: 14px;
+    }
+
+    .heepit-about-card p {
+        font-size: 12px;
+    }
+
+    .heepit-value-item {
+        padding: 12px;
+    }
+
+    .heepit-value-item h3 {
+        font-size: 12.5px;
+    }
+
+    .heepit-value-item p {
+        font-size: 11px;
+    }
+
     .heepit-contact-list a {
-        transition: none;
+        font-size: 12px;
+        padding: 10px 11px;
+    }
+
+    .heepit-about-footer strong {
+        font-size: 13px;
+    }
+
+    .heepit-about-footer span {
+        font-size: 9.5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .about-heepit *,
+    .about-heepit *::before,
+    .about-heepit *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

@@ -1,224 +1,51 @@
-/* DetailsData.css */
-
-.dt-data,
-.dt-data * {
+.dt-data *,
+.dt-data *::before,
+.dt-data *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   MAIN CONTAINER
-   ============================================ */
 .dt-data {
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 14px;
+    padding: 12px 0 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
+}
 
+.dt-data>section {
     width: 100%;
-    max-width: 720px;
-    margin: 0 auto;
-    gap: 18px;
-
-    background: #eef1f7;
-
-    animation: dtDataFade 0.5s ease both;
 }
 
-/* ============================================
-   COMMON CLAY SECTION (har child ko apply hoga)
-   ============================================ */
-.dt-data>* {
-    width: 100%;
-
-    background: #f0f2f7;
-    border-radius: 24px;
-
-    box-shadow:
-        8px 8px 20px rgba(174, 181, 199, 0.55),
-        -8px -8px 20px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
-
-    transition:
-        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 0.35s ease;
-
-    animation: dtDataSectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+.dt-data>section+section {
+    margin-top: 2px;
 }
 
-/* Staggered entrance */
-.dt-data>*:nth-child(1) {
-    animation-delay: 0.04s;
-}
-
-.dt-data>*:nth-child(2) {
-    animation-delay: 0.08s;
-}
-
-.dt-data>*:nth-child(3) {
-    animation-delay: 0.12s;
-}
-
-.dt-data>*:nth-child(4) {
-    animation-delay: 0.16s;
-}
-
-.dt-data>*:nth-child(5) {
-    animation-delay: 0.20s;
-}
-
-.dt-data>*:nth-child(6) {
-    animation-delay: 0.24s;
-}
-
-.dt-data>*:nth-child(7) {
-    animation-delay: 0.28s;
-}
-
-.dt-data>*:nth-child(8) {
-    animation-delay: 0.32s;
-}
-
-/* Hover — very subtle lift */
-.dt-data>*:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        12px 12px 28px rgba(174, 181, 199, 0.6),
-        -12px -12px 28px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(174, 181, 199, 0.3);
-}
-
-
-
-.dt-data h3 {
-    margin: 0 0 10px;
-
-    font-size: clamp(0.95rem, 2.3vw, 1.1rem);
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    color: #4b5170;
-
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* Paragraphs default */
-.dt-data p {
-    margin: 0;
-    font-size: clamp(0.85rem, 2.1vw, 0.95rem);
-    line-height: 1.6;
-    color: #5a6080;
-}
-
-/* ============================================
-   DIVIDER (agar kabhi use karo)
-   ============================================ */
-.dt-data hr {
-    border: none;
-    height: 2px;
-    margin: 6px 0;
-
-    border-radius: 2px;
-
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(174, 181, 199, 0.5),
-            transparent);
-}
-
-/* ============================================
-   SCROLLBAR (agar koi section scroll ho)
-   ============================================ */
-.dt-data ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-.dt-data ::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.dt-data ::-webkit-scrollbar-thumb {
-    background: rgba(174, 181, 199, 0.6);
-    border-radius: 10px;
-}
-
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes dtDataFade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes dtDataSectionIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .dt-data {
-        gap: 16px;
-    }
-
-    .dt-data>* {
-        border-radius: 22px;
-    }
-}
-
-/* Phones */
 @media (max-width: 480px) {
     .dt-data {
-        gap: 14px;
-    }
-
-    .dt-data>* {
-        border-radius: 20px;
-
-        box-shadow:
-            6px 6px 16px rgba(174, 181, 199, 0.5),
-            -6px -6px 16px rgba(255, 255, 255, 0.95),
-            inset 1px 1px 2px rgba(255, 255, 255, 1);
-    }
-
-    .dt-data>*:hover {
-        transform: none;
+        gap: 12px;
+        padding: 10px 0 20px;
     }
 }
 
-/* Small phones */
 @media (max-width: 360px) {
     .dt-data {
-        gap: 12px;
-    }
-
-    .dt-data>* {
-        border-radius: 18px;
+        gap: 10px;
+        padding: 8px 0 18px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .dt-data,
-    .dt-data>* {
-        animation: none;
-    }
-    .dt-data>* {
-        transition: none;
+
+    .dt-data *,
+    .dt-data *::before,
+    .dt-data *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

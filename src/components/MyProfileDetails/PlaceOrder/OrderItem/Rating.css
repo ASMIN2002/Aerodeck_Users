@@ -1,1049 +1,453 @@
-/* Rating.css — 3D UTHA HUA CLAYMORPHISM */
-
-.order-rating,
-.order-rating * {
+.order-rating *,
+.order-rating *::before,
+.order-rating *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   🔥 MAIN WRAPPER — 3D UTHA HUA PANEL
-   ============================================ */
 .order-rating {
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
     width: 100%;
-
-    margin: 0;
-    padding: 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 3D UTHA HUA PANEL */
-    box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.5),
-        0 7px 14px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        11px 11px 22px rgba(140, 150, 180, 0.22),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-
-    animation: ratingIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes ratingIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-4px) scale(1);
-    }
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.order-rating::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
-}
-
-/* ============================================
-   HEADING
-   ============================================ */
-.order-rating h3 {
-    margin: 0;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-}
-
-/* ⭐ emoji before heading */
-.order-rating h3::before {
-    content: "⭐";
-    font-size: 1em;
-    filter: drop-shadow(0 2px 3px rgba(224, 165, 46, 0.4));
-}
-
-/* ============================================
-   🔥 RATING STARS — interactive
-   ============================================ */
-.rating-stars {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-
-    width: 100%;
-
-    padding: 10px 8px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3),
-        0 4px 10px rgba(140, 150, 180, 0.22),
-        0 2px 6px rgba(140, 150, 180, 0.15),
-        3px 3px 8px rgba(140, 150, 180, 0.12),
-        -3px -3px 8px rgba(255, 255, 255, 1);
-}
-
-.rating-stars span {
-    display: grid;
-    place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    color: #b8bdcf;
-    font-size: 1.35rem;
-    line-height: 1;
-
-    cursor: pointer;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transform: translateY(-2px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.rating-stars span:hover {
-    transform: translateY(-4px) scale(1.08);
-    color: #e0a52e;
-
-    box-shadow:
-        0 8px 18px rgba(224, 165, 46, 0.5),
-        0 4px 10px rgba(224, 165, 46, 0.35),
-        5px 5px 12px rgba(224, 165, 46, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(224, 165, 46, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(224, 165, 46, 0.35);
-}
-
-.rating-stars span:active {
-    transform: translateY(0) scale(0.94);
-    box-shadow:
-        inset 5px 5px 10px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 10px rgba(255, 255, 255, 1);
-}
-
-/* ---- ACTIVE star — golden 3D ball ---- */
-.rating-stars span.active-star {
-    color: #4a3200;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
-    text-shadow:
-        0 1px 1px rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.5);
-
-    box-shadow:
-        0 8px 16px rgba(224, 165, 46, 0.65),
-        0 4px 10px rgba(224, 165, 46, 0.5),
-        5px 5px 12px rgba(224, 165, 46, 0.35),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(224, 165, 46, 0.22),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.6),
-        inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.45);
-
-    transform: translateY(-3px) scale(1.06);
-
-    animation: starPop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes starPop {
-    0% {
-        transform: translateY(-3px) scale(0.85);
-    }
-
-    60% {
-        transform: translateY(-3px) scale(1.15);
-    }
-
-    100% {
-        transform: translateY(-3px) scale(1.06);
-    }
-}
-
-/* ============================================
-   🔥 REVIEW TEXTAREA — 3D INSET
-   ============================================ */
-.review-box {
-    width: 100%;
-    min-height: 90px;
-
-    padding: 12px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    color: #3f4664;
-    font-family: inherit;
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.5;
-
-    resize: vertical;
-
-    outline: none;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    /* 🔥 3D INSET FEEL */
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        0 2px 6px rgba(140, 150, 180, 0.18),
-        3px 3px 8px rgba(140, 150, 180, 0.15),
-        -3px -3px 8px rgba(255, 255, 255, 1);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.review-box:focus {
-    border-color: rgba(124, 140, 248, 0.5);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(124, 140, 248, 0.3),
-        0 6px 14px rgba(124, 140, 248, 0.35),
-        0 3px 8px rgba(124, 140, 248, 0.25),
-        4px 4px 10px rgba(124, 140, 248, 0.2),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        0 0 0 3px rgba(124, 140, 248, 0.15);
-}
-
-.review-box::placeholder {
-    color: #b8bdcf;
-    font-weight: 700;
-    font-style: italic;
-}
-
-/* ============================================
-   REVIEW COUNT — character counter
-   ============================================ */
-.review-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    align-self: flex-end;
-
-    padding: 3px 10px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #8a90ac;
-    font-size: 0.66rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        0 2px 4px rgba(140, 150, 180, 0.28),
-        2px 2px 6px rgba(140, 150, 180, 0.22),
-        -2px -2px 6px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-1px);
-}
-
-/* ============================================
-   🔥 SUBMIT BUTTON — accent 3D pill
-   ============================================ */
-.submit-rating {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    height: 50px;
-    padding: 0 20px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgb(51, 0, 255), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #0026ff 100%);
-
-    color: #ffffff;
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    line-height: 1;
-
-    cursor: pointer;
-
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 12px 24px rgba(91, 110, 225, 0.55),
-        0 6px 14px rgba(91, 110, 225, 0.4),
-        8px 8px 18px rgba(91, 110, 225, 0.28),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.85),
-        -6px 6px 14px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-3px);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.submit-rating:hover:not(:disabled) {
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 18px 32px rgba(91, 110, 225, 0.65),
-        0 9px 18px rgba(91, 110, 225, 0.5),
-        11px 11px 22px rgba(91, 110, 225, 0.35),
-        -10px -10px 22px rgba(255, 255, 255, 1),
-        8px -8px 18px rgba(255, 255, 255, 0.95),
-        -8px 8px 18px rgba(91, 110, 225, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-}
-
-.submit-rating:active:not(:disabled) {
-    transform: translateY(1px) scale(0.97);
-    box-shadow:
-        inset 6px 6px 14px rgba(60, 70, 160, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
-}
-
-.submit-rating:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: translateY(-3px);
-    filter: grayscale(0.3);
-}
-
-/* ============================================
-   🔥 REVIEW TOAST — 3D green pill
-   ============================================ */
-.review-toast {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    padding: 10px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-    font-size: clamp(0.7rem, 1.9vw, 0.78rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.35;
-    text-align: center;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 10px 22px rgba(95, 187, 90, 0.55),
-        0 5px 14px rgba(95, 187, 90, 0.4),
-        7px 7px 16px rgba(95, 187, 90, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(95, 187, 90, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(40, 100, 40, 0.45);
-
-    transform: translateY(-3px);
-
-    animation: toastPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes toastPop {
-    from {
-        opacity: 0;
-        transform: translateY(-3px) scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-3px) scale(1);
-    }
-}
-
-/* ============================================
-   🔥 SUBMITTING PROGRESS
-   ============================================ */
-.review-progress-wrap {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 14px;
+    margin: 4px 0;
+    border-radius: 16px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        0 12px 28px -18px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
+    overflow: hidden;
+}
 
+.order-rating h3 {
+    margin: 0;
+    padding: 0 2px 4px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+    color: #ffffff;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.order-rating h3::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    bottom: -2px;
+    width: 26px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #6366f1 0%, #ec4899 100%);
+    box-shadow: 0 2px 8px -2px rgba(236, 72, 153, 0.75);
+}
+
+.rating-stars {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 2px 2px;
+}
+
+.rating-stars span {
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    color: rgba(148, 163, 184, 0.35);
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    user-select: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+.rating-stars span:hover {
+    transform: translateY(-2px) scale(1.15);
+    color: rgba(251, 191, 36, 0.7);
+}
+
+.rating-stars span.active-star {
+    color: #fbbf24;
+    text-shadow:
+        0 0 12px rgba(251, 191, 36, 0.7),
+        0 0 22px rgba(245, 158, 11, 0.45);
+    animation: rating-star-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes rating-star-pop {
+    0% {
+        transform: scale(0.7);
+    }
+
+    60% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.review-box {
     width: 100%;
-    padding: 10px 0;
+    min-height: 72px;
+    max-height: 140px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.review-box::placeholder {
+    color: rgba(148, 163, 184, 0.65);
+    font-weight: 500;
+}
+
+.review-box:hover {
+    border-color: rgba(139, 92, 246, 0.35);
+}
+
+.review-box:focus {
+    border-color: rgba(139, 92, 246, 0.75);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.12) 0%,
+            rgba(139, 92, 246, 0.04) 100%);
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.18),
+        0 8px 20px -8px rgba(139, 92, 246, 0.6);
+}
+
+.review-count {
+    margin: 0;
+    padding: 0 2px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    line-height: 1;
+    color: rgba(148, 163, 184, 0.75);
+    text-align: right;
+}
+
+.review-toast {
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,
+            rgba(59, 130, 246, 0.2) 0%,
+            rgba(99, 102, 241, 0.1) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    color: #c7d2fe;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    text-align: center;
+    animation: review-toast-in 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+    box-shadow: 0 8px 22px -8px rgba(99, 102, 241, 0.65);
+}
+
+@keyframes review-toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.review-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px 2px;
 }
 
 .review-progress-bar {
-    position: relative;
-
     width: 100%;
-    height: 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.95);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.4), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    box-shadow:
-        inset 3px 3px 6px rgba(155, 165, 190, 0.45),
-        inset -3px -3px 6px rgba(255, 255, 255, 1),
-        0 4px 10px rgba(140, 150, 180, 0.28),
-        0 2px 6px rgba(140, 150, 180, 0.18);
-
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.06);
     overflow: hidden;
 }
 
 .review-progress-fill {
     height: 100%;
-
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.5), transparent 55%),
-        linear-gradient(90deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        0 0 14px rgba(124, 140, 248, 0.75),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.6);
-
-    animation: progressFill 1.2s ease-in-out infinite;
+    width: 40%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    box-shadow: 0 0 12px -1px rgba(236, 72, 153, 0.75);
+    animation: review-progress-slide 1.2s ease-in-out infinite;
 }
 
-@keyframes progressFill {
+@keyframes review-progress-slide {
     0% {
-        width: 0%;
-    }
-
-    50% {
-        width: 70%;
+        transform: translateX(-120%);
     }
 
     100% {
-        width: 100%;
+        transform: translateX(320%);
     }
 }
 
 .review-progress-text {
     margin: 0;
-
-    font-size: clamp(0.72rem, 1.95vw, 0.8rem);
-    font-weight: 800;
+    font-size: 12px;
+    font-weight: 700;
     letter-spacing: 0.3px;
+    line-height: 1.3;
+    color: rgba(199, 210, 254, 0.85);
     text-align: center;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.9),
-        0 0 8px rgba(124, 140, 248, 0.25);
 }
 
-/* ============================================
-   🔥 SUBMITTED REVIEW CARD — 3D UTHA HUA
-   ============================================ */
-.submitted-review {
-    position: relative;
+.submit-rating {
+    width: 100%;
+    height: 44px;
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow:
+        0 10px 26px -8px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
 
+.submit-rating:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow:
+        0 14px 32px -8px rgba(139, 92, 246, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.06);
+}
+
+.submit-rating:active:not(:disabled) {
+    transform: translateY(0) scale(0.97);
+}
+
+.submit-rating:disabled {
+    cursor: not-allowed;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(148, 163, 184, 0.55);
+    box-shadow: none;
+    filter: none;
+}
+
+.submit-rating:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
+}
+
+.submitted-review {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 12px;
-
-    width: 100%;
-
-    padding: 18px 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4fc 0%, #dfe6f3 100%);
-
-    /* 🔥 3D UTHA HUA */
-    box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.5),
-        0 7px 14px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        11px 11px 22px rgba(140, 150, 180, 0.22),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.28);
-
-    transform: translateY(-3px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-
-    animation: submittedPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.12) 0%,
+            rgba(5, 150, 105, 0.05) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes submittedPop {
-    from {
-        opacity: 0;
-        transform: translateY(-3px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-3px) scale(1);
-    }
-}
-
-.submitted-review:hover {
-    transform: translateY(-6px);
-}
-
-/* 🔥 TOP HIGHLIGHT */
 .submitted-review::before {
-    content: "";
+    content: "❞";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 18px 18px 0 0;
+    top: 4px;
+    right: 14px;
+    font-size: 42px;
+    line-height: 1;
+    color: rgba(16, 185, 129, 0.18);
+    font-family: Georgia, serif;
     pointer-events: none;
-    z-index: 3;
 }
 
-/* ---- Submitted stars row ---- */
 .submitted-stars {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    width: 100%;
+    gap: 4px;
 }
 
-.submitted-stars .filled-star,
-.submitted-stars .empty-star {
-    display: grid;
-    place-items: center;
-
-    width: 34px;
-    height: 34px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    font-size: 1.05rem;
-    line-height: 1;
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ---- Filled star — golden 3D ball ---- */
 .submitted-stars .filled-star {
-    color: #4a3200;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffd76a 0%, #e0a52e 100%);
-
+    font-size: 22px;
+    line-height: 1;
+    color: #fbbf24;
     text-shadow:
-        0 1px 1px rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.5);
-
-    box-shadow:
-        0 6px 14px rgba(224, 165, 46, 0.6),
-        0 3px 8px rgba(224, 165, 46, 0.45),
-        4px 4px 10px rgba(224, 165, 46, 0.3),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.9),
-        -3px 3px 8px rgba(224, 165, 46, 0.2),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.6),
-        inset -1.5px -1.5px 3px rgba(140, 90, 20, 0.4);
-
-    transform: translateY(-2px);
+        0 0 12px rgba(251, 191, 36, 0.65),
+        0 0 20px rgba(245, 158, 11, 0.4);
 }
 
-/* ---- Empty star — neutral 3D ball ---- */
 .submitted-stars .empty-star {
-    color: #b8bdcf;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.5),
-        0 3px 8px rgba(140, 150, 180, 0.35),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.4);
-
-    transform: translateY(-2px);
+    font-size: 22px;
+    line-height: 1;
+    color: rgba(148, 163, 184, 0.35);
 }
 
-/* ---- Submitted message ---- */
 .submitted-message {
     margin: 0;
-
-    padding: 10px 12px;
-
-    width: 100%;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    font-size: clamp(0.78rem, 2.1vw, 0.86rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.5;
-    text-align: center;
-
-    color: #5a6180;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);
-
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3),
-        0 3px 8px rgba(140, 150, 180, 0.22),
-        0 2px 4px rgba(140, 150, 180, 0.15),
-        2px 2px 6px rgba(140, 150, 180, 0.12),
-        -2px -2px 6px rgba(255, 255, 255, 1);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.55;
+    color: rgba(229, 231, 235, 0.9);
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
-/* ---- Verified badge — green 3D pill ---- */
 .submitted-badge {
+    align-self: flex-start;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-
-    padding: 5px 12px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-    font-size: 0.66rem;
-    font-weight: 900;
+    padding: 5px 10px;
+    border-radius: 9px;
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.24) 0%,
+            rgba(5, 150, 105, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #a7f3d0;
+    font-size: 10.5px;
+    font-weight: 800;
     letter-spacing: 0.4px;
     text-transform: uppercase;
     line-height: 1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 6px 14px rgba(95, 187, 90, 0.55),
-        0 3px 8px rgba(95, 187, 90, 0.4),
-        4px 4px 10px rgba(95, 187, 90, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(95, 187, 90, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(40, 100, 40, 0.45);
-
-    transform: translateY(-2px);
-
-    animation: verifiedPulse 2.4s ease-in-out infinite;
+    box-shadow: 0 4px 12px -3px rgba(16, 185, 129, 0.55);
+    white-space: nowrap;
 }
 
-@keyframes verifiedPulse {
-
-    0%,
-    100% {
-        transform: translateY(-2px);
-    }
-
-    50% {
-        transform: translateY(-4px);
-    }
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .order-rating {
-        padding: 14px;
-        border-radius: 18px;
-        gap: 11px;
-        transform: translateY(-3px);
-    }
-
-    .order-rating h3 {
-        font-size: 0.86rem;
-    }
-
-    .rating-stars {
-        padding: 9px 6px;
-        gap: 5px;
-        border-radius: 13px;
-    }
-
-    .rating-stars span {
-        width: 38px;
-        height: 38px;
-        font-size: 1.2rem;
-    }
-
-    .review-box {
-        padding: 11px 13px;
-        border-radius: 13px;
-        font-size: 0.84rem;
-        min-height: 80px;
-    }
-
-    .review-count {
-        padding: 3px 9px;
-        font-size: 0.62rem;
-    }
-
-    .submit-rating {
-        height: 46px;
-        font-size: 0.88rem;
-        border-radius: 13px;
-    }
-
-    .submitted-review {
-        padding: 16px 14px;
-        border-radius: 16px;
-        gap: 10px;
-    }
-
-    .submitted-stars .filled-star,
-    .submitted-stars .empty-star {
-        width: 30px;
-        height: 30px;
-        font-size: 0.95rem;
-    }
-
-    .submitted-badge {
-        padding: 4px 10px;
-        font-size: 0.62rem;
-    }
-}
-
-/* Phones */
 @media (max-width: 480px) {
     .order-rating {
         padding: 12px;
-        border-radius: 16px;
-        gap: 10px;
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 10px 20px rgba(140, 150, 180, 0.45),
-            0 5px 10px rgba(140, 150, 180, 0.32),
-            0 3px 8px rgba(140, 150, 180, 0.25),
-            8px 8px 18px rgba(140, 150, 180, 0.2),
-            -8px -8px 18px rgba(255, 255, 255, 1),
-            6px -6px 14px rgba(255, 255, 255, 0.9),
-            -6px 6px 14px rgba(140, 150, 180, 0.12),
-            5px -5px 12px rgba(255, 255, 255, 0.85),
-            -5px 5px 12px rgba(140, 150, 180, 0.1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
+        border-radius: 14px;
+        gap: 9px;
     }
 
     .order-rating h3 {
-        font-size: 0.8rem;
-        letter-spacing: 0.2px;
+        font-size: 12.5px;
     }
 
     .rating-stars {
-        padding: 8px 5px;
-        gap: 4px;
-        border-radius: 12px;
+        gap: 6px;
     }
 
     .rating-stars span {
-        width: 34px;
-        height: 34px;
-        font-size: 1.05rem;
-        border-width: 1.5px;
+        font-size: 28px;
     }
 
     .review-box {
         padding: 10px 12px;
-        border-radius: 12px;
-        font-size: 0.78rem;
-        min-height: 70px;
+        font-size: 12.5px;
+        min-height: 64px;
     }
 
     .review-count {
-        padding: 2px 8px;
-        font-size: 0.56rem;
+        font-size: 10px;
     }
 
     .submit-rating {
         height: 42px;
-        font-size: 0.82rem;
+        font-size: 12.5px;
+        border-radius: 11px;
+    }
+
+    .submitted-review {
+        padding: 12px;
         border-radius: 12px;
-        letter-spacing: 0.3px;
-    }
-
-    .review-toast {
-        padding: 9px 12px;
-        font-size: 0.72rem;
-        border-radius: 11px;
-    }
-
-    .review-progress-bar {
-        height: 10px;
-    }
-
-    .review-progress-text {
-        font-size: 0.74rem;
-    }
-
-    .submitted-review {
-        padding: 14px 12px;
-        border-radius: 14px;
-        gap: 9px;
-    }
-
-    .submitted-stars {
-        gap: 4px;
-    }
-
-    .submitted-stars .filled-star,
-    .submitted-stars .empty-star {
-        width: 26px;
-        height: 26px;
-        font-size: 0.86rem;
-        border-width: 1.5px;
-    }
-
-    .submitted-message {
-        padding: 9px 11px;
-        font-size: 0.74rem;
-        border-radius: 11px;
-    }
-
-    .submitted-badge {
-        padding: 4px 9px;
-        font-size: 0.56rem;
-        letter-spacing: 0.3px;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .order-rating {
-        padding: 10px;
-        border-radius: 14px;
-        gap: 9px;
-    }
-
-    .order-rating h3 {
-        font-size: 0.72rem;
-    }
-
-    .rating-stars {
-        padding: 7px 4px;
-        gap: 3px;
-        border-radius: 11px;
-    }
-
-    .rating-stars span {
-        width: 30px;
-        height: 30px;
-        font-size: 0.92rem;
-    }
-
-    .review-box {
-        padding: 9px 10px;
-        border-radius: 11px;
-        font-size: 0.72rem;
-        min-height: 60px;
-    }
-
-    .review-count {
-        padding: 2px 7px;
-        font-size: 0.5rem;
-    }
-
-    .submit-rating {
-        height: 38px;
-        font-size: 0.74rem;
-        border-radius: 11px;
-    }
-
-    .review-toast {
-        padding: 8px 10px;
-        font-size: 0.66rem;
-        border-radius: 10px;
-    }
-
-    .submitted-review {
-        padding: 12px 10px;
-        border-radius: 13px;
         gap: 8px;
     }
 
     .submitted-stars .filled-star,
     .submitted-stars .empty-star {
-        width: 22px;
-        height: 22px;
-        font-size: 0.76rem;
+        font-size: 20px;
     }
 
     .submitted-message {
-        padding: 8px 10px;
-        font-size: 0.68rem;
-        border-radius: 10px;
+        font-size: 12.5px;
     }
 
     .submitted-badge {
-        padding: 3px 8px;
-        font-size: 0.5rem;
+        font-size: 10px;
+        padding: 4px 9px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .order-rating,
-    .rating-stars span.active-star,
-    .submitted-review,
-    .submitted-badge,
-    .review-toast,
-    .review-progress-fill {
-        animation: none;
+@media (max-width: 360px) {
+    .order-rating {
+        padding: 11px;
+        border-radius: 13px;
     }
 
-    .rating-stars span,
-    .review-box,
-    .submit-rating,
+    .rating-stars span {
+        font-size: 26px;
+    }
+
+    .review-box {
+        font-size: 12px;
+        padding: 10px 11px;
+    }
+
+    .submit-rating {
+        height: 40px;
+        font-size: 12px;
+    }
+
     .submitted-stars .filled-star,
-    .submitted-stars .empty-star,
-    .submitted-review {
-        transition: none;
+    .submitted-stars .empty-star {
+        font-size: 18px;
+    }
+
+    .submitted-message {
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .order-rating *,
+    .order-rating *::before,
+    .order-rating *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

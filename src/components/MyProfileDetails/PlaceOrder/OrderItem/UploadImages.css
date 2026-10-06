@@ -1,445 +1,251 @@
-/* UploadImages.css — 3D UTHA HUA CLAYMORPHISM */
-
-.upload-images,
-.upload-images * {
+.upload-images *,
+.upload-images *::before,
+.upload-images *::after,
+.review-preview-overlay *,
+.review-preview-overlay *::before,
+.review-preview-overlay *::after,
+.delete-popup-overlay *,
+.delete-popup-overlay *::before,
+.delete-popup-overlay *::after {
     box-sizing: border-box;
-}
-
-/* ============================================
-   🔥 MAIN WRAPPER — 3D UTHA HUA PANEL
-   ============================================ */
-.upload-images {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    width: 100%;
-
-    margin: 0;
-    padding: 16px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥 3D UTHA HUA PANEL */
-    box-shadow:
-        0 14px 28px rgba(140, 150, 180, 0.5),
-        0 7px 14px rgba(140, 150, 180, 0.35),
-        0 4px 10px rgba(140, 150, 180, 0.25),
-        11px 11px 22px rgba(140, 150, 180, 0.22),
-        -11px -11px 22px rgba(255, 255, 255, 1),
-        9px -9px 20px rgba(255, 255, 255, 0.9),
-        -9px 9px 20px rgba(140, 150, 180, 0.12),
-        7px -7px 16px rgba(255, 255, 255, 0.85),
-        -7px 7px 16px rgba(140, 150, 180, 0.1),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-4px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-
-    animation: uploadImagesIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes uploadImagesIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-4px) scale(1);
-    }
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.upload-images::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
-}
-
-/* ============================================
-   HEADING
-   ============================================ */
-.upload-images h3 {
-    margin: 0;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: clamp(0.82rem, 2.2vw, 0.92rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-}
-
-/* 📸 emoji before heading */
-.upload-images h3::before {
-    content: "📸";
-    font-size: 1em;
-    filter: drop-shadow(0 2px 3px rgba(124, 140, 248, 0.35));
-}
-
-/* ---- Upload note ---- */
-.upload-note {
-    margin: 0;
-
-    font-size: clamp(0.66rem, 1.8vw, 0.74rem);
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.15px;
-    line-height: 1.4;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* ============================================
-   🔥 UPLOAD SUCCESS TOAST — 3D green pill
-   ============================================ */
-.upload-success-toast {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    padding: 10px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-    font-size: clamp(0.7rem, 1.9vw, 0.78rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.35;
-    text-align: center;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 10px 22px rgba(95, 187, 90, 0.55),
-        0 5px 14px rgba(95, 187, 90, 0.4),
-        7px 7px 16px rgba(95, 187, 90, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(95, 187, 90, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(40, 100, 40, 0.45);
-
-    transform: translateY(-3px);
-
-    animation: uploadToastPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes uploadToastPop {
-    from {
-        opacity: 0;
-        transform: translateY(-3px) scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-3px) scale(1);
-    }
-}
-
-/* ============================================
-   🔥 UPLOAD LOADING — accent 3D pill
-   ============================================ */
-.upload-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    width: 100%;
-    padding: 10px 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 12px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    color: #ffffff;
-    font-size: clamp(0.7rem, 1.9vw, 0.78rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1.35;
-    text-align: center;
-
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 10px 22px rgba(91, 110, 225, 0.55),
-        0 5px 14px rgba(91, 110, 225, 0.4),
-        7px 7px 16px rgba(91, 110, 225, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(91, 110, 225, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(60, 70, 160, 0.5);
-
-    transform: translateY(-3px);
-    animation: uploadLoadingPulse 1.6s ease-in-out infinite;
-}
-
-@keyframes uploadLoadingPulse {
-
-    0%,
-    100% {
-        transform: translateY(-3px);
-    }
-
-    50% {
-        transform: translateY(-6px);
-    }
-}
-
-/* 📤 spinner emoji before text */
-.upload-loading::before {
-    content: "📤";
-    font-size: 1.1em;
-    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
-}
-
-/* ============================================
-   🔥 IMAGE PREVIEW GRID
-   ============================================ */
-.image-preview {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 12px;
-
-    width: 100%;
-}
-
-/* ---- Preview card container ---- */
-.preview-card {
-    position: relative;
-
-    width: 100%;
-    aspect-ratio: 1 / 1;
-
-    border-radius: 16px;
-
-    overflow: hidden;
-}
-
-/* ---- Upload box (empty state) — 3D dashed ---- */
-.upload-box {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    width: 100%;
-    height: 100%;
-
-    border: 2px dashed rgba(124, 140, 248, 0.5);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #f0f4ff 0%, #e0e6f9 100%);
-
-    color: #5b6ee1;
-    font-size: clamp(0.68rem, 1.9vw, 0.76rem);
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    text-align: center;
-    line-height: 1.3;
-
-    cursor: pointer;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 6px rgba(124, 140, 248, 0.25);
-
-    box-shadow:
-        0 10px 20px rgba(124, 140, 248, 0.3),
-        0 5px 12px rgba(124, 140, 248, 0.22),
-        7px 7px 14px rgba(124, 140, 248, 0.18),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(124, 140, 248, 0.1),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.25);
-
-    transform: translateY(-3px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-tap-highlight-color: transparent;
 }
 
-.upload-box:hover {
-    transform: translateY(-6px);
-
+.upload-images {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    margin: 4px 0;
+    border-radius: 16px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        0 16px 30px rgba(124, 140, 248, 0.45),
-        0 8px 18px rgba(124, 140, 248, 0.32),
-        10px 10px 20px rgba(124, 140, 248, 0.25),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.95),
-        -7px 7px 16px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.3);
+        0 12px 28px -18px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
+    overflow: hidden;
 }
 
-.upload-box:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow:
-        inset 5px 5px 12px rgba(124, 140, 248, 0.4),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ---- Upload icon — 3D accent ball ---- */
-.upload-icon {
-    display: grid;
-    place-items: center;
-
-    width: 42px;
-    height: 42px;
-
-    padding: 10px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
+.upload-images h3 {
+    margin: 0;
+    padding: 0 2px 4px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
     color: #ffffff;
-    font-size: 1.1rem;
-
-    box-shadow:
-        0 8px 16px rgba(91, 110, 225, 0.55),
-        0 4px 10px rgba(91, 110, 225, 0.4),
-        5px 5px 12px rgba(91, 110, 225, 0.28),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(91, 110, 225, 0.18),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.5),
-        inset -1.5px -1.5px 3px rgba(60, 70, 160, 0.5);
-
-    animation: uploadIconFloat 2.6s ease-in-out infinite;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
 }
 
-@keyframes uploadIconFloat {
+.upload-images h3::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    bottom: -2px;
+    width: 26px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #6366f1 0%, #ec4899 100%);
+    box-shadow: 0 2px 8px -2px rgba(236, 72, 153, 0.75);
+}
+
+.upload-note {
+    margin: 0;
+    padding: 0 2px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    line-height: 1.4;
+    color: rgba(165, 180, 252, 0.75);
+}
+
+.upload-success-toast {
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.2) 0%,
+            rgba(5, 150, 105, 0.08) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #a7f3d0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    text-align: center;
+    animation: upload-toast-in 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+    box-shadow: 0 8px 22px -8px rgba(16, 185, 129, 0.65);
+}
+
+@keyframes upload-toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.upload-loading {
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.2) 0%,
+            rgba(99, 102, 241, 0.08) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.45);
+    color: #ddd6fe;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    text-align: center;
+    animation: upload-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes upload-pulse {
 
     0%,
     100% {
-        transform: translateY(0) rotate(0deg);
+        opacity: 1;
     }
 
     50% {
-        transform: translateY(-4px) rotate(-6deg);
+        opacity: 0.6;
     }
 }
 
-.upload-box:hover .upload-icon {
-    transform: scale(1.1) rotate(-8deg);
-    animation: none;
+.image-preview {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 4px 0 2px;
 }
 
-/* ---- Preview image (filled state) — 3D frame ---- */
+.preview-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.16) 0%,
+            rgba(236, 72, 153, 0.12) 100%);
+    border: 1px dashed rgba(139, 92, 246, 0.35);
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.preview-card:has(.preview-image) {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 8px 20px -12px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.preview-card:hover {
+    border-color: rgba(139, 92, 246, 0.55);
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 26px -12px rgba(139, 92, 246, 0.7),
+        0 0 0 1px rgba(139, 92, 246, 0.2) inset;
+}
+
 .preview-image {
-    display: block;
     width: 100%;
     height: 100%;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
     object-fit: cover;
     object-position: center;
-
+    display: block;
     cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+    user-select: none;
+    -webkit-user-drag: none;
+}
 
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+.preview-card:hover .preview-image {
+    transform: scale(1.05);
+}
 
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    cursor: pointer;
+    color: rgba(165, 180, 252, 0.85);
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+
+.upload-box:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.14) 0%,
+            rgba(139, 92, 246, 0.04) 100%);
+}
+
+.upload-icon {
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    border-radius: 11px;
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.25) 0%,
+            rgba(236, 72, 153, 0.2) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    color: #ffffff;
+    box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.65);
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.upload-box:hover .upload-icon {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    transform: translateY(-2px) scale(1.06);
     box-shadow:
-        0 10px 20px rgba(140, 150, 180, 0.5),
-        0 5px 12px rgba(140, 150, 180, 0.35),
-        7px 7px 14px rgba(140, 150, 180, 0.28),
-        -7px -7px 14px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(140, 150, 180, 0.15),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
-
-    transform: translateY(-3px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        0 10px 22px -6px rgba(139, 92, 246, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
-.preview-image:hover {
-    transform: translateY(-6px) scale(1.02);
-}
-
-/* ============================================
-   🔥 REVIEW PREVIEW OVERLAY — fullscreen
-   ============================================ */
 .review-preview-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
-
-    background: rgba(10, 10, 20, 0.85);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    animation: previewOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    background: radial-gradient(ellipse at center,
+            rgba(6, 8, 18, 0.94) 0%,
+            rgba(2, 4, 10, 0.98) 100%);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    animation: review-preview-fade 0.25s ease;
 }
 
-@keyframes previewOverlayIn {
+@keyframes review-preview-fade {
     from {
         opacity: 0;
     }
@@ -449,31 +255,76 @@
     }
 }
 
-/* ---- Preview image (large) ---- */
-.review-preview-image {
-    display: block;
-
-    max-width: 100%;
-    max-height: 85vh;
-
-    object-fit: contain;
-
-    border: 3px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-
+.review-preview-close,
+.review-preview-delete {
+    position: absolute;
+    top: 18px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(10, 12, 24, 0.82);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    z-index: 3;
     box-shadow:
-        0 30px 60px rgba(0, 0, 0, 0.6),
-        0 15px 30px rgba(0, 0, 0, 0.45),
-        0 8px 16px rgba(0, 0, 0, 0.3),
-        18px 18px 36px rgba(140, 150, 180, 0.4),
-        -18px -18px 36px rgba(255, 255, 255, 0.15),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    animation: previewImagePop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        0 12px 28px -8px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes previewImagePop {
+.review-preview-close {
+    right: 18px;
+}
+
+.review-preview-delete {
+    right: 72px;
+}
+
+.review-preview-close:hover {
+    border-color: rgba(139, 92, 246, 0.6);
+    background: rgba(139, 92, 246, 0.28);
+    transform: rotate(90deg) scale(1.06);
+}
+
+.review-preview-delete:hover {
+    border-color: rgba(239, 68, 68, 0.6);
+    background: rgba(239, 68, 68, 0.28);
+    transform: scale(1.06);
+}
+
+.review-preview-close:active,
+.review-preview-delete:active {
+    transform: scale(0.94);
+}
+
+.review-preview-close:focus-visible,
+.review-preview-delete:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
+}
+
+.review-preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+    user-select: none;
+    -webkit-user-drag: none;
+    animation: review-preview-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes review-preview-pop {
     from {
         opacity: 0;
         transform: scale(0.9);
@@ -485,683 +336,288 @@
     }
 }
 
-/* ---- Close button — 3D red ball ---- */
-.review-preview-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-
-    display: grid;
-    place-items: center;
-
-    width: 48px;
-    height: 48px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
-    color: #ffffff;
-    font-size: 1.15rem;
-    font-weight: 900;
-    line-height: 1;
-
-    cursor: pointer;
-
-    text-shadow:
-        0 1px 3px rgba(140, 40, 40, 0.5),
-        0 0 8px rgba(255, 255, 255, 0.3);
-
-    box-shadow:
-        0 12px 24px rgba(226, 90, 90, 0.65),
-        0 6px 14px rgba(226, 90, 90, 0.5),
-        8px 8px 18px rgba(226, 90, 90, 0.35),
-        -8px -8px 18px rgba(255, 255, 255, 0.4),
-        6px -6px 14px rgba(255, 255, 255, 0.3),
-        -6px 6px 14px rgba(226, 90, 90, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.review-preview-close:hover {
-    transform: scale(1.1) rotate(90deg);
-}
-
-.review-preview-close:active {
-    transform: scale(0.92);
-    box-shadow:
-        inset 6px 6px 14px rgba(160, 50, 50, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
-}
-
-/* ---- Delete button — 3D red ball ---- */
-.review-preview-delete {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10000;
-
-    display: grid;
-    place-items: center;
-
-    width: 52px;
-    height: 52px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
-    color: #ffffff;
-    font-size: 1.25rem;
-    line-height: 1;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 12px 24px rgba(226, 90, 90, 0.65),
-        0 6px 14px rgba(226, 90, 90, 0.5),
-        8px 8px 18px rgba(226, 90, 90, 0.35),
-        -8px -8px 18px rgba(255, 255, 255, 0.4),
-        6px -6px 14px rgba(255, 255, 255, 0.3),
-        -6px 6px 14px rgba(226, 90, 90, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.review-preview-delete:hover {
-    transform: translateX(-50%) scale(1.1) rotate(-8deg);
-}
-
-.review-preview-delete:active {
-    transform: translateX(-50%) scale(0.92);
-    box-shadow:
-        inset 6px 6px 14px rgba(160, 50, 50, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
-}
-
-/* ============================================
-   🔥 DELETE POPUP — 3D utha hua modal
-   ============================================ */
 .delete-popup-overlay {
     position: fixed;
     inset: 0;
-    z-index: 10001;
-
+    z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 20px;
-
-    background: rgba(10, 10, 20, 0.6);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    animation: deleteOverlayIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes deleteOverlayIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    background: radial-gradient(ellipse at center,
+            rgba(10, 12, 24, 0.72) 0%,
+            rgba(6, 8, 18, 0.9) 100%);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    animation: review-preview-fade 0.25s ease;
 }
 
 .delete-popup {
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
     width: 100%;
-    max-width: 340px;
-
-    padding: 22px 20px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 22px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    text-align: center;
-
-    /* 🔥 3D MODAL */
+    max-width: 360px;
+    padding: 22px 20px 18px;
+    border-radius: 18px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.98) 0%,
+            rgba(14, 16, 32, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     box-shadow:
-        0 28px 56px rgba(140, 150, 180, 0.6),
-        0 14px 28px rgba(140, 150, 180, 0.45),
-        0 8px 16px rgba(140, 150, 180, 0.3),
-        18px 18px 36px rgba(140, 150, 180, 0.3),
-        -18px -18px 36px rgba(255, 255, 255, 1),
-        14px -14px 30px rgba(255, 255, 255, 0.95),
-        -14px 14px 30px rgba(140, 150, 180, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-6px);
-
-    animation: deletePopupPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        0 32px 64px -16px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(239, 68, 68, 0.14) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    animation: delete-popup-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
 }
 
-@keyframes deletePopupPop {
+.delete-popup::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 150px;
+    background: radial-gradient(ellipse at center,
+            rgba(239, 68, 68, 0.28) 0%,
+            rgba(236, 72, 153, 0.1) 45%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(46px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes delete-popup-pop {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.9);
+        transform: translateY(14px) scale(0.94);
     }
 
     to {
         opacity: 1;
-        transform: translateY(-6px) scale(1);
+        transform: translateY(0) scale(1);
     }
-}
-
-/* 🔥 TOP HIGHLIGHT */
-.delete-popup::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 22px 22px 0 0;
-    pointer-events: none;
-    z-index: 2;
 }
 
 .delete-popup h3 {
-    margin: 0;
-
-    font-size: clamp(0.98rem, 2.7vw, 1.12rem);
-    font-weight: 900;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 6px rgba(140, 150, 180, 0.15);
+    position: relative;
+    z-index: 1;
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    color: #ffffff;
+    text-align: center;
 }
 
 .delete-popup p {
-    margin: 0;
-
-    font-size: clamp(0.76rem, 2vw, 0.86rem);
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.45;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+    margin: 0 0 18px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    color: rgba(229, 231, 235, 0.82);
+    text-align: center;
 }
 
-/* ---- Delete popup buttons row ---- */
 .delete-popup-buttons {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
-
-    margin-top: 6px;
 }
 
-.delete-popup-buttons button {
+.delete-cancel-btn,
+.delete-confirm-btn {
     flex: 1;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 46px;
-    padding: 0 14px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 14px;
-
-    font-size: 0.82rem;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    line-height: 1;
-
+    height: 42px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
     cursor: pointer;
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ---- Cancel — neutral 3D ---- */
 .delete-cancel-btn {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    color: #3f4664;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-
-    box-shadow:
-        0 8px 18px rgba(140, 150, 180, 0.5),
-        0 4px 10px rgba(140, 150, 180, 0.35),
-        5px 5px 12px rgba(140, 150, 180, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.35);
-
-    transform: translateY(-3px);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .delete-cancel-btn:hover {
-    transform: translateY(-6px);
-    color: #5b6ee1;
-}
-
-.delete-cancel-btn:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.6),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
-}
-
-/* ---- Confirm Delete — red 3D ---- */
-.delete-confirm-btn {
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ff9a9a 0%, #e25a5a 100%);
-
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
     color: #ffffff;
+    transform: translateY(-1px);
+}
 
-    text-shadow:
-        0 1px 3px rgba(140, 40, 40, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-
+.delete-confirm-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
     box-shadow:
-        0 10px 22px rgba(226, 90, 90, 0.55),
-        0 5px 14px rgba(226, 90, 90, 0.4),
-        7px 7px 16px rgba(226, 90, 90, 0.28),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.85),
-        -5px 5px 12px rgba(226, 90, 90, 0.18),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
-
-    transform: translateY(-3px);
+        0 8px 22px -6px rgba(239, 68, 68, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .delete-confirm-btn:hover {
-    transform: translateY(-6px);
-
+    transform: translateY(-1px);
     box-shadow:
-        0 16px 30px rgba(226, 90, 90, 0.65),
-        0 8px 18px rgba(226, 90, 90, 0.5),
-        10px 10px 22px rgba(226, 90, 90, 0.35),
-        -9px -9px 20px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.9),
-        -7px 7px 16px rgba(226, 90, 90, 0.22),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.55),
-        inset -2px -2px 4px rgba(160, 50, 50, 0.5);
+        0 12px 28px -6px rgba(239, 68, 68, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.08);
 }
 
+.delete-cancel-btn:active,
 .delete-confirm-btn:active {
-    transform: translateY(1px) scale(0.96);
-    box-shadow:
-        inset 6px 6px 14px rgba(160, 50, 50, 0.7),
-        inset -6px -6px 14px rgba(255, 255, 255, 0.3);
+    transform: translateY(0) scale(0.97);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .upload-images {
-        padding: 14px;
-        border-radius: 18px;
-        gap: 11px;
-        transform: translateY(-3px);
-    }
-
-    .upload-images h3 {
-        font-size: 0.86rem;
-    }
-
-    .upload-note {
-        font-size: 0.7rem;
-    }
-
-    .upload-success-toast,
-    .upload-loading {
-        padding: 9px 12px;
-        font-size: 0.72rem;
-        border-radius: 11px;
-    }
-
-    .image-preview {
-        gap: 10px;
-    }
-
-    .preview-card {
-        border-radius: 14px;
-    }
-
-    .upload-box {
-        border-radius: 14px;
-        gap: 6px;
-        font-size: 0.72rem;
-    }
-
-    .upload-icon {
-        width: 38px;
-        height: 38px;
-        padding: 9px;
-        font-size: 1rem;
-    }
-
-    .preview-image {
-        border-radius: 14px;
-    }
-
-    .review-preview-close {
-        width: 42px;
-        height: 42px;
-        font-size: 1.05rem;
-        top: 16px;
-        right: 16px;
-    }
-
-    .review-preview-delete {
-        width: 46px;
-        height: 46px;
-        font-size: 1.1rem;
-        bottom: 16px;
-    }
-
-    .delete-popup {
-        padding: 20px 18px;
-        border-radius: 20px;
-        gap: 11px;
-    }
-
-    .delete-popup h3 {
-        font-size: 1.05rem;
-    }
-
-    .delete-popup p {
-        font-size: 0.82rem;
-    }
-
-    .delete-popup-buttons button {
-        height: 44px;
-        font-size: 0.78rem;
-        border-radius: 13px;
-    }
+.delete-cancel-btn:focus-visible,
+.delete-confirm-btn:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
-/* Phones */
 @media (max-width: 480px) {
     .upload-images {
         padding: 12px;
-        border-radius: 16px;
-        gap: 10px;
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 10px 20px rgba(140, 150, 180, 0.45),
-            0 5px 10px rgba(140, 150, 180, 0.32),
-            0 3px 8px rgba(140, 150, 180, 0.25),
-            8px 8px 18px rgba(140, 150, 180, 0.2),
-            -8px -8px 18px rgba(255, 255, 255, 1),
-            6px -6px 14px rgba(255, 255, 255, 0.9),
-            -6px 6px 14px rgba(140, 150, 180, 0.12),
-            5px -5px 12px rgba(255, 255, 255, 0.85),
-            -5px 5px 12px rgba(140, 150, 180, 0.1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
-    }
-
-    .upload-images h3 {
-        font-size: 0.8rem;
-        letter-spacing: 0.2px;
-    }
-
-    .upload-note {
-        font-size: 0.64rem;
-    }
-
-    .upload-success-toast,
-    .upload-loading {
-        padding: 8px 11px;
-        font-size: 0.66rem;
-        border-radius: 10px;
-    }
-
-    .image-preview {
-        gap: 9px;
-    }
-
-    .preview-card {
-        border-radius: 13px;
-    }
-
-    .upload-box {
-        border-radius: 13px;
-        gap: 5px;
-        font-size: 0.66rem;
-        border-width: 1.5px;
-    }
-
-    .upload-icon {
-        width: 34px;
-        height: 34px;
-        padding: 8px;
-        font-size: 0.92rem;
-    }
-
-    .preview-image {
-        border-radius: 13px;
-    }
-
-    .review-preview-overlay {
-        padding: 14px;
-    }
-
-    .review-preview-image {
-        border-radius: 16px;
-    }
-
-    .review-preview-close {
-        width: 38px;
-        height: 38px;
-        font-size: 0.95rem;
-        top: 14px;
-        right: 14px;
-    }
-
-    .review-preview-delete {
-        width: 42px;
-        height: 42px;
-        font-size: 1.05rem;
-        bottom: 14px;
-    }
-
-    .delete-popup-overlay {
-        padding: 16px;
-    }
-
-    .delete-popup {
-        padding: 18px 16px;
-        border-radius: 18px;
-        max-width: 300px;
-        gap: 10px;
-    }
-
-    .delete-popup h3 {
-        font-size: 0.98rem;
-    }
-
-    .delete-popup p {
-        font-size: 0.76rem;
-    }
-
-    .delete-popup-buttons {
-        gap: 9px;
-        margin-top: 4px;
-    }
-
-    .delete-popup-buttons button {
-        height: 42px;
-        font-size: 0.74rem;
-        border-radius: 12px;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .upload-images {
-        padding: 10px;
         border-radius: 14px;
         gap: 9px;
-        transform: translateY(-1px);
     }
 
     .upload-images h3 {
-        font-size: 0.72rem;
+        font-size: 12.5px;
     }
 
     .upload-note {
-        font-size: 0.58rem;
-    }
-
-    .upload-success-toast,
-    .upload-loading {
-        padding: 7px 10px;
-        font-size: 0.6rem;
-        border-radius: 9px;
+        font-size: 11px;
     }
 
     .image-preview {
-        gap: 8px;
+        gap: 9px;
     }
 
     .preview-card {
         border-radius: 12px;
-    }
-
-    .upload-box {
-        border-radius: 12px;
-        gap: 4px;
-        font-size: 0.6rem;
     }
 
     .upload-icon {
         width: 30px;
         height: 30px;
         padding: 7px;
-        font-size: 0.84rem;
+        border-radius: 10px;
     }
 
-    .preview-image {
-        border-radius: 12px;
+    .upload-box {
+        font-size: 11px;
+        gap: 6px;
     }
 
-    .review-preview-overlay {
-        padding: 12px;
-    }
-
-    .review-preview-image {
-        border-radius: 14px;
+    .review-preview-close,
+    .review-preview-delete {
+        top: 14px;
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
+        border-radius: 11px;
     }
 
     .review-preview-close {
-        width: 34px;
-        height: 34px;
-        font-size: 0.88rem;
-        top: 12px;
-        right: 12px;
+        right: 14px;
     }
 
     .review-preview-delete {
-        width: 38px;
-        height: 38px;
-        font-size: 0.95rem;
-        bottom: 12px;
-    }
-
-    .delete-popup-overlay {
-        padding: 12px;
+        right: 62px;
     }
 
     .delete-popup {
-        padding: 16px 14px;
+        padding: 20px 18px 16px;
         border-radius: 16px;
-        max-width: 280px;
-        gap: 9px;
     }
 
     .delete-popup h3 {
-        font-size: 0.9rem;
+        font-size: 15px;
     }
 
     .delete-popup p {
-        font-size: 0.7rem;
+        font-size: 12.5px;
     }
 
-    .delete-popup-buttons {
-        gap: 8px;
-    }
-
-    .delete-popup-buttons button {
-        height: 38px;
-        font-size: 0.68rem;
+    .delete-cancel-btn,
+    .delete-confirm-btn {
+        height: 40px;
+        font-size: 13px;
         border-radius: 11px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .upload-images,
-    .upload-success-toast,
-    .upload-loading,
-    .upload-icon,
-    .review-preview-overlay,
-    .review-preview-image,
-    .delete-popup-overlay,
-    .delete-popup {
-        animation: none;
+@media (max-width: 360px) {
+    .upload-images {
+        padding: 11px;
+        border-radius: 13px;
     }
 
-    .upload-box,
-    .upload-icon,
-    .preview-image,
+    .image-preview {
+        gap: 8px;
+    }
+
+    .preview-card {
+        border-radius: 11px;
+    }
+
     .review-preview-close,
-    .review-preview-delete,
-    .delete-popup-buttons button {
-        transition: none;
+    .review-preview-delete {
+        top: 12px;
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .review-preview-close {
+        right: 12px;
+    }
+
+    .review-preview-delete {
+        right: 58px;
+    }
+
+    .delete-popup {
+        padding: 18px 16px 14px;
+    }
+
+    .delete-cancel-btn,
+    .delete-confirm-btn {
+        height: 38px;
+        font-size: 12.5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .upload-images *,
+    .upload-images *::before,
+    .upload-images *::after,
+    .review-preview-overlay *,
+    .review-preview-overlay *::before,
+    .review-preview-overlay *::after,
+    .delete-popup-overlay *,
+    .delete-popup-overlay *::before,
+    .delete-popup-overlay *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

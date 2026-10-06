@@ -19,7 +19,7 @@ const NAV_HISTORY_KEY = "heepit_navigation_history";
 
 function App() {
     const navigate = useNavigate();
-    const goTo = (url) => {
+    const goTo = (url, options = {}) => {
         let history = [];
 
         try {
@@ -29,19 +29,27 @@ function App() {
             history = [];
         }
 
-        if (history.length === 0 || history[history.length - 1].url !== url) {
+        if (options.replace && history.length > 0) {
+            history[history.length - 1] = {
+                number: history.length,
+                url: url
+            };
+        } else if (
+            history.length === 0 ||
+            history[history.length - 1].url !== url
+        ) {
             history.push({
                 number: history.length + 1,
                 url: url
             });
-
-            localStorage.setItem(
-                NAV_HISTORY_KEY,
-                JSON.stringify(history)
-            );
         }
 
-        navigate(url);
+        localStorage.setItem(
+            NAV_HISTORY_KEY,
+            JSON.stringify(history)
+        );
+
+        navigate(url, options);
     };
 
     const location = useLocation();

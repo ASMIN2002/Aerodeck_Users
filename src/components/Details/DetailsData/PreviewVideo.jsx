@@ -17,9 +17,6 @@ function PreviewVideo({ productDetail }) {
     const [progress, setProgress] = useState({});
     const [wasPlayingBeforeScroll, setWasPlayingBeforeScroll] = useState({});
 
-    /* ============================================
-       THUMBNAIL GENERATE
-       ============================================ */
     useEffect(() => {
 
         videos.forEach((video, index) => {
@@ -63,9 +60,6 @@ function PreviewVideo({ productDetail }) {
 
     }, [videos.join(",")]);
 
-    /* ============================================
-       PLAY / PAUSE
-       ============================================ */
     const handlePlayPause = (index) => {
 
         const videoEl = videoRefs.current[index];
@@ -104,9 +98,6 @@ function PreviewVideo({ productDetail }) {
 
     };
 
-    /* ============================================
-       VIDEO EVENTS
-       ============================================ */
     const handleEnded = (index) => {
 
         const videoEl = videoRefs.current[index];
@@ -128,9 +119,6 @@ function PreviewVideo({ productDetail }) {
         setPlayingIndex(index);
     };
 
-    /* ============================================
-       PROGRESS UPDATE
-       ============================================ */
     const handleTimeUpdate = (index) => {
 
         const videoEl = videoRefs.current[index];
@@ -144,10 +132,6 @@ function PreviewVideo({ productDetail }) {
         }));
 
     };
-
-    /* ============================================
-       SEEK — progress bar touch
-       ============================================ */
     const handleSeek = (index, e) => {
 
         const videoEl = videoRefs.current[index];
@@ -172,10 +156,6 @@ function PreviewVideo({ productDetail }) {
         videoEl.currentTime = percent * videoEl.duration;
 
     };
-
-    /* ============================================
-       INTERSECTION OBSERVER — scroll in/out
-       ============================================ */
     useEffect(() => {
 
         const observers = [];
@@ -213,7 +193,6 @@ function PreviewVideo({ productDetail }) {
 
                         } else {
 
-                            /* SCROLL OUT — agar play ho raha tha toh pause */
                             if (playingIndex === index && !videoEl.paused) {
 
                                 videoEl.pause();
@@ -249,9 +228,6 @@ function PreviewVideo({ productDetail }) {
 
     }, [playingIndex, wasPlayingBeforeScroll, videos.length]);
 
-    /* ============================================
-       UNMOUNT — SAB PAUSE
-       ============================================ */
     useEffect(() => {
 
         return () => {
@@ -325,7 +301,6 @@ function PreviewVideo({ productDetail }) {
                                         )
                                     }
 
-                                    {/* PAUSE BUTTON — top-right, jab playing */}
                                     {
                                         isPlaying && (
                                             <button
@@ -342,13 +317,10 @@ function PreviewVideo({ productDetail }) {
                                             </button>
                                         )
                                     }
-
-                                    {/* VIDEO BADGE — bottom-left */}
                                     <div className="dt-reel-badge">
                                         Video {index + 1}
                                     </div>
 
-                                    {/* PROGRESS BAR — bottom */}
                                     <div
                                         className="dt-reel-progress"
                                         onClick={(e) => {

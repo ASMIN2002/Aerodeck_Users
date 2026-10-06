@@ -1,187 +1,252 @@
-.address-page,
-.address-page * {
+.address-page *,
+.address-page *::before,
+.address-page *::after,
+.delete-confirm-overlay *,
+.delete-confirm-overlay *::before,
+.delete-confirm-overlay *::after {
     box-sizing: border-box;
-}
-
-.address-page {
-    width: 100%;
-    min-height: 100vh;
-    padding: 14px 16px 24px;
-    margin: 0;
-    background: #f7f8fa;
-    font-family: inherit;
     -webkit-tap-highlight-color: transparent;
 }
 
-.address-success-message {
-    position: sticky;
-    top: 8px;
-    z-index: 20;
-
+.address-page {
+    position: relative;
     width: 100%;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-
-    background: #e7f7ec;
-    border: 1px solid #c6ebd3;
-    border-radius: 10px;
-
-    color: #166534;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.1px;
-    line-height: 1.35;
-    text-align: center;
-
-    animation: addressMsgIn 0.3s ease;
+    max-width: 640px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 14px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
 }
 
-@keyframes addressMsgIn {
+.address-success-message {
+    padding: 11px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.18) 0%,
+            rgba(5, 150, 105, 0.08) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #a7f3d0;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    text-align: center;
+    animation: address-success-in 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+    box-shadow: 0 8px 22px -8px rgba(16, 185, 129, 0.65);
+}
+
+@keyframes address-success-in {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(-8px) scale(0.96);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .address-header {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 100%;
-    padding: 4px 0 14px;
-    margin-bottom: 4px;
-}
-
-.back-btn {
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 50%;
-    color: #333;
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: background 0.15s ease, transform 0.1s ease;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.back-btn:hover {
-    background: #f2f2f2;
-}
-
-.back-btn:active {
-    transform: scale(0.94);
+    padding: 4px 0 8px;
 }
 
 .address-header>div {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .address-header h2 {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 18px;
     font-weight: 800;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
     line-height: 1.2;
-    color: #222;
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.address-header p {
-    margin: 4px 0 0;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
+.address-header>div p {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
     line-height: 1.3;
-    color: #999;
+    color: rgba(251, 191, 36, 0.85);
+}
+
+.back-btn,
+.add-btn {
+    flex-shrink: 0;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.back-btn {
+    width: 42px;
+    font-size: 18px;
+}
+
+.back-btn:hover {
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(139, 92, 246, 0.08) 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px -8px rgba(139, 92, 246, 0.7);
+    transform: translateX(-2px);
+}
+
+.back-btn:active {
+    transform: translateX(-2px) scale(0.94);
 }
 
 .add-btn {
-    flex-shrink: 0;
-    padding: 8px 14px;
-    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
-    color: #fff;
-    border: none;
-    border-radius: 999px;
-    font-family: inherit;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    line-height: 1;
-    cursor: pointer;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+    padding: 0 16px;
+    border-color: rgba(139, 92, 246, 0.45);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
+    box-shadow:
+        0 8px 22px -6px rgba(139, 92, 246, 0.75),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .add-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #ff7a26, #e85f00);
-    box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow:
+        0 12px 28px -6px rgba(139, 92, 246, 0.95),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.06);
 }
 
 .add-btn:active:not(:disabled) {
-    transform: scale(0.96);
+    transform: translateY(0) scale(0.96);
 }
 
 .add-btn:disabled {
-    opacity: 0.45;
     cursor: not-allowed;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(148, 163, 184, 0.55);
     box-shadow: none;
 }
 
+.back-btn:focus-visible,
+.add-btn:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
+}
+
 .empty-address {
-    width: 100%;
-    padding: 44px 20px;
-    margin-bottom: 12px;
-
-    background: #fff;
-    border: 1px dashed #e5e5e5;
-    border-radius: 14px;
-
+    padding: 40px 20px;
+    border-radius: 16px;
+    border: 1px dashed rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.1) 0%,
+            rgba(236, 72, 153, 0.06) 100%);
     text-align: center;
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: #999;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: rgba(165, 180, 252, 0.75);
 }
 
 .address-card {
     position: relative;
-
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        0 12px 28px -18px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    transition: all 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+    overflow: visible;
+}
 
-    width: 100%;
-    padding: 14px 16px;
-    margin-bottom: 12px;
-
-    background: #fff;
-    border: 1.5px solid #eee;
-    border-radius: 14px;
-
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+.address-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: linear-gradient(180deg, #6366f1 0%, #ec4899 100%);
+    opacity: 0.6;
+    transition: opacity 0.25s ease;
 }
 
 .address-card:hover {
-    border-color: #ffd9b3;
-    box-shadow: 0 6px 18px rgba(255, 107, 0, 0.1);
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-2px);
+    box-shadow:
+        0 16px 32px -18px rgba(139, 92, 246, 0.6),
+        0 0 0 1px rgba(139, 92, 246, 0.18) inset;
+}
+
+.address-card:hover::before {
+    opacity: 1;
 }
 
 .address-card.selected {
-    border-color: #ff6b00;
-    background: #fff8ec;
-    box-shadow: 0 6px 18px rgba(255, 107, 0, 0.15);
+    border-color: rgba(139, 92, 246, 0.65);
+    background: linear-gradient(180deg,
+            rgba(99, 102, 241, 0.14) 0%,
+            rgba(20, 22, 40, 0.94) 100%);
+    box-shadow:
+        0 16px 32px -16px rgba(139, 92, 246, 0.75),
+        0 0 0 1px rgba(139, 92, 246, 0.35) inset;
+}
+
+.address-card.selected::before {
+    opacity: 1;
+    width: 4px;
 }
 
 .address-top {
@@ -189,8 +254,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    width: 100%;
+    gap: 12px;
 }
 
 .address-top>div {
@@ -203,122 +267,134 @@
 
 .address-top h3 {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: 12.5px;
     font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1.25;
-    color: #222;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
+    line-height: 1;
+    color: rgba(165, 180, 252, 0.9);
+    white-space: nowrap;
 }
 
 .primary-badge {
-    display: inline-block;
-    padding: 3px 9px;
-    background: #ff6b00;
-    color: #fff;
-    font-size: 0.58rem;
-    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 900;
     letter-spacing: 0.5px;
-    line-height: 1.2;
-    border-radius: 999px;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow:
+        0 4px 12px -3px rgba(236, 72, 153, 0.75),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
     white-space: nowrap;
 }
 
 .menu-btn {
     flex-shrink: 0;
+    width: 34px;
+    height: 34px;
     display: grid;
     place-items: center;
-
-    width: 32px;
-    height: 32px;
-    padding: 0;
-
-    background: #f5f5f5;
-    border: 1px solid #eee;
-    border-radius: 50%;
-
-    color: #666;
-    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    color: #e5e7eb;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1;
-
     cursor: pointer;
-
-    transition: background 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    padding: 0;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .menu-btn:hover {
-    background: #ececec;
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(139, 92, 246, 0.08) 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.65);
+}
+
+.menu-btn:active {
+    transform: scale(0.94);
+}
+
+.menu-btn:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
 .address-menu {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 8px);
     right: 0;
-    z-index: 30;
-
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    min-width: 170px;
+    z-index: 20;
+    width: 50%;
     padding: 6px;
-
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 12px;
-
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
-
-    animation: menuIn 0.18s ease;
+    border-radius: 14px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.98) 0%,
+            rgba(14, 16, 32, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+        0 24px 48px -12px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.14) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    animation: address-menu-in 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: top right;
+    overflow: hidden;
 }
 
-@keyframes menuIn {
+@keyframes address-menu-in {
     from {
         opacity: 0;
-        transform: translateY(-6px);
+        transform: translateY(-8px) scale(0.94);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .address-menu button {
+    display: block;
     width: 100%;
     padding: 10px 12px;
-
-    background: transparent;
     border: none;
-    border-radius: 8px;
-
-    text-align: left;
+    border-radius: 10px;
+    background: transparent;
+    color: #d1d5db;
     font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.1px;
-    line-height: 1.25;
-    color: #333;
-
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-align: left;
     cursor: pointer;
-
-    transition: background 0.15s ease, color 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
-.address-menu button:hover {
-    background: #f5f5f5;
-}
 
 .address-menu button.delete-btn {
-    color: #dc2626;
+    color: #fca5a5;
 }
 
-.address-menu button.delete-btn:hover {
-    background: #fee2e2;
-    color: #b91c1c;
+
+.address-menu button:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
 .namnum {
@@ -326,56 +402,60 @@
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    width: 100%;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .namnum h4 {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: 0.1px;
-    line-height: 1.25;
-    color: #222;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .namnum p {
     margin: 0;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-    line-height: 1.3;
-    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    color: rgba(165, 180, 252, 0.85);
+    white-space: nowrap;
 }
 
 .address-card>p {
     margin: 0;
-    font-size: 0.78rem;
+    font-size: 12.5px;
     font-weight: 500;
-    letter-spacing: 0.1px;
-    line-height: 1.5;
-    color: #666;
-
+    letter-spacing: 0.2px;
+    line-height: 1.55;
+    color: rgba(229, 231, 235, 0.82);
+    overflow-wrap: anywhere;
     word-break: break-word;
 }
 
 .delete-confirm-overlay {
     position: fixed;
     inset: 0;
-    z-index: 999;
-
-    display: grid;
-    place-items: center;
-
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
-
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-
-    animation: confirmFade 0.2s ease;
+    background: radial-gradient(ellipse at center,
+            rgba(10, 12, 24, 0.72) 0%,
+            rgba(6, 8, 18, 0.9) 100%);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    animation: address-fade-in 0.25s ease;
 }
 
-@keyframes confirmFade {
+@keyframes address-fade-in {
     from {
         opacity: 0;
     }
@@ -386,345 +466,311 @@
 }
 
 .delete-confirm-box {
+    position: relative;
     width: 100%;
-    max-width: 340px;
-    padding: 24px 20px 18px;
-
-    background: #fff;
-    border-radius: 16px;
-
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-
-    text-align: center;
-
-    animation: confirmPop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    max-width: 380px;
+    padding: 24px 22px 20px;
+    border-radius: 20px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.98) 0%,
+            rgba(14, 16, 32, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+        0 32px 64px -16px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(239, 68, 68, 0.14) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    animation: address-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
 }
 
-@keyframes confirmPop {
+.delete-confirm-box::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 160px;
+    background: radial-gradient(ellipse at center,
+            rgba(239, 68, 68, 0.28) 0%,
+            rgba(236, 72, 153, 0.1) 45%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(46px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes address-pop {
     from {
         opacity: 0;
-        transform: scale(0.92);
+        transform: translateY(14px) scale(0.94);
     }
 
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0) scale(1);
     }
 }
 
 .delete-confirm-box h3 {
+    position: relative;
+    z-index: 1;
     margin: 0 0 8px;
-    font-size: 1.05rem;
+    font-size: 16px;
     font-weight: 800;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
     line-height: 1.3;
-    color: #222;
+    color: #ffffff;
+    text-align: center;
 }
 
 .delete-confirm-box p {
+    position: relative;
+    z-index: 1;
     margin: 0 0 20px;
-    font-size: 0.82rem;
+    font-size: 13px;
     font-weight: 500;
-    line-height: 1.45;
-    color: #777;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    color: rgba(229, 231, 235, 0.82);
+    text-align: center;
 }
 
 .delete-confirm-actions {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
     gap: 10px;
-    width: 100%;
 }
 
 .delete-confirm-actions button {
     flex: 1;
-    height: 46px;
-
-    border: none;
+    height: 42px;
     border-radius: 12px;
-
     font-family: inherit;
-    font-size: 0.86rem;
+    font-size: 13.5px;
     font-weight: 800;
-    letter-spacing: 0.2px;
-
+    letter-spacing: 0.4px;
     cursor: pointer;
-
-    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .delete-confirm-actions button:first-child {
-    background: #f5f5f5;
-    color: #555;
-    border: 1px solid #e5e5e5;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .delete-confirm-actions button:first-child:hover {
-    background: #ebebeb;
-    color: #333;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 
-.delete-confirm-actions button:first-child:active {
-    transform: scale(0.97);
+.delete-confirm-actions .confirm-delete-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    box-shadow:
+        0 8px 22px -6px rgba(239, 68, 68, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
-.confirm-delete-btn {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: #fff;
-    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
+.delete-confirm-actions .confirm-delete-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 12px 28px -6px rgba(239, 68, 68, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.08);
 }
 
-.confirm-delete-btn:hover {
-    background: linear-gradient(135deg, #e03838, #b91c1c);
-    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.45);
+.delete-confirm-actions button:active {
+    transform: translateY(0) scale(0.97);
 }
 
-.confirm-delete-btn:active {
-    transform: scale(0.97);
+.delete-confirm-actions button:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
     .address-page {
+        gap: 10px;
         padding: 12px 12px 20px;
     }
 
     .address-header {
         gap: 10px;
-        padding: 2px 0 12px;
-    }
-
-    .back-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
+        padding: 4px 0 6px;
     }
 
     .address-header h2 {
-        font-size: 1rem;
+        font-size: 17px;
     }
 
-    .address-header p {
-        font-size: 0.66rem;
+    .address-header>div p {
+        font-size: 10.5px;
+    }
+
+    .back-btn,
+    .add-btn {
+        height: 38px;
+        border-radius: 11px;
+        font-size: 12px;
+    }
+
+    .back-btn {
+        width: 38px;
+        font-size: 17px;
     }
 
     .add-btn {
-        padding: 7px 12px;
-        font-size: 0.72rem;
-    }
-
-    .empty-address {
-        padding: 36px 16px;
-        font-size: 0.78rem;
+        padding: 0 14px;
     }
 
     .address-card {
         padding: 12px;
-        border-radius: 12px;
-        gap: 7px;
+        border-radius: 14px;
+        gap: 9px;
     }
 
     .address-top h3 {
-        font-size: 0.74rem;
+        font-size: 11.5px;
     }
 
     .primary-badge {
-        font-size: 0.54rem;
-        padding: 2px 7px;
+        font-size: 8.5px;
+        padding: 2.5px 7px;
+        border-radius: 6px;
     }
 
     .menu-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        border-radius: 9px;
     }
 
     .address-menu {
-        min-width: 150px;
+        min-width: 170px;
+        border-radius: 13px;
     }
 
     .address-menu button {
-        padding: 9px 10px;
-        font-size: 0.74rem;
+        padding: 9px 11px;
+        font-size: 12.5px;
+        border-radius: 9px;
     }
 
     .namnum h4 {
-        font-size: 0.82rem;
+        font-size: 13px;
     }
 
     .namnum p {
-        font-size: 0.72rem;
+        font-size: 11.5px;
     }
 
     .address-card>p {
-        font-size: 0.72rem;
+        font-size: 12px;
     }
 
     .delete-confirm-box {
-        padding: 20px 16px 16px;
-        border-radius: 14px;
-    }
-
-    .delete-confirm-box h3 {
-        font-size: 0.95rem;
-    }
-
-    .delete-confirm-box p {
-        font-size: 0.76rem;
-    }
-
-    .delete-confirm-actions button {
-        height: 42px;
-        font-size: 0.8rem;
-    }
-}
-
-@media (min-width: 600px) {
-    .address-page {
-        max-width: 780px;
-        margin: 0 auto;
-        padding: 20px 24px 32px;
-    }
-
-    .address-header {
-        padding: 4px 0 18px;
-        gap: 14px;
-    }
-
-    .back-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 1.3rem;
-    }
-
-    .address-header h2 {
-        font-size: 1.4rem;
-    }
-
-    .address-header p {
-        font-size: 0.82rem;
-    }
-
-    .add-btn {
-        padding: 10px 20px;
-        font-size: 0.86rem;
-    }
-
-    .empty-address {
-        padding: 56px 24px;
-        font-size: 0.95rem;
-        border-radius: 16px;
-    }
-
-    .address-card {
-        padding: 18px 20px;
-        border-radius: 16px;
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-
-    .address-top h3 {
-        font-size: 0.9rem;
-    }
-
-    .primary-badge {
-        font-size: 0.66rem;
-        padding: 4px 11px;
-    }
-
-    .menu-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1.2rem;
-    }
-
-    .address-menu {
-        min-width: 190px;
-        padding: 8px;
-        border-radius: 14px;
-    }
-
-    .address-menu button {
-        padding: 11px 14px;
-        font-size: 0.86rem;
-        border-radius: 10px;
-    }
-
-    .namnum h4 {
-        font-size: 1rem;
-    }
-
-    .namnum p {
-        font-size: 0.86rem;
-    }
-
-    .address-card>p {
-        font-size: 0.86rem;
-    }
-
-    .delete-confirm-box {
-        max-width: 380px;
-        padding: 28px 24px 22px;
+        padding: 22px 18px 18px;
         border-radius: 18px;
     }
 
     .delete-confirm-box h3 {
-        font-size: 1.15rem;
+        font-size: 15px;
     }
 
     .delete-confirm-box p {
-        font-size: 0.9rem;
+        font-size: 12.5px;
     }
 
     .delete-confirm-actions button {
-        height: 50px;
-        font-size: 0.94rem;
-        border-radius: 14px;
+        height: 40px;
+        font-size: 13px;
+        border-radius: 11px;
     }
 }
 
-@media (min-width: 900px) {
+@media (max-width: 360px) {
     .address-page {
-        max-width: 860px;
+        padding: 10px 10px 18px;
     }
 
     .address-header h2 {
-        font-size: 1.55rem;
+        font-size: 16px;
+    }
+
+    .back-btn,
+    .add-btn {
+        height: 36px;
+        border-radius: 10px;
+        font-size: 11.5px;
+    }
+
+    .back-btn {
+        width: 36px;
+        font-size: 16px;
+    }
+
+    .add-btn {
+        padding: 0 12px;
     }
 
     .address-card {
-        padding: 20px 22px;
+        padding: 11px;
+        border-radius: 13px;
+    }
+
+    .address-top h3 {
+        font-size: 11px;
     }
 
     .namnum h4 {
-        font-size: 1.05rem;
+        font-size: 12.5px;
+    }
+
+    .namnum p {
+        font-size: 11px;
+    }
+
+    .address-card>p {
+        font-size: 11.5px;
+    }
+
+    .delete-confirm-box {
+        padding: 20px 16px 16px;
+    }
+
+    .delete-confirm-actions button {
+        height: 38px;
+        font-size: 12.5px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-    .back-btn,
-    .add-btn,
-    .address-card,
-    .menu-btn,
-    .address-menu,
-    .address-menu button,
-    .delete-confirm-overlay,
-    .delete-confirm-box,
-    .delete-confirm-actions button,
-    .address-success-message {
-        transition: none;
-        animation: none;
+    .address-page *,
+    .address-page *::before,
+    .address-page *::after,
+    .delete-confirm-overlay *,
+    .delete-confirm-overlay *::before,
+    .delete-confirm-overlay *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
-
-    .back-btn:active,
-    .add-btn:active,
-    .menu-btn:active,
-    .delete-confirm-actions button:active {
-        transform: none;
-    }
-
-    .address-card:hover {
-        transform: none;
-    }
+}
+.address-card:hover,
+.address-card:focus-within {
+    z-index: 50;
 }

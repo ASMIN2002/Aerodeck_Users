@@ -164,6 +164,14 @@ function MyWishlist({
                                     item.premium_rating
                                 }
                             </p>
+                            <p className="wishlist-discount">
+                                {
+                                    item.shop_discount_percentage ||
+                                    item.gift_discount_percentage ||
+                                    item.product_discount_percentage ||
+                                    item.premium_discount_percentage
+                                } % Off
+                            </p>
                             <div className="detwish">
 
                                 <p className="wishlist-stats">

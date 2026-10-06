@@ -1,11 +1,15 @@
 import "./TOPHEADER.css";
 import { useNavigate } from "react-router-dom";
 
-function TOPHEADER({ title }) {
+function TOPHEADER({ title, onBack }) {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate(-1);
+        if (onBack) {
+            onBack();
+        } else {
+            navigate(-1);
+        }
     };
 
     return (

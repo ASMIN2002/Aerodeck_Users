@@ -33,14 +33,11 @@ function OrderSuccess({ setProfilePage }) {
 
     const steps = [
         "Verifying order details",
-        "Confirming payment",
+        "Verifing Your Address",
         "Reserving your items",
         "Preparing dispatch",
     ];
 
-    /* ==========================================
-       STAGE 1 — PROCESSING
-       ========================================== */
     if (stage === "processing") {
         return (
             <div className="order-success-page processing-page">

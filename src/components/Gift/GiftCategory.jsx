@@ -1,5 +1,5 @@
 import GiftCard from "./GiftCard";
-import "./GiftCategory.css";
+// import "./GiftCategory.css";
 
 function GiftCategory({
     category,

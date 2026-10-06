@@ -11,9 +11,7 @@
 .all-shops-page {
   width: 100%;
   min-height: 100vh;
-
   background: #eef1f7;
-
   animation: allShopsFadeIn 0.5s ease both;
 }
 

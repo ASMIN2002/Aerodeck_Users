@@ -1,538 +1,399 @@
-/* EditAddress.css */
-
-.heep-edit-addr-page,
-.heep-edit-addr-page * {
+.heep-edit-addr-page *,
+.heep-edit-addr-page *::before,
+.heep-edit-addr-page *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   PAGE WRAPPER
-   ============================================ */
 .heep-edit-addr-page {
     position: relative;
-
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-
-    width: 100%;
-    min-height: 100vh;
-
-    padding: 18px 14px 110px;
-
-    background: #eef1f7;
-
-    animation: heepEditAddrPageFade 0.5s ease both;
+    gap: 14px;
+    padding: 14px 14px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
+    margin-bottom: 60px;
 }
 
-/* ============================================
-   HEADER (Clay card)
-   ============================================ */
 .heep-edit-addr-header {
     display: flex;
     align-items: center;
     gap: 12px;
-
-    width: 100%;
-    padding: 14px 16px;
-
-    background: #f0f2f7;
-    border-radius: 22px;
-
-    box-shadow:
-        8px 8px 20px rgba(174, 181, 199, 0.55),
-        -8px -8px 20px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
-
-    animation: heepEditAddrHeaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    padding: 4px 0 8px;
 }
 
-.heep-edit-addr-title {
-    margin: 0;
-    flex: 1;
-
-    font-size: clamp(1rem, 2.6vw, 1.2rem);
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    color: #3a3f55;
-    text-align: right;
-
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* ---- Back button ---- */
 .heep-edit-addr-back-btn {
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
     width: 42px;
     height: 42px;
-
-    font-size: 1.15rem;
-    color: #4b5170;
-
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
-    border: none;
-    border-radius: 50%;
-
-    background: #f0f2f7;
-
-    box-shadow:
-        5px 5px 12px rgba(174, 181, 199, 0.6),
-        -5px -5px 12px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
-
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    outline: none;
+    padding: 0;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .heep-edit-addr-back-btn:hover {
-    transform: translateY(-2px) translateX(-2px);
-    color: #5b6ee1;
-
-    box-shadow:
-        8px 8px 18px rgba(124, 140, 248, 0.3),
-        -6px -6px 14px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(139, 92, 246, 0.08) 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px -8px rgba(139, 92, 246, 0.7);
+    transform: translateX(-2px);
 }
 
 .heep-edit-addr-back-btn:active {
-    transform: translateY(1px) scale(0.94);
-
-    box-shadow:
-        inset 4px 4px 8px rgba(174, 181, 199, 0.6),
-        inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+    transform: translateX(-2px) scale(0.94);
 }
 
 .heep-edit-addr-back-btn:focus-visible {
-    outline: 2px solid #7c8cf8;
+    outline: 2px solid rgba(139, 92, 246, 0.9);
     outline-offset: 3px;
 }
 
-/* ============================================
-   FORM (Clay card)
-   ============================================ */
+.heep-edit-addr-title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .heep-edit-addr-form {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-
-    width: 100%;
-    padding: 20px 18px;
-
-    background: #f0f2f7;
-    border-radius: 24px;
-
+    gap: 10px;
+    padding: 16px 14px;
+    border-radius: 18px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
-        10px 10px 24px rgba(174, 181, 199, 0.6),
-        -10px -10px 24px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1),
-        inset -1px -1px 2px rgba(174, 181, 199, 0.28);
-
-    animation: heepEditAddrFormIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+        0 16px 36px -18px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
-/* ============================================
-   INPUTS (Clay inset)
-   ============================================ */
 .heep-edit-addr-form input[type="text"],
 .heep-edit-addr-form input[type="tel"],
 .heep-edit-addr-form select {
     width: 100%;
-    padding: 13px 16px;
-
-    font-size: clamp(0.85rem, 2.1vw, 0.95rem);
+    height: 46px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13.5px;
     font-weight: 600;
     letter-spacing: 0.2px;
-    color: #3a3f55;
-
-    background: #f0f2f7;
-
-    border: none;
-    border-radius: 14px;
-
+    line-height: 1;
     outline: none;
-
-    box-shadow:
-        inset 4px 4px 10px rgba(174, 181, 199, 0.45),
-        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
-
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-appearance: none;
+    transition: all 0.25s ease;
     appearance: none;
+    -webkit-appearance: none;
 }
 
 .heep-edit-addr-form input::placeholder {
-    color: #a0a5c0;
+    color: rgba(148, 163, 184, 0.65);
     font-weight: 500;
 }
 
-.heep-edit-addr-form input:focus,
+.heep-edit-addr-form input:hover:not([readonly]),
+.heep-edit-addr-form select:hover {
+    border-color: rgba(139, 92, 246, 0.35);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.1) 0%,
+            rgba(139, 92, 246, 0.03) 100%);
+}
+
+.heep-edit-addr-form input:focus:not([readonly]),
 .heep-edit-addr-form select:focus {
+    border-color: rgba(139, 92, 246, 0.75);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.14) 0%,
+            rgba(139, 92, 246, 0.05) 100%);
     box-shadow:
-        0 0 0 2px #7c8cf8,
-        inset 4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset -4px -4px 10px rgba(255, 255, 255, 0.95);
+        0 0 0 3px rgba(139, 92, 246, 0.18),
+        0 8px 20px -8px rgba(139, 92, 246, 0.6);
 }
 
-.heep-edit-addr-form input[readOnly] {
-    color: #8a90b0;
-    background: #eaedf4;
-
-    box-shadow:
-        inset 3px 3px 8px rgba(174, 181, 199, 0.4),
-        inset -3px -3px 8px rgba(255, 255, 255, 0.9);
+.heep-edit-addr-form input[readonly] {
+    cursor: default;
+    opacity: 0.7;
 }
 
-.heep-edit-addr-form input[readOnly]:focus {
-    box-shadow:
-        inset 3px 3px 8px rgba(174, 181, 199, 0.4),
-        inset -3px -3px 8px rgba(255, 255, 255, 0.9);
+.heep-edit-addr-form input[readonly]:hover,
+.heep-edit-addr-form input[readonly]:focus {
+    border-color: rgba(255, 255, 255, 0.09);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    box-shadow: none;
 }
 
-/* ============================================
-   SELECT
-   ============================================ */
 .heep-edit-addr-form select {
     cursor: pointer;
-    padding-right: 40px;
-
-    background-image:
-        linear-gradient(45deg, transparent 50%, #6a7090 50%),
-        linear-gradient(135deg, #6a7090 50%, transparent 50%);
-    background-position:
-        calc(100% - 20px) calc(50% + 2px),
-        calc(100% - 14px) calc(50% + 2px);
-    background-size: 6px 6px, 6px 6px;
+    padding-right: 38px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c7d2fe' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
+    background-position: right 14px center;
 }
 
 .heep-edit-addr-form select option {
-    padding: 12px;
-    color: #3a3f55;
-    background: #f0f2f7;
+    background: #14162a;
+    color: #ffffff;
+    padding: 8px;
 }
 
-/* ============================================
-   ADDRESS TYPE (Radios)
-   ============================================ */
 .heep-edit-addr-type {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-
-    margin-top: 4px;
+    display: flex;
+    gap: 8px;
+    padding: 4px 0 2px;
+    flex-wrap: wrap;
 }
 
 .heep-edit-addr-type label {
-    position: relative;
-
-    display: flex;
+    flex: 1;
+    min-width: 90px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-
-    padding: 11px 8px;
-
-    font-size: clamp(0.78rem, 2vw, 0.86rem);
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    color: #4b5170;
-
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    color: rgba(229, 231, 235, 0.85);
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
     cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
-
-    background: #f0f2f7;
-    border-radius: 14px;
-
-    box-shadow:
-        4px 4px 10px rgba(174, 181, 199, 0.5),
-        -4px -4px 10px rgba(255, 255, 255, 0.95),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
-
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.heep-edit-addr-type label input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
 }
 
 .heep-edit-addr-type label:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        6px 6px 14px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        inset 1px 1px 2px rgba(255, 255, 255, 1);
-}
-
-.heep-edit-addr-type label:has(input[type="radio"]:checked) {
+    border-color: rgba(139, 92, 246, 0.5);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.14) 0%,
+            rgba(139, 92, 246, 0.05) 100%);
     color: #ffffff;
+    transform: translateY(-1px);
+}
 
-    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
+.heep-edit-addr-type label input[type="radio"] {
+    display: none;
+}
 
+.heep-edit-addr-type label:has(input:checked) {
+    border-color: rgba(139, 92, 246, 0.75);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
     box-shadow:
-        6px 6px 16px rgba(124, 140, 248, 0.5),
-        -4px -4px 12px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35),
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1);
-
-    transform: translateY(-2px);
+        0 8px 22px -6px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
-.heep-edit-addr-type label:active {
-    transform: translateY(0) scale(0.97);
-}
-
-/* ============================================
-   SAVE BUTTON (Clay gradient)
-   ============================================ */
 .heep-edit-addr-save-btn {
     width: 100%;
-
-    margin-top: 8px;
-    padding: 15px 20px;
-
-    font-size: clamp(0.9rem, 2.4vw, 1rem);
+    height: 50px;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 14px;
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
     font-weight: 800;
     letter-spacing: 0.5px;
-    color: #ffffff;
-
+    line-height: 1;
     cursor: pointer;
-    border: none;
-    border-radius: 16px;
-
-    background: linear-gradient(135deg, #6a7bf0, #9b5de5);
-
+    outline: none;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow:
-        6px 6px 16px rgba(124, 140, 248, 0.45),
-        -4px -4px 12px rgba(255, 255, 255, 0.9),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35),
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+        0 10px 28px -8px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
 
-    transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
+.heep-edit-addr-save-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow:
+        0 14px 34px -8px rgba(139, 92, 246, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.06);
+}
+
+.heep-edit-addr-save-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
 }
 
 .heep-edit-addr-save-btn:disabled {
     cursor: not-allowed;
-    opacity: 0.55;
-
-    background: linear-gradient(135deg, #a0a8d0, #b8a0d0);
-
-    box-shadow:
-        inset 3px 3px 8px rgba(174, 181, 199, 0.5),
-        inset -3px -3px 8px rgba(255, 255, 255, 0.9);
-
-    transform: none;
-    pointer-events: none;
-}
-
-.heep-edit-addr-save-btn:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        10px 10px 22px rgba(124, 140, 248, 0.55),
-        -6px -6px 16px rgba(255, 255, 255, 1),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.35);
-}
-
-.heep-edit-addr-save-btn:active {
-    transform: translateY(1px) scale(0.98);
-
-    box-shadow:
-        inset 5px 5px 12px rgba(60, 70, 140, 0.45),
-        inset -5px -5px 12px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(148, 163, 184, 0.55);
+    box-shadow: none;
+    filter: none;
 }
 
 .heep-edit-addr-save-btn:focus-visible {
-    outline: 2px solid #7c8cf8;
+    outline: 2px solid rgba(139, 92, 246, 0.9);
     outline-offset: 3px;
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes heepEditAddrPageFade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes heepEditAddrHeaderIn {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes heepEditAddrFormIn {
-    from {
-        opacity: 0;
-        transform: translateY(24px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .heep-edit-addr-page {
-        padding: 16px 12px 100px;
-        gap: 14px;
-    }
-
-    .heep-edit-addr-header {
-        padding: 12px 14px;
-        border-radius: 20px;
-    }
-
-    .heep-edit-addr-form {
-        padding: 18px 16px;
-        border-radius: 22px;
-        gap: 12px;
-    }
-}
-
-/* Phones */
 @media (max-width: 480px) {
     .heep-edit-addr-page {
-        padding: 14px 12px 100px;
         gap: 12px;
+        padding: 12px 12px 20px;
     }
 
     .heep-edit-addr-header {
-        padding: 12px 12px;
-        border-radius: 18px;
         gap: 10px;
-    }
-
-    .heep-edit-addr-title {
-        font-size: 0.95rem;
+        padding: 4px 0 6px;
     }
 
     .heep-edit-addr-back-btn {
         width: 38px;
         height: 38px;
-        font-size: 1rem;
-    }
-
-    .heep-edit-addr-form {
-        padding: 16px 14px;
-        border-radius: 20px;
-        gap: 12px;
-    }
-
-    .heep-edit-addr-form input[type="text"],
-    .heep-edit-addr-form input[type="tel"],
-    .heep-edit-addr-form select {
-        padding: 12px 14px;
-        border-radius: 12px;
-        font-size: 0.85rem;
-    }
-
-    .heep-edit-addr-type {
-        gap: 8px;
-    }
-
-    .heep-edit-addr-type label {
-        padding: 12px 10px;
-        justify-content: flex-start;
-        border-radius: 12px;
-    }
-
-    .heep-edit-addr-save-btn {
-        padding: 14px 16px;
-        border-radius: 14px;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .heep-edit-addr-page {
-        padding: 12px 10px 95px;
-        gap: 10px;
-    }
-
-    .heep-edit-addr-header {
-        padding: 10px 10px;
-        border-radius: 16px;
+        font-size: 17px;
+        border-radius: 11px;
     }
 
     .heep-edit-addr-title {
-        font-size: 0.9rem;
-    }
-
-    .heep-edit-addr-back-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
+        font-size: 16px;
     }
 
     .heep-edit-addr-form {
         padding: 14px 12px;
-        border-radius: 18px;
-        gap: 10px;
+        gap: 9px;
+        border-radius: 16px;
     }
 
     .heep-edit-addr-form input[type="text"],
     .heep-edit-addr-form input[type="tel"],
     .heep-edit-addr-form select {
-        padding: 11px 12px;
+        height: 44px;
+        font-size: 13px;
         border-radius: 11px;
-        font-size: 0.82rem;
+        padding: 0 12px;
+    }
+
+    .heep-edit-addr-form select {
+        padding-right: 34px;
+        background-position: right 12px center;
+    }
+
+    .heep-edit-addr-type {
+        gap: 7px;
     }
 
     .heep-edit-addr-type label {
-        padding: 10px 8px;
-        font-size: 0.78rem;
+        height: 42px;
+        padding: 0 12px;
+        font-size: 12px;
+        border-radius: 11px;
+        min-width: 80px;
+    }
+
+    .heep-edit-addr-save-btn {
+        height: 46px;
+        font-size: 13.5px;
+        border-radius: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+    .heep-edit-addr-page {
+        padding: 10px 10px 18px;
+    }
+
+    .heep-edit-addr-back-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+    .heep-edit-addr-title {
+        font-size: 15px;
+    }
+
+    .heep-edit-addr-form {
+        padding: 12px 11px;
+        border-radius: 14px;
+    }
+
+    .heep-edit-addr-form input[type="text"],
+    .heep-edit-addr-form input[type="tel"],
+    .heep-edit-addr-form select {
+        height: 42px;
+        font-size: 12.5px;
+        border-radius: 10px;
+    }
+
+    .heep-edit-addr-type label {
+        height: 40px;
+        font-size: 11.5px;
         border-radius: 10px;
     }
 
     .heep-edit-addr-save-btn {
-        padding: 13px 14px;
-        font-size: 0.85rem;
+        height: 44px;
+        font-size: 13px;
         border-radius: 12px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
 
-    .heep-edit-addr-page,
-    .heep-edit-addr-header,
-    .heep-edit-addr-form {
-        animation: none;
-    }
-
-    .heep-edit-addr-back-btn,
-    .heep-edit-addr-form input,
-    .heep-edit-addr-form select,
-    .heep-edit-addr-type label,
-    .heep-edit-addr-save-btn {
-        transition: none;
+    .heep-edit-addr-page *,
+    .heep-edit-addr-page *::before,
+    .heep-edit-addr-page *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

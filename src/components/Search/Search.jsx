@@ -18,13 +18,23 @@ function Search({
 }) {
 
     const [categories, setCategories] = useState([]);
+    const [allCategories, setAllCategories] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
-    const [hideSuggestions, setHideSuggestions] = useState(false); // 👈 NAYA STATE
+    const [hideSuggestions, setHideSuggestions] = useState(false);
+    const [showFilterTip, setShowFilterTip] = useState(false);
 
-    /* ============================================
-       LOAD CATEGORIES
-       ============================================ */
+    const isPremium = typeof window !== "undefined"
+        && window.location.pathname.includes("/premium");
+
+    const hasActiveFilter =
+        filter &&
+        (
+            (filter.sort && filter.sort !== "") ||
+            (filter.rating && Number(filter.rating) > 0) ||
+            (filter.availableOnly === true)
+        );
+
     useEffect(() => {
         const loadCategories = async () => {
             try {
@@ -32,17 +42,10 @@ function Search({
                 const data = await response.json();
 
                 if (data.success) {
-                    const shopCategories = (data.data || [])
-                        .filter(item =>
-                            item.catname?.trim().toUpperCase() === "SHOP"
-                        )
-                        .filter(item => item.category?.trim());
-
-                    const shuffled = [...shopCategories].sort(
-                        () => Math.random() - 0.5
+                    const list = (data.data || []).filter(
+                        (item) => item.category?.trim()
                     );
-
-                    setCategories(shuffled);
+                    setAllCategories(list);
                 }
             } catch (error) {
                 console.error("CATEGORY FETCH ERROR:", error);
@@ -52,18 +55,59 @@ function Search({
         loadCategories();
     }, []);
 
+    useEffect(() => {
+
+        let filtered = [];
+
+        if (selectedMenu === "Shop") {
+            filtered = allCategories.filter(
+                (item) => item.catname?.trim().toUpperCase() === "SHOP"
+            );
+        } else if (selectedMenu === "Gifts") {
+            filtered = allCategories.filter(
+                (item) => item.catname?.trim().toUpperCase() === "GIFT"
+            );
+        } else if (selectedMenu === "Cards") {
+            if (isPremium) {
+                filtered = allCategories.filter(
+                    (item) =>
+                        item.catname?.trim().toUpperCase() === "CARDS" &&
+                        item.category?.trim().toUpperCase() === "PREMIUM"
+                );
+            } else {
+                filtered = allCategories.filter(
+                    (item) =>
+                        item.catname?.trim().toUpperCase() === "CARDS" &&
+                        item.category?.trim().toUpperCase() !== "PREMIUM"
+                );
+            }
+        }
+
+        const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+        setCategories(shuffled);
+        setPlaceholderIndex(0);
+
+    }, [allCategories, selectedMenu, isPremium]);
+
+    useEffect(() => {
+        if (hasActiveFilter) {
+            setShowFilterTip(true);
+            const timer = setTimeout(() => setShowFilterTip(false), 5000);
+            return () => clearTimeout(timer);
+        } else {
+            setShowFilterTip(false);
+        }
+    }, [hasActiveFilter]);
+
     const shopCategories = (categories || [])
-        .map(item => item.category?.trim())
+        .map((item) => item.category?.trim())
         .filter(Boolean);
 
-    /* ============================================
-       ANIMATED PLACEHOLDER
-       ============================================ */
     useEffect(() => {
         if (categoryName || search.trim() || shopCategories.length === 0) return;
 
         const interval = setInterval(() => {
-            setPlaceholderIndex(prev => (prev + 1) % shopCategories.length);
+            setPlaceholderIndex((prev) => (prev + 1) % shopCategories.length);
         }, 2200);
 
         return () => clearInterval(interval);
@@ -71,14 +115,11 @@ function Search({
 
     const srRef = useRef(null);
 
-    /* ============================================
-       OUTSIDE CLICK — close filter AND suggestions
-       ============================================ */
     useEffect(() => {
         function handleOutsideClick(event) {
             if (srRef.current && !srRef.current.contains(event.target)) {
                 setShowFilter(false);
-                setHideSuggestions(true); // 👈 bahar click pe suggestions hide
+                setHideSuggestions(true);
             }
         }
 
@@ -86,43 +127,45 @@ function Search({
         return () => document.removeEventListener("click", handleOutsideClick);
     }, []);
 
-    /* ============================================
-       CONFIG
-       ============================================ */
     const config = {
-        Cards: { data: cards, name: "card_name", category: "card_category" },
+        Cards: { data: cards, name: "product_name", category: "product_category" },
         Gifts: { data: gifts, name: "gift_name", category: "gift_category" },
         Shop: { data: shops, name: "shop_name", category: "shop_category" },
         Premium: { data: premiums, name: "premium_name", category: "premium_category" }
     };
 
-    /* ============================================
-       SUGGESTIONS — derived (useMemo)
-       ============================================ */
     const searchSuggestions = useMemo(() => {
-        if (hideSuggestions) return []; // 👈 hidden ho to kuch mat do
+        if (hideSuggestions) return [];
 
         const current = config[selectedMenu];
 
         if (!current || !search.trim()) return [];
 
-        const data = current.data || [];
+        let data = current.data || [];
+
+        if (selectedMenu === "Cards") {
+            data = data.filter((item) => {
+                const cat = String(item.product_category || "").trim().toUpperCase();
+                return isPremium ? cat === "PREMIUM" : cat !== "PREMIUM";
+            });
+        }
+
         const keyword = search.toLowerCase().trim();
 
         const names = data
-            .filter(item => item[current.name]?.toLowerCase().includes(keyword))
-            .map(item => ({ type: "name", value: item[current.name] }));
+            .filter((item) => item[current.name]?.toLowerCase().includes(keyword))
+            .map((item) => ({ type: "name", value: item[current.name] }));
 
         const categoryValues = [
             ...new Set(
                 data
-                    .filter(item => item[current.category]?.toLowerCase().includes(keyword))
-                    .map(item => item[current.category])
+                    .filter((item) => item[current.category]?.toLowerCase().includes(keyword))
+                    .map((item) => item[current.category])
                     .filter(Boolean)
             )
         ];
 
-        const categorySuggestions = categoryValues.map(category => ({
+        const categorySuggestions = categoryValues.map((category) => ({
             type: "category",
             value: category
         }));
@@ -132,24 +175,43 @@ function Search({
         return combined
             .filter((item, index, self) =>
                 index === self.findIndex(
-                    x => x.value.toLowerCase() === item.value.toLowerCase()
+                    (x) => x.value.toLowerCase() === item.value.toLowerCase()
                 )
             )
             .slice(0, 6);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [search, selectedMenu, cards, gifts, shops, premiums, hideSuggestions]);
+    }, [search, selectedMenu, cards, gifts, shops, premiums, hideSuggestions, isPremium]);
 
     const hasSuggestions = searchSuggestions.length > 0;
+
+    const handleClearFilter = () => {
+        setFilter({
+            category: "All",
+            sort: "",
+            rating: 0,
+            availableOnly: false
+        });
+        try {
+            sessionStorage.removeItem("heep_filter");
+        } catch (err) {
+            console.error(err);
+        }
+        setShowFilterTip(false);
+    };
+
+    const handleFilterButtonClick = () => {
+        if (hasActiveFilter) {
+            handleClearFilter();
+        } else {
+            setShowFilter(!showFilter);
+        }
+    };
 
     return (
         <div className="sr-container" ref={srRef}>
 
-            {/* ============================================
-                TOP ROW — search box + filter button
-                ============================================ */}
             <div className="sr-top-row">
 
-                {/* ---- SEARCH BOX ---- */}
                 <div className="sr-search-box">
 
                     {!search.trim() && (
@@ -175,7 +237,7 @@ function Search({
                         value={search}
                         onChange={(e) => {
                             setSearch(e.target.value);
-                            setHideSuggestions(false); // 👈 typing pe wapas show
+                            setHideSuggestions(false);
                         }}
                     />
 
@@ -189,21 +251,27 @@ function Search({
 
                 </div>
 
-                {/* ---- FILTER BUTTON ---- */}
-                <button
-                    className="sr-filter-btn"
-                    type="button"
-                    onClick={() => setShowFilter(!showFilter)}
-                    aria-label="Filter"
-                >
-                    ⚙
-                </button>
+                <div className="sr-filter-wrap">
+
+                    {showFilterTip && (
+                        <div className="sr-filter-tip">
+                            Click here to remove filter
+                        </div>
+                    )}
+
+                    <button
+                        className={`sr-filter-btn ${hasActiveFilter ? "active" : ""}`}
+                        type="button"
+                        onClick={handleFilterButtonClick}
+                        aria-label={hasActiveFilter ? "Clear filter" : "Filter"}
+                    >
+                        {hasActiveFilter ? "✕" : "⚙"}
+                    </button>
+
+                </div>
 
             </div>
 
-            {/* ============================================
-                SUGGESTIONS — search box ke neeche
-                ============================================ */}
             <div
                 className={`sr-suggestions ${hasSuggestions ? "sr-suggestions-show" : ""}`}
             >
@@ -215,7 +283,7 @@ function Search({
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => {
                             setSearch(item.value);
-                            setHideSuggestions(true); // 👈 suggestion click pe hide
+                            setHideSuggestions(true);
                         }}
                     >
                         <span className="sr-suggestion-icon">
@@ -226,9 +294,6 @@ function Search({
                 ))}
             </div>
 
-            {/* ============================================
-                FILTER PANEL
-                ============================================ */}
             {showFilter && (
                 <Filter
                     selectedMenu={selectedMenu}

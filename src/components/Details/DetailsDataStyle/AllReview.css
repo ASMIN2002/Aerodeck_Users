@@ -1,68 +1,100 @@
-.allreview-page,
-.allreview-page * {
+.allreview-page *,
+.allreview-page *::before,
+.allreview-page *::after {
     box-sizing: border-box;
-}
-
-.allreview-page {
-    width: 100%;
-    min-height: 100vh;
-    padding: 14px 16px 24px;
-    margin: 0;
-    background: #fff;
-    font-family: inherit;
     -webkit-tap-highlight-color: transparent;
 }
 
+.allreview-page {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px 14px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
+}
+
 .allreview-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 100%;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 14px;
+    padding: 8px 0 12px;
+    background: linear-gradient(180deg,
+            rgba(10, 12, 24, 0.98) 0%,
+            rgba(10, 12, 24, 0.92) 75%,
+            rgba(10, 12, 24, 0) 100%);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
 }
 
 .allreview-back {
     flex-shrink: 0;
+    width: 42px;
+    height: 42px;
     display: grid;
     place-items: center;
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    background: #f5f5f5;
-    border: 1px solid #eee;
-    border-radius: 50%;
-    color: #333;
-    font-size: 1.15rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1;
     cursor: pointer;
-    transition: background 0.15s ease, transform 0.1s ease;
-    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    padding: 0;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .allreview-back:hover {
-    background: #ececec;
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(139, 92, 246, 0.08) 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px -8px rgba(139, 92, 246, 0.7);
+    transform: translateX(-2px);
 }
 
 .allreview-back:active {
-    transform: scale(0.94);
+    transform: translateX(-2px) scale(0.94);
+}
+
+.allreview-back:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
 }
 
 .allreview-header>div {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .allreview-header h2 {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 17px;
     font-weight: 800;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-    color: #222;
-
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    color: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -70,95 +102,155 @@
 
 .review-filter {
     display: flex;
-    align-items: center;
     gap: 8px;
-    width: 100%;
+    padding: 4px 0 8px;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 4px 2px 14px;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .review-filter::-webkit-scrollbar {
     display: none;
+    height: 0;
 }
 
 .star-btn {
     flex-shrink: 0;
-    padding: 8px 14px;
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 999px;
-    color: #555;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 100%);
+    color: rgba(229, 231, 235, 0.85);
     font-family: inherit;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.2px;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
     line-height: 1;
     cursor: pointer;
+    outline: none;
     white-space: nowrap;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .star-btn:hover {
-    background: #fff8ec;
-    border-color: #ffe0b2;
-    color: #b26a00;
+    border-color: rgba(251, 191, 36, 0.5);
+    background: linear-gradient(180deg,
+            rgba(251, 191, 36, 0.15) 0%,
+            rgba(251, 191, 36, 0.05) 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 
 .star-btn:active {
-    transform: scale(0.96);
+    transform: translateY(0) scale(0.96);
+}
+
+.star-btn:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 2px;
 }
 
 .star-btn.active {
-    background: linear-gradient(135deg, #ff8a3d, #ff6b00);
-    border-color: #ff6b00;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.35);
+    border-color: rgba(251, 191, 36, 0.75);
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #ea580c 100%);
+    color: #ffffff;
+    box-shadow:
+        0 8px 22px -6px rgba(251, 191, 36, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
-.star-btn.active:hover {
-    background: linear-gradient(135deg, #ff7a26, #e85f00);
-    border-color: #e85f00;
-    color: #fff;
+.star-btn.five.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: rgba(16, 185, 129, 0.75);
+    box-shadow:
+        0 8px 22px -6px rgba(16, 185, 129, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+.star-btn.four.active {
+    background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+    border-color: rgba(132, 204, 22, 0.75);
+    box-shadow:
+        0 8px 22px -6px rgba(132, 204, 22, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+.star-btn.three.active {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border-color: rgba(245, 158, 11, 0.75);
+}
+
+.star-btn.two.active {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border-color: rgba(249, 115, 22, 0.75);
+}
+
+.star-btn.one.active {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-color: rgba(239, 68, 68, 0.75);
+    box-shadow:
+        0 8px 22px -6px rgba(239, 68, 68, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
 .allreview-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
 }
 
 .allreview-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
-
     padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.94) 0%,
+            rgba(14, 16, 32, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        0 12px 28px -18px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(139, 92, 246, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+    transition: all 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+    overflow: hidden;
+}
 
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 14px;
-
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+.allreview-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #6366f1 0%, #ec4899 100%);
+    opacity: 0.7;
+    border-radius: 3px 0 0 3px;
 }
 
 .allreview-card:hover {
-    border-color: #ffd9b3;
-    box-shadow: 0 6px 18px rgba(255, 107, 0, 0.1);
-    transform: translateY(-1px);
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-2px);
+    box-shadow:
+        0 16px 32px -18px rgba(139, 92, 246, 0.6),
+        0 0 0 1px rgba(139, 92, 246, 0.18) inset;
 }
 
 .allreview-top {
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 100%;
+    min-width: 0;
 }
 
 .allreview-avatar-image,
@@ -167,31 +259,28 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    display: block;
+    padding: 2px;
+    background: linear-gradient(135deg,
+            #6366f1 0%,
+            #a855f7 55%,
+            #ec4899 100%);
+    box-shadow: 0 6px 16px -6px rgba(139, 92, 246, 0.75);
     object-fit: cover;
+    object-position: center;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .allreview-avatar-image {
-    border: 2px solid #fff1e0;
-    background: #f5f5f5;
-}
-
-.allreview-avatar {
-    display: grid;
-    place-items: center;
-
-    background: #f2f4f8;
-    border: 1px solid #e5e7ec;
-    color: #8b91a8;
-
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1;
-    text-align: center;
-    text-transform: uppercase;
-
-    padding: 0;
+    object-fit: cover;
+    background: #0e1020;
+    display: block;
 }
 
 .allreview-user {
@@ -199,27 +288,28 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 
 .allreview-user h3 {
     margin: 0;
-    font-size: 0.86rem;
-    font-weight: 700;
-    letter-spacing: 0.1px;
-    line-height: 1.25;
-    color: #222;
-
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .allreview-rating {
-    font-size: 0.72rem;
+    font-size: 11.5px;
+    font-weight: 700;
     letter-spacing: 0.5px;
     line-height: 1;
-    color: #f5a623;
+    color: #fbbf24;
+    text-shadow: 0 2px 6px rgba(251, 191, 36, 0.35);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -227,12 +317,12 @@
 
 .allreview-message {
     margin: 0;
-    font-size: 0.82rem;
+    font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.1px;
-    line-height: 1.5;
-    color: #555;
-
+    letter-spacing: 0.2px;
+    line-height: 1.55;
+    color: rgba(229, 231, 235, 0.86);
+    overflow-wrap: anywhere;
     word-break: break-word;
 }
 
@@ -240,228 +330,159 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-
-    width: 100%;
-    padding: 44px 20px;
-
-    background: #fafafa;
-    border: 1px dashed #e5e5e5;
-    border-radius: 14px;
-
+    gap: 8px;
+    padding: 40px 20px;
+    border-radius: 16px;
+    border: 1px dashed rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.1) 0%,
+            rgba(236, 72, 153, 0.06) 100%);
     text-align: center;
 }
 
 .no-review h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 15px;
     font-weight: 800;
-    letter-spacing: 0.2px;
-    color: #333;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+    line-height: 1.2;
 }
 
 .no-review p {
     margin: 0;
-    font-size: 0.82rem;
+    font-size: 12.5px;
     font-weight: 500;
-    line-height: 1.4;
-    color: #888;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    color: rgba(165, 180, 252, 0.78);
+    max-width: 300px;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
     .allreview-page {
+        gap: 12px;
         padding: 12px 12px 20px;
     }
 
     .allreview-header {
-        padding-bottom: 12px;
-        margin-bottom: 12px;
+        padding: 6px 0 10px;
         gap: 10px;
     }
 
     .allreview-back {
-        width: 34px;
-        height: 34px;
-        font-size: 1.05rem;
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+        border-radius: 11px;
     }
 
     .allreview-header h2 {
-        font-size: 1rem;
+        font-size: 16px;
     }
 
     .review-filter {
         gap: 6px;
-        padding: 3px 2px 12px;
+        padding: 4px 0 6px;
     }
 
     .star-btn {
-        padding: 7px 12px;
-        font-size: 0.72rem;
-    }
-
-    .allreview-list {
-        gap: 10px;
+        height: 34px;
+        padding: 0 11px;
+        font-size: 11.5px;
+        border-radius: 10px;
     }
 
     .allreview-card {
         padding: 12px;
-        border-radius: 12px;
-        gap: 8px;
+        border-radius: 14px;
+        gap: 9px;
+    }
+
+    .allreview-avatar-image,
+    .allreview-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
+    }
+
+    .allreview-user h3 {
+        font-size: 13px;
+    }
+
+    .allreview-rating {
+        font-size: 11px;
+    }
+
+    .allreview-message {
+        font-size: 12.5px;
+    }
+
+    .no-review {
+        padding: 32px 16px;
+        border-radius: 14px;
+    }
+
+    .no-review h3 {
+        font-size: 14px;
+    }
+
+    .no-review p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 360px) {
+    .allreview-page {
+        padding: 10px 10px 18px;
+    }
+
+    .allreview-back {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+        border-radius: 10px;
+    }
+
+    .allreview-header h2 {
+        font-size: 15px;
+    }
+
+    .star-btn {
+        height: 32px;
+        padding: 0 10px;
+        font-size: 11px;
+        border-radius: 9px;
+    }
+
+    .allreview-card {
+        padding: 11px;
+        border-radius: 13px;
     }
 
     .allreview-avatar-image,
     .allreview-avatar {
         width: 38px;
         height: 38px;
-    }
-
-    .allreview-avatar {
-        font-size: 0.52rem;
+        font-size: 14px;
     }
 
     .allreview-user h3 {
-        font-size: 0.8rem;
-    }
-
-    .allreview-rating {
-        font-size: 0.66rem;
+        font-size: 12.5px;
     }
 
     .allreview-message {
-        font-size: 0.76rem;
-    }
-
-    .no-review {
-        padding: 36px 16px;
-    }
-
-    .no-review h3 {
-        font-size: 0.92rem;
-    }
-
-    .no-review p {
-        font-size: 0.76rem;
-    }
-}
-
-@media (min-width: 600px) {
-    .allreview-page {
-        max-width: 780px;
-        margin: 0 auto;
-        padding: 20px 24px 32px;
-    }
-
-    .allreview-header {
-        padding-bottom: 18px;
-        margin-bottom: 18px;
-        gap: 14px;
-    }
-
-    .allreview-back {
-        width: 44px;
-        height: 44px;
-        font-size: 1.3rem;
-    }
-
-    .allreview-header h2 {
-        font-size: 1.4rem;
-    }
-
-    .review-filter {
-        gap: 10px;
-        padding: 4px 2px 18px;
-    }
-
-    .star-btn {
-        padding: 10px 18px;
-        font-size: 0.86rem;
-    }
-
-    .allreview-list {
-        gap: 14px;
-    }
-
-    .allreview-card {
-        padding: 18px;
-        border-radius: 16px;
-        gap: 12px;
-    }
-
-    .allreview-avatar-image,
-    .allreview-avatar {
-        width: 50px;
-        height: 50px;
-    }
-
-    .allreview-avatar {
-        font-size: 0.66rem;
-    }
-
-    .allreview-user h3 {
-        font-size: 0.96rem;
-    }
-
-    .allreview-rating {
-        font-size: 0.82rem;
-    }
-
-    .allreview-message {
-        font-size: 0.9rem;
-    }
-
-    .no-review {
-        padding: 56px 24px;
-    }
-
-    .no-review h3 {
-        font-size: 1.1rem;
-    }
-
-    .no-review p {
-        font-size: 0.9rem;
-    }
-}
-
-@media (min-width: 900px) {
-    .allreview-page {
-        max-width: 860px;
-    }
-
-    .allreview-header h2 {
-        font-size: 1.55rem;
-    }
-
-    .allreview-card {
-        padding: 20px;
-    }
-
-    .allreview-avatar-image,
-    .allreview-avatar {
-        width: 54px;
-        height: 54px;
-    }
-
-    .allreview-user h3 {
-        font-size: 1rem;
-    }
-
-    .allreview-message {
-        font-size: 0.94rem;
+        font-size: 12px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-    .allreview-back,
-    .star-btn,
-    .allreview-card {
-        transition: none;
-    }
-
-    .allreview-back:active,
-    .star-btn:active,
-    .allreview-card:hover {
-        transform: none;
+    .allreview-page *,
+    .allreview-page *::before,
+    .allreview-page *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

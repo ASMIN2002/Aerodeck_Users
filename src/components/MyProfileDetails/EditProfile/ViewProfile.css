@@ -1,889 +1,502 @@
-/* ViewProfile.css — 3D UTHA HUA CLAYMORPHISM */
-
-.viewprofile,
-.viewprofile * {
+.viewprofile *,
+.viewprofile *::before,
+.viewprofile *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================
-   PAGE WRAPPER
-   ============================================ */
 .viewprofile {
     position: relative;
     width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
     min-height: 100vh;
-
-    margin: 0;
-    padding: 16px 14px 70px;
-
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-
-    -webkit-tap-highlight-color: transparent;
-
-    animation: viewProfileIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes viewProfileIn {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   🔥 MAIN CARD — HEAVY 3D UTHA HUA
-   ============================================ */
-.view-card {
-    position: relative;
-
     display: flex;
     flex-direction: column;
-    gap: 20px;
-
-    width: 100%;
-
-    margin: 0 0 20px;
-    padding: 20px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 24px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #e8edf7 100%);
-
-    /* 🔥🔥🔥 PURE HEAVY 3D — CHAARO TARAF */
-    box-shadow:
-        0 20px 40px rgba(140, 150, 180, 0.55),
-        0 10px 20px rgba(140, 150, 180, 0.4),
-        0 5px 12px rgba(140, 150, 180, 0.28),
-        16px 16px 32px rgba(140, 150, 180, 0.28),
-        -16px -16px 32px rgba(255, 255, 255, 1),
-        13px -13px 26px rgba(255, 255, 255, 0.95),
-        -13px 13px 26px rgba(140, 150, 180, 0.15),
-        10px -10px 22px rgba(255, 255, 255, 0.9),
-        -10px 10px 22px rgba(140, 150, 180, 0.12),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.3);
-
-    transform: translateY(-6px);
-    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    gap: 16px;
+    padding: 16px 14px 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
 }
 
-/* 🔥 TOP HIGHLIGHT LINE */
+.view-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 20px;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.96) 0%,
+            rgba(14, 16, 32, 0.96) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+        0 20px 40px -18px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(139, 92, 246, 0.12) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    overflow: hidden;
+}
+
 .view-card::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 2.5px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 24px 24px 0 0;
-    pointer-events: none;
-    z-index: 3;
-    filter: blur(0.5px);
-}
-
-/* 🔥 BOTTOM GROUND SHADOW */
-.view-card::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 15%;
-    right: 15%;
-    height: 6px;
+    top: -100px;
+    right: -80px;
+    width: 260px;
+    height: 240px;
     background: radial-gradient(ellipse at center,
-            rgba(140, 150, 180, 0.4) 0%,
-            transparent 70%);
-    border-radius: 50%;
+            rgba(99, 102, 241, 0.28) 0%,
+            rgba(236, 72, 153, 0.12) 42%,
+            rgba(0, 0, 0, 0) 72%);
+    filter: blur(52px);
     pointer-events: none;
-    filter: blur(3px);
-    z-index: -1;
+    z-index: 0;
 }
 
-/* ============================================
-   HEAD SECTION — back + user id + avatar
-   ============================================ */
 .headback {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 14px;
-
-    width: 100%;
-    padding-bottom: 16px;
-
-    border-bottom: 1.5px dashed rgba(155, 165, 190, 0.35);
-
-    position: relative;
 }
 
-/* dashed divider shadow hint */
-.headback::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.9) 50%,
-            transparent 100%);
-    pointer-events: none;
-}
-
-/* ---- Left — back button + user id ---- */
 .leftheadback {
     flex: 1;
     min-width: 0;
-
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* ---- Back button — 3D wool ball ---- */
 .view-back {
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
     width: 42px;
     height: 42px;
-
-    border: 1.5px solid rgba(255, 255, 255, 0.98);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #eef2fa 0%, #dde2ee 100%);
-
-    color: #5b6ee1;
-    font-size: 1.15rem;
-    font-weight: 900;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 100%);
+    color: #e5e7eb;
+    font-size: 20px;
+    font-weight: 700;
     line-height: 1;
-
     cursor: pointer;
-
-    box-shadow:
-        0 6px 14px rgba(140, 150, 180, 0.55),
-        0 3px 8px rgba(140, 150, 180, 0.4),
-        4px 4px 10px rgba(140, 150, 180, 0.28),
-        -4px -4px 10px rgba(255, 255, 255, 1),
-        3px -3px 8px rgba(255, 255, 255, 0.85),
-        -3px 3px 8px rgba(140, 150, 180, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.45);
-
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    outline: none;
+    padding: 0;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .view-back:hover {
-    transform: translateX(-3px) scale(1.06);
-    color: #7c8cf8;
-
-    box-shadow:
-        0 8px 18px rgba(124, 140, 248, 0.5),
-        0 4px 10px rgba(124, 140, 248, 0.35),
-        5px 5px 12px rgba(124, 140, 248, 0.25),
-        -5px -5px 12px rgba(255, 255, 255, 1),
-        4px -4px 10px rgba(255, 255, 255, 0.9),
-        -4px 4px 10px rgba(124, 140, 248, 0.15),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.35);
+    border-color: rgba(139, 92, 246, 0.55);
+    background: linear-gradient(180deg,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(139, 92, 246, 0.08) 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px -8px rgba(139, 92, 246, 0.7);
+    transform: translateX(-2px);
 }
 
 .view-back:active {
-    transform: translateX(0) scale(0.94);
-    box-shadow:
-        inset 5px 5px 12px rgba(155, 165, 190, 0.7),
-        inset -5px -5px 12px rgba(255, 255, 255, 1);
+    transform: translateX(-2px) scale(0.94);
 }
 
 .view-back:focus-visible {
-    outline: 2px solid #7c8cf8;
+    outline: 2px solid rgba(139, 92, 246, 0.9);
     outline-offset: 3px;
 }
 
-/* ---- User ID label + value ---- */
 .view-row1 {
-    flex: 1;
-    min-width: 0;
-
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
+    min-width: 0;
 }
 
 .view-row1 span {
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.6px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
-    line-height: 1.2;
-
-    color: #8a90ac;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    line-height: 1;
+    color: rgba(165, 180, 252, 0.75);
 }
 
 .view-row1 p {
     margin: 0;
-
-    font-size: clamp(0.76rem, 2.1vw, 0.86rem);
-    font-weight: 900;
+    font-size: 11.5px;
+    font-weight: 700;
     letter-spacing: 0.3px;
-    line-height: 1.2;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 8px rgba(124, 140, 248, 0.25);
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.3;
+    color: #c7d2fe;
+    word-break: break-all;
+    font-family: "SF Mono", "Monaco", "Menlo", "Courier New", monospace;
 }
 
-/* ---- Avatar wrapper ---- */
 .view-image-wrapperdet {
     flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+    padding: 3px;
+    background: linear-gradient(135deg,
+            #6366f1 0%,
+            #a855f7 50%,
+            #ec4899 100%);
+    box-shadow:
+        0 10px 26px -10px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
 
 .view-image {
-    display: block;
-
-    width: 72px;
-    height: 72px;
-
-    border: 3px solid rgba(255, 255, 255, 1);
-    border-radius: 50%;
-
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
     object-fit: cover;
     object-position: center;
-
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-
-    /* 🔥 3D WOOL BALL AVATAR */
-    box-shadow:
-        0 12px 24px rgba(140, 150, 180, 0.55),
-        0 6px 14px rgba(140, 150, 180, 0.4),
-        8px 8px 18px rgba(140, 150, 180, 0.3),
-        -8px -8px 18px rgba(255, 255, 255, 1),
-        6px -6px 14px rgba(255, 255, 255, 0.9),
-        -6px 6px 14px rgba(140, 150, 180, 0.15),
-        inset 2px 2px 4px rgba(255, 255, 255, 1),
-        inset -2px -2px 4px rgba(155, 165, 190, 0.4);
-
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    display: block;
+    background: #0e1020;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
-.view-card:hover .view-image {
-    transform: scale(1.05) rotate(-3deg);
-}
-
-/* ============================================
-   INFO SECTION — rows
-   ============================================ */
 .view-info {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-
-    width: 100%;
+    gap: 0;
+    padding: 6px 0 0;
 }
 
-/* ---- Each info row — 3D wool pill ---- */
 .view-row {
-    position: relative;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-
-    width: 100%;
-    padding: 13px 16px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 16px;
-
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #ffffff 0%, #eef2fa 100%);
-
-    /* 🔥 3D UTHA HUA ROW — chaaro taraf */
-    box-shadow:
-        0 10px 20px rgba(140, 150, 180, 0.45),
-        0 5px 12px rgba(140, 150, 180, 0.32),
-        0 3px 6px rgba(140, 150, 180, 0.22),
-        7px 7px 16px rgba(140, 150, 180, 0.22),
-        -7px -7px 16px rgba(255, 255, 255, 1),
-        5px -5px 12px rgba(255, 255, 255, 0.9),
-        -5px 5px 12px rgba(140, 150, 180, 0.1),
-        4px -4px 10px rgba(255, 255, 255, 0.85),
-        -4px 4px 10px rgba(140, 150, 180, 0.08),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.28);
-
-    transform: translateY(-3px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    gap: 14px;
+    padding: 12px 4px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    line-height: 1.4;
+    transition: background 0.2s ease;
 }
 
-/* top highlight */
-.view-row::before {
+.view-row+.view-row::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 12%;
-    right: 12%;
-    height: 1.5px;
+    left: 4px;
+    right: 4px;
+    height: 1px;
+    margin-top: -24px;
     background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 1) 50%,
-            transparent 100%);
-    border-radius: 16px 16px 0 0;
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.07) 50%,
+            rgba(255, 255, 255, 0) 100%);
     pointer-events: none;
-    z-index: 2;
 }
 
-.view-row:hover {
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 16px 30px rgba(124, 140, 248, 0.4),
-        0 8px 18px rgba(124, 140, 248, 0.28),
-        0 4px 10px rgba(124, 140, 248, 0.2),
-        10px 10px 22px rgba(124, 140, 248, 0.18),
-        -10px -10px 22px rgba(255, 255, 255, 1),
-        7px -7px 16px rgba(255, 255, 255, 0.95),
-        -7px 7px 16px rgba(124, 140, 248, 0.12),
-        inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-        inset -1.5px -1.5px 3px rgba(124, 140, 248, 0.22);
-}
-
-/* ---- Label (left) ---- */
 .view-row>span {
     flex-shrink: 0;
-
-    position: relative;
-    padding-left: 10px;
-
-    font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    line-height: 1.3;
-
-    color: #8a90ac;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 1px 2px rgba(140, 150, 180, 0.15);
+    line-height: 1;
+    color: rgba(165, 180, 252, 0.78);
 }
 
-/* 🔥 accent bar before label */
-.view-row>span::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 3.5px;
-    height: 70%;
-
-    border-radius: 3px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #8e9dff 0%, #5b6ee1 100%);
-
-    box-shadow:
-        1.5px 2px 4px rgba(91, 110, 225, 0.45),
-        -1px -1px 3px rgba(255, 255, 255, 1),
-        inset 1px 1px 1.5px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 1.5px rgba(60, 70, 160, 0.45);
-}
-
-/* ---- Value (right) ---- */
 .view-row>p {
     flex: 1;
     min-width: 0;
-
     margin: 0;
-
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
-    font-weight: 800;
-    letter-spacing: 0.15px;
-    line-height: 1.35;
     text-align: right;
-
-    color: #3f4664;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 2px 4px rgba(140, 150, 180, 0.12);
-
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+    overflow-wrap: anywhere;
     word-break: break-word;
 }
 
-/* ---- Email states ---- */
-.view-row>p.email-set {
-    color: #3f4664;
-}
-
-.view-row>p.email-not-set {
-    color: #8a90ac;
-    font-style: italic;
-    font-weight: 700;
-}
-
-/* ============================================
-   🔥 ACTIONS — Edit Profile button
-   ============================================ */
-.view-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-}
-
-.edit-btn {
-    position: relative;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-
-    width: 100%;
-    height: 54px;
-    padding: 0 24px;
-
-    border: 2px solid rgba(255, 255, 255, 1);
-    border-radius: 18px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgb(43, 0, 255), transparent 55%),
-        linear-gradient(145deg, #0022ff 0%, #0026ff 100%);
-
-    color: #ffffff;
-    font-size: clamp(0.9rem, 2.4vw, 1rem);
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    line-height: 1;
-
-    cursor: pointer;
-
-    text-shadow:
-        0 1px 3px rgba(60, 70, 160, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.3);
-    transform: translateY(-4px);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* top highlight */
-.edit-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 1.5px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(246, 246, 246, 0.862) 50%,
-            transparent 100%);
-    border-radius: 18px 18px 0 0;
-    pointer-events: none;
-}
-
-.edit-btn:hover {
-    transform: translateY(-8px);
-}
-
-.edit-btn:active {
-    transform: translateY(0) scale(0.97);
-}
-
-.edit-btn:focus-visible {
-    outline: 2px solid #7c8cf8;
-    outline-offset: 3px;
-}
-
-/* ============================================
-   🔥 PROMO CODE ROW
-   ============================================ */
 .promo-row {
     display: inline-flex !important;
     align-items: center;
     justify-content: flex-end;
     gap: 8px;
-
     flex-wrap: wrap;
 }
 
 .promo-code-value {
-    font-size: clamp(0.78rem, 2.1vw, 0.88rem);
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,
+            rgba(139, 92, 246, 0.24) 0%,
+            rgba(236, 72, 153, 0.12) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.45);
+    color: #ffffff;
+    font-size: 12px;
     font-weight: 900;
-    letter-spacing: 1.5px;
-    line-height: 1.2;
-
-    color: #5b6ee1;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 0 8px rgba(124, 140, 248, 0.3);
+    letter-spacing: 1.2px;
+    font-family: "SF Mono", "Monaco", "Menlo", "Courier New", monospace;
+    box-shadow:
+        0 6px 16px -6px rgba(139, 92, 246, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    white-space: nowrap;
 }
 
-/* ---- N/A state ---- */
-.promo-row.promo-na {
-    color: #8a90ac !important;
-    font-style: italic;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* ---- Active (not redeemed) ---- */
-.promo-row.promo-active {
-    color: #3f4664;
-}
-
-/* ---- Redeemed state ---- */
-.promo-row.promo-redeemed .promo-code-value {
-    color: #8a90ac;
-
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 1),
-        0 1px 2px rgba(140, 150, 180, 0.2);
-}
-
-/* ---- REDEEMED badge — green 3D pill ---- */
 .promo-badge {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-
-    padding: 3px 10px;
-
-    border: 1.5px solid rgba(255, 255, 255, 1);
-    border-radius: 999px;
-
-    background:
-        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 1), transparent 55%),
-        linear-gradient(145deg, #a7f3a0 0%, #5fbb5a 100%);
-
-    color: #1a4a1a;
-    font-size: 0.58rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.22) 0%,
+            rgba(5, 150, 105, 0.08) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #6ee7b7;
+    font-size: 9px;
     font-weight: 900;
     letter-spacing: 0.6px;
     text-transform: uppercase;
     line-height: 1;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px -3px rgba(16, 185, 129, 0.55);
+}
 
-    text-shadow:
-        1px 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 6px rgba(255, 255, 255, 0.4);
+.promo-row.promo-na {
+    color: rgba(148, 163, 184, 0.6) !important;
+    font-style: italic;
+}
+
+.promo-row.promo-redeemed .promo-code-value {
+    opacity: 0.75;
+    filter: saturate(0.6);
+}
+
+.promo-row.promo-active .promo-code-value {
+    animation: promo-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes promo-glow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 6px 16px -6px rgba(139, 92, 246, 0.7),
+            0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+    }
+
+    50% {
+        box-shadow:
+            0 8px 22px -6px rgba(139, 92, 246, 1),
+            0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+    }
+}
+
+.view-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.edit-btn {
+    width: 100%;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    line-height: 1;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    transition: all 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+    box-shadow:
+        0 10px 26px -8px rgba(139, 92, 246, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.edit-btn:hover {
     transform: translateY(-1px);
+    box-shadow:
+        0 14px 32px -8px rgba(139, 92, 246, 1),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    filter: brightness(1.06);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+.edit-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.edit-btn:focus-visible {
+    outline: 2px solid rgba(139, 92, 246, 0.9);
+    outline-offset: 3px;
+}
+
 @media (max-width: 480px) {
-    .promo-row {
-        gap: 6px;
-    }
-
-    .promo-code-value {
-        font-size: 0.76rem;
-        letter-spacing: 1.2px;
-    }
-
-    .promo-badge {
-        padding: 2px 8px;
-        font-size: 0.52rem;
-        letter-spacing: 0.5px;
-    }
-}
-
-@media (max-width: 360px) {
-    .promo-row {
-        gap: 5px;
-    }
-
-    .promo-code-value {
-        font-size: 0.7rem;
-        letter-spacing: 1px;
-    }
-
-    .promo-badge {
-        padding: 2px 7px;
-        font-size: 0.48rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/* Tablets */
-@media (max-width: 768px) {
     .viewprofile {
-        padding: 14px 12px 60px;
+        gap: 14px;
+        padding: 14px 12px 20px;
     }
 
     .view-card {
-        padding: 18px;
-        border-radius: 22px;
-        gap: 18px;
-        margin-bottom: 18px;
-        transform: translateY(-5px);
+        padding: 16px;
+        border-radius: 18px;
+        gap: 16px;
     }
 
     .view-back {
         width: 38px;
         height: 38px;
-        font-size: 1.05rem;
-    }
-
-    .leftheadback {
-        gap: 11px;
+        font-size: 18px;
+        border-radius: 11px;
     }
 
     .view-row1 span {
-        font-size: 0.64rem;
+        font-size: 9.5px;
+        letter-spacing: 1.2px;
     }
 
     .view-row1 p {
-        font-size: 0.8rem;
+        font-size: 11px;
+    }
+
+    .view-image-wrapperdet {
+        width: 68px;
+        height: 68px;
+        border-radius: 20px;
     }
 
     .view-image {
-        width: 66px;
-        height: 66px;
-        border-width: 2.5px;
+        border-radius: 18px;
     }
 
     .view-info {
-        gap: 11px;
+        padding: 4px 0 0;
     }
 
     .view-row {
-        padding: 12px 14px;
-        border-radius: 14px;
-        transform: translateY(-3px);
+        padding: 11px 4px;
+        gap: 12px;
+        font-size: 12.5px;
+    }
+
+    .view-row+.view-row::before {
+        margin-top: -22px;
     }
 
     .view-row>span {
-        font-size: 0.72rem;
+        font-size: 10.5px;
+        letter-spacing: 0.6px;
     }
 
     .view-row>p {
-        font-size: 0.82rem;
+        font-size: 12.5px;
+    }
+
+    .promo-code-value {
+        font-size: 11.5px;
+        padding: 3px 9px;
+        letter-spacing: 1px;
+    }
+
+    .promo-badge {
+        font-size: 8.5px;
+        padding: 3px 7px;
     }
 
     .edit-btn {
-        height: 50px;
-        border-radius: 16px;
-        font-size: 0.92rem;
+        height: 46px;
+        font-size: 13px;
+        border-radius: 13px;
     }
 }
 
-/* Phones */
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     .viewprofile {
-        padding: 12px 10px 54px;
+        padding: 12px 10px 18px;
     }
 
     .view-card {
-        padding: 16px;
-        border-radius: 20px;
-        gap: 16px;
-        margin-bottom: 16px;
-        transform: translateY(-4px);
-
-        box-shadow:
-            0 14px 28px rgba(140, 150, 180, 0.5),
-            0 7px 16px rgba(140, 150, 180, 0.35),
-            0 4px 10px rgba(140, 150, 180, 0.25),
-            11px 11px 22px rgba(140, 150, 180, 0.22),
-            -11px -11px 22px rgba(255, 255, 255, 1),
-            9px -9px 20px rgba(255, 255, 255, 0.9),
-            -9px 9px 20px rgba(140, 150, 180, 0.12),
-            7px -7px 16px rgba(255, 255, 255, 0.85),
-            -7px 7px 16px rgba(140, 150, 180, 0.1),
-            inset 1.5px 1.5px 3px rgba(255, 255, 255, 1),
-            inset -1.5px -1.5px 3px rgba(155, 165, 190, 0.26);
-    }
-
-    .headback {
-        gap: 12px;
-        padding-bottom: 14px;
+        padding: 14px;
+        border-radius: 16px;
     }
 
     .view-back {
         width: 36px;
         height: 36px;
-        font-size: 1rem;
-        border-width: 1.5px;
+        font-size: 17px;
+        border-radius: 10px;
     }
 
-    .leftheadback {
-        gap: 10px;
-    }
-
-    .view-row1 span {
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
-    }
-
-    .view-row1 p {
-        font-size: 0.74rem;
-    }
-
-    .view-image {
-        width: 60px;
-        height: 60px;
-        border-width: 2px;
-    }
-
-    .view-info {
-        gap: 10px;
-    }
-
-    .view-row {
-        padding: 11px 13px;
-        border-radius: 13px;
-        transform: translateY(-3px);
-    }
-
-    .view-row>span {
-        font-size: 0.66rem;
-        padding-left: 9px;
-    }
-
-    .view-row>span::before {
-        width: 3px;
-        height: 65%;
-    }
-
-    .view-row>p {
-        font-size: 0.76rem;
-    }
-
-    .edit-btn {
-        height: 48px;
-        border-radius: 14px;
-        font-size: 0.88rem;
-    }
-}
-
-/* Small phones */
-@media (max-width: 360px) {
-    .viewprofile {
-        padding: 10px 8px 50px;
-    }
-
-    .view-card {
-        padding: 14px;
+    .view-image-wrapperdet {
+        width: 62px;
+        height: 62px;
         border-radius: 18px;
-        gap: 14px;
-        margin-bottom: 14px;
-        transform: translateY(-3px);
-    }
-
-    .headback {
-        padding-bottom: 12px;
-    }
-
-    .view-back {
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
-    }
-
-    .leftheadback {
-        gap: 9px;
-    }
-
-    .view-row1 span {
-        font-size: 0.56rem;
-    }
-
-    .view-row1 p {
-        font-size: 0.68rem;
     }
 
     .view-image {
-        width: 54px;
-        height: 54px;
-    }
-
-    .view-info {
-        gap: 9px;
+        border-radius: 16px;
     }
 
     .view-row {
-        padding: 10px 12px;
-        border-radius: 12px;
+        padding: 10px 4px;
+        font-size: 12px;
+    }
+
+    .view-row+.view-row::before {
+        margin-top: -20px;
     }
 
     .view-row>span {
-        font-size: 0.6rem;
-        padding-left: 8px;
-    }
-
-    .view-row>span::before {
-        width: 2.5px;
+        font-size: 10px;
     }
 
     .view-row>p {
-        font-size: 0.7rem;
+        font-size: 12px;
+    }
+
+    .promo-code-value {
+        font-size: 11px;
+        padding: 3px 8px;
     }
 
     .edit-btn {
         height: 44px;
-        border-radius: 13px;
-        font-size: 0.82rem;
+        font-size: 12.5px;
+        border-radius: 12px;
     }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-    .viewprofile {
-        animation: none;
-    }
 
-    .view-back,
-    .view-image,
-    .view-row,
-    .edit-btn {
-        transition: none;
+    .viewprofile *,
+    .viewprofile *::before,
+    .viewprofile *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

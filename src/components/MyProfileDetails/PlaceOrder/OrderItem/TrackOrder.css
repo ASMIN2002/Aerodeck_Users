@@ -1,484 +1,365 @@
-/* =========================
-   TRACK ORDER - WHITE THEME
-   ========================= */
+.track-order *,
+.track-order *::before,
+.track-order *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
 .track-order {
+    position: relative;
     width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 28px 24px 32px;
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
-    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 12px 0 4px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, sans-serif;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color: #e5e7eb;
 }
-
-/* =========================
-   TITLE
-   ========================= */
 
 .track-title {
-    margin: 0 0 28px;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #111827;
-    letter-spacing: 0.3px;
-    line-height: 1.4;
-    text-align: center;
-    word-break: break-word;
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+    color: #ffffff;
+    padding: 0 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-/* =========================
-   TRACK LINE (shared)
-   ========================= */
 
 .track-line {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    width: 100%;
-    padding: 0 4px;
-    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 0 2px;
 }
-
-/* =========================
-   PROGRESS LINE (normal + return)
-   ========================= */
 
 .track-progress-line {
     position: absolute;
-    top: 15px;
-    left: calc(10% + 4px);
+    top: 9px;
+    left: 18px;
+    right: 18px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    z-index: 0;
+}
+
+.track-progress-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
     width: 0;
-    height: 4px;
-    background: #16a34a;
-    border-radius: 4px;
-    z-index: 1;
-    transition: width 0.3s ease;
-    max-width: calc(80% - 8px);
+    border-radius: 3px;
+    background: linear-gradient(90deg, #10b981 0%, #34d399 55%, #6ee7b7 100%);
+    box-shadow:
+        0 0 12px -1px rgba(16, 185, 129, 0.85),
+        0 0 20px -4px rgba(52, 211, 153, 0.6);
+    transition: width 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+    will-change: width;
 }
 
-.track-progress-line.animate-progress {
+.track-progress-line.animate-progress::after {
     width: var(--progress, 0%);
-    transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* =========================
-   TRACK STEP (normal + return)
-   ========================= */
 
 .track-step {
     position: relative;
-    z-index: 2;
+    z-index: 1;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
+    gap: 6px;
     min-width: 0;
-    text-align: center;
 }
 
-.track-step .track-circle {
-    width: 30px;
-    height: 30px;
+.track-circle {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: #f3f4f6;
-    border: 3px solid #d1d5db;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.35s ease;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.96) 0%,
+            rgba(14, 16, 32, 0.96) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 4px 10px -3px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
-    position: relative;
 }
 
 .track-step.completed .track-circle {
-    background: #16a34a;
-    border-color: #15803d;
-    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+    background: linear-gradient(135deg, #10b981 0%, #059669 55%, #047857 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow:
+        0 0 0 4px rgba(16, 185, 129, 0.18),
+        0 6px 16px -4px rgba(16, 185, 129, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    animation: track-dot-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.track-step.completed .track-circle::after {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background: #ffffff;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+@keyframes track-dot-pop {
+    0% {
+        transform: scale(0.5);
+    }
+
+    60% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .track-step span {
-    margin-top: 8px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #9ca3af;
-    letter-spacing: 0.4px;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    text-align: center;
     text-transform: uppercase;
-    line-height: 1.3;
-    word-break: break-word;
-    transition: color 0.3s ease;
+    color: rgba(148, 163, 184, 0.72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: color 0.5s ease;
 }
 
 .track-step.completed span {
-    color: #15803d;
+    color: #6ee7b7;
 }
 
 .track-step small {
-    margin-top: 3px;
-    font-size: 0.6rem;
-    color: #d1d5db;
-    font-weight: 500;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    color: rgba(165, 180, 252, 0.7);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
-
-/* =========================
-   CANCELLED TRACK
-   ========================= */
 
 .cancel-track {
     position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 4px 2px 0;
 }
-
-/* --- Red progress bar --- */
 
 .cancel-progress-red {
     position: absolute;
-    top: 15px;
-    left: calc(10% + 4px);
+    top: 13px;
+    left: 18px;
+    right: 18px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(239, 68, 68, 0.15);
+    overflow: hidden;
+    z-index: 0;
+}
+
+.cancel-progress-red::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
     width: 0;
-    height: 4px;
-    background: #dc2626;
-    border-radius: 4px;
-    z-index: 1;
-    transition: width 0.3s ease;
-    max-width: calc(80% - 8px);
+    border-radius: 3px;
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 0 12px -1px rgba(239, 68, 68, 0.85);
+    transition: width 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
-.cancel-progress-red.animate-cancel-red {
+.cancel-progress-red.animate-cancel-red::after {
     width: var(--cancel-progress, 0%);
-    transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* --- Green refund progress bar --- */
 
 .cancel-progress-green {
     position: absolute;
-    top: 15px;
-    left: calc(10% + 4px);
+    top: 13px;
+    right: 18px;
+    height: 3px;
+    border-radius: 3px;
     width: 0;
-    height: 4px;
-    background: #16a34a;
-    border-radius: 4px;
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    box-shadow:
+        0 0 12px -1px rgba(16, 185, 129, 0.85),
+        0 0 20px -4px rgba(52, 211, 153, 0.6);
+    transition: width 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
     z-index: 1;
-    transition: width 0.3s ease;
-    max-width: calc(80% - 8px);
 }
 
 .cancel-progress-green.animate-cancel-green {
-    width: 100%;
-    max-width: calc(80% - 8px);
-    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    width: 24%;
 }
-
-/* =========================
-   CANCEL STEP
-   ========================= */
 
 .cancel-step {
     position: relative;
     z-index: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
+    gap: 6px;
     min-width: 0;
-    text-align: center;
 }
 
-.cancel-step .track-circle.cancel-dot {
-    width: 30px;
-    height: 30px;
+.cancel-dot {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: #f3f4f6;
-    border: 3px solid #d1d5db;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.35s ease;
+    background: linear-gradient(180deg,
+            rgba(20, 22, 40, 0.96) 0%,
+            rgba(14, 16, 32, 0.96) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 4px 10px -3px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
-    position: relative;
 }
 
-.cancel-step.completed .track-circle.cancel-dot {
-    background: #dc2626;
-    border-color: #b91c1c;
-    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
-}
-
-.cancel-step.completed .track-circle.cancel-dot::after {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background: #ffffff;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.cancel-step.completed .cancel-dot {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow:
+        0 0 0 4px rgba(239, 68, 68, 0.18),
+        0 6px 16px -4px rgba(239, 68, 68, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    animation: track-dot-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cancel-step span {
-    margin-top: 8px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #9ca3af;
-    letter-spacing: 0.4px;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    text-align: center;
     text-transform: uppercase;
-    line-height: 1.3;
-    word-break: break-word;
-    transition: color 0.3s ease;
+    color: rgba(148, 163, 184, 0.72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    transition: color 0.5s ease;
 }
 
 .cancel-step.completed span {
-    color: #b91c1c;
+    color: #fecaca;
 }
 
-/* --- Refund step special --- */
-
-.cancel-step.refund-step .track-circle.refund-dot {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: #f3f4f6;
-    border: 3px solid #d1d5db;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.35s ease;
-    flex-shrink: 0;
-    position: relative;
+.refund-step.completed .refund-dot {
+    background: linear-gradient(135deg, #10b981 0%, #059669 55%, #047857 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow:
+        0 0 0 4px rgba(16, 185, 129, 0.18),
+        0 6px 16px -4px rgba(16, 185, 129, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    animation: track-dot-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cancel-step.refund-step.completed .track-circle.refund-dot {
-    background: #16a34a;
-    border-color: #15803d;
-    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+.refund-step.completed span {
+    color: #6ee7b7;
 }
-
-.cancel-step.refund-step.completed .track-circle.refund-dot::after {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background: #ffffff;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.cancel-step.refund-step.completed span {
-    color: #15803d;
-}
-
-/* =========================
-   RESPONSIVE - TABLET
-   ========================= */
-
-@media (max-width: 768px) {
-    .track-order {
-        padding: 22px 16px 26px;
-        border-radius: 16px;
-        margin: 0 8px;
-    }
-
-    .track-title {
-        font-size: 1.1rem;
-        margin-bottom: 22px;
-    }
-
-    .track-step .track-circle,
-    .cancel-step .track-circle.cancel-dot,
-    .cancel-step.refund-step .track-circle.refund-dot {
-        width: 26px;
-        height: 26px;
-        border-width: 2.5px;
-    }
-
-    .track-progress-line,
-    .cancel-progress-red,
-    .cancel-progress-green {
-        top: 13px;
-        height: 3.5px;
-        left: calc(10% + 3px);
-        max-width: calc(80% - 6px);
-    }
-
-    .track-step span,
-    .cancel-step span {
-        font-size: 0.62rem;
-        margin-top: 6px;
-        letter-spacing: 0.3px;
-    }
-
-    .track-step small {
-        font-size: 0.55rem;
-    }
-}
-
-/* =========================
-   RESPONSIVE - MOBILE
-   ========================= */
 
 @media (max-width: 480px) {
     .track-order {
-        padding: 18px 10px 22px;
-        border-radius: 14px;
-        margin: 0 4px;
+        gap: 12px;
+        padding: 10px 0 4px;
     }
 
     .track-title {
-        font-size: 0.95rem;
-        margin-bottom: 18px;
-        letter-spacing: 0.2px;
+        font-size: 12px;
+        letter-spacing: 0.3px;
     }
 
-    .track-line {
-        padding: 0;
-    }
-
-    .track-step .track-circle,
-    .cancel-step .track-circle.cancel-dot,
-    .cancel-step.refund-step .track-circle.refund-dot {
-        width: 20px;
-        height: 20px;
-        border-width: 2px;
-    }
-
-    .track-step.completed .track-circle::after,
-    .cancel-step.completed .track-circle.cancel-dot::after,
-    .cancel-step.refund-step.completed .track-circle.refund-dot::after {
-        width: 6px;
-        height: 6px;
-    }
-
-    .track-progress-line,
-    .cancel-progress-red,
-    .cancel-progress-green {
-        top: 10px;
-        height: 3px;
-        left: calc(10% + 2px);
-        max-width: calc(80% - 4px);
-    }
-
-    .track-step span,
-    .cancel-step span {
-        font-size: 0.52rem;
-        margin-top: 5px;
-        letter-spacing: 0.2px;
-        font-weight: 700;
-    }
-
-    .track-step small {
-        font-size: 0.48rem;
-    }
-}
-
-/* =========================
-   RESPONSIVE - VERY SMALL
-   ========================= */
-
-@media (max-width: 360px) {
-    .track-order {
-        padding: 14px 6px 18px;
-        border-radius: 12px;
-    }
-
-    .track-title {
-        font-size: 0.85rem;
-        margin-bottom: 14px;
-    }
-
-    .track-step .track-circle,
-    .cancel-step .track-circle.cancel-dot,
-    .cancel-step.refund-step .track-circle.refund-dot {
-        width: 16px;
-        height: 16px;
-        border-width: 2px;
-    }
-
-    .track-step.completed .track-circle::after,
-    .cancel-step.completed .track-circle.cancel-dot::after,
-    .cancel-step.refund-step.completed .track-circle.refund-dot::after {
-        width: 5px;
-        height: 5px;
+    .track-line,
+    .cancel-track {
+        padding: 0 1px;
     }
 
     .track-progress-line,
     .cancel-progress-red,
     .cancel-progress-green {
         top: 8px;
-        height: 2.5px;
-        left: calc(10% + 1px);
-        max-width: calc(80% - 2px);
+        left: 16px;
+        right: 16px;
+    }
+
+    .track-circle,
+    .cancel-dot {
+        width: 18px;
+        height: 18px;
+        border-width: 2px;
     }
 
     .track-step span,
     .cancel-step span {
-        font-size: 0.45rem;
-        margin-top: 4px;
-        letter-spacing: 0.1px;
+        font-size: 8px;
+        letter-spacing: 0.2px;
     }
 
     .track-step small {
-        font-size: 0.4rem;
+        font-size: 7.5px;
     }
 }
 
-/* =========================
-   SOFT PULSE ANIMATIONS
-   ========================= */
-
-@keyframes pulse-green {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+@media (max-width: 360px) {
+    .track-title {
+        font-size: 11.5px;
     }
 
-    50% {
-        box-shadow: 0 0 0 8px rgba(22, 163, 74, 0.06);
+    .track-progress-line,
+    .cancel-progress-red,
+    .cancel-progress-green {
+        top: 7.5px;
+        left: 14px;
+        right: 14px;
+    }
+
+    .track-circle,
+    .cancel-dot {
+        width: 16px;
+        height: 16px;
+    }
+
+    .track-step span,
+    .cancel-step span {
+        font-size: 7.5px;
+        letter-spacing: 0.15px;
+    }
+
+    .track-step small {
+        font-size: 7px;
     }
 }
 
-@keyframes pulse-red {
+@media (prefers-reduced-motion: reduce) {
 
-    0%,
-    100% {
-        box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+    .track-order *,
+    .track-order *::before,
+    .track-order *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
-
-    50% {
-        box-shadow: 0 0 0 8px rgba(220, 38, 38, 0.06);
-    }
-}
-
-.track-step.completed .track-circle {
-    animation: pulse-green 2s ease-in-out infinite;
-}
-
-.cancel-step.completed .track-circle.cancel-dot {
-    animation: pulse-red 2s ease-in-out infinite;
-}
-
-.cancel-step.refund-step.completed .track-circle.refund-dot {
-    animation: pulse-green 2s ease-in-out infinite;
 }

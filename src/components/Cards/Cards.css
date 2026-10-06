@@ -1,114 +1,325 @@
-/* ==========================================================================
-   CARDS SECTION — PREMIUM DARK ANIMATED
-   ========================================================================== */
-
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
-
-/* ============================================
-   SECTION CONTAINER
-   ============================================ */
+.cds-section *,
+.cds-section *::before,
+.cds-section *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
 .cds-section {
     position: relative;
     width: 100%;
-    padding: 12px 0 90px 0;
-    background: #0a0a0f;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px 10px 10px;
+    gap: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: #e5e7eb;
+    transition: background 0.4s ease;
+    isolation: isolate;
     min-height: 100vh;
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
-    animation: cdsSectionEnter 0.5s ease;
 }
 
-.cds-section * {
-    box-sizing: border-box;
+/* ============================================
+   REGULAR THEME — Simple
+   ============================================ */
+.cds-section.cards-regular {
+    background: transparent;
 }
 
-@keyframes cdsSectionEnter {
-    from {
-        opacity: 0;
+
+@keyframes aqua-ambient {
+
+    0%,
+    100% {
+        opacity: 0.75;
+        transform: translateX(-50%) scale(1);
     }
 
-    to {
+    50% {
         opacity: 1;
+        transform: translateX(-50%) scale(1.08);
+    }
+}
+
+@keyframes aqua-ambient-reverse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.12);
     }
 }
 
 /* ============================================
-   GRID — 3 COLUMN
+   STICKY TAB ROW
    ============================================ */
+.cds-top-row {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    justify-content: flex-end;
+    width: calc(100% + 28px);
+    margin: 0 -14px;
+    padding: 0px 10px 10px 10px;
+    background: linear-gradient(180deg,
+            rgba(10, 12, 24, 0.98) 0%,
+            rgba(10, 12, 24, 0.92) 70%,
+            rgba(10, 12, 24, 0) 100%);
+    transition: background 0.4s ease;
+}
 
+.cds-section.cards-premium .cds-top-row {
+    background: linear-gradient(180deg,
+            rgba(2, 6, 12, 0.98) 0%,
+            rgba(2, 6, 12, 0.92) 70%,
+            rgba(2, 6, 12, 0) 100%);
+    border-bottom: 1px solid rgba(0, 245, 212, 0.12);
+    box-shadow: 0 8px 24px -12px rgba(0, 245, 212, 0.35);
+}
+
+/* ============================================
+   GRID
+   ============================================ */
 .cds-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 0 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
     width: 100%;
+    position: relative;
+    z-index: 1;
+    padding-top: 4px;
+}
+
+.cds-grid:empty::after {
+    content: "No cards found";
+    grid-column: 1 / -1;
+    padding: 48px 20px;
+    border-radius: 16px;
+    border: 1px dashed rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.1) 0%,
+            rgba(236, 72, 153, 0.06) 100%);
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: rgba(165, 180, 252, 0.78);
+}
+
+.cds-section.cards-premium .cds-grid:empty::after {
+    border-color: rgba(0, 245, 212, 0.4);
+    background: linear-gradient(135deg,
+            rgba(0, 245, 212, 0.1) 0%,
+            rgba(0, 194, 224, 0.06) 100%);
+    color: rgba(0, 245, 212, 0.85);
 }
 
 /* ============================================
-   CARD — BASE (ProductCard ke liye)
+   PREMIUM CARD OVERRIDES
    ============================================ */
-
-.cds-grid>* {
-    width: 100%;
-    min-width: 0;
-    animation: cdsCardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+.cds-section.cards-premium .pc-card {
+    border-color: rgba(0, 245, 212, 0.35);
+    background: linear-gradient(180deg,
+            rgba(6, 16, 20, 0.96) 0%,
+            rgba(3, 8, 12, 0.96) 100%);
+    box-shadow:
+        0 12px 32px -14px rgba(0, 0, 0, 0.95),
+        0 0 26px -10px rgba(0, 245, 212, 0.4),
+        0 0 0 1px rgba(0, 245, 212, 0.16) inset;
+    animation: aqua-card-glow 3.4s ease-in-out infinite;
 }
 
-.cds-grid>*:nth-child(1) {
-    animation-delay: 0.02s;
+@keyframes aqua-card-glow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 12px 32px -14px rgba(0, 0, 0, 0.95),
+            0 0 26px -10px rgba(0, 245, 212, 0.4),
+            0 0 0 1px rgba(0, 245, 212, 0.16) inset;
+    }
+
+    50% {
+        box-shadow:
+            0 12px 32px -14px rgba(0, 0, 0, 0.95),
+            0 0 34px -8px rgba(0, 245, 212, 0.6),
+            0 0 0 1px rgba(0, 245, 212, 0.28) inset;
+    }
 }
 
-.cds-grid>*:nth-child(2) {
-    animation-delay: 0.04s;
+.cds-section.cards-premium .pc-card:hover {
+    border-color: rgba(0, 245, 212, 0.85);
+    transform: translateY(-3px);
+    box-shadow:
+        0 20px 44px -14px rgba(0, 245, 212, 0.75),
+        0 0 44px -6px rgba(0, 245, 212, 0.55),
+        0 0 0 1px rgba(0, 245, 212, 0.4) inset;
+    animation: none;
 }
 
-.cds-grid>*:nth-child(3) {
-    animation-delay: 0.06s;
+@keyframes aqua-star-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 16px rgba(0, 245, 212, 0.85),
+            0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow:
+            0 0 26px rgba(0, 245, 212, 1),
+            0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+    }
 }
 
-.cds-grid>*:nth-child(4) {
-    animation-delay: 0.08s;
+.cds-section.cards-premium .pc-image-box {
+    background: linear-gradient(135deg,
+            rgba(0, 245, 212, 0.14) 0%,
+            rgba(0, 194, 224, 0.14) 100%);
+    border-bottom: 1px solid rgba(0, 245, 212, 0.15);
 }
 
-.cds-grid>*:nth-child(5) {
-    animation-delay: 0.10s;
+.cds-section.cards-premium .pc-category {
+    background: linear-gradient(135deg,
+            rgba(0, 245, 212, 0.2) 0%,
+            rgba(0, 194, 224, 0.08) 100%);
+    border-color: rgba(0, 245, 212, 0.5);
+    color: #7ef9e9;
 }
 
-.cds-grid>*:nth-child(6) {
-    animation-delay: 0.12s;
+.cds-section.cards-premium .pc-final-price {
+    background: linear-gradient(90deg, #00f5d4 0%, #00c2e0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.cds-grid>*:nth-child(7) {
-    animation-delay: 0.14s;
+.cds-section.cards-premium .pc-discount-badge {
+    background: linear-gradient(135deg, #00f5d4 0%, #00c2e0 55%, #0096c7 100%);
+    color: #021014;
+    box-shadow:
+        0 0 18px rgba(0, 245, 212, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.25) inset;
 }
 
-.cds-grid>*:nth-child(8) {
-    animation-delay: 0.16s;
+.cds-section.cards-premium .pc-stat {
+    border-color: rgba(0, 245, 212, 0.2);
+    background: linear-gradient(180deg,
+            rgba(0, 245, 212, 0.08) 0%,
+            rgba(0, 245, 212, 0.02) 100%);
+    color: rgba(126, 249, 233, 0.9);
 }
 
-.cds-grid>*:nth-child(9) {
-    animation-delay: 0.18s;
+.cds-section.cards-premium .pc-card:hover .pc-stat {
+    border-color: rgba(0, 245, 212, 0.5);
+    background: linear-gradient(180deg,
+            rgba(0, 245, 212, 0.16) 0%,
+            rgba(0, 245, 212, 0.05) 100%);
+    color: #7ef9e9;
 }
 
-.cds-grid>*:nth-child(10) {
-    animation-delay: 0.20s;
+.cds-section.cards-premium .pc-rating {
+    background: linear-gradient(135deg,
+            rgba(0, 245, 212, 0.14) 0%,
+            rgba(0, 194, 224, 0.05) 100%);
+    border-color: rgba(0, 245, 212, 0.4);
+    color: #7ef9e9;
 }
 
-.cds-grid>*:nth-child(11) {
-    animation-delay: 0.22s;
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (min-width: 560px) {
+    .cds-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
 }
 
-.cds-grid>*:nth-child(12) {
-    animation-delay: 0.24s;
+@media (min-width: 820px) {
+    .cds-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+    }
 }
 
-@keyframes cdsCardEnter {
+@media (max-width: 480px) {
+    .cds-section {
+        gap: 12px;
+    }
+
+    .cds-top-row {
+        width: calc(100% + 24px);
+        margin: 0 -12px;
+    }
+
+    .cds-grid {
+        gap: 10px;
+    }
+
+    .cds-section.cards-premium .pc-card::after {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+        border-radius: 7px;
+    }
+
+}
+
+@media (max-width: 360px) {
+
+    .cds-top-row {
+        width: calc(100% + 20px);
+        margin: 0 -10px;
+    }
+
+    .cds-grid {
+        gap: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cds-section *,
+    .cds-section *::before,
+    .cds-section *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.cds-empty {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 56px 20px;
+    border-radius: 16px;
+    border: 1px dashed rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.1) 0%,
+            rgba(236, 72, 153, 0.06) 100%);
+    text-align: center;
+    animation: cds-empty-in 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes cds-empty-in {
     from {
         opacity: 0;
-        transform: translateY(18px) scale(0.94);
+        transform: translateY(8px) scale(0.98);
     }
 
     to {
@@ -117,128 +328,59 @@
     }
 }
 
-/* ============================================
-   GRID BACKGROUND GLOW — subtle animated
-   ============================================ */
-
-.cds-section::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(162, 155, 254, 0.06), transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(108, 92, 231, 0.05), transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(0, 206, 201, 0.03), transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-    animation: cdsBgFloat 12s ease-in-out infinite;
+.cds-empty-icon {
+    font-size: 40px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 12px rgba(139, 92, 246, 0.55));
+    animation: cds-empty-float 2.6s ease-in-out infinite;
 }
 
-@keyframes cdsBgFloat {
+@keyframes cds-empty-float {
 
     0%,
     100% {
-        transform: scale(1) rotate(0deg);
+        transform: translateY(0);
     }
 
     50% {
-        transform: scale(1.05) rotate(2deg);
+        transform: translateY(-6px);
     }
 }
 
-.cds-grid {
-    position: relative;
-    z-index: 1;
+.cds-empty-title {
+    margin: 4px 0 0;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    color: #ffffff;
 }
 
-/* ============================================
-   RESPONSIVE — GRID COLUMNS
-   ============================================ */
-
-/* Tablet — 3 columns */
-@media (min-width: 600px) and (max-width: 1023px) {
-    .cds-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        padding: 0 14px;
-    }
+.cds-empty-text {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+    color: rgba(165, 180, 252, 0.78);
+    max-width: 260px;
 }
 
-/* Desktop — 4 columns */
-@media (min-width: 1024px) {
-    .cds-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        padding: 0 24px;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
+.cds-section.cards-premium .cds-empty {
+    border-color: rgba(0, 245, 212, 0.4);
+    background: linear-gradient(135deg,
+            rgba(0, 245, 212, 0.1) 0%,
+            rgba(0, 194, 224, 0.05) 100%);
 }
 
-/* Large desktop — 5 columns */
-@media (min-width: 1440px) {
-    .cds-grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 20px;
-    }
+.cds-section.cards-premium .cds-empty-icon {
+    filter: drop-shadow(0 4px 12px rgba(0, 245, 212, 0.7));
 }
 
-/* Small phone — 2 columns */
-@media (max-width: 380px) {
-    .cds-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        padding: 0 8px;
-    }
+.cds-section.cards-premium .cds-empty-title {
+    color: #7ef9e9;
 }
 
-/* ============================================
-   LOADING OVERLAY
-   ============================================ */
-
-.cds-section .loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 15, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ============================================
-   ACCESSIBILITY — reduced motion
-   ============================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .cds-section,
-    .cds-grid>*,
-    .cds-section::before {
-        animation: none !important;
-        transition: none !important;
-    }
-}
-
-/* ============================================
-   iOS SAFE AREA
-   ============================================ */
-
-@supports (padding: max(0px)) {
-    .cds-grid {
-        padding-left: max(10px, env(safe-area-inset-left));
-        padding-right: max(10px, env(safe-area-inset-right));
-    }
-
-    @media (min-width: 1024px) {
-        .cds-grid {
-            padding-left: max(24px, env(safe-area-inset-left));
-            padding-right: max(24px, env(safe-area-inset-right));
-        }
-    }
+.cds-section.cards-premium .cds-empty-text {
+    color: rgba(126, 249, 233, 0.75);
 }

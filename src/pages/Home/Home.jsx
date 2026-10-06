@@ -9,7 +9,6 @@ import Search from "../../components/Search/Search";
 import Cards from "../../components/Cards/Cards";
 import Gift from "../../components/Gift/Gift";
 import Shop from "../../components/Shop/Shop";
-import Premium from "../../components/Premium/Premium";
 import Offer from "../../components/Offer/Offer";
 import BottomNav from "../../components/BottomNav/BottomNav";
 import Details from "../../components/Details/Details";
@@ -48,7 +47,6 @@ function Home({
     const location = useLocation();
     const navigate = useNavigate();
 
-    // SAMAN
     useEffect(() => {
         if (location.pathname === "/home") {
             setSelectedBottomTab("Home");
@@ -71,17 +69,7 @@ function Home({
 
             return;
         }
-        if (location.pathname === "/premium") {
-            setSelectedBottomTab("Premium");
-            setSelectedMenu("Premium");
-            setProfilePage("profile");
 
-            setIsDetailsOpen(false);
-            setSelectedProduct(null);
-            setDetailsPage("details");
-
-            return;
-        }
         if (location.pathname === "/home/shop") {
             setSelectedBottomTab("Home");
             setSelectedMenu("Shop");
@@ -98,6 +86,7 @@ function Home({
 
             return;
         }
+
         if (location.pathname === "/home/shop/allcategory") {
             setSelectedBottomTab("Home");
             setSelectedMenu("Shop");
@@ -113,11 +102,11 @@ function Home({
 
             return;
         }
+
         if (
             location.pathname.startsWith("/home/shop/allcategory/") &&
             !location.pathname.includes("/product/")
         ) {
-
             const category = decodeURIComponent(
                 location.pathname.split("/home/shop/allcategory/")[1]
             );
@@ -138,11 +127,11 @@ function Home({
 
             return;
         }
+
         if (
             location.pathname.startsWith("/home/shop/category/") &&
             !location.pathname.includes("/product/")
         ) {
-
             const category = decodeURIComponent(
                 location.pathname.split("/home/shop/category/")[1]
             );
@@ -196,7 +185,6 @@ function Home({
             return;
         }
 
-        // ALL GIFT CATEGORIES
         if (location.pathname === "/home/gifts/allcategory") {
             setSelectedBottomTab("Home");
             setSelectedMenu("Gifts");
@@ -228,11 +216,11 @@ function Home({
 
             return;
         }
+
         if (
             location.pathname.startsWith("/home/gifts/allcategory/") &&
             !location.pathname.includes("/product/")
         ) {
-
             const category = decodeURIComponent(
                 location.pathname.split("/home/gifts/allcategory/")[1]
             );
@@ -253,9 +241,7 @@ function Home({
             return;
         }
 
-        // GIFT CATEGORY
         if (location.pathname.startsWith("/home/gifts/category/")) {
-
             const category = decodeURIComponent(
                 location.pathname.split("/home/gifts/category/")[1]
             );
@@ -277,7 +263,12 @@ function Home({
             return;
         }
 
-        if (location.pathname === "/home/cards") {
+        if (
+            location.pathname === "/home/cards" ||
+            location.pathname.startsWith("/home/cards/product/") ||
+            location.pathname === "/home/cards/premium" ||
+            location.pathname.startsWith("/home/cards/premium/product/")
+        ) {
             setSelectedBottomTab("Home");
             setSelectedMenu("Cards");
             setProfilePage("profile");
@@ -293,12 +284,8 @@ function Home({
 
     }, [location.pathname]);
 
-
-    // PROFILE
     useEffect(() => {
-        if (
-            location.pathname.startsWith("/profile/wishlist/product/")
-        ) {
+        if (location.pathname.startsWith("/profile/wishlist/product/")) {
             setSelectedBottomTab("Profile");
             setProfilePage("wishlist");
             return;
@@ -315,42 +302,31 @@ function Home({
         setDetailsPage("details");
 
         if (location.pathname === "/profile") {
-
             setProfilePage("profile");
-
             return;
         }
 
         if (location.pathname === "/profile/address") {
-
             setProfilePage("address");
-
             return;
         }
 
         if (location.pathname === "/profile/address/addaddress") {
-
             setProfilePage("addaddress");
-
             return;
         }
 
         if (location.pathname === "/profile/address/editaddress") {
-
             setProfilePage("editaddress");
-
             return;
         }
 
         if (location.pathname === "/profile/wishlist") {
-
             setProfilePage("wishlist");
-
             return;
         }
 
         if (location.pathname.startsWith("/profile/orders/order/")) {
-
             const orderId = location.pathname.split("/profile/orders/order/")[1];
 
             setProfilePage("order-details");
@@ -361,50 +337,38 @@ function Home({
 
             return;
         }
+
         if (location.pathname === "/profile/orders") {
-
             setProfilePage("orders");
-
             return;
         }
 
         if (location.pathname === "/profile/help") {
-
             setProfilePage("help");
-
             return;
         }
 
         if (location.pathname === "/profile/about") {
-
             setProfilePage("about");
-
             return;
         }
 
         if (location.pathname === "/profile/terms") {
-
             setProfilePage("terms");
-
             return;
         }
 
         if (location.pathname === "/profile/viewprofile/editprofile") {
-
             setProfilePage("editprofile");
-
             return;
         }
 
         if (location.pathname === "/profile/viewprofile") {
-
             setProfilePage("viewprofile");
-
             return;
         }
 
     }, [location.pathname]);
-
 
     useEffect(() => {
         const parts = location.pathname.split("/").filter(Boolean);
@@ -424,13 +388,13 @@ function Home({
             setSelectedBottomTab("Profile");
             setProfilePage("order-details");
         }
+
         if (
             parts.length === 4 &&
             parts[0] === "profile" &&
             parts[1] === "wishlist" &&
             parts[2] === "product"
         ) {
-
             type = "shop";
             id = parts[3];
 
@@ -438,53 +402,38 @@ function Home({
             setProfilePage("wishlist");
         }
 
-        if (
-            (parts.length === 4 || parts.length === 5) &&
-            parts[0] === "home" &&
-            parts[3]
-        ) {
-
-            if (
-                parts[1] === "shop" &&
-                parts[2] === "product"
-            ) {
-
+        if (parts[0] === "home" && (parts.length === 4 || parts.length === 5)) {
+            if (parts[1] === "shop" && parts[2] === "product") {
                 type = "products";
                 id = parts[3];
             }
 
-            if (
-                parts[1] === "gifts" &&
-                parts[2] === "product"
-            ) {
-
+            if (parts[1] === "gifts" && parts[2] === "product") {
                 type = "gifts";
                 id = parts[3];
             }
 
-            if (
-                parts[1] === "cards" &&
-                parts[2] === "product"
-            ) {
-
+            if (parts[1] === "cards" && parts[2] === "product") {
                 type = "cards";
                 id = parts[3];
             }
 
-            if (
-                parts[1] === "premium" &&
-                parts[2] === "product"
-            ) {
-
+            if (parts[1] === "premium" && parts[2] === "product") {
                 type = "premium";
                 id = parts[3];
             }
         }
 
-        // ==========================================
-        // ALL CATEGORY PRODUCT URL
-        // /home/shop/allcategory/ELECTRONICS/product/P27
-        // ==========================================
+        if (
+            parts.length === 5 &&
+            parts[0] === "home" &&
+            parts[1] === "cards" &&
+            parts[2] === "premium" &&
+            parts[3] === "product"
+        ) {
+            type = "cards";
+            id = parts[4];
+        }
 
         if (
             parts.length === 6 &&
@@ -493,15 +442,12 @@ function Home({
             parts[2] === "allcategory" &&
             parts[4] === "product"
         ) {
-
             type = "products";
             id = parts[5];
 
             setSelectedMenu("Shop");
 
-            setSelectedShopCategory(
-                decodeURIComponent(parts[3])
-            );
+            setSelectedShopCategory(decodeURIComponent(parts[3]));
 
             setShopCategoryPage(true);
             setAllShopCategoriesPage(false);
@@ -514,60 +460,38 @@ function Home({
             parts[2] === "category" &&
             parts[4] === "product"
         ) {
-
             if (parts[1] === "gifts") {
-
                 type = "gifts";
                 id = parts[5];
 
                 setSelectedMenu("Gifts");
 
-                setSelectedGiftCategory(
-                    decodeURIComponent(parts[3])
-                );
+                setSelectedGiftCategory(decodeURIComponent(parts[3]));
 
                 setGiftCategoryPage(true);
             }
 
             if (parts[1] === "shop") {
-
                 type = "products";
                 id = parts[5];
 
                 setSelectedMenu("Shop");
 
-                setSelectedShopCategory(
-                    decodeURIComponent(parts[3])
-                );
+                setSelectedShopCategory(decodeURIComponent(parts[3]));
 
                 setShopCategoryPage(true);
             }
         }
 
-        // ==========================================
-        // INVALID / NON-PRODUCT URL
-        // ==========================================
-
         if (!type || !id) {
             return;
         }
 
-        // ==========================================
-        // BOTTOM TAB
-        // ==========================================
-
         if (type === "premium") {
-
             setSelectedBottomTab("Premium");
-
-        } else if (
-            location.pathname.startsWith("/profile/wishlist/")
-        ) {
-
+        } else if (location.pathname.startsWith("/profile/wishlist/")) {
             setSelectedBottomTab("Profile");
-
         } else {
-
             setSelectedBottomTab("Home");
         }
 
@@ -600,6 +524,7 @@ function Home({
                 }
             };
         });
+
         if (location.pathname.endsWith("/reviews")) {
             setDetailsPage("allreview");
         } else if (location.pathname.endsWith("/media")) {
@@ -619,7 +544,6 @@ function Home({
 
         if (
             savedTab === "Home" ||
-            savedTab === "Premium" ||
             savedTab === "Offers" ||
             savedTab === "Cart" ||
             savedTab === "Profile"
@@ -629,19 +553,16 @@ function Home({
 
         return "Home";
     });
+
     const [search, setSearch] = useState("");
 
     const [filter, setFilter] = useState({
-
         category: "All",
-
         sort: "",
-
         rating: 0,
-
         availableOnly: false
-
     });
+
     const [categories, setCategories] = useState([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profilePage, setProfilePage] = useState("profile");
@@ -653,7 +574,6 @@ function Home({
     const [shopCategoryPage, setShopCategoryPage] = useState(false);
     const [selectedShopCategory, setSelectedShopCategory] = useState(null);
 
-
     const [cardSuggestionsData, setCardSuggestionsData] = useState([]);
     const [giftSuggestionsData, setGiftSuggestionsData] = useState([]);
     const [shopSuggestionsData, setShopSuggestionsData] = useState([]);
@@ -663,9 +583,7 @@ function Home({
     const [navKey, setNavKey] = useState(0);
 
     useEffect(() => {
-
         localStorage.setItem("selectedMenu", selectedMenu);
-
     }, [selectedMenu]);
 
     useEffect(() => {
@@ -678,61 +596,41 @@ function Home({
     }, [selectedBottomTab]);
 
     const handleLogout = async () => {
-
         try {
-
             await fetch(`${API}/api/auth/logout`, {
-
                 method: "POST",
-
                 headers: {
-
                     "Content-Type": "application/json"
-
                 },
-
                 body: JSON.stringify({
-
                     session_token: localStorage.getItem("session_token")
-
                 })
-
             });
-
         } catch (err) {
-
             console.error(err);
-
         }
 
         localStorage.removeItem("session_token");
-
         setPage("login");
-
     };
-    const handleOpenDetails = (product, type) => {
 
+    const handleOpenDetails = (product, type) => {
         setDetailsBackPage({
             selectedBottomTab,
             profilePage,
             selectedMenu,
             pathname: location.pathname
         });
+
         if (!location.pathname.includes("/product/")) {
-
             setDetailsBackPage({
-
                 selectedBottomTab,
-
                 profilePage,
-
                 selectedMenu,
-
                 pathname: location.pathname
-
             });
-
         }
+
         setDetailsPage("details");
 
         setSelectedProduct({
@@ -751,90 +649,51 @@ function Home({
         let productUrl;
 
         if (location.pathname.includes("/product/")) {
-
-            const basePath =
-                location.pathname.split("/product/")[0];
-
+            const basePath = location.pathname.split("/product/")[0];
             productUrl = `${basePath}/product/${id}`;
-
         } else if (
-
             (type === "gift" &&
                 location.pathname.startsWith("/home/gifts/category/")) ||
-
             (type === "shop" &&
                 location.pathname.startsWith("/home/shop/category/"))
-
         ) {
-
             productUrl = `${location.pathname}/product/${id}`;
-
         } else {
-
             productUrl = `${location.pathname}/product/${id}`;
-
         }
 
-
-        // RELATED PRODUCT → replace history
         if (location.pathname.includes("/product/")) {
-
-            window.history.replaceState(
-                {},
-                "",
-                productUrl
-            );
-
-            window.dispatchEvent(
-                new PopStateEvent("popstate")
-            );
-
+            window.history.replaceState({}, "", productUrl);
+            window.dispatchEvent(new PopStateEvent("popstate"));
         } else {
-
             goTo(productUrl);
-
         }
     };
 
     const handleCloseDetails = () => {
         const currentPath = location.pathname;
 
-        // Reviews / Media → Product Details
         if (
             currentPath.endsWith("/reviews") ||
             currentPath.endsWith("/media")
         ) {
-
             const productPath = currentPath
                 .replace(/\/reviews$/, "")
                 .replace(/\/media$/, "");
 
             setDetailsPage("details");
-
             goTo(productPath);
 
             return;
         }
 
-        // Product Details → Parent Page
         if (currentPath.includes("/product/")) {
-
-            const parentPath =
-                currentPath.split("/product/")[0];
+            const parentPath = currentPath.split("/product/")[0];
 
             if (detailsBackPage) {
-
-                setSelectedBottomTab(
-                    detailsBackPage.selectedBottomTab
-                );
-
-                setProfilePage(
-                    detailsBackPage.profilePage
-                );
-
-                setSelectedMenu(
-                    detailsBackPage.selectedMenu
-                );
+                setSelectedBottomTab(detailsBackPage.selectedBottomTab);
+                setProfilePage(detailsBackPage.profilePage);
+                setSelectedMenu(detailsBackPage.selectedMenu);
             }
 
             setDetailsPage("details");
@@ -846,7 +705,6 @@ function Home({
             return;
         }
 
-        // Normal fallback
         setDetailsPage("details");
         setSelectedProduct(null);
         setIsDetailsOpen(false);
@@ -855,6 +713,7 @@ function Home({
             goTo(detailsBackPage.pathname);
         }
     };
+
     const [orderData, setOrderData] = useState({
         items: [],
         orderType: ""
@@ -879,7 +738,9 @@ function Home({
         !allGiftsPage &&
         !shopCategoryPage &&
         !giftCategoryPage;
+
     const [profile, setProfile] = useState(null);
+
     useEffect(() => {
         async function loadProfile() {
             const response = await fetch(`${API}/api/user/profile`, {
@@ -898,6 +759,7 @@ function Home({
         }
         loadProfile();
     }, []);
+
     useEffect(() => {
         const handleBackNavigation = () => {
             const path = window.location.pathname;
@@ -932,6 +794,13 @@ function Home({
                 setIsDetailsOpen(true);
                 return;
             }
+
+            if (isDetailsOpen) {
+                setIsDetailsOpen(false);
+                setSelectedProduct(null);
+                setDetailsPage("details");
+                return;
+            }
         };
 
         window.addEventListener("popstate", handleBackNavigation);
@@ -939,7 +808,8 @@ function Home({
         return () => {
             window.removeEventListener("popstate", handleBackNavigation);
         };
-    }, []);
+    }, [isDetailsOpen]);
+
     useEffect(() => {
         if (detailsPage !== "details") return;
 
@@ -949,7 +819,6 @@ function Home({
         const homeContent = document.querySelector(".home-content");
         if (!homeContent) return;
 
-        // Do rAF — DOM paint hone ka wait
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 homeContent.scrollTop = Number(savedScroll);
@@ -958,61 +827,51 @@ function Home({
         });
     }, [detailsPage]);
 
-
     return (
-
         <div className="home-container">
 
-            {
-                showMainHeader && (
-                    <>
-                        <Header
-                            selectedMenu={selectedMenu}
-                            setSelectedMenu={setSelectedMenu}
-                            isMenuOpen={isMenuOpen}
-                            setSelectedBottomTab={setSelectedBottomTab}
-                            setIsMenuOpen={setIsMenuOpen}
-                            selectedBottomTab={selectedBottomTab}
-                            cartCount={cartCount}
-                            isDetailsOpen={isDetailsOpen}
-                            closeDetails={handleCloseDetails}
-                            userId={user?.user_id}
-                            onReloadHome={() => setNavKey((prev) => prev + 1)}
-                            onOpenCart={() => {
-                                setIsDetailsOpen(false);
-                                setSelectedProduct(null);
-                                setDetailsPage("details");
-                                setSelectedBottomTab("Cart");
-                                setProfilePage("cart");
-                                navigate("/cart");
-                            }}
-                        />
-
-                        <div className="home-address">
-                            <Address
-                                setProfilePage={setProfilePage}
-                                setSelectedBottomTab={setSelectedBottomTab}
-                            />
-                        </div>
-
-                    </>
-                )
-            }
-            {
-                !isDetailsOpen &&
-
-                (
-                    selectedBottomTab === "Home" ||
-                    selectedBottomTab === "Premium"
-                ) &&
+            {showMainHeader && (
                 <>
-                    {allShopCategoriesPage && selectedBottomTab === "Home" && (
+                    <Header
+                        selectedMenu={selectedMenu}
+                        setSelectedMenu={setSelectedMenu}
+                        isMenuOpen={isMenuOpen}
+                        setSelectedBottomTab={setSelectedBottomTab}
+                        setIsMenuOpen={setIsMenuOpen}
+                        selectedBottomTab={selectedBottomTab}
+                        cartCount={cartCount}
+                        isDetailsOpen={isDetailsOpen}
+                        closeDetails={handleCloseDetails}
+                        userId={user?.user_id}
+                        onReloadHome={() => setNavKey((prev) => prev + 1)}
+                        onOpenCart={() => {
+                            setIsDetailsOpen(false);
+                            setSelectedProduct(null);
+                            setDetailsPage("details");
+                            setSelectedBottomTab("Cart");
+                            setProfilePage("cart");
+                            navigate("/cart");
+                        }}
+                    />
+
+                    <div className="home-address">
+                        <Address
+                            setProfilePage={setProfilePage}
+                            setSelectedBottomTab={setSelectedBottomTab}
+                        />
+                    </div>
+                </>
+            )}
+
+            {!isDetailsOpen && selectedBottomTab === "Home" && (
+                <>
+                    {allShopCategoriesPage && (
                         <>
                             <TOPHEADER
                                 title="All Categories"
                                 onBack={() => {
                                     setAllShopCategoriesPage(false);
-                                    goTo("/home/shop");
+                                    goTo("/home/shop", { replace: true });
                                 }}
                             />
 
@@ -1024,16 +883,18 @@ function Home({
                             </div>
                         </>
                     )}
-                    {shopCategoryPage && selectedBottomTab === "Home" && (
+
+                    {shopCategoryPage && (
                         <>
                             <TOPHEADER
                                 title={selectedShopCategory}
                                 onBack={() => {
                                     setSelectedShopCategory(null);
                                     setShopCategoryPage(false);
-                                    goTo("/home/shop");
+                                    goTo("/home/shop", { replace: true });
                                 }}
                             />
+
                             <div className="home-address">
                                 <Address
                                     setProfilePage={setProfilePage}
@@ -1041,15 +902,15 @@ function Home({
                                 />
                             </div>
                         </>
-
                     )}
-                    {allShopsPage && selectedBottomTab === "Home" && (
+
+                    {allShopsPage && (
                         <>
                             <TOPHEADER
                                 title="All Shops"
                                 onBack={() => {
                                     setAllShopsPage(false);
-                                    goTo("/home/shop");
+                                    goTo("/home/shop", { replace: true });
                                 }}
                             />
 
@@ -1062,13 +923,8 @@ function Home({
                         </>
                     )}
 
-
                     <Search
-                        selectedMenu={
-                            selectedBottomTab === "Home"
-                                ? selectedMenu
-                                : "Premium"
-                        }
+                        selectedMenu={selectedMenu}
                         search={search}
                         setSearch={setSearch}
                         categoryName={shopCategoryPage ? selectedShopCategory : null}
@@ -1081,98 +937,85 @@ function Home({
                         premiums={premiumSuggestionsData}
                     />
                 </>
-            }
+            )}
             <div className="home-content">
 
-                {
-                    isDetailsOpen && (
-                        <>
-                            <div style={{ display: detailsPage === "details" ? "block" : "none" }}>
-                                <Details
-                                    product={selectedProduct}
-                                    onBack={handleCloseDetails}
-                                    setCartCount={setCartCount}
-                                    onOpenDetails={handleOpenDetails}
-                                    onViewAll={() => {
-                                        setDetailsPage("allreview");
-                                        navigate(`${location.pathname}/reviews`);
-                                    }}
-                                    onViewAllMedia={() => {
-                                        setDetailsPage("allmedia");
-                                        navigate(`${location.pathname}/media`);
-                                    }}
-                                    onBuyNow={(buyNowItem, orderType) => {
-                                        setBuyNowFromDetails(true);
-                                        setOrderData({
-                                            items: [buyNowItem],
-                                            orderType: orderType
-                                        });
-                                        setIsDetailsOpen(false);
-                                        setSelectedProduct(null);
-                                        setSelectedBottomTab("Profile");
-                                        setProfilePage(
-                                            orderType === "products"
-                                                ? "productorder"
-                                                : "cardorder"
-                                        );
-                                    }}
-                                />
-                            </div>
-
-                            {detailsPage === "allreview" && (
-                                <AllReview
-                                    setDetailsPage={setDetailsPage}
-                                    product_id={
-                                        selectedProduct?.data?.product_id ||
-                                        selectedProduct?.data?.gift_id ||
-                                        selectedProduct?.data?.shop_id ||
-                                        selectedProduct?.data?.premium_id
-                                    }
-                                />
-                            )}
-
-                            {detailsPage === "allmedia" && (
-                                <AllMedia
-                                    onBack={() => setDetailsPage("details")}
-                                    product_id={
-                                        selectedProduct?.data?.product_id ||
-                                        selectedProduct?.data?.gift_id ||
-                                        selectedProduct?.data?.shop_id ||
-                                        selectedProduct?.data?.premium_id
-                                    }
-                                />
-                            )}
-                        </>
-                    )
-                }
-
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Home" &&
+                {isDetailsOpen && (
                     <>
+                        <div style={{ display: detailsPage === "details" ? "block" : "none" }}>
+                            <Details
+                                product={selectedProduct}
+                                onBack={handleCloseDetails}
+                                setCartCount={setCartCount}
+                                onOpenDetails={handleOpenDetails}
+                                onViewAll={() => {
+                                    setDetailsPage("allreview");
+                                    navigate(`${location.pathname}/reviews`);
+                                }}
+                                onViewAllMedia={() => {
+                                    setDetailsPage("allmedia");
+                                    navigate(`${location.pathname}/media`);
+                                }}
+                                onBuyNow={(buyNowItem, orderType) => {
+                                    setBuyNowFromDetails(true);
+                                    setOrderData({
+                                        items: [buyNowItem],
+                                        orderType: orderType
+                                    });
+                                    setIsDetailsOpen(false);
+                                    setSelectedProduct(null);
+                                    setSelectedBottomTab("Profile");
+                                    setProfilePage(
+                                        orderType === "products"
+                                            ? "productorder"
+                                            : "cardorder"
+                                    );
+                                }}
+                            />
+                        </div>
 
-                        {
+                        {detailsPage === "allreview" && (
+                            <AllReview
+                                setDetailsPage={setDetailsPage}
+                                product_id={
+                                    selectedProduct?.data?.product_id ||
+                                    selectedProduct?.data?.gift_id ||
+                                    selectedProduct?.data?.shop_id ||
+                                    selectedProduct?.data?.premium_id
+                                }
+                            />
+                        )}
 
-                            selectedMenu === "Cards" &&
+                        {detailsPage === "allmedia" && (
+                            <AllMedia
+                                onBack={() => setDetailsPage("details")}
+                                product_id={
+                                    selectedProduct?.data?.product_id ||
+                                    selectedProduct?.data?.gift_id ||
+                                    selectedProduct?.data?.shop_id ||
+                                    selectedProduct?.data?.premium_id
+                                }
+                            />
+                        )}
+                    </>
+                )}
 
-                            <>
-                                <Cards
-                                    key={`cards-${navKey}`}
-                                    setCartCount={setCartCount}
-                                    onOpenDetails={handleOpenDetails}
-                                    search={search}
-                                    filter={filter}
-                                    setCategories={setCategories}
-                                />
+                {!isDetailsOpen && selectedBottomTab === "Home" && (
+                    <>
+                        {selectedMenu === "Cards" && (
+                            <Cards
+                                key={`cards-${navKey}`}
+                                setCartCount={setCartCount}
+                                onOpenDetails={handleOpenDetails}
+                                search={search}
+                                filter={filter}
+                                setFilter={setFilter}
+                                setCategories={setCategories}
+                                setSuggestionData={setCardSuggestionsData}
+                            />
+                        )}
 
-                            </>
-
-                        }
-
-                        {
-
-                            selectedMenu === "Gifts" &&
-
+                        {selectedMenu === "Gifts" && (
                             <Gift
                                 key={`gift-${navKey}`}
                                 user={user}
@@ -1191,11 +1034,9 @@ function Home({
                                 setSuggestionData={setGiftSuggestionsData}
                                 goTo={goTo}
                             />
+                        )}
 
-                        }
-
-                        {
-                            selectedMenu === "Shop" &&
+                        {selectedMenu === "Shop" && (
                             <Shop
                                 key={`shop-${navKey}`}
                                 user={user}
@@ -1214,35 +1055,15 @@ function Home({
                                 setSuggestionData={setShopSuggestionsData}
                                 goTo={goTo}
                             />
-                        }
-
+                        )}
                     </>
+                )}
 
-                }
-
-                {
-
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Premium" &&
-                    <Premium
-                        setCartCount={setCartCount}
-                        onOpenDetails={handleOpenDetails}
-                        search={search}
-                        filter={filter}
-                    />
-
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Offers" &&
-
+                {!isDetailsOpen && selectedBottomTab === "Offers" && (
                     <Offer />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "profile" &&
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "profile" && (
                     <Profile
                         key={profilePage + "-" + (user?.user_id || "")}
                         user={user}
@@ -1253,46 +1074,33 @@ function Home({
                         setProfilePage={setProfilePage}
                         navigateWithLoading={navigateWithLoading}
                     />
+                )}
 
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "viewprofile" &&
-
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "viewprofile" && (
                     <ViewProfile
                         profile={profile}
                         setProfilePage={setProfilePage}
                         navigateWithLoading={navigateWithLoading}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "address" &&
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "address" && (
                     <MyAddresses
                         setProfilePage={setProfilePage}
                         selectedAddress={selectedAddress}
                         setSelectedAddress={setSelectedAddress}
                         navigateWithLoading={navigateWithLoading}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "wishlist" &&
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "wishlist" && (
                     <MyWishlist
                         setProfilePage={setProfilePage}
                         onOpenDetails={handleOpenDetails}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Cart" &&
-                    profilePage === "cart" &&
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Cart" && profilePage === "cart" && (
                     <MyCart
                         setProfilePage={setProfilePage}
                         setOrderData={setOrderData}
@@ -1301,156 +1109,108 @@ function Home({
                         setSelectedBottomTab={setSelectedBottomTab}
                         setCartCount={setCartCount}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "productorder" &&
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "productorder" && (
                     <ProductOrder
                         setProfilePage={setProfilePage}
                         orderData={orderData}
                         setOrderData={setOrderData}
                         selectedAddress={selectedAddress}
-
                         buyNowFromDetails={buyNowFromDetails}
-
                         onBackToDetails={() => {
                             setBuyNowFromDetails(false);
                             setIsDetailsOpen(true);
                             setDetailsPage("details");
                         }}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "cardorder" &&
+                )}
+
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "cardorder" && (
                     <CardOrder
                         setProfilePage={setProfilePage}
                         orderData={orderData}
                         setOrderData={setOrderData}
-
                         buyNowFromDetails={buyNowFromDetails}
-
                         onBackToDetails={() => {
                             setBuyNowFromDetails(false);
-
                             setIsDetailsOpen(true);
-
                             setDetailsPage("details");
                         }}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "orders" &&
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "orders" && (
                     <MyOrders
                         setProfilePage={setProfilePage}
                         selectedOrder={selectedOrder}
                         setSelectedOrder={setSelectedOrder}
                         navigateWithLoading={navigateWithLoading}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "rewards" &&
+                )}
 
-                    <Rewards
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "rewards" && (
+                    <Rewards setProfilePage={setProfilePage} />
+                )}
+
+                {!isDetailsOpen && profilePage === "order-details" && (
+                    <OrderItemDetails
+                        order={selectedOrder}
                         setProfilePage={setProfilePage}
+                        onOpenDetails={handleOpenDetails}
+                        setSelectedTrackingOrder={setSelectedTrackingOrder}
+                        setSelectedInvoice={setSelectedInvoice}
+                        navigateWithLoading={navigateWithLoading}
                     />
-                }
-                {!isDetailsOpen &&
-                    profilePage === "order-details" && (
-                        <OrderItemDetails
-                            order={selectedOrder}
-                            setProfilePage={setProfilePage}
-                            onOpenDetails={handleOpenDetails}
-                            setSelectedTrackingOrder={setSelectedTrackingOrder}
-                            setSelectedInvoice={setSelectedInvoice}
-                            navigateWithLoading={navigateWithLoading}
-                        />
-                    )}
-                {
-                    profilePage === "invoice" && (
-                        <ItemInvoice
-                            setProfilePage={setProfilePage}
-                            order_id={selectedInvoice?.order_id}
-                            product_id={selectedInvoice?.product_id}
-                        />
-                    )
-                }
+                )}
+
+                {profilePage === "invoice" && (
+                    <ItemInvoice
+                        setProfilePage={setProfilePage}
+                        order_id={selectedInvoice?.order_id}
+                        product_id={selectedInvoice?.product_id}
+                    />
+                )}
+
                 {profilePage === "payment" && (
                     <Payment
                         setProfilePage={setProfilePage}
                         orderData={orderData}
                     />
                 )}
+
                 {profilePage === "ordersuccess" && (
-                    <OrderSuccess
-                        setProfilePage={setProfilePage}
-                    />
+                    <OrderSuccess setProfilePage={setProfilePage} />
                 )}
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "help" &&
 
-                    <HelpAndSupport
-                        setProfilePage={setProfilePage}
-                    />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "about" &&
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "help" && (
+                    <HelpAndSupport setProfilePage={setProfilePage} />
+                )}
 
-                    <AboutAerodeck
-                        setProfilePage={setProfilePage}
-                    />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "terms" &&
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "about" && (
+                    <AboutAerodeck setProfilePage={setProfilePage} />
+                )}
 
-                    <Terms
-                        setProfilePage={setProfilePage}
-                    />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "editprofile" &&
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "terms" && (
+                    <Terms setProfilePage={setProfilePage} />
+                )}
 
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "editprofile" && (
                     <EditProfile
                         profile={profile}
                         setProfile={setProfile}
                         setProfilePage={setProfilePage}
                         navigateWithLoading={navigateWithLoading}
                     />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "addaddress" &&
+                )}
 
-                    <AddAddress
-                        setProfilePage={setProfilePage}
-                    />
-                }
-                {
-                    !isDetailsOpen &&
-                    selectedBottomTab === "Profile" &&
-                    profilePage === "editaddress" &&
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "addaddress" && (
+                    <AddAddress setProfilePage={setProfilePage} />
+                )}
 
-                    <EditAddress
-                        setProfilePage={setProfilePage}
-                    />
-                }
+                {!isDetailsOpen && selectedBottomTab === "Profile" && profilePage === "editaddress" && (
+                    <EditAddress setProfilePage={setProfilePage} />
+                )}
 
             </div>
 
@@ -1469,9 +1229,7 @@ function Home({
             />
 
         </div>
-
     );
-
 }
 
 export default Home;
