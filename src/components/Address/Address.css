@@ -100,8 +100,8 @@
 }
 
 .ad-no-address {
-    color: rgba(199, 210, 254, 0.85);
-    font-style: italic;
+    color: rgb(220 255 0);
+    letter-spacing: 0.5px;
 }
 
 .ad-arrow {

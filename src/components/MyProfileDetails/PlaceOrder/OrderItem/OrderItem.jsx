@@ -115,7 +115,7 @@ function OrderItem({
                 returnStatus={isReturned ? item.return_status : null}
                 paymentStatus={order.payment_status}
                 orderId={order_id}
-                cancelStatus={"CANCEL"}
+                cancelStatus={item.order_status}
             />
 
             {item.order_status === "DELIVERED" && (

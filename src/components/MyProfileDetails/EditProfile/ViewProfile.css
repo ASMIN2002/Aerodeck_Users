@@ -500,3 +500,24 @@
         transition-duration: 0.01ms !important;
     }
 }
+
+.not-verified {
+    color: #ef4444;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+.not-verified {
+    color: #ef4444;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+.processing {
+    color: #f59e0b;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}

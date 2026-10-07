@@ -12,47 +12,46 @@ function AllReview({
     const [summary, setSummary] = useState({});
     const [reviews, setReviews] = useState([]);
     const [selectedStar, setSelectedStar] = useState(5);
+
     const filteredReviews = reviews.filter(
-        (review) => review.rating === selectedStar
+        (review) => Number(review.rating) === Number(selectedStar)
     );
 
     useEffect(() => {
         async function loadReviews() {
             if (!product_id) return;
-            const response = await fetch(
-                `${API}/api/user/review/all/${product_id}`
-            );
-            const data = await response.json();
-            if (data.success) {
-                setSummary(data.summary);
-                setReviews(data.reviews);
+            try {
+                const response = await fetch(
+                    `${API}/api/user/review/all/${product_id}`
+                );
+                const data = await response.json();
+                if (data.success) {
+                    setSummary(data.summary || {});
+                    setReviews(data.reviews || []);
+                }
+            } catch (err) {
+                console.error("REVIEWS LOAD ERROR:", err);
             }
         }
         loadReviews();
     }, [product_id]);
-    return (
 
+    return (
         <div className="allreview-page">
 
             <div className="allreview-header">
-
                 <button
                     className="allreview-back"
                     onClick={() => navigate(-1)}
                 >
                     ←
                 </button>
-
                 <div>
-
                     <h2>Customer Reviews</h2>
-
                 </div>
-
             </div>
 
             <div className="review-filter">
-
                 <button
                     className={`star-btn five ${selectedStar === 5 ? "active" : ""}`}
                     onClick={() => setSelectedStar(5)}
@@ -87,108 +86,65 @@ function AllReview({
                 >
                     1⭐ ({summary.one || 0})
                 </button>
-
             </div>
 
             <div className="allreview-list">
+                {filteredReviews.length > 0 ? (
+                    filteredReviews.map((review, index) => {
 
-                {
+                        const safeName =
+                            review.full_name && review.full_name.trim()
+                                ? review.full_name.trim()
+                                : "Anonymous";
 
-                    filteredReviews.length > 0 ? (
-
-                        filteredReviews.map((review, index) => (
-
+                        return (
                             <div
                                 className="allreview-card"
                                 key={index}
                             >
-
                                 <div className="allreview-top">
 
-                                    {
-
-                                        review.profile_image ? (
-
-                                            <img
-                                                src={review.profile_image}
-                                                alt={review.full_name}
-                                                className="allreview-avatar-image"
-                                            />
-
-                                        ) : (
-
-                                            <div className="allreview-avatar">
-
-                                                {
-
-                                                    review.full_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-
-                                                }
-
-                                            </div>
-
-                                        )
-
-                                    }
+                                    {review.profile_image ? (
+                                        <img
+                                            src={review.profile_image}
+                                            alt={safeName}
+                                            className="allreview-avatar-image"
+                                        />
+                                    ) : (
+                                        <div className="allreview-avatar">
+                                            {safeName.charAt(0).toUpperCase()}
+                                        </div>
+                                    )}
 
                                     <div className="allreview-user">
-
-                                        <h3>
-
-                                            {review.full_name}
-
-                                        </h3>
+                                        <h3>{safeName}</h3>
 
                                         <div className="allreview-rating">
-
-                                            {"⭐".repeat(review.rating)}
-
+                                            {"⭐".repeat(Number(review.rating) || 0)}
                                         </div>
-
                                     </div>
 
                                 </div>
 
                                 <p className="allreview-message">
-
-                                    {review.review_message}
-
+                                    {review.review_message || "No message."}
                                 </p>
 
                             </div>
-
-                        ))
-
-                    ) : (
-
-                        <div className="no-review">
-
-                            <h3>
-
-                                No Reviews Yet
-
-                            </h3>
-
-                            <p>
-
-                                No customer has given a {selectedStar} star review.
-
-                            </p>
-
-                        </div>
-
-                    )
-
-                }
-
+                        );
+                    })
+                ) : (
+                    <div className="no-review">
+                        <h3>No Reviews Yet</h3>
+                        <p>
+                            No customer has given a {selectedStar} star review.
+                        </p>
+                    </div>
+                )}
             </div>
 
         </div>
-
     );
-
 }
 
 export default AllReview;

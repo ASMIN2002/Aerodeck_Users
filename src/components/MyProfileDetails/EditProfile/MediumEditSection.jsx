@@ -32,7 +32,6 @@ function MediumEditSection({
     const hasMobileNumber =
         !!profile?.mobile_number;
 
-
     useEffect(() => {
         let name = profile?.full_name || "";
 
@@ -45,6 +44,16 @@ function MediumEditSection({
         setEmail(profile?.email || "");
     }, [profile]);
 
+    useEffect(() => {
+        if (!message) return;
+
+        const timer = setTimeout(() => {
+            setMessage("");
+            setMessageType("");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [message]);
 
     const handleSaveName = async () => {
 
@@ -98,11 +107,6 @@ function MediumEditSection({
                         setOriginalName(data.user.full_name);
                         setMessage("Name updated successfully.");
                         setMessageType("success");
-
-                        setTimeout(() => {
-                            setMessage("");
-                            setMessageType("");
-                        }, 3000);
                     },
                     "Updating Name...",
                     500
@@ -120,7 +124,6 @@ function MediumEditSection({
             setMessageType("error");
         }
     };
-
 
     const handleSaveWhatsapp = async () => {
 
@@ -163,11 +166,6 @@ function MediumEditSection({
 
                         setMessage("WhatsApp number saved. Please send the verification message.");
                         setMessageType("success");
-
-                        setTimeout(() => {
-                            setMessage("");
-                            setMessageType("");
-                        }, 5000);
                     },
                     "Saving WhatsApp...",
                     500
@@ -187,7 +185,6 @@ function MediumEditSection({
             setSavingWhatsapp(false);
         }
     };
-
 
     const handleSaveMobile = async () => {
 
@@ -230,11 +227,6 @@ function MediumEditSection({
 
                         setMessage("Mobile number saved. Please pick up the verification call.");
                         setMessageType("success");
-
-                        setTimeout(() => {
-                            setMessage("");
-                            setMessageType("");
-                        }, 5000);
                     },
                     "Saving Mobile...",
                     500
@@ -255,18 +247,15 @@ function MediumEditSection({
         }
     };
 
-
     const handleChangeWhatsapp = () => {
         setShowWhatsappBox(true);
         setWhatsappInput("");
     };
 
-
     const handleChangeMobile = () => {
         setShowMobileBox(true);
         setMobileInput("");
     };
-
 
     return (
 
@@ -277,7 +266,6 @@ function MediumEditSection({
                     {message}
                 </div>
             )}
-
 
             <div className="medium-field">
 
@@ -317,7 +305,6 @@ function MediumEditSection({
 
             </div>
 
-
             <div className="medium-field">
 
                 <label>
@@ -339,7 +326,6 @@ function MediumEditSection({
                 </div>
 
             </div>
-
 
             <div className="medium-field">
 
@@ -421,7 +407,6 @@ function MediumEditSection({
                 )}
 
             </div>
-
 
             <div className="medium-field">
 

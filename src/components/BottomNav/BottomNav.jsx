@@ -21,21 +21,26 @@ function BottomNav({
     useEffect(() => {
         const fetchCartCount = async () => {
             try {
-                const userData = JSON.parse(localStorage.getItem("user"));
+                const sessionToken = localStorage.getItem("session_token");
 
-                if (!userData?.user_id) {
+                if (!sessionToken) {
                     setCartCount(0);
                     return;
                 }
 
                 const response = await fetch(
-                    `${API}/api/user/cart?user_id=${userData.user_id}`
+                    `${API}/api/user/cart?session_token=${sessionToken}`
                 );
+
+                if (response.status === 401) {
+                    setCartCount(0);
+                    return;
+                }
 
                 const data = await response.json();
 
-                if (data.success && data.cart) {
-                    setCartCount(data.cart.length);
+                if (data.success && data.data) {
+                    setCartCount(data.data.length);
                 } else {
                     setCartCount(0);
                 }

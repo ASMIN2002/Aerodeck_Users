@@ -64,15 +64,11 @@ function ViewProfile({
     const displayEmail =
         profile?.email || "NOT SET";
 
-    const displayMobile =
-        Number(profile?.is_mobile_verified) === 1 && profile?.mobile_number
-            ? profile.mobile_number
-            : "NOT SET";
+    const mobileHasNumber = !!profile?.mobile_number;
+    const mobileIsVerified = Number(profile?.is_mobile_verified) === 1;
 
-    const displayWhatsapp =
-        Number(profile?.is_whatsapp_verified) === 1 && profile?.whatsapp_number
-            ? profile.whatsapp_number
-            : "NOT SET";
+    const whatsappHasNumber = !!profile?.whatsapp_number;
+    const whatsappIsVerified = Number(profile?.is_whatsapp_verified) === 1;
 
     return (
 
@@ -129,12 +125,28 @@ function ViewProfile({
 
                     <div className="view-row">
                         <span>Mobile</span>
-                        <p>{displayMobile}</p>
+                        <p>
+                            {mobileIsVerified && mobileHasNumber ? (
+                                profile.mobile_number
+                            ) : mobileHasNumber ? (
+                                <span className="processing">Processing</span>
+                            ) : (
+                                <span className="not-verified">Not Verified</span>
+                            )}
+                        </p>
                     </div>
 
                     <div className="view-row">
                         <span>WhatsApp</span>
-                        <p>{displayWhatsapp}</p>
+                        <p>
+                            {whatsappIsVerified && whatsappHasNumber ? (
+                                profile.whatsapp_number
+                            ) : whatsappHasNumber ? (
+                                <span className="processing">Processing</span>
+                            ) : (
+                                <span className="not-verified">Not Verified</span>
+                            )}
+                        </p>
                     </div>
 
                     <div className="view-row">

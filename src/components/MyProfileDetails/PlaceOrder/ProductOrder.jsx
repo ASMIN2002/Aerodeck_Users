@@ -13,9 +13,6 @@ function ProductOrder({
     const navigate = useNavigate();
     const products = orderData?.items || [];
 
-    /* ============================================
-       HELPERS
-       ============================================ */
     const getPrice = (item) => {
         return Number(
             item.product_price ??
@@ -67,35 +64,27 @@ function ProductOrder({
         }
     };
 
-    /* ============================================
-       STATE
-       ============================================ */
     const [paymentMethod, setPaymentMethod] = useState("COD");
     const [openCartProduct, setOpenCartProduct] = useState(null);
     const [primaryAddress, setPrimaryAddress] = useState(null);
     const [placingOrder, setPlacingOrder] = useState(false);
     const [showOrderConfirm, setShowOrderConfirm] = useState(false);
-    const [addressError, setAddressError] = useState("");
+    const [addressError, setAddressError] = useState(null);
 
     const [hypoPoints, setHypoPoints] = useState(0);
     const [useHypo, setUseHypo] = useState(false);
 
-    /* ============================================
-       PRICE CALCULATIONS
-       ============================================ */
+    const [userDetails, setUserDetails] = useState(null);
+
     const subtotal = products.reduce((sum, item) => {
         return sum + (getPrice(item) * item.quantity);
     }, 0);
 
-    const platformFee = 2;
     const MINIMUM_ORDER_AMOUNT = 200;
 
-    const grandTotal = subtotal + platformFee;
-    const upiTotal = subtotal + platformFee;
+    const grandTotal = subtotal;
+    const upiTotal = subtotal;
 
-    /* ============================================
-       HYPO REDEMPTION
-       ============================================ */
     const usableHypo = Math.floor(hypoPoints / 100) * 100;
     const hypoRupees = usableHypo / 10;
     const canUseHypo = hypoPoints >= 100;
@@ -116,9 +105,6 @@ function ProductOrder({
         return total + saving;
     }, 0);
 
-    /* ============================================
-       OUTSIDE CLICK
-       ============================================ */
     useEffect(() => {
         const handleOutsideClick = () => {
             setOpenCartProduct(null);
@@ -131,9 +117,6 @@ function ProductOrder({
         };
     }, [openCartProduct]);
 
-    /* ============================================
-       FETCH ADDRESS
-       ============================================ */
     useEffect(() => {
         const fetchPrimaryAddress = async () => {
             try {
@@ -155,9 +138,6 @@ function ProductOrder({
         fetchPrimaryAddress();
     }, []);
 
-    /* ============================================
-       FETCH HYPO POINTS
-       ============================================ */
     useEffect(() => {
         async function loadHypoPoints() {
             try {
@@ -176,11 +156,36 @@ function ProductOrder({
         loadHypoPoints();
     }, []);
 
+    useEffect(() => {
+        async function loadUserDetails() {
+            try {
+                const sessionToken = localStorage.getItem("session_token");
+                const response = await fetch(
+                    `${API}/api/user/details?session_token=${sessionToken}`
+                );
+                const data = await response.json();
+                if (data.success && data.data) {
+                    setUserDetails(data.data);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        loadUserDetails();
+    }, []);
+
+    useEffect(() => {
+        if (!addressError) return;
+
+        const timer = setTimeout(() => {
+            setAddressError(null);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [addressError]);
+
     return (
-
         <div className="product-order-page">
-
-            {/* HEADER */}
             <div className="product-order-header">
                 <button
                     className="product-order-back"
@@ -191,7 +196,6 @@ function ProductOrder({
                 <h2>Product Order</h2>
             </div>
 
-            {/* ADDRESS */}
             <div className="order-section">
                 <h3>Deliver To:</h3>
                 <div className="address-card-card">
@@ -228,7 +232,6 @@ function ProductOrder({
                 </div>
             </div>
 
-            {/* PRODUCTS */}
             <div className="order-section">
                 <div className="product-list">
                     {products.length > 0 ? (
@@ -321,28 +324,16 @@ function ProductOrder({
                 </div>
             </div>
 
-            {/* ============================================
-                PRICE DETAILS
-               ============================================ */}
             <div className="order-section">
-
                 <h3>💰 Price Details</h3>
 
                 <div className="price-box">
-
                     <div className="row">
                         <span>Total MRP</span>
                         <span>₹{subtotal.toFixed(2)}</span>
                     </div>
 
-                    <div className="row">
-                        <span>Platform Fee</span>
-                        <span>₹{platformFee.toFixed(2)}</span>
-                    </div>
-
-                    {/* HYPO SECTION */}
                     <div className="hypo-section">
-
                         <div className="hypo-header">
                             <div className="hypo-title">
                                 <FaBolt className="hypo-icon" />
@@ -377,7 +368,6 @@ function ProductOrder({
                                 Add <strong>{100 - hypoPoints} more points</strong> to unlock HYPO redemption.
                             </p>
                         )}
-
                     </div>
 
                     {useHypo && canUseHypo && (
@@ -404,14 +394,10 @@ function ProductOrder({
                             You will save <span>₹{totalSavings.toFixed(2)}</span> on this order!
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
-            {/* PAYMENT METHOD */}
             <div className="order-section">
-
                 <div
                     className={`payment-card ${paymentMethod === "COD" ? "selected" : ""}`}
                     onClick={() => setPaymentMethod("COD")}
@@ -422,35 +408,70 @@ function ProductOrder({
                     </div>
                     <strong>₹{finalTotal.toFixed(2)}</strong>
                 </div>
-
             </div>
 
             {addressError && (
-                <p className="address-error">
-                    {addressError}
-                </p>
+                <div className="address-error">
+                    <span>{addressError.text}</span>
+
+                    {addressError.action === "verify" && (
+                        <button
+                            className="verify-here-btn"
+                            onClick={() => navigate("/profile/viewprofile")}
+                        >
+                            Verify
+                        </button>
+                    )}
+
+                    {addressError.action === "address" && (
+                        <button
+                            className="verify-here-btn"
+                            onClick={() => navigate("/profile/address")}
+                        >
+                            Address
+                        </button>
+                    )}
+                </div>
             )}
 
             <button
                 className="continue-payment-btn"
                 onClick={() => {
 
+                    if (!userDetails?.full_name || userDetails.full_name.trim() === "") {
+                        setAddressError({
+                            text: "First give your name to continue.",
+                            action: "verify"
+                        });
+                        return;
+                    }
+
+                    if (!userDetails?.mobile_number || userDetails.is_mobile_verified !== 1) {
+                        setAddressError({
+                            text: "Please verify your mobile number first.",
+                            action: "verify"
+                        });
+                        return;
+                    }
+
                     if (subtotal < MINIMUM_ORDER_AMOUNT) {
                         const remainingAmount = MINIMUM_ORDER_AMOUNT - subtotal;
-                        setAddressError(
-                            `Minimum order amount is ₹200. Add ₹${remainingAmount.toFixed(2)} more to continue.`
-                        );
-                        setTimeout(() => setAddressError(""), 3000);
+                        setAddressError({
+                            text: `Minimum order amount is ₹200. Add ₹${remainingAmount.toFixed(2)} more to continue.`,
+                            action: null
+                        });
                         return;
                     }
 
                     if (!primaryAddress) {
-                        setAddressError("Please select the address.");
-                        setTimeout(() => setAddressError(""), 2000);
+                        setAddressError({
+                            text: "Please select the address.",
+                            action: "address"
+                        });
                         return;
                     }
 
-                    setAddressError("");
+                    setAddressError(null);
                     setShowOrderConfirm(true);
 
                 }}
@@ -460,7 +481,6 @@ function ProductOrder({
                     : "Place Order"}
             </button>
 
-            {/* ORDER CONFIRM */}
             {showOrderConfirm && (
                 <div
                     className="order-confirm-overlay"
@@ -488,7 +508,6 @@ function ProductOrder({
                         )}
 
                         <div className="order-confirm-actions">
-
                             <button
                                 type="button"
                                 className="order-confirm-cancel"
@@ -506,13 +525,9 @@ function ProductOrder({
                                     setPlacingOrder(true);
 
                                     try {
-
                                         const sessionToken =
                                             localStorage.getItem("session_token");
 
-                                        /* ============================================
-                                           1. PLACE ORDER
-                                           ============================================ */
                                         const response = await fetch(
                                             `${API}/api/user/orders/place-order`,
                                             {
@@ -531,7 +546,6 @@ function ProductOrder({
                                                     items: products,
                                                     total_items: products.length,
                                                     subtotal,
-                                                    platform_fee: platformFee,
                                                     delivery_fee: 0,
                                                     total_amount: finalTotal,
                                                     hypo_points_used: pointsToUse
@@ -546,13 +560,8 @@ function ProductOrder({
                                             return;
                                         }
 
-                                        /* ============================================
-                                           2. USE HYPO POINTS (if any)
-                                           ============================================ */
                                         if (pointsToUse > 0) {
-
                                             try {
-
                                                 await fetch(
                                                     `${API}/api/user/rewards/use`,
                                                     {
@@ -566,39 +575,29 @@ function ProductOrder({
                                                         })
                                                     }
                                                 );
-
                                             } catch (err) {
                                                 console.error("HYPO use error:", err);
                                             }
-
                                         }
 
                                         setProfilePage("ordersuccess");
 
                                     } catch (error) {
-
                                         console.error("Place order error:", error);
-
                                     } finally {
-
                                         setPlacingOrder(false);
-
                                     }
 
                                 }}
                             >
                                 Confirm Order
                             </button>
-
                         </div>
                     </div>
                 </div>
             )}
-
         </div>
-
     );
-
 }
 
 export default ProductOrder;
