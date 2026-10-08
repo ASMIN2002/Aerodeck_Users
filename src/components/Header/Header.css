@@ -438,24 +438,7 @@
 }
 
 .hd-notif-badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 9px;
-    background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 800;
-    line-height: 18px;
-    text-align: center;
-    letter-spacing: 0.2px;
-    border: 2px solid rgba(10, 12, 24, 0.95);
-    box-shadow: 0 4px 10px -2px rgba(239, 68, 68, 0.7);
-    z-index: 3;
-    pointer-events: none;
+    display: none;
 }
 
 .hd-notif-ripple {
@@ -685,14 +668,6 @@
 
     .hd-notif-icon {
         font-size: 18px;
-    }
-
-    .hd-notif-badge {
-        min-width: 16px;
-        height: 16px;
-        font-size: 9px;
-        line-height: 16px;
-        padding: 0 4px;
     }
 
     .hd-menu-dropdown {
