@@ -1,5 +1,10 @@
 {
   "appId": "com.heepit.user",
   "appName": "HEEPIT",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "url": "https://heepituniqueusersmustvalue.netlify.app",
+    "cleartext": true,
+    "errorPath": "offline.html"
+  }
 }
