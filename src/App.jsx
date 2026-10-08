@@ -7,13 +7,11 @@ import TermsAndCondition from "./pages/Login/TermsAndCondition";
 import Loading from "./components/Loading/Loading";
 import Splash from "./pages/Splash/Splash";
 import Home from "./pages/Home/Home";
-import NoInternet from "./components/NoInternet/NoInternet";
 import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login/Login";
 import { API } from "./services/api";
-
 
 const NAV_HISTORY_KEY = "heepit_navigation_history";
 
@@ -186,7 +184,6 @@ function App() {
     const [checkingSession, setCheckingSession] = useState(true);
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
-    const [isOnline, setIsOnline] = useState(true);
     const [updateRequired, setUpdateRequired] = useState(false);
 
     const navigateWithLoading = (
@@ -241,53 +238,6 @@ function App() {
 
         checkForUpdate();
     }, [user, page]);
-
-    useEffect(() => {
-        let interval;
-
-        async function checkServer() {
-            try {
-                const response = await fetch(`${API}/health`, {
-                    method: "GET",
-                    cache: "no-store"
-                });
-
-                const data = await response.json();
-
-                console.log("HEEPIT Health:", response.status, data);
-
-                if (response.ok && data.success === true) {
-                    setIsOnline(true);
-                } else {
-                    setIsOnline(false);
-                }
-            } catch (err) {
-                console.error("HEEPIT Health Check Error:", err);
-                setIsOnline(false);
-            }
-        }
-
-        function goOnline() {
-            checkServer();
-        }
-
-        function goOffline() {
-            setIsOnline(false);
-        }
-
-        checkServer();
-
-        interval = setInterval(checkServer, 30000);
-
-        window.addEventListener("online", goOnline);
-        window.addEventListener("offline", goOffline);
-
-        return () => {
-            clearInterval(interval);
-            window.removeEventListener("online", goOnline);
-            window.removeEventListener("offline", goOffline);
-        };
-    }, []);
 
     useEffect(() => {
         async function restoreSession() {
@@ -432,17 +382,7 @@ function App() {
         }
 
         syncVersionAfterUpdate();
-    }, [user, page]);
-
-    if (!isOnline) {
-        return (
-            <NoInternet
-                onRetry={() => {
-                    window.location.reload();
-                }}
-            />
-        );
-    }
+    }, [user]);
 
     if (checkingSession && page !== "splash") {
         return null;
