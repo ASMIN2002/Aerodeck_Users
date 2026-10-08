@@ -1,53 +1,484 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050810" />
     <title>HEEPIT — Offline</title>
     <style>
-        body {
+        * {
             margin: 0;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, sans-serif;
+            background: #050810;
+            color: #e5e7eb;
+        }
+
+        body {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #050810;
-            color: #fff;
-            font-family: sans-serif;
+            padding: 24px;
+            position: relative;
+            isolation: isolate;
+            animation: body-fade 0.4s ease;
+        }
+
+        @keyframes body-fade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: -180px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 520px;
+            height: 380px;
+            background: radial-gradient(ellipse at center,
+                    rgba(99, 102, 241, 0.35) 0%,
+                    rgba(236, 72, 153, 0.15) 42%,
+                    rgba(0, 0, 0, 0) 72%);
+            filter: blur(70px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orb-float 6s ease-in-out infinite;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: -140px;
+            right: -100px;
+            width: 420px;
+            height: 360px;
+            background: radial-gradient(ellipse at center,
+                    rgba(236, 72, 153, 0.28) 0%,
+                    rgba(139, 92, 246, 0.12) 42%,
+                    rgba(0, 0, 0, 0) 72%);
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orb-float-reverse 8s ease-in-out infinite;
+        }
+
+        @keyframes orb-float {
+
+            0%,
+            100% {
+                opacity: 0.75;
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.1);
+            }
+        }
+
+        @keyframes orb-float-reverse {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.15);
+            }
+        }
+
+        .offline-card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 380px;
+            padding: 36px 28px 28px;
+            border-radius: 26px;
+            background: linear-gradient(180deg,
+                    rgba(20, 22, 40, 0.96) 0%,
+                    rgba(14, 16, 32, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            box-shadow:
+                0 32px 64px -16px rgba(0, 0, 0, 0.9),
+                0 0 0 1px rgba(139, 92, 246, 0.12) inset,
+                0 1px 0 rgba(255, 255, 255, 0.06) inset;
             text-align: center;
+            animation: card-in 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+            overflow: hidden;
         }
 
-        h1 {
-            font-size: 22px;
-            margin: 0 0 12px;
+        .offline-card::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            right: -80px;
+            width: 260px;
+            height: 240px;
+            background: radial-gradient(ellipse at center,
+                    rgba(139, 92, 246, 0.28) 0%,
+                    rgba(236, 72, 153, 0.12) 42%,
+                    rgba(0, 0, 0, 0) 72%);
+            filter: blur(52px);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin: 0 0 24px;
+        @keyframes card-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.94);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
-        button {
-            padding: 12px 24px;
-            border: none;
+        .brand-mark {
+            position: relative;
+            z-index: 1;
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            box-shadow:
+                0 16px 36px -10px rgba(139, 92, 246, 0.9),
+                0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+            color: #ffffff;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            animation: mark-pulse 2.4s ease-in-out infinite;
+        }
+
+        .brand-mark::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.32) 0%,
+                    rgba(255, 255, 255, 0) 45%);
+            pointer-events: none;
+        }
+
+        @keyframes mark-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .offline-icon {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            margin-bottom: 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg,
+                    rgba(239, 68, 68, 0.18) 0%,
+                    rgba(236, 72, 153, 0.08) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fecaca;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            line-height: 1;
+            transition: all 0.35s ease;
+        }
+
+        .offline-icon::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.85);
+            animation: dot-blink 1.4s ease-in-out infinite;
+            flex-shrink: 0;
+            transition: all 0.35s ease;
+        }
+
+        @keyframes dot-blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+        }
+
+        /* Reconnecting state */
+        .offline-icon.reconnecting {
+            background: linear-gradient(135deg,
+                    rgba(251, 191, 36, 0.18) 0%,
+                    rgba(245, 158, 11, 0.08) 100%);
+            border-color: rgba(251, 191, 36, 0.45);
+            color: #fef3c7;
+        }
+
+        .offline-icon.reconnecting::before {
+            background: #fbbf24;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.85);
+        }
+
+        .offline-card h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            line-height: 1.25;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg,
+                    #ffffff 0%,
+                    #c7d2fe 55%,
+                    #f0abfc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.35s ease;
+        }
+
+        .offline-card p {
+            position: relative;
+            z-index: 1;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            line-height: 1.6;
+            color: rgba(199, 210, 254, 0.78);
+            margin-bottom: 26px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.35s ease;
+        }
+
+        .status-indicator {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            color: #fff;
-            font-size: 14px;
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.05) 0%,
+                    rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(199, 210, 254, 0.85);
+            font-size: 11.5px;
             font-weight: 700;
-            cursor: pointer;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid rgba(139, 92, 246, 0.25);
+            border-top-color: #a855f7;
+            animation: spin 0.8s linear infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .footer-note {
+            position: relative;
+            z-index: 1;
+            margin-top: 22px;
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(148, 163, 184, 0.5);
+        }
+
+        @media (max-width: 380px) {
+            .offline-card {
+                padding: 30px 22px 24px;
+                border-radius: 22px;
+            }
+
+            .brand-mark {
+                width: 68px;
+                height: 68px;
+                font-size: 32px;
+                border-radius: 20px;
+                margin-bottom: 16px;
+            }
+
+            .offline-card h1 {
+                font-size: 20px;
+            }
+
+            .offline-card p {
+                font-size: 12.5px;
+                margin-bottom: 22px;
+            }
+
+            .offline-icon {
+                font-size: 10px;
+                padding: 5px 12px;
+                letter-spacing: 1.2px;
+            }
+
+            .status-indicator {
+                font-size: 11px;
+                padding: 9px 15px;
+            }
+
+            .footer-note {
+                font-size: 10px;
+                margin-top: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <h1>No Internet Connection</h1>
-        <p>Please check your network and try again.</p>
-        <button onclick="window.location.reload()">Retry Now</button>
+    <div class="offline-card">
+        <div class="brand-mark">H</div>
+
+        <div class="offline-icon" id="statusIcon">Offline</div>
+
+        <h1 id="statusTitle">No Internet Connection</h1>
+
+        <p id="statusText">
+            Please check your network connection. We'll automatically
+            reconnect when you're back online.
+        </p>
+
+        <div class="status-indicator">
+            <div class="spinner"></div>
+            <span>Waiting for connection...</span>
+        </div>
+
+        <div class="footer-note">HEEPIT</div>
     </div>
+
+    <script>
+        (function () {
+            const TARGET_URL = "https://heepituniqueusersmustvalue.netlify.app";
+            const CHECK_INTERVAL = 1000;
+
+            const statusIcon = document.getElementById("statusIcon");
+            const statusTitle = document.getElementById("statusTitle");
+            const statusText = document.getElementById("statusText");
+
+            let checkTimer = null;
+            let isRedirecting = false;
+
+            function setReconnectingState() {
+                statusIcon.classList.add("reconnecting");
+                statusIcon.textContent = "Reconnecting";
+                statusTitle.textContent = "Internet is Back!";
+                statusText.textContent = "Connecting to HEEPIT...";
+            }
+
+            function checkInternet() {
+                if (isRedirecting) return;
+
+                // Check internet by pinging a fast endpoint
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                fetch(TARGET_URL + "/favicon.ico", {
+                    method: "HEAD",
+                    cache: "no-store",
+                    signal: controller.signal
+                })
+                    .then(() => {
+                        clearTimeout(timeoutId);
+                        // Internet aa gaya
+                        isRedirecting = true;
+                        setReconnectingState();
+
+                        // Small delay for visual feedback
+                        setTimeout(() => {
+                            window.location.href = TARGET_URL;
+                        }, 400);
+                    })
+                    .catch(() => {
+                        clearTimeout(timeoutId);
+                        // Still offline — retry
+                        checkTimer = setTimeout(checkInternet, CHECK_INTERVAL);
+                    });
+            }
+
+            // Also use browser events as primary signals
+            window.addEventListener("online", () => {
+                if (isRedirecting) return;
+                isRedirecting = true;
+                setReconnectingState();
+                setTimeout(() => {
+                    window.location.href = TARGET_URL;
+                }, 300);
+            });
+
+            // Start checking
+            checkInternet();
+
+            // Cleanup
+            window.addEventListener("beforeunload", () => {
+                if (checkTimer) clearTimeout(checkTimer);
+            });
+        })();
+    </script>
 </body>
 
 </html>
