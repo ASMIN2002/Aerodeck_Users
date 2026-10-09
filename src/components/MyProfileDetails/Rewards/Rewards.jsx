@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./Rewards.css";
 import { API } from "../../../services/api";
 
-
+/* ============================================
+   MASK EMAIL
+   ============================================ */
 function maskEmail(email) {
 
     if (!email || !email.includes("@")) return email || "";
@@ -62,7 +64,7 @@ function ScratchBox({ number, onReveal, disabled }) {
 }
 
 /* ============================================
-   GENERATE BOXES — 1 to 6, all different, shuffled
+   GENERATE BOXES
    ============================================ */
 function generateBoxes() {
 
@@ -109,6 +111,7 @@ function Rewards({ setProfilePage }) {
     const [usedOwnerId, setUsedOwnerId] = useState(0);
     const [usedOwnerEmail, setUsedOwnerEmail] = useState("");
     const [usedUpdatedAt, setUsedUpdatedAt] = useState(null);
+    const [usedRedeemed, setUsedRedeemed] = useState(0);
     const [countdown, setCountdown] = useState("");
 
     const helpBoxRef = useRef(null);
@@ -135,6 +138,7 @@ function Rewards({ setProfilePage }) {
                     setUsedOwnerId(data.data.used_owner_id || 0);
                     setUsedOwnerEmail(data.data.used_owner_email || "");
                     setUsedUpdatedAt(data.data.used_updated_at || null);
+                    setUsedRedeemed(data.data.used_redeemed || 0);
                 }
 
             } catch (err) {
@@ -179,11 +183,11 @@ function Rewards({ setProfilePage }) {
     }, [showHelp]);
 
     /* ============================================
-       COUNTDOWN — 24h from used_updated_at
+       COUNTDOWN — sirf jab usedRedeemed === 0
        ============================================ */
     useEffect(() => {
 
-        if (usedOwnerId <= 0 || !usedUpdatedAt) {
+        if (usedOwnerId <= 0 || usedRedeemed === 1 || !usedUpdatedAt) {
             setCountdown("");
             return;
         }
@@ -214,7 +218,7 @@ function Rewards({ setProfilePage }) {
         const interval = setInterval(tick, 1000);
         return () => clearInterval(interval);
 
-    }, [usedOwnerId, usedUpdatedAt]);
+    }, [usedOwnerId, usedRedeemed, usedUpdatedAt]);
 
     /* ============================================
        RESET AFTER SCRATCH — REAL
@@ -362,6 +366,7 @@ function Rewards({ setProfilePage }) {
                     setUsedOwnerId(rewardData.data.used_owner_id || 0);
                     setUsedOwnerEmail(rewardData.data.used_owner_email || "");
                     setUsedUpdatedAt(rewardData.data.used_updated_at || null);
+                    setUsedRedeemed(rewardData.data.used_redeemed || 0);
                 }
 
             } else {
@@ -657,32 +662,57 @@ function Rewards({ setProfilePage }) {
 
                     {usedOwnerId > 0 ? (
 
-                        <div className="redeem-pending-box">
+                        usedRedeemed === 1 ? (
 
-                            <div className="redeem-pending-icon">⏳</div>
+                            /* ✅ APPROVED */
+                            <div className="redeem-approved-box">
 
-                            <h3 className="redeem-pending-title">
-                                You used the promocode of
-                            </h3>
+                                <div className="redeem-approved-icon">🎉</div>
 
-                            <p className="redeem-pending-email">
-                                {maskEmail(usedOwnerEmail)}
-                            </p>
+                                <p className="redeem-approved-text">
+                                    <strong>{maskEmail(usedOwnerEmail)}</strong>
+                                    {" "}approved your request.<br />
+                                    You Got 10 Hypo Points Flat.
+                                </p>
 
-                            <p className="redeem-pending-text">
-                                Waiting for response...
-                            </p>
+                                <p className="redeem-approved-footer">
+                                    Thank you for using HEEPIT ❤️
+                                </p>
 
-                            {countdown && (
-                                <div className="redeem-countdown">
-                                    {countdown}
-                                </div>
-                            )}
+                            </div>
 
-                        </div>
+                        ) : (
+
+                            /* ⏳ WAITING */
+                            <div className="redeem-pending-box">
+
+                                <div className="redeem-pending-icon">⏳</div>
+
+                                <h3 className="redeem-pending-title">
+                                    You used the promocode of
+                                </h3>
+
+                                <p className="redeem-pending-email">
+                                    {maskEmail(usedOwnerEmail)}
+                                </p>
+
+                                <p className="redeem-pending-text">
+                                    Waiting for response...
+                                </p>
+
+                                {countdown && (
+                                    <div className="redeem-countdown">
+                                        {countdown}
+                                    </div>
+                                )}
+
+                            </div>
+
+                        )
 
                     ) : (
 
+                        /* 📝 INPUT FORM */
                         <div className="redeem-input-box">
 
                             <label className="redeem-label">

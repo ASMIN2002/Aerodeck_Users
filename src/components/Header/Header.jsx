@@ -20,6 +20,7 @@ function Header({
 }) {
     const dropdownRef = useRef(null);
     const menuDropdownRef = useRef(null);
+    const autoOpenedRef = useRef(false);
     const navigate = useNavigate();
 
     const [version, setVersion] = useState("");
@@ -53,9 +54,36 @@ function Header({
         if (userId) loadVersion();
     }, [userId]);
 
+    /* ============================================
+       NOTIFICATIONS CHECK
+       ============================================ */
     useEffect(() => {
         async function checkNotifications() {
             try {
+
+                const sessionToken = localStorage.getItem("session_token");
+
+                const rewardRes = await fetch(
+                    `${API}/api/user/rewards?session_token=${sessionToken}`
+                );
+                const rewardData = await rewardRes.json();
+
+                let hasPendingRequest = false;
+
+                if (rewardData.success && rewardData.data) {
+                    const rId = rewardData.data.req_userid || 0;
+                    const isRedeemed = rewardData.data.redeemed === 1;
+
+                    if (rId > 0 && !isRedeemed) {
+                        hasPendingRequest = true;
+
+                        if (!autoOpenedRef.current) {
+                            autoOpenedRef.current = true;
+                            setShowNotifOverlay(true);
+                        }
+                    }
+                }
+
                 const res = await fetch(`${API}/api/user/notification/count`);
                 const data = await res.json();
 
@@ -68,14 +96,19 @@ function Header({
                         10
                     );
 
-                    setHasNotification(currentCount > lastSeenCount);
+                    if (hasPendingRequest) {
+                        setHasNotification(true);
+                    } else {
+                        setHasNotification(currentCount > lastSeenCount);
+                    }
                 }
+
             } catch (err) {
                 console.log(err);
             }
         }
         if (userId) checkNotifications();
-    }, [userId, showNotifOverlay]);
+    }, [userId]);
 
     useEffect(() => {
         function handleClickOutside(e) {
@@ -109,21 +142,15 @@ function Header({
         localStorage.setItem("lastSeenCount", String(notifCount));
         setHasNotification(false);
         setShowNotifOverlay(true);
-        window.history.pushState({}, "", "/notification");
     };
 
     const handleNotifClose = () => {
         setShowNotifOverlay(false);
-        navigate(-1);
-        setTimeout(() => {
-            setHasNotification(prev => {
-                const lastSeenCount = parseInt(
-                    localStorage.getItem("lastSeenCount") || "0",
-                    10
-                );
-                return notifCount > lastSeenCount;
-            });
-        }, 500);
+    };
+
+    const handleRedeemHandled = () => {
+        setHasNotification(false);
+        autoOpenedRef.current = true;
     };
 
     const handleComingSoon = (feature) => {
@@ -268,7 +295,10 @@ function Header({
             </header>
 
             {showNotifOverlay && (
-                <Notification onClose={handleNotifClose} />
+                <Notification
+                    onClose={handleNotifClose}
+                    onRedeemHandled={handleRedeemHandled}
+                />
             )}
 
             {createPortal(toastElement, document.body)}

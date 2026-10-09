@@ -2,16 +2,48 @@ import { useEffect, useState } from "react";
 import { API } from "../../services/api";
 import "./Notification.css";
 
-function Notification({ onClose }) {
+/* ============================================
+   MASK EMAIL
+   ============================================ */
+function maskEmail(email) {
 
+    if (!email || !email.includes("@")) return email || "";
+
+    const [local, domain] = email.split("@");
+
+    const visibleCount = Math.max(1, Math.floor(local.length / 2));
+    const starsCount = local.length - visibleCount;
+
+    const visible = local.slice(0, visibleCount);
+    const stars = "*".repeat(starsCount);
+
+    return `${visible}${stars}@${domain}`;
+
+}
+
+function Notification({ onClose, onRedeemHandled }) {
+
+    /* ============================================
+       USER 1 — kisi ne mera promo use kiya
+       ============================================ */
     const [redeemed, setRedeemed] = useState(false);
     const [reqUserId, setReqUserId] = useState(0);
-    const [requesterName, setRequesterName] = useState("");
+    const [requesterEmail, setRequesterEmail] = useState("");
+
+    /* ============================================
+       USER 2 — maine kisi ka promo use kiya
+       ============================================ */
+    const [usedOwnerId, setUsedOwnerId] = useState(0);
+    const [usedOwnerEmail, setUsedOwnerEmail] = useState("");
+    const [usedRedeemed, setUsedRedeemed] = useState(0);
 
     const [notifications, setNotifications] = useState([]);
     const [loadingNotifs, setLoadingNotifs] = useState(true);
-    const [expandedId, setExpandedId] = useState(null); // 👈 naya
+    const [expandedId, setExpandedId] = useState(null);
 
+    /* ============================================
+       LOAD REWARDS
+       ============================================ */
     useEffect(() => {
 
         async function loadData() {
@@ -27,29 +59,13 @@ function Notification({ onClose }) {
 
                 if (data.success && data.data) {
 
-                    const myReqUserId = data.data.req_userid || 0;
-                    const isRedeemed = data.data.redeemed === 1;
+                    setReqUserId(data.data.req_userid || 0);
+                    setRedeemed(data.data.redeemed === 1);
+                    setRequesterEmail(data.data.requester_email || "");
 
-                    setReqUserId(myReqUserId);
-                    setRedeemed(isRedeemed);
-
-                    if (myReqUserId > 0) {
-                        try {
-                            const userRes = await fetch(`${API}/api/users`);
-                            const usersData = await userRes.json();
-
-                            if (usersData.success) {
-                                const found = usersData.data.find(
-                                    u => String(u.user_id) === String(myReqUserId)
-                                );
-                                if (found) {
-                                    setRequesterName(found.full_name || "User");
-                                }
-                            }
-                        } catch (e) {
-                            console.log(e);
-                        }
-                    }
+                    setUsedOwnerId(data.data.used_owner_id || 0);
+                    setUsedOwnerEmail(data.data.used_owner_email || "");
+                    setUsedRedeemed(data.data.used_redeemed || 0);
 
                 }
 
@@ -64,7 +80,7 @@ function Notification({ onClose }) {
     }, []);
 
     /* ============================================
-       FETCH — heepit_notification list
+       LOAD NOTIFICATIONS
        ============================================ */
     useEffect(() => {
 
@@ -115,6 +131,7 @@ function Notification({ onClose }) {
             const data = await res.json();
 
             if (data.success) {
+                if (onRedeemHandled) onRedeemHandled();
                 onClose();
             }
 
@@ -128,30 +145,20 @@ function Notification({ onClose }) {
        ITEM CLICK — toggle expand
        ============================================ */
     const handleItemClick = (id, e) => {
-        e.stopPropagation(); // box ke andar ka click, overlay tak na jaye
+        e.stopPropagation();
         setExpandedId(prev => (prev === id ? null : id));
     };
 
-    /* ============================================
-       BOX KE ANDAR CLICK — sirf expand collapse
-       ============================================ */
     const handleBoxClick = (e) => {
         e.stopPropagation();
-        // agar kisi expanded item ke bahar click hua to collapse
         setExpandedId(null);
     };
 
     return (
 
-        <div
-            className="hd-notif-overlay"
-            onClick={onClose}
-        >
+        <div className="hd-notif-overlay" onClick={onClose}>
 
-            <div
-                className="hd-notif-box"
-                onClick={handleBoxClick}
-            >
+            <div className="hd-notif-box" onClick={handleBoxClick}>
 
                 <div className="hd-notif-header">
 
@@ -166,10 +173,7 @@ function Notification({ onClose }) {
                             </span>
                         </div>
 
-                        <button
-                            className="hd-notif-close"
-                            onClick={onClose}
-                        >
+                        <button className="hd-notif-close" onClick={onClose}>
                             ✕
                         </button>
 
@@ -178,16 +182,20 @@ function Notification({ onClose }) {
                 </div>
 
                 {/* ============================================
-                   REDEEM SECTION — pinned
+                   PINNED 1 — kisi ne mera promo use kiya
                    ============================================ */}
-                {(reqUserId > 0) && (
+                {reqUserId > 0 && (
                     <div className="hd-notif-pinned">
 
                         {!redeemed && (
                             <div className="hd-notif-action-box">
 
                                 <div className="hd-notif-message">
-                                    <strong>{requesterName || "Someone"}</strong>
+                                    <strong>
+                                        {requesterEmail
+                                            ? maskEmail(requesterEmail)
+                                            : "Someone"}
+                                    </strong>
                                     {" "}wants to redeem your promo code.
                                 </div>
 
@@ -214,8 +222,12 @@ function Notification({ onClose }) {
 
                         {redeemed && (
                             <div className="hd-notif-line">
-                                Your promo code was used by{" "}
-                                <strong>{requesterName || "User"}</strong>
+                                Your promo code was used by{" "}, <br /> You Got 40 hypo points flat.
+                                <strong>
+                                    {requesterEmail
+                                        ? maskEmail(requesterEmail)
+                                        : "User"}
+                                </strong>
                             </div>
                         )}
 
@@ -223,7 +235,33 @@ function Notification({ onClose }) {
                 )}
 
                 {/* ============================================
-                   NOTIFICATION LIST — scroll yahan
+                   PINNED 2 — maine kisi ka promo use kiya
+                   ============================================ */}
+                {usedOwnerId > 0 && (
+                    <div className="hd-notif-pinned hd-notif-pinned-used">
+
+                        {usedRedeemed === 1 ? (
+
+                            <div className="hd-notif-line hd-notif-line-approved">
+                                <strong>{maskEmail(usedOwnerEmail)}</strong>
+                                {" "}approved your request. You got 10 HYPO Points Flat.
+                            </div>
+
+                        ) : (
+
+                            <div className="hd-notif-line">
+                                You used the promocode of{" "}
+                                <strong>{maskEmail(usedOwnerEmail)}</strong>
+                                {" "}— Waiting for response...
+                            </div>
+
+                        )}
+
+                    </div>
+                )}
+
+                {/* ============================================
+                   NOTIFICATION LIST
                    ============================================ */}
                 <div className="hd-notif-list-wrap">
 
@@ -256,7 +294,7 @@ function Notification({ onClose }) {
                         </div>
                     )}
 
-                    {!loadingNotifs && notifications.length === 0 && reqUserId === 0 && (
+                    {!loadingNotifs && notifications.length === 0 && reqUserId === 0 && usedOwnerId === 0 && (
                         <div className="hd-notif-empty">
                             <span>🔕</span>
                             <p>No Notifications</p>

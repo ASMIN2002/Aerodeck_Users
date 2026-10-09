@@ -1683,3 +1683,26 @@
     letter-spacing: 2px;
     font-variant-numeric: tabular-nums;
 }
+
+.redeem-approved-box {
+    text-align: center;
+    padding: 32px 20px;
+    border-radius: 12px;
+}
+
+.redeem-approved-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.redeem-approved-text {
+    font-size: 15px;
+    color: #e1e4ec;
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+.redeem-approved-footer {
+    font-size: 13px;
+    color: #ccd0d5;
+}
