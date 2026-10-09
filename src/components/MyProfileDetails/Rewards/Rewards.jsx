@@ -3,6 +3,23 @@ import { useNavigate } from "react-router-dom";
 import "./Rewards.css";
 import { API } from "../../../services/api";
 
+
+function maskEmail(email) {
+
+    if (!email || !email.includes("@")) return email || "";
+
+    const [local, domain] = email.split("@");
+
+    const visibleCount = Math.max(1, Math.floor(local.length / 2));
+    const starsCount = local.length - visibleCount;
+
+    const visible = local.slice(0, visibleCount);
+    const stars = "*".repeat(starsCount);
+
+    return `${visible}${stars}@${domain}`;
+
+}
+
 /* ============================================
    SCRATCH BOX
    ============================================ */
@@ -51,13 +68,13 @@ function generateBoxes() {
 
     const values = [1, 2, 3, 4, 5, 6];
 
-    // Fisher-Yates shuffle
     for (let i = values.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [values[i], values[j]] = [values[j], values[i]];
     }
 
     return values;
+
 }
 
 /* ============================================
@@ -88,8 +105,11 @@ function Rewards({ setProfilePage }) {
     const [sendMsg, setSendMsg] = useState("");
     const [sendMsgType, setSendMsgType] = useState("");
     const [isChecking, setIsChecking] = useState(false);
-    const [reqUserId, setReqUserId] = useState(0);
-    const [redeemed, setRedeemed] = useState(false);
+
+    const [usedOwnerId, setUsedOwnerId] = useState(0);
+    const [usedOwnerEmail, setUsedOwnerEmail] = useState("");
+    const [usedUpdatedAt, setUsedUpdatedAt] = useState(null);
+    const [countdown, setCountdown] = useState("");
 
     const helpBoxRef = useRef(null);
 
@@ -112,8 +132,9 @@ function Rewards({ setProfilePage }) {
                 if (data.success && data.data) {
                     setHypoPoints(data.data.hypo_points || 0);
                     setCount(data.data.count || 0);
-                    setReqUserId(data.data.req_userid || 0);
-                    setRedeemed(data.data.redeemed === 1);
+                    setUsedOwnerId(data.data.used_owner_id || 0);
+                    setUsedOwnerEmail(data.data.used_owner_email || "");
+                    setUsedUpdatedAt(data.data.used_updated_at || null);
                 }
 
             } catch (err) {
@@ -156,6 +177,44 @@ function Rewards({ setProfilePage }) {
         };
 
     }, [showHelp]);
+
+    /* ============================================
+       COUNTDOWN — 24h from used_updated_at
+       ============================================ */
+    useEffect(() => {
+
+        if (usedOwnerId <= 0 || !usedUpdatedAt) {
+            setCountdown("");
+            return;
+        }
+
+        const expiry = new Date(usedUpdatedAt).getTime() + 24 * 60 * 60 * 1000;
+
+        const tick = () => {
+
+            const diff = expiry - Date.now();
+
+            if (diff <= 0) {
+                setCountdown("Expired");
+                window.location.reload();
+                return;
+            }
+
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+
+            setCountdown(
+                `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`
+            );
+
+        };
+
+        tick();
+        const interval = setInterval(tick, 1000);
+        return () => clearInterval(interval);
+
+    }, [usedOwnerId, usedUpdatedAt]);
 
     /* ============================================
        RESET AFTER SCRATCH — REAL
@@ -300,8 +359,9 @@ function Rewards({ setProfilePage }) {
                 const rewardData = await rewardRes.json();
 
                 if (rewardData.success && rewardData.data) {
-                    setReqUserId(rewardData.data.req_userid || 0);
-                    setRedeemed(rewardData.data.redeemed === 1);
+                    setUsedOwnerId(rewardData.data.used_owner_id || 0);
+                    setUsedOwnerEmail(rewardData.data.used_owner_email || "");
+                    setUsedUpdatedAt(rewardData.data.used_updated_at || null);
                 }
 
             } else {
@@ -595,22 +655,30 @@ function Rewards({ setProfilePage }) {
 
                 <div className="redeem-section">
 
-                    {reqUserId > 0 && redeemed ? (
+                    {usedOwnerId > 0 ? (
 
-                        <div className="redeem-redeemed-box">
-                            <div className="redeem-redeemed-icon">🎉</div>
+                        <div className="redeem-pending-box">
 
-                            <h3 className="redeem-redeemed-title">
-                                Already Redeemed
+                            <div className="redeem-pending-icon">⏳</div>
+
+                            <h3 className="redeem-pending-title">
+                                You used the promocode of
                             </h3>
 
-                            <p className="redeem-redeemed-text">
-                                You got <strong>10 HYPO Points</strong>
+                            <p className="redeem-pending-email">
+                                {maskEmail(usedOwnerEmail)}
                             </p>
 
-                            <p className="redeem-redeemed-footer">
-                                Congratulations! 🎊
+                            <p className="redeem-pending-text">
+                                Waiting for response...
                             </p>
+
+                            {countdown && (
+                                <div className="redeem-countdown">
+                                    {countdown}
+                                </div>
+                            )}
+
                         </div>
 
                     ) : (
