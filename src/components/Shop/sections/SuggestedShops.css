@@ -378,3 +378,51 @@
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ============================================
+   OUT OF STOCK
+   ============================================ */
+.shop-suggested-card.out-of-stock .shop-suggested-image {
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter 0.3s, opacity 0.3s;
+}
+
+.shop-suggested-card.out-of-stock .shop-suggested-name {
+    color: rgba(229, 231, 235, 0.5);
+}
+
+.shop-suggested-card.out-of-stock .shop-suggested-price del,
+.shop-suggested-card.out-of-stock .shop-suggested-price strong {
+    color: rgba(229, 231, 235, 0.5);
+}
+
+.shop-suggested-card.out-of-stock:hover .shop-suggested-image {
+    filter: grayscale(1);
+    opacity: 0.55;
+}
+
+.shop-suggested-card.out-of-stock:hover .shop-suggested-image img {
+    transform: none;
+}
+
+/* OUT OF STOCK BADGE */
+.shop-suggested-oos {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    padding: 4px 8px;
+    background: rgba(220, 38, 38, 0.95);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border-radius: 6px;
+    z-index: 3;
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.5);
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}

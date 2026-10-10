@@ -472,7 +472,42 @@
         transition-duration: 0.01ms !important;
     }
 }
-.pc-category-row-information{
+
+.pc-category-row-information {
     display: flex;
     justify-content: space-between;
+}
+
+/* ============================================
+   OUT OF STOCK
+   ============================================ */
+.pc-card.out-of-stock .pc-image {
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter 0.3s, opacity 0.3s;
+}
+
+.pc-card.out-of-stock .pc-name,
+.pc-card.out-of-stock .pc-final-price,
+.pc-card.out-of-stock .pc-demo-price,
+.pc-card.out-of-stock .pc-category,
+.pc-card.out-of-stock .pc-stat,
+.pc-card.out-of-stock .pc-rating,
+.pc-card.out-of-stock .pc-desc {
+    color: rgba(229, 231, 235, 0.5);
+    opacity: 0.7;
+}
+
+.pc-card.out-of-stock:hover .pc-image {
+    transform: none;
+}
+
+/* OUT OF STOCK OVERLAY */
+.pc-oos-overlay {
+    display: none;
+}
+
+/* Ensure image-grid is relative for overlay positioning */
+.pc-image-grid {
+    position: relative;
 }

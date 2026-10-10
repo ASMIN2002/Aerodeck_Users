@@ -47,37 +47,48 @@ function SuggestedShops({ shops, onOpenDetails, onOpenAllShops }) {
             <div className="shop-suggested-scroll">
                 <div className="shop-suggested-grid">
 
-                    {suggestedShops.map((shop, index) => (
-                        <div
-                            className="shop-suggested-card"
-                            key={shop.shop_id}
-                            onClick={() => onOpenDetails(shop, "shop")}
-                            style={{ animationDelay: `${index * 0.04}s` }}
-                        >
-                            <div className="shop-suggested-image">
-                                <img
-                                    src={shop.shop_image1}
-                                    alt={shop.shop_name}
-                                />
-                                {Number(shop.shop_rating) > 3.5 && (
-                                    <span className="shop-suggested-rating">
-                                        {Number(shop.shop_rating).toFixed(1)}
-                                        <span className="rating-star">★</span>
-                                    </span>
-                                )}
-                            </div>
+                    {suggestedShops.map((shop, index) => {
+                        const isAvailable = Number(shop.shop_status) === 1;
 
-                            <div className="shop-suggested-info">
-                                <span className="shop-suggested-name">
-                                    {shop.shop_name}
-                                </span>
-                                <div className="shop-suggested-price">
-                                    <del>₹{shop.shop_demo_price}</del>
-                                    <strong>₹{shop.shop_price}</strong>
+                        return (
+                            <div
+                                className={`shop-suggested-card ${!isAvailable ? "out-of-stock" : ""}`}
+                                key={shop.shop_id}
+                                onClick={() => onOpenDetails(shop, "shop")}
+                                style={{ animationDelay: `${index * 0.04}s` }}
+                            >
+                                <div className="shop-suggested-image">
+                                    <img
+                                        src={shop.shop_image1}
+                                        alt={shop.shop_name}
+                                    />
+
+                                    {!isAvailable && (
+                                        <span className="shop-suggested-oos">
+                                            OUT OF STOCK
+                                        </span>
+                                    )}
+
+                                    {isAvailable && Number(shop.shop_rating) > 3.5 && (
+                                        <span className="shop-suggested-rating">
+                                            {Number(shop.shop_rating).toFixed(1)}
+                                            <span className="rating-star">★</span>
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="shop-suggested-info">
+                                    <span className="shop-suggested-name">
+                                        {shop.shop_name}
+                                    </span>
+                                    <div className="shop-suggested-price">
+                                        <del>₹{shop.shop_demo_price}</del>
+                                        <strong>₹{shop.shop_price}</strong>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                 </div>
             </div>

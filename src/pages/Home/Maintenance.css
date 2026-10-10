@@ -1,0 +1,160 @@
+/* ============================================
+   MAINTENANCE PAGE
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+.maintenance-page {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0d1117;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 99999;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Background glow */
+.maintenance-page::before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.15);
+    filter: blur(120px);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+}
+
+.maintenance-page::after {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.15);
+    filter: blur(120px);
+    bottom: -100px;
+    left: -100px;
+    pointer-events: none;
+}
+
+/* CARD */
+.maintenance-card {
+    position: relative;
+    z-index: 2;
+    max-width: 420px;
+    width: 100%;
+    background: rgba(22, 27, 34, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 40px 28px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(59, 130, 246, 0.15);
+    animation: maintenanceIn 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes maintenanceIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ICON */
+.maintenance-icon {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 20px;
+    display: inline-block;
+    animation: maintenanceSpin 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.6));
+}
+
+@keyframes maintenanceSpin {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(15deg) scale(1.05);
+    }
+}
+
+/* TITLE */
+.maintenance-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0 0 14px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #ffffff 0%, #8b949e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* TEXT */
+.maintenance-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #8b949e;
+    margin: 0 0 24px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+/* FOOTER */
+.maintenance-footer {
+    font-size: 13px;
+    color: #c9d1d9;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+    .maintenance-card {
+        padding: 32px 22px;
+        border-radius: 16px;
+    }
+
+    .maintenance-icon {
+        font-size: 54px;
+        margin-bottom: 16px;
+    }
+
+    .maintenance-title {
+        font-size: 20px;
+    }
+
+    .maintenance-text {
+        font-size: 13px;
+    }
+
+    .maintenance-footer {
+        font-size: 12px;
+    }
+}

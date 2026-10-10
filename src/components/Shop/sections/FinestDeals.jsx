@@ -26,28 +26,39 @@ function FinestDeals({ user, shops, onOpenDetails }) {
             <div className="shop-finest-deals-scroll">
                 <div className="shop-finest-deals-grid">
 
-                    {finestDeals.map((shop, index) => (
-                        <div
-                            className="shop-finest-deal-card"
-                            key={shop.shop_id}
-                            onClick={() => onOpenDetails(shop, "shop")}
-                            style={{ animationDelay: `${index * 0.05}s` }}
-                        >
-                            <div className="shop-finest-deal-image">
-                                <img
-                                    src={shop.shop_image1}
-                                    alt={shop.shop_name}
-                                />
-                                <span className="shop-finest-deal-price">
-                                    From ₹{Number(shop.shop_price || 0).toLocaleString("en-IN")}
+                    {finestDeals.map((shop, index) => {
+                        const isAvailable = Number(shop.shop_status) === 1;
+
+                        return (
+                            <div
+                                className={`shop-finest-deal-card ${!isAvailable ? "out-of-stock" : ""}`}
+                                key={shop.shop_id}
+                                onClick={() => onOpenDetails(shop, "shop")}
+                                style={{ animationDelay: `${index * 0.05}s` }}
+                            >
+                                <div className="shop-finest-deal-image">
+                                    <img
+                                        src={shop.shop_image1}
+                                        alt={shop.shop_name}
+                                    />
+
+                                    {!isAvailable && (
+                                        <span className="shop-finest-deal-oos">
+                                            OUT OF STOCK
+                                        </span>
+                                    )}
+
+                                    <span className="shop-finest-deal-price">
+                                        From ₹{Number(shop.shop_price || 0).toLocaleString("en-IN")}
+                                    </span>
+                                </div>
+
+                                <span className="shop-finest-deal-name">
+                                    {shop.shop_name}
                                 </span>
                             </div>
-
-                            <span className="shop-finest-deal-name">
-                                {shop.shop_name}
-                            </span>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                 </div>
             </div>

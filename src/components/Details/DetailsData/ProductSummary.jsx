@@ -1,6 +1,6 @@
 import "../DetailsDataStyle/ProductSummary.css";
 import { API } from "../../../services/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function ProductSummary({
@@ -11,7 +11,6 @@ function ProductSummary({
     onBuyNow
 }) {
     const navigate = useNavigate();
-
 
     const name =
         product?.product_name ||
@@ -54,7 +53,6 @@ function ProductSummary({
     const totalPrice =
         Number(price || 0) * Number(cartQuantity || 0);
 
-
     const isShopOrGift =
         !!(
             product?.shop_name ||
@@ -63,12 +61,16 @@ function ProductSummary({
             product?.gift_description
         );
 
-
+    /* ============================================
+       STATUS CHECK
+       ============================================ */
     const status =
         product?.product_status ??
         product?.gift_status ??
         product?.shop_status ??
         product?.premium_status;
+
+    const isAvailable = Number(status) === 1;
 
     const [expanded, setExpanded] = useState(false);
     const LIMIT = 120;
@@ -77,7 +79,104 @@ function ProductSummary({
     const whatsappNumber = "918984031948";
     const sessionToken = localStorage.getItem("session_token");
 
+    /* ============================================
+       USER + ADDRESS STATE
+       ============================================ */
+    const [userDetails, setUserDetails] = useState(null);
+    const [primaryAddress, setPrimaryAddress] = useState(null);
+    const [verifyError, setVerifyError] = useState(null);
+
+    useEffect(() => {
+        async function loadUserDetails() {
+            if (!sessionToken) return;
+
+            try {
+                const response = await fetch(
+                    `${API}/api/user/details?session_token=${sessionToken}`
+                );
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    setUserDetails(data.data);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        loadUserDetails();
+    }, [sessionToken]);
+
+    useEffect(() => {
+        async function fetchPrimaryAddress() {
+            if (!sessionToken) return;
+
+            try {
+                const response = await fetch(
+                    `${API}/api/user/address?session_token=${sessionToken}`
+                );
+                const data = await response.json();
+
+                if (data.success) {
+                    const primary = data.data.find(
+                        (item) => item.is_primary === 1
+                    );
+                    setPrimaryAddress(primary || null);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        fetchPrimaryAddress();
+    }, [sessionToken]);
+
+    useEffect(() => {
+        if (!verifyError) return;
+
+        const timer = setTimeout(() => {
+            setVerifyError(null);
+        }, 3500);
+
+        return () => clearTimeout(timer);
+    }, [verifyError]);
+
+    /* ============================================
+       ORDER NOW
+       ============================================ */
     const handleOrderNow = async () => {
+
+        if (!userDetails?.full_name || userDetails.full_name.trim() === "") {
+            setVerifyError({
+                text: "First give your name to continue.",
+                action: "verify"
+            });
+            return;
+        }
+
+        if (!userDetails?.mobile_number || userDetails.is_mobile_verified !== 1) {
+            setVerifyError({
+                text: "Please verify your mobile number first.",
+                action: "verify"
+            });
+            return;
+        }
+
+        if (!userDetails?.whatsapp_number || userDetails.is_whatsapp_verified !== 1) {
+            setVerifyError({
+                text: "Please verify your WhatsApp number first.",
+                action: "verify"
+            });
+            return;
+        }
+
+        if (!primaryAddress) {
+            setVerifyError({
+                text: "Please select the address.",
+                action: "address"
+            });
+            return;
+        }
 
         const productId =
             product?.product_id ||
@@ -85,19 +184,14 @@ function ProductSummary({
             product?.premium_id ||
             product?.shop_id;
 
-        if (!sessionToken || !productId) {
-            return;
-        }
+        if (!sessionToken || !productId) return;
 
         try {
-
             const response = await fetch(
                 `${API}/api/user/whatsapp-order-data`,
                 {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         session_token: sessionToken,
                         product_id: productId
@@ -107,9 +201,7 @@ function ProductSummary({
 
             const data = await response.json();
 
-            if (!data.success) {
-                return;
-            }
+            if (!data.success) return;
 
             const message =
                 `USER = #${data.user_id}HEEPITUSER\n` +
@@ -122,53 +214,36 @@ function ProductSummary({
             window.open(whatsappUrl, "_blank");
 
         } catch (error) {
-
             console.error("WhatsApp order error:", error);
-
         }
     };
 
     return (
-
         <section className="ps-section">
             <div className="tobbardet">
                 <div className="ps-price-row">
 
                     <div className="pridisc">
                         {demoPrice && (
-
                             <span className="ps-demo-price">
-
                                 ₹{demoPrice}
-
                             </span>
-
                         )}
 
                         {discount > 0 && (
-
                             <span className="ps-discount">
-
                                 {discount}% OFF
-
                             </span>
-
                         )}
                     </div>
                     <span className="ps-price">
-
                         ₹{price}
-
                     </span>
 
                 </div>
                 <div className="ps-rating">
-
                     ⭐ {rating}
-
                 </div>
-
-
             </div>
 
             <div className="ps-header">
@@ -193,43 +268,45 @@ function ProductSummary({
 
             <div className="downcartbuy">
 
-                {isShopOrGift ? (
+                {!isAvailable ? (
+
+                    <div className="ps-oos-wrap">
+                        <div className="ps-oos-badge">
+                            OUT OF STOCK
+                        </div>
+                        <p className="ps-oos-text">
+                            This product is currently unavailable.
+                        </p>
+                    </div>
+
+                ) : isShopOrGift ? (
                     <>
                         <div className="ps-cart-row">
 
                             {cartQuantity > 0 ? (
-
                                 <div className="ps-qty">
-
                                     <button onClick={onDecreaseCart}>
                                         -
                                     </button>
-
                                     <span>
                                         {cartQuantity}
                                     </span>
-
                                     <button onClick={onIncreaseCart}>
                                         +
                                     </button>
-
                                 </div>
-
                             ) : (
-
                                 <button
                                     className="ps-cart-btn"
                                     onClick={onIncreaseCart}
                                 >
                                     🛒 Add To Cart
                                 </button>
-
                             )}
 
                         </div>
 
                         <div className="ps-buy-now">
-
                             <button
                                 className="ps-cart-btn"
                                 onClick={() => {
@@ -238,7 +315,6 @@ function ProductSummary({
                                 }}
                             >
                                 Buy at&nbsp;
-
                                 <span className="ps-total-price">
                                     ₹{Number(
                                         cartQuantity > 0
@@ -246,32 +322,48 @@ function ProductSummary({
                                             : price
                                     ).toLocaleString("en-IN")}
                                 </span>
-
                             </button>
-
                         </div>
                     </>
                 ) : (
-
                     <div className="ps-buy-now">
-
                         <button
                             className="ps-cart-btn"
                             onClick={handleOrderNow}
                         >
                             ORDER NOW
                         </button>
-
                     </div>
-
                 )}
 
             </div>
 
+            {verifyError && (
+                <div className="ps-verify-error">
+                    <span>{verifyError.text}</span>
+
+                    {verifyError.action === "verify" && (
+                        <button
+                            className="ps-verify-btn"
+                            onClick={() => navigate("/profile/viewprofile")}
+                        >
+                            Verify
+                        </button>
+                    )}
+
+                    {verifyError.action === "address" && (
+                        <button
+                            className="ps-verify-btn"
+                            onClick={() => navigate("/profile/address")}
+                        >
+                            Address
+                        </button>
+                    )}
+                </div>
+            )}
+
         </section>
-
     );
-
 }
 
 export default ProductSummary;

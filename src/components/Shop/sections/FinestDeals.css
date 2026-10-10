@@ -261,3 +261,72 @@
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ============================================
+   OUT OF STOCK
+   ============================================ */
+.shop-finest-deal-card.out-of-stock .shop-finest-deal-image {
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter 0.3s, opacity 0.3s;
+}
+
+.shop-finest-deal-card.out-of-stock .shop-finest-deal-name {
+    color: rgba(229, 231, 235, 0.5);
+}
+
+.shop-finest-deal-card.out-of-stock:hover .shop-finest-deal-image {
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 8px 20px -10px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    filter: grayscale(1);
+    opacity: 0.55;
+}
+
+.shop-finest-deal-card.out-of-stock:hover .shop-finest-deal-image img {
+    transform: none;
+}
+
+.shop-finest-deal-card.out-of-stock:hover .shop-finest-deal-name {
+    color: rgba(229, 231, 235, 0.5);
+}
+
+/* OUT OF STOCK BADGE */
+.shop-finest-deal-oos {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    padding: 4px 8px;
+    background: rgba(220, 38, 38, 0.95);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border-radius: 6px;
+    z-index: 3;
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.5);
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+@media (max-width: 480px) {
+    .shop-finest-deal-oos {
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        padding: 3px 6px;
+        font-size: 8.5px;
+        border-radius: 5px;
+    }
+}
+
+@media (max-width: 360px) {
+    .shop-finest-deal-oos {
+        font-size: 8px;
+        padding: 2.5px 5px;
+    }
+}

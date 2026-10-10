@@ -9,13 +9,18 @@ function ProductCard({
         onOpenDetails();
     };
 
+    const isAvailable = Number(product.product_status) === 1;
+
     const discountPercent = Number(product.product_discount_percentage || 0);
     const demoPrice = Number(product.product_demo_price || 0);
     const finalPrice = Number(product.product_price || 0);
     const hasDiscount = discountPercent > 0 && demoPrice > finalPrice;
 
     return (
-        <div className="pc-card" onClick={handleCardClick}>
+        <div
+            className={`pc-card ${!isAvailable ? "out-of-stock" : ""}`}
+            onClick={handleCardClick}
+        >
             <div className="pc-image-box">
                 <div className="pc-image-grid">
                     <img
@@ -23,9 +28,15 @@ function ProductCard({
                         alt={product.product_name}
                         className="pc-image"
                     />
+
+                    {!isAvailable && (
+                        <span className="pc-oos-overlay">
+                            OUT OF STOCK
+                        </span>
+                    )}
                 </div>
 
-                {hasDiscount && (
+                {isAvailable && hasDiscount && (
                     <span className="pc-discount-badge">
                         {discountPercent}% OFF
                     </span>
@@ -33,12 +44,12 @@ function ProductCard({
 
                 <span
                     className={
-                        product.product_status
+                        isAvailable
                             ? "pc-status-pill available"
                             : "pc-status-pill unavailable"
                     }
                 >
-                    {product.product_status ? "Available" : "Out of Stock"}
+                    {isAvailable ? "Available" : "Out of Stock"}
                 </span>
             </div>
 
@@ -84,7 +95,6 @@ function ProductCard({
                         ⭐ {product.product_rating || "4.3"}
                     </div>
                 </div>
-
 
             </div>
         </div>

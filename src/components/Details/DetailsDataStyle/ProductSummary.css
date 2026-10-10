@@ -430,3 +430,143 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================
+   VERIFY ERROR BOX
+   ============================================ */
+.ps-verify-error {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1.5px solid rgba(255, 107, 107, 0.6);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(255, 107, 107, 0.25);
+  z-index: 9999;
+  max-width: 92vw;
+  width: max-content;
+  opacity: 0;
+  animation: psErrorSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.ps-verify-error::before {
+  content: "⚠️";
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.ps-verify-error span {
+  color: #ffcccb;
+  line-height: 1.4;
+  flex: 1;
+}
+
+@keyframes psErrorSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 30px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.ps-verify-btn {
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.ps-verify-btn:hover {
+  background: linear-gradient(135deg, #ff5252 0%, #d94840 100%);
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.6);
+  transform: translateY(-1px);
+}
+
+.ps-verify-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .ps-verify-error {
+    bottom: 90px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    gap: 10px;
+    max-width: 94vw;
+  }
+
+  .ps-verify-error::before {
+    font-size: 18px;
+  }
+
+  .ps-verify-btn {
+    padding: 7px 14px;
+    font-size: 11px;
+  }
+}
+
+/* ============================================
+   OUT OF STOCK — summary
+   ============================================ */
+.ps-oos-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1.5px dashed rgba(220, 38, 38, 0.4);
+  border-radius: 14px;
+  margin-top: 8px;
+}
+
+.ps-oos-badge {
+  padding: 8px 20px;
+  background: rgba(220, 38, 38, 0.95);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.4);
+  text-align: center;
+}
+
+.ps-oos-text {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(229, 231, 235, 0.7);
+  text-align: center;
+  letter-spacing: 0.2px;
+}

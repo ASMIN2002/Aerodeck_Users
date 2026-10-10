@@ -9,6 +9,7 @@ import Splash from "./pages/Splash/Splash";
 import Home from "./pages/Home/Home";
 import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
+import Maintenance from "./pages/Home/Maintenance";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login/Login";
 import { API } from "./services/api";
@@ -185,6 +186,7 @@ function App() {
     const [authMode, setAuthMode] = useState("");
     const [cartCount, setCartCount] = useState(0);
     const [updateRequired, setUpdateRequired] = useState(false);
+    const [isMaintenance, setIsMaintenance] = useState(false);
 
     const navigateWithLoading = (
         action,
@@ -202,6 +204,33 @@ function App() {
         }, duration);
     };
 
+    /* ============================================
+       MAINTENANCE CHECK
+       ============================================ */
+    useEffect(() => {
+        async function checkMaintenance() {
+            try {
+                const res = await fetch(`${API}/api/founders/all-founders`);
+                const data = await res.json();
+
+                if (data.success) {
+                    const hasUser = data.data.some((f) =>
+                        (f.updatepage || "")
+                            .split(",")
+                            .map((p) => p.trim().toUpperCase())
+                            .includes("USER")
+                    );
+
+                    setIsMaintenance(hasUser);
+                }
+            } catch (err) {
+                console.error("Maintenance check error:", err);
+            }
+        }
+
+        checkMaintenance();
+    }, []);
+
     useEffect(() => {
         async function checkForUpdate() {
             if (!user?.user_id || page !== "home") {
@@ -211,24 +240,15 @@ function App() {
             try {
                 const url = `${API}/user/check-update/${user.user_id}`;
 
-                console.log("UPDATE CHECK URL:", url);
-
                 const response = await fetch(url);
-
-                console.log("UPDATE CHECK STATUS:", response.status);
-
                 const data = await response.json();
-
-                console.log("UPDATE CHECK RESPONSE:", data);
 
                 if (
                     data.success &&
                     data.update_available === true
                 ) {
-                    console.log("🔥 UPDATE AVAILABLE");
                     setUpdateRequired(true);
                 } else {
-                    console.log("✅ NO UPDATE REQUIRED");
                     setUpdateRequired(false);
                 }
             } catch (err) {
@@ -280,8 +300,6 @@ function App() {
                             const appInfo = await CapacitorApp.getInfo();
                             const installedVersion = String(appInfo.version);
 
-                            console.log("ACTUAL INSTALLED VERSION:", installedVersion);
-
                             const currentVersionResponse = await fetch(
                                 `${API}/user/app-version/${data.user.user_id}`
                             );
@@ -292,12 +310,8 @@ function App() {
                                 ? String(currentVersionData.version)
                                 : "";
 
-                            console.log("DATABASE VERSION:", databaseVersion);
-
                             if (databaseVersion !== installedVersion) {
-                                console.log("VERSION DIFFERENT - SYNCING DATABASE...");
-
-                                const versionResponse = await fetch(
+                                await fetch(
                                     `${API}/user/update-app-version/${data.user.user_id}`,
                                     {
                                         method: "PUT",
@@ -309,12 +323,6 @@ function App() {
                                         })
                                     }
                                 );
-
-                                const versionData = await versionResponse.json();
-
-                                console.log("VERSION SYNC RESULT:", versionData);
-                            } else {
-                                console.log("VERSION ALREADY MATCHED");
                             }
                         }
                     } catch (versionError) {
@@ -368,7 +376,6 @@ function App() {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ version: installedVersion })
                     });
-                    console.log("✅ VERSION SYNCED AFTER UPDATE!");
 
                     const updateRes = await fetch(`${API}/user/check-update/${user.user_id}`);
                     const updateData = await updateRes.json();
@@ -383,6 +390,21 @@ function App() {
 
         syncVersionAfterUpdate();
     }, [user]);
+
+    /* ============================================
+       MAINTENANCE — sab kuch block
+       ============================================ */
+    if (isMaintenance) {
+        return (
+            <>
+                <Toaster
+                    position="top-center"
+                    toastOptions={{ duration: 2500 }}
+                />
+                <Maintenance />
+            </>
+        );
+    }
 
     if (checkingSession && page !== "splash") {
         return null;

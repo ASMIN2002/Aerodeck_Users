@@ -20,9 +20,7 @@ function TrackOrder({
     const currentStep = steps.indexOf(orderStatus);
 
     const isCancelled =
-        ["REQUESTED", "PROCESSING", "CANCELLED", "REFUND"].includes(
-            cancelStatus
-        );
+        ["REQUESTED", "PROCESSING", "CANCELLED"].includes(cancelStatus);
 
     const returnSteps = [
         "REQUESTED",
@@ -34,42 +32,23 @@ function TrackOrder({
     const returnCurrentStep =
         returnSteps.indexOf(returnStatus);
 
-    const hasRefund =
-        paymentStatus &&
-        paymentStatus.toUpperCase() !== "PENDING";
-
-    const cancelSteps = hasRefund
-        ? [
-            "REQUESTED",
-            "PROCESSING",
-            "CANCELLED",
-            "REFUND"
-        ]
-        : [
-            "REQUESTED",
-            "PROCESSING",
-            "CANCELLED"
-        ];
+    const cancelSteps = ["REQUESTED", "PROCESSING", "CANCELLED"];
     const cancelCurrentStep = cancelSteps.indexOf(cancelStatus);
+
     const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
-
         const timer = setTimeout(() => {
             setAnimate(true);
         }, 100);
 
         return () => clearTimeout(timer);
-
     }, [orderStatus, returnStatus, paymentStatus, orderId]);
 
-
     return (
-
         <div className="track-order">
 
             <h3 className="track-title">
-
                 {
                     isCancelled
                         ? "❌ Order Cancelled"
@@ -77,211 +56,89 @@ function TrackOrder({
                             ? `🔄 Return Tracking - ${returnStatus}`
                             : `🚚 Track Order - ${orderStatus}`
                 }
-
             </h3>
 
-
-            {/* =========================
-                CANCELLED ORDER
-            ========================= */}
-
+            {/* CANCELLED */}
             {
                 isCancelled ? (
-
-                    <div
-                        className={`track-line cancel-track ${hasRefund
-                            ? "has-refund"
-                            : "no-refund"
-                            }`}
-                    >
-
-                        {/* RED PROGRESS */}
-
+                    <div className="track-line cancel-track">
                         <div
-                            className={`cancel-progress-red ${animate
-                                ? "animate-cancel-red"
-                                : ""
-                                }`}
+                            className={`cancel-progress-red ${animate ? "animate-cancel-red" : ""}`}
                             style={{
-                                "--cancel-progress": hasRefund
-                                    ? cancelCurrentStep === 0
-                                        ? "10.66%"
+                                "--cancel-progress":
+                                    cancelCurrentStep === 0
+                                        ? "16%"
                                         : cancelCurrentStep === 1
                                             ? "50%"
-                                            : "66.66%"
-                                    : cancelCurrentStep === 0
-                                        ? "15%"
-                                        : cancelCurrentStep === 1
-                                            ? "75%"
-                                            : "100%"
+                                            : "83%"
                             }}
                         ></div>
 
-
-                        {/* GREEN REFUND PROGRESS */}
-
-                        {
-                            hasRefund && (
-
-                                <div
-                                    className={`cancel-progress-green ${animate
-                                        ? "animate-cancel-green"
-                                        : ""
-                                        }`}
-                                ></div>
-
-                            )
-                        }
-
-
-                        {/* REQUESTED */}
-
                         <div
-                            className={`cancel-step ${["REQUESTED", "PROCESSING", "CANCELLED", "REFUND"].includes(cancelStatus)
+                            className={`cancel-step ${["REQUESTED", "PROCESSING", "CANCELLED"].includes(cancelStatus)
                                 ? "completed"
-                                : ""
-                                }`}
+                                : ""}`}
                         >
                             <div className="track-circle cancel-dot"></div>
                             <span>REQUESTED</span>
                         </div>
 
-
-                        {/* PROCESSING */}
-
                         <div
-                            className={`cancel-step ${["PROCESSING", "CANCELLED", "REFUND"].includes(cancelStatus)
+                            className={`cancel-step ${["PROCESSING", "CANCELLED"].includes(cancelStatus)
                                 ? "completed"
-                                : ""
-                                }`}
+                                : ""}`}
                         >
                             <div className="track-circle cancel-dot"></div>
                             <span>PROCESSING</span>
                         </div>
 
-
-                        {/* CANCELLED */}
                         <div
-                            className={`cancel-step ${["CANCELLED", "REFUND"].includes(cancelStatus)
+                            className={`cancel-step ${cancelStatus === "CANCELLED"
                                 ? "completed"
-                                : ""
-                                }`}
+                                : ""}`}
                         >
                             <div className="track-circle cancel-dot"></div>
                             <span>CANCELLED</span>
                         </div>
-
-
-                        {/* REFUND */}
-
-                        {hasRefund && (
-                            <div
-                                className={`cancel-step refund-step ${cancelStatus === "REFUND"
-                                    ? "completed"
-                                    : ""
-                                    }`}
-                            >
-                                <div className="track-circle refund-dot"></div>
-                                <span>REFUND</span>
-                            </div>
-                        )}
                     </div>
-
                 ) : returnStatus ? (
-
-                    /* =========================
-                       RETURN TRACKING
-                    ========================= */
-
+                    /* RETURN TRACKING */
                     <div className="track-line">
-
                         <div
-                            className={`track-progress-line ${animate
-                                ? "animate-progress"
-                                : ""
-                                }`}
+                            className={`track-progress-line ${animate ? "animate-progress" : ""}`}
                             style={{
                                 "--progress":
                                     returnCurrentStep <= 0
                                         ? "0%"
-                                        : `${(
-                                            returnCurrentStep /
-                                            (returnSteps.length - 1)
-                                        ) * 100}%`
+                                        : `${(returnCurrentStep / (returnSteps.length - 1)) * 100}%`
                             }}
                         ></div>
 
-
-                        <div
-                            className={`track-step ${returnCurrentStep >= 0
-                                ? "completed"
-                                : ""
-                                }`}
-                        >
+                        <div className={`track-step ${returnCurrentStep >= 0 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
-
                             <span>REQUESTED</span>
-
-                            {/* <small>11-AUG-2026</small> */}
                         </div>
 
-
-                        <div
-                            className={`track-step ${returnCurrentStep >= 1
-                                ? "completed"
-                                : ""
-                                }`}
-                        >
+                        <div className={`track-step ${returnCurrentStep >= 1 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
-
                             <span>CONFIRMED</span>
-
-                            {/* <small>12-AUG-2026</small> */}
                         </div>
 
-
-                        <div
-                            className={`track-step ${returnCurrentStep >= 2
-                                ? "completed"
-                                : ""
-                                }`}
-                        >
+                        <div className={`track-step ${returnCurrentStep >= 2 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
-
                             <span>PICKUP</span>
-
-                            {/* <small>13-AUG-2026</small> */}
                         </div>
 
-
-                        <div
-                            className={`track-step ${returnCurrentStep >= 3
-                                ? "completed"
-                                : ""
-                                }`}
-                        >
+                        <div className={`track-step ${returnCurrentStep >= 3 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
-
                             <span>REFUND</span>
-
-                            {/* <small>14-AUG-2026</small> */}
                         </div>
-
                     </div>
-
                 ) : (
-
-                    /* =========================
-                       NORMAL ORDER TRACKING
-                    ========================= */
-
+                    /* NORMAL ORDER */
                     <div className="track-line">
-
                         <div
-                            className={`track-progress-line ${animate
-                                ? "animate-progress"
-                                : ""
-                                }`}
+                            className={`track-progress-line ${animate ? "animate-progress" : ""}`}
                             style={{
                                 "--progress":
                                     currentStep === 0
@@ -298,48 +155,31 @@ function TrackOrder({
                             }}
                         ></div>
 
-
-                        <div className={`track-step ${currentStep >= 0 ? "completed" : ""
-                            }`}>
+                        <div className={`track-step ${currentStep >= 0 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>PLACED</span>
-                            {/* <small>11-AUG-2026</small> */}
                         </div>
 
-
-                        <div className={`track-step ${currentStep >= 1 ? "completed" : ""
-                            }`}>
+                        <div className={`track-step ${currentStep >= 1 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>PACKED</span>
-                            {/* <small>11-AUG-2026</small> */}
                         </div>
 
-
-                        <div className={`track-step ${currentStep >= 2 ? "completed" : ""
-                            }`}>
+                        <div className={`track-step ${currentStep >= 2 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>SHIPPED</span>
-                            {/* <small>12-AUG-2026</small> */}
                         </div>
 
-
-                        <div className={`track-step ${currentStep >= 3 ? "completed" : ""
-                            }`}>
+                        <div className={`track-step ${currentStep >= 3 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>OOD</span>
-                            {/* <small>13-AUG-2026</small> */}
                         </div>
 
-
-                        <div className={`track-step ${currentStep >= 4 ? "completed" : ""
-                            }`}>
+                        <div className={`track-step ${currentStep >= 4 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>DELIVERED</span>
-                            {/* <small>14-AUG-2026</small> */}
                         </div>
-
                     </div>
-
                 )
             }
 

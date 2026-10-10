@@ -4,39 +4,28 @@ import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 
 function ProductShop({
-
     product,
-
     isSaved,
-
     isLiked,
-
     isAddedToCart,
-
     cartQuantity,
-
     onSave,
-
     onLike,
-
     onAddToCart,
-
     onIncreaseQuantity,
-
     onDecreaseQuantity,
-
     onOpenDetails = () => { }
-
 }) {
+
+    const isAvailable = Number(product.shop_status) === 1;
 
     const handleShopClick = () => {
         onOpenDetails();
     };
 
     return (
-
         <div
-            className="heepit-shop-card"
+            className={`heepit-shop-card ${!isAvailable ? "out-of-stock" : ""}`}
             onClick={handleShopClick}
         >
 
@@ -44,13 +33,13 @@ function ProductShop({
 
                 <span
                     className={
-                        product.shop_status
+                        isAvailable
                             ? "heepit-shop-status available"
                             : "heepit-shop-status unavailable"
                     }
                 >
                     {
-                        product.shop_status
+                        isAvailable
                             ? "Available"
                             : "Out of Stock"
                     }
@@ -78,6 +67,12 @@ function ProductShop({
             <div className="heepit-shop-image-box">
                 <div className="heepit-shop-image-grid">
                     <img src={product.shop_image1} alt="" className="heepit-shop-image" />
+
+                    {!isAvailable && (
+                        <span className="heepit-shop-oos-overlay">
+                            OUT OF STOCK
+                        </span>
+                    )}
                 </div>
             </div>
 
@@ -124,7 +119,7 @@ function ProductShop({
             <div className="heepit-shop-footer">
 
                 {
-                    !product.shop_status ? (
+                    !isAvailable ? (
 
                         <button
                             className="heepit-shop-cart-btn"

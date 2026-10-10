@@ -14,30 +14,41 @@ function ValueDeals({ shops, onOpenDetails }) {
             <div className="shop-value-deals-scroll">
                 <div className="shop-value-deals-grid">
 
-                    {valueDeals.map((shop, index) => (
-                        <div
-                            key={shop.shop_id}
-                            className="shop-value-card"
-                            onClick={() => onOpenDetails(shop, "shop")}
-                            style={{ animationDelay: `${index * 0.05}s` }}
-                        >
-                            <div className="shop-value-image">
-                                <img
-                                    src={shop.shop_image1}
-                                    alt={shop.shop_name}
-                                />
-                                {shop.shop_highlight_text && (
-                                    <span className="shop-value-highlight">
-                                        {shop.shop_highlight_text}
-                                    </span>
-                                )}
-                            </div>
+                    {valueDeals.map((shop, index) => {
+                        const isAvailable = Number(shop.shop_status) === 1;
 
-                            <span className="shop-value-name">
-                                {shop.shop_name}
-                            </span>
-                        </div>
-                    ))}
+                        return (
+                            <div
+                                key={shop.shop_id}
+                                className={`shop-value-card ${!isAvailable ? "out-of-stock" : ""}`}
+                                onClick={() => onOpenDetails(shop, "shop")}
+                                style={{ animationDelay: `${index * 0.05}s` }}
+                            >
+                                <div className="shop-value-image">
+                                    <img
+                                        src={shop.shop_image1}
+                                        alt={shop.shop_name}
+                                    />
+
+                                    {!isAvailable && (
+                                        <span className="shop-value-oos">
+                                            OUT OF STOCK
+                                        </span>
+                                    )}
+
+                                    {isAvailable && shop.shop_highlight_text && (
+                                        <span className="shop-value-highlight">
+                                            {shop.shop_highlight_text}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <span className="shop-value-name">
+                                    {shop.shop_name}
+                                </span>
+                            </div>
+                        );
+                    })}
 
                 </div>
             </div>
