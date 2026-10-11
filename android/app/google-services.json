@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "120656064805",
+    "project_id": "heepit",
+    "storage_bucket": "heepit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120656064805:android:532c55f0855d67861d6acc",
+        "android_client_info": {
+          "package_name": "com.aerodeck.founder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyyTU3uynV8FVEIYc3OZY2TxupsXwB4es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120656064805:android:1e90de78ae62e81f1d6acc",
+        "android_client_info": {
+          "package_name": "com.heepit.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyyTU3uynV8FVEIYc3OZY2TxupsXwB4es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

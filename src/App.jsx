@@ -1,8 +1,10 @@
+// src/App.jsx
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
+import { PushNotifications } from "@capacitor/push-notifications";
 import TermsAndCondition from "./pages/Login/TermsAndCondition";
 import Loading from "./components/Loading/Loading";
 import Splash from "./pages/Splash/Splash";
@@ -18,6 +20,7 @@ const NAV_HISTORY_KEY = "heepit_navigation_history";
 
 function App() {
     const navigate = useNavigate();
+
     const goTo = (url, options = {}) => {
         let history = [];
 
@@ -205,6 +208,95 @@ function App() {
     };
 
     /* ============================================
+       FCM PUSH NOTIFICATION REGISTRATION
+       ============================================ */
+    useEffect(() => {
+        async function setupPushNotifications() {
+            if (!Capacitor.isNativePlatform()) {
+                console.log("Push notifications skipped on web");
+                return;
+            }
+
+            try {
+                let perm = await PushNotifications.checkPermissions();
+
+                if (perm.receive === "prompt") {
+                    perm = await PushNotifications.requestPermissions();
+                }
+
+                if (perm.receive !== "granted") {
+                    console.log("Push permission denied");
+                    return;
+                }
+
+                /* LISTENERS — PEHLE */
+                PushNotifications.addListener(
+                    "registration",
+                    async (token) => {
+                        console.log("FCM TOKEN:", token.value);
+
+                        alert("FCM TOKEN:\n" + token.value);
+
+                        const sessionToken =
+                            localStorage.getItem("session_token");
+
+                        if (!sessionToken) return;
+
+                        try {
+                            const res = await fetch(
+                                `${API}/api/user/save-fcm-token`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        session_token: sessionToken,
+                                        fcm_token: token.value
+                                    })
+                                }
+                            );
+                            const data = await res.json();
+                            console.log("Token save response:", data);
+                        } catch (err) {
+                            console.error("Token save error:", err);
+                        }
+                    }
+                );
+
+                PushNotifications.addListener(
+                    "registrationError",
+                    (err) => {
+                        console.error("Push registration error:", err);
+                    }
+                );
+
+                PushNotifications.addListener(
+                    "pushNotificationReceived",
+                    (notification) => {
+                        console.log("Push received:", notification);
+                    }
+                );
+
+                PushNotifications.addListener(
+                    "pushNotificationActionPerformed",
+                    (action) => {
+                        console.log("Push action:", action);
+                    }
+                );
+
+                /* REGISTER — BAAD ME */
+                await PushNotifications.register();
+
+            } catch (err) {
+                console.error("Push setup error:", err);
+            }
+        }
+
+        setupPushNotifications();
+    }, []);
+
+    /* ============================================
        MAINTENANCE CHECK
        ============================================ */
     useEffect(() => {
@@ -304,7 +396,8 @@ function App() {
                                 `${API}/user/app-version/${data.user.user_id}`
                             );
 
-                            const currentVersionData = await currentVersionResponse.json();
+                            const currentVersionData =
+                                await currentVersionResponse.json();
 
                             const databaseVersion = currentVersionData.version
                                 ? String(currentVersionData.version)
@@ -371,13 +464,18 @@ function App() {
                     : "";
 
                 if (databaseVersion !== installedVersion) {
-                    await fetch(`${API}/user/update-app-version/${user.user_id}`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ version: installedVersion })
-                    });
+                    await fetch(
+                        `${API}/user/update-app-version/${user.user_id}`,
+                        {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ version: installedVersion })
+                        }
+                    );
 
-                    const updateRes = await fetch(`${API}/user/check-update/${user.user_id}`);
+                    const updateRes = await fetch(
+                        `${API}/user/check-update/${user.user_id}`
+                    );
                     const updateData = await updateRes.json();
                     if (updateData.update_available === false) {
                         setUpdateRequired(false);
@@ -391,9 +489,6 @@ function App() {
         syncVersionAfterUpdate();
     }, [user]);
 
-    /* ============================================
-       MAINTENANCE — sab kuch block
-       ============================================ */
     if (isMaintenance) {
         return (
             <>

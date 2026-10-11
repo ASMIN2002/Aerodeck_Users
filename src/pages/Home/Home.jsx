@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// src/components/Home/Home.jsx
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 
@@ -107,6 +108,63 @@ function Home({
     const [allGiftsPage, setAllGiftsPage] = useState(false);
 
     const [profile, setProfile] = useState(null);
+
+    /* ============================================
+       PULL TO REFRESH
+       ============================================ */
+    const [pullDistance, setPullDistance] = useState(0);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const touchStartYRef = useRef(0);
+    const THRESHOLD = 80;
+
+    const handleTouchStart = (e) => {
+        const container = e.currentTarget;
+        if (container.scrollTop <= 0 && !isRefreshing) {
+            touchStartYRef.current = e.touches[0].clientY;
+        } else {
+            touchStartYRef.current = 0;
+        }
+    };
+
+    const handleTouchMove = (e) => {
+        if (touchStartYRef.current === 0 || isRefreshing) return;
+
+        const container = e.currentTarget;
+        if (container.scrollTop > 0) return;
+
+        const currentY = e.touches[0].clientY;
+        const diff = currentY - touchStartYRef.current;
+
+        if (diff > 0) {
+            const distance = Math.min(diff * 0.5, 120);
+            setPullDistance(distance);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        if (pullDistance >= THRESHOLD && !isRefreshing) {
+            setIsRefreshing(true);
+
+            const container = document.querySelector(".home-content");
+            const scrollPos = container ? container.scrollTop : 0;
+
+            setTimeout(() => {
+                setNavKey((prev) => prev + 1);
+                setIsRefreshing(false);
+                setPullDistance(0);
+
+                requestAnimationFrame(() => {
+                    const el = document.querySelector(".home-content");
+                    if (el) el.scrollTop = Number(scrollPos);
+                });
+            }, 600);
+        } else {
+            setPullDistance(0);
+        }
+
+        touchStartYRef.current = 0;
+    };
+ 
     useHomeRouting({
         setSelectedBottomTab,
         setSelectedMenu,
@@ -125,7 +183,6 @@ function Home({
         setSelectedOrder,
     });
 
-
     useEffect(() => {
         localStorage.setItem("selectedMenu", selectedMenu);
     }, [selectedMenu]);
@@ -137,7 +194,6 @@ function Home({
         }
         localStorage.setItem("selectedBottomTab", selectedBottomTab);
     }, [selectedBottomTab]);
-
 
     useEffect(() => {
         async function loadProfile() {
@@ -464,7 +520,41 @@ function Home({
                 </>
             )}
 
-            <div className="home-content">
+            <div
+                className="home-content"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
+                {/* PULL TO REFRESH INDICATOR */}
+                <div
+                    className="pull-refresh-indicator"
+                    style={{
+                        height: `${pullDistance}px`,
+                        opacity: pullDistance > 0 ? 1 : 0
+                    }}
+                >
+                    <div
+                        className={`pull-refresh-icon ${pullDistance >= THRESHOLD ? "ready" : ""} ${isRefreshing ? "spinning" : ""}`}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <path d="M21 2v6h-6" />
+                            <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+                            <path d="M3 22v-6h6" />
+                            <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+                        </svg>
+                    </div>
+                    <span className="pull-refresh-text">
+                        {isRefreshing
+                            ? "Refreshing..."
+                            : pullDistance >= THRESHOLD
+                                ? "Release to refresh"
+                                : "Pull down to refresh"}
+                    </span>
+                </div>
+
                 {isDetailsOpen && (
                     <>
                         <div
