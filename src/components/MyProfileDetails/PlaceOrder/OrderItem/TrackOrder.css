@@ -363,3 +363,24 @@
         transition-duration: 0.01ms !important;
     }
 }
+
+.track-date {
+    font-size: 8.5px;
+    color: #6e7681;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin-top: 2px;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.track-step.completed .track-date {
+    color: #58a6ff;
+}
+
+@media (max-width: 480px) {
+    .track-date {
+        font-size: 7.5px;
+    }
+}

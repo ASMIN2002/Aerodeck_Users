@@ -116,6 +116,7 @@ function OrderItem({
                 paymentStatus={order.payment_status}
                 orderId={order_id}
                 cancelStatus={item.order_status}
+                orderItemId={item.order_item_id}
             />
 
             {item.order_status === "DELIVERED" && (

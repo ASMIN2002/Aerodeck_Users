@@ -1,12 +1,14 @@
 import "./TrackOrder.css";
 import { useEffect, useState } from "react";
+import { API } from "../../../../services/api";
 
 function TrackOrder({
     orderStatus,
     returnStatus,
     paymentStatus,
     orderId,
-    cancelStatus
+    cancelStatus,
+    orderItemId
 }) {
 
     const steps = [
@@ -36,6 +38,42 @@ function TrackOrder({
     const cancelCurrentStep = cancelSteps.indexOf(cancelStatus);
 
     const [animate, setAnimate] = useState(false);
+    const [processingMap, setProcessingMap] = useState({});
+
+    /* ============================================
+       FETCH PROCESSING UPDATES
+       ============================================ */
+    useEffect(() => {
+        async function loadProcessing() {
+            if (!orderItemId) return;
+
+            try {
+                const res = await fetch(
+                    `${API}/api/user/processing/${orderItemId}`
+                );
+                const data = await res.json();
+
+                if (data.success && data.data) {
+                    const map = {};
+
+                    const raw = data.data.processing_update || "";
+
+                    raw.split(",").forEach((entry) => {
+                        const [status, date] = entry.split("~");
+                        if (status && date) {
+                            map[status.trim()] = date.trim();
+                        }
+                    });
+
+                    setProcessingMap(map);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        loadProcessing();
+    }, [orderItemId]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -44,6 +82,16 @@ function TrackOrder({
 
         return () => clearTimeout(timer);
     }, [orderStatus, returnStatus, paymentStatus, orderId]);
+
+    /* ============================================
+       GET DATE
+       ============================================ */
+    const getDate = (status) => {
+        if (status === "OUT_FOR_DELIVERY") {
+            return processingMap["OUT_FOR_DELIVERY"] || "N/A";
+        }
+        return processingMap[status] || "N/A";
+    };
 
     return (
         <div className="track-order">
@@ -158,26 +206,41 @@ function TrackOrder({
                         <div className={`track-step ${currentStep >= 0 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>PLACED</span>
+                            <small className="track-date">
+                                {getDate("PLACED")}
+                            </small>
                         </div>
 
                         <div className={`track-step ${currentStep >= 1 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>PACKED</span>
+                            <small className="track-date">
+                                {getDate("PACKED")}
+                            </small>
                         </div>
 
                         <div className={`track-step ${currentStep >= 2 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>SHIPPED</span>
+                            <small className="track-date">
+                                {getDate("SHIPPED")}
+                            </small>
                         </div>
 
                         <div className={`track-step ${currentStep >= 3 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>OOD</span>
+                            <small className="track-date">
+                                {getDate("OUT_FOR_DELIVERY")}
+                            </small>
                         </div>
 
                         <div className={`track-step ${currentStep >= 4 ? "completed" : ""}`}>
                             <div className="track-circle"></div>
                             <span>DELIVERED</span>
+                            <small className="track-date">
+                                {getDate("DELIVERED")}
+                            </small>
                         </div>
                     </div>
                 )

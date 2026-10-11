@@ -1,3 +1,4 @@
+// src/components/Notification.jsx
 import { useEffect, useState } from "react";
 import { API } from "../../services/api";
 import "./Notification.css";
@@ -23,16 +24,10 @@ function maskEmail(email) {
 
 function Notification({ onClose, onRedeemHandled }) {
 
-    /* ============================================
-       USER 1 — kisi ne mera promo use kiya
-       ============================================ */
     const [redeemed, setRedeemed] = useState(false);
     const [reqUserId, setReqUserId] = useState(0);
     const [requesterEmail, setRequesterEmail] = useState("");
 
-    /* ============================================
-       USER 2 — maine kisi ka promo use kiya
-       ============================================ */
     const [usedOwnerId, setUsedOwnerId] = useState(0);
     const [usedOwnerEmail, setUsedOwnerEmail] = useState("");
     const [usedRedeemed, setUsedRedeemed] = useState(0);
@@ -41,9 +36,7 @@ function Notification({ onClose, onRedeemHandled }) {
     const [loadingNotifs, setLoadingNotifs] = useState(true);
     const [expandedId, setExpandedId] = useState(null);
 
-    /* ============================================
-       LOAD REWARDS
-       ============================================ */
+    /* LOAD REWARDS */
     useEffect(() => {
 
         async function loadData() {
@@ -79,9 +72,7 @@ function Notification({ onClose, onRedeemHandled }) {
 
     }, []);
 
-    /* ============================================
-       LOAD NOTIFICATIONS
-       ============================================ */
+    /* LOAD NOTIFICATIONS — sirf status = 1 (USER) */
     useEffect(() => {
 
         async function loadNotifications() {
@@ -93,7 +84,10 @@ function Notification({ onClose, onRedeemHandled }) {
                 const data = await res.json();
 
                 if (data.success) {
-                    setNotifications(data.data || []);
+                    const userOnly = (data.data || []).filter(
+                        (n) => Number(n.status) === 1
+                    );
+                    setNotifications(userOnly);
                 }
 
             } catch (err) {
@@ -107,9 +101,7 @@ function Notification({ onClose, onRedeemHandled }) {
 
     }, []);
 
-    /* ============================================
-       ACCEPT / IGNORE
-       ============================================ */
+    /* ACCEPT / IGNORE */
     const handleRedeemAction = async (action) => {
 
         try {
@@ -141,9 +133,6 @@ function Notification({ onClose, onRedeemHandled }) {
 
     };
 
-    /* ============================================
-       ITEM CLICK — toggle expand
-       ============================================ */
     const handleItemClick = (id, e) => {
         e.stopPropagation();
         setExpandedId(prev => (prev === id ? null : id));
@@ -181,9 +170,7 @@ function Notification({ onClose, onRedeemHandled }) {
 
                 </div>
 
-                {/* ============================================
-                   PINNED 1 — kisi ne mera promo use kiya
-                   ============================================ */}
+                {/* PINNED 1 — kisi ne mera promo use kiya */}
                 {reqUserId > 0 && (
                     <div className="hd-notif-pinned">
 
@@ -222,21 +209,21 @@ function Notification({ onClose, onRedeemHandled }) {
 
                         {redeemed && (
                             <div className="hd-notif-line">
-                                Your promo code was used by{" "}, <br /> You Got 40 hypo points flat.
+                                Your promo code was used by{" "}
                                 <strong>
                                     {requesterEmail
                                         ? maskEmail(requesterEmail)
                                         : "User"}
                                 </strong>
+                                <br />
+                                You Got 40 hypo points flat.
                             </div>
                         )}
 
                     </div>
                 )}
 
-                {/* ============================================
-                   PINNED 2 — maine kisi ka promo use kiya
-                   ============================================ */}
+                {/* PINNED 2 — maine kisi ka promo use kiya */}
                 {usedOwnerId > 0 && (
                     <div className="hd-notif-pinned hd-notif-pinned-used">
 
@@ -260,9 +247,7 @@ function Notification({ onClose, onRedeemHandled }) {
                     </div>
                 )}
 
-                {/* ============================================
-                   NOTIFICATION LIST
-                   ============================================ */}
+                {/* NOTIFICATION LIST */}
                 <div className="hd-notif-list-wrap">
 
                     {loadingNotifs && (
@@ -279,7 +264,7 @@ function Notification({ onClose, onRedeemHandled }) {
                                 return (
                                     <div
                                         key={item.id}
-                                        className={`hd-notif-item ${item.status ? "active" : "inactive"} ${isExpanded ? "expanded" : ""}`}
+                                        className={`hd-notif-item active ${isExpanded ? "expanded" : ""}`}
                                         onClick={(e) => handleItemClick(item.id, e)}
                                     >
                                         <div className="hd-notif-item-text">
