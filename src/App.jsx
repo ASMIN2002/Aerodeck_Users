@@ -209,13 +209,38 @@ function App() {
     };
 
     /* ============================================
+       FCM TOKEN SAVE HELPER
+       ============================================ */
+    const saveFcmTokenToBackend = async () => {
+        const sessionToken = localStorage.getItem("session_token");
+        const fcmToken = localStorage.getItem("fcm_token");
+
+        if (!sessionToken || !fcmToken) {
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API}/api/user/save-fcm-token`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    fcm_token: fcmToken
+                })
+            });
+            const data = await res.json();
+            console.log("Token save response:", data);
+        } catch (err) {
+            console.error("Token save error:", err);
+        }
+    };
+
+    /* ============================================
        FCM PUSH NOTIFICATION REGISTRATION
        ============================================ */
     useEffect(() => {
         async function setupPushNotifications() {
-            /* ============================================
-               PREVENT DOUBLE SETUP (StrictMode)
-               ============================================ */
+            /* Prevent double setup (StrictMode) */
             if (pushSetupRef.current) {
                 console.log("Push already setup — skip");
                 return;
@@ -239,9 +264,7 @@ function App() {
                     return;
                 }
 
-                /* ============================================
-                   CREATE DEFAULT CHANNEL (Android 8+)
-                   ============================================ */
+                /* Create default channel */
                 try {
                     await PushNotifications.createChannel({
                         id: "default",
@@ -253,39 +276,22 @@ function App() {
                         vibration: true
                     });
                 } catch (chErr) {
-                    console.log("Channel create error (already exists?):", chErr);
+                    console.log("Channel create error:", chErr);
                 }
 
                 /* ============================================
-                   LISTENERS
+                   REGISTRATION — token mile to save karo
                    ============================================ */
                 PushNotifications.addListener(
                     "registration",
                     async (token) => {
-                        const sessionToken =
-                            localStorage.getItem("session_token");
+                        console.log("FCM TOKEN:", token.value);
 
-                        if (!sessionToken) return;
+                        /* localStorage me save karo — hamesha */
+                        localStorage.setItem("fcm_token", token.value);
 
-                        try {
-                            const res = await fetch(
-                                `${API}/api/user/save-fcm-token`,
-                                {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({
-                                        session_token: sessionToken,
-                                        fcm_token: token.value
-                                    })
-                                }
-                            );
-                            const data = await res.json();
-                            console.log("Token save response:", data);
-                        } catch (err) {
-                            console.error("Token save error:", err);
-                        }
+                        /* Agar logged in hai — turant backend save karo */
+                        await saveFcmTokenToBackend();
                     }
                 );
 
@@ -296,9 +302,7 @@ function App() {
                     }
                 );
 
-                /* ============================================
-                   FOREGROUND NOTIFICATION
-                   ============================================ */
+                /* Foreground notification — toast */
                 PushNotifications.addListener(
                     "pushNotificationReceived",
                     (notification) => {
@@ -342,9 +346,7 @@ function App() {
                     }
                 );
 
-                /* ============================================
-                   REGISTER
-                   ============================================ */
+                /* Register */
                 await PushNotifications.register();
 
             } catch (err) {
@@ -354,6 +356,16 @@ function App() {
 
         setupPushNotifications();
     }, [navigate]);
+
+    /* ============================================
+       LOGIN DETECT — jab session_token aaye, token save karo
+       ============================================ */
+    useEffect(() => {
+        /* Page change pe check karo — login ke baad turant save */
+        if (page === "home") {
+            saveFcmTokenToBackend();
+        }
+    }, [page]);
 
     /* ============================================
        MAINTENANCE CHECK
@@ -591,6 +603,7 @@ function App() {
                 <Login
                     setPage={changePage}
                     setAuthMode={setAuthMode}
+                    onLoginSuccess={saveFcmTokenToBackend}
                 />
             )}
 

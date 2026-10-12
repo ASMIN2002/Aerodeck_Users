@@ -10,7 +10,7 @@ import "../../styles/Login.css";
 import { API } from "../../services/api";
 
 
-function Login({ setPage, setAuthMode }) {
+function Login({ setPage, setAuthMode, onLoginSuccess }) {
 
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
@@ -153,6 +153,15 @@ function Login({ setPage, setAuthMode }) {
 
             showToast("Login successful!", "success");
 
+            // ✅ FCM token us user ki row mein save karo
+            if (onLoginSuccess) {
+                try {
+                    await onLoginSuccess();
+                } catch (cbErr) {
+                    console.error("onLoginSuccess error:", cbErr);
+                }
+            }
+
             setTimeout(() => {
                 hideToast();
                 window.location.reload();
@@ -231,8 +240,8 @@ function Login({ setPage, setAuthMode }) {
                         {!otpSent && (
                             <button
                                 className={`lg-btn ${email.includes("@") && !isSending
-                                        ? "lg-btn-active"
-                                        : "lg-btn-disabled"
+                                    ? "lg-btn-active"
+                                    : "lg-btn-disabled"
                                     }`}
                                 onClick={handleSendOtp}
                                 disabled={!email.includes("@") || isSending}
@@ -287,8 +296,8 @@ function Login({ setPage, setAuthMode }) {
 
                                 <button
                                     className={`lg-btn ${otp.length === 6 && !isVerifying
-                                            ? "lg-btn-active"
-                                            : "lg-btn-disabled"
+                                        ? "lg-btn-active"
+                                        : "lg-btn-disabled"
                                         }`}
                                     onClick={handleVerifyOtp}
                                     disabled={otp.length !== 6 || isVerifying}
