@@ -233,10 +233,6 @@ function App() {
                 PushNotifications.addListener(
                     "registration",
                     async (token) => {
-                        console.log("FCM TOKEN:", token.value);
-
-                        alert("FCM TOKEN:\n" + token.value);
-
                         const sessionToken =
                             localStorage.getItem("session_token");
 
