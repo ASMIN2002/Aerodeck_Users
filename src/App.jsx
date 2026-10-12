@@ -12,7 +12,7 @@ import Home from "./pages/Home/Home";
 import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
 import Maintenance from "./pages/Home/Maintenance";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import Login from "./pages/Login/Login";
 import { API } from "./services/api";
 
@@ -229,7 +229,26 @@ function App() {
                     return;
                 }
 
-                /* LISTENERS — PEHLE */
+                /* ============================================
+                   CREATE DEFAULT CHANNEL (Android 8+)
+                   ============================================ */
+                try {
+                    await PushNotifications.createChannel({
+                        id: "default",
+                        name: "Default",
+                        description: "Default notifications",
+                        importance: 5,
+                        visibility: 1,
+                        sound: "default",
+                        vibration: true
+                    });
+                } catch (chErr) {
+                    console.log("Channel create error (already exists?):", chErr);
+                }
+
+                /* ============================================
+                   LISTENERS
+                   ============================================ */
                 PushNotifications.addListener(
                     "registration",
                     async (token) => {
@@ -267,21 +286,57 @@ function App() {
                     }
                 );
 
+                /* ============================================
+                   FOREGROUND NOTIFICATION
+                   ============================================ */
                 PushNotifications.addListener(
                     "pushNotificationReceived",
                     (notification) => {
-                        console.log("Push received:", notification);
+                        console.log("Push received (foreground):", notification);
+
+                        const title =
+                            notification.title ||
+                            notification.data?.title ||
+                            "HEEPIT";
+
+                        const body =
+                            notification.body ||
+                            notification.data?.body ||
+                            "New notification";
+
+                        /* Toast dikhao */
+                        toast(`${title}\n${body}`, {
+                            icon: "🔔",
+                            duration: 4000,
+                            style: {
+                                background: "#161b22",
+                                color: "#fff",
+                                border: "1px solid rgba(0,255,224,0.4)",
+                                fontSize: "13px",
+                                fontWeight: 600,
+                                maxWidth: "90vw"
+                            }
+                        });
                     }
                 );
 
                 PushNotifications.addListener(
                     "pushNotificationActionPerformed",
                     (action) => {
-                        console.log("Push action:", action);
+                        console.log("Push action (tapped):", action);
+
+                        const data = action.notification?.data;
+
+                        /* Order tap pe order details kholo */
+                        if (data?.order_id) {
+                            navigate("/profile/orders");
+                        }
                     }
                 );
 
-                /* REGISTER — BAAD ME */
+                /* ============================================
+                   REGISTER
+                   ============================================ */
                 await PushNotifications.register();
 
             } catch (err) {
@@ -290,7 +345,7 @@ function App() {
         }
 
         setupPushNotifications();
-    }, []);
+    }, [navigate]);
 
     /* ============================================
        MAINTENANCE CHECK
