@@ -210,12 +210,24 @@ function App() {
 
     /* ============================================
        FCM TOKEN SAVE HELPER
+       (retry logic — token ready na ho toh wait kare)
        ============================================ */
-    const saveFcmTokenToBackend = async () => {
+    const saveFcmTokenToBackend = async (retries = 5) => {
         const sessionToken = localStorage.getItem("session_token");
         const fcmToken = localStorage.getItem("fcm_token");
 
-        if (!sessionToken || !fcmToken) {
+        if (!sessionToken) {
+            console.log("No session token — skip FCM save");
+            return;
+        }
+
+        if (!fcmToken) {
+            if (retries > 0) {
+                console.log(`FCM token not ready — retry (${retries} left)`);
+                setTimeout(() => saveFcmTokenToBackend(retries - 1), 1000);
+            } else {
+                console.log("FCM token never arrived — giving up");
+            }
             return;
         }
 
