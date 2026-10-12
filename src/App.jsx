@@ -57,6 +57,7 @@ function App() {
     const location = useLocation();
 
     const skipHistorySaveRef = useRef(false);
+    const pushSetupRef = useRef(false);
 
     useEffect(() => {
         const path = location.pathname;
@@ -212,6 +213,15 @@ function App() {
        ============================================ */
     useEffect(() => {
         async function setupPushNotifications() {
+            /* ============================================
+               PREVENT DOUBLE SETUP (StrictMode)
+               ============================================ */
+            if (pushSetupRef.current) {
+                console.log("Push already setup — skip");
+                return;
+            }
+            pushSetupRef.current = true;
+
             if (!Capacitor.isNativePlatform()) {
                 console.log("Push notifications skipped on web");
                 return;
@@ -304,7 +314,6 @@ function App() {
                             notification.data?.body ||
                             "New notification";
 
-                        /* Toast dikhao */
                         toast(`${title}\n${body}`, {
                             icon: "🔔",
                             duration: 4000,
@@ -327,7 +336,6 @@ function App() {
 
                         const data = action.notification?.data;
 
-                        /* Order tap pe order details kholo */
                         if (data?.order_id) {
                             navigate("/profile/orders");
                         }
