@@ -1,6 +1,5 @@
-// src/App.jsx
 import "./App.css";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
@@ -17,24 +16,65 @@ import Login from "./pages/Login/Login";
 import { API } from "./services/api";
 
 const NAV_HISTORY_KEY = "heepit_navigation_history";
+const USER_KEY = "user";
+
+function getStoredUser() {
+    try {
+        const saved = localStorage.getItem(USER_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch {
+        return null;
+    }
+}
+
+function readHistory() {
+    try {
+        const saved = localStorage.getItem(NAV_HISTORY_KEY);
+        return saved ? JSON.parse(saved) : [];
+    } catch {
+        return [];
+    }
+}
+
+function writeHistory(history) {
+    try {
+        localStorage.setItem(NAV_HISTORY_KEY, JSON.stringify(history));
+    } catch {
+        // ignore
+    }
+}
 
 function App() {
     const navigate = useNavigate();
+    const navigateRef = useRef(navigate);
+    const location = useLocation();
 
-    const goTo = (url, options = {}) => {
-        let history = [];
+    useEffect(() => {
+        navigateRef.current = navigate;
+    }, [navigate]);
 
-        try {
-            const saved = localStorage.getItem(NAV_HISTORY_KEY);
-            history = saved ? JSON.parse(saved) : [];
-        } catch {
-            history = [];
-        }
+    const skipHistorySaveRef = useRef(false);
+    const pushSetupRef = useRef(false);
+    const fcmSavedRef = useRef(false);
+
+    const [page, setPage] = useState("splash");
+    const [showLoading, setShowLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState("Loading HEEPIT...");
+    const [loadingDuration, setLoadingDuration] = useState(3000);
+    const [user, setUser] = useState(getStoredUser);
+    const [checkingSession, setCheckingSession] = useState(true);
+    const [, setAuthMode] = useState("");
+    const [cartCount, setCartCount] = useState(0);
+    const [updateRequired, setUpdateRequired] = useState(false);
+    const [isMaintenance, setIsMaintenance] = useState(false);
+
+    const goTo = useCallback((url, options = {}) => {
+        let history = readHistory();
 
         if (options.replace && history.length > 0) {
             history[history.length - 1] = {
                 number: history.length,
-                url: url
+                url
             };
         } else if (
             history.length === 0 ||
@@ -42,121 +82,60 @@ function App() {
         ) {
             history.push({
                 number: history.length + 1,
-                url: url
+                url
             });
         }
 
-        localStorage.setItem(
-            NAV_HISTORY_KEY,
-            JSON.stringify(history)
-        );
+        writeHistory(history);
+        navigateRef.current(url, options);
+    }, []);
 
-        navigate(url, options);
-    };
-
-    const location = useLocation();
-
-    const skipHistorySaveRef = useRef(false);
-    const pushSetupRef = useRef(false);
-
-    useEffect(() => {
-        const path = location.pathname;
-
-        if (path === "/" || path === "/login") {
-            return;
-        }
-
-        let history = [];
-
-        try {
-            const saved = localStorage.getItem(NAV_HISTORY_KEY);
-            history = saved ? JSON.parse(saved) : [];
-        } catch {
-            history = [];
-        }
-
-        if (skipHistorySaveRef.current) {
-            skipHistorySaveRef.current = false;
-            return;
-        }
-
-        if (history.length === 0 || history[history.length - 1].url !== path) {
-            history.push({
-                number: history.length + 1,
-                url: path
-            });
-        }
-
-        localStorage.setItem(
-            NAV_HISTORY_KEY,
-            JSON.stringify(history)
-        );
-    }, [location.pathname]);
-
-    useEffect(() => {
-        const handleBackButton = async () => {
-            let history = [];
-
-            try {
-                const saved = localStorage.getItem(NAV_HISTORY_KEY);
-                history = saved ? JSON.parse(saved) : [];
-            } catch {
-                history = [];
-            }
-
-            if (history.length > 1) {
-                history.pop();
-
-                history = history.map((item, index) => ({
-                    number: index + 1,
-                    url: item.url
-                }));
-
-                localStorage.setItem(
-                    NAV_HISTORY_KEY,
-                    JSON.stringify(history)
-                );
-
-                skipHistorySaveRef.current = true;
-
-                navigate(history[history.length - 1].url);
-                return;
-            }
-
-            localStorage.removeItem(NAV_HISTORY_KEY);
-
-            await CapacitorApp.exitApp();
-        };
-
-        let listener;
-
-        CapacitorApp.addListener(
-            "backButton",
-            handleBackButton
-        ).then((result) => {
-            listener = result;
-        });
-
-        return () => {
-            if (listener) {
-                listener.remove();
-            }
-        };
-    }, [navigate]);
-
-    const changePage = (nextPage) => {
+    const changePage = useCallback((nextPage) => {
         const routes = {
             splash: "/",
             login: "/login",
             home: "/home/shop",
             appupdate: "/appupdate"
         };
+
         setPage(nextPage);
+
         const route = routes[nextPage];
         if (route && location.pathname !== route) {
-            navigate(route);
+            navigateRef.current(route);
         }
-    };
+    }, [location.pathname]);
+
+    const saveFcmTokenToBackend = useCallback(async (retries = 5) => {
+        const sessionToken = localStorage.getItem("session_token");
+        const fcmToken = localStorage.getItem("fcm_token");
+
+        if (!sessionToken) return;
+
+        if (!fcmToken) {
+            if (retries > 0) {
+                setTimeout(() => saveFcmTokenToBackend(retries - 1), 1000);
+            }
+            return;
+        }
+
+        if (fcmSavedRef.current) return;
+        fcmSavedRef.current = true;
+
+        try {
+            await fetch(`${API}/api/user/save-fcm-token`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    fcm_token: fcmToken
+                })
+            });
+        } catch (err) {
+            console.error("FCM save error:", err.message);
+            fcmSavedRef.current = false;
+        }
+    }, []);
 
     useEffect(() => {
         const path = location.pathname;
@@ -181,88 +160,64 @@ function App() {
         }
     }, [location.pathname]);
 
-    const [page, setPage] = useState("splash");
-    const [showLoading, setShowLoading] = useState(false);
-    const [loadingText, setLoadingText] = useState("Loading HEEPIT...");
-    const [loadingDuration, setLoadingDuration] = useState(3000);
-    const [user, setUser] = useState(null);
-    const [checkingSession, setCheckingSession] = useState(true);
-    const [authMode, setAuthMode] = useState("");
-    const [cartCount, setCartCount] = useState(0);
-    const [updateRequired, setUpdateRequired] = useState(false);
-    const [isMaintenance, setIsMaintenance] = useState(false);
+    useEffect(() => {
+        const path = location.pathname;
 
-    const navigateWithLoading = (
-        action,
-        text = "Loading HEEPIT...",
-        duration = 3000
-    ) => {
-        setLoadingText(text);
-        setLoadingDuration(duration);
-        setShowLoading(true);
+        if (path === "/" || path === "/login") return;
 
-        setTimeout(() => {
-            if (typeof action === "function") {
-                action();
-            }
-        }, duration);
-    };
-
-    /* ============================================
-       FCM TOKEN SAVE HELPER
-       (retry logic — token ready na ho toh wait kare)
-       ============================================ */
-    const saveFcmTokenToBackend = async (retries = 5) => {
-        const sessionToken = localStorage.getItem("session_token");
-        const fcmToken = localStorage.getItem("fcm_token");
-
-        if (!sessionToken) {
-            console.log("No session token — skip FCM save");
+        if (skipHistorySaveRef.current) {
+            skipHistorySaveRef.current = false;
             return;
         }
 
-        if (!fcmToken) {
-            if (retries > 0) {
-                console.log(`FCM token not ready — retry (${retries} left)`);
-                setTimeout(() => saveFcmTokenToBackend(retries - 1), 1000);
-            } else {
-                console.log("FCM token never arrived — giving up");
-            }
-            return;
-        }
+        const history = readHistory();
 
-        try {
-            const res = await fetch(`${API}/api/user/save-fcm-token`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    fcm_token: fcmToken
-                })
+        if (history.length === 0 || history[history.length - 1].url !== path) {
+            history.push({
+                number: history.length + 1,
+                url: path
             });
-            const data = await res.json();
-            console.log("Token save response:", data);
-        } catch (err) {
-            console.error("Token save error:", err);
+            writeHistory(history);
         }
-    };
+    }, [location.pathname]);
 
-    /* ============================================
-       FCM PUSH NOTIFICATION REGISTRATION
-       ============================================ */
+    useEffect(() => {
+        const handleBackButton = async () => {
+            let history = readHistory();
+
+            if (history.length > 1) {
+                history.pop();
+                history = history.map((item, index) => ({
+                    number: index + 1,
+                    url: item.url
+                }));
+                writeHistory(history);
+                skipHistorySaveRef.current = true;
+                navigateRef.current(history[history.length - 1].url);
+                return;
+            }
+
+            localStorage.removeItem(NAV_HISTORY_KEY);
+            await CapacitorApp.exitApp();
+        };
+
+        let listener;
+
+        CapacitorApp.addListener("backButton", handleBackButton).then((result) => {
+            listener = result;
+        });
+
+        return () => {
+            if (listener) listener.remove();
+        };
+    }, []);
+
     useEffect(() => {
         async function setupPushNotifications() {
-            /* Prevent double setup (StrictMode) */
-            if (pushSetupRef.current) {
-                console.log("Push already setup — skip");
-                return;
-            }
+            if (pushSetupRef.current) return;
             pushSetupRef.current = true;
 
-            if (!Capacitor.isNativePlatform()) {
-                console.log("Push notifications skipped on web");
-                return;
-            }
+            if (!Capacitor.isNativePlatform()) return;
 
             try {
                 let perm = await PushNotifications.checkPermissions();
@@ -271,12 +226,8 @@ function App() {
                     perm = await PushNotifications.requestPermissions();
                 }
 
-                if (perm.receive !== "granted") {
-                    console.log("Push permission denied");
-                    return;
-                }
+                if (perm.receive !== "granted") return;
 
-                /* Create default channel */
                 try {
                     await PushNotifications.createChannel({
                         id: "default",
@@ -287,101 +238,60 @@ function App() {
                         sound: "default",
                         vibration: true
                     });
-                } catch (chErr) {
-                    console.log("Channel create error:", chErr);
+                } catch {
+                    // channel already exists
                 }
 
-                /* ============================================
-                   REGISTRATION — token mile to save karo
-                   ============================================ */
-                PushNotifications.addListener(
-                    "registration",
-                    async (token) => {
-                        console.log("FCM TOKEN:", token.value);
+                PushNotifications.addListener("registration", async (token) => {
+                    localStorage.setItem("fcm_token", token.value);
+                    fcmSavedRef.current = false;
+                    await saveFcmTokenToBackend();
+                });
 
-                        /* localStorage me save karo — hamesha */
-                        localStorage.setItem("fcm_token", token.value);
+                PushNotifications.addListener("registrationError", (err) => {
+                    console.error("Push registration error:", err);
+                });
 
-                        /* Agar logged in hai — turant backend save karo */
-                        await saveFcmTokenToBackend();
-                    }
-                );
+                PushNotifications.addListener("pushNotificationReceived", (notification) => {
+                    const title = notification.title || notification.data?.title || "HEEPIT";
+                    const body = notification.body || notification.data?.body || "New notification";
 
-                PushNotifications.addListener(
-                    "registrationError",
-                    (err) => {
-                        console.error("Push registration error:", err);
-                    }
-                );
-
-                /* Foreground notification — toast */
-                PushNotifications.addListener(
-                    "pushNotificationReceived",
-                    (notification) => {
-                        console.log("Push received (foreground):", notification);
-
-                        const title =
-                            notification.title ||
-                            notification.data?.title ||
-                            "HEEPIT";
-
-                        const body =
-                            notification.body ||
-                            notification.data?.body ||
-                            "New notification";
-
-                        toast(`${title}\n${body}`, {
-                            icon: "🔔",
-                            duration: 4000,
-                            style: {
-                                background: "#161b22",
-                                color: "#fff",
-                                border: "1px solid rgba(0,255,224,0.4)",
-                                fontSize: "13px",
-                                fontWeight: 600,
-                                maxWidth: "90vw"
-                            }
-                        });
-                    }
-                );
-
-                PushNotifications.addListener(
-                    "pushNotificationActionPerformed",
-                    (action) => {
-                        console.log("Push action (tapped):", action);
-
-                        const data = action.notification?.data;
-
-                        if (data?.order_id) {
-                            navigate("/profile/orders");
+                    toast(`${title}\n${body}`, {
+                        icon: "🔔",
+                        duration: 4000,
+                        style: {
+                            background: "#161b22",
+                            color: "#fff",
+                            border: "1px solid rgba(0,255,224,0.4)",
+                            fontSize: "13px",
+                            fontWeight: 600,
+                            maxWidth: "90vw"
                         }
+                    });
+                });
+
+                PushNotifications.addListener("pushNotificationActionPerformed", (action) => {
+                    const data = action.notification?.data;
+                    if (data?.order_id) {
+                        navigateRef.current("/profile/orders");
                     }
-                );
+                });
 
-                /* Register */
                 await PushNotifications.register();
-
             } catch (err) {
-                console.error("Push setup error:", err);
+                console.error("Push setup error:", err.message);
             }
         }
 
         setupPushNotifications();
-    }, [navigate]);
+    }, [saveFcmTokenToBackend]);
 
-    /* ============================================
-       LOGIN DETECT — jab session_token aaye, token save karo
-       ============================================ */
     useEffect(() => {
-        /* Page change pe check karo — login ke baad turant save */
         if (page === "home") {
             saveFcmTokenToBackend();
         }
-    }, [page]);
+    }, [page, saveFcmTokenToBackend]);
 
-    /* ============================================
-       MAINTENANCE CHECK
-       ============================================ */
     useEffect(() => {
         async function checkMaintenance() {
             try {
@@ -395,11 +305,10 @@ function App() {
                             .map((p) => p.trim().toUpperCase())
                             .includes("USER")
                     );
-
                     setIsMaintenance(hasUser);
                 }
             } catch (err) {
-                console.error("Maintenance check error:", err);
+                console.error("Maintenance check error:", err.message);
             }
         }
 
@@ -408,37 +317,24 @@ function App() {
 
     useEffect(() => {
         async function checkForUpdate() {
-            if (!user?.user_id || page !== "home") {
-                return;
-            }
+            if (!user?.user_id || page !== "home") return;
 
             try {
-                const url = `${API}/user/check-update/${user.user_id}`;
-
-                const response = await fetch(url);
+                const response = await fetch(`${API}/user/check-update/${user.user_id}`);
                 const data = await response.json();
 
-                if (
-                    data.success &&
-                    data.update_available === true
-                ) {
-                    setUpdateRequired(true);
-                } else {
-                    setUpdateRequired(false);
-                }
+                setUpdateRequired(data.success && data.update_available === true);
             } catch (err) {
-                console.error("UPDATE CHECK ERROR:", err);
+                console.error("Update check error:", err.message);
             }
         }
 
         checkForUpdate();
-    }, [user, page]);
+    }, [user?.user_id, page]);
 
     useEffect(() => {
         async function restoreSession() {
-            if (page !== "splash") {
-                return;
-            }
+            if (page !== "splash") return;
 
             setShowLoading(true);
 
@@ -450,40 +346,29 @@ function App() {
                     return;
                 }
 
-                const response = await fetch(
-                    `${API}/api/auth/check-session`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            session_token: sessionToken
-                        })
-                    }
-                );
+                const response = await fetch(`${API}/api/auth/check-session`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ session_token: sessionToken })
+                });
 
                 const data = await response.json();
 
                 if (data.success && data.authenticated) {
                     setUser(data.user);
+                    localStorage.setItem(USER_KEY, JSON.stringify(data.user));
 
-                    try {
-                        if (!Capacitor.isNativePlatform()) {
-                            console.log("Web platform - skipping version sync");
-                        } else {
+                    if (Capacitor.isNativePlatform()) {
+                        try {
                             const appInfo = await CapacitorApp.getInfo();
                             const installedVersion = String(appInfo.version);
 
-                            const currentVersionResponse = await fetch(
+                            const versionRes = await fetch(
                                 `${API}/user/app-version/${data.user.user_id}`
                             );
-
-                            const currentVersionData =
-                                await currentVersionResponse.json();
-
-                            const databaseVersion = currentVersionData.version
-                                ? String(currentVersionData.version)
+                            const versionData = await versionRes.json();
+                            const databaseVersion = versionData.version
+                                ? String(versionData.version)
                                 : "";
 
                             if (databaseVersion !== installedVersion) {
@@ -491,32 +376,25 @@ function App() {
                                     `${API}/user/update-app-version/${data.user.user_id}`,
                                     {
                                         method: "PUT",
-                                        headers: {
-                                            "Content-Type": "application/json"
-                                        },
-                                        body: JSON.stringify({
-                                            version: installedVersion
-                                        })
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ version: installedVersion })
                                     }
                                 );
                             }
+                        } catch (err) {
+                            console.error("Version sync error:", err.message);
                         }
-                    } catch (versionError) {
-                        console.error("APP VERSION SYNC ERROR:", versionError);
                     }
 
                     changePage("home");
                 } else {
                     localStorage.removeItem("session_token");
-                    localStorage.removeItem("user");
+                    localStorage.removeItem(USER_KEY);
+                    setUser(null);
                     changePage("login");
                 }
             } catch (err) {
-                console.error(err);
-
-                if (!navigator.onLine) {
-                    console.log("Offline — session preserved in localStorage");
-                }
+                console.error("Session restore error:", err.message);
             } finally {
                 setCheckingSession(false);
                 setShowLoading(false);
@@ -524,61 +402,12 @@ function App() {
         }
 
         restoreSession();
-    }, [page]);
-
-    useEffect(() => {
-        async function syncVersionAfterUpdate() {
-            if (!user?.user_id) return;
-
-            if (!Capacitor.isNativePlatform()) {
-                return;
-            }
-
-            try {
-                const appInfo = await CapacitorApp.getInfo();
-                const installedVersion = String(appInfo.version);
-
-                const currentVersionResponse = await fetch(
-                    `${API}/user/app-version/${user.user_id}`
-                );
-                const currentVersionData = await currentVersionResponse.json();
-                const databaseVersion = currentVersionData.version
-                    ? String(currentVersionData.version)
-                    : "";
-
-                if (databaseVersion !== installedVersion) {
-                    await fetch(
-                        `${API}/user/update-app-version/${user.user_id}`,
-                        {
-                            method: "PUT",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ version: installedVersion })
-                        }
-                    );
-
-                    const updateRes = await fetch(
-                        `${API}/user/check-update/${user.user_id}`
-                    );
-                    const updateData = await updateRes.json();
-                    if (updateData.update_available === false) {
-                        setUpdateRequired(false);
-                    }
-                }
-            } catch (err) {
-                console.error("VERSION SYNC ERROR:", err);
-            }
-        }
-
-        syncVersionAfterUpdate();
-    }, [user]);
+    }, [page, changePage]);
 
     if (isMaintenance) {
         return (
             <>
-                <Toaster
-                    position="top-center"
-                    toastOptions={{ duration: 2500 }}
-                />
+                <Toaster position="top-center" toastOptions={{ duration: 2500 }} />
                 <Maintenance />
             </>
         );
@@ -590,12 +419,7 @@ function App() {
 
     return (
         <>
-            <Toaster
-                position="top-center"
-                toastOptions={{
-                    duration: 2500
-                }}
-            />
+            <Toaster position="top-center" toastOptions={{ duration: 2500 }} />
 
             {showLoading && (
                 <Loading
@@ -605,11 +429,7 @@ function App() {
                 />
             )}
 
-            {page === "splash" && (
-                <Splash
-                    setPage={changePage}
-                />
-            )}
+            {page === "splash" && <Splash setPage={changePage} />}
 
             {page === "login" && (
                 <Login
@@ -619,17 +439,20 @@ function App() {
                 />
             )}
 
-            {page === "terms" && (
-                <TermsAndCondition
-                    setPage={setPage}
-                />
-            )}
+            {page === "terms" && <TermsAndCondition setPage={setPage} />}
 
             {page === "home" && (
                 <Home
                     user={user}
                     setPage={changePage}
-                    navigateWithLoading={navigateWithLoading}
+                    navigateWithLoading={(action, text, duration) => {
+                        setLoadingText(text || "Loading HEEPIT...");
+                        setLoadingDuration(duration || 3000);
+                        setShowLoading(true);
+                        setTimeout(() => {
+                            if (typeof action === "function") action();
+                        }, duration || 3000);
+                    }}
                     cartCount={cartCount}
                     setCartCount={setCartCount}
                     goTo={goTo}
@@ -639,9 +462,7 @@ function App() {
             {page === "home" && updateRequired && (
                 <Update
                     user={user}
-                    onCancel={() => {
-                        setUpdateRequired(false);
-                    }}
+                    onCancel={() => setUpdateRequired(false)}
                     onUpdate={() => {
                         setUpdateRequired(false);
                         changePage("appupdate");
@@ -649,9 +470,7 @@ function App() {
                 />
             )}
 
-            {page === "appupdate" && (
-                <AppUpdate user={user} />
-            )}
+            {page === "appupdate" && <AppUpdate user={user} />}
         </>
     );
 }

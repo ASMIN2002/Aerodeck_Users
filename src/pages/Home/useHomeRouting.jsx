@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+function decodeCategory(path, prefix) {
+    return decodeURIComponent(path.split(prefix)[1]);
+}
+
 export default function useHomeRouting({
     setSelectedBottomTab,
     setSelectedMenu,
@@ -20,7 +24,6 @@ export default function useHomeRouting({
 }) {
     const location = useLocation();
 
-
     useEffect(() => {
         const path = location.pathname;
 
@@ -28,6 +31,12 @@ export default function useHomeRouting({
             setIsDetailsOpen(false);
             setSelectedProduct(null);
             setDetailsPage("details");
+        };
+
+        const goHome = (menu) => {
+            setSelectedBottomTab("Home");
+            setSelectedMenu(menu);
+            setProfilePage("profile");
         };
 
         const resetShopPages = () => {
@@ -45,9 +54,7 @@ export default function useHomeRouting({
         };
 
         if (path === "/home") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Shop");
-            setProfilePage("profile");
+            goHome("Shop");
             resetShopPages();
             resetGiftPages();
             closeDetails();
@@ -55,18 +62,14 @@ export default function useHomeRouting({
         }
 
         if (path === "/home/shop") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Shop");
-            setProfilePage("profile");
+            goHome("Shop");
             resetShopPages();
             closeDetails();
             return;
         }
 
         if (path === "/home/shop/allcategory") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Shop");
-            setProfilePage("profile");
+            goHome("Shop");
             setAllShopCategoriesPage(true);
             setAllShopsPage(false);
             setShopCategoryPage(false);
@@ -75,34 +78,16 @@ export default function useHomeRouting({
         }
 
         if (
-            path.startsWith("/home/shop/allcategory/") &&
+            (path.startsWith("/home/shop/allcategory/") ||
+                path.startsWith("/home/shop/category/")) &&
             !path.includes("/product/")
         ) {
-            const category = decodeURIComponent(
-                path.split("/home/shop/allcategory/")[1]
-            );
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Shop");
-            setProfilePage("profile");
-            setSelectedShopCategory(category);
-            setAllShopCategoriesPage(false);
-            setAllShopsPage(false);
-            setShopCategoryPage(true);
-            closeDetails();
-            return;
-        }
+            const prefix = path.startsWith("/home/shop/allcategory/")
+                ? "/home/shop/allcategory/"
+                : "/home/shop/category/";
 
-        if (
-            path.startsWith("/home/shop/category/") &&
-            !path.includes("/product/")
-        ) {
-            const category = decodeURIComponent(
-                path.split("/home/shop/category/")[1]
-            );
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Shop");
-            setProfilePage("profile");
-            setSelectedShopCategory(category);
+            goHome("Shop");
+            setSelectedShopCategory(decodeCategory(path, prefix));
             setAllShopCategoriesPage(false);
             setAllShopsPage(false);
             setShopCategoryPage(true);
@@ -111,9 +96,7 @@ export default function useHomeRouting({
         }
 
         if (path === "/home/shop/allshops") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Shop");
-            setProfilePage("profile");
+            goHome("Shop");
             setAllShopsPage(true);
             setAllShopCategoriesPage(false);
             setShopCategoryPage(false);
@@ -122,18 +105,14 @@ export default function useHomeRouting({
         }
 
         if (path === "/home/gifts") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Gifts");
-            setProfilePage("profile");
+            goHome("Gifts");
             resetGiftPages();
             closeDetails();
             return;
         }
 
         if (path === "/home/gifts/allcategory") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Gifts");
-            setProfilePage("profile");
+            goHome("Gifts");
             setAllGiftCategoriesPage(true);
             setAllGiftsPage(false);
             setGiftCategoryPage(false);
@@ -142,9 +121,7 @@ export default function useHomeRouting({
         }
 
         if (path === "/home/gifts/allgifts") {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Gifts");
-            setProfilePage("profile");
+            goHome("Gifts");
             setAllGiftsPage(true);
             setAllGiftCategoriesPage(false);
             setGiftCategoryPage(false);
@@ -153,34 +130,19 @@ export default function useHomeRouting({
         }
 
         if (
-            path.startsWith("/home/gifts/allcategory/") &&
+            (path.startsWith("/home/gifts/allcategory/") ||
+                path.startsWith("/home/gifts/category/")) &&
             !path.includes("/product/")
         ) {
-            const category = decodeURIComponent(
-                path.split("/home/gifts/allcategory/")[1]
-            );
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Gifts");
-            setProfilePage("profile");
-            setSelectedGiftCategory(category);
-            setAllGiftCategoriesPage(false);
-            setAllGiftsPage(false);
-            setGiftCategoryPage(true);
-            closeDetails();
-            return;
-        }
+            const prefix = path.startsWith("/home/gifts/allcategory/")
+                ? "/home/gifts/allcategory/"
+                : "/home/gifts/category/";
 
-        if (path.startsWith("/home/gifts/category/")) {
-            const category = decodeURIComponent(
-                path.split("/home/gifts/category/")[1]
-            );
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Gifts");
-            setProfilePage("profile");
-            setSelectedGiftCategory(category);
-            setGiftCategoryPage(true);
+            goHome("Gifts");
+            setSelectedGiftCategory(decodeCategory(path, prefix));
             setAllGiftCategoriesPage(false);
             setAllGiftsPage(false);
+            setGiftCategoryPage(true);
             closeDetails();
             return;
         }
@@ -191,9 +153,7 @@ export default function useHomeRouting({
             path === "/home/cards/premium" ||
             path.startsWith("/home/cards/premium/product/")
         ) {
-            setSelectedBottomTab("Home");
-            setSelectedMenu("Cards");
-            setProfilePage("profile");
+            goHome("Cards");
             setAllGiftCategoriesPage(false);
             setGiftCategoryPage(false);
             closeDetails();
@@ -251,11 +211,9 @@ export default function useHomeRouting({
         }
 
         if (path.startsWith("/profile/orders/order/")) {
-            const pathAfterOrder = path.split("/profile/orders/order/")[1];
-            const orderId = pathAfterOrder.split("/")[0];
+            const orderId = path.split("/profile/orders/order/")[1].split("/")[0];
 
             setProfilePage("order-details");
-
             setSelectedOrder((prev) => {
                 if (prev && String(prev.order_id) === String(orderId)) {
                     return prev;
@@ -426,7 +384,8 @@ export default function useHomeRouting({
                 data: {
                     product_id: type === "products" ? id : undefined,
                     gift_id: type === "gifts" ? id : undefined,
-                    shop_id: type === "shop" || type === "cards" ? id : undefined,
+                    shop_id:
+                        type === "shop" || type === "cards" ? id : undefined,
                     premium_id: type === "premium" ? id : undefined,
                 },
             };

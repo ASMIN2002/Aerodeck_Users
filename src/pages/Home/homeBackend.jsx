@@ -3,6 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 import useHomeRouting from "./useHomeRouting";
 
+const TAB_KEY = "selectedBottomTab";
+const MENU_KEY = "selectedMenu";
+
+function getInitialTab() {
+    const saved = localStorage.getItem(TAB_KEY);
+    return ["Home", "Offers", "Cart", "Profile"].includes(saved) ? saved : "Home";
+}
+
 export default function useHomeBackend({
     user,
     setPage,
@@ -13,26 +21,9 @@ export default function useHomeBackend({
     const location = useLocation();
     const navigate = useNavigate();
 
-    // ─────────────────────────────────────────────
-    // States
-    // ─────────────────────────────────────────────
     const [selectedMenu, setSelectedMenu] = useState("Shop");
-
-    const [selectedBottomTab, setSelectedBottomTab] = useState(() => {
-        const savedTab = localStorage.getItem("selectedBottomTab");
-        if (
-            savedTab === "Home" ||
-            savedTab === "Offers" ||
-            savedTab === "Cart" ||
-            savedTab === "Profile"
-        ) {
-            return savedTab;
-        }
-        return "Home";
-    });
-
+    const [selectedBottomTab, setSelectedBottomTab] = useState(getInitialTab);
     const [search, setSearch] = useState("");
-
     const [filter, setFilter] = useState({
         category: "All",
         sort: "",
@@ -58,11 +49,7 @@ export default function useHomeBackend({
     const [profileImageRefresh, setProfileImageRefresh] = useState(0);
 
     const [navKey, setNavKey] = useState(0);
-
-    const [orderData, setOrderData] = useState({
-        items: [],
-        orderType: "",
-    });
+    const [orderData, setOrderData] = useState({ items: [], orderType: "" });
     const [buyNowFromDetails, setBuyNowFromDetails] = useState(false);
     const [detailsBackPage, setDetailsBackPage] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
@@ -73,12 +60,8 @@ export default function useHomeBackend({
     const [allGiftCategoriesPage, setAllGiftCategoriesPage] = useState(false);
     const [allShopsPage, setAllShopsPage] = useState(false);
     const [allGiftsPage, setAllGiftsPage] = useState(false);
-
     const [profile, setProfile] = useState(null);
 
-    // ─────────────────────────────────────────────
-    // Routing hook
-    // ─────────────────────────────────────────────
     useHomeRouting({
         setSelectedBottomTab,
         setSelectedMenu,
@@ -97,38 +80,32 @@ export default function useHomeBackend({
         setSelectedOrder,
     });
 
-    // ─────────────────────────────────────────────
-    // localStorage persistence
-    // ─────────────────────────────────────────────
     useEffect(() => {
-        localStorage.setItem("selectedMenu", selectedMenu);
+        localStorage.setItem(MENU_KEY, selectedMenu);
     }, [selectedMenu]);
 
     useEffect(() => {
         if (selectedBottomTab === null) {
-            localStorage.removeItem("selectedBottomTab");
+            localStorage.removeItem(TAB_KEY);
             return;
         }
-        localStorage.setItem("selectedBottomTab", selectedBottomTab);
+        localStorage.setItem(TAB_KEY, selectedBottomTab);
     }, [selectedBottomTab]);
 
-    // ─────────────────────────────────────────────
-    // Load profile
-    // ─────────────────────────────────────────────
     useEffect(() => {
         async function loadProfile() {
-            const response = await fetch(`${API}/api/user/profile`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    session_token: localStorage.getItem("session_token"),
-                }),
-            });
-            const data = await response.json();
-            if (data.success) {
-                setProfile(data.user);
+            try {
+                const response = await fetch(`${API}/api/user/profile`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        session_token: localStorage.getItem("session_token"),
+                    }),
+                });
+                const data = await response.json();
+                if (data.success) setProfile(data.user);
+            } catch (err) {
+                console.error("Profile load error:", err.message);
             }
         }
         loadProfile();
@@ -173,24 +150,17 @@ export default function useHomeBackend({
                 setIsDetailsOpen(false);
                 setSelectedProduct(null);
                 setDetailsPage("details");
-                return;
             }
         };
 
         window.addEventListener("popstate", handleBackNavigation);
-
-        return () => {
-            window.removeEventListener("popstate", handleBackNavigation);
-        };
+        return () => window.removeEventListener("popstate", handleBackNavigation);
     }, [isDetailsOpen]);
-
 
     useEffect(() => {
         if (detailsPage !== "details") return;
-
         const savedScroll = sessionStorage.getItem("detailsScrollPosition");
         if (!savedScroll) return;
-
         const homeContent = document.querySelector(".home-content");
         if (!homeContent) return;
 
@@ -201,21 +171,19 @@ export default function useHomeBackend({
             });
         });
     }, [detailsPage]);
+
     const handleLogout = async () => {
         try {
             await fetch(`${API}/api/auth/logout`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     session_token: localStorage.getItem("session_token"),
                 }),
             });
         } catch (err) {
-            console.error(err);
+            console.error("Logout error:", err.message);
         }
-
         localStorage.removeItem("session_token");
         setPage("login");
     };
@@ -228,47 +196,17 @@ export default function useHomeBackend({
             pathname: location.pathname,
         });
 
-        if (!location.pathname.includes("/product/")) {
-            setDetailsBackPage({
-                selectedBottomTab,
-                profilePage,
-                selectedMenu,
-                pathname: location.pathname,
-            });
-        }
-
         setDetailsPage("details");
-
-        setSelectedProduct({
-            type,
-            data: product,
-        });
-
+        setSelectedProduct({ type, data: product });
         setIsDetailsOpen(true);
 
-        const id =
-            product.product_id ||
-            product.gift_id ||
-            product.shop_id ||
-            product.premium_id;
+        const id = product.product_id || product.gift_id || product.shop_id || product.premium_id;
+        const inProduct = location.pathname.includes("/product/");
+        const productUrl = inProduct
+            ? `${location.pathname.split("/product/")[0]}/product/${id}`
+            : `${location.pathname}/product/${id}`;
 
-        let productUrl;
-
-        if (location.pathname.includes("/product/")) {
-            const basePath = location.pathname.split("/product/")[0];
-            productUrl = `${basePath}/product/${id}`;
-        } else if (
-            (type === "gift" &&
-                location.pathname.startsWith("/home/gifts/category/")) ||
-            (type === "shop" &&
-                location.pathname.startsWith("/home/shop/category/"))
-        ) {
-            productUrl = `${location.pathname}/product/${id}`;
-        } else {
-            productUrl = `${location.pathname}/product/${id}`;
-        }
-
-        if (location.pathname.includes("/product/")) {
+        if (inProduct) {
             window.history.replaceState({}, "", productUrl);
             window.dispatchEvent(new PopStateEvent("popstate"));
         } else {
@@ -280,44 +218,34 @@ export default function useHomeBackend({
         const currentPath = location.pathname;
 
         if (currentPath.endsWith("/reviews") || currentPath.endsWith("/media")) {
-            const productPath = currentPath
-                .replace(/\/reviews$/, "")
-                .replace(/\/media$/, "");
-
+            const productPath = currentPath.replace(/\/reviews$/, "").replace(/\/media$/, "");
             setDetailsPage("details");
             goTo(productPath);
-
             return;
         }
 
         if (currentPath.includes("/product/")) {
             const parentPath = currentPath.split("/product/")[0];
-
             if (detailsBackPage) {
                 setSelectedBottomTab(detailsBackPage.selectedBottomTab);
                 setProfilePage(detailsBackPage.profilePage);
                 setSelectedMenu(detailsBackPage.selectedMenu);
             }
-
             setDetailsPage("details");
             setSelectedProduct(null);
             setIsDetailsOpen(false);
-
             goTo(parentPath);
-
             return;
         }
 
         setDetailsPage("details");
         setSelectedProduct(null);
         setIsDetailsOpen(false);
-
-        if (detailsBackPage?.pathname) {
-            goTo(detailsBackPage.pathname);
-        }
+        if (detailsBackPage?.pathname) goTo(detailsBackPage.pathname);
     };
 
-    const handleReloadHome = () => setNavKey((prev) => prev + 1);
+    const handleReloadHome = () => setNavKey((p) => p + 1);
+
     const showMainHeader =
         !isDetailsOpen &&
         selectedBottomTab === "Home" &&
@@ -329,72 +257,39 @@ export default function useHomeBackend({
         !giftCategoryPage;
 
     return {
-        location,
-        navigate,
-        selectedMenu,
-        setSelectedMenu,
-        selectedBottomTab,
-        setSelectedBottomTab,
-        search,
-        setSearch,
-        filter,
-        setFilter,
-        categories,
-        setCategories,
-        isMenuOpen,
-        setIsMenuOpen,
-        profilePage,
-        setProfilePage,
-        selectedProduct,
-        setSelectedProduct,
-        isDetailsOpen,
-        setIsDetailsOpen,
-        giftCategoryPage,
-        setGiftCategoryPage,
-        selectedGiftCategory,
-        setSelectedGiftCategory,
-        detailsPage,
-        setDetailsPage,
-        shopCategoryPage,
-        setShopCategoryPage,
-        selectedShopCategory,
-        setSelectedShopCategory,
-        cardSuggestionsData,
-        setCardSuggestionsData,
-        giftSuggestionsData,
-        setGiftSuggestionsData,
-        shopSuggestionsData,
-        setShopSuggestionsData,
-        premiumSuggestionsData,
-        setPremiumSuggestionsData,
-        profileImageRefresh,
-        setProfileImageRefresh,
-        navKey,
-        setNavKey,
-        orderData,
-        setOrderData,
-        buyNowFromDetails,
-        setBuyNowFromDetails,
-        detailsBackPage,
-        setDetailsBackPage,
-        selectedAddress,
-        setSelectedAddress,
-        selectedOrder,
-        setSelectedOrder,
-        selectedTrackingOrder,
-        setSelectedTrackingOrder,
-        selectedInvoice,
-        setSelectedInvoice,
-        allShopCategoriesPage,
-        setAllShopCategoriesPage,
-        allGiftCategoriesPage,
-        setAllGiftCategoriesPage,
-        allShopsPage,
-        setAllShopsPage,
-        allGiftsPage,
-        setAllGiftsPage,
-        profile,
-        setProfile,
+        location, navigate,
+        selectedMenu, setSelectedMenu,
+        selectedBottomTab, setSelectedBottomTab,
+        search, setSearch,
+        filter, setFilter,
+        categories, setCategories,
+        isMenuOpen, setIsMenuOpen,
+        profilePage, setProfilePage,
+        selectedProduct, setSelectedProduct,
+        isDetailsOpen, setIsDetailsOpen,
+        giftCategoryPage, setGiftCategoryPage,
+        selectedGiftCategory, setSelectedGiftCategory,
+        detailsPage, setDetailsPage,
+        shopCategoryPage, setShopCategoryPage,
+        selectedShopCategory, setSelectedShopCategory,
+        cardSuggestionsData, setCardSuggestionsData,
+        giftSuggestionsData, setGiftSuggestionsData,
+        shopSuggestionsData, setShopSuggestionsData,
+        premiumSuggestionsData, setPremiumSuggestionsData,
+        profileImageRefresh, setProfileImageRefresh,
+        navKey, setNavKey,
+        orderData, setOrderData,
+        buyNowFromDetails, setBuyNowFromDetails,
+        detailsBackPage, setDetailsBackPage,
+        selectedAddress, setSelectedAddress,
+        selectedOrder, setSelectedOrder,
+        selectedTrackingOrder, setSelectedTrackingOrder,
+        selectedInvoice, setSelectedInvoice,
+        allShopCategoriesPage, setAllShopCategoriesPage,
+        allGiftCategoriesPage, setAllGiftCategoriesPage,
+        allShopsPage, setAllShopsPage,
+        allGiftsPage, setAllGiftsPage,
+        profile, setProfile,
         handleLogout,
         handleOpenDetails,
         handleCloseDetails,
