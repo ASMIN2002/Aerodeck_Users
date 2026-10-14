@@ -6,12 +6,19 @@ import NODP from "../../../assets/NODP.png";
 import { useNavigate } from "react-router-dom";
 import ImageCropper from "../../../pages/Crop/ImageCropper";
 
-function TopEditSection({
-    profile,
-    setProfile
-}) {
+const SUCCESS_DURATION = 3000;
+const UPLOAD_FINISH_DELAY = 400;
+const REMOVE_FINISH_DELAY = 500;
+const CROPPED_FILENAME = "profile_cropped.jpg";
+
+function getSessionToken() {
+    return localStorage.getItem("session_token");
+}
+
+function TopEditSection({ profile, setProfile }) {
     const navigate = useNavigate();
     const fileInputRef = useRef(null);
+
     const [selectedImage, setSelectedImage] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -22,21 +29,20 @@ function TopEditSection({
     const [showCropModal, setShowCropModal] = useState(false);
     const [imageForCrop, setImageForCrop] = useState(null);
 
-    const handleGoBack = () => {
-        navigate(-1);
-    };
-
     useEffect(() => {
         return () => {
-            if (previewImage) {
-                URL.revokeObjectURL(previewImage);
-            }
+            if (previewImage) URL.revokeObjectURL(previewImage);
         };
     }, [previewImage]);
 
+    const handleGoBack = () => navigate(-1);
+
+    const clearFileInput = () => {
+        if (fileInputRef.current) fileInputRef.current.value = "";
+    };
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-
         if (!file) return;
 
         if (!file.type.startsWith("image/")) {
@@ -45,21 +51,14 @@ function TopEditSection({
         }
 
         const imageUrl = URL.createObjectURL(file);
-
         setImageForCrop(imageUrl);
         setShowCropModal(true);
-
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
+        clearFileInput();
     };
 
     const handleUpload = (file) => {
         const imageToUpload = file || selectedImage;
-
-        if (!imageToUpload || uploading) {
-            return;
-        }
+        if (!imageToUpload || uploading) return;
 
         if (imageToUpload.size === 0) {
             alert("Image file is empty. Please select another image.");
@@ -74,15 +73,14 @@ function TopEditSection({
 
         const formData = new FormData();
         formData.append("image", imageToUpload);
-        formData.append("session_token", localStorage.getItem("session_token"));
+        formData.append("session_token", getSessionToken());
 
         const xhr = new XMLHttpRequest();
         xhr.open("POST", `${API}/api/upload/user-profile`);
 
         xhr.upload.onprogress = (event) => {
             if (event.lengthComputable) {
-                const progress = Math.round((event.loaded / event.total) * 100);
-                setUploadProgress(progress);
+                setUploadProgress(Math.round((event.loaded / event.total) * 100));
             }
         };
 
@@ -99,25 +97,18 @@ function TopEditSection({
 
                 setProfile(data.user);
                 window.dispatchEvent(new Event("profileImageUpdated"));
-
                 setSelectedImage(null);
                 setPreviewImage(null);
-
-                if (fileInputRef.current) {
-                    fileInputRef.current.value = "";
-                }
-
+                clearFileInput();
                 setUploadProgress(100);
+
                 setTimeout(() => {
                     setUploading(false);
                     setUploadSuccess(true);
-                    setTimeout(() => {
-                        setUploadSuccess(false);
-                    }, 3000);
-                }, 400);
-
+                    setTimeout(() => setUploadSuccess(false), SUCCESS_DURATION);
+                }, UPLOAD_FINISH_DELAY);
             } catch (err) {
-                console.error("Parse error:", err);
+                console.error("Parse error:", err.message);
                 setUploading(false);
                 setUploadProgress(0);
                 alert("Upload failed. Please try again.");
@@ -142,20 +133,12 @@ function TopEditSection({
         setShowPopup(false);
 
         try {
-            const response = await fetch(
-                `${API}/api/upload/remove-user-profile`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        session_token: localStorage.getItem("session_token")
-                    })
-                }
-            );
-
-            const data = await response.json();
+            const res = await fetch(`${API}/api/upload/remove-user-profile`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_token: getSessionToken() }),
+            });
+            const data = await res.json();
 
             if (!data.success) {
                 setUploading(false);
@@ -166,6 +149,7 @@ function TopEditSection({
             }
 
             setUploadProgress(100);
+
             setTimeout(() => {
                 setProfile(data.user);
                 window.dispatchEvent(new Event("profileImageUpdated"));
@@ -174,82 +158,72 @@ function TopEditSection({
                 setUploadSuccess("removed");
                 setPreviewImage(null);
                 setSelectedImage(null);
-                setTimeout(() => {
-                    setUploadSuccess(false);
-                }, 3000);
-            }, 500);
-
+                setTimeout(() => setUploadSuccess(false), SUCCESS_DURATION);
+            }, REMOVE_FINISH_DELAY);
         } catch (err) {
-            console.error("REMOVE ERROR:", err);
+            console.error("Remove error:", err.message);
             setUploading(false);
             setUploadProgress(0);
             alert("Profile picture deletion failed.");
         }
     };
 
-    const handleClosePopup = () => {
-        setShowPopup(false);
-    };
+    const handleClosePopup = () => setShowPopup(false);
 
     const handlePencilClick = (e) => {
         e.stopPropagation();
         setShowPopup(true);
     };
 
-    const getImageSource = () => {
-        if (previewImage) {
-            return previewImage;
-        }
-        return profile?.profile_image || NODP;
-    };
-
-    const handleCropDone = async (blob) => {
+    const handleCropDone = (blob) => {
         try {
             if (!blob || blob.size === 0) {
                 alert("Failed to create cropped image.");
                 return;
             }
 
-            const croppedFile = new File(
-                [blob],
-                "profile_cropped.jpg",
-                {
-                    type: "image/jpeg",
-                    lastModified: Date.now()
-                }
-            );
+            const croppedFile = new File([blob], CROPPED_FILENAME, {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+            });
 
-            const previewUrl = URL.createObjectURL(croppedFile);
-
-            setPreviewImage(previewUrl);
+            setPreviewImage(URL.createObjectURL(croppedFile));
             setSelectedImage(croppedFile);
-
             setShowCropModal(false);
             setImageForCrop(null);
 
             handleUpload(croppedFile);
-
-        } catch (error) {
-            console.error("CROP DONE ERROR:", error);
+        } catch (err) {
+            console.error("Crop done error:", err.message);
             alert("Failed to process cropped image.");
         }
     };
 
     const handleCropCancel = () => {
-        if (imageForCrop) {
-            URL.revokeObjectURL(imageForCrop);
-        }
-
+        if (imageForCrop) URL.revokeObjectURL(imageForCrop);
         setImageForCrop(null);
         setShowCropModal(false);
     };
 
+    const getImageSource = () => previewImage || profile?.profile_image || NODP;
+
+    const uploadActionLabel =
+        uploadAction === "remove"
+            ? "Removing Profile Picture"
+            : "Uploading Profile Picture";
+
     return (
         <div className="top-edit-card">
-
             <div className="top-edit-header">
                 <button className="back-button" onClick={handleGoBack}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                    >
                         <path d="M19 12H5" />
                         <path d="M12 19l-7-7 7-7" />
                     </svg>
@@ -261,8 +235,7 @@ function TopEditSection({
                 <div className="profile-upload-success">
                     {uploadSuccess === "removed"
                         ? "✓ PROFILE PICTURE REMOVED SUCCESSFULLY"
-                        : "✓ PROFILE PICTURE UPLOADED SUCCESSFULLY"
-                    }
+                        : "✓ PROFILE PICTURE UPLOADED SUCCESSFULLY"}
                 </div>
             )}
 
@@ -270,12 +243,7 @@ function TopEditSection({
                 <div className="profile-upload-screen">
                     <div className="profile-upload-box">
                         <div className="profile-upload-icon">↑</div>
-                        <h2>
-                            {uploadAction === "remove"
-                                ? "Removing Profile Picture"
-                                : "Uploading Profile Picture"
-                            }
-                        </h2>
+                        <h2>{uploadActionLabel}</h2>
                         <p>Please wait...</p>
                         <div className="profile-upload-progress">
                             <div
@@ -322,77 +290,90 @@ function TopEditSection({
                 disabled={uploading}
             />
 
-            {showPopup && createPortal(
-                <div className="profile-popup-overlay" onClick={handleClosePopup}>
-                    <div className="profile-popup" onClick={(e) => e.stopPropagation()}>
-                        <div className="profile-popup-header">
-                            <h3>Edit Profile Picture</h3>
-                            <button className="profile-popup-close" onClick={handleClosePopup}>
-                                ×
-                            </button>
-                        </div>
-                        <div className="profile-popup-options">
-                            <button
-                                className="popup-option upload"
-                                onClick={() => {
-                                    setShowPopup(false);
-                                    fileInputRef.current.click();
-                                }}
-                            >
-                                <span className="popup-icon">📷</span>
-                                Upload Photo
-                                <span className="popup-sub">Choose from gallery</span>
-                            </button>
-
-                            {profile?.profile_image && (
+            {showPopup &&
+                createPortal(
+                    <div className="profile-popup-overlay" onClick={handleClosePopup}>
+                        <div
+                            className="profile-popup"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="profile-popup-header">
+                                <h3>Edit Profile Picture</h3>
                                 <button
-                                    className="popup-option remove"
-                                    onClick={handleRemoveProfilePicture}
-                                    disabled={uploading}
+                                    className="profile-popup-close"
+                                    onClick={handleClosePopup}
                                 >
-                                    <span className="popup-icon">🗑️</span>
-                                    Remove Photo
-                                    <span className="popup-sub">Remove current photo</span>
+                                    ×
                                 </button>
-                            )}
+                            </div>
 
-                            <button
-                                className="popup-option cancel"
-                                onClick={handleClosePopup}
-                            >
-                                Cancel
-                            </button>
+                            <div className="profile-popup-options">
+                                <button
+                                    className="popup-option upload"
+                                    onClick={() => {
+                                        setShowPopup(false);
+                                        fileInputRef.current.click();
+                                    }}
+                                >
+                                    <span className="popup-icon">📷</span>
+                                    Upload Photo
+                                    <span className="popup-sub">
+                                        Choose from gallery
+                                    </span>
+                                </button>
+
+                                {profile?.profile_image && (
+                                    <button
+                                        className="popup-option remove"
+                                        onClick={handleRemoveProfilePicture}
+                                        disabled={uploading}
+                                    >
+                                        <span className="popup-icon">🗑️</span>
+                                        Remove Photo
+                                        <span className="popup-sub">
+                                            Remove current photo
+                                        </span>
+                                    </button>
+                                )}
+
+                                <button
+                                    className="popup-option cancel"
+                                    onClick={handleClosePopup}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </div>,
-                document.body
-            )}
+                    </div>,
+                    document.body
+                )}
 
-            {showCropModal && imageForCrop && createPortal(
-                <div className="crop-modal-overlay">
-                    <div className="crop-modal">
-                        <div className="crop-modal-header">
-                            <h3>Crop Profile Picture</h3>
-                            <button
-                                className="crop-modal-close"
-                                onClick={handleCropCancel}
-                            >
-                                ×
-                            </button>
+            {showCropModal &&
+                imageForCrop &&
+                createPortal(
+                    <div className="crop-modal-overlay">
+                        <div className="crop-modal">
+                            <div className="crop-modal-header">
+                                <h3>Crop Profile Picture</h3>
+                                <button
+                                    className="crop-modal-close"
+                                    onClick={handleCropCancel}
+                                >
+                                    ×
+                                </button>
+                            </div>
+
+                            <div className="crop-modal-body">
+                                <ImageCropper
+                                    image={imageForCrop}
+                                    onCancel={handleCropCancel}
+                                    onCropDone={handleCropDone}
+                                />
+                            </div>
                         </div>
-
-                        <div className="crop-modal-body">
-                            <ImageCropper
-                                image={imageForCrop}
-                                onCancel={handleCropCancel}
-                                onCropDone={handleCropDone}
-                            />
-                        </div>
-                    </div>
-                </div>,
-                document.body
-            )}
-
+                    </div>,
+                    document.body
+                )}
         </div>
     );
 }

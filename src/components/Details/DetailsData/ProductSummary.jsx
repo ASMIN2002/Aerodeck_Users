@@ -3,204 +3,124 @@ import { API } from "../../../services/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const WHATSAPP_NUMBER = "918984031948";
+const DESC_LIMIT = 120;
+const ERROR_DURATION = 3500;
+
+const FIELD_KEYS = ["product", "gift", "shop", "premium"];
+
+function getField(product, suffix, fallback = undefined) {
+    if (!product) return fallback;
+    for (const key of FIELD_KEYS) {
+        const val = product[`${key}_${suffix}`];
+        if (val !== undefined && val !== null) return val;
+    }
+    return fallback;
+}
+
 function ProductSummary({
     product,
     cartQuantity,
     onIncreaseCart,
     onDecreaseCart,
-    onBuyNow
+    onBuyNow,
 }) {
     const navigate = useNavigate();
 
-    const name =
-        product?.product_name ||
-        product?.gift_name ||
-        product?.shop_name ||
-        product?.premium_name;
+    const name = getField(product, "name");
+    const description = getField(product, "description");
+    const rating = getField(product, "rating", 0);
+    const price = getField(product, "price");
+    const demoPrice = getField(product, "demo_price");
+    const discount = getField(product, "discount_percentage", 0);
+    const status = getField(product, "status");
 
-    const description =
-        product?.product_description ||
-        product?.gift_description ||
-        product?.shop_description ||
-        product?.premium_description;
-
-    const rating =
-        product?.product_rating ||
-        product?.gift_rating ||
-        product?.shop_rating ||
-        product?.premium_rating ||
-        0;
-
-    const price =
-        product?.product_price ||
-        product?.gift_price ||
-        product?.shop_price ||
-        product?.premium_price;
-
-    const demoPrice =
-        product?.product_demo_price ||
-        product?.gift_demo_price ||
-        product?.shop_demo_price ||
-        product?.premium_demo_price;
-
-    const discount =
-        product?.product_discount_percentage ||
-        product?.gift_discount_percentage ||
-        product?.shop_discount_percentage ||
-        product?.premium_discount_percentage ||
-        0;
-
-    const totalPrice =
-        Number(price || 0) * Number(cartQuantity || 0);
-
-    const isShopOrGift =
-        !!(
-            product?.shop_name ||
-            product?.gift_name ||
-            product?.shop_description ||
-            product?.gift_description
-        );
-
-    /* ============================================
-       STATUS CHECK
-       ============================================ */
-    const status =
-        product?.product_status ??
-        product?.gift_status ??
-        product?.shop_status ??
-        product?.premium_status;
-
+    const totalPrice = Number(price || 0) * Number(cartQuantity || 0);
     const isAvailable = Number(status) === 1;
 
+    const isShopOrGift = !!(
+        product?.shop_name ||
+        product?.gift_name ||
+        product?.shop_description ||
+        product?.gift_description
+    );
+
     const [expanded, setExpanded] = useState(false);
-    const LIMIT = 120;
-    const isLong = (description?.length || 0) > LIMIT;
-
-    const whatsappNumber = "918984031948";
-    const sessionToken = localStorage.getItem("session_token");
-
-    /* ============================================
-       USER + ADDRESS STATE
-       ============================================ */
     const [userDetails, setUserDetails] = useState(null);
     const [primaryAddress, setPrimaryAddress] = useState(null);
     const [verifyError, setVerifyError] = useState(null);
 
+    const sessionToken = localStorage.getItem("session_token");
+    const isLong = (description?.length || 0) > DESC_LIMIT;
+
     useEffect(() => {
-        async function loadUserDetails() {
-            if (!sessionToken) return;
+        if (!sessionToken) return;
 
-            try {
-                const response = await fetch(
-                    `${API}/api/user/details?session_token=${sessionToken}`
-                );
-                const data = await response.json();
-
-                if (data.success && data.data) {
-                    setUserDetails(data.data);
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        loadUserDetails();
+        fetch(`${API}/api/user/details?session_token=${sessionToken}`)
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.success && data.data) setUserDetails(data.data);
+            })
+            .catch((err) => console.error("User details error:", err.message));
     }, [sessionToken]);
 
     useEffect(() => {
-        async function fetchPrimaryAddress() {
-            if (!sessionToken) return;
+        if (!sessionToken) return;
 
-            try {
-                const response = await fetch(
-                    `${API}/api/user/address?session_token=${sessionToken}`
-                );
-                const data = await response.json();
-
+        fetch(`${API}/api/user/address?session_token=${sessionToken}`)
+            .then((r) => r.json())
+            .then((data) => {
                 if (data.success) {
-                    const primary = data.data.find(
-                        (item) => item.is_primary === 1
-                    );
+                    const primary = data.data.find((item) => item.is_primary === 1);
                     setPrimaryAddress(primary || null);
                 }
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        fetchPrimaryAddress();
+            })
+            .catch((err) => console.error("Address fetch error:", err.message));
     }, [sessionToken]);
 
     useEffect(() => {
         if (!verifyError) return;
-
-        const timer = setTimeout(() => {
-            setVerifyError(null);
-        }, 3500);
-
+        const timer = setTimeout(() => setVerifyError(null), ERROR_DURATION);
         return () => clearTimeout(timer);
     }, [verifyError]);
 
-    /* ============================================
-       ORDER NOW
-       ============================================ */
-    const handleOrderNow = async () => {
-
-        if (!userDetails?.full_name || userDetails.full_name.trim() === "") {
-            setVerifyError({
-                text: "First give your name to continue.",
-                action: "verify"
-            });
-            return;
+    const validateOrder = () => {
+        if (!userDetails?.full_name || !userDetails.full_name.trim()) {
+            return { text: "First give your name to continue.", action: "verify" };
         }
-
         if (!userDetails?.mobile_number || userDetails.is_mobile_verified !== 1) {
-            setVerifyError({
-                text: "Please verify your mobile number first.",
-                action: "verify"
-            });
-            return;
+            return { text: "Please verify your mobile number first.", action: "verify" };
         }
-
         if (!userDetails?.whatsapp_number || userDetails.is_whatsapp_verified !== 1) {
-            setVerifyError({
-                text: "Please verify your WhatsApp number first.",
-                action: "verify"
-            });
-            return;
+            return { text: "Please verify your WhatsApp number first.", action: "verify" };
         }
-
         if (!primaryAddress) {
-            setVerifyError({
-                text: "Please select the address.",
-                action: "address"
-            });
+            return { text: "Please select the address.", action: "address" };
+        }
+        return null;
+    };
+
+    const handleOrderNow = async () => {
+        const error = validateOrder();
+        if (error) {
+            setVerifyError(error);
             return;
         }
 
-        const productId =
-            product?.product_id ||
-            product?.gift_id ||
-            product?.premium_id ||
-            product?.shop_id;
-
+        const productId = getField(product, "id");
         if (!sessionToken || !productId) return;
 
         try {
-            const response = await fetch(
-                `${API}/api/user/whatsapp-order-data`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        session_token: sessionToken,
-                        product_id: productId
-                    })
-                }
-            );
+            const response = await fetch(`${API}/api/user/whatsapp-order-data`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    product_id: productId,
+                }),
+            });
 
             const data = await response.json();
-
             if (!data.success) return;
 
             const message =
@@ -208,118 +128,76 @@ function ProductSummary({
                 `PRODUCT = #${data.product_id}HEEPITPRODUCT\n\n` +
                 `Just press Send to know more.`;
 
-            const whatsappUrl =
-                `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
-            window.open(whatsappUrl, "_blank");
-
-        } catch (error) {
-            console.error("WhatsApp order error:", error);
+            window.open(
+                `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+                "_blank"
+            );
+        } catch (err) {
+            console.error("WhatsApp order error:", err.message);
         }
+    };
+
+    const handleBuyNowClick = () => {
+        navigate("/buy");
+        onBuyNow?.();
     };
 
     return (
         <section className="ps-section">
             <div className="tobbardet">
                 <div className="ps-price-row">
-
                     <div className="pridisc">
-                        {demoPrice && (
-                            <span className="ps-demo-price">
-                                ₹{demoPrice}
-                            </span>
-                        )}
-
+                        {demoPrice && <span className="ps-demo-price">₹{demoPrice}</span>}
                         {discount > 0 && (
-                            <span className="ps-discount">
-                                {discount}% OFF
-                            </span>
+                            <span className="ps-discount">{discount}% OFF</span>
                         )}
                     </div>
-                    <span className="ps-price">
-                        ₹{price}
-                    </span>
-
+                    <span className="ps-price">₹{price}</span>
                 </div>
-                <div className="ps-rating">
-                    ⭐ {rating}
-                </div>
+                <div className="ps-rating">⭐ {rating}</div>
             </div>
 
             <div className="ps-header">
-                <h2 className="ps-name">
-                    {name}
-                </h2>
+                <h2 className="ps-name">{name}</h2>
             </div>
-            <h2 className="ps-desc">
-                {expanded || !isLong
-                    ? description
-                    : description.slice(0, LIMIT)}
 
+            <h2 className="ps-desc">
+                {expanded || !isLong ? description : description?.slice(0, DESC_LIMIT)}
                 {isLong && (
-                    <span
-                        className="ps-more"
-                        onClick={() => setExpanded(!expanded)}
-                    >
+                    <span className="ps-more" onClick={() => setExpanded(!expanded)}>
                         {expanded ? " Less" : "... More"}
                     </span>
                 )}
             </h2>
 
             <div className="downcartbuy">
-
                 {!isAvailable ? (
-
                     <div className="ps-oos-wrap">
-                        <div className="ps-oos-badge">
-                            OUT OF STOCK
-                        </div>
-                        <p className="ps-oos-text">
-                            This product is currently unavailable.
-                        </p>
+                        <div className="ps-oos-badge">OUT OF STOCK</div>
+                        <p className="ps-oos-text">This product is currently unavailable.</p>
                     </div>
-
                 ) : isShopOrGift ? (
                     <>
                         <div className="ps-cart-row">
-
                             {cartQuantity > 0 ? (
                                 <div className="ps-qty">
-                                    <button onClick={onDecreaseCart}>
-                                        -
-                                    </button>
-                                    <span>
-                                        {cartQuantity}
-                                    </span>
-                                    <button onClick={onIncreaseCart}>
-                                        +
-                                    </button>
+                                    <button onClick={onDecreaseCart}>-</button>
+                                    <span>{cartQuantity}</span>
+                                    <button onClick={onIncreaseCart}>+</button>
                                 </div>
                             ) : (
-                                <button
-                                    className="ps-cart-btn"
-                                    onClick={onIncreaseCart}
-                                >
+                                <button className="ps-cart-btn" onClick={onIncreaseCart}>
                                     🛒 Add To Cart
                                 </button>
                             )}
-
                         </div>
 
                         <div className="ps-buy-now">
-                            <button
-                                className="ps-cart-btn"
-                                onClick={() => {
-                                    navigate("/buy");
-                                    onBuyNow?.();
-                                }}
-                            >
+                            <button className="ps-cart-btn" onClick={handleBuyNowClick}>
                                 Buy at&nbsp;
                                 <span className="ps-total-price">
                                     ₹{Number(
-                                        cartQuantity > 0
-                                            ? totalPrice
-                                            : price
+                                        cartQuantity > 0 ? totalPrice : price
                                     ).toLocaleString("en-IN")}
                                 </span>
                             </button>
@@ -327,15 +205,11 @@ function ProductSummary({
                     </>
                 ) : (
                     <div className="ps-buy-now">
-                        <button
-                            className="ps-cart-btn"
-                            onClick={handleOrderNow}
-                        >
+                        <button className="ps-cart-btn" onClick={handleOrderNow}>
                             ORDER NOW
                         </button>
                     </div>
                 )}
-
             </div>
 
             {verifyError && (
@@ -361,7 +235,6 @@ function ProductSummary({
                     )}
                 </div>
             )}
-
         </section>
     );
 }

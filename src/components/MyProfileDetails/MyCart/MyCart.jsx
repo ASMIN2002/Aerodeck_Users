@@ -7,281 +7,122 @@ import CartCard from "./CartCard";
 import TOPHEADER from "../../Header/TOPHEADER";
 import { API } from "../../../services/api";
 
+function isProductOrShop(productId) {
+    const id = String(productId);
+    return id.startsWith("G") || id.startsWith("S");
+}
+
 function MyCart({
     setProfilePage,
     setOrderData,
     setBuyNowFromDetails,
     onOpenDetails,
     setSelectedBottomTab,
-    setCartCount
+    setCartCount,
 }) {
     const navigate = useNavigate();
     const sessionToken = localStorage.getItem("session_token");
+
     const [activeTab] = useState("products");
     const [cart, setCart] = useState([]);
 
-    const products = cart.filter(item => {
+    const products = cart.filter((item) => isProductOrShop(item.product_id));
+    const cards = cart.filter((item) => !isProductOrShop(item.product_id));
 
-        const id = String(item.product_id);
-
-        return id.startsWith("G") || id.startsWith("S");
-
-    });
-
-    const cards = cart.filter(item => {
-
-        const id = String(item.product_id);
-
-        return !id.startsWith("G") && !id.startsWith("S");
-
-    });
     const fetchCart = async () => {
-
         try {
-
             const res = await fetch(
-
                 `${API}/api/user/cart?session_token=${sessionToken}`
             );
-
             const data = await res.json();
-
-            console.log(data);
-
-            if (data.success) {
-
-                setCart(data.data || []);
-
-            }
-
+            if (data.success) setCart(data.data || []);
+        } catch (err) {
+            console.error("Cart fetch error:", err.message);
         }
-
-        catch (err) {
-
-            console.log(err);
-
-        }
-
     };
+
     const handleDelete = async (productId) => {
-
         try {
-
-            const response = await fetch(
-                `${API}/api/user/cart/${productId}`,
-                {
-                    method: "DELETE",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        session_token: sessionToken
-                    })
-                }
-            );
-
-            const data = await response.json();
-
+            const res = await fetch(`${API}/api/user/cart/${productId}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_token: sessionToken }),
+            });
+            const data = await res.json();
             if (!data.success) return;
 
-            setCart(prev =>
-                prev.filter(
-                    item => item.product_id !== productId
-                )
-            );
-
-            // Cart badge count update
-            setCartCount(prev => Math.max(0, prev - 1));
-
+            setCart((prev) => prev.filter((item) => item.product_id !== productId));
+            setCartCount((prev) => Math.max(0, prev - 1));
         } catch (err) {
-
-            console.log(err);
-
+            console.error("Delete error:", err.message);
         }
     };
+
+    const updateQuantity = async (item, newQuantity) => {
+        const res = await fetch(`${API}/api/user/cart`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                session_token: sessionToken,
+                product_id: item.product_id,
+                quantity: newQuantity,
+            }),
+        });
+        const data = await res.json();
+        if (!data.success) return false;
+
+        setCart((prev) =>
+            prev.map((cartItem) =>
+                cartItem.cart_id === item.cart_id
+                    ? { ...cartItem, quantity: newQuantity }
+                    : cartItem
+            )
+        );
+        return true;
+    };
+
     const handleIncrease = async (item) => {
-
-        const newQuantity = item.quantity + 1;
-
-        const response = await fetch(`${API}/api/user/cart`, {
-
-            method: "PUT",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify({
-
-                session_token: sessionToken,
-
-                product_id: item.product_id,
-
-                quantity: newQuantity
-
-            })
-
-        });
-
-        const data = await response.json();
-
-        if (!data.success) return;
-
-        setCart(prev =>
-
-            prev.map(cartItem =>
-
-                cartItem.cart_id === item.cart_id
-
-                    ? {
-
-                        ...cartItem,
-
-                        quantity: newQuantity
-
-                    }
-
-                    : cartItem
-
-            )
-
-        );
-
+        await updateQuantity(item, item.quantity + 1);
     };
+
     const handleDecrease = async (item) => {
+        const minQty = isProductOrShop(item.product_id) ? 1 : 50;
 
-        const minQty =
-
-            String(item.product_id).startsWith("G") ||
-
-                String(item.product_id).startsWith("S")
-
-                ? 1
-
-                : 50;
-
-        // Minimum pe delete
         if (item.quantity <= minQty) {
-
             await handleDelete(item.product_id);
-
             return;
-
         }
 
-        const newQuantity = item.quantity - 1;
-
-        const response = await fetch(`${API}/api/user/cart`, {
-
-            method: "PUT",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify({
-
-                session_token: sessionToken,
-
-                product_id: item.product_id,
-
-                quantity: newQuantity
-
-            })
-
-        });
-
-        const data = await response.json();
-
-        if (!data.success) return;
-
-        setCart(prev =>
-
-            prev.map(cartItem =>
-
-                cartItem.cart_id === item.cart_id
-
-                    ? {
-
-                        ...cartItem,
-
-                        quantity: newQuantity
-
-                    }
-
-                    : cartItem
-
-            )
-
-        );
-
+        await updateQuantity(item, item.quantity - 1);
     };
+
     const handlePlaceOrder = () => {
-
         setBuyNowFromDetails(false);
-
         setSelectedBottomTab("Profile");
 
-        if (activeTab === "products") {
+        const isProductsTab = activeTab === "products";
 
-            setOrderData({
-                items: products,
-                orderType: "products"
-            });
+        setOrderData({
+            items: isProductsTab ? products : cards,
+            orderType: isProductsTab ? "products" : "cards",
+        });
 
-            setProfilePage("productorder");
+        setProfilePage(isProductsTab ? "productorder" : "cardorder");
 
-            window.history.pushState(
-                {},
-                "",
-                "/cart/placeorder"
-            );
-
-            window.dispatchEvent(
-                new PopStateEvent("popstate")
-            );
-
-        } else {
-
-            setOrderData({
-                items: cards,
-                orderType: "cards"
-            });
-
-            setProfilePage("cardorder");
-
-            window.history.pushState(
-                {},
-                "",
-                "/cart/placeorder"
-            );
-
-            window.dispatchEvent(
-                new PopStateEvent("popstate")
-            );
-
-        }
-
+        window.history.pushState({}, "", "/cart/placeorder");
+        window.dispatchEvent(new PopStateEvent("popstate"));
     };
+
     useEffect(() => {
-
         fetchCart();
-
     }, [sessionToken]);
 
-    return (
+    const isProductsTab = activeTab === "products";
+    const visibleItems = isProductsTab ? products : cards;
 
+    return (
         <div className="mycart-page">
-            <TOPHEADER
-                title="My Cart"
-                onBack={() => navigate(-1)}
-            />
+            <TOPHEADER title="My Cart" onBack={() => navigate(-1)} />
 
             <div className="mycart-topbar">
                 <Address
@@ -290,72 +131,34 @@ function MyCart({
                 />
             </div>
 
-            {/* <CartTabs
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                setProfilePage={setProfilePage}
-            /> */}
             <div className="mycart-content">
-
-                {activeTab === "products" ? (
-
-                    products.length > 0 ? (
-
-                        products.map((item) => (
-
-                            <CartCard
-                                key={item.cart_id}
-                                item={item}
-                                onOpenDetails={onOpenDetails}
-                                onDelete={handleDelete}
-                                onIncrease={handleIncrease}
-                                onDecrease={handleDecrease}
-                            />
-
-                        ))
-
-                    ) : (
-                        <div className="empty-cart">
-                            <h2>No Products in your cart</h2>
-                        </div>
-                    )
+                {visibleItems.length > 0 ? (
+                    visibleItems.map((item) => (
+                        <CartCard
+                            key={item.cart_id}
+                            item={item}
+                            onOpenDetails={onOpenDetails}
+                            onDelete={handleDelete}
+                            onIncrease={handleIncrease}
+                            onDecrease={handleDecrease}
+                        />
+                    ))
                 ) : (
-                    cards.length > 0 ? (
-                        cards.map((item) => (
-                            <CartCard
-                                key={item.cart_id}
-                                item={item}
-                                onOpenDetails={onOpenDetails}
-                                onDelete={handleDelete}
-                                onIncrease={handleIncrease}
-                                onDecrease={handleDecrease}
-                            />
-
-                        ))
-
-                    ) : (
-
-                        <div className="empty-cart">
-                            <h2>
-                                No Cards in your cart
-                            </h2>
-                        </div>
-                    )
+                    <div className="empty-cart">
+                        <h2>
+                            {isProductsTab
+                                ? "No Products in your cart"
+                                : "No Cards in your cart"}
+                        </h2>
+                    </div>
                 )}
             </div>
-            {(
-                (activeTab === "products" && products.length > 0) ||
-                (activeTab === "cards" && cards.length > 0)
-            ) && (
-                    <CartBilling
-                        items={activeTab === "products" ? products : cards}
-                        onPlaceOrder={handlePlaceOrder}
-                    />
-                )}
+
+            {visibleItems.length > 0 && (
+                <CartBilling items={visibleItems} onPlaceOrder={handlePlaceOrder} />
+            )}
         </div>
-
     );
-
 }
 
 export default MyCart;

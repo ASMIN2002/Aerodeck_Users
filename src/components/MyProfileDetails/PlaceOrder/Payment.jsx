@@ -1,228 +1,137 @@
-import { useState } from "react";
 import { API } from "../../../services/api";
 import "./Payment.css";
 
-function Payment({
-    setProfilePage,
-    orderData
-}) {
+const GST_RATE = 0.18;
+const PLATFORM_FEE = 2;
+const RAZORPAY_THEME = "#2563eb";
 
-    const products = orderData?.items || [];
+const PRICE_KEYS = ["product_price", "shop_price", "gift_price", "premium_price"];
 
-    const subtotal = products.reduce((sum, item) => {
+function pickPrice(item) {
+    for (const key of PRICE_KEYS) {
+        const val = item[key];
+        if (val !== undefined && val !== null) return Number(val);
+    }
+    return 0;
+}
 
-        const price = Number(
-            item.product_price ??
-            item.shop_price ??
-            item.gift_price ??
-            0
-        );
+function calculateAmounts(products, orderData) {
+    const subtotal = products.reduce(
+        (sum, item) => sum + pickPrice(item) * item.quantity,
+        0
+    );
 
-        return sum + (price * item.quantity);
-
-    }, 0);
-
-    const gst = +(subtotal * 0.18).toFixed(2);
-
-    const platformFee = 2;
-
+    const gst = +(subtotal * GST_RATE).toFixed(2);
     const amount =
         orderData?.orderType === "cards"
-            ? Number(orderData.total_amount)
-            : subtotal + gst + platformFee;
+            ? Number(orderData.total_amount || 0)
+            : subtotal + gst + PLATFORM_FEE;
 
-    const upiId = "aerodeck@upi";
+    return { subtotal, gst, platformFee: PLATFORM_FEE, amount };
+}
 
-    const [paymentType, setPaymentType] = useState("upi");
+function Payment({ setProfilePage, orderData }) {
+    const products = orderData?.items || [];
 
-    const [utr, setUtr] = useState("");
+    const { subtotal, gst, platformFee, amount } = calculateAmounts(
+        products,
+        orderData
+    );
 
-    const copyUpiId = () => {
+    const buildVerifyPayload = (response) => ({
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_signature: response.razorpay_signature,
 
-        navigator.clipboard.writeText(upiId);
+        session_token: localStorage.getItem("session_token"),
+        address_id: orderData.address_id,
+        payment_method: orderData.payment_method,
 
-        alert("UPI ID copied successfully.");
+        order_type: orderData.orderType === "products" ? "PRODUCT" : "CARD",
+        items: orderData.items,
 
-    };
-    const handlePayment = async () => {
+        total_items: orderData.total_items,
+        subtotal,
+        gst,
+        platform_fee: platformFee,
+        delivery_fee: orderData.delivery_fee || 0,
 
+        total_amount: subtotal + gst + platformFee + (orderData.delivery_fee || 0),
+
+        advance_amount:
+            orderData.orderType === "cards" ? orderData.total_amount : amount,
+
+        remaining_amount:
+            orderData.orderType === "cards" ? orderData.remaining_amount : 0,
+    });
+
+    const handleVerifyPayment = async (response) => {
         try {
+            const verifyRes = await fetch(`${API}/api/user/payment/verify`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(buildVerifyPayload(response)),
+            });
 
-            // Get Razorpay Key
-            const configResponse = await fetch(
-                `${API}/api/user/payment/config`
-            );
+            const result = await verifyRes.json();
 
-            const config = await configResponse.json();
+            if (result.success) {
+                alert("Payment Verified Successfully");
+                setProfilePage("ordersuccess");
+            } else {
+                alert(result.message);
+            }
+        } catch (err) {
+            console.error("Verify payment error:", err.message);
+            alert("Payment Verification Failed");
+        }
+    };
+
+    const handlePayment = async () => {
+        try {
+            const configRes = await fetch(`${API}/api/user/payment/config`);
+            const config = await configRes.json();
 
             if (!config.success) {
-
                 alert("Unable to load payment configuration.");
                 return;
-
             }
 
-            // Create Razorpay Order
-            const orderResponse = await fetch(
-                `${API}/api/user/payment/create-order`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        amount
-                    })
-                }
-            );
+            const orderRes = await fetch(`${API}/api/user/payment/create-order`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount }),
+            });
 
-            const data = await orderResponse.json();
+            const data = await orderRes.json();
 
             if (!data.success) {
-
                 alert(data.message);
                 return;
-
             }
 
             const options = {
-
                 key: config.key,
-
                 amount: data.order.amount,
-
                 currency: data.order.currency,
-
                 name: "AERODECK",
-
                 description: "Premium Cards & Gifts",
-
                 order_id: data.order.id,
-
-
-
-                handler: async function (response) {
-
-                    try {
-                        const verifyResponse = await fetch(
-                            `${API}/api/user/payment/verify`,
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({
-
-                                    razorpay_order_id: response.razorpay_order_id,
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_signature: response.razorpay_signature,
-
-                                    session_token: localStorage.getItem("session_token"),
-
-                                    address_id: orderData.address_id,
-
-                                    payment_method: orderData.payment_method,
-
-                                    order_type:
-                                        orderData.orderType === "products"
-                                            ? "PRODUCT"
-                                            : "CARD",
-
-                                    items: orderData.items,
-
-                                    total_items: orderData.total_items,
-
-                                    subtotal: orderData.subtotal,
-
-                                    gst: orderData.gst,
-
-                                    platform_fee: orderData.platform_fee,
-
-                                    delivery_fee: orderData.delivery_fee,
-
-                                    total_amount: orderData.subtotal + orderData.gst + orderData.platform_fee + orderData.delivery_fee,
-
-                                    advance_amount:
-                                        orderData.orderType === "cards"
-                                            ? orderData.total_amount
-                                            : amount,
-
-                                    remaining_amount:
-                                        orderData.orderType === "cards"
-                                            ? orderData.remaining_amount
-                                            : 0,
-
-                                })
-                            }
-                        );
-
-                        const result = await verifyResponse.json();
-
-                        if (result.success) {
-
-                            alert("Payment Verified Successfully");
-
-                            setProfilePage("ordersuccess");
-
-                        } else {
-
-                            alert(result.message);
-
-                        }
-
-                    } catch (error) {
-
-                        console.error(error);
-
-                        alert("Payment Verification Failed");
-
-                    }
-
-                },
-                theme: {
-
-                    color: "#2563eb"
-
-                }
-
+                handler: handleVerifyPayment,
+                theme: { color: RAZORPAY_THEME },
             };
 
             const razorpay = new window.Razorpay(options);
-
             razorpay.open();
-
-        } catch (error) {
-
-            console.error(error);
-
+        } catch (err) {
+            console.error("Payment error:", err.message);
             alert("Something went wrong.");
-
         }
-
-    };
-
-    const handleVerify = () => {
-
-        if (!utr.trim()) {
-
-            alert("Please enter Transaction ID / UTR Number.");
-
-            return;
-
-        }
-
-        setProfilePage("ordersuccess");
-
     };
 
     return (
-
         <div className="payment-page">
-
-            {/* Header */}
-
             <div className="payment-header">
-
                 <button
                     className="payment-back"
                     onClick={() => setProfilePage("cart")}
@@ -230,32 +139,18 @@ function Payment({
                     ←
                 </button>
                 <h2>UPI Payment</h2>
-
             </div>
-
-            {/* Amount */}
 
             <div className="payment-amount-card">
-
                 <p>Total Amount</p>
-
                 <h1>₹{amount}</h1>
-
             </div>
 
-            <button
-                className="pay-now-btn"
-                onClick={handlePayment}
-            >
-
+            <button className="pay-now-btn" onClick={handlePayment}>
                 Pay Now
-
             </button>
-
         </div>
-
     );
-
 }
 
 export default Payment;

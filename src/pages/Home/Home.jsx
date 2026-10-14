@@ -24,7 +24,6 @@ import MyAddresses from "../../components/MyProfileDetails/MyAddress/MyAddresses
 import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress";
 import EditAddress from "../../components/MyProfileDetails/EditAddress/EditAddress";
 import ProductOrder from "../../components/MyProfileDetails/PlaceOrder/ProductOrder";
-import CardOrder from "../../components/MyProfileDetails/PlaceOrder/CardOrder";
 import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
 import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
 import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
@@ -628,20 +627,6 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         orderData={orderData}
                         setOrderData={setOrderData}
                         selectedAddress={selectedAddress}
-                        buyNowFromDetails={buyNowFromDetails}
-                        onBackToDetails={() => {
-                            setBuyNowFromDetails(false);
-                            setIsDetailsOpen(true);
-                            setDetailsPage("details");
-                        }}
-                    />
-                )}
-
-                {isProfilePage("cardorder") && (
-                    <CardOrder
-                        setProfilePage={setProfilePage}
-                        orderData={orderData}
-                        setOrderData={setOrderData}
                         buyNowFromDetails={buyNowFromDetails}
                         onBackToDetails={() => {
                             setBuyNowFromDetails(false);

@@ -15,7 +15,7 @@ function ShopHome({
     onCategoryClick,
     onOpenDetails,
     onOpenAllShops,
-    onOpenAllShopCategories
+    onOpenAllShopCategories,
 }) {
     return (
         <div className="shop-home">

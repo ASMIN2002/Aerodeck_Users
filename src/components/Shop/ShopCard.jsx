@@ -16,7 +16,6 @@ function ProductShop({
     onDecreaseQuantity,
     onOpenDetails = () => { }
 }) {
-
     const isAvailable = Number(product.shop_status) === 1;
 
     const handleShopClick = () => {
@@ -28,42 +27,6 @@ function ProductShop({
             className={`heepit-shop-card ${!isAvailable ? "out-of-stock" : ""}`}
             onClick={handleShopClick}
         >
-
-            <div className="heepit-shop-top">
-
-                <span
-                    className={
-                        isAvailable
-                            ? "heepit-shop-status available"
-                            : "heepit-shop-status unavailable"
-                    }
-                >
-                    {
-                        isAvailable
-                            ? "Available"
-                            : "Out of Stock"
-                    }
-                </span>
-
-                <button
-                    className={`heepit-shop-like ${isLiked ? "active" : ""}`}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onLike(product.shop_id);
-                    }}
-                >
-                    {
-                        isLiked
-                            ? <BsHeartFill />
-                            : <FiHeart />
-                    }
-                    <span className="heepit-shop-like-count">
-                        {product.shop_total_likes}
-                    </span>
-                </button>
-
-            </div>
-
             <div className="heepit-shop-image-box">
                 <div className="heepit-shop-image-grid">
                     <img src={product.shop_image1} alt="" className="heepit-shop-image" />
@@ -77,17 +40,13 @@ function ProductShop({
             </div>
 
             <div className="heepit-shop-body">
-
-                {
-                    product.shop_highlight_text && (
-                        <div className="heepit-shop-highlight">
-                            {product.shop_highlight_text}
-                        </div>
-                    )
-                }
+                {product.shop_highlight_text && (
+                    <div className="heepit-shop-highlight">
+                        {product.shop_highlight_text}
+                    </div>
+                )}
 
                 <div className="heepit-shop-rating-row">
-
                     <span>
                         ⭐ {product.shop_rating || "4.3"}
                     </span>
@@ -95,7 +54,6 @@ function ProductShop({
                     <div className="heepit-shop-final-price">
                         ₹{product.shop_price}
                     </div>
-
                 </div>
 
                 <h3 className="heepit-shop-name">
@@ -103,7 +61,6 @@ function ProductShop({
                 </h3>
 
                 <div className="heepit-shop-price-row">
-
                     <span className="heepit-shop-demo-price">
                         ₹{product.shop_demo_price}
                     </span>
@@ -111,88 +68,10 @@ function ProductShop({
                     <span className="heepit-shop-discount">
                         {product.shop_discount_percentage}% OFF
                     </span>
-
                 </div>
-
             </div>
-
-            <div className="heepit-shop-footer">
-
-                {
-                    !isAvailable ? (
-
-                        <button
-                            className="heepit-shop-cart-btn"
-                            disabled
-                        >
-                            Out Of Stock
-                        </button>
-
-                    ) : !isAddedToCart ? (
-
-                        <button
-                            className="heepit-shop-cart-btn"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onAddToCart(product.shop_id);
-                            }}
-                        >
-                            <FiShoppingCart />
-                            <span>Add To Cart</span>
-                        </button>
-
-                    ) : (
-
-                        <div
-                            className="heepit-shop-qty-box"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <button
-                                className="heepit-shop-qty-btn"
-                                onClick={() => onDecreaseQuantity(product.shop_id)}
-                            >
-                                -
-                            </button>
-
-                            <span className="heepit-shop-qty">
-                                {cartQuantity}
-                            </span>
-
-                            <button
-                                className="heepit-shop-qty-btn"
-                                onClick={() => onIncreaseQuantity(product.shop_id)}
-                            >
-                                +
-                            </button>
-
-                        </div>
-
-                    )
-                }
-
-                <button
-                    className={`heepit-shop-save ${isSaved ? "active" : ""}`}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onSave(product.shop_id);
-                    }}
-                >
-                    {
-                        isSaved
-                            ? <BsBookmarkFill />
-                            : <FiBookmark />
-                    }
-                    <span className="heepit-shop-save-count">
-                        {product.shop_total_saves}
-                    </span>
-                </button>
-
-            </div>
-
         </div>
-
     );
-
 }
 
 export default ProductShop;

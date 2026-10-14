@@ -8,6 +8,15 @@ import Notification from "./Notification";
 import { API } from "../../services/api";
 import "./Header.css";
 
+const MENU_OPTIONS = [
+    { key: "Shop", label: "Products", icon: "🛍️", route: "/home/shop", comingSoon: false },
+    { key: "Cards", label: "Cards", icon: "💳", route: "/home/cards", comingSoon: false },
+    { key: "Gifts", label: "Gifts", icon: "🎁", route: "/home/gifts", comingSoon: true },
+];
+
+const DEFAULT_OPTION = MENU_OPTIONS[0];
+const TOAST_DURATION = 2000;
+
 function Header({
     selectedMenu,
     setSelectedMenu,
@@ -16,9 +25,8 @@ function Header({
     isDetailsOpen,
     closeDetails,
     userId,
-    onReloadHome
+    onReloadHome,
 }) {
-    const dropdownRef = useRef(null);
     const menuDropdownRef = useRef(null);
     const autoOpenedRef = useRef(false);
     const navigate = useNavigate();
@@ -29,38 +37,32 @@ function Header({
     const [showNotifOverlay, setShowNotifOverlay] = useState(false);
     const [hasNotification, setHasNotification] = useState(false);
     const [notifCount, setNotifCount] = useState(0);
-
     const [showMenuDropdown, setShowMenuDropdown] = useState(false);
 
-    const menuOptions = [
-        { key: "Shop", label: "Products", icon: "🛍️", comingSoon: false },
-        { key: "Cards", label: "Cards", icon: "💳", comingSoon: false },
-        { key: "Gifts", label: "Gifts", icon: "🎁", comingSoon: true }
-    ];
-
-    const [selectedLabel, setSelectedLabel] = useState("Products");
-    const [selectedIcon, setSelectedIcon] = useState("🛍️");
+    const currentOption =
+        MENU_OPTIONS.find((opt) => opt.key === selectedMenu) || DEFAULT_OPTION;
 
     useEffect(() => {
+        if (!userId) return;
+
         async function loadVersion() {
             try {
-                const response = await fetch(`${API}/user/app-version/${userId}`);
-                const data = await response.json();
+                const res = await fetch(`${API}/user/app-version/${userId}`);
+                const data = await res.json();
                 if (data.success) setVersion(data.version);
             } catch (err) {
-                console.log(err);
+                console.error("Version load error:", err.message);
             }
         }
-        if (userId) loadVersion();
+
+        loadVersion();
     }, [userId]);
 
-    /* ============================================
-       NOTIFICATIONS CHECK
-       ============================================ */
     useEffect(() => {
+        if (!userId) return;
+
         async function checkNotifications() {
             try {
-
                 const sessionToken = localStorage.getItem("session_token");
 
                 const rewardRes = await fetch(
@@ -76,7 +78,6 @@ function Header({
 
                     if (rId > 0 && !isRedeemed) {
                         hasPendingRequest = true;
-
                         if (!autoOpenedRef.current) {
                             autoOpenedRef.current = true;
                             setShowNotifOverlay(true);
@@ -88,29 +89,29 @@ function Header({
                 const data = await res.json();
 
                 if (data.success) {
-                    const currentCount = data.count || 0;
-                    setNotifCount(currentCount);
+                    const count = data.count || 0;
+                    setNotifCount(count);
 
-                    const lastSeenCount = parseInt(
+                    const lastSeen = parseInt(
                         localStorage.getItem("lastSeenCount") || "0",
                         10
                     );
 
-                    if (hasPendingRequest) {
-                        setHasNotification(true);
-                    } else {
-                        setHasNotification(currentCount > lastSeenCount);
-                    }
+                    setHasNotification(
+                        hasPendingRequest || count > lastSeen
+                    );
                 }
-
             } catch (err) {
-                console.log(err);
+                console.error("Notification check error:", err.message);
             }
         }
-        if (userId) checkNotifications();
+
+        checkNotifications();
     }, [userId]);
 
     useEffect(() => {
+        if (!showMenuDropdown) return;
+
         function handleClickOutside(e) {
             if (
                 menuDropdownRef.current &&
@@ -119,24 +120,15 @@ function Header({
                 setShowMenuDropdown(false);
             }
         }
-        if (showMenuDropdown) {
-            document.addEventListener("mousedown", handleClickOutside);
-            document.addEventListener("touchstart", handleClickOutside);
-        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("touchstart", handleClickOutside);
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("touchstart", handleClickOutside);
         };
     }, [showMenuDropdown]);
-
-    useEffect(() => {
-        const found = menuOptions.find((opt) => opt.key === selectedMenu);
-        if (found) {
-            setSelectedLabel(found.label);
-            setSelectedIcon(found.icon);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedMenu]);
 
     const handleNotifOpen = () => {
         localStorage.setItem("lastSeenCount", String(notifCount));
@@ -144,9 +136,7 @@ function Header({
         setShowNotifOverlay(true);
     };
 
-    const handleNotifClose = () => {
-        setShowNotifOverlay(false);
-    };
+    const handleNotifClose = () => setShowNotifOverlay(false);
 
     const handleRedeemHandled = () => {
         setHasNotification(false);
@@ -156,7 +146,14 @@ function Header({
     const handleComingSoon = (feature) => {
         setToastMessage(`${feature} Coming Soon!`);
         setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+        setTimeout(() => setShowToast(false), TOAST_DURATION);
+    };
+
+    const handleTabClick = (menu) => {
+        if (isDetailsOpen) closeDetails();
+        setSelectedBottomTab("Home");
+        setSelectedMenu(menu);
+        setIsMenuOpen(false);
     };
 
     const handleMenuOptionClick = (option) => {
@@ -167,45 +164,17 @@ function Header({
             return;
         }
 
-        setSelectedLabel(option.label);
-        setSelectedIcon(option.icon);
         handleTabClick(option.key);
-
         if (onReloadHome) onReloadHome();
-
-        if (option.key === "Cards") {
-            navigate("/home/cards", { replace: true });
-        } else if (option.key === "Gifts") {
-            navigate("/home/gifts", { replace: true });
-        } else {
-            navigate("/home/shop", { replace: true });
-        }
+        navigate(option.route, { replace: true });
     };
-
-    const handleTabClick = (menu) => {
-        if (isDetailsOpen) closeDetails();
-        setSelectedBottomTab("Home");
-        setSelectedMenu(menu);
-        setIsMenuOpen(false);
-    };
-
-    const toastElement = showToast ? (
-        <div className="hd-toast" role="status" aria-live="polite">
-            <span className="hd-toast-icon">
-                <HiOutlineSparkles />
-            </span>
-            <span className="hd-toast-text">{toastMessage}</span>
-            <span className="hd-toast-bar" />
-        </div>
-    ) : null;
 
     return (
         <>
-            <header className="hd-header" ref={dropdownRef}>
+            <header className="hd-header">
                 <div className="hd-glow" />
 
                 <div className="hd-inner">
-
                     <div className="hd-brand">
                         <div className="hd-brand-mark">
                             <span>H</span>
@@ -220,30 +189,27 @@ function Header({
                     </div>
 
                     <div className="hd-actions">
-
                         <div className="hd-menu-wrap" ref={menuDropdownRef}>
                             <button
                                 type="button"
                                 className={`hd-menu-trigger ${showMenuDropdown ? "open" : ""}`}
-                                onClick={() => setShowMenuDropdown(p => !p)}
+                                onClick={() => setShowMenuDropdown((p) => !p)}
                                 aria-haspopup="true"
                                 aria-expanded={showMenuDropdown}
                             >
-                                {selectedIcon && (
-                                    <span className="hd-menu-icon">{selectedIcon}</span>
-                                )}
-                                <span className="hd-menu-label">{selectedLabel}</span>
-                                <span className={`hd-menu-chevron ${showMenuDropdown ? "rotate" : ""}`}>
+                                <span className="hd-menu-icon">{currentOption.icon}</span>
+                                <span className="hd-menu-label">{currentOption.label}</span>
+                                <span
+                                    className={`hd-menu-chevron ${showMenuDropdown ? "rotate" : ""}`}
+                                >
                                     <FiChevronDown />
                                 </span>
                             </button>
 
                             {showMenuDropdown && (
                                 <div className="hd-menu-dropdown" role="menu">
-                                    <div className="hd-menu-dropdown-head">
-                                        Browse
-                                    </div>
-                                    {menuOptions.map((option) => (
+                                    <div className="hd-menu-dropdown-head">Browse</div>
+                                    {MENU_OPTIONS.map((option) => (
                                         <button
                                             key={option.key}
                                             type="button"
@@ -289,7 +255,6 @@ function Header({
                             )}
                             <span className="hd-notif-ripple" />
                         </button>
-
                     </div>
                 </div>
             </header>
@@ -301,7 +266,17 @@ function Header({
                 />
             )}
 
-            {createPortal(toastElement, document.body)}
+            {showToast &&
+                createPortal(
+                    <div className="hd-toast" role="status" aria-live="polite">
+                        <span className="hd-toast-icon">
+                            <HiOutlineSparkles />
+                        </span>
+                        <span className="hd-toast-text">{toastMessage}</span>
+                        <span className="hd-toast-bar" />
+                    </div>,
+                    document.body
+                )}
         </>
     );
 }

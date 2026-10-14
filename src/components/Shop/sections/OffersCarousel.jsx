@@ -5,25 +5,25 @@ import { API } from "../../../services/api";
 
 function OffersCarousel() {
 
-    const [openOffers, setOpenOffers] = useState([]);
+    const [openOffers, setopen_offer_heepits] = useState([]);
     const [activeOfferIndex, setActiveOfferIndex] = useState(0);
     const [now, setNow] = useState(Date.now());
 
     const offerScrollRef = useRef(null);
 
     useEffect(() => {
-        const fetchOpenOffers = async () => {
+        const fetchopen_offer_heepits = async () => {
             try {
                 const res = await fetch(`${API}/api/openoffers/active`);
                 const data = await res.json();
                 if (data.success && Array.isArray(data.data)) {
-                    setOpenOffers(data.data);
+                    setopen_offer_heepits(data.data);
                 }
             } catch (err) {
                 console.error("Open offers fetch error:", err);
             }
         };
-        fetchOpenOffers();
+        fetchopen_offer_heepits();
     }, []);
 
     useEffect(() => {

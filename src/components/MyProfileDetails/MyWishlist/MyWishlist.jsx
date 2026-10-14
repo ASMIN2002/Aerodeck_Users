@@ -3,11 +3,36 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../services/api";
 
-function MyWishlist({
-    setProfilePage,
-    onOpenDetails
-}) {
+const TYPE_KEYS = ["product", "gift", "shop", "premium"];
 
+const PRODUCT_TYPE_MAP = {
+    product_id: "products",
+    gift_id: "gifts",
+    shop_id: "shop",
+    premium_id: "premium",
+};
+
+function pickField(item, suffix, fallback = undefined) {
+    if (!item) return fallback;
+    for (const key of TYPE_KEYS) {
+        const val = item[`${key}_${suffix}`];
+        if (val !== undefined && val !== null) return val;
+    }
+    return fallback;
+}
+
+function getProductId(item) {
+    return pickField(item, "id");
+}
+
+function getProductType(item) {
+    for (const [idKey, type] of Object.entries(PRODUCT_TYPE_MAP)) {
+        if (item[idKey]) return type;
+    }
+    return "";
+}
+
+function MyWishlist({ setProfilePage, onOpenDetails }) {
     const navigate = useNavigate();
 
     const [wishlist, setWishlist] = useState([]);
@@ -15,235 +40,108 @@ function MyWishlist({
 
     const sessionToken = localStorage.getItem("session_token");
 
+    const fetchWishlist = async () => {
+        try {
+            const res = await fetch(
+                `${API}/api/user/wishlist?session_token=${sessionToken}`
+            );
+            const data = await res.json();
+            if (data.success) setWishlist(data.data || []);
+        } catch (err) {
+            console.error("Wishlist fetch error:", err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchWishlist();
     }, []);
 
-    const fetchWishlist = async () => {
-
-        try {
-
-            const res = await fetch(
-                `${API}/api/user/wishlist?session_token=${sessionToken}`
-            );
-
-            const data = await res.json();
-            if (data.success) {
-                setWishlist(data.data || []);
-            }
-
-        } catch (err) {
-
-            console.error(err);
-
-        } finally {
-
-            setLoading(false);
-
-        }
-
-    };
-
     const handleRemove = async (productId) => {
-
         try {
-
             await fetch(`${API}/api/user/wishlist/${productId}`, {
-
                 method: "DELETE",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    session_token: sessionToken
-                })
-
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_token: sessionToken }),
             });
-
             fetchWishlist();
-
+        } catch (err) {
+            console.error("Remove error:", err.message);
         }
-
-        catch (err) {
-
-            console.error(err);
-
-        }
-
     };
 
-    /* 🔥 Back button handler */
     const handleBack = () => {
         setProfilePage("profile");
         navigate(-1);
     };
 
     return (
-
         <div className="mywishlist">
-
             <div className="wishlist-header">
-
-                <button
-                    className="wishlist-back"
-                    onClick={handleBack}
-                >
+                <button className="wishlist-back" onClick={handleBack}>
                     ←
                 </button>
-
                 <h2>My Wishlist</h2>
-
             </div>
 
-            {
-                loading &&
-                <p>Loading...</p>
-            }
+            {loading && <p>Loading...</p>}
 
-            {
-                !loading &&
-                wishlist.length === 0 &&
-
+            {!loading && wishlist.length === 0 && (
                 <div className="wishlist-empty">
-
                     ❤️
-
                     <h3>No Wishlist Found</h3>
-
                     <p>Your favourite cards will appear here.</p>
-
                 </div>
+            )}
 
-            }
+            {wishlist.map((item) => {
+                const productId = getProductId(item);
+                const productType = getProductType(item);
 
-            {
-
-                wishlist.map((item) => (
-
-                    <div
-                        className="wishlist-card"
-                        key={
-                            item.product_id ||
-                            item.gift_id ||
-                            item.shop_id ||
-                            item.premium_id
-                        }
-                    >
-
+                return (
+                    <div className="wishlist-card" key={productId}>
                         <img
-                            src={
-                                item.product_image1 ||
-                                item.gift_image1 ||
-                                item.shop_image1 ||
-                                item.premium_image1
-                            }
-                            alt={
-                                item.product_name ||
-                                item.gift_name ||
-                                item.shop_name ||
-                                item.premium_name
-                            }
+                            src={pickField(item, "image1", "")}
+                            alt={pickField(item, "name", "")}
                         />
 
                         <div className="wishlist-info">
-
-                            <h3>{
-                                item.product_name ||
-                                item.gift_name ||
-                                item.shop_name ||
-                                item.premium_name
-                            }</h3>
-
-                            <p>
-                                ⭐ {
-                                    item.product_rating ||
-                                    item.gift_rating ||
-                                    item.shop_rating ||
-                                    item.premium_rating
-                                }
-                            </p>
+                            <h3>{pickField(item, "name", "")}</h3>
+                            <p>⭐ {pickField(item, "rating", 0)}</p>
                             <p className="wishlist-discount">
-                                {
-                                    item.shop_discount_percentage ||
-                                    item.gift_discount_percentage ||
-                                    item.product_discount_percentage ||
-                                    item.premium_discount_percentage
-                                } % Off
+                                {pickField(item, "discount_percentage", 0)} % Off
                             </p>
+
                             <div className="detwish">
-
                                 <p className="wishlist-stats">
-                                    ❤️ {
-                                        item.product_total_likes ||
-                                        item.gift_total_likes ||
-                                        item.shop_total_likes ||
-                                        item.premium_total_likes
-                                    } &nbsp;&nbsp; 🔖{
-                                        item.product_total_saves ||
-                                        item.gift_total_saves ||
-                                        item.shop_total_saves ||
-                                        item.premium_total_saves
-                                    }
+                                    ❤️ {pickField(item, "total_likes", 0)} &nbsp;&nbsp; 🔖
+                                    {pickField(item, "total_saves", 0)}
                                 </p>
-
-                                <h4>
-                                    ₹ {
-                                        item.product_price ||
-                                        item.gift_price ||
-                                        item.shop_price ||
-                                        item.premium_price
-                                    }
-                                </h4>
+                                <h4>₹ {pickField(item, "price", 0)}</h4>
                             </div>
-
                         </div>
 
                         <div className="wishlist-actions">
-
                             <button
                                 className="wishlist-view"
-                                onClick={() => {
-
-                                    const type =
-                                        item.product_id ? "products" :
-                                            item.gift_id ? "gifts" :
-                                                item.shop_id ? "shop" :
-                                                    item.premium_id ? "premium" :
-                                                        "";
-
-                                    onOpenDetails(item, type);
-                                }}
+                                onClick={() => onOpenDetails(item, productType)}
                             >
                                 View
                             </button>
 
                             <button
                                 className="wishlist-remove"
-                                onClick={() =>
-                                    handleRemove(
-                                        item.product_id ||
-                                        item.gift_id ||
-                                        item.shop_id ||
-                                        item.premium_id
-                                    )
-                                }
+                                onClick={() => handleRemove(productId)}
                             >
                                 Remove
                             </button>
-
                         </div>
-
                     </div>
-
-                ))
-            }
-
+                );
+            })}
         </div>
-
     );
-
 }
 
 export default MyWishlist;

@@ -5,14 +5,35 @@ import "./EditAddress.css";
 import { API } from "../../../services/api";
 import Loading from "../../../components/Loading/Loading";
 
+const ADDRESS_TYPES = [
+    { value: "Home", label: "🏠 Home" },
+    { value: "Work", label: "🏢 Work" },
+    { value: "Other", label: "📍 Other" },
+];
+
+const COMPARE_FIELDS = [
+    "full_name",
+    "mobile_number",
+    "house_flat",
+    "area_street",
+    "landmark",
+    "city",
+    "state",
+    "pincode",
+    "country",
+    "address_type",
+];
+
+function getSessionToken() {
+    return localStorage.getItem("session_token");
+}
+
 function EditAddress({ setProfilePage }) {
     const navigate = useNavigate();
 
-    const sessionToken = localStorage.getItem("session_token");
-
     const [formData, setFormData] = useState({
         address_id: "",
-        session_token: sessionToken,
+        session_token: getSessionToken(),
         full_name: "",
         mobile_number: "",
         house_flat: "",
@@ -24,7 +45,7 @@ function EditAddress({ setProfilePage }) {
         country: "",
         latitude: null,
         longitude: null,
-        address_type: "Home"
+        address_type: "Home",
     });
 
     const [originalData, setOriginalData] = useState(null);
@@ -33,224 +54,132 @@ function EditAddress({ setProfilePage }) {
     const [savingAddress, setSavingAddress] = useState(false);
     const [isChanged, setIsChanged] = useState(false);
 
-    const fetchPincode = async (pin) => {
+    const updateField = (field, value) => {
+        setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
+    const fetchPincode = async (pin) => {
         if (pin.length !== 6) return;
 
         try {
-
             setLoadingPin(true);
 
-            const response = await fetch(
-                `${API}/api/user/address/pincode/${pin}`
-            );
-
-            const data = await response.json();
-            console.log(data.location);
+            const res = await fetch(`${API}/api/user/address/pincode/${pin}`);
+            const data = await res.json();
 
             if (data.success) {
-
-                setFormData(prev => ({
-                    ...prev,
+                const updates = {
                     pincode: pin,
                     city: data.location.city,
                     state: data.location.state,
-                    country: data.location.country
-                }));
+                    country: data.location.country,
+                };
 
-                /* 🔥 originalData bhi mirror karo */
-                setOriginalData(orig => {
-                    if (!orig) return orig;
-                    return {
-                        ...orig,
-                        pincode: pin,
-                        city: data.location.city,
-                        state: data.location.state,
-                        country: data.location.country
-                    };
-                });
-
+                setFormData((prev) => ({ ...prev, ...updates }));
+                setOriginalData((orig) => (orig ? { ...orig, ...updates } : orig));
                 setAreas(data.areas);
-
             }
-
-        } catch (error) {
-
-            console.error(error);
-
+        } catch (err) {
+            console.error("Pincode fetch error:", err.message);
         } finally {
-
             setLoadingPin(false);
-
         }
-
     };
 
     useEffect(() => {
-
         const savedAddress = localStorage.getItem("editAddress");
+        if (!savedAddress) return;
 
-        if (savedAddress) {
+        const data = JSON.parse(savedAddress);
+        const initial = { ...data, session_token: getSessionToken() };
 
-            const data = JSON.parse(savedAddress);
+        setFormData(initial);
+        setOriginalData(initial);
+        setIsChanged(false);
 
-            const initial = {
-                ...data,
-                session_token: sessionToken
-            };
-
-            setFormData(initial);
-            setOriginalData(initial);
-            setIsChanged(false);
-
-            fetchPincode(data.pincode);
-
-        }
-
+        fetchPincode(data.pincode);
     }, []);
 
     useEffect(() => {
+        if (!originalData || loadingPin) return;
 
-        if (!originalData) return;
-        if (loadingPin) return;
-
-        const fieldsToCompare = [
-            "full_name",
-            "mobile_number",
-            "house_flat",
-            "area_street",
-            "landmark",
-            "city",
-            "state",
-            "pincode",
-            "country",
-            "address_type"
-        ];
-
-        const changed = fieldsToCompare.some(
+        const changed = COMPARE_FIELDS.some(
             (key) =>
                 String(formData[key] ?? "").trim() !==
                 String(originalData[key] ?? "").trim()
         );
 
         setIsChanged(changed);
-
     }, [formData, originalData, loadingPin]);
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
         if (!isChanged) return;
 
         setSavingAddress(true);
 
         try {
-
-            const response = await fetch(
-
+            const res = await fetch(
                 `${API}/api/user/address/${formData.address_id}`,
-
                 {
-
                     method: "PUT",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(formData)
-
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData),
                 }
-
             );
-
-            const data = await response.json();
+            const data = await res.json();
 
             if (data.success) {
-
-                setSavingAddress(false);
-
                 localStorage.removeItem("editAddress");
-
                 sessionStorage.setItem(
                     "addressSuccessMessage",
                     "Address updated successfully."
                 );
-
                 setProfilePage("address");
                 navigate("/profile/address", { replace: true });
-
             } else {
-
-                setSavingAddress(false);
-
                 alert(data.message);
-
             }
-
-        } catch (error) {
-
+        } catch (err) {
+            console.error("Update address error:", err.message);
+        } finally {
             setSavingAddress(false);
-
-            console.error(error);
-
         }
-
     };
 
-    /* 🔥 Back button handler */
     const handleBack = () => {
         setProfilePage("address");
         navigate(-1);
     };
 
-    if (!formData.address_id) {
-        return <h2>Loading...</h2>;
-    }
+    const handlePincodeChange = (e) => {
+        const pin = e.target.value.replace(/\D/g, "");
+        updateField("pincode", pin);
+
+        if (pin.length === 6) fetchPincode(pin);
+    };
+
+    if (!formData.address_id) return <h2>Loading...</h2>;
 
     return (
-
         <div className="heep-edit-addr-page">
-            {
-                savingAddress && (
-                    <Loading
-                        manual={true}
-                        text="Updating Address..."
-                    />
-                )
-            }
+            {savingAddress && (
+                <Loading manual={true} text="Updating Address..." />
+            )}
 
             <div className="heep-edit-addr-header">
-
-                <button
-                    className="heep-edit-addr-back-btn"
-                    onClick={handleBack}
-                >
+                <button className="heep-edit-addr-back-btn" onClick={handleBack}>
                     <FiArrowLeft />
                 </button>
-
-                <h2 className="heep-edit-addr-title">
-                    Edit Address
-                </h2>
-
+                <h2 className="heep-edit-addr-title">Edit Address</h2>
             </div>
 
-            <form
-                className="heep-edit-addr-form"
-                onSubmit={handleSubmit}
-            >
-
+            <form className="heep-edit-addr-form" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     placeholder="Full Name"
                     value={formData.full_name || ""}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            full_name: e.target.value
-                        }))
-                    }
+                    onChange={(e) => updateField("full_name", e.target.value)}
                 />
 
                 <input
@@ -259,10 +188,7 @@ function EditAddress({ setProfilePage }) {
                     maxLength={10}
                     value={formData.mobile_number || ""}
                     onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            mobile_number: e.target.value.replace(/\D/g, "")
-                        }))
+                        updateField("mobile_number", e.target.value.replace(/\D/g, ""))
                     }
                 />
 
@@ -270,25 +196,14 @@ function EditAddress({ setProfilePage }) {
                     type="text"
                     placeholder="House / Flat / Building"
                     value={formData.house_flat || ""}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            house_flat: e.target.value
-                        }))
-                    }
+                    onChange={(e) => updateField("house_flat", e.target.value)}
                 />
 
                 <select
                     value={formData.area_street || ""}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            area_street: e.target.value
-                        }))
-                    }
+                    onChange={(e) => updateField("area_street", e.target.value)}
                 >
                     <option value="">Select Area</option>
-
                     {areas.map((area, index) => (
                         <option key={index} value={area}>
                             {area}
@@ -300,32 +215,15 @@ function EditAddress({ setProfilePage }) {
                     type="text"
                     placeholder="Landmark (Optional)"
                     value={formData.landmark || ""}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            landmark: e.target.value
-                        }))
-                    }
+                    onChange={(e) => updateField("landmark", e.target.value)}
                 />
+
                 <input
                     type="text"
                     placeholder="PIN Code"
                     maxLength={6}
                     value={formData.pincode || ""}
-                    onChange={(e) => {
-
-                        const pin = e.target.value.replace(/\D/g, "");
-
-                        setFormData(prev => ({
-                            ...prev,
-                            pincode: pin
-                        }));
-
-                        if (pin.length === 6) {
-                            fetchPincode(pin);
-                        }
-
-                    }}
+                    onChange={handlePincodeChange}
                     readOnly
                 />
 
@@ -351,55 +249,22 @@ function EditAddress({ setProfilePage }) {
                 />
 
                 <div className="heep-edit-addr-type">
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="type"
-                            value="Home"
-                            checked={(formData.address_type || "Home") === "Home"}
-                            onChange={(e) =>
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address_type: e.target.value
-                                }))
-                            }
-                        />
-                        🏠 Home
-                    </label>
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="type"
-                            value="Work"
-                            checked={formData.address_type === "Work"}
-                            onChange={(e) =>
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address_type: e.target.value
-                                }))
-                            }
-                        />
-                        🏢 Work
-                    </label>
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="type"
-                            value="Other"
-                            checked={formData.address_type === "Other"}
-                            onChange={(e) =>
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address_type: e.target.value
-                                }))
-                            }
-                        />
-                        📍 Other
-                    </label>
-
+                    {ADDRESS_TYPES.map((type) => (
+                        <label key={type.value}>
+                            <input
+                                type="radio"
+                                name="type"
+                                value={type.value}
+                                checked={
+                                    (formData.address_type || "Home") === type.value
+                                }
+                                onChange={(e) =>
+                                    updateField("address_type", e.target.value)
+                                }
+                            />
+                            {type.label}
+                        </label>
+                    ))}
                 </div>
 
                 <button
@@ -409,12 +274,9 @@ function EditAddress({ setProfilePage }) {
                 >
                     Update Address
                 </button>
-
             </form>
         </div>
-
     );
-
 }
 
 export default EditAddress;

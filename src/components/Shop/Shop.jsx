@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Loading from "../../components/Loading/Loading";
 import ShopCard from "../Shop/ShopCard";
 import Toast from "../Toast/Toast";
@@ -9,8 +9,6 @@ import ShopCategory from "./ShopCategory";
 import ALLShopCategories from "./ALLShopCategories";
 import "./Shop.css";
 
-const SUGGESTION_LIMIT = 6;
-const OFFER_SCROLL_INTERVAL = 3000;
 const TOAST_DURATION = 2000;
 
 function shopIdOf(product) {
@@ -23,6 +21,31 @@ function updateShopField(products, shopId, field, delta) {
             ? { ...p, [field]: Math.max((p[field] || 0) + delta, 0) }
             : p
     );
+}
+
+function toggleSetItem(set, id, isAdd) {
+    const next = new Set(set);
+    if (isAdd) next.add(id);
+    else next.delete(id);
+    return next;
+}
+
+async function toggleUserItem(endpoint, id, isActive, sessionToken) {
+    const res = await fetch(
+        isActive
+            ? `${API}/api/user/${endpoint}/${id}`
+            : `${API}/api/user/${endpoint}`,
+        {
+            method: isActive ? "DELETE" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(
+                isActive
+                    ? { session_token: sessionToken }
+                    : { session_token: sessionToken, product_id: id }
+            ),
+        }
+    );
+    return res.json();
 }
 
 function Shop({
@@ -51,21 +74,10 @@ function Shop({
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
     const [showLoading, setShowLoading] = useState(true);
-    const [searchSuggestions, setSearchSuggestions] = useState([]);
-    const [activeOfferIndex, setActiveOfferIndex] = useState(0);
-
-    const offerScrollRef = useRef(null);
 
     const showToast = (message, type = "success") => {
         setToast({ show: true, message, type });
         setTimeout(() => setToast({ show: false, message: "", type }), TOAST_DURATION);
-    };
-
-    const toggleSetItem = (set, id, isAdd) => {
-        const next = new Set(set);
-        if (isAdd) next.add(id);
-        else next.delete(id);
-        return next;
     };
 
     const handleSave = async (productId) => {
@@ -73,21 +85,7 @@ function Shop({
         const isSaved = savedProducts.has(id);
 
         try {
-            const res = await fetch(
-                isSaved
-                    ? `${API}/api/user/wishlist/${id}`
-                    : `${API}/api/user/wishlist`,
-                {
-                    method: isSaved ? "DELETE" : "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(
-                        isSaved
-                            ? { session_token: sessionToken }
-                            : { session_token: sessionToken, product_id: id }
-                    ),
-                }
-            );
-            const data = await res.json();
+            const data = await toggleUserItem("wishlist", id, isSaved, sessionToken);
             if (!data.success) return;
 
             setSavedProducts((prev) => toggleSetItem(prev, id, !isSaved));
@@ -95,7 +93,10 @@ function Shop({
                 updateShopField(prev, id, "shop_total_saves", isSaved ? -1 : 1)
             );
 
-            showToast(isSaved ? "Removed from Wishlist" : "Saved to Wishlist", isSaved ? "info" : "success");
+            showToast(
+                isSaved ? "Removed from Wishlist" : "Saved to Wishlist",
+                isSaved ? "info" : "success"
+            );
         } catch (err) {
             console.error("Save error:", err.message);
         }
@@ -106,21 +107,7 @@ function Shop({
         const isLiked = likedProducts.has(id);
 
         try {
-            const res = await fetch(
-                isLiked
-                    ? `${API}/api/user/likes/${id}`
-                    : `${API}/api/user/likes`,
-                {
-                    method: isLiked ? "DELETE" : "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(
-                        isLiked
-                            ? { session_token: sessionToken }
-                            : { session_token: sessionToken, product_id: id }
-                    ),
-                }
-            );
-            const data = await res.json();
+            const data = await toggleUserItem("likes", id, isLiked, sessionToken);
             if (!data.success) return;
 
             setLikedProducts((prev) => toggleSetItem(prev, id, !isLiked));
@@ -128,7 +115,10 @@ function Shop({
                 updateShopField(prev, id, "shop_total_likes", isLiked ? -1 : 1)
             );
 
-            showToast(isLiked ? "Like Removed" : "Product Liked", isLiked ? "info" : "success");
+            showToast(
+                isLiked ? "Like Removed" : "Product Liked",
+                isLiked ? "info" : "success"
+            );
         } catch (err) {
             console.error("Like error:", err.message);
         }
@@ -147,7 +137,11 @@ function Shop({
             const res = await fetch(`${API}/api/user/cart`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: sessionToken, product_id: id, quantity: 1 }),
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    product_id: id,
+                    quantity: 1,
+                }),
             });
             const data = await res.json();
             if (!data.success) return;
@@ -172,13 +166,19 @@ function Shop({
             const res = await fetch(`${API}/api/user/cart`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: sessionToken, product_id: id, quantity: newQty }),
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    product_id: id,
+                    quantity: newQty,
+                }),
             });
             const data = await res.json();
             if (!data.success) return;
 
             setCartProducts((prev) =>
-                prev.map((i) => (String(i.product_id) === id ? { ...i, quantity: newQty } : i))
+                prev.map((i) =>
+                    String(i.product_id) === id ? { ...i, quantity: newQty } : i
+                )
             );
         } catch (err) {
             console.error("Increase qty error:", err.message);
@@ -200,7 +200,9 @@ function Shop({
                 const data = await res.json();
                 if (!data.success) return;
 
-                const nextCart = cartProducts.filter((i) => String(i.product_id) !== id);
+                const nextCart = cartProducts.filter(
+                    (i) => String(i.product_id) !== id
+                );
                 setCartProducts(nextCart);
                 setCartCount(nextCart.length);
                 return;
@@ -210,13 +212,19 @@ function Shop({
             const res = await fetch(`${API}/api/user/cart`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: sessionToken, product_id: id, quantity: newQty }),
+                body: JSON.stringify({
+                    session_token: sessionToken,
+                    product_id: id,
+                    quantity: newQty,
+                }),
             });
             const data = await res.json();
             if (!data.success) return;
 
             setCartProducts((prev) =>
-                prev.map((i) => (String(i.product_id) === id ? { ...i, quantity: newQty } : i))
+                prev.map((i) =>
+                    String(i.product_id) === id ? { ...i, quantity: newQty } : i
+                )
             );
         } catch (err) {
             console.error("Decrease qty error:", err.message);
@@ -258,10 +266,14 @@ function Shop({
 
         async function loadWishlist() {
             try {
-                const res = await fetch(`${API}/api/user/wishlist?session_token=${sessionToken}`);
+                const res = await fetch(
+                    `${API}/api/user/wishlist?session_token=${sessionToken}`
+                );
                 const data = await res.json();
                 if (data.success) {
-                    setSavedProducts(new Set(data.data.map((i) => String(i.product_id))));
+                    setSavedProducts(
+                        new Set(data.data.map((i) => String(i.product_id)))
+                    );
                 }
             } catch (err) {
                 console.error("Wishlist error:", err.message);
@@ -270,7 +282,9 @@ function Shop({
 
         async function loadLikes() {
             try {
-                const res = await fetch(`${API}/api/user/likes?session_token=${sessionToken}`);
+                const res = await fetch(
+                    `${API}/api/user/likes?session_token=${sessionToken}`
+                );
                 const data = await res.json();
                 if (data.success) {
                     setLikedProducts(new Set(data.data.map((i) => i.product_id)));
@@ -282,7 +296,9 @@ function Shop({
 
         async function loadCart() {
             try {
-                const res = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`);
+                const res = await fetch(
+                    `${API}/api/user/cart?session_token=${sessionToken}`
+                );
                 const data = await res.json();
                 if (data.success) {
                     setCartProducts(data.data);
@@ -314,95 +330,18 @@ function Shop({
     const finalShops = useMemo(() => {
         let list = [...filteredShops];
 
-        if (filter.sort === "low") list.sort((a, b) => Number(a.shop_price) - Number(b.shop_price));
-        if (filter.sort === "high") list.sort((a, b) => Number(b.shop_price) - Number(a.shop_price));
+        if (filter.sort === "low")
+            list.sort((a, b) => Number(a.shop_price) - Number(b.shop_price));
+        if (filter.sort === "high")
+            list.sort((a, b) => Number(b.shop_price) - Number(a.shop_price));
 
-        if (filter.rating > 0) list = list.filter((s) => Number(s.shop_rating) >= filter.rating);
-        if (filter.availableOnly) list = list.filter((s) => Number(s.shop_status) === 1);
+        if (filter.rating > 0)
+            list = list.filter((s) => Number(s.shop_rating) >= filter.rating);
+        if (filter.availableOnly)
+            list = list.filter((s) => Number(s.shop_status) === 1);
 
         return list;
     }, [filteredShops, filter]);
-
-    useEffect(() => {
-        if (!search.trim()) {
-            setSearchSuggestions([]);
-            return;
-        }
-
-        const keyword = search.toLowerCase().trim();
-
-        const names = shops
-            .filter((s) => s.shop_name?.toLowerCase().includes(keyword))
-            .map((s) => ({ type: "shop", value: s.shop_name }));
-
-        const cats = [
-            ...new Set(
-                shops
-                    .filter((s) => s.shop_category?.toLowerCase().includes(keyword))
-                    .map((s) => s.shop_category)
-                    .filter(Boolean)
-            ),
-        ].map((c) => ({ type: "category", value: c }));
-
-        const unique = [...names, ...cats].filter(
-            (item, idx, arr) =>
-                idx === arr.findIndex((x) => x.value.toLowerCase() === item.value.toLowerCase())
-        );
-
-        setSearchSuggestions(unique.slice(0, SUGGESTION_LIMIT));
-    }, [search, shops]);
-
-    const suggestedShops = useMemo(() => {
-        const good = shops.filter((s) => Number(s.shop_rating || 0) > 3.5);
-        const medium = shops.filter((s) => {
-            const r = Number(s.shop_rating || 0);
-            return r > 1 && r <= 3.5;
-        });
-        const veryLow = shops.filter((s) => Number(s.shop_rating || 0) <= 1);
-
-        const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
-
-        return shuffle([
-            ...shuffle(good).slice(0, 15),
-            ...shuffle(medium).slice(0, 2),
-            ...shuffle(veryLow).slice(0, 3),
-        ]);
-    }, [shops]);
-
-    const topLikedShops = useMemo(
-        () =>
-            [...shops]
-                .sort((a, b) => Number(b.shop_total_likes || 0) - Number(a.shop_total_likes || 0))
-                .slice(0, 16),
-        [shops]
-    );
-
-    const offerShops = useMemo(() => {
-        return shops
-            .filter((s) => /up\s*to.*\d+%.*off/i.test(s.shop_highlight_text || ""))
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 5);
-    }, [shops]);
-
-    useEffect(() => {
-        if (offerShops.length <= 1) return;
-
-        const timer = setInterval(() => {
-            const c = offerScrollRef.current;
-            if (!c) return;
-
-            const next = c.scrollLeft + c.clientWidth;
-            if (next >= c.scrollWidth - c.clientWidth) {
-                c.scrollTo({ left: 0, behavior: "smooth" });
-            } else {
-                c.scrollTo({ left: next, behavior: "smooth" });
-            }
-        }, OFFER_SCROLL_INTERVAL);
-
-        return () => clearInterval(timer);
-    }, [offerShops]);
-
-    const randomShops = useMemo(() => [...shops].sort(() => Math.random() - 0.5), [shops]);
 
     const isSearching = search.trim().length > 0;
     const isFilterActive =
@@ -474,11 +413,14 @@ function Shop({
                                     isSaved={savedProducts.has(String(shop.shop_id))}
                                     isLiked={likedProducts.has(String(shop.shop_id))}
                                     isAddedToCart={cartProducts.some(
-                                        (i) => String(i.product_id) === String(shop.shop_id)
+                                        (i) =>
+                                            String(i.product_id) === String(shop.shop_id)
                                     )}
                                     cartQuantity={
                                         cartProducts.find(
-                                            (i) => String(i.product_id) === String(shop.shop_id)
+                                            (i) =>
+                                                String(i.product_id) ===
+                                                String(shop.shop_id)
                                         )?.quantity || 0
                                     }
                                     onSave={handleSave}
@@ -494,7 +436,9 @@ function Shop({
                         <div className="shop-empty">
                             <span className="shop-empty-icon">📭</span>
                             <h3 className="shop-empty-title">No Products Available</h3>
-                            <p className="shop-empty-text">Try changing your filter or search.</p>
+                            <p className="shop-empty-text">
+                                Try changing your filter or search.
+                            </p>
                         </div>
                     )}
                 </section>
@@ -513,14 +457,6 @@ function Shop({
                         goTo("/home/shop/allcategory");
                     }}
                     onOpenDetails={onOpenDetails}
-                    onSave={handleSave}
-                    onLike={handleLike}
-                    onAddToCart={handleAddToCart}
-                    onIncreaseQuantity={handleIncreaseQuantity}
-                    onDecreaseQuantity={handleDecreaseQuantity}
-                    savedProducts={savedProducts}
-                    likedProducts={likedProducts}
-                    cartProducts={cartProducts}
                     onOpenAllShops={() => {
                         setShopCategoryPage(false);
                         setSelectedShopCategory(null);
