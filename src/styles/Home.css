@@ -5,10 +5,9 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: none;
+    background: black;
     position: relative;
     isolation: isolate;
-    background: black;
 }
 
 .home-container::before {
@@ -30,13 +29,15 @@
 
 .home-content {
     flex: 1;
+    position: relative;
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
     padding-bottom: 16px;
+    padding-top: 8px;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    scroll-behavior: smooth;
+    overscroll-behavior-y: contain;
+    scroll-behavior: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     background: #0d0d11;
@@ -46,6 +47,63 @@
     display: none;
     width: 0;
     height: 0;
+}
+
+.pull-refresh-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    overflow: hidden;
+    padding: 0 20px 8px;
+    transition: height 0.15s ease-out, opacity 0.15s ease-out;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.pull-refresh-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.pull-refresh-icon.ready {
+    color: #58a6ff;
+    border-color: #58a6ff;
+    box-shadow: 0 0 16px rgba(88, 166, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.pull-refresh-icon.spinning svg {
+    animation: pullSpin 0.8s linear infinite;
+}
+
+@keyframes pullSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.pull-refresh-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8b949e;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -96,64 +154,4 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
-}
-
-/* ============================================
-   PULL TO REFRESH
-   ============================================ */
-.home-content {
-    position: relative;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.pull-refresh-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    overflow: hidden;
-    transition: height 0.2s ease, opacity 0.2s ease;
-    padding: 0 20px;
-}
-
-.pull-refresh-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #161b22;
-    border: 1px solid #30363d;
-    color: #8b949e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    flex-shrink: 0;
-}
-
-.pull-refresh-icon.ready {
-    color: #58a6ff;
-    border-color: #58a6ff;
-    box-shadow: 0 0 16px rgba(88, 166, 255, 0.4);
-    transform: scale(1.05);
-}
-
-.pull-refresh-icon.spinning svg {
-    animation: pullSpin 0.8s linear infinite;
-}
-
-@keyframes pullSpin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.pull-refresh-text {
-    font-size: 11px;
-    font-weight: 700;
-    color: #8b949e;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
 }

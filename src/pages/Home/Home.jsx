@@ -1,5 +1,5 @@
 // src/components/Home/Home.jsx
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 
@@ -40,6 +40,8 @@ import useHomeRouting from "./useHomeRouting";
 
 const TAB_KEY = "selectedBottomTab";
 const MENU_KEY = "selectedMenu";
+const REFRESH_THRESHOLD = 80;
+const REFRESH_DURATION = 600;
 
 function getInitialTab() {
     const saved = localStorage.getItem(TAB_KEY);
@@ -94,40 +96,85 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
     const [pullDistance, setPullDistance] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const touchStartYRef = useRef(0);
-    const THRESHOLD = 80;
+    const homeContentRef = useRef(null);
+    const scrollPositionRef = useRef(0);
 
-    const handleTouchStart = (e) => {
-        const c = e.currentTarget;
-        touchStartYRef.current = c.scrollTop <= 0 && !isRefreshing ? e.touches[0].clientY : 0;
-    };
+    /* ============================================
+       PULL TO REFRESH — FIXED
+       ============================================ */
 
-    const handleTouchMove = (e) => {
+    const handleTouchStart = useCallback((e) => {
+        const container = homeContentRef.current;
+        if (!container || isRefreshing) return;
+
+        // Sirf tab start jab top pe ho
+        if (container.scrollTop <= 0) {
+            touchStartYRef.current = e.touches[0].clientY;
+            scrollPositionRef.current = container.scrollTop;
+        } else {
+            touchStartYRef.current = 0;
+        }
+    }, [isRefreshing]);
+
+    const handleTouchMove = useCallback((e) => {
         if (!touchStartYRef.current || isRefreshing) return;
-        if (e.currentTarget.scrollTop > 0) return;
-        const diff = e.touches[0].clientY - touchStartYRef.current;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.5, 120));
-    };
 
-    const handleTouchEnd = () => {
-        if (pullDistance >= THRESHOLD && !isRefreshing) {
+        const container = homeContentRef.current;
+        if (!container || container.scrollTop > 0) {
+            touchStartYRef.current = 0;
+            setPullDistance(0);
+            return;
+        }
+
+        const diff = e.touches[0].clientY - touchStartYRef.current;
+        if (diff > 0) {
+            // Damping factor — smooth feel
+            const distance = Math.min(diff * 0.5, 120);
+            setPullDistance(distance);
+        }
+    }, [isRefreshing]);
+
+    const handleTouchEnd = useCallback(() => {
+        const container = homeContentRef.current;
+        if (!container) return;
+
+        if (pullDistance >= REFRESH_THRESHOLD && !isRefreshing) {
             setIsRefreshing(true);
-            const container = document.querySelector(".home-content");
-            const scrollPos = container ? container.scrollTop : 0;
+
+            // Scroll position save
+            const savedScroll = container.scrollTop;
 
             setTimeout(() => {
-                setNavKey((p) => p + 1);
+                // Refresh key badhao — sab child components re-render
+                setNavKey((prev) => prev + 1);
+
+                // Reset
                 setIsRefreshing(false);
                 setPullDistance(0);
+
+                // Scroll restore — 2 frames baad
                 requestAnimationFrame(() => {
-                    const el = document.querySelector(".home-content");
-                    if (el) el.scrollTop = Number(scrollPos);
+                    requestAnimationFrame(() => {
+                        if (container) {
+                            container.scrollTop = savedScroll;
+                        }
+                    });
                 });
-            }, 600);
+            }, REFRESH_DURATION);
         } else {
             setPullDistance(0);
         }
+
         touchStartYRef.current = 0;
-    };
+    }, [pullDistance, isRefreshing]);
+
+    /* ============================================
+       REFRESH HANDLER — Child components ke liye
+       ============================================ */
+
+    const handleRefresh = useCallback(() => {
+        setNavKey((prev) => prev + 1);
+    }, []);
 
     useHomeRouting({
         setSelectedBottomTab,
@@ -141,7 +188,6 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
         setShopCategoryPage,
         setGiftCategoryPage,
         setAllShopCategoriesPage,
-        setAllShopsPage,
         setAllGiftCategoriesPage,
         setAllGiftsPage,
         setSelectedOrder,
@@ -176,7 +222,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
             }
         }
         loadProfile();
-    }, []);
+    }, [navKey]);   // ✅ navKey dependency — refresh pe profile reload
 
     useEffect(() => {
         const handleBackNavigation = () => {
@@ -228,7 +274,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
         if (detailsPage !== "details") return;
         const savedScroll = sessionStorage.getItem("detailsScrollPosition");
         if (!savedScroll) return;
-        const homeContent = document.querySelector(".home-content");
+        const homeContent = homeContentRef.current;
         if (!homeContent) return;
 
         requestAnimationFrame(() => {
@@ -345,7 +391,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         isDetailsOpen={isDetailsOpen}
                         closeDetails={handleCloseDetails}
                         userId={user?.user_id}
-                        onReloadHome={() => setNavKey((p) => p + 1)}
+                        onReloadHome={handleRefresh}
                         onOpenCart={() => {
                             setIsDetailsOpen(false);
                             setSelectedProduct(null);
@@ -403,24 +449,6 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         </>
                     )}
 
-                    {allShopsPage && (
-                        <>
-                            <TOPHEADER
-                                title="All Shops"
-                                onBack={() => {
-                                    setAllShopsPage(false);
-                                    goTo("/home/shop", { replace: true });
-                                }}
-                            />
-                            <div className="home-address">
-                                <Address
-                                    setProfilePage={setProfilePage}
-                                    setSelectedBottomTab={setSelectedBottomTab}
-                                />
-                            </div>
-                        </>
-                    )}
-
                     <Search
                         selectedMenu={selectedMenu}
                         search={search}
@@ -439,6 +467,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
             <div
                 className="home-content"
+                ref={homeContentRef}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
@@ -451,7 +480,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                     }}
                 >
                     <div
-                        className={`pull-refresh-icon ${pullDistance >= THRESHOLD ? "ready" : ""} ${isRefreshing ? "spinning" : ""}`}
+                        className={`pull-refresh-icon ${pullDistance >= REFRESH_THRESHOLD ? "ready" : ""} ${isRefreshing ? "spinning" : ""}`}
                     >
                         <svg
                             width="20"
@@ -472,7 +501,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                     <span className="pull-refresh-text">
                         {isRefreshing
                             ? "Refreshing..."
-                            : pullDistance >= THRESHOLD
+                            : pullDistance >= REFRESH_THRESHOLD
                                 ? "Release to refresh"
                                 : "Pull down to refresh"}
                     </span>
@@ -506,7 +535,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         </div>
 
                         {detailsPage === "allreview" && (
-                            <AllReview setDetailsPage={setDetailsPage} product_id={getProductId()} />
+                            <AllReview product_id={getProductId()} />
                         )}
 
                         {detailsPage === "allmedia" && (
@@ -565,8 +594,6 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                                 setSelectedShopCategory={setSelectedShopCategory}
                                 allShopCategoriesPage={allShopCategoriesPage}
                                 setAllShopCategoriesPage={setAllShopCategoriesPage}
-                                allShopsPage={allShopsPage}
-                                setAllShopsPage={setAllShopsPage}
                                 setSuggestionData={setShopSuggestionsData}
                                 goTo={goTo}
                             />
