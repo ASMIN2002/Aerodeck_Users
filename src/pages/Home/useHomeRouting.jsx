@@ -163,6 +163,12 @@ export default function useHomeRouting({
             return;
         }
 
+        if (path.startsWith("/profile/likes/product/")) {
+            setSelectedBottomTab("Profile");
+            setProfilePage("likes");
+            return;
+        }
+
         if (
             path.startsWith("/profile/orders/order/") &&
             path.includes("/product/")
@@ -310,6 +316,17 @@ export default function useHomeRouting({
             setSelectedBottomTab("Profile");
             setProfilePage("reviews");
         }
+        if (
+            parts.length === 4 &&
+            parts[0] === "profile" &&
+            parts[1] === "likes" &&
+            parts[2] === "product"
+        ) {
+            type = "shop";
+            id = parts[3];
+            setSelectedBottomTab("Profile");
+            setProfilePage("likes");
+        }
 
         if (parts[0] === "home" && (parts.length === 4 || parts.length === 5)) {
             if (parts[1] === "shop" && parts[2] === "product") {
@@ -386,10 +403,11 @@ export default function useHomeRouting({
             setSelectedBottomTab("Profile");
         } else if (path.startsWith("/profile/reviews/")) {
             setSelectedBottomTab("Profile");
+        } else if (path.startsWith("/profile/likes/")) {
+            setSelectedBottomTab("Profile");
         } else {
             setSelectedBottomTab("Home");
         }
-
         if (path.startsWith("/profile/wishlist/")) {
             setProfilePage("wishlist");
         } else if (path.startsWith("/profile/reviews/")) {

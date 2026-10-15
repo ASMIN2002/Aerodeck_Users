@@ -667,6 +667,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
                 {isProfilePage("likes") && (
                     <MyLikes
+                        key={`likes-${navKey}`}
                         setProfilePage={setProfilePage}
                         onOpenDetails={handleOpenDetails}
                     />

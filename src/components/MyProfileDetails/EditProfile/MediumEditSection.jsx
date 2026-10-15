@@ -26,15 +26,15 @@ async function updateUserField(endpoint, field, value) {
     return res.json();
 }
 
+const INITIAL_PHONE_STATE = {
+    whatsapp: { input: "", showBox: false, saving: false },
+    mobile: { input: "", showBox: false, saving: false },
+};
+
 function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
     const [fullName, setFullName] = useState("");
     const [originalName, setOriginalName] = useState("");
-    const [whatsappInput, setWhatsappInput] = useState("");
-    const [mobileInput, setMobileInput] = useState("");
-    const [showWhatsappBox, setShowWhatsappBox] = useState(false);
-    const [showMobileBox, setShowMobileBox] = useState(false);
-    const [savingWhatsapp, setSavingWhatsapp] = useState(false);
-    const [savingMobile, setSavingMobile] = useState(false);
+    const [phone, setPhone] = useState(INITIAL_PHONE_STATE);
     const [message, setMessage] = useState("");
     const [messageType, setMessageType] = useState("");
 
@@ -65,6 +65,13 @@ function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
     const showMessage = (text, type) => {
         setMessage(text);
         setMessageType(type);
+    };
+
+    const updatePhone = (type, updates) => {
+        setPhone((prev) => ({
+            ...prev,
+            [type]: { ...prev[type], ...updates },
+        }));
     };
 
     const handleSaveName = async () => {
@@ -102,20 +109,17 @@ function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
 
     const handleSavePhone = async (type) => {
         const isWhatsapp = type === "whatsapp";
-        const input = isWhatsapp ? whatsappInput : mobileInput;
-        const setInput = isWhatsapp ? setWhatsappInput : setMobileInput;
-        const setSaving = isWhatsapp ? setSavingWhatsapp : setSavingMobile;
-        const setShowBox = isWhatsapp ? setShowWhatsappBox : setShowMobileBox;
         const label = isWhatsapp ? "WhatsApp" : "Mobile";
+        const current = phone[type];
 
-        const cleanNumber = input.replace(/\D/g, "");
+        const cleanNumber = current.input.replace(/\D/g, "");
 
         if (cleanNumber.length !== PHONE_LENGTH) {
             showMessage(`${label} number must be ${PHONE_LENGTH} digits.`, "error");
             return;
         }
 
-        setSaving(true);
+        updatePhone(type, { saving: true });
         setMessage("");
         setMessageType("");
 
@@ -133,8 +137,7 @@ function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
                 navigateWithLoading(
                     () => {
                         setProfile(data.user);
-                        setInput("");
-                        setShowBox(false);
+                        updatePhone(type, { input: "", showBox: false });
                         showMessage(successMsg, "success");
                     },
                     `Saving ${label}...`,
@@ -150,38 +153,29 @@ function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
             console.error(`${label} update error:`, err.message);
             showMessage("Server Error.", "error");
         } finally {
-            setSaving(false);
+            updatePhone(type, { saving: false });
         }
-    };
-
-    const handleChangeWhatsapp = () => {
-        setShowWhatsappBox(true);
-        setWhatsappInput("");
-    };
-
-    const handleChangeMobile = () => {
-        setShowMobileBox(true);
-        setMobileInput("");
     };
 
     const renderPhoneField = (type) => {
         const isWhatsapp = type === "whatsapp";
         const isVerified = isWhatsapp ? isWhatsappVerified : isMobileVerified;
         const hasNumber = isWhatsapp ? hasWhatsappNumber : hasMobileNumber;
-        const input = isWhatsapp ? whatsappInput : mobileInput;
-        const setInput = isWhatsapp ? setWhatsappInput : setMobileInput;
-        const showBox = isWhatsapp ? showWhatsappBox : showMobileBox;
-        const saving = isWhatsapp ? savingWhatsapp : savingMobile;
-        const profileNumber = isWhatsapp
-            ? profile?.whatsapp_number
-            : profile?.mobile_number;
-        const onChange = isWhatsapp ? handleChangeWhatsapp : handleChangeMobile;
+        const current = phone[type];
 
         const label = isWhatsapp ? "WhatsApp Number" : "Mobile Number";
         const placeholder = `Enter 10 digit ${isWhatsapp ? "WhatsApp" : "mobile"} number`;
         const verifyMsg = isWhatsapp
             ? "As soon as you got a message from WhatsApp, reply VERIFY for verification."
             : "As soon as you got a call from us, press VERIFY for verification.";
+
+        const profileNumber = isWhatsapp
+            ? profile?.whatsapp_number
+            : profile?.mobile_number;
+
+        const handleChange = () => {
+            updatePhone(type, { showBox: true, input: "" });
+        };
 
         return (
             <div className="medium-field">
@@ -192,25 +186,27 @@ function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
                         <span className="mobile-number">+91 {profileNumber}</span>
                         <span className="verified">Verified</span>
                     </div>
-                ) : showBox || !hasNumber ? (
+                ) : current.showBox || !hasNumber ? (
                     <div className="email-input-row">
                         <input
                             type="tel"
                             inputMode="numeric"
                             maxLength={PHONE_LENGTH}
-                            value={input}
+                            value={current.input}
                             onChange={(e) =>
-                                setInput(e.target.value.replace(/\D/g, ""))
+                                updatePhone(type, {
+                                    input: e.target.value.replace(/\D/g, ""),
+                                })
                             }
                             placeholder={placeholder}
-                            disabled={saving}
+                            disabled={current.saving}
                         />
                         <button
                             className="send-otp-btn"
                             onClick={() => handleSavePhone(type)}
-                            disabled={input.length !== PHONE_LENGTH || saving}
+                            disabled={current.input.length !== PHONE_LENGTH || current.saving}
                         >
-                            {saving ? "SAVING..." : "VERIFY"}
+                            {current.saving ? "SAVING..." : "VERIFY"}
                         </button>
                     </div>
                 ) : (
@@ -219,7 +215,7 @@ function MediumEditSection({ profile, setProfile, navigateWithLoading }) {
                             <span className="mobile-number">+91 {profileNumber}</span>
                             <button
                                 className="change-number-btn"
-                                onClick={onChange}
+                                onClick={handleChange}
                             >
                                 CHANGE
                             </button>

@@ -2,17 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyLikes.css";
 import { API } from "../../../services/api";
-
-const TYPE_KEYS = ["product", "gift", "shop", "premium"];
-
-function pickField(item, suffix, fallback = "") {
-    if (!item) return fallback;
-    for (const key of TYPE_KEYS) {
-        const val = item[`${key}_${suffix}`];
-        if (val !== undefined && val !== null) return val;
-    }
-    return fallback;
-}
+import { FaHeart } from "react-icons/fa";
 
 function MyLikes({ setProfilePage, onOpenDetails }) {
     const navigate = useNavigate();
@@ -24,7 +14,7 @@ function MyLikes({ setProfilePage, onOpenDetails }) {
             try {
                 const sessionToken = localStorage.getItem("session_token");
                 const res = await fetch(
-                    `${API}/api/user/likes?session_token=${sessionToken}`
+                    `${API}/api/user/likes/my?session_token=${sessionToken}`
                 );
                 const data = await res.json();
                 if (data.success) setLikes(data.data || []);
@@ -40,7 +30,24 @@ function MyLikes({ setProfilePage, onOpenDetails }) {
 
     const handleBack = () => {
         setProfilePage("profile");
-        navigate(-1);
+        navigate("/profile", { replace: true });
+    };
+
+    const handleOpen = (like) => {
+        const typeMap = {
+            gifts: "gift",
+            shop: "shop",
+            premium: "premium",
+            products: "card",
+        };
+
+        const productData = {
+            product_id: like.product_id,
+            product_name: like.product_name,
+            product_image1: like.product_image,
+        };
+
+        onOpenDetails?.(productData, typeMap[like.product_type] || "card");
     };
 
     if (loading) return <p style={{ padding: 20 }}>Loading...</p>;
@@ -58,15 +65,30 @@ function MyLikes({ setProfilePage, onOpenDetails }) {
                     <p>Products you like will appear here.</p>
                 </div>
             ) : (
-                likes.map((item) => (
-                    <div
-                        key={item.product_id}
-                        className="my-likes-card"
-                        onClick={() => onOpenDetails?.(item, "shop")}
-                    >
-                        <span>{item.product_id}</span>
-                    </div>
-                ))
+                <div className="my-likes-list">
+                    {likes.map((like) => (
+                        <div
+                            key={like.like_id}
+                            className="my-likes-card"
+                            onClick={() => handleOpen(like)}
+                        >
+                            <img
+                                src={like.product_image}
+                                alt={like.product_name}
+                                className="my-likes-image"
+                            />
+
+                            <div className="my-likes-info">
+                                <h4>{like.product_name}</h4>
+                            </div>
+
+                            <div className="my-likes-action">
+                                <FaHeart className="my-likes-heart" />
+                                <span className="my-likes-count">{like.total_likes}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );
