@@ -1,564 +1,179 @@
-/* ============================================================
-   VideoHero.css — 16:9 Landscape, Fully Responsive
-   ============================================================ */
-
-.shop-video-section,
-.shop-video-section * {
-    box-sizing: border-box;
-}
-
-/* ============================================================
-   SECTION WRAPPER
-   ============================================================ */
 .shop-video-section {
     width: 100%;
     max-width: 1100px;
-    margin: 0 auto 12px;
-    padding: 10px 12px 14px;
-    font-family: inherit;
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* ============================================================
-   INTRO — "Hey! Welcome to Heepit"
-   ============================================================ */
-.heepit-intro {
-    width: 100%;
-    padding: 4px 2px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    margin: 0 auto;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
+    background: #0d0d11;
 }
 
 .heepit-intro h2 {
-    margin: 0;
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    line-height: 1.25;
-
-    background: linear-gradient(135deg, #ff8a3d 0%, #ff6b00 60%, #e85f00 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    text-shadow: 0 2px 8px rgba(255, 107, 0, 0.15);
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #f3f4f6;
+    padding: 0 0.25rem;
 }
 
-/* ============================================================
-   EMPTY STATE
-   ============================================================ */
-.shop-video-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    padding: 24px 16px;
-    border-radius: 16px;
-    text-align: center;
-}
-
-.shop-video-empty-icon {
-    font-size: 2.4rem;
-    line-height: 1;
-    margin-bottom: 4px;
-    filter: drop-shadow(0 4px 8px rgba(255, 107, 0, 0.25));
-}
-
-.shop-video-empty h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 800;
-    color: #3f4664;
-    letter-spacing: 0.2px;
-}
-
-.shop-video-empty p {
-    margin: 0;
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: #8b91a8;
-}
-
-/* ============================================================
-   SCROLL WRAPPER — 16:9 box
-   ============================================================ */
-.shop-video-scroll {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    /* ✅ EXACT 16:9 */
-    border-radius: 16px;
-    overflow: hidden;
-
-    box-shadow:
-        0 12px 28px rgba(0, 0, 0, 0.18),
-        0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* ============================================================
-   SLIDE — video container (fills the 16:9 wrapper)
-   ============================================================ */
 .shop-video-slide {
     position: relative;
-
     width: 100%;
-    height: 100%;
-
+    aspect-ratio: 16/9;
     background: #000;
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
-
-    cursor: grab;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     user-select: none;
-    -webkit-user-select: none;
-    touch-action: pan-y;
+    cursor: grab;
 }
 
 .shop-video-slide:active {
     cursor: grabbing;
 }
 
-/* Video — fills box, object-fit cover */
 .shop-video-slide video {
-    position: absolute;
-    inset: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-    object-position: center;
-
-    display: block;
-    background: #000;
-
     pointer-events: none;
-
-    -webkit-user-select: none;
-    user-select: none;
 }
 
-/* ============================================================
-   INFO LABELS
-   ============================================================ */
-
-/* TOP LEFT — Name */
 .shop-video-info-name {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    max-width: 55%;
-
-    padding: 5px 11px;
-
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-
+    top: 0.6rem;
+    left: 0.6rem;
     color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
+    font-weight: 600;
+    font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(10px);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    max-width: 55%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    z-index: 2;
-    pointer-events: none;
 }
 
-/* TOP RIGHT — Date */
 .shop-video-info-date {
     position: absolute;
-    top: 10px;
-    right: 10px;
-
-    padding: 5px 9px;
-
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
+    top: 0.6rem;
+    right: 0.6rem;
+    color: #9ca3af;
+    font-size: clamp(0.65rem, 1.4vw, 0.8rem);
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(10px);
+    padding: 4px 8px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-
-    color: #e8eaf0;
-    font-size: 0.64rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    line-height: 1.2;
-
-    z-index: 2;
-    pointer-events: none;
 }
 
-/* BOTTOM LEFT — Frontview */
 .shop-video-info-frontview {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    max-width: 55%;
-
-    padding: 5px 11px;
-
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
+    bottom: 0.6rem;
+    left: 0.6rem;
+    color: #e5e7eb;
+    font-size: clamp(0.68rem, 1.6vw, 0.85rem);
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(10px);
+    padding: 4px 10px;
+    border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-
-    color: #fff;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
-
+    max-width: 52%;
+    line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    z-index: 2;
-    pointer-events: none;
 }
 
-/* ============================================================
-   CONTROLS — bottom right
-   ============================================================ */
 .shop-video-controls {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-
+    bottom: 0.6rem;
+    right: 0.6rem;
     display: flex;
-    align-items: center;
-    gap: 7px;
-
-    z-index: 3;
+    gap: 6px;
+    z-index: 10;
 }
 
 .shop-video-control-btn {
-    display: grid;
-    place-items: center;
-
-    width: 34px;
-    height: 34px;
-
-    padding: 0;
-    margin: 0;
-
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(18, 18, 24, 0.75);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 50%;
-
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #fff;
-    font-size: 0.9rem;
-    line-height: 1;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
-
-    -webkit-tap-highlight-color: transparent;
-}
-
-.shop-video-control-btn:hover {
-    background: rgba(0, 0, 0, 0.7);
-    transform: scale(1.06);
-}
-
-.shop-video-control-btn:active {
-    transform: scale(0.92);
-}
-
-/* Purple — active */
-.shop-video-control-btn.purple {
-    background: linear-gradient(145deg, #7c8cf8, #5b6ee1);
-    border-color: rgba(255, 255, 255, 0.4);
-
-    box-shadow:
-        0 4px 12px rgba(91, 110, 225, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.shop-video-control-btn.purple:hover {
-    background: linear-gradient(145deg, #8b9aff, #6a7cff);
-    box-shadow:
-        0 6px 16px rgba(91, 110, 225, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-
-.shop-video-control-btn svg {
-    display: block;
-    width: 15px;
-    height: 15px;
-}
-
-/* ============================================================
-   DOTS
-   ============================================================ */
-.shop-video-dots {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+    font-size: 0.95rem;
+}
 
-    width: 100%;
-    padding: 12px 0 2px;
+.shop-video-control-btn:hover {
+    transform: scale(1.08);
+    background: rgba(30, 30, 40, 0.95);
+}
+
+.shop-video-control-btn.purple {
+    background: #7c3aed;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+.shop-video-dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 0.7rem;
 }
 
 .shop-video-dot {
-    width: 7px;
-    height: 7px;
-
-    background: #c8cdd9;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-
+    background: #374151;
     cursor: pointer;
-
-    transition:
-        width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-        background 0.25s ease,
-        transform 0.2s ease;
-}
-
-.shop-video-dot:hover {
-    background: #a8afc0;
-    transform: scale(1.15);
+    transition: all 0.2s ease;
 }
 
 .shop-video-dot.active {
-    width: 22px;
-    background: linear-gradient(90deg, #ff8a3d, #ff6b00);
-    border-radius: 999px;
-    transform: none;
-    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.45);
+    background: #8b5cf6;
+    width: 18px;
+    border-radius: 8px;
 }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+.shop-video-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    background: #13131a;
+    border-radius: 12px;
+    border: 1px dashed #374151;
+    color: #9ca3af;
+}
 
-/* Small mobile (≤ 360px) */
-@media (max-width: 360px) {
-    .shop-video-section {
-        padding: 8px 8px 10px;
-    }
+.shop-video-empty-icon {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+}
 
-    .heepit-intro h2 {
-        font-size: 0.98rem;
-    }
-
-    .shop-video-scroll,
+@media(max-width:480px) {
     .shop-video-slide {
-        border-radius: 12px;
-    }
-
-    .shop-video-info-name,
-    .shop-video-info-frontview {
-        padding: 4px 8px;
-        font-size: 0.6rem;
-        top: 8px;
-        left: 8px;
-    }
-
-    .shop-video-info-frontview {
-        top: auto;
-        bottom: 8px;
-        left: 8px;
-    }
-
-    .shop-video-info-date {
-        top: 8px;
-        right: 8px;
-        padding: 4px 7px;
-        font-size: 0.56rem;
-    }
-
-    .shop-video-controls {
-        bottom: 8px;
-        right: 8px;
-        gap: 5px;
+        border-radius: 10px;
     }
 
     .shop-video-control-btn {
         width: 28px;
         height: 28px;
-    }
-
-    .shop-video-control-btn svg {
-        width: 12px;
-        height: 12px;
-    }
-
-    .shop-video-dots {
-        padding: 8px 0 2px;
-        gap: 5px;
-    }
-
-    .shop-video-dot {
-        width: 6px;
-        height: 6px;
-    }
-
-    .shop-video-dot.active {
-        width: 18px;
-    }
-}
-
-/* Mobile (≤ 480px) */
-@media (max-width: 480px) {
-    .shop-video-slide video {
-        object-fit: cover;
-        /* fill the 16:9 box */
-    }
-}
-
-/* Tablet & up (≥ 600px) */
-@media (min-width: 600px) {
-    .shop-video-section {
-        padding: 14px 20px 18px;
-    }
-
-    .heepit-intro h2 {
-        font-size: 1.35rem;
-    }
-
-    .shop-video-scroll,
-    .shop-video-slide,
-    .shop-video-empty {
-        border-radius: 20px;
-    }
-
-    .shop-video-scroll {
-        box-shadow:
-            0 16px 40px rgba(0, 0, 0, 0.22),
-            0 6px 16px rgba(0, 0, 0, 0.12);
-    }
-
-    .shop-video-info-name {
-        top: 14px;
-        left: 14px;
-        padding: 7px 14px;
-        font-size: 0.8rem;
-    }
-
-    .shop-video-info-date {
-        top: 14px;
-        right: 14px;
-        padding: 7px 12px;
-        font-size: 0.72rem;
-    }
-
-    .shop-video-info-frontview {
-        bottom: 14px;
-        left: 14px;
-        padding: 7px 14px;
-        font-size: 0.78rem;
-    }
-
-    .shop-video-controls {
-        bottom: 14px;
-        right: 14px;
-        gap: 9px;
-    }
-
-    .shop-video-control-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    .shop-video-control-btn svg {
-        width: 17px;
-        height: 17px;
-    }
-
-    .shop-video-dots {
-        gap: 8px;
-        padding: 14px 0 4px;
-    }
-
-    .shop-video-dot {
-        width: 8px;
-        height: 8px;
-    }
-
-    .shop-video-dot.active {
-        width: 26px;
-    }
-}
-
-/* Desktop (≥ 900px) */
-@media (min-width: 900px) {
-    .shop-video-section {
-        max-width: 1100px;
-    }
-
-    .heepit-intro h2 {
-        font-size: 1.5rem;
-    }
-
-    .shop-video-info-name {
-        top: 16px;
-        left: 16px;
         font-size: 0.85rem;
     }
 
-    .shop-video-info-date {
-        top: 16px;
-        right: 16px;
-        font-size: 0.78rem;
-    }
-
+    .shop-video-info-name,
+    .shop-video-info-date,
     .shop-video-info-frontview {
-        bottom: 16px;
-        left: 16px;
-        font-size: 0.82rem;
-    }
-
-    .shop-video-controls {
-        bottom: 16px;
-        right: 16px;
-    }
-
-    .shop-video-control-btn {
-        width: 44px;
-        height: 44px;
-    }
-
-    .shop-video-control-btn svg {
-        width: 18px;
-        height: 18px;
-    }
-}
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .shop-video-control-btn,
-    .shop-video-dot {
-        transition: none;
-    }
-
-    .shop-video-control-btn:hover {
-        transform: none;
+        padding: 3px 8px;
     }
 }

@@ -1,19 +1,7 @@
 import "./ShopCard.css";
-import { FiHeart, FiBookmark } from "react-icons/fi";
-import { BsHeartFill, BsBookmarkFill } from "react-icons/bs";
-import { FiShoppingCart } from "react-icons/fi";
 
 function ProductShop({
     product,
-    isSaved,
-    isLiked,
-    isAddedToCart,
-    cartQuantity,
-    onSave,
-    onLike,
-    onAddToCart,
-    onIncreaseQuantity,
-    onDecreaseQuantity,
     onOpenDetails = () => { }
 }) {
     const isAvailable = Number(product.shop_status) === 1;
@@ -31,31 +19,29 @@ function ProductShop({
                 <div className="heepit-shop-image-grid">
                     <img src={product.shop_image1} alt="" className="heepit-shop-image" />
 
+                    <span className="heepit-shop-rating-badge">
+                        ⭐ {product.shop_rating || "4.3"}
+                    </span>
+
+                    <span className="heepit-shop-final-price-badge">
+                        ₹{product.shop_price}
+                    </span>
+
                     {!isAvailable && (
                         <span className="heepit-shop-oos-overlay">
                             OUT OF STOCK
                         </span>
                     )}
+
+                    {product.shop_highlight_text && (
+                        <div className="heepit-shop-highlight">
+                            {product.shop_highlight_text}
+                        </div>
+                    )}
                 </div>
             </div>
 
             <div className="heepit-shop-body">
-                {product.shop_highlight_text && (
-                    <div className="heepit-shop-highlight">
-                        {product.shop_highlight_text}
-                    </div>
-                )}
-
-                <div className="heepit-shop-rating-row">
-                    <span>
-                        ⭐ {product.shop_rating || "4.3"}
-                    </span>
-
-                    <div className="heepit-shop-final-price">
-                        ₹{product.shop_price}
-                    </div>
-                </div>
-
                 <h3 className="heepit-shop-name">
                     {product.shop_name}
                 </h3>

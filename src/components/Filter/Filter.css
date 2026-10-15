@@ -1,356 +1,175 @@
-.fl-overlay *,
-.fl-overlay *::before,
-.fl-overlay *::after,
-.fl-dropdown *,
-.fl-dropdown *::before,
-.fl-dropdown *::after {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+* {
+    box-sizing: border-box
 }
 
 .fl-overlay {
     position: fixed;
     inset: 0;
-    z-index: 998;
-    background: radial-gradient(ellipse at top right,
-            rgba(10, 12, 24, 0.72) 0%,
-            rgba(6, 8, 18, 0.88) 100%);
-    backdrop-filter: blur(10px) saturate(140%);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-    animation: fl-fade-in 0.25s ease;
+    z-index: 80;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: fl-fade .15s ease-out
 }
 
-@keyframes fl-fade-in {
+@keyframes fl-fade {
     from {
-        opacity: 0;
+        opacity: 0
     }
 
     to {
-        opacity: 1;
+        opacity: 1
     }
 }
 
 .fl-dropdown {
     position: fixed;
-    top: 118px;
-    right: 14px;
-    z-index: 999;
-    width: 290px;
-    max-height: calc(100vh - 140px);
+    top: 56px;
+    right: 10px;
+    z-index: 90;
+    width: 200px;
+    max-height: calc(100vh - 76px);
     display: flex;
     flex-direction: column;
-    border-radius: 18px;
-    background: linear-gradient(180deg,
-            rgba(20, 22, 40, 0.98) 0%,
-            rgba(14, 16, 32, 0.98) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    box-shadow:
-        0 32px 64px -16px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(139, 92, 246, 0.14) inset,
-        0 1px 0 rgba(255, 255, 255, 0.06) inset;
-    animation: fl-drop-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: top right;
+    border-radius: 12px;
+    background: rgba(20, 20, 26, .98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .7);
+    color: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
     overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
+    animation: fl-pop .18s ease-out;
+    transform-origin: top right
 }
 
-.fl-dropdown::before {
-    content: "";
-    position: absolute;
-    top: -80px;
-    right: -60px;
-    width: 240px;
-    height: 200px;
-    background: radial-gradient(ellipse at center,
-            rgba(99, 102, 241, 0.28) 0%,
-            rgba(236, 72, 153, 0.12) 42%,
-            rgba(0, 0, 0, 0) 72%);
-    filter: blur(48px);
-    pointer-events: none;
-    z-index: 0;
-}
-
-@keyframes fl-drop-in {
+@keyframes fl-pop {
     from {
         opacity: 0;
-        transform: translateY(-10px) scale(0.94);
+        transform: scale(.95)
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: scale(1)
     }
 }
 
 .fl-content {
-    position: relative;
-    z-index: 1;
     flex: 1;
-    min-height: 0;
     overflow-y: auto;
-    overflow-x: hidden;
-    padding: 14px 12px 8px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(139, 92, 246, 0.5) transparent;
+    padding: 10px
 }
 
 .fl-content::-webkit-scrollbar {
-    width: 5px;
-}
-
-.fl-content::-webkit-scrollbar-track {
-    background: transparent;
+    width: 3px
 }
 
 .fl-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #6366f1, #ec4899);
-    border-radius: 3px;
+    background: rgba(124, 92, 255, .4);
+    border-radius: 3px
 }
 
 .fl-title {
-    margin: 4px 6px 8px;
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 1.4px;
+    margin: 4px 0 6px;
+    font-size: 10px;
+    font-weight: 700;
     text-transform: uppercase;
-    color: rgba(148, 163, 184, 0.75);
-}
-
-.fl-divider {
-    margin: 12px 6px;
-    border: none;
-    height: 1px;
-    background: linear-gradient(90deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.08) 50%,
-            rgba(255, 255, 255, 0) 100%);
+    letter-spacing: .6px;
+    color: rgba(255, 255, 255, .5)
 }
 
 .fl-item {
-    position: relative;
-    display: flex;
-    align-items: center;
     width: 100%;
-    padding: 11px 14px;
+    padding: 7px 9px;
     margin-bottom: 4px;
-    border: 1px solid transparent;
-    border-radius: 11px;
-    background: transparent;
-    color: #d1d5db;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.2px;
-    text-align: left;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .08);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.22s cubic-bezier(0.34, 1.2, 0.64, 1);
-    outline: none;
-    overflow: hidden;
-}
-
-.fl-item::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) scaleY(0);
-    width: 3px;
-    height: 60%;
-    border-radius: 0 3px 3px 0;
-    background: linear-gradient(180deg, #6366f1, #ec4899);
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: left;
+    transition: .15s
 }
 
 .fl-item:hover {
-    background: linear-gradient(90deg,
-            rgba(139, 92, 246, 0.14) 0%,
-            rgba(139, 92, 246, 0.04) 100%);
-    color: #ffffff;
-    transform: translateX(2px);
-}
-
-.fl-item:active {
-    transform: translateX(2px) scale(0.98);
+    background: rgba(255, 255, 255, .1)
 }
 
 .fl-item.active {
-    border-color: rgba(139, 92, 246, 0.45);
-    background: linear-gradient(90deg,
-            rgba(139, 92, 246, 0.24) 0%,
-            rgba(236, 72, 153, 0.08) 100%);
-    color: #ffffff;
-    box-shadow: 0 6px 18px -8px rgba(139, 92, 246, 0.7);
+    background: rgba(124, 92, 255, .25);
+    border-color: rgba(124, 92, 255, .5);
+    color: #c4b1ff
 }
 
-.fl-item.active::before {
-    transform: translateY(-50%) scaleY(1);
-}
-
-.fl-item:focus-visible {
-    outline: 2px solid rgba(139, 92, 246, 0.85);
-    outline-offset: 2px;
+.fl-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    margin: 8px 0
 }
 
 .fl-actions {
-    position: relative;
-    z-index: 1;
     display: flex;
-    gap: 8px;
-    padding: 12px 14px 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.02) 0%,
-            rgba(255, 255, 255, 0) 100%);
-    flex-shrink: 0;
+    gap: 6px;
+    padding: 8px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    flex-shrink: 0
 }
 
 .fl-reset-btn,
 .fl-apply-btn {
     flex: 1;
-    height: 40px;
-    padding: 0 16px;
-    border-radius: 11px;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
+    padding: 7px;
+    border-radius: 8px;
+    border: none;
+    font-size: 11px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
-    outline: none;
-    border: 1px solid transparent;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    transition: .15s
 }
 
 .fl-reset-btn {
-    background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(255, 255, 255, 0.03) 100%);
-    color: #e5e7eb;
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .1)
 }
 
 .fl-reset-btn:hover {
-    background: linear-gradient(180deg,
-            rgba(239, 68, 68, 0.18) 0%,
-            rgba(239, 68, 68, 0.06) 100%);
-    border-color: rgba(239, 68, 68, 0.45);
-    color: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px -8px rgba(239, 68, 68, 0.6);
-}
-
-.fl-reset-btn:active {
-    transform: translateY(0) scale(0.97);
+    background: rgba(255, 77, 109, .2);
+    border-color: rgba(255, 77, 109, .4)
 }
 
 .fl-apply-btn {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
-    color: #ffffff;
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow:
-        0 8px 22px -6px rgba(139, 92, 246, 0.75),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    background: linear-gradient(135deg, #7c5cff, #4d2fff);
+    color: #fff
 }
 
 .fl-apply-btn:hover {
-    transform: translateY(-1px);
-    box-shadow:
-        0 12px 28px -6px rgba(139, 92, 246, 0.95),
-        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-    filter: brightness(1.06);
+    opacity: .9
 }
 
-.fl-apply-btn:active {
-    transform: translateY(0) scale(0.97);
-}
-
-.fl-reset-btn:focus-visible,
-.fl-apply-btn:focus-visible {
-    outline: 2px solid rgba(139, 92, 246, 0.85);
-    outline-offset: 2px;
-}
-
-@media (max-width: 480px) {
-    fl-dropdown {
-        top: 108px;
-        max-height: calc(100vh - 128px);
-        border-radius: 16px;
-    }
-
-    .fl-content {
-        padding: 12px 10px 6px;
+@media(max-width:480px) {
+    .fl-dropdown {
+        top: 50px;
+        right: 8px;
+        width: 180px
     }
 
     .fl-item {
-        padding: 10px 12px;
-        font-size: 12.5px;
-        border-radius: 10px;
+        font-size: 10px;
+        padding: 6px 8px
     }
 
     .fl-title {
+        font-size: 9px
+    }
+
+    .fl-reset-btn,
+    .fl-apply-btn {
         font-size: 10px;
-        margin: 3px 4px 7px;
-    }
-
-    .fl-divider {
-        margin: 10px 4px;
-    }
-
-    .fl-actions {
-        padding: 10px 12px 12px;
-        gap: 7px;
-    }
-
-    .fl-reset-btn,
-    .fl-apply-btn {
-        height: 38px;
-        font-size: 12.5px;
-        border-radius: 10px;
-    }
-}
-
-@media (max-width: 360px) {
-    fl-dropdown {
-        top: 108px;
-        max-height: calc(100vh - 128px);
-        border-radius: 16px;
-    }
-
-    .fl-content {
-        padding: 11px 9px 6px;
-    }
-
-    .fl-item {
-        padding: 9px 11px;
-        font-size: 12px;
-    }
-
-    .fl-actions {
-        padding: 10px 11px 11px;
-    }
-
-    .fl-reset-btn,
-    .fl-apply-btn {
-        height: 36px;
-        font-size: 12px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .fl-overlay *,
-    .fl-overlay *::before,
-    .fl-overlay *::after,
-    .fl-dropdown *,
-    .fl-dropdown *::before,
-    .fl-dropdown *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        padding: 6px
     }
 }

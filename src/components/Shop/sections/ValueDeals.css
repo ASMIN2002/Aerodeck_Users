@@ -1,326 +1,146 @@
-.shop-value-deals-section *,
-.shop-value-deals-section *::before,
-.shop-value-deals-section *::after {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
 .shop-value-deals-section {
     width: 100%;
-    padding: 8px 0 16px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-    overflow: hidden;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
+    background: #0d0d11;
 }
 
-.shop-value-deals-section .likeheader {
-    padding: 0 20px 14px;
-}
-
-.shop-value-deals-section .likeheader h3 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-    color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
-    display: inline-block;
-}
-
-.shop-value-deals-section .likeheader h3::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 32px;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #6366f1 0%, #ec4899 100%);
-    box-shadow: 0 2px 8px -2px rgba(236, 72, 153, 0.75);
+.likeheader h3 {
+    font-size: clamp(0.95rem, 2.2vw, 1.3rem);
+    font-weight: 700;
+    color: #f3f4f6;
+    margin: 0 0 0.75rem 0.25rem;
 }
 
 .shop-value-deals-scroll {
     width: 100%;
     overflow-x: auto;
-    overflow-y: hidden;
     scrollbar-width: none;
-    -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    padding: 2px 0 6px;
+    padding-bottom: 0.25rem;
 }
 
 .shop-value-deals-scroll::-webkit-scrollbar {
     display: none;
-    height: 0;
 }
 
 .shop-value-deals-grid {
     display: flex;
-    gap: 12px;
-    padding: 0 20px;
+    gap: 0.6rem;
     width: max-content;
 }
 
 .shop-value-card {
+    width: 130px;
+    background: #15151e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 0.4rem;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    width: 148px;
-    flex-shrink: 0;
-    padding: 0;
-    border: none;
-    background: transparent;
     cursor: pointer;
-    outline: none;
-    font-family: inherit;
-    text-align: left;
-    animation: shop-value-in 0.45s cubic-bezier(0.34, 1.4, 0.64, 1) both;
-    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes shop-value-in {
-    from {
-        opacity: 0;
-        transform: translateY(10px) scale(0.96);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    flex-shrink: 0;
+    user-select: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    animation: fadeIn 0.3s ease forwards;
 }
 
 .shop-value-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
+    border-color: #8b5cf6;
 }
 
-.shop-value-card:active {
-    transform: translateY(-1px) scale(0.98);
-}
-
-.shop-value-card:focus-visible .shop-value-image {
-    outline: 2px solid rgba(139, 92, 246, 0.9);
-    outline-offset: 3px;
+.shop-value-card.out-of-stock {
+    opacity: 0.6;
 }
 
 .shop-value-image {
     position: relative;
-    width: 148px;
-    height: 148px;
-    border-radius: 14px;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
     overflow: hidden;
-    background: linear-gradient(135deg,
-            rgba(99, 102, 241, 0.2) 0%,
-            rgba(236, 72, 153, 0.15) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-        0 8px 20px -10px rgba(0, 0, 0, 0.85),
-        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-    flex-shrink: 0;
-}
-
-.shop-value-card:hover .shop-value-image {
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow:
-        0 12px 26px -10px rgba(139, 92, 246, 0.7),
-        0 0 0 1px rgba(139, 92, 246, 0.2) inset;
+    background: #08080c;
 }
 
 .shop-value-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
     display: block;
-    transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
-    user-select: none;
-    -webkit-user-drag: none;
 }
 
-.shop-value-card:hover .shop-value-image img {
-    transform: scale(1.07);
+.shop-value-oos {
+    position: absolute;
+    top: 0.3rem;
+    left: 0.3rem;
+    background: rgba(220, 38, 38, 0.85);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
 }
 
 .shop-value-highlight {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    max-width: calc(100% - 16px);
-    padding: 4px 9px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
-    color: #ffffff;
-    font-size: 9.5px;
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    line-height: 1;
+    bottom: 0.3rem;
+    left: 0.3rem;
+    background: rgba(124, 58, 237, 0.85);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    max-width: 85%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-shadow:
-        0 6px 14px -4px rgba(245, 158, 11, 0.8),
-        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-    z-index: 2;
 }
 
 .shop-value-name {
-    display: block;
-    width: 148px;
-    max-width: 148px;
-    padding: 0 2px;
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    line-height: 1.3;
-    color: rgba(229, 231, 235, 0.92);
+    color: #e5e7eb;
+    font-size: clamp(0.68rem, 1.5vw, 0.78rem);
+    font-weight: 500;
+    margin-top: 0.4rem;
+    line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.25s ease;
+    padding: 0 2px;
 }
 
-.shop-value-card:hover .shop-value-name {
-    color: #ffffff;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-@media (max-width: 480px) {
-    .shop-value-deals-section .likeheader {
-        padding: 0 18px 12px;
-    }
-
-    .shop-value-deals-section .likeheader h3 {
-        font-size: 14px;
-    }
-
-    .shop-value-deals-section .likeheader h3::after {
-        width: 28px;
-        bottom: -5px;
-    }
-
-    .shop-value-deals-grid {
-        gap: 20px;
-        padding: 0 18px;
-    }
-
+@media(max-width:480px) {
     .shop-value-card {
-        width: 134px;
-        gap: 7px;
+        width: 115px;
+        padding: 0.35rem;
+        border-radius: 8px;
     }
 
-    .shop-value-image {
-        width: 134px;
-        height: 134px;
-        border-radius: 12px;
+    .shop-value-name {
+        font-size: 0.68rem;
     }
 
     .shop-value-highlight {
-        font-size: 9px;
-        padding: 3.5px 7px;
-        top: 6px;
-        left: 6px;
-        border-radius: 7px;
+        font-size: 0.58rem;
+        padding: 1px 5px;
     }
-
-    .shop-value-name {
-        width: 134px;
-        max-width: 134px;
-        font-size: 11.5px;
-    }
-}
-
-@media (max-width: 360px) {
-    .shop-value-deals-section .likeheader {
-        padding: 0 16px 10px;
-    }
-
-    .shop-value-deals-section .likeheader h3 {
-        font-size: 13.5px;
-    }
-
-    .shop-value-deals-section .likeheader h3::after {
-        width: 24px;
-        bottom: -4px;
-    }
-
-    .shop-value-deals-grid {
-        gap: 15px;
-        padding: 0 16px;
-    }
-
-    .shop-value-card {
-        width: 122px;
-        gap: 6px;
-    }
-
-    .shop-value-image {
-        width: 122px;
-        height: 122px;
-        border-radius: 11px;
-    }
-
-    .shop-value-name {
-        width: 122px;
-        max-width: 122px;
-        font-size: 11px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .shop-value-deals-section *,
-    .shop-value-deals-section *::before,
-    .shop-value-deals-section *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* ============================================
-   OUT OF STOCK
-   ============================================ */
-.shop-value-card.out-of-stock .shop-value-image {
-    filter: grayscale(1);
-    opacity: 0.55;
-    transition: filter 0.3s, opacity 0.3s;
-}
-
-.shop-value-card.out-of-stock .shop-value-name {
-    color: rgba(229, 231, 235, 0.5);
-}
-
-.shop-value-card.out-of-stock:hover .shop-value-image {
-    filter: grayscale(1);
-    opacity: 0.55;
-}
-
-.shop-value-card.out-of-stock:hover .shop-value-image img {
-    transform: none;
-}
-
-/* OUT OF STOCK BADGE */
-.shop-value-oos {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    right: 6px;
-    padding: 4px 8px;
-    background: rgba(220, 38, 38, 0.95);
-    color: #fff;
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    text-align: center;
-    border-radius: 6px;
-    z-index: 3;
-    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.5);
-    text-transform: uppercase;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
 }

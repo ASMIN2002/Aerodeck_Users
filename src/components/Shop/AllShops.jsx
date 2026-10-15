@@ -2,17 +2,13 @@ import ShopCard from "./ShopCard";
 import "./AllShops.css";
 
 function AllShops({
-
     shops,
     onOpenDetails,
-
     onSave,
     onLike,
     onAddToCart,
-
     onIncreaseQuantity,
     onDecreaseQuantity,
-
     savedProducts,
     likedProducts,
     cartProducts

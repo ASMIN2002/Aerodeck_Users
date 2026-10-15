@@ -1,25 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import "./VideoHero.css";
-import {
-    FiVolume2,
-    FiVolumeX,
-    FiPlay,
-    FiPause
-} from "react-icons/fi";
+import { FiVolume2, FiVolumeX, FiPlay, FiPause } from "react-icons/fi";
 import { API } from "../../../services/api";
 
-function VideoHero() {
+const MUTE_STORAGE_KEY = "shopVideosMuted";
+const CONTROLS_SELECTOR = ".shop-video-controls";
 
+function getInitialMuted() {
+    const saved = localStorage.getItem(MUTE_STORAGE_KEY);
+    return saved === null ? true : saved === "true";
+}
+
+function getNextIndex(current, total) {
+    return (current + 1) % total;
+}
+
+function getPrevIndex(current, total) {
+    return current === 0 ? total - 1 : current - 1;
+}
+
+function VideoHero() {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    /* Independent sticky states */
     const [isPlaying, setIsPlaying] = useState(true);
-    const [isMuted, setIsMuted] = useState(() => {
-        const saved = localStorage.getItem("shopVideosMuted");
-        return saved === null ? true : saved === "true";
-    });
+    const [isMuted, setIsMuted] = useState(getInitialMuted);
 
     const videoRef = useRef(null);
     const slideRef = useRef(null);
@@ -28,46 +34,31 @@ function VideoHero() {
         active: false,
         startX: 0,
         startTime: 0,
-        duration: 0
+        duration: 0,
     });
 
-    /* ===============================
-       FETCH ACTIVE VIDEOS
-    =============================== */
     useEffect(() => {
-
         const fetchVideos = async () => {
             try {
                 setLoading(true);
                 const res = await fetch(`${API}/api/videohero/active`);
                 const data = await res.json();
-                if (data.success) {
-                    setVideos(data.data || []);
-                }
+                if (data.success) setVideos(data.data || []);
             } catch (err) {
-                console.error("Video fetch error:", err);
+                console.error("Video fetch error:", err.message);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchVideos();
-
     }, []);
 
-    /* ===============================
-       MUTE — apply to video only
-    =============================== */
     useEffect(() => {
-        localStorage.setItem("shopVideosMuted", String(isMuted));
-        if (videoRef.current) {
-            videoRef.current.muted = isMuted;
-        }
+        localStorage.setItem(MUTE_STORAGE_KEY, String(isMuted));
+        if (videoRef.current) videoRef.current.muted = isMuted;
     }, [isMuted, currentIndex]);
 
-    /* ===============================
-       PLAY/PAUSE — apply to video only
-    =============================== */
     useEffect(() => {
         if (videos.length === 0) return;
         const video = videoRef.current;
@@ -75,27 +66,15 @@ function VideoHero() {
 
         video.muted = isMuted;
 
-        if (isPlaying) {
-            video.play().catch(() => {});
-        } else {
-            video.pause();
-        }
+        if (isPlaying) video.play().catch(() => { });
+        else video.pause();
     }, [currentIndex, videos, isPlaying]);
 
-    /* ===============================
-       BUTTONS — independent
-    =============================== */
-    const togglePlay = () => {
-        setIsPlaying((prev) => !prev);
-    };
-
-    const toggleMute = () => {
-        setIsMuted((prev) => !prev);
-    };
+    const togglePlay = () => setIsPlaying((prev) => !prev);
+    const toggleMute = () => setIsMuted((prev) => !prev);
 
     const handleVideoEnd = () => {
-        const nextIndex = (currentIndex + 1) % videos.length;
-        setCurrentIndex(nextIndex);
+        setCurrentIndex(getNextIndex(currentIndex, videos.length));
         setIsPlaying(true);
     };
 
@@ -104,9 +83,6 @@ function VideoHero() {
         setIsPlaying(true);
     };
 
-    /* ============================================
-       DRAG — only seek, no play/pause
-    ============================================ */
     const getDeltaTime = (clientX) => {
         const slide = slideRef.current;
         if (!slide) return 0;
@@ -124,7 +100,7 @@ function VideoHero() {
             active: true,
             startX: clientX,
             startTime: video.currentTime,
-            duration: video.duration
+            duration: video.duration,
         };
     };
 
@@ -137,16 +113,13 @@ function VideoHero() {
 
         if (newTime >= video.duration) {
             dragRef.current.active = false;
-            const nextIndex = (currentIndex + 1) % videos.length;
-            setCurrentIndex(nextIndex);
+            setCurrentIndex(getNextIndex(currentIndex, videos.length));
             return;
         }
 
         if (newTime <= 0) {
             dragRef.current.active = false;
-            const prevIndex =
-                currentIndex === 0 ? videos.length - 1 : currentIndex - 1;
-            setCurrentIndex(prevIndex);
+            setCurrentIndex(getPrevIndex(currentIndex, videos.length));
             return;
         }
 
@@ -157,12 +130,11 @@ function VideoHero() {
         dragRef.current.active = false;
     };
 
-    /* ============================================
-       TOUCH — only drag
-    ============================================ */
+    const isInsideControls = (target) => target.closest(CONTROLS_SELECTOR);
+
     const onTouchStart = (e) => {
         if (e.touches.length !== 1) return;
-        if (e.target.closest(".shop-video-controls")) return;
+        if (isInsideControls(e.target)) return;
         handleDragStart(e.touches[0].clientX);
     };
 
@@ -172,15 +144,10 @@ function VideoHero() {
         handleDragMove(e.touches[0].clientX);
     };
 
-    const onTouchEnd = () => {
-        handleDragEnd();
-    };
+    const onTouchEnd = handleDragEnd;
 
-    /* ============================================
-       MOUSE — only drag
-    ============================================ */
     const onMouseDown = (e) => {
-        if (e.target.closest(".shop-video-controls")) return;
+        if (isInsideControls(e.target)) return;
         e.preventDefault();
         handleDragStart(e.clientX);
 
@@ -197,6 +164,8 @@ function VideoHero() {
 
     if (loading) return null;
 
+    const currentVideo = videos[currentIndex];
+
     return (
         <section className="shop-video-section">
             <div className="heepit-intro">
@@ -204,17 +173,13 @@ function VideoHero() {
             </div>
 
             {videos.length === 0 ? (
-
                 <div className="shop-video-empty">
                     <div className="shop-video-empty-icon">🎬</div>
                     <h3>No AD Available</h3>
                     <p>Please check back later</p>
                 </div>
-
             ) : (
-
                 <>
-
                     <div className="shop-video-scroll">
                         <div
                             className="shop-video-slide"
@@ -224,10 +189,9 @@ function VideoHero() {
                             onTouchEnd={onTouchEnd}
                             onMouseDown={onMouseDown}
                         >
-
                             <video
                                 ref={videoRef}
-                                src={videos[currentIndex]?.video_url}
+                                src={currentVideo?.video_url}
                                 autoPlay
                                 muted
                                 playsInline
@@ -235,31 +199,26 @@ function VideoHero() {
                                 onEnded={handleVideoEnd}
                             />
 
-                            {/* TOP LEFT — Name */}
                             <div className="shop-video-info-name">
-                                {videos[currentIndex]?.name}
+                                {currentVideo?.name}
                             </div>
 
-                            {/* TOP RIGHT — Date */}
                             <div className="shop-video-info-date">
-                                {new Date(
-                                    videos[currentIndex]?.created_at
-                                ).toLocaleDateString("en-IN", {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric"
-                                })}
+                                {new Date(currentVideo?.created_at).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric",
+                                    }
+                                )}
                             </div>
 
-                            {/* BOTTOM LEFT — Frontview */}
                             <div className="shop-video-info-frontview">
-                                {videos[currentIndex]?.frontview}
+                                {currentVideo?.frontview}
                             </div>
 
-                            {/* BOTTOM RIGHT — Controls */}
                             <div className="shop-video-controls">
-
-                                {/* Play/Pause — purple when playing */}
                                 <button
                                     type="button"
                                     className={`shop-video-control-btn ${isPlaying ? "purple" : ""}`}
@@ -269,7 +228,6 @@ function VideoHero() {
                                     {isPlaying ? <FiPause /> : <FiPlay />}
                                 </button>
 
-                                {/* Mute — purple when unmuted */}
                                 <button
                                     type="button"
                                     className={`shop-video-control-btn ${!isMuted ? "purple" : ""}`}
@@ -278,9 +236,7 @@ function VideoHero() {
                                 >
                                     {isMuted ? <FiVolumeX /> : <FiVolume2 />}
                                 </button>
-
                             </div>
-
                         </div>
                     </div>
 
@@ -289,18 +245,14 @@ function VideoHero() {
                             {videos.map((video, i) => (
                                 <span
                                     key={video.id}
-                                    className={`shop-video-dot ${
-                                        currentIndex === i ? "active" : ""
-                                    }`}
+                                    className={`shop-video-dot ${currentIndex === i ? "active" : ""}`}
                                     onClick={() => goToVideo(i)}
                                 />
                             ))}
                         </div>
                     )}
-
                 </>
             )}
-
         </section>
     );
 }

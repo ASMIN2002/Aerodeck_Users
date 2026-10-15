@@ -59,7 +59,6 @@ function CategoriesSection({
                     onClick={onOpenAllShopCategories}
                     aria-label="View all categories"
                 >
-                    <span className="heep-cat-viewall-fade" />
                     <span className="heep-cat-viewall-btn">
                         <FiArrowRight />
                     </span>
