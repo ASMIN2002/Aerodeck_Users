@@ -220,7 +220,7 @@ function Search({
     const currentPlaceholder = categoryName
         ? `Search ${categoryName}...`
         : shopCategories.length > 0
-            ? `Search ${shopCategories[placeholderIndex]}...`
+            ? `${shopCategories[placeholderIndex]}...`
             : "";
 
     return (
@@ -236,7 +236,7 @@ function Search({
                                     : "sr-animated-placeholder"
                             }
                         >
-                            {currentPlaceholder}
+                           {currentPlaceholder}
                         </span>
                     )}
 

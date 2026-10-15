@@ -6,11 +6,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 10px;
-    background: rgba(10, 10, 14, .85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    padding: 8px;
     font-family: system-ui, -apple-system, sans-serif
 }
 
@@ -98,7 +94,6 @@
 
 @media(max-width:480px) {
     .ad-container {
-        padding: 6px 8px;
         gap: 6px
     }
 

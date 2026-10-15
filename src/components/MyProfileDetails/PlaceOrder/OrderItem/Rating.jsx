@@ -2,15 +2,21 @@ import "./Rating.css";
 import { useEffect, useState } from "react";
 import { API } from "../../../../services/api";
 
-function Rating({ product_id, order_item_id }) {
+const STARS = [1, 2, 3, 4, 5];
+const MAX_REVIEW_LENGTH = 20;
+const SUBMIT_FEEDBACK_DURATION = 1200;
 
+function getSessionToken() {
+    return localStorage.getItem("session_token");
+}
+
+function Rating({ product_id, order_item_id }) {
     const [rating, setRating] = useState(0);
     const [message, setMessage] = useState("");
     const [rated, setRated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState("");
-    const [toast, setToast] = useState(false);
 
     useEffect(() => {
         loadReview();
@@ -18,13 +24,10 @@ function Rating({ product_id, order_item_id }) {
 
     const loadReview = async () => {
         try {
-            const sessionToken = localStorage.getItem("session_token");
-
-            const response = await fetch(
-                `${API}/api/user/review/${order_item_id}?session_token=${sessionToken}`
+            const res = await fetch(
+                `${API}/api/user/review/${order_item_id}?session_token=${getSessionToken()}`
             );
-
-            const data = await response.json();
+            const data = await res.json();
 
             if (data.success && data.rated) {
                 setRating(data.rating);
@@ -32,38 +35,31 @@ function Rating({ product_id, order_item_id }) {
                 setRated(true);
             }
         } catch (err) {
-            console.error(err);
+            console.error("Load review error:", err.message);
         } finally {
             setLoading(false);
         }
     };
 
     const handleSubmit = async () => {
-
         if (rating === 0) return;
         if (!message.trim()) return;
 
         setSubmitting(true);
 
         try {
-            const sessionToken = localStorage.getItem("session_token");
-
-            const response = await fetch(
-                `${API}/api/user/review`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        session_token: sessionToken,
-                        order_item_id,
-                        product_id,
-                        rating,
-                        review_message: message
-                    })
-                }
-            );
-
-            const data = await response.json();
+            const res = await fetch(`${API}/api/user/review`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    session_token: getSessionToken(),
+                    order_item_id,
+                    product_id,
+                    rating,
+                    review_message: message,
+                }),
+            });
+            const data = await res.json();
 
             if (data.success) {
                 setSubmitMessage("✓ Review submitted successfully");
@@ -72,29 +68,24 @@ function Rating({ product_id, order_item_id }) {
                     setRated(true);
                     setSubmitMessage("");
                     setSubmitting(false);
-                }, 1200);
+                }, SUBMIT_FEEDBACK_DURATION);
             } else {
                 setSubmitting(false);
             }
         } catch (err) {
-            console.error(err);
+            console.error("Submit review error:", err.message);
             setSubmitting(false);
         }
     };
 
     if (loading) return null;
 
-    /* ==========================================
-       ✅ ALREADY RATED — Sirf review card dikhao
-       ========================================== */
     if (rated && !submitting) {
         return (
             <div className="order-rating">
                 <div className="submitted-review">
-
-                    {/* ✅ User ka rating (stars) */}
                     <div className="submitted-stars">
-                        {[1, 2, 3, 4, 5].map((star) => (
+                        {STARS.map((star) => (
                             <span
                                 key={star}
                                 className={star <= rating ? "filled-star" : "empty-star"}
@@ -104,42 +95,26 @@ function Rating({ product_id, order_item_id }) {
                         ))}
                     </div>
 
-                    {/* ✅ User ka review message */}
                     {message && (
-                        <p className="submitted-message">
-                            {message}
-                        </p>
+                        <p className="submitted-message">{message}</p>
                     )}
 
-                    {/* ✅ Verified badge */}
-                    <div className="submitted-badge">
-                        ✓ Verified Purchase
-                    </div>
+                    <div className="submitted-badge">✓ Verified Purchase</div>
                 </div>
             </div>
         );
     }
 
-    /* ==========================================
-       ✅ INPUT FORM — Jab tak submit nahi hua
-       ========================================== */
     return (
         <div className="order-rating">
-
-            {submitMessage && (
-                <div className="review-toast">
-                    {submitMessage}
-                </div>
-            )}
+            {submitMessage && <div className="review-toast">{submitMessage}</div>}
 
             {submitting && (
                 <div className="review-progress-wrap">
                     <div className="review-progress-bar">
-                        <div className="review-progress-fill"></div>
+                        <div className="review-progress-fill" />
                     </div>
-                    <p className="review-progress-text">
-                        Submitting your review...
-                    </p>
+                    <p className="review-progress-text">Submitting your review...</p>
                 </div>
             )}
 
@@ -148,7 +123,7 @@ function Rating({ product_id, order_item_id }) {
                     <h3>Rate this Product</h3>
 
                     <div className="rating-stars">
-                        {[1, 2, 3, 4, 5].map((star) => (
+                        {STARS.map((star) => (
                             <span
                                 key={star}
                                 className={star <= rating ? "active-star" : ""}
@@ -159,22 +134,16 @@ function Rating({ product_id, order_item_id }) {
                         ))}
                     </div>
 
-                    {toast && (
-                        <div className="review-toast">
-                            💙 Your review is very helpful for other users.
-                        </div>
-                    )}
-
                     <textarea
                         className="review-box"
-                        maxLength={20}
+                        maxLength={MAX_REVIEW_LENGTH}
                         placeholder="Write your review..."
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
 
                     <div className="review-count">
-                        {message.length}/20
+                        {message.length}/{MAX_REVIEW_LENGTH}
                     </div>
 
                     <button

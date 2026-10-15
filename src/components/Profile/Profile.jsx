@@ -172,15 +172,7 @@ function Profile({
                     <span>❤️</span>
                     <span>Wishlist</span>
                 </div>
-                {/* <div
-                    className="profile-item"
-                    onClick={() =>
-                        handleProfileNavigation("cart", "Loading Cart...")
-                    }
-                >
-                    <span>🛒</span>
-                    <span>My Cart</span>
-                </div> */}
+       
                 <div
                     className="profile-item"
                     onClick={() =>
@@ -201,15 +193,6 @@ function Profile({
                     <span>My Rewards</span>
                 </div>
 
-                {/* <div
-                    className="profile-item"
-                    onClick={() =>
-                        handleProfileNavigation("help", "Loading Help & Support...")
-                    }
-                >
-                    <span>❓</span>
-                    <span>Help & Support</span>
-                </div> */}
 
                 <div
                     className="profile-item"

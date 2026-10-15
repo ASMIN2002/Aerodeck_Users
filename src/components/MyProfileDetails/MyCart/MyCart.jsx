@@ -123,14 +123,10 @@ function MyCart({
     return (
         <div className="mycart-page">
             <TOPHEADER title="My Cart" onBack={() => navigate(-1)} />
-
-            <div className="mycart-topbar">
-                <Address
-                    setProfilePage={setProfilePage}
-                    setSelectedBottomTab={setSelectedBottomTab}
-                />
-            </div>
-
+            <Address
+                setProfilePage={setProfilePage}
+                setSelectedBottomTab={setSelectedBottomTab}
+            />
             <div className="mycart-content">
                 {visibleItems.length > 0 ? (
                     visibleItems.map((item) => (

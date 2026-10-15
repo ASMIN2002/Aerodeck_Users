@@ -1,8 +1,48 @@
 import "./AboutAerodeck.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiArrowLeft, FiGlobe, FiMail, FiShoppingBag, FiShield, FiHeart } from "react-icons/fi";
+import {
+    FiArrowLeft,
+    FiGlobe,
+    FiMail,
+    FiShoppingBag,
+    FiShield,
+    FiHeart,
+} from "react-icons/fi";
 import { API } from "../../../services/api";
+
+const CONTACT_LINKS = [
+    {
+        href: "https://heepitofficial.netlify.app/",
+        icon: FiGlobe,
+        text: "heepitofficial.netlify.app",
+        external: true,
+    },
+    {
+        href: "mailto:heepit.official@gmail.com",
+        icon: FiMail,
+        text: "heepit.official@gmail.com",
+        external: false,
+    },
+];
+
+const VALUES = [
+    {
+        icon: FiHeart,
+        title: "Curated",
+        desc: "Products and experiences presented with clarity, not clutter.",
+    },
+    {
+        icon: FiShield,
+        title: "Reliable",
+        desc: "Designed around dependable information and a consistent experience.",
+    },
+    {
+        icon: FiShoppingBag,
+        title: "Simple",
+        desc: "Less friction between discovering something and getting it.",
+    },
+];
 
 function AboutAerodeck({ setProfilePage }) {
     const navigate = useNavigate();
@@ -13,16 +53,18 @@ function AboutAerodeck({ setProfilePage }) {
 
         const fetchLatestVersion = async () => {
             try {
-                const response = await fetch(`${API}/api/app/latest-version`);
-                const data = await response.json();
+                const res = await fetch(`${API}/api/app/latest-version`);
+                const data = await res.json();
 
-                if (active && data.success && data.version) {
+                if (!active) return;
+
+                if (data.success && data.version) {
                     setVersion(String(data.version));
-                } else if (active) {
+                } else {
                     setVersion("Unavailable");
                 }
-            } catch (error) {
-                console.error("APP VERSION ERROR:", error);
+            } catch (err) {
+                console.error("Version fetch error:", err.message);
                 if (active) setVersion("Unavailable");
             }
         };
@@ -34,9 +76,7 @@ function AboutAerodeck({ setProfilePage }) {
         };
     }, []);
 
-    const handleBack = () => {
-        navigate(-1);
-    };
+    const handleBack = () => navigate(-1);
 
     return (
         <div className="about-heepit">
@@ -58,8 +98,14 @@ function AboutAerodeck({ setProfilePage }) {
                 <section className="heepit-about-hero">
                     <div className="heepit-about-logo">H</div>
 
-                    <span className="heepit-about-eyebrow">THE HEEPiT EXPERIENCE</span>
-                    <h1>Shop smarter.<br />Choose better.</h1>
+                    <span className="heepit-about-eyebrow">
+                        THE HEEPiT EXPERIENCE
+                    </span>
+                    <h1>
+                        Shop smarter.
+                        <br />
+                        Choose better.
+                    </h1>
                     <p>
                         HEEPIT is a modern shopping platform built to bring products,
                         cards, gifts and everyday essentials together in one simple,
@@ -83,15 +129,17 @@ function AboutAerodeck({ setProfilePage }) {
                 </section>
 
                 <section className="heepit-about-card">
-                    <div className="heepit-about-card-icon"><FiShoppingBag /></div>
+                    <div className="heepit-about-card-icon">
+                        <FiShoppingBag />
+                    </div>
                     <div>
                         <span className="heepit-about-label">WHAT IS HEEPiT?</span>
                         <h3>A marketplace made for modern shopping.</h3>
                         <p>
-                            HEEPIT focuses on a clean discovery experience, useful categories,
-                            reliable product information and a smoother journey from browsing
-                            to checkout. The goal is simple: make online shopping feel easier,
-                            clearer and more enjoyable.
+                            HEEPIT focuses on a clean discovery experience, useful
+                            categories, reliable product information and a smoother
+                            journey from browsing to checkout. The goal is simple: make
+                            online shopping feel easier, clearer and more enjoyable.
                         </p>
                     </div>
                 </section>
@@ -103,21 +151,16 @@ function AboutAerodeck({ setProfilePage }) {
                     </div>
 
                     <div className="heepit-value-grid">
-                        <article className="heepit-value-item">
-                            <FiHeart />
-                            <h3>Curated</h3>
-                            <p>Products and experiences presented with clarity, not clutter.</p>
-                        </article>
-                        <article className="heepit-value-item">
-                            <FiShield />
-                            <h3>Reliable</h3>
-                            <p>Designed around dependable information and a consistent experience.</p>
-                        </article>
-                        <article className="heepit-value-item">
-                            <FiShoppingBag />
-                            <h3>Simple</h3>
-                            <p>Less friction between discovering something and getting it.</p>
-                        </article>
+                        {VALUES.map((value) => {
+                            const Icon = value.icon;
+                            return (
+                                <article className="heepit-value-item" key={value.title}>
+                                    <Icon />
+                                    <h3>{value.title}</h3>
+                                    <p>{value.desc}</p>
+                                </article>
+                            );
+                        })}
                     </div>
                 </section>
 
@@ -128,14 +171,19 @@ function AboutAerodeck({ setProfilePage }) {
                     </div>
 
                     <div className="heepit-contact-list">
-                        <a href="https://heepitofficial.netlify.app/" target="_blank" rel="noreferrer">
-                            <FiGlobe />
-                            <span>heepitofficial.netlify.app</span>
-                        </a>
-                        <a href="mailto:heepit.official@gmail.com">
-                            <FiMail />
-                            <span>heepit.official@gmail.com</span>
-                        </a>
+                        {CONTACT_LINKS.map((link) => {
+                            const Icon = link.icon;
+                            const linkProps = link.external
+                                ? { target: "_blank", rel: "noreferrer" }
+                                : {};
+
+                            return (
+                                <a href={link.href} key={link.text} {...linkProps}>
+                                    <Icon />
+                                    <span>{link.text}</span>
+                                </a>
+                            );
+                        })}
                     </div>
                 </section>
 
