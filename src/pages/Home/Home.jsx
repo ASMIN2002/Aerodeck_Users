@@ -34,6 +34,9 @@ import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../components/MyProfileDetails/Terms/Terms";
 import Address from "../../components/Address/Address";
 import Rewards from "../../components/MyProfileDetails/Rewards/Rewards";
+import MyLikes from "../../components/MyProfileDetails/MyLikes/MyLikes";
+import MyReviews from "../../components/MyProfileDetails/MyReviews/MyReviews";
+import Settings from "../../components/MyProfileDetails/Settings/Settings";
 import TOPHEADER from "../../components/Header/TOPHEADER";
 
 import useHomeRouting from "./useHomeRouting";
@@ -662,8 +665,28 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
                 {isProfilePage("rewards") && <Rewards setProfilePage={setProfilePage} />}
 
+                {isProfilePage("likes") && (
+                    <MyLikes
+                        setProfilePage={setProfilePage}
+                        onOpenDetails={handleOpenDetails}
+                    />
+                )}
+
+                {isProfilePage("reviews") && (
+                    <MyReviews
+                        key={`reviews-${navKey}`}
+                        setProfilePage={setProfilePage}
+                        onOpenDetails={handleOpenDetails}
+                    />
+                )}
+
+                {isProfilePage("settings") && (
+                    <Settings setProfilePage={setProfilePage} />
+                )}
+
                 {!isDetailsOpen && profilePage === "order-details" && (
                     <OrderItemDetails
+                        key={`order-${navKey}`}
                         order={selectedOrder}
                         setProfilePage={setProfilePage}
                         onOpenDetails={handleOpenDetails}

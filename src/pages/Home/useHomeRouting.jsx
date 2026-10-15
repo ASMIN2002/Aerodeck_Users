@@ -157,6 +157,12 @@ export default function useHomeRouting({
             return;
         }
 
+        if (path.startsWith("/profile/reviews/product/")) {
+            setSelectedBottomTab("Profile");
+            setProfilePage("reviews");
+            return;
+        }
+
         if (
             path.startsWith("/profile/orders/order/") &&
             path.includes("/product/")
@@ -212,6 +218,26 @@ export default function useHomeRouting({
 
         if (path === "/profile/orders") {
             setProfilePage("orders");
+            return;
+        }
+
+        if (path === "/profile/rewards") {
+            setProfilePage("rewards");
+            return;
+        }
+
+        if (path === "/profile/likes") {
+            setProfilePage("likes");
+            return;
+        }
+
+        if (path === "/profile/reviews") {
+            setProfilePage("reviews");
+            return;
+        }
+
+        if (path === "/profile/settings") {
+            setProfilePage("settings");
             return;
         }
 
@@ -271,6 +297,18 @@ export default function useHomeRouting({
             id = parts[3];
             setSelectedBottomTab("Profile");
             setProfilePage("wishlist");
+        }
+
+        if (
+            parts.length === 4 &&
+            parts[0] === "profile" &&
+            parts[1] === "reviews" &&
+            parts[2] === "product"
+        ) {
+            type = "shop";
+            id = parts[3];
+            setSelectedBottomTab("Profile");
+            setProfilePage("reviews");
         }
 
         if (parts[0] === "home" && (parts.length === 4 || parts.length === 5)) {
@@ -346,13 +384,19 @@ export default function useHomeRouting({
             setSelectedBottomTab("Premium");
         } else if (path.startsWith("/profile/wishlist/")) {
             setSelectedBottomTab("Profile");
+        } else if (path.startsWith("/profile/reviews/")) {
+            setSelectedBottomTab("Profile");
         } else {
             setSelectedBottomTab("Home");
         }
 
-        setProfilePage(
-            path.startsWith("/profile/wishlist/") ? "wishlist" : "profile"
-        );
+        if (path.startsWith("/profile/wishlist/")) {
+            setProfilePage("wishlist");
+        } else if (path.startsWith("/profile/reviews/")) {
+            setProfilePage("reviews");
+        } else {
+            setProfilePage("profile");
+        }
 
         setSelectedProduct((prev) => {
             if (prev && prev.type === type) {

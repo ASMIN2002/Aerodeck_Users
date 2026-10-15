@@ -1,0 +1,64 @@
+.my-likes {
+    padding: 16px;
+    min-height: 100vh;
+    background: #0d0d11;
+}
+
+.my-likes-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1a1a1f;
+    margin-bottom: 16px;
+}
+
+.my-likes-back {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.my-likes-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e6edf3;
+    margin: 0;
+}
+
+.my-likes-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8b949e;
+}
+
+.my-likes-empty h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e6edf3;
+    margin: 0 0 6px;
+}
+
+.my-likes-empty p {
+    font-size: 12px;
+    margin: 0;
+}
+
+.my-likes-card {
+    padding: 12px;
+    border-radius: 10px;
+    background: #161b22;
+    border: 1px solid #1a1a1f;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #e6edf3;
+    cursor: pointer;
+}
