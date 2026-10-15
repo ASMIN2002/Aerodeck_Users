@@ -23,12 +23,13 @@ function VideoHero() {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    const [isPlaying, setIsPlaying] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(getInitialMuted);
+    const [hasEnded, setHasEnded] = useState(false);
 
     const videoRef = useRef(null);
     const slideRef = useRef(null);
+    const wasPlayingBeforeScrollRef = useRef(false);
 
     const dragRef = useRef({
         active: false,
@@ -50,43 +51,90 @@ function VideoHero() {
                 setLoading(false);
             }
         };
-
         fetchVideos();
     }, []);
 
     useEffect(() => {
         localStorage.setItem(MUTE_STORAGE_KEY, String(isMuted));
         if (videoRef.current) videoRef.current.muted = isMuted;
-    }, [isMuted, currentIndex]);
+    }, [isMuted]);
 
     useEffect(() => {
         if (videos.length === 0) return;
         const video = videoRef.current;
         if (!video) return;
-
         video.muted = isMuted;
-
-        if (isPlaying) video.play().catch(() => { });
+        if (isPlaying && !hasEnded) video.play().catch(() => { });
         else video.pause();
-    }, [currentIndex, videos, isPlaying]);
+    }, [currentIndex, videos, isPlaying, isMuted, hasEnded]);
 
-    const togglePlay = () => setIsPlaying((prev) => !prev);
+    useEffect(() => {
+        const slide = slideRef.current;
+        if (!slide) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const video = videoRef.current;
+                    if (!video) return;
+                    if (entry.isIntersecting) {
+                        if (wasPlayingBeforeScrollRef.current && !hasEnded) {
+                            video.muted = isMuted;
+                            video.play()
+                                .then(() => {
+                                    setIsPlaying(true);
+                                    wasPlayingBeforeScrollRef.current = false;
+                                })
+                                .catch(() => { });
+                        }
+                    } else {
+                        if (!video.paused) {
+                            video.pause();
+                            setIsPlaying(false);
+                            wasPlayingBeforeScrollRef.current = true;
+                        }
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+        observer.observe(slide);
+        return () => observer.disconnect();
+    }, [isMuted, hasEnded]);
+
+    const handlePlayPause = () => {
+        const video = videoRef.current;
+        if (!video) return;
+        if (isPlaying && !video.paused) {
+            video.pause();
+            setIsPlaying(false);
+        } else {
+            if (hasEnded) {
+                video.currentTime = 0;
+                setHasEnded(false);
+            }
+            video.muted = isMuted;
+            video.play()
+                .then(() => setIsPlaying(true))
+                .catch(() => { });
+        }
+    };
+
     const toggleMute = () => setIsMuted((prev) => !prev);
 
     const handleVideoEnd = () => {
-        setCurrentIndex(getNextIndex(currentIndex, videos.length));
-        setIsPlaying(true);
+        setIsPlaying(false);
+        setHasEnded(true);
     };
 
     const goToVideo = (index) => {
         setCurrentIndex(index);
-        setIsPlaying(true);
+        setIsPlaying(false);
+        setHasEnded(false);
     };
 
     const getDeltaTime = (clientX) => {
         const slide = slideRef.current;
         if (!slide) return 0;
-
         const rect = slide.getBoundingClientRect();
         const deltaX = clientX - dragRef.current.startX;
         return (deltaX / rect.width) * dragRef.current.duration;
@@ -95,7 +143,6 @@ function VideoHero() {
     const handleDragStart = (clientX) => {
         const video = videoRef.current;
         if (!video || !video.duration) return;
-
         dragRef.current = {
             active: true,
             startX: clientX,
@@ -107,22 +154,12 @@ function VideoHero() {
     const handleDragMove = (clientX) => {
         const video = videoRef.current;
         if (!video || !dragRef.current.active) return;
-
         const deltaTime = getDeltaTime(clientX);
         const newTime = dragRef.current.startTime + deltaTime;
-
-        if (newTime >= video.duration) {
+        if (newTime >= video.duration || newTime <= 0) {
             dragRef.current.active = false;
-            setCurrentIndex(getNextIndex(currentIndex, videos.length));
             return;
         }
-
-        if (newTime <= 0) {
-            dragRef.current.active = false;
-            setCurrentIndex(getPrevIndex(currentIndex, videos.length));
-            return;
-        }
-
         video.currentTime = newTime;
     };
 
@@ -150,14 +187,12 @@ function VideoHero() {
         if (isInsideControls(e.target)) return;
         e.preventDefault();
         handleDragStart(e.clientX);
-
         const moveHandler = (ev) => handleDragMove(ev.clientX);
         const upHandler = () => {
             handleDragEnd();
             document.removeEventListener("mousemove", moveHandler);
             document.removeEventListener("mouseup", upHandler);
         };
-
         document.addEventListener("mousemove", moveHandler);
         document.addEventListener("mouseup", upHandler);
     };
@@ -180,6 +215,24 @@ function VideoHero() {
                 </div>
             ) : (
                 <>
+                    <div className="shop-video-info-row" key={currentIndex}>
+                        <span className="shop-video-info-name infodtat">
+                            {currentVideo?.name}
+                        </span>
+                        <span className="shop-video-info-date infodtat">
+                            {new Date(currentVideo?.created_at).toLocaleDateString(
+                                "en-IN",
+                                {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                }
+                            )}
+                        </span>
+                        <span className="shop-video-info-frontview infodtat">
+                            {currentVideo?.frontview}
+                        </span>
+                    </div>
                     <div className="shop-video-scroll">
                         <div
                             className="shop-video-slide"
@@ -192,37 +245,18 @@ function VideoHero() {
                             <video
                                 ref={videoRef}
                                 src={currentVideo?.video_url}
-                                autoPlay
                                 muted
                                 playsInline
-                                preload="auto"
+                                preload="metadata"
                                 onEnded={handleVideoEnd}
+                                onClick={handlePlayPause}
                             />
-
-                            <div className="shop-video-info-name">
-                                {currentVideo?.name}
-                            </div>
-
-                            <div className="shop-video-info-date">
-                                {new Date(currentVideo?.created_at).toLocaleDateString(
-                                    "en-IN",
-                                    {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric",
-                                    }
-                                )}
-                            </div>
-
-                            <div className="shop-video-info-frontview">
-                                {currentVideo?.frontview}
-                            </div>
 
                             <div className="shop-video-controls">
                                 <button
                                     type="button"
-                                    className={`shop-video-control-btn ${isPlaying ? "purple" : ""}`}
-                                    onClick={togglePlay}
+                                    className={`shop-video-btn shop-video-btn-tl ${isPlaying ? "active" : ""}`}
+                                    onClick={handlePlayPause}
                                     aria-label={isPlaying ? "Pause" : "Play"}
                                 >
                                     {isPlaying ? <FiPause /> : <FiPlay />}
@@ -230,12 +264,38 @@ function VideoHero() {
 
                                 <button
                                     type="button"
-                                    className={`shop-video-control-btn ${!isMuted ? "purple" : ""}`}
+                                    className={`shop-video-btn shop-video-btn-tr ${!isMuted ? "active" : ""}`}
                                     onClick={toggleMute}
                                     aria-label={isMuted ? "Unmute" : "Mute"}
                                 >
                                     {isMuted ? <FiVolumeX /> : <FiVolume2 />}
                                 </button>
+
+                                {videos.length > 1 && (
+                                    <button
+                                        type="button"
+                                        className="shop-video-btn shop-video-btn-bl"
+                                        onClick={() =>
+                                            goToVideo(getPrevIndex(currentIndex, videos.length))
+                                        }
+                                        aria-label="Previous"
+                                    >
+                                        ‹
+                                    </button>
+                                )}
+
+                                {videos.length > 1 && (
+                                    <button
+                                        type="button"
+                                        className="shop-video-btn shop-video-btn-br"
+                                        onClick={() =>
+                                            goToVideo(getNextIndex(currentIndex, videos.length))
+                                        }
+                                        aria-label="Next"
+                                    >
+                                        ›
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

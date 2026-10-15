@@ -1,6 +1,6 @@
 .heep-cat-sticky-wrap {
     position: sticky;
-    top: 0;
+    top: -10px;
     z-index: 90;
     background: #0d0d11;
     padding: 0.6rem 0.5rem;
