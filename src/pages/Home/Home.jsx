@@ -97,20 +97,13 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
     const [isRefreshing, setIsRefreshing] = useState(false);
     const touchStartYRef = useRef(0);
     const homeContentRef = useRef(null);
-    const scrollPositionRef = useRef(0);
-
-    /* ============================================
-       PULL TO REFRESH — FIXED
-       ============================================ */
 
     const handleTouchStart = useCallback((e) => {
         const container = homeContentRef.current;
         if (!container || isRefreshing) return;
 
-        // Sirf tab start jab top pe ho
         if (container.scrollTop <= 0) {
             touchStartYRef.current = e.touches[0].clientY;
-            scrollPositionRef.current = container.scrollTop;
         } else {
             touchStartYRef.current = 0;
         }
@@ -128,9 +121,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
         const diff = e.touches[0].clientY - touchStartYRef.current;
         if (diff > 0) {
-            // Damping factor — smooth feel
-            const distance = Math.min(diff * 0.5, 120);
-            setPullDistance(distance);
+            setPullDistance(Math.min(diff * 0.5, 120));
         }
     }, [isRefreshing]);
 
@@ -140,24 +131,16 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
         if (pullDistance >= REFRESH_THRESHOLD && !isRefreshing) {
             setIsRefreshing(true);
-
-            // Scroll position save
             const savedScroll = container.scrollTop;
 
             setTimeout(() => {
-                // Refresh key badhao — sab child components re-render
                 setNavKey((prev) => prev + 1);
-
-                // Reset
                 setIsRefreshing(false);
                 setPullDistance(0);
 
-                // Scroll restore — 2 frames baad
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
-                        if (container) {
-                            container.scrollTop = savedScroll;
-                        }
+                        if (container) container.scrollTop = savedScroll;
                     });
                 });
             }, REFRESH_DURATION);
@@ -167,10 +150,6 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
         touchStartYRef.current = 0;
     }, [pullDistance, isRefreshing]);
-
-    /* ============================================
-       REFRESH HANDLER — Child components ke liye
-       ============================================ */
 
     const handleRefresh = useCallback(() => {
         setNavKey((prev) => prev + 1);
@@ -222,7 +201,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
             }
         }
         loadProfile();
-    }, [navKey]);   // ✅ navKey dependency — refresh pe profile reload
+    }, [navKey]);
 
     useEffect(() => {
         const handleBackNavigation = () => {
@@ -376,6 +355,15 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
         selectedProduct?.data?.shop_id ||
         selectedProduct?.data?.premium_id;
 
+    const showBottomNav =
+        !isDetailsOpen &&
+        (
+            selectedBottomTab === "Home" ||
+            selectedBottomTab === "Cart" ||
+            selectedBottomTab === "Offers" ||
+            (selectedBottomTab === "Profile" && profilePage === "profile")
+        );
+
     return (
         <div className="home-container">
             {showMainHeader && (
@@ -466,7 +454,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
             )}
 
             <div
-                className="home-content"
+                className={`home-content ${showBottomNav ? "has-bottom-nav" : ""}`}
                 ref={homeContentRef}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -721,19 +709,21 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                 {isProfilePage("editaddress") && <EditAddress setProfilePage={setProfilePage} />}
             </div>
 
-            <BottomNav
-                user={user}
-                profileImageRefresh={profileImageRefresh}
-                selectedBottomTab={selectedBottomTab}
-                setSelectedBottomTab={setSelectedBottomTab}
-                setSelectedMenu={setSelectedMenu}
-                isDetailsOpen={isDetailsOpen}
-                closeDetails={handleCloseDetails}
-                setProfilePage={setProfilePage}
-                navigateWithLoading={navigateWithLoading}
-                cartCount={cartCount}
-                setCartCount={setCartCount}
-            />
+            {showBottomNav && (
+                <BottomNav
+                    user={user}
+                    profileImageRefresh={profileImageRefresh}
+                    selectedBottomTab={selectedBottomTab}
+                    setSelectedBottomTab={setSelectedBottomTab}
+                    setSelectedMenu={setSelectedMenu}
+                    isDetailsOpen={isDetailsOpen}
+                    closeDetails={handleCloseDetails}
+                    setProfilePage={setProfilePage}
+                    navigateWithLoading={navigateWithLoading}
+                    cartCount={cartCount}
+                    setCartCount={setCartCount}
+                />
+            )}
         </div>
     );
 }
