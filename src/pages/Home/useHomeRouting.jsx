@@ -17,7 +17,6 @@ export default function useHomeRouting({
     setShopCategoryPage,
     setGiftCategoryPage,
     setAllShopCategoriesPage,
-    setAllShopsPage,
     setAllGiftCategoriesPage,
     setAllGiftsPage,
     setSelectedOrder,
@@ -41,7 +40,6 @@ export default function useHomeRouting({
 
         const resetShopPages = () => {
             setAllShopCategoriesPage(false);
-            setAllShopsPage(false);
             setShopCategoryPage(false);
             setSelectedShopCategory(null);
         };
@@ -71,7 +69,6 @@ export default function useHomeRouting({
         if (path === "/home/shop/allcategory") {
             goHome("Shop");
             setAllShopCategoriesPage(true);
-            setAllShopsPage(false);
             setShopCategoryPage(false);
             closeDetails();
             return;
@@ -89,17 +86,7 @@ export default function useHomeRouting({
             goHome("Shop");
             setSelectedShopCategory(decodeCategory(path, prefix));
             setAllShopCategoriesPage(false);
-            setAllShopsPage(false);
             setShopCategoryPage(true);
-            closeDetails();
-            return;
-        }
-
-        if (path === "/home/shop/allshops") {
-            goHome("Shop");
-            setAllShopsPage(true);
-            setAllShopCategoriesPage(false);
-            setShopCategoryPage(false);
             closeDetails();
             return;
         }
@@ -329,7 +316,6 @@ export default function useHomeRouting({
             setSelectedShopCategory(decodeURIComponent(parts[3]));
             setShopCategoryPage(true);
             setAllShopCategoriesPage(false);
-            setAllShopsPage(false);
         }
 
         if (

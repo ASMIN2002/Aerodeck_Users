@@ -1,44 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "../DetailsDataStyle/AllReview.css";
 import { API } from "../../../services/api";
 
-function AllReview({
-    setDetailsPage,
-    product_id
-}) {
+const STAR_FILTERS = [
+    { value: 5, key: "five", label: "five" },
+    { value: 4, key: "four", label: "four" },
+    { value: 3, key: "three", label: "three" },
+    { value: 2, key: "two", label: "two" },
+    { value: 1, key: "one", label: "one" },
+];
 
+function getSafeName(name) {
+    return name && name.trim() ? name.trim() : "Anonymous";
+}
+
+function renderStars(rating) {
+    return "⭐".repeat(Number(rating) || 0);
+}
+
+function AllReview({ product_id }) {
     const navigate = useNavigate();
+
     const [summary, setSummary] = useState({});
     const [reviews, setReviews] = useState([]);
     const [selectedStar, setSelectedStar] = useState(5);
 
-    const filteredReviews = reviews.filter(
-        (review) => Number(review.rating) === Number(selectedStar)
-    );
-
     useEffect(() => {
+        if (!product_id) return;
+
         async function loadReviews() {
-            if (!product_id) return;
             try {
-                const response = await fetch(
+                const res = await fetch(
                     `${API}/api/user/review/all/${product_id}`
                 );
-                const data = await response.json();
+                const data = await res.json();
+
                 if (data.success) {
                     setSummary(data.summary || {});
                     setReviews(data.reviews || []);
                 }
             } catch (err) {
-                console.error("REVIEWS LOAD ERROR:", err);
+                console.error("Reviews load error:", err.message);
             }
         }
+
         loadReviews();
     }, [product_id]);
 
+    const filteredReviews = useMemo(
+        () =>
+            reviews.filter(
+                (review) => Number(review.rating) === Number(selectedStar)
+            ),
+        [reviews, selectedStar]
+    );
+
     return (
         <div className="allreview-page">
-
             <div className="allreview-header">
                 <button
                     className="allreview-back"
@@ -46,64 +65,35 @@ function AllReview({
                 >
                     ←
                 </button>
+
                 <div>
                     <h2>Customer Reviews</h2>
                 </div>
             </div>
 
             <div className="review-filter">
-                <button
-                    className={`star-btn five ${selectedStar === 5 ? "active" : ""}`}
-                    onClick={() => setSelectedStar(5)}
-                >
-                    5⭐ ({summary.five || 0})
-                </button>
-
-                <button
-                    className={`star-btn four ${selectedStar === 4 ? "active" : ""}`}
-                    onClick={() => setSelectedStar(4)}
-                >
-                    4⭐ ({summary.four || 0})
-                </button>
-
-                <button
-                    className={`star-btn three ${selectedStar === 3 ? "active" : ""}`}
-                    onClick={() => setSelectedStar(3)}
-                >
-                    3⭐ ({summary.three || 0})
-                </button>
-
-                <button
-                    className={`star-btn two ${selectedStar === 2 ? "active" : ""}`}
-                    onClick={() => setSelectedStar(2)}
-                >
-                    2⭐ ({summary.two || 0})
-                </button>
-
-                <button
-                    className={`star-btn one ${selectedStar === 1 ? "active" : ""}`}
-                    onClick={() => setSelectedStar(1)}
-                >
-                    1⭐ ({summary.one || 0})
-                </button>
+                {STAR_FILTERS.map((star) => (
+                    <button
+                        key={star.value}
+                        className={`star-btn ${star.label} ${selectedStar === star.value ? "active" : ""}`}
+                        onClick={() => setSelectedStar(star.value)}
+                    >
+                        {star.value}⭐ ({summary[star.key] || 0})
+                    </button>
+                ))}
             </div>
 
             <div className="allreview-list">
                 {filteredReviews.length > 0 ? (
                     filteredReviews.map((review, index) => {
-
-                        const safeName =
-                            review.full_name && review.full_name.trim()
-                                ? review.full_name.trim()
-                                : "Anonymous";
+                        const safeName = getSafeName(review.full_name);
 
                         return (
                             <div
                                 className="allreview-card"
-                                key={index}
+                                key={`${safeName}-${index}`}
                             >
                                 <div className="allreview-top">
-
                                     {review.profile_image ? (
                                         <img
                                             src={review.profile_image}
@@ -120,16 +110,14 @@ function AllReview({
                                         <h3>{safeName}</h3>
 
                                         <div className="allreview-rating">
-                                            {"⭐".repeat(Number(review.rating) || 0)}
+                                            {renderStars(review.rating)}
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <p className="allreview-message">
                                     {review.review_message || "No message."}
                                 </p>
-
                             </div>
                         );
                     })
@@ -142,7 +130,6 @@ function AllReview({
                     </div>
                 )}
             </div>
-
         </div>
     );
 }

@@ -1,572 +1,253 @@
-.ps-section *,
-.ps-section *::before,
-.ps-section *::after {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
 .ps-section {
-  position: relative;
+  background: #15151e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 10px;
-  border-radius: 20px;
-  background: linear-gradient(180deg,
-      rgba(20, 22, 40, 0.96) 0%,
-      rgba(14, 16, 32, 0.96) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  box-shadow:
-    0 16px 36px -18px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(139, 92, 246, 0.1) inset,
-    0 1px 0 rgba(255, 255, 255, 0.05) inset;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  color: #e5e7eb;
+  gap: 0.5rem;
+  box-sizing: border-box;
 }
 
 .tobbardet {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .ps-price-row {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-  min-width: 0;
+  gap: 0.5rem;
 }
 
 .pridisc {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .ps-demo-price {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.2px;
-  color: rgba(148, 163, 184, 0.72);
+  color: #6b7280;
+  font-size: clamp(0.72rem, 1.6vw, 0.82rem);
   text-decoration: line-through;
-  text-decoration-thickness: 1px;
-  text-decoration-color: rgba(148, 163, 184, 0.6);
-  line-height: 1;
-  white-space: nowrap;
 }
 
 .ps-discount {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  border-radius: 8px;
-  background: linear-gradient(135deg,
-      rgba(16, 185, 129, 0.2) 0%,
-      rgba(5, 150, 105, 0.08) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.38);
-  color: #6ee7b7;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  line-height: 1;
-  white-space: nowrap;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
 }
 
 .ps-price {
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 0.3px;
-  line-height: 1;
-  background: linear-gradient(90deg, #a5b4fc 0%, #f0abfc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  white-space: nowrap;
+  color: #a78bfa;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 800;
 }
 
 .ps-rating {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 10px;
-  border-radius: 10px;
-  background: linear-gradient(135deg,
-      rgba(251, 191, 36, 0.18) 0%,
-      rgba(245, 158, 11, 0.06) 100%);
-  border: 1px solid rgba(251, 191, 36, 0.32);
-  color: #fef3c7;
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  line-height: 1;
-  white-space: nowrap;
+  color: #fbbf24;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #1c1c28;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 6px;
 }
 
 .ps-header {
-  display: flex;
-  flex-direction: column;
+  margin: 0;
 }
 
 .ps-name {
+  color: #f3f4f6;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 700;
   margin: 0;
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
   line-height: 1.3;
-  color: #ffffff;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .ps-desc {
+  color: #9ca3af;
+  font-size: clamp(0.68rem, 1.5vw, 0.76rem);
+  font-weight: 400;
+  line-height: 1.45;
   margin: 0;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2px;
-  line-height: 1.55;
-  color: rgba(229, 231, 235, 0.82);
-  white-space: pre-wrap;
-  word-break: break-word;
 }
 
 .ps-more {
-  display: inline;
-  margin-left: 4px;
-  color: #c4b5fd;
-  font-weight: 800;
+  color: #8b5cf6;
+  font-weight: 600;
   cursor: pointer;
   user-select: none;
-  transition: color 0.2s ease;
-  white-space: nowrap;
 }
 
 .ps-more:hover {
-  color: #f0abfc;
   text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .downcartbuy {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 2px;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.25rem;
 }
 
 .ps-cart-row {
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-}
-
-.ps-cart-btn {
   flex: 1;
-  min-width: 0;
-  height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(139, 92, 246, 0.45);
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-  line-height: 1;
-  cursor: pointer;
-  outline: none;
-  white-space: nowrap;
-  overflow: hidden;
-  transition: all 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
-  box-shadow:
-    0 10px 26px -8px rgba(139, 92, 246, 0.75),
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-}
-
-.ps-cart-btn:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 14px 32px -8px rgba(139, 92, 246, 0.95),
-    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-  filter: brightness(1.06);
-}
-
-.ps-cart-btn:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.ps-cart-btn:focus-visible {
-  outline: 2px solid rgba(139, 92, 246, 0.9);
-  outline-offset: 3px;
-}
-
-.ps-cart-btn:disabled {
-  cursor: not-allowed;
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.06) 0%,
-      rgba(255, 255, 255, 0.02) 100%);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: rgba(148, 163, 184, 0.6);
-  box-shadow: none;
-}
-
-.ps-qty {
-  flex: 1;
-  min-width: 0;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 6px;
-  border-radius: 14px;
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  background: linear-gradient(180deg,
-      rgba(139, 92, 246, 0.18) 0%,
-      rgba(139, 92, 246, 0.06) 100%);
-  box-shadow:
-    0 8px 20px -8px rgba(139, 92, 246, 0.6),
-    0 0 0 1px rgba(139, 92, 246, 0.15) inset;
-}
-
-.ps-qty button {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border: none;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.07);
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 900;
-  line-height: 1;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
-  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.ps-qty button:hover {
-  background: rgba(139, 92, 246, 0.4);
-  transform: scale(1.06);
-  box-shadow: 0 6px 14px -4px rgba(139, 92, 246, 0.7);
-}
-
-.ps-qty button:active {
-  transform: scale(0.92);
-}
-
-.ps-qty button:focus-visible {
-  outline: 2px solid rgba(139, 92, 246, 0.9);
-  outline-offset: 2px;
-}
-
-.ps-qty span {
-  flex: 1;
-  min-width: 0;
-  text-align: center;
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-  line-height: 1;
 }
 
 .ps-buy-now {
-  display: flex;
-  align-items: stretch;
-}
-
-.ps-total-price {
-  font-weight: 900;
-  letter-spacing: 0.4px;
-}
-
-@media (max-width: 480px) {
-  .ps-section {
-    gap: 12px;
-    border-radius: 18px;
-  }
-
-  .tobbardet {
-    gap: 10px;
-    padding-bottom: 10px;
-  }
-
-  .ps-price {
-    font-size: 20px;
-  }
-
-  .ps-demo-price {
-    font-size: 11.5px;
-  }
-
-  .ps-discount {
-    font-size: 9.5px;
-    padding: 3px 7px;
-    border-radius: 7px;
-  }
-
-  .ps-rating {
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 9px;
-  }
-
-  .ps-name {
-    font-size: 16px;
-  }
-
-  .ps-desc {
-    font-size: 12.5px;
-    line-height: 1.5;
-  }
-
-  .ps-cart-btn {
-    height: 44px;
-    font-size: 13px;
-    border-radius: 12px;
-    padding: 0 14px;
-  }
-
-  .ps-qty {
-    height: 44px;
-    border-radius: 12px;
-    padding: 0 5px;
-  }
-
-  .ps-qty button {
-    width: 32px;
-    height: 32px;
-    font-size: 17px;
-    border-radius: 9px;
-  }
-
-  .ps-qty span {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 360px) {
-  .ps-section {
-    border-radius: 16px;
-  }
-
-  .ps-price {
-    font-size: 18px;
-  }
-
-  .ps-demo-price {
-    font-size: 11px;
-  }
-
-  .ps-discount {
-    font-size: 9px;
-    padding: 3px 6px;
-  }
-
-  .ps-rating {
-    font-size: 10.5px;
-    padding: 4px 7px;
-  }
-
-  .ps-name {
-    font-size: 15px;
-  }
-
-  .ps-desc {
-    font-size: 12px;
-  }
-
-  .ps-cart-btn {
-    height: 42px;
-    font-size: 12.5px;
-    border-radius: 11px;
-    padding: 0 12px;
-    gap: 6px;
-  }
-
-  .ps-qty {
-    height: 42px;
-    border-radius: 11px;
-  }
-
-  .ps-qty button {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    border-radius: 8px;
-  }
-
-  .ps-qty span {
-    font-size: 13px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .ps-section *,
-  .ps-section *::before,
-  .ps-section *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ============================================
-   VERIFY ERROR BOX
-   ============================================ */
-.ps-verify-error {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border: 1.5px solid rgba(255, 107, 107, 0.6);
-  color: #fff;
-  padding: 14px 18px;
-  border-radius: 14px;
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(255, 107, 107, 0.25);
-  z-index: 9999;
-  max-width: 92vw;
-  width: max-content;
-  opacity: 0;
-  animation: psErrorSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  backdrop-filter: blur(10px);
-  pointer-events: auto;
-}
-
-.ps-verify-error::before {
-  content: "⚠️";
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.ps-verify-error span {
-  color: #ffcccb;
-  line-height: 1.4;
   flex: 1;
 }
 
-@keyframes psErrorSlideIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 30px) scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0) scale(1);
-  }
-}
-
-.ps-verify-btn {
-  padding: 8px 18px;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+.ps-cart-btn {
+  width: 100%;
+  background: #7c3aed;
   color: #fff;
   border: none;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  border-radius: 8px;
+  padding: 0.55rem;
+  font-size: clamp(0.72rem, 1.6vw, 0.82rem);
+  font-weight: 700;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
-  text-transform: uppercase;
-  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.ps-verify-btn:hover {
-  background: linear-gradient(135deg, #ff5252 0%, #d94840 100%);
-  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.6);
+.ps-cart-btn:hover {
+  background: #6d28d9;
   transform: translateY(-1px);
 }
 
-.ps-verify-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+.ps-cart-btn:active {
+  transform: scale(0.98);
 }
 
-/* MOBILE */
-@media (max-width: 480px) {
-  .ps-verify-error {
-    bottom: 90px;
-    padding: 12px 14px;
-    font-size: 12.5px;
-    gap: 10px;
-    max-width: 94vw;
-  }
-
-  .ps-verify-error::before {
-    font-size: 18px;
-  }
-
-  .ps-verify-btn {
-    padding: 7px 14px;
-    font-size: 11px;
-  }
+.ps-total-price {
+  font-weight: 800;
+  color: #fff;
 }
 
-/* ============================================
-   OUT OF STOCK — summary
-   ============================================ */
+.ps-qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1c1c28;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.ps-qty button {
+  background: none;
+  border: none;
+  color: #f3f4f6;
+  width: 30px;
+  height: 30px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.ps-qty button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ps-qty span {
+  color: #a78bfa;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .ps-oos-wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 18px 16px;
-  background: rgba(220, 38, 38, 0.08);
-  border: 1.5px dashed rgba(220, 38, 38, 0.4);
-  border-radius: 14px;
-  margin-top: 8px;
+  gap: 3px;
+  padding: 0.4rem;
+  text-align: center;
 }
 
 .ps-oos-badge {
-  padding: 8px 20px;
-  background: rgba(220, 38, 38, 0.95);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 1.2px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.4);
-  text-align: center;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
 }
 
 .ps-oos-text {
+  color: #6b7280;
+  font-size: 0.62rem;
   margin: 0;
-  font-size: 12.5px;
+}
+
+.ps-verify-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  margin-top: 0.25rem;
+}
+
+.ps-verify-btn {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.62rem;
   font-weight: 600;
-  color: rgba(229, 231, 235, 0.7);
-  text-align: center;
-  letter-spacing: 0.2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+@media(max-width:480px) {
+  .ps-section {
+    padding: 0.6rem;
+    border-radius: 10px;
+    gap: 0.4rem;
+  }
+
+  .ps-cart-btn {
+    padding: 0.48rem;
+    font-size: 0.72rem;
+  }
+
+  .ps-qty button {
+    width: 26px;
+    height: 26px;
+    font-size: 0.8rem;
+  }
+
+  .ps-qty span {
+    font-size: 0.75rem;
+  }
+
+  .downcartbuy {
+    gap: 0.4rem;
+  }
 }

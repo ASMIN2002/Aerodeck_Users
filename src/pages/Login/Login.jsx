@@ -136,8 +136,8 @@ function Login({ setPage, setAuthMode, onLoginSuccess }) {
             <div className="lg-orb">
                 <div className="lg-content">
                     <div className="lg-brand">
-                        <h1>HEEPIT LOGIN</h1>
-                        <p className="lg-subtitle">Sign in with your email</p>
+                        <h1>WELCOME TO HEEPIT</h1>
+                        <p className="lg-subtitle">Enter your email</p>
                     </div>
 
                     <div className="lg-form">

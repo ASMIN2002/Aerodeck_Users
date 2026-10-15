@@ -35,13 +35,6 @@ function SuggestedShops({ shops, onOpenDetails, onOpenAllShops }) {
 
             <div className="shop-section-title">
                 <h4>Suggested For You</h4>
-                <button
-                    type="button"
-                    onClick={onOpenAllShops}
-                    className="viewALL"
-                >
-                    <FiArrowRight />
-                </button>
             </div>
 
             <div className="shop-suggested-scroll">

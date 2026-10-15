@@ -5,90 +5,70 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
 import "../DetailsDataStyle/MediaViewer.css";
 
-function MediaViewer({
+const MAX_STARS = 5;
 
-    product_id,
+function renderStars(rating) {
+    return Array.from({ length: MAX_STARS }, (_, i) =>
+        i < rating ? (
+            <FaStar key={i} className="heepit-mv-star heepit-mv-star-filled" />
+        ) : (
+            <FaRegStar key={i} className="heepit-mv-star" />
+        )
+    );
+}
 
-    media_id,
-
-    onClose,
-
-    getTimeAgo
-
-}) {
-
+function MediaViewer({ product_id, media_id, onClose, getTimeAgo }) {
     const [images, setImages] = useState([]);
-
     const [selectedIndex, setSelectedIndex] = useState(0);
-
     const [direction, setDirection] = useState("right");
 
     useEffect(() => {
+        if (!product_id) return;
 
         async function loadImages() {
-
-            if (!product_id) return;
-
             try {
-
-                const response = await fetch(
-
+                const res = await fetch(
                     `${API}/api/user/review/media/${product_id}`
-
                 );
-
-                const data = await response.json();
+                const data = await res.json();
 
                 if (data.success) {
-
                     setImages(data.images);
 
                     const index = data.images.findIndex(
-
-                        item => item.media_id === media_id
-
+                        (item) => item.media_id === media_id
                     );
 
-                    if (index !== -1) {
-
-                        setSelectedIndex(index);
-
-                    }
-
+                    if (index !== -1) setSelectedIndex(index);
                 }
-
             } catch (err) {
-
-                console.error(err);
-
+                console.error("Media viewer load error:", err.message);
             }
-
         }
 
         loadImages();
-
-    }, [
-
-        product_id,
-
-        media_id
-
-    ]);
-
+    }, [product_id, media_id]);
 
     if (images.length === 0) return null;
 
     const currentImage = images[selectedIndex];
-
     if (!currentImage) return null;
 
-    return createPortal(
-        <div
-            className="heepit-mv-overlay"
-            onClick={onClose}
-        >
-            <div className="heepit-mv-box">
+    const goPrev = (e) => {
+        e.stopPropagation();
+        setDirection("left");
+        setSelectedIndex((prev) => Math.max(0, prev - 1));
+    };
 
+    const goNext = (e) => {
+        e.stopPropagation();
+        setDirection("right");
+        setSelectedIndex((prev) => Math.min(images.length - 1, prev + 1));
+    };
+
+    return createPortal(
+        <div className="heepit-mv-overlay" onClick={onClose}>
+            <div className="heepit-mv-box">
                 <button
                     className="heepit-mv-close"
                     onClick={(e) => {
@@ -102,12 +82,7 @@ function MediaViewer({
                 {selectedIndex > 0 && (
                     <button
                         className="heepit-mv-arrow heepit-mv-arrow-left"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (selectedIndex <= 0) return;
-                            setDirection("left");
-                            setSelectedIndex(selectedIndex - 1);
-                        }}
+                        onClick={goPrev}
                     >
                         <IoChevronBack />
                     </button>
@@ -116,12 +91,7 @@ function MediaViewer({
                 {selectedIndex < images.length - 1 && (
                     <button
                         className="heepit-mv-arrow heepit-mv-arrow-right"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (selectedIndex >= images.length - 1) return;
-                            setDirection("right");
-                            setSelectedIndex(selectedIndex + 1);
-                        }}
+                        onClick={goNext}
                     >
                         <IoChevronForward />
                     </button>
@@ -143,11 +113,13 @@ function MediaViewer({
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="heepit-mv-user">
-                        <img
-                            src={currentImage.profile_image}
-                            alt=""
-                            className="heepit-mv-profile"
-                        />
+                        {currentImage.profile_image && (
+                            <img
+                                src={currentImage.profile_image}
+                                alt=""
+                                className="heepit-mv-profile"
+                            />
+                        )}
                         <div className="heepit-mv-user-info">
                             <h3>{currentImage.full_name}</h3>
                             <span>{getTimeAgo(currentImage.upload_date)}</span>
@@ -155,21 +127,13 @@ function MediaViewer({
                     </div>
 
                     <div className="heepit-mv-rating">
-                        {[...Array(5)].map((_, index) =>
-                            index < currentImage.rating ? (
-                                <FaStar key={index} className="heepit-mv-star heepit-mv-star-filled" />
-                            ) : (
-                                <FaRegStar key={index} className="heepit-mv-star" />
-                            )
-                        )}
+                        {renderStars(currentImage.rating)}
                     </div>
                 </div>
-
             </div>
         </div>,
         document.body
     );
-
 }
 
 export default MediaViewer;

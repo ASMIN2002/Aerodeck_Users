@@ -3,7 +3,7 @@ import { API } from "../../../services/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const WHATSAPP_NUMBER = "918984031948";
+const WHATSAPP_NUMBER = "919583282886";
 const DESC_LIMIT = 120;
 const ERROR_DURATION = 3500;
 

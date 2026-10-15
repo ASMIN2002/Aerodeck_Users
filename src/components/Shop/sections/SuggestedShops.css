@@ -22,27 +22,6 @@
     margin: 0;
 }
 
-.viewALL {
-    background: #1a1a24;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #a78bfa;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-}
-
-.viewALL:hover {
-    background: #7c3aed;
-    color: #fff;
-    border-color: #7c3aed;
-}
-
 .shop-suggested-scroll {
     width: 100%;
     overflow-x: auto;
@@ -198,9 +177,4 @@
         font-size: 0.7rem;
     }
 
-    .viewALL {
-        width: 26px;
-        height: 26px;
-        font-size: 0.8rem;
-    }
 }

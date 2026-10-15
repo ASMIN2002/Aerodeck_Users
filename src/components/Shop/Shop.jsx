@@ -4,7 +4,6 @@ import ShopCard from "../Shop/ShopCard";
 import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 import ShopHome from "./ShopHome";
-import AllShops from "./AllShops";
 import ShopCategory from "./ShopCategory";
 import ALLShopCategories from "./ALLShopCategories";
 import "./Shop.css";
@@ -60,8 +59,6 @@ function Shop({
     allShopCategoriesPage,
     setAllShopCategoriesPage,
     setSelectedShopCategory,
-    allShopsPage,
-    setAllShopsPage,
     setSuggestionData,
     goTo,
 }) {
@@ -370,20 +367,6 @@ function Shop({
                         goTo(`/home/shop/allcategory/${encodeURIComponent(category)}`);
                     }}
                 />
-            ) : allShopsPage ? (
-                <AllShops
-                    shops={finalShops}
-                    onBack={() => setAllShopsPage(false)}
-                    onOpenDetails={onOpenDetails}
-                    onSave={handleSave}
-                    onLike={handleLike}
-                    onAddToCart={handleAddToCart}
-                    onIncreaseQuantity={handleIncreaseQuantity}
-                    onDecreaseQuantity={handleDecreaseQuantity}
-                    savedProducts={savedProducts}
-                    likedProducts={likedProducts}
-                    cartProducts={cartProducts}
-                />
             ) : shopCategoryPage ? (
                 <ShopCategory
                     category={selectedShopCategory}
@@ -457,12 +440,6 @@ function Shop({
                         goTo("/home/shop/allcategory");
                     }}
                     onOpenDetails={onOpenDetails}
-                    onOpenAllShops={() => {
-                        setShopCategoryPage(false);
-                        setSelectedShopCategory(null);
-                        setAllShopsPage(true);
-                        goTo("/home/shop/allshops");
-                    }}
                 />
             )}
 

@@ -1,54 +1,29 @@
 import "../DetailsDataStyle/WhyChoose.css";
 
+const WHY_CHOOSE = [
+    { icon: "🛡️", title: "Certified Products" },
+    { icon: "🚚", title: "Fast Delivery" },
+    { icon: "💳", title: "Secure Payment" },
+    { icon: "🎁", title: "Premium Packaging" },
+];
+
 function WhyChoose() {
-
     return (
-
         <div className="dt-why">
-
             <h3>Why Choose HEEPIT?</h3>
 
             <div className="dt-why-grid">
-
-                <div className="dt-why-card">
-                    <div className="detwhy">
-                        <div className="dt-why-icon">🛡️</div>
-                        <h4>Certified Products</h4>
+                {WHY_CHOOSE.map((item) => (
+                    <div className="dt-why-card" key={item.title}>
+                        <div className="detwhy">
+                            <div className="dt-why-icon">{item.icon}</div>
+                            <h4>{item.title}</h4>
+                        </div>
                     </div>
-
-                </div>
-
-                <div className="dt-why-card">
-                    <div className="detwhy">
-                        <div className="dt-why-icon">🚚</div>
-
-                        <h4>Fast Delivery</h4>
-                    </div>
-                  
-                </div>
-
-                <div className="dt-why-card">
-                    <div className="detwhy">
-                        <div className="dt-why-icon">💳</div>
-
-                        <h4>Secure Payment</h4>
-                    </div>
-                </div>
-
-                <div className="dt-why-card">
-                    <div className="detwhy">
-                        <div className="dt-why-icon">🎁</div>
-
-                        <h4>Premium Packaging</h4>
-                    </div>
-                </div>
-
+                ))}
             </div>
-
         </div>
-
     );
-
 }
 
 export default WhyChoose;
