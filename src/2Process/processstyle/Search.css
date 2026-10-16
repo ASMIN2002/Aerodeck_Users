@@ -1,16 +1,15 @@
-* {
-    box-sizing: border-box
-}
-
 .sr-container {
     position: relative;
-    padding: 8px 10px;
-    background: rgba(10, 10, 14, .85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
-    font-family: system-ui, -apple-system, sans-serif;
-    z-index: 50
+    width: 100%;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #eaafc8 0%, #c9a8d8 55%, #654ea3 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background .3s ease, border-color .3s ease
+}
+
+[data-theme="dark"] .sr-container {
+    background: linear-gradient(135deg, #0f2027 0%, #203a4a 55%, #2c5364 100%);
+    border-bottom-color: rgba(120, 220, 255, 0.18)
 }
 
 .sr-top-row {
@@ -22,20 +21,20 @@
 .sr-search-box {
     position: relative;
     flex: 1;
-    min-width: 0;
     display: flex;
     align-items: center;
     height: 38px;
-    padding: 0 10px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, .06);
-    border: 1px solid rgba(255, 255, 255, .1);
-    transition: .2s
+    padding: 0 6px 0 14px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(10px);
+    transition: border-color .25s ease, background .25s ease
 }
 
-.sr-search-box:focus-within {
-    background: rgba(124, 92, 255, .12);
-    border-color: rgba(124, 92, 255, .45)
+[data-theme="dark"] .sr-search-box {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.28)
 }
 
 .sr-input {
@@ -45,54 +44,83 @@
     border: none;
     outline: none;
     background: transparent;
-    color: #fff;
-    font-size: 13px
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #2b1055;
+    padding: 0 8px 0 0
+}
+
+[data-theme="dark"] .sr-input {
+    color: #e0f2f7
+}
+
+.sr-input::placeholder {
+    color: transparent
 }
 
 .sr-static-placeholder,
 .sr-animated-placeholder {
     position: absolute;
-    left: 10px;
+    left: 14px;
+    right: 46px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 13px;
-    color: rgba(255, 255, 255, .4);
     pointer-events: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: rgba(76, 29, 149, 0.6);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: calc(100% - 50px)
+    line-height: 1
+}
+
+[data-theme="dark"] .sr-static-placeholder,
+[data-theme="dark"] .sr-animated-placeholder {
+    color: rgba(207, 234, 245, 0.6)
 }
 
 .sr-animated-placeholder {
-    animation: sr-fade .3s ease-out
+    animation: sr-slide-in .45s ease
 }
 
-@keyframes sr-fade {
+@keyframes sr-slide-in {
     from {
-        opacity: 0
+        opacity: 0;
+        transform: translateY(calc(-50% + 6px));
     }
 
     to {
-        opacity: 1
+        opacity: 1;
+        transform: translateY(-50%);
     }
 }
 
 .sr-search-icon-btn {
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
     border: none;
-    background: transparent;
-    color: rgba(255, 255, 255, .55);
-    font-size: 13px;
+    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    color: #fff;
+    font-size: 12.5px;
     cursor: pointer;
-    flex-shrink: 0
+    outline: none;
+    flex-shrink: 0;
+    transition: transform .2s ease, opacity .2s ease
 }
 
-.sr-search-icon-btn:hover {
-    color: #a78bff
+[data-theme="dark"] .sr-search-icon-btn {
+    background: linear-gradient(135deg, #2c5364, #4a8ba8)
+}
+
+.sr-search-icon-btn:active {
+    transform: scale(0.94)
 }
 
 .sr-filter-wrap {
@@ -101,128 +129,254 @@
 }
 
 .sr-filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 38px;
     height: 38px;
-    border-radius: 10px;
-    display: grid;
-    place-items: center;
-    background: rgba(255, 255, 255, .06);
-    border: 1px solid rgba(255, 255, 255, .1);
-    color: #fff;
-    font-size: 14px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.55);
+    color: #4c1d95;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
-    transition: .2s
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: background .25s ease, border-color .25s ease, transform .2s ease
 }
 
-.sr-filter-btn:hover {
-    background: rgba(124, 92, 255, .2);
-    border-color: rgba(124, 92, 255, .4)
+[data-theme="dark"] .sr-filter-btn {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.28);
+    color: #cfeaf5
 }
 
 .sr-filter-btn.active {
-    background: rgba(255, 77, 109, .2);
-    border-color: rgba(255, 77, 109, .45);
-    color: #ff4d6d
+    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    color: #fff;
+    border-color: transparent
+}
+
+[data-theme="dark"] .sr-filter-btn.active {
+    background: linear-gradient(135deg, #2c5364, #4a8ba8)
+}
+
+.sr-filter-btn:active {
+    transform: scale(0.94)
 }
 
 .sr-filter-tip {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 8px);
     right: 0;
     padding: 6px 10px;
     border-radius: 8px;
-    background: rgba(20, 20, 26, .96);
-    border: 1px solid rgba(124, 92, 255, .4);
+    background: rgba(43, 16, 85, 0.92);
     color: #fff;
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     white-space: nowrap;
     z-index: 60;
-    animation: sr-fade .2s ease-out
+    animation: sr-tip-in .3s ease
+}
+
+[data-theme="dark"] .sr-filter-tip {
+    background: rgba(15, 32, 39, 0.95);
+    color: #cfeaf5;
+    border: 1px solid rgba(120, 220, 255, 0.3)
+}
+
+.sr-filter-tip::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 14px;
+    width: 8px;
+    height: 8px;
+    background: rgba(43, 16, 85, 0.92);
+    transform: rotate(45deg)
+}
+
+[data-theme="dark"] .sr-filter-tip::before {
+    background: rgba(15, 32, 39, 0.95)
+}
+
+@keyframes sr-tip-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .sr-suggestions {
     position: absolute;
-    top: calc(100% + 4px);
-    left: 10px;
-    right: 56px;
-    max-height: 240px;
-    overflow-y: auto;
-    display: none;
+    top: calc(100% - 4px);
+    left: 12px;
+    right: 12px;
+    z-index: 55;
+    display: flex;
     flex-direction: column;
-    padding: 5px;
+    gap: 2px;
+    padding: 6px;
     border-radius: 12px;
-    background: rgba(20, 20, 26, .98);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, .1);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, .7);
-    z-index: 70
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 14px 40px rgba(101, 78, 163, 0.28), 0 4px 12px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease
+}
+
+[data-theme="dark"] .sr-suggestions {
+    background: rgba(15, 32, 39, 0.95);
+    border-color: rgba(120, 220, 255, 0.22);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(120, 220, 255, 0.06)
 }
 
 .sr-suggestions-show {
-    display: flex
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto
 }
 
 .sr-suggestion {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
+    gap: 9px;
+    width: 100%;
+    padding: 9px 11px;
+    border-radius: 9px;
     border: none;
     background: transparent;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
+    color: #3b1261;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
     text-align: left;
-    transition: background .15s
+    cursor: pointer;
+    outline: none;
+    transition: background .18s ease, color .18s ease
 }
 
-.sr-suggestion:hover {
-    background: rgba(124, 92, 255, .18)
+[data-theme="dark"] .sr-suggestion {
+    color: #d7eef8
 }
 
 .sr-suggestion-icon {
-    color: #a78bff;
-    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    font-size: 11px;
+    color: #654ea3;
     flex-shrink: 0
+}
+
+[data-theme="dark"] .sr-suggestion-icon {
+    color: #7fd4e8
 }
 
 @media(max-width:480px) {
     .sr-container {
-        padding: 6px 8px
+        padding: 6px 10px
     }
 
     .sr-search-box {
         height: 34px;
-        padding: 0 8px
+        padding: 0 5px 0 12px;
+        border-radius: 10px
     }
 
-    .sr-input,
-    .sr-static-placeholder,
-    .sr-animated-placeholder {
-        font-size: 11px
+    .sr-input {
+        font-size: 12.5px
     }
 
     .sr-static-placeholder,
     .sr-animated-placeholder {
-        left: 8px;
-        max-width: calc(100% - 42px)
+        left: 12px;
+        right: 42px;
+        font-size: 12.5px
+    }
+
+    .sr-search-icon-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 11.5px;
+        border-radius: 7px
     }
 
     .sr-filter-btn {
         width: 34px;
         height: 34px;
-        font-size: 12px
-    }
-
-    .sr-suggestion {
-        font-size: 11px;
-        padding: 7px 9px
+        font-size: 14px;
+        border-radius: 10px
     }
 
     .sr-suggestions {
-        left: 8px;
-        right: 50px
+        left: 10px;
+        right: 10px;
+        padding: 5px;
+        border-radius: 11px
+    }
+
+    .sr-suggestion {
+        padding: 8px 10px;
+        font-size: 12px
+    }
+
+    .sr-filter-tip {
+        font-size: 10px;
+        padding: 5px 8px
+    }
+}
+
+@media(max-width:360px) {
+    .sr-container {
+        padding: 5px 8px
+    }
+
+    .sr-search-box {
+        height: 32px;
+        padding: 0 4px 0 10px;
+        border-radius: 9px
+    }
+
+    .sr-input {
+        font-size: 12px
+    }
+
+    .sr-static-placeholder,
+    .sr-animated-placeholder {
+        left: 10px;
+        right: 38px;
+        font-size: 12px
+    }
+
+    .sr-search-icon-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+        border-radius: 6px
+    }
+
+    .sr-filter-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+        border-radius: 9px
+    }
+
+    .sr-suggestion {
+        padding: 7px 9px;
+        font-size: 11.5px
     }
 }

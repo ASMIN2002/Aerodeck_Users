@@ -4,27 +4,88 @@
     height: 100dvh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    background: black;
+    overflow: visible;
     position: relative;
-    isolation: isolate;
+    background: linear-gradient(135deg, #d3959b 0%, #bfe6ba 100%);
+    transition: background .3s ease
+}
+
+[data-theme="dark"] .home-container {
+    background: linear-gradient(135deg, #152331 0%, #000000 100%)
 }
 
 .home-container::before {
     content: "";
     position: fixed;
-    top: -180px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 640px;
-    height: 380px;
-    background: radial-gradient(ellipse at center,
-            rgba(99, 102, 241, 0.18) 0%,
-            rgba(236, 72, 153, 0.08) 42%,
-            rgba(0, 0, 0, 0) 72%);
-    filter: blur(70px);
+    inset: 0;
     pointer-events: none;
     z-index: -1;
+    background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(255, 255, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 28% 72%, rgba(255, 255, 255, 0.85) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 45% 32%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(2px 2px at 62% 68%, rgba(255, 255, 255, 0.85) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 78% 22%, rgba(255, 255, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 88% 82%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 8% 58%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(2px 2px at 92% 48%, rgba(255, 255, 255, 0.85) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 8%, rgba(255, 255, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 55% 92%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 72% 55%, rgba(255, 255, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 22% 88%, rgba(255, 255, 255, 0.85) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 35%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(2px 2px at 50% 5%, rgba(255, 255, 255, 0.85) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 95% 65%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(2px 2px at 40% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 68% 12%, rgba(255, 255, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(2px 2px at 82% 60%, rgba(255, 255, 255, 0.85) 0%, transparent 100%);
+    background-size: 100% 100%;
+    animation: homeStarsBlink 2.5s ease-in-out infinite;
+    opacity: 1
+}
+
+[data-theme="dark"] .home-container::before {
+    background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(184, 240, 255, 1) 0%, transparent 100%),
+        radial-gradient(2px 2px at 28% 72%, rgba(184, 240, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 45% 32%, rgba(184, 240, 255, 1) 0%, transparent 100%),
+        radial-gradient(2px 2px at 62% 68%, rgba(184, 240, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 78% 22%, rgba(184, 240, 255, 1) 0%, transparent 100%),
+        radial-gradient(2px 2px at 88% 82%, rgba(184, 240, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 8% 58%, rgba(184, 240, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 92% 48%, rgba(184, 240, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 8%, rgba(184, 240, 255, 1) 0%, transparent 100%),
+        radial-gradient(2px 2px at 55% 92%, rgba(184, 240, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 72% 55%, rgba(184, 240, 255, 1) 0%, transparent 100%),
+        radial-gradient(2px 2px at 22% 88%, rgba(184, 240, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 35%, rgba(184, 240, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 50% 5%, rgba(184, 240, 255, 0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 95% 65%, rgba(184, 240, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 40% 50%, rgba(184, 240, 255, 0.85) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 68% 12%, rgba(184, 240, 255, 0.95) 0%, transparent 100%),
+        radial-gradient(2px 2px at 82% 60%, rgba(184, 240, 255, 0.9) 0%, transparent 100%)
+}
+
+@keyframes homeStarsBlink {
+    0% {
+        opacity: 0.35;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.35;
+    }
 }
 
 .home-content {
@@ -33,23 +94,22 @@
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
-    padding: 8px 0 16px;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
     scroll-behavior: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    background: #0d0d11;
+    background: transparent
 }
 
 .home-content.has-bottom-nav {
-    padding-bottom: 76px;
+    padding-bottom: 76px
 }
 
 .home-content::-webkit-scrollbar {
     display: none;
     width: 0;
-    height: 0;
+    height: 0
 }
 
 .pull-refresh-indicator {
@@ -66,76 +126,72 @@
     padding: 0 20px 8px;
     transition: height 0.15s ease-out, opacity 0.15s ease-out;
     pointer-events: none;
-    z-index: 999;
+    z-index: 999
 }
 
 .pull-refresh-icon {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: #161b22;
-    border: 1px solid #30363d;
-    color: #8b949e;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    color: #654ea3;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.25s ease;
     flex-shrink: 0;
+    backdrop-filter: blur(8px)
+}
+
+[data-theme="dark"] .pull-refresh-icon {
+    background: rgba(15, 32, 39, 0.85);
+    border-color: rgba(120, 220, 255, 0.35);
+    color: #7fd4e8
 }
 
 .pull-refresh-icon.ready {
-    color: #58a6ff;
-    border-color: #58a6ff;
-    box-shadow: 0 0 16px rgba(88, 166, 255, 0.4);
-    transform: scale(1.05);
+    color: #654ea3;
+    border-color: #654ea3;
+    box-shadow: 0 0 16px rgba(101, 78, 163, 0.5);
+    transform: scale(1.05)
+}
+
+[data-theme="dark"] .pull-refresh-icon.ready {
+    color: #7fd4e8;
+    border-color: #7fd4e8;
+    box-shadow: 0 0 16px rgba(127, 212, 232, 0.5)
 }
 
 .pull-refresh-icon.spinning svg {
-    animation: pullSpin 0.8s linear infinite;
+    animation: pullSpin 0.8s linear infinite
 }
 
 @keyframes pullSpin {
     to {
-        transform: rotate(360deg);
+        transform: rotate(360deg)
     }
 }
 
 .pull-refresh-text {
     font-size: 11px;
     font-weight: 700;
-    color: #8b949e;
+    color: #2b1055;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5)
 }
 
-@media (max-width: 768px) {
-    .home-container::before {
-        width: 420px;
-        height: 260px;
-        top: -130px;
-        filter: blur(55px);
-    }
-}
-
-@media (max-width: 480px) {
-    .home-container::before {
-        width: 320px;
-        height: 200px;
-        top: -100px;
-        filter: blur(48px);
-    }
-}
-
-@media (max-width: 360px) {
-    .home-container::before {
-        width: 260px;
-        height: 170px;
-        top: -80px;
-    }
+[data-theme="dark"] .pull-refresh-text {
+    color: #cfeaf5;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5)
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .home-container::before {
+        animation: none
+    }
 
     .home-container *,
     .home-container *::before,
@@ -143,6 +199,6 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+        scroll-behavior: auto !important
     }
 }

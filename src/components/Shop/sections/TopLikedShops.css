@@ -1,68 +1,129 @@
 .shop-top-liked-section {
+    position: relative;
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 1rem 0.5rem;
-    box-sizing: border-box;
-    background: #0d0d11;
+    margin-top: 14px;
+    padding: 26px 0 16px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(90deg, rgba(33, 150, 243, 0.28) 0%, rgba(0, 200, 200, 0.18) 45%, rgba(255, 255, 255, 0) 100%);
+    isolation: isolate
+}
+
+[data-theme="dark"] .shop-top-liked-section {
+    background: linear-gradient(90deg, rgba(236, 56, 188, 0.32) 0%, rgba(115, 3, 192, 0.20) 45%, rgba(0, 0, 0, 0) 100%)
+}
+
+.shop-top-liked-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    pointer-events: none;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.65) 55%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    mask-image: linear-gradient(270deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(270deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 2
+}
+
+[data-theme="dark"] .shop-top-liked-section::after {
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.75) 55%, rgba(0, 0, 0, 0) 100%)
 }
 
 .likeheader {
-    font-size: clamp(0.95rem, 2.2vw, 1.3rem);
-    font-weight: 700;
-    color: #f3f4f6;
-    margin: 0 0 0.75rem 0.25rem;
+    position: relative;
+    z-index: 1;
+    padding: 0 14px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #0d47a1
+}
+
+[data-theme="dark"] .likeheader {
+    color: #fdeff9
 }
 
 .shop-liked-scroll {
+    position: relative;
+    z-index: 1;
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
+    -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 0.25rem;
+    padding: 2px 0 6px
 }
 
 .shop-liked-scroll::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0
 }
 
 .shop-liked-grid {
     display: flex;
-    gap: 0.6rem;
-    width: max-content;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 14px;
+    width: max-content
 }
 
 .shop-liked-card {
-    width: 130px;
-    background: #15151e;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 0.4rem;
+    flex: 0 0 auto;
+    width: 150px;
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     cursor: pointer;
-    flex-shrink: 0;
-    user-select: none;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-    animation: fadeIn 0.3s ease forwards;
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: shop-liked-card-in .5s cubic-bezier(.4, 0, .2, 1) both
 }
 
-.shop-liked-card:hover {
-    transform: translateY(-2px);
-    border-color: #8b5cf6;
+[data-theme="dark"] .shop-liked-card {
+    background: rgba(15, 10, 40, 0.55);
+    border-color: rgba(236, 56, 188, 0.3);
+    box-shadow: 0 6px 18px rgba(236, 56, 188, 0.28), 0 2px 6px rgba(0, 0, 0, 0.45)
 }
 
-.shop-liked-card.out-of-stock {
-    opacity: 0.6;
+.shop-liked-card:active {
+    transform: scale(0.96)
+}
+
+@keyframes shop-liked-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .shop-liked-image {
     position: relative;
     width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
     overflow: hidden;
-    background: #08080c;
+    background: linear-gradient(135deg, #bbdefb, #b2dfdb)
+}
+
+[data-theme="dark"] .shop-liked-image {
+    background: linear-gradient(135deg, #7303c0, #ec38bc)
 }
 
 .shop-liked-image img {
@@ -70,109 +131,238 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform .4s ease
+}
+
+.shop-liked-card:active .shop-liked-image img {
+    transform: scale(1.05)
 }
 
 .shop-liked-oos {
     position: absolute;
-    top: 0.3rem;
-    left: 0.3rem;
-    background: rgba(220, 38, 38, 0.85);
-    backdrop-filter: blur(4px);
-    color: #fff;
-    font-size: 0.55rem;
-    font-weight: 700;
-    padding: 2px 5px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
+    top: 6px;
+    left: 6px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(150, 30, 30, 0.9);
+    color: #ffffff;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.6px
 }
 
 .shop-liked-count {
     position: absolute;
-    bottom: 0.3rem;
-    left: 0.3rem;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(6px);
-    color: #f43f5e;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-    display: flex;
+    top: 6px;
+    right: 6px;
+    display: inline-flex;
     align-items: center;
     gap: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(236, 56, 110, 0.92);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(4px)
+}
+
+[data-theme="dark"] .shop-liked-count {
+    background: rgba(236, 56, 188, 0.9)
 }
 
 .shop-liked-icon {
-    font-size: 0.7rem;
-    color: #f43f5e;
+    font-size: 10px;
+    color: #ffffff
 }
 
 .shop-liked-info {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    margin-top: 0.4rem;
-    padding: 0 2px;
+    gap: 4px;
+    padding: 0 2px 2px
 }
 
 .shop-liked-name {
-    color: #e5e7eb;
-    font-size: clamp(0.68rem, 1.5vw, 0.78rem);
-    font-weight: 500;
-    white-space: nowrap;
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: #0d47a1;
+    line-height: 1.2;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+[data-theme="dark"] .shop-liked-name {
+    color: #fdeff9
 }
 
 .shop-liked-price {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 4px;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600
 }
 
 .shop-liked-discount {
-    color: #10b981;
-    font-size: 0.62rem;
-    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(33, 150, 243, 0.18);
+    color: #0d47a1;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2px
+}
+
+[data-theme="dark"] .shop-liked-discount {
+    background: rgba(236, 56, 188, 0.22);
+    color: #fdeff9
 }
 
 .shop-liked-price strong {
-    color: #a78bfa;
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #00897b
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
+[data-theme="dark"] .shop-liked-price strong {
+    color: #4dd0c9
+}
+
+.shop-liked-card.out-of-stock {
+    opacity: 0.75
+}
+
+.shop-liked-card.out-of-stock .shop-liked-image img {
+    filter: grayscale(0.6)
+}
+
+@media(max-width:768px) {
+    .shop-top-liked-section {
+        margin-top: 12px;
+        padding: 22px 0 14px;
+        border-radius: 16px
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .likeheader {
+        padding: 0 12px;
+        font-size: 15px
+    }
+
+    .shop-liked-grid {
+        gap: 9px;
+        padding: 0 12px
+    }
+
+    .shop-liked-card {
+        width: 138px
+    }
+
+    .shop-liked-name {
+        font-size: 12px
     }
 }
 
 @media(max-width:480px) {
+    .shop-top-liked-section {
+        margin-top: 10px;
+        padding: 20px 0 12px;
+        border-radius: 14px
+    }
+
+    .likeheader {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        font-size: 14px
+    }
+
+    .shop-liked-grid {
+        gap: 8px;
+        padding: 0 10px
+    }
+
     .shop-liked-card {
-        width: 115px;
-        padding: 0.35rem;
-        border-radius: 8px;
+        width: 124px;
+        border-radius: 12px;
+        padding: 5px
+    }
+
+    .shop-liked-image {
+        border-radius: 9px
     }
 
     .shop-liked-name {
-        font-size: 0.68rem;
+        font-size: 11.5px
+    }
+
+    .shop-liked-price {
+        font-size: 10.5px
     }
 
     .shop-liked-price strong {
-        font-size: 0.7rem;
+        font-size: 12px
+    }
+
+    .shop-liked-oos {
+        font-size: 8px;
+        padding: 2px 6px
     }
 
     .shop-liked-count {
-        font-size: 0.6rem;
-        padding: 1px 5px;
+        font-size: 9.5px;
+        padding: 2px 6px
+    }
+}
+
+@media(max-width:360px) {
+    .shop-top-liked-section {
+        padding: 18px 0 10px;
+        border-radius: 12px
+    }
+
+    .likeheader {
+        padding: 0 8px;
+        margin-bottom: 8px;
+        font-size: 13px
+    }
+
+    .shop-liked-grid {
+        gap: 7px;
+        padding: 0 8px
+    }
+
+    .shop-liked-card {
+        width: 112px;
+        border-radius: 11px;
+        padding: 4px
+    }
+
+    .shop-liked-name {
+        font-size: 11px
+    }
+
+    .shop-liked-price {
+        font-size: 10px
+    }
+
+    .shop-liked-price strong {
+        font-size: 11.5px
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shop-liked-card {
+        animation: none
+    }
+
+    .shop-liked-card *,
+    .shop-liked-card *::before,
+    .shop-liked-card *::after {
+        transition-duration: 0.01ms !important
     }
 }

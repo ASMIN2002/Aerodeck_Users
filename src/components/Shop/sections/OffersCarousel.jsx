@@ -108,6 +108,19 @@ function OffersCarousel() {
     return (
         <section className="shop-offer-carousel-section">
 
+            <div className="shop-offer-bg" aria-hidden="true">
+                <span className="shop-offer-confetti shop-offer-confetti-1" />
+                <span className="shop-offer-confetti shop-offer-confetti-2" />
+                <span className="shop-offer-confetti shop-offer-confetti-3" />
+                <span className="shop-offer-confetti shop-offer-confetti-4" />
+                <span className="shop-offer-confetti shop-offer-confetti-5" />
+                <span className="shop-offer-confetti shop-offer-confetti-6" />
+                <span className="shop-offer-confetti shop-offer-confetti-7" />
+                <span className="shop-offer-confetti shop-offer-confetti-8" />
+                <span className="shop-offer-glow shop-offer-glow-1" />
+                <span className="shop-offer-glow shop-offer-glow-2" />
+            </div>
+
             <div className="shop-offer-heading-row">
                 <h2 className="shop-offer-heading">
                     Special <span>Offers</span>

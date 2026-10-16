@@ -1,36 +1,82 @@
 .shop-video-section {
-    padding: 8px 0;
-    background: #0d0d11;
+    position: relative;
+    width: 100%;
+    padding: 14px 12px 20px;
+    background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: background .3s ease
+}
+
+[data-theme="dark"] .shop-video-section {
+    background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%)
+}
+
+.heepit-intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px
 }
 
 .heepit-intro h2 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #e6edf3;
     margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    color: #0f2027;
     text-align: center;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4)
 }
 
-.shop-video-scroll {
-    padding: 0 16px;
+[data-theme="dark"] .heepit-intro h2 {
+    color: #e0f2f7;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4)
 }
 
-.shop-video-slide {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 7 / 4;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #000;
-    user-select: none;
-    touch-action: pan-y;
+.shop-video-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 40px 20px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px dashed rgba(15, 32, 39, 0.25);
+    text-align: center
 }
 
-.shop-video-slide video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+[data-theme="dark"] .shop-video-empty {
+    background: rgba(15, 32, 39, 0.4);
+    border-color: rgba(120, 220, 255, 0.3)
+}
+
+.shop-video-empty-icon {
+    font-size: 38px;
+    opacity: 0.75
+}
+
+.shop-video-empty h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f2027
+}
+
+[data-theme="dark"] .shop-video-empty h3 {
+    color: #e0f2f7
+}
+
+.shop-video-empty p {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: rgba(15, 32, 39, 0.7)
+}
+
+[data-theme="dark"] .shop-video-empty p {
+    color: rgba(207, 234, 245, 0.65)
 }
 
 .shop-video-info-row {
@@ -38,11 +84,21 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    padding: 8px 16px 5px;
-    animation: infoFadeIn 0.3s ease-out;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    animation: shop-video-info-in .4s ease
 }
 
-@keyframes infoFadeIn {
+[data-theme="dark"] .shop-video-info-row {
+    background: rgba(15, 32, 39, 0.4);
+    border-color: rgba(120, 220, 255, 0.22)
+}
+
+@keyframes shop-video-info-in {
     from {
         opacity: 0;
         transform: translateY(-4px);
@@ -54,220 +110,354 @@
     }
 }
 
-.shop-video-info-name,
-.shop-video-info-date,
-.shop-video-info-frontview {
-    flex: 1;
-    min-width: 0;
-    font-size: 11px;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.infodtat {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #0f2027;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
-.shop-video-info-name,
-.shop-video-info-date,
-.shop-video-info-frontview {
-    flex: 1;
-    min-width: 0;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    border: 2px solid;
-    background-size: 200% 200%;
-    animation: borderColor 3s linear infinite, bgMove 4s ease infinite;
+[data-theme="dark"] .infodtat {
+    color: #cfeaf5
 }
 
 .shop-video-info-name {
-    color: #fbfbfb;
-    background-image: linear-gradient(135deg, #1e3a8a, #3b82f6, #06b6d4);
+    flex: 1;
+    min-width: 0;
+    text-align: left
 }
 
 .shop-video-info-date {
-    color: #000000;
-    background-image: linear-gradient(135deg, #7c2d12, #ea580c, #facc15);
+    flex-shrink: 0;
+    opacity: 0.75
 }
 
 .shop-video-info-frontview {
-    color: #000000;
-    background-image: linear-gradient(135deg, #065f46, #10b981, #a7f3d0);
+    flex-shrink: 0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 800
 }
 
-@keyframes borderColor {
-    0% {
-        border-color: #ff0080;
-    }
-
-    25% {
-        border-color: #ff8c00;
-    }
-
-    50% {
-        border-color: #40e0d0;
-    }
-
-    75% {
-        border-color: #a855f7;
-    }
-
-    100% {
-        border-color: #ff0080;
-    }
+[data-theme="dark"] .shop-video-info-frontview {
+    background: linear-gradient(135deg, #2c5364, #4a8ba8)
 }
 
-@keyframes bgMove {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+.shop-video-scroll {
+    width: 100%;
+    display: flex;
+    justify-content: center
 }
-.infodtat{
-    text-align: center;
-    margin-bottom: 5px;
-    font-weight: bold;
+
+.shop-video-slide {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #0f2027 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%230f2027'/><circle cx='8' cy='4.5' r='1.1' fill='%23ffffff' opacity='0.35'/><path d='M7.4 3.6 L10 4.5 L7.4 5.4 Z' fill='%23ffffff' opacity='0.85'/></svg>") center/cover no-repeat;
+    box-shadow: 0 14px 40px rgba(15, 32, 39, 0.35);
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-y
 }
+
+[data-theme="dark"] .shop-video-slide {
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55)
+}
+
+.shop-video-slide:active {
+    cursor: grabbing
+}
+
+.shop-video-slide video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #0f2027;
+    border-radius: 16px
+}
+
 .shop-video-controls {
     position: absolute;
     inset: 0;
-    pointer-events: none;
-    z-index: 10;
+    pointer-events: none
 }
 
 .shop-video-btn {
     position: absolute;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(15, 32, 39, 0.55);
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
+    outline: none;
     pointer-events: auto;
-    transition: all 0.2s ease;
-    padding: 0;
-}
-
-.shop-video-btn:active {
-    background: rgba(0, 0, 0, 0.55);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: #fff;
+    backdrop-filter: blur(10px);
+    transition: background .2s ease, transform .2s ease, opacity .2s ease
 }
 
 .shop-video-btn.active {
-    color: #58a6ff;
-    border-color: rgba(88, 166, 255, 0.6);
-    background: rgba(88, 166, 255, 0.15);
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    color: #0f2027;
+    border-color: transparent
+}
+
+[data-theme="dark"] .shop-video-btn.active {
+    background: linear-gradient(135deg, #2b5876, #4e4376);
+    color: #e0f2f7;
+    border-color: rgba(120, 220, 255, 0.4)
+}
+
+.shop-video-btn:active {
+    transform: scale(0.92)
 }
 
 .shop-video-btn-tl {
     top: 10px;
-    left: 10px;
+    left: 10px
 }
 
 .shop-video-btn-tr {
     top: 10px;
-    right: 10px;
+    right: 10px
 }
 
 .shop-video-btn-bl {
     bottom: 10px;
     left: 10px;
     font-size: 22px;
-    line-height: 1;
+    font-weight: 700;
+    line-height: 1
 }
 
 .shop-video-btn-br {
     bottom: 10px;
     right: 10px;
     font-size: 22px;
-    line-height: 1;
+    font-weight: 700;
+    line-height: 1
 }
 
 .shop-video-dots {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    padding: 10px 0;
+    margin-top: 12px
 }
 
 .shop-video-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: #30363d;
+    background: rgba(15, 32, 39, 0.3);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background .25s ease, transform .25s ease
+}
+
+[data-theme="dark"] .shop-video-dot {
+    background: rgba(207, 234, 245, 0.3)
 }
 
 .shop-video-dot.active {
-    background: #58a6ff;
-    width: 18px;
-    border-radius: 3px;
+    background: #654ea3;
+    transform: scale(1.35);
+    box-shadow: 0 0 8px rgba(101, 78, 163, 0.6)
 }
 
-.shop-video-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    text-align: center;
-    gap: 6px;
+[data-theme="dark"] .shop-video-dot.active {
+    background: #7fd4e8;
+    box-shadow: 0 0 8px rgba(127, 212, 232, 0.7)
 }
 
-.shop-video-empty-icon {
-    font-size: 36px;
-    margin-bottom: 4px;
-}
+@media(max-width:768px) {
+    .shop-video-section {
+        padding: 12px 10px 16px;
+        border-radius: 16px
+    }
 
-.shop-video-empty h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #e6edf3;
-    margin: 0;
-}
+    .heepit-intro h2 {
+        font-size: 15.5px
+    }
 
-.shop-video-empty p {
-    font-size: 12px;
-    color: #8b949e;
-    margin: 0;
-}
+    .shop-video-info-row {
+        padding: 7px 10px;
+        gap: 6px
+    }
 
-@media (max-width: 480px) {
+    .infodtat {
+        font-size: 11px
+    }
+
+    .shop-video-slide {
+        border-radius: 14px
+    }
+
+    .shop-video-slide video {
+        border-radius: 14px
+    }
+
     .shop-video-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
+        width: 34px;
+        height: 34px;
+        font-size: 14px
     }
 
     .shop-video-btn-bl,
     .shop-video-btn-br {
-        font-size: 20px;
+        font-size: 20px
     }
 
-    .shop-video-info-name,
-    .shop-video-info-date,
+    .shop-video-btn-tl,
+    .shop-video-btn-tr {
+        top: 8px
+    }
+
+    .shop-video-btn-tl,
+    .shop-video-btn-bl {
+        left: 8px
+    }
+
+    .shop-video-btn-tr,
+    .shop-video-btn-br {
+        right: 8px
+    }
+
+    .shop-video-btn-bl,
+    .shop-video-btn-br {
+        bottom: 8px
+    }
+}
+
+@media(max-width:480px) {
+    .shop-video-section {
+        padding: 10px 8px 14px;
+        border-radius: 14px
+    }
+
+    .heepit-intro {
+        margin-bottom: 8px
+    }
+
+    .heepit-intro h2 {
+        font-size: 14.5px
+    }
+
+    .shop-video-info-row {
+        padding: 6px 9px;
+        border-radius: 10px;
+        gap: 5px
+    }
+
+    .infodtat {
+        font-size: 10.5px
+    }
+
     .shop-video-info-frontview {
-        font-size: 10px;
+        padding: 2px 7px;
+        font-size: 10px
+    }
+
+    .shop-video-slide {
+        border-radius: 12px
+    }
+
+    .shop-video-slide video {
+        border-radius: 12px
+    }
+
+    .shop-video-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 13px
+    }
+
+    .shop-video-btn-bl,
+    .shop-video-btn-br {
+        font-size: 18px
+    }
+
+    .shop-video-btn-tl,
+    .shop-video-btn-tr {
+        top: 6px
+    }
+
+    .shop-video-btn-tl,
+    .shop-video-btn-bl {
+        left: 6px
+    }
+
+    .shop-video-btn-tr,
+    .shop-video-btn-br {
+        right: 6px
+    }
+
+    .shop-video-btn-bl,
+    .shop-video-btn-br {
+        bottom: 6px
+    }
+
+    .shop-video-dots {
+        margin-top: 10px;
+        gap: 5px
+    }
+
+    .shop-video-dot {
+        width: 6px;
+        height: 6px
+    }
+}
+
+@media(max-width:360px) {
+    .shop-video-section {
+        padding: 8px 6px 12px;
+        border-radius: 12px
+    }
+
+    .heepit-intro h2 {
+        font-size: 13.5px
+    }
+
+    .infodtat {
+        font-size: 10px
+    }
+
+    .shop-video-info-frontview {
+        font-size: 9.5px;
+        padding: 2px 6px
+    }
+
+    .shop-video-slide {
+        border-radius: 10px
+    }
+
+    .shop-video-slide video {
+        border-radius: 10px
+    }
+
+    .shop-video-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px
+    }
+
+    .shop-video-btn-bl,
+    .shop-video-btn-br {
+        font-size: 16px
     }
 }

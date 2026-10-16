@@ -19,28 +19,23 @@ function ShopHome({
 }) {
     return (
         <div className="shop-home">
-            <VideoHero />
-
             <CategoriesSection
                 categories={categories}
                 onCategoryClick={onCategoryClick}
                 onOpenAllShopCategories={onOpenAllShopCategories}
             />
-
+            <VideoHero />
             <OffersCarousel />
-
             <FinestDeals
                 user={user}
                 shops={shops}
                 onOpenDetails={onOpenDetails}
             />
-
             <SuggestedShops
                 shops={shops}
                 onOpenDetails={onOpenDetails}
                 onOpenAllShops={onOpenAllShops}
             />
-
             <TopLikedShops
                 shops={shops}
                 onOpenDetails={onOpenDetails}
