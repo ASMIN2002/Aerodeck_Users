@@ -1,8 +1,19 @@
-import "./MyOrders.css";
+import "../profilestyles/Orders.css";
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { API } from "../../../services/api";
-import Loading from "../../../components/Loading/Loading";
+import { API } from "../../services/api";
+import Loading from "../../components/Loading/Loading";
+import {
+    FiArrowLeft,
+    FiPackage,
+    FiGift,
+    FiClock,
+    FiCheckCircle,
+    FiXCircle,
+    FiSlash,
+    FiZap,
+    FiChevronRight
+} from "react-icons/fi";
 
 const MIN_ORDER_FOR_REWARD = 250;
 const FAKE_LOADING_DELAY = 500;
@@ -16,11 +27,11 @@ const CANCEL_REASONS = [
 ];
 
 const REWARD_ICONS = {
-    got: "🎁",
-    "on-way": "⏳",
-    redeemed: "✓",
-    lost: "💔",
-    "no-chance": "🚫",
+    got: FiGift,
+    "on-way": FiClock,
+    redeemed: FiCheckCircle,
+    lost: FiXCircle,
+    "no-chance": FiSlash,
 };
 
 const STATUS_LABELS = ["REQUESTED", "PROCESSING", "CANCELLED", "DELIVERED"];
@@ -196,14 +207,14 @@ function MyOrders({
                         navigate("/profile");
                     }}
                 >
-                    ←
+                    <FiArrowLeft />
                 </button>
-                <h2>MY ORDERS</h2>
+                <h2>My Orders</h2>
             </div>
 
             {orders.length === 0 && (
                 <div className="orders-empty">
-                    📦
+                    <FiPackage className="orders-empty-icon" />
                     <h3>No Orders Yet</h3>
                     <p>Your placed orders will appear here.</p>
                 </div>
@@ -212,6 +223,7 @@ function MyOrders({
             {sortedOrders.map((order) => {
                 const reward = getRewardInfo(order, userRewardCount);
                 const showCancel = canCancelOrder(order.order_status);
+                const RewardIcon = REWARD_ICONS[reward.type];
 
                 return (
                     <div
@@ -239,15 +251,13 @@ function MyOrders({
                         <div className="order-bottom-row">
                             {order.order_status === "DELIVERED" && (
                                 <div className="order-delivered-badge">
-                                    <span className="delivered-icon">✓</span>
+                                    <FiCheckCircle className="delivered-icon" />
                                     <span className="delivered-text">Delivered</span>
                                 </div>
                             )}
 
                             <div className={`order-reward-badge ${reward.type}`}>
-                                <span className="reward-icon">
-                                    {REWARD_ICONS[reward.type]}
-                                </span>
+                                <RewardIcon className="reward-icon" />
                                 <span className="reward-text">{reward.text}</span>
                             </div>
 
@@ -258,15 +268,13 @@ function MyOrders({
                                         : "order-hypo-hint"
                                 }
                             >
-                                <span
+                                <FiZap
                                     className={
                                         order.is_hypo_used === 1
                                             ? "hypo-badge-icon"
                                             : "hypo-hint-icon"
                                     }
-                                >
-                                    ⚡
-                                </span>
+                                />
                                 <span
                                     className={
                                         order.is_hypo_used === 1
@@ -287,7 +295,7 @@ function MyOrders({
                                 </button>
                             )}
 
-                            <div className="order-card-arrow">&gt;</div>
+                            <FiChevronRight className="order-card-arrow" />
                         </div>
                     </div>
                 );

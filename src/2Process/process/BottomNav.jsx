@@ -1,7 +1,8 @@
 import "../processstyle/BottomNav.css";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiGift, FiHome, FiStar, FiShoppingCart, FiUser } from "react-icons/fi";
+import { FiHome, FiGift, FiShoppingCart, FiUser } from "react-icons/fi";
+import { MdHealthAndSafety } from "react-icons/md";
 import { API } from "../../services/api";
 
 const TOAST_DURATION = 2500;
@@ -9,11 +10,11 @@ const SCROLL_DELAY = 150;
 const KEYBOARD_THRESHOLD = 150;
 
 const NAV_ITEMS = [
-    { key: "Home", icon: FiHome, path: "/home/shop", clearMenu: false },
-    { key: "Offers", icon: FiGift, comingSoon: true },
-    { key: "Premium", icon: FiStar, comingSoon: true },
-    { key: "Cart", icon: FiShoppingCart, path: "/cart", showCartCount: true, clearMenu: true },
-    { key: "Profile", icon: FiUser, path: "/profile", clearMenu: true },
+    { key: "Home", label: "Home", icon: FiHome, path: "/home/shop", clearMenu: false },
+    { key: "Offers", label: "Offer", icon: FiGift, comingSoon: true },
+    { key: "Premium", label: "Medicure", icon: MdHealthAndSafety, comingSoon: true },
+    { key: "Cart", label: "My Cart", icon: FiShoppingCart, path: "/cart", showCartCount: true, clearMenu: true },
+    { key: "Profile", label: "Profile", icon: FiUser, path: "/profile", clearMenu: true },
 ];
 
 function getSessionToken() {
@@ -161,6 +162,7 @@ function BottomNav({
                                     <span className="bn-cart-count">{cartCount}</span>
                                 )}
                             </span>
+                            <span className="bn-label">{item.label}</span>
                         </button>
                     );
                 })}

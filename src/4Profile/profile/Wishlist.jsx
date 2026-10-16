@@ -1,7 +1,14 @@
-import "./MyWishlist.css";
+import "../profilestyles/Wishlist.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { API } from "../../../services/api";
+import { API } from "../../services/api";
+import {
+    FiArrowLeft,
+    FiHeart,
+    FiStar,
+    FiBookmark,
+    FiTrash2,
+    FiEye,
+} from "react-icons/fi";
 
 const TYPE_KEYS = ["product", "gift", "shop", "premium"];
 
@@ -32,9 +39,24 @@ function getProductType(item) {
     return "";
 }
 
-function MyWishlist({ setProfilePage, onOpenDetails }) {
-    const navigate = useNavigate();
+function normalizeForDetails(item, productType) {
+    return {
+        [`${productType}_id`]: getProductId(item),
+        [`${productType}_name`]: pickField(item, "name", ""),
+        [`${productType}_image1`]: pickField(item, "image1", ""),
+        [`${productType}_price`]: pickField(item, "price", 0),
+        [`${productType}_rating`]: pickField(item, "rating", 0),
+        [`${productType}_discount_percentage`]: pickField(
+            item,
+            "discount_percentage",
+            0
+        ),
+        [`${productType}_total_likes`]: pickField(item, "total_likes", 0),
+        [`${productType}_total_saves`]: pickField(item, "total_saves", 0),
+    };
+}
 
+function MyWishlist({ setProfilePage, onOpenDetails }) {
     const [wishlist, setWishlist] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -73,23 +95,27 @@ function MyWishlist({ setProfilePage, onOpenDetails }) {
 
     const handleBack = () => {
         setProfilePage("profile");
-        navigate(-1);
+    };
+
+    const handleView = (item, productType) => {
+        const normalized = normalizeForDetails(item, productType);
+        onOpenDetails(normalized, productType);
     };
 
     return (
         <div className="mywishlist">
             <div className="wishlist-header">
                 <button className="wishlist-back" onClick={handleBack}>
-                    ←
+                    <FiArrowLeft />
                 </button>
                 <h2>My Wishlist</h2>
             </div>
 
-            {loading && <p>Loading...</p>}
+            {loading && <p className="wishlist-loading">Loading...</p>}
 
             {!loading && wishlist.length === 0 && (
                 <div className="wishlist-empty">
-                    ❤️
+                    <FiHeart className="wishlist-empty-icon" />
                     <h3>No Wishlist Found</h3>
                     <p>Your favourite cards will appear here.</p>
                 </div>
@@ -101,23 +127,37 @@ function MyWishlist({ setProfilePage, onOpenDetails }) {
 
                 return (
                     <div className="wishlist-card" key={productId}>
-                        <img
-                            src={pickField(item, "image1", "")}
-                            alt={pickField(item, "name", "")}
-                        />
+                        <div className="wishlist-image-wrap">
+                            <img
+                                src={pickField(item, "image1", "")}
+                                alt={pickField(item, "name", "")}
+                            />
+                        </div>
 
                         <div className="wishlist-info">
                             <h3>{pickField(item, "name", "")}</h3>
-                            <p>⭐ {pickField(item, "rating", 0)}</p>
-                            <p className="wishlist-discount">
-                                {pickField(item, "discount_percentage", 0)} % Off
-                            </p>
+
+                            <div className="wishlist-meta-row">
+                                <span className="wishlist-rating">
+                                    <FiStar className="wishlist-meta-icon star" />
+                                    {pickField(item, "rating", 0)}
+                                </span>
+                                <span className="wishlist-discount">
+                                    {pickField(item, "discount_percentage", 0)}% OFF
+                                </span>
+                            </div>
 
                             <div className="detwish">
-                                <p className="wishlist-stats">
-                                    ❤️ {pickField(item, "total_likes", 0)} &nbsp;&nbsp; 🔖
-                                    {pickField(item, "total_saves", 0)}
-                                </p>
+                                <div className="wishlist-stats">
+                                    <span className="wishlist-stat">
+                                        <FiHeart className="wishlist-meta-icon heart" />
+                                        {pickField(item, "total_likes", 0)}
+                                    </span>
+                                    <span className="wishlist-stat">
+                                        <FiBookmark className="wishlist-meta-icon bookmark" />
+                                        {pickField(item, "total_saves", 0)}
+                                    </span>
+                                </div>
                                 <h4>₹ {pickField(item, "price", 0)}</h4>
                             </div>
                         </div>
@@ -125,16 +165,18 @@ function MyWishlist({ setProfilePage, onOpenDetails }) {
                         <div className="wishlist-actions">
                             <button
                                 className="wishlist-view"
-                                onClick={() => onOpenDetails(item, productType)}
+                                onClick={() => handleView(item, productType)}
+                                aria-label="View"
                             >
-                                View
+                                <FiEye />
                             </button>
 
                             <button
                                 className="wishlist-remove"
                                 onClick={() => handleRemove(productId)}
+                                aria-label="Remove"
                             >
-                                Remove
+                                <FiTrash2 />
                             </button>
                         </div>
                     </div>

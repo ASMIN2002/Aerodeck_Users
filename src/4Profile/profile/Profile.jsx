@@ -1,22 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Profile.css";
+import "../profilestyles/Profile.css";
 import NODP from "../../assets/NODP.png";
 import Loading from "../../components/Loading/Loading";
 import { API } from "../../services/api";
+import {
+    FiMapPin,
+    FiHeart,
+    FiPackage,
+    FiGift,
+    FiThumbsUp,
+    FiStar,
+    FiSettings,
+    FiInfo,
+    FiFileText,
+    FiChevronRight
+} from "react-icons/fi";
 
 const NAV_DELAY = 500;
 
 const MENU_ITEMS = [
-    { page: "address", icon: "📍", label: "My Addresses", loading: "Loading Addresses..." },
-    { page: "wishlist", icon: "❤️", label: "Wishlist", loading: "Loading Wishlist..." },
-    { page: "orders", icon: "📦", label: "My Orders", loading: "Loading Orders..." },
-    { page: "rewards", icon: "🎁", label: "My Rewards", loading: "Loading My Rewards..." },
-    { page: "likes", icon: "👍", label: "My Likes", loading: "Loading My Likes..." },
-    { page: "reviews", icon: "⭐", label: "My Reviews", loading: "Loading My Reviews..." },
-    { page: "settings", icon: "⚙️", label: "Settings", loading: "Loading Settings..." },
-    { page: "about", icon: "ℹ️", label: "About HEEPIT", loading: "Loading About HEEPIT..." },
-    { page: "terms", icon: "📄", label: "Terms and Conditions", loading: "Loading Terms & Conditions..." },
+    { page: "orders", Icon: FiPackage, label: "My Orders", loading: "Loading Orders..." },
+    { page: "address", Icon: FiMapPin, label: "My Addresses", loading: "Loading Addresses..." },
+    { page: "wishlist", Icon: FiHeart, label: "Wishlist", loading: "Loading Wishlist..." },
+    { page: "likes", Icon: FiThumbsUp, label: "My Likes", loading: "Loading My Likes..." },
+    { page: "reviews", Icon: FiStar, label: "My Reviews", loading: "Loading My Reviews..." },
+    { page: "rewards", Icon: FiGift, label: "My Rewards", loading: "Loading My Rewards..." },
+    { page: "settings", Icon: FiSettings, label: "Settings", loading: "Loading Settings..." },
+    { page: "about", Icon: FiInfo, label: "About HEEPIT", loading: "Loading About HEEPIT..." },
+    { page: "terms", Icon: FiFileText, label: "Terms & Conditions", loading: "Loading Terms & Conditions..." },
 ];
 
 function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading }) {
@@ -97,8 +109,8 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
                 </div>
 
                 <div className="prohead2">
-                    <h2>{profile?.full_name}</h2>
-                    <p>{maskedMobile}</p>
+                    <h2>{profile?.full_name || "Not Set"}</h2>
+                    <p>{maskedMobile || "Not Set"}</p>
                     <button
                         className="edit-profile-btn-pro"
                         onClick={() =>
@@ -114,17 +126,17 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
             </div>
 
             <div className="profile-menu">
-                {MENU_ITEMS.map((item) => (
-                    <div
-                        key={item.page}
+                {MENU_ITEMS.map(({ page, Icon, label, loading }) => (
+                    <button
+                        key={page}
                         className="profile-item"
-                        onClick={() =>
-                            handleProfileNavigation(item.page, item.loading)
-                        }
+                        onClick={() => handleProfileNavigation(page, loading)}
                     >
-                        <span>{item.icon}</span>
-                        <span>{item.label}</span>
-                    </div>
+                        <span className="profile-item-icon">
+                            <Icon />
+                        </span>
+                        <span className="profile-item-label">{label}</span>
+                    </button>
                 ))}
             </div>
 

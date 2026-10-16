@@ -101,7 +101,6 @@
 [data-theme="dark"] .shop-finest-deal-card {
     background: rgba(15, 32, 39, 0.55);
     border-color: rgba(120, 220, 200, 0.25);
-    box-shadow: 0 6px 18px rgba(20, 110, 180, 0.35), 0 2px 6px rgba(0, 0, 0, 0.4)
 }
 
 .shop-finest-deal-card:active {
