@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import "./Search.css";
-import Filter from "../Filter/Filter";
+import "../processstyle/Search.css";
+import Filter from "./Filter";
 import { FaSearch } from "react-icons/fa";
 import { API } from "../../services/api";
 
@@ -236,7 +236,7 @@ function Search({
                                     : "sr-animated-placeholder"
                             }
                         >
-                           {currentPlaceholder}
+                            {currentPlaceholder}
                         </span>
                     )}
 

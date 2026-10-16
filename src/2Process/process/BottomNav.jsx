@@ -1,4 +1,4 @@
-import "./BottomNav.css";
+import "../processstyle/BottomNav.css";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiGift, FiHome, FiStar, FiShoppingCart, FiUser } from "react-icons/fi";

@@ -5,13 +5,13 @@ import { API } from "../../services/api";
 
 import "../../styles/Home.css";
 
-import Header from "../../components/Header/Header";
-import Search from "../../components/Search/Search";
+import Header from "../../2Process/process/Header";
+import Search from "../../2Process/process/Search";
 import Cards from "../../components/Cards/Cards";
 import Gift from "../../components/Gift/Gift";
 import Shop from "../../components/Shop/Shop";
 import Offer from "../../components/Offer/Offer";
-import BottomNav from "../../components/BottomNav/BottomNav";
+import BottomNav from "../../2Process/process/BottomNav";
 import Details from "../../components/Details/Details";
 import Profile from "../../components/Profile/Profile";
 import MyWishlist from "../../components/MyProfileDetails/MyWishlist/MyWishlist";
@@ -32,13 +32,12 @@ import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfi
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../components/MyProfileDetails/Terms/Terms";
-import Address from "../../components/Address/Address";
+import Address from "../../2Process/process/Address";
 import Rewards from "../../components/MyProfileDetails/Rewards/Rewards";
 import MyLikes from "../../components/MyProfileDetails/MyLikes/MyLikes";
 import MyReviews from "../../components/MyProfileDetails/MyReviews/MyReviews";
 import Settings from "../../components/MyProfileDetails/Settings/Settings";
-import TOPHEADER from "../../components/Header/TOPHEADER";
-
+import TOPHEADER from "../../2Process/process/TopHeader";
 import useHomeRouting from "./useHomeRouting";
 
 const TAB_KEY = "selectedBottomTab";

@@ -1,0 +1,79 @@
+.hd-header {
+    position: relative;
+    width: 100%;
+    padding: 14px 16px;
+    background: #111114;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hd-glow {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #22c55e, transparent);
+    opacity: 0.5;
+}
+
+.hd-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hd-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hd-brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.hd-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.hd-brand-name {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.hd-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hd-notif-btn {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.hd-notif-icon {
+    font-size: 18px;
+}

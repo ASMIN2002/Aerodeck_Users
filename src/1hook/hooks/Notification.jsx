@@ -1,7 +1,7 @@
 // src/components/Notification.jsx
 import { useEffect, useState } from "react";
 import { API } from "../../services/api";
-import "./Notification.css";
+import "../hooksstyle/Notification.css";
 
 /* ============================================
    MASK EMAIL
