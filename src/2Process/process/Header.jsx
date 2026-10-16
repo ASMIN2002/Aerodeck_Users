@@ -2,7 +2,6 @@ import { useState } from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
 import Version from "../../1hook/hooks/Version";
 import Options from "../../1hook/hooks/Options";
-// import Notification from "../../Notification";
 import Notification from "../../1hook/hooks/Notification";
 import "../processstyle/Header.css";
 
@@ -33,13 +32,15 @@ function Header({
     return (
         <>
             <header className="hd-header">
-                <div className="hd-glow" />
+                <div className="hd-stars" aria-hidden="true">
+                    {Array.from({ length: 28 }).map((_, i) => (
+                        <span key={i} className={`hd-star hd-star-${i + 1}`} />
+                    ))}
+                    <span className="hd-shine" />
+                </div>
 
                 <div className="hd-inner">
                     <div className="hd-brand">
-                        <div className="hd-brand-mark">
-                            <span>H</span>
-                        </div>
                         <div className="hd-brand-text">
                             <h1 className="hd-brand-name">HEEPIT</h1>
                             <Version userId={userId} />
