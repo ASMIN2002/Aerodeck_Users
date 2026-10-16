@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import Version from "../../1hook/hooks/Version";
 import Options from "../../1hook/hooks/Options";
@@ -15,7 +15,10 @@ function Header({
     userId,
     onReloadHome,
 }) {
-    const [showNotifOverlay, setShowNotifOverlay] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const showNotifOverlay = location.pathname === "/notification";
 
     const handleSelect = (option) => {
         if (isDetailsOpen) closeDetails();
@@ -27,6 +30,14 @@ function Header({
 
     const handleComingSoon = (label) => {
         console.log(`${label} Coming Soon!`);
+    };
+
+    const handleOpenNotif = () => {
+        navigate("/notification");
+    };
+
+    const handleCloseNotif = () => {
+        navigate(-1);
     };
 
     return (
@@ -56,7 +67,7 @@ function Header({
 
                         <button
                             className="hd-notif-btn"
-                            onClick={() => setShowNotifOverlay(true)}
+                            onClick={handleOpenNotif}
                             aria-label="Notifications"
                         >
                             <IoNotificationsOutline className="hd-notif-icon" />
@@ -66,7 +77,7 @@ function Header({
             </header>
 
             {showNotifOverlay && (
-                <Notification onClose={() => setShowNotifOverlay(false)} />
+                <Notification onClose={handleCloseNotif} />
             )}
         </>
     );
