@@ -180,25 +180,6 @@ function ViewProfile({
 
             </div>
 
-            <div className="view-actions">
-
-                <button
-                    className="edit-btn"
-                    onClick={() => {
-                        navigateWithLoading(
-                            () => {
-                                setProfilePage("editprofile");
-                                navigate("/profile/viewprofile/editprofile");
-                            },
-                            "Loading Edit Profile...",
-                            500
-                        );
-                    }}
-                >
-                    Edit Profile
-                </button>
-            </div>
-
         </div>
 
     );

@@ -1,0 +1,21 @@
+.edit-profile {
+    width: 100%;
+    min-height: 100%;
+    padding: 14px 14px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    background: #f4f1fa;
+}
+
+[data-theme="dark"] .edit-profile {
+    background: #0f2027;
+}
+
+@media (max-width: 360px) {
+    .edit-profile {
+        padding: 10px 10px 20px;
+        gap: 10px;
+    }
+}

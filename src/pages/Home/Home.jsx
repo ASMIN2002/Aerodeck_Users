@@ -19,7 +19,7 @@ import MyCart from "../../components/MyProfileDetails/MyCart/MyCart";
 import MyOrders from "../../4Profile/profile/Orders";
 import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/HelpAndSupport";
 import AboutAerodeck from "../../4Profile/profile/AboutHeepit";
-import EditProfile from "../../components/MyProfileDetails/EditProfile/EditProfile";
+import EditProfile from "../../4Profile/profileDetails/editprofile/EditProfile";
 import MyAddresses from "../../4Profile/profile/Addresses";
 import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress";
 import EditAddress from "../../components/MyProfileDetails/EditAddress/EditAddress";
@@ -28,15 +28,16 @@ import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
 import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
 import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
 import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/ItemInvoice";
-import ViewProfile from "../../components/MyProfileDetails/EditProfile/ViewProfile";
+import ViewProfile from "../../4Profile/profileDetails/editprofile/ViewProfile";
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../4Profile/profile/TandC";
 import Address from "../../2Process/process/Address";
-import Rewards from "../../components/MyProfileDetails/Rewards/Rewards";
+import Rewards from "../../4Profile/profile/Rewards";
+import DemoRedeemRewards from "../../4Profile/profileDetails/DemoRedeemRewards";
 import MyLikes from "../../4Profile/profile/Likes";
 import MyReviews from "../../4Profile/profile/MyReviews";
-import Settings from "../../components/MyProfileDetails/Settings/Settings";
+import Settings from "../../4Profile/profile/Settings";
 import TOPHEADER from "../../2Process/process/TopHeader";
 import useHomeRouting from "./useHomeRouting";
 
@@ -663,6 +664,10 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                 )}
 
                 {isProfilePage("rewards") && <Rewards setProfilePage={setProfilePage} />}
+
+                {isProfilePage("demoredeem") && (
+                    <DemoRedeemRewards setProfilePage={setProfilePage} />
+                )}
 
                 {isProfilePage("likes") && (
                     <MyLikes

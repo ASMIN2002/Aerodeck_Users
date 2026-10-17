@@ -1,5 +1,4 @@
 import "./EditProfile.css";
-
 import TopEditSection from "./TopEditSection";
 import MediumEditSection from "./MediumEditSection";
 
@@ -9,11 +8,8 @@ function EditProfile({
     setProfilePage,
     navigateWithLoading
 }) {
-
     return (
-
         <div className="edit-profile">
-
             <TopEditSection
                 profile={profile}
                 setProfile={setProfile}
@@ -26,12 +22,8 @@ function EditProfile({
                 setProfile={setProfile}
                 navigateWithLoading={navigateWithLoading}
             />
-
-
         </div>
-
     );
-
 }
 
 export default EditProfile;

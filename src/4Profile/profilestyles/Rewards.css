@@ -1,0 +1,542 @@
+.my-rewards {
+    padding: 16px;
+    background: #ffffff;
+    color: #2b1055;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+[data-theme="dark"] .my-rewards {
+    background: #0f2027;
+    color: #cfeaf5;
+}
+
+.my-rewards-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.my-rewards-back {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(43, 16, 85, 0.1);
+    background: rgba(43, 16, 85, 0.04);
+    color: #2b1055;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .my-rewards-back {
+    border-color: rgba(120, 220, 255, 0.15);
+    background: rgba(120, 220, 255, 0.08);
+    color: #cfeaf5;
+}
+
+.my-rewards-header h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .my-rewards-header h2 {
+    color: #e0f2f7;
+}
+
+.my-rewards-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    border-radius: 10px;
+    background: rgba(43, 16, 85, 0.05);
+    margin-bottom: 14px;
+}
+
+[data-theme="dark"] .my-rewards-tabs {
+    background: rgba(120, 220, 255, 0.08);
+}
+
+.my-rewards-tab {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: rgba(43, 16, 85, 0.6);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .my-rewards-tab {
+    color: rgba(207, 234, 245, 0.6);
+}
+
+.my-rewards-tab.active {
+    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(101, 78, 163, 0.3);
+}
+
+[data-theme="dark"] .my-rewards-tab.active {
+    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
+    color: #0f2027;
+}
+
+.rewards-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rewards-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .rewards-topbar {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.rewards-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+}
+
+.rewards-stat.right {
+    align-items: flex-end;
+}
+
+.rewards-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(43, 16, 85, 0.55);
+}
+
+[data-theme="dark"] .rewards-label {
+    color: rgba(207, 234, 245, 0.55);
+}
+
+.rewards-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .rewards-value {
+    color: #e0f2f7;
+}
+
+.rewards-value.chances {
+    color: #be185d;
+}
+
+[data-theme="dark"] .rewards-value.chances {
+    color: #ec4899;
+}
+
+.rewards-value.points {
+    color: #654ea3;
+}
+
+[data-theme="dark"] .rewards-value.points {
+    color: #7fd4e8;
+}
+
+.rewards-help-btn {
+    position: absolute;
+    top: 0;
+    right: -22px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(43, 16, 85, 0.1);
+    color: #2b1055;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .rewards-help-btn {
+    background: rgba(120, 220, 255, 0.15);
+    color: #cfeaf5;
+}
+
+.rewards-help-box {
+    position: absolute;
+    top: 70px;
+    right: 16px;
+    z-index: 50;
+    min-width: 220px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(43, 16, 85, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .rewards-help-box {
+    background: #1a2228;
+    border-color: rgba(120, 220, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.rewards-help-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .rewards-help-title {
+    color: #e0f2f7;
+}
+
+.rewards-help-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 11px;
+    color: rgba(43, 16, 85, 0.8);
+}
+
+[data-theme="dark"] .rewards-help-row {
+    color: rgba(207, 234, 245, 0.8);
+}
+
+.help-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(101, 78, 163, 0.15);
+    color: #654ea3;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .help-num {
+    background: rgba(120, 220, 255, 0.15);
+    color: #7fd4e8;
+}
+
+.scratch-notice {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(43, 16, 85, 0.6);
+}
+
+[data-theme="dark"] .scratch-notice {
+    color: rgba(207, 234, 245, 0.6);
+}
+
+.notice-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+}
+
+.scratch-card {
+    position: relative;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+}
+
+[data-theme="dark"] .scratch-card {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.scratch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.scratch-box {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    background: rgba(101, 78, 163, 0.15);
+}
+
+[data-theme="dark"] .scratch-box {
+    background: rgba(120, 220, 255, 0.12);
+}
+
+.scratch-number-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scratch-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: #654ea3;
+}
+
+[data-theme="dark"] .scratch-number {
+    color: #7fd4e8;
+}
+
+.scratch-cover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    transition: opacity 0.3s ease;
+}
+
+[data-theme="dark"] .scratch-cover {
+    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
+}
+
+.scratch-box.scratching .scratch-cover {
+    opacity: 0;
+}
+
+.scratch-box.revealed .scratch-cover {
+    display: none;
+}
+
+.scratch-cover-text {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+[data-theme="dark"] .scratch-cover-text {
+    color: #0f2027;
+}
+
+.scratch-locked-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .scratch-locked-overlay {
+    background: rgba(15, 32, 39, 0.7);
+}
+
+.lock-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.lock-icon {
+    font-size: 28px;
+}
+
+.lock-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .lock-text {
+    color: #e0f2f7;
+}
+
+.lock-sub {
+    font-size: 11px;
+    color: rgba(43, 16, 85, 0.6);
+}
+
+[data-theme="dark"] .lock-sub {
+    color: rgba(207, 234, 245, 0.6);
+}
+
+.rewards-terms {
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .rewards-terms {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.rewards-terms-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b1055;
+    margin-bottom: 10px;
+}
+
+[data-theme="dark"] .rewards-terms-title {
+    color: #e0f2f7;
+}
+
+.terms-icon {
+    font-size: 14px;
+}
+
+.rewards-terms-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.terms-item {
+    display: flex;
+    gap: 8px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: rgba(43, 16, 85, 0.8);
+}
+
+[data-theme="dark"] .terms-item {
+    color: rgba(207, 234, 245, 0.8);
+}
+
+.terms-item strong {
+    color: #be185d;
+}
+
+[data-theme="dark"] .terms-item strong {
+    color: #ec4899;
+}
+
+.terms-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #654ea3;
+    margin-top: 7px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .terms-dot {
+    background: #7fd4e8;
+}
+
+.rewards-terms-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(43, 16, 85, 0.08);
+    text-align: center;
+    font-size: 11px;
+    color: rgba(43, 16, 85, 0.6);
+}
+
+[data-theme="dark"] .rewards-terms-footer {
+    border-top-color: rgba(120, 220, 255, 0.15);
+    color: rgba(207, 234, 245, 0.6);
+}
+
+.rewards-terms-footer strong {
+    color: #be185d;
+}
+
+[data-theme="dark"] .rewards-terms-footer strong {
+    color: #ec4899;
+}
+
+.rewards-congrats {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.rewards-congrats-inner {
+    padding: 24px 32px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 2px solid #ec4899;
+    box-shadow: 0 20px 50px rgba(236, 72, 153, 0.4);
+    text-align: center;
+    animation: reward-pop 0.3s ease;
+}
+
+[data-theme="dark"] .rewards-congrats-inner {
+    background: #16232b;
+}
+
+@keyframes reward-pop {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.rewards-congrats-emoji {
+    font-size: 32px;
+    margin-bottom: 6px;
+}
+
+.rewards-congrats-inner h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .rewards-congrats-inner h3 {
+    color: #e0f2f7;
+}
+
+.rewards-congrats-points {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: #ec4899;
+}
