@@ -286,7 +286,6 @@
     background-size: 300% 100%;
     animation: hd-flow 8s linear infinite;
     pointer-events: none;
-    z-index: 2
 }
 
 [data-theme="dark"] .hd-header::after {
