@@ -1,5 +1,5 @@
+import "../profilestyles/TandC.css";
 import { useNavigate } from "react-router-dom";
-import "./Terms.css";
 
 const TERMS_SECTIONS = [
     {

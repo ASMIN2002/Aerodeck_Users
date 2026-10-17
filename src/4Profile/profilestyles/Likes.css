@@ -1,0 +1,203 @@
+.my-likes {
+    width: 100%;
+    min-height: 100%;
+    padding: 14px 14px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+    background: #f4f1fa;
+}
+
+[data-theme="dark"] .my-likes {
+    background: #0f2027;
+}
+
+.my-likes-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.my-likes-back {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(101, 78, 163, 0.14);
+    color: #654ea3;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    outline: none;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .my-likes-back {
+    background: rgba(120, 220, 255, 0.14);
+    color: #7fd4e8;
+}
+
+.my-likes-header h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .my-likes-header h2 {
+    color: #e0f2f7;
+}
+
+.my-likes-empty {
+    padding: 30px 16px;
+    text-align: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .my-likes-empty {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.my-likes-empty h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .my-likes-empty h3 {
+    color: #e0f2f7;
+}
+
+.my-likes-empty p {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: rgba(43, 16, 85, 0.65);
+}
+
+[data-theme="dark"] .my-likes-empty p {
+    color: rgba(207, 234, 245, 0.65);
+}
+
+.my-likes-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.my-likes-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+    min-width: 0;
+    transition: transform 0.2s ease;
+}
+
+[data-theme="dark"] .my-likes-card {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(189, 218, 228, 0.16);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.my-likes-card:active {
+    transform: scale(0.97);
+}
+
+.my-likes-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 9px;
+    display: block;
+    background: #f1f1f5;
+}
+
+[data-theme="dark"] .my-likes-image {
+    background: #1a2228;
+}
+
+.my-likes-info {
+    min-width: 0;
+}
+
+.my-likes-info h4 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b1055;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+[data-theme="dark"] .my-likes-info h4 {
+    color: #cfeaf5;
+}
+
+.my-likes-action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.my-likes-heart {
+    font-size: 11px;
+    color: #dc2626;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .my-likes-heart {
+    color: #f87171;
+}
+
+.my-likes-count {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(43, 16, 85, 0.65);
+}
+
+[data-theme="dark"] .my-likes-count {
+    color: rgba(207, 234, 245, 0.65);
+}
+
+@media (max-width: 360px) {
+    .my-likes {
+        padding: 10px 10px 20px;
+        gap: 10px;
+    }
+
+    .my-likes-list {
+        gap: 8px;
+    }
+
+    .my-likes-card {
+        padding: 6px;
+    }
+
+    .my-likes-info h4 {
+        font-size: 11px;
+    }
+
+    .my-likes-count {
+        font-size: 10px;
+    }
+}

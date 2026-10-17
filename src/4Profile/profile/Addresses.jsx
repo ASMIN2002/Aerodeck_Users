@@ -1,9 +1,9 @@
-import "./MyAddresses.css";
+import "../profilestyles/Addresses.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading/Loading";
+import Loading from "../../components/Loading/Loading";
 import { FiArrowLeft } from "react-icons/fi";
-import { API } from "../../../services/api";
+import { API } from "../../services/api";
 
 const MAX_ADDRESSES = 4;
 const MESSAGE_DURATION = 3000;

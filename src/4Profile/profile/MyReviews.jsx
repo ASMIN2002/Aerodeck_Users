@@ -1,7 +1,7 @@
+import "../profilestyles/MyReviews.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MyReviews.css";
-import { API } from "../../../services/api";
+import { API } from "../../services/api";
 
 function renderStars(rating) {
     const count = Math.max(0, Math.min(5, Number(rating) || 0));

@@ -1,0 +1,212 @@
+.my-reviews {
+    width: 100%;
+    min-height: 100%;
+    padding: 14px 14px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+    background: #f4f1fa;
+}
+
+[data-theme="dark"] .my-reviews {
+    background: #0f2027;
+}
+
+.my-reviews-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.my-reviews-back {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(101, 78, 163, 0.14);
+    color: #654ea3;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    outline: none;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .my-reviews-back {
+    background: rgba(120, 220, 255, 0.14);
+    color: #7fd4e8;
+}
+
+.my-reviews-header h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .my-reviews-header h2 {
+    color: #e0f2f7;
+}
+
+.my-reviews-empty {
+    padding: 30px 16px;
+    text-align: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .my-reviews-empty {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.my-reviews-empty h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .my-reviews-empty h3 {
+    color: #e0f2f7;
+}
+
+.my-reviews-empty p {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: rgba(43, 16, 85, 0.65);
+}
+
+[data-theme="dark"] .my-reviews-empty p {
+    color: rgba(207, 234, 245, 0.65);
+}
+
+.my-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.my-reviews-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+    min-width: 0;
+    transition: transform 0.2s ease;
+}
+
+[data-theme="dark"] .my-reviews-card {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(68, 143, 171, 0.16);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.my-reviews-card:active {
+    transform: scale(0.97);
+}
+
+.my-reviews-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 9px;
+    display: block;
+    background: #f1f1f5;
+}
+
+[data-theme="dark"] .my-reviews-image {
+    background: #1a2228;
+}
+
+.my-reviews-info {
+    min-width: 0;
+}
+
+.my-reviews-info h4 {
+    margin: 0 0 2px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2b1055;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+[data-theme="dark"] .my-reviews-info h4 {
+    color: #cfeaf5;
+}
+
+.my-reviews-price {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #654ea3;
+}
+
+[data-theme="dark"] .my-reviews-price {
+    color: #7fd4e8;
+}
+
+.my-reviews-stars {
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+.my-reviews-msg {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(43, 16, 85, 0.6);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+[data-theme="dark"] .my-reviews-msg {
+    color: rgba(207, 234, 245, 0.6);
+}
+
+@media (max-width: 360px) {
+    .my-reviews {
+        padding: 10px 10px 20px;
+        gap: 10px;
+    }
+
+    .my-reviews-grid {
+        gap: 8px;
+    }
+
+    .my-reviews-card {
+        padding: 6px;
+    }
+
+    .my-reviews-info h4 {
+        font-size: 11px;
+    }
+
+    .my-reviews-msg {
+        font-size: 10px;
+    }
+}

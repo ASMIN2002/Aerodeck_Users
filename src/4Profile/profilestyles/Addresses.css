@@ -1,0 +1,345 @@
+.address-page {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #ffffff;
+    color: #2b1055;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+[data-theme="dark"] .address-page {
+    background: #0f2027;
+    color: #cfeaf5;
+}
+
+.address-success-message {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #15803d;
+    font-size: 12px;
+}
+
+[data-theme="dark"] .address-success-message {
+    color: #22c55e;
+}
+
+.address-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.address-header h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .address-header h2 {
+    color: #e0f2f7;
+}
+
+.address-header p {
+    margin: 2px 0 0;
+    font-size: 10px;
+    color: #b45309;
+}
+
+[data-theme="dark"] .address-header p {
+    color: #f59e0b;
+}
+
+.back-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(43, 16, 85, 0.1);
+    background: rgba(43, 16, 85, 0.04);
+    color: #2b1055;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .back-btn {
+    border-color: rgba(120, 220, 255, 0.15);
+    background: rgba(120, 220, 255, 0.08);
+    color: #cfeaf5;
+}
+
+.add-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #ec4899;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.empty-address {
+    text-align: center;
+    padding: 40px 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+[data-theme="dark"] .empty-address {
+    color: #9ca3af;
+}
+
+.address-card {
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(52, 65, 70, 0.8);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .address-card {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.address-card.selected {
+    border-color: rgba(236, 72, 153, 0.5);
+}
+
+.address-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.address-top h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2b1055;
+    text-transform: capitalize;
+}
+
+[data-theme="dark"] .address-top h3 {
+    color: #e0f2f7;
+}
+
+.primary-badge {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(236, 72, 153, 0.12);
+    color: #be185d;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+[data-theme="dark"] .primary-badge {
+    background: rgba(236, 72, 153, 0.15);
+    color: #ec4899;
+}
+
+.menu-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .menu-btn {
+    color: #9ca3af;
+}
+
+.address-menu {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    min-width: 160px;
+    padding: 6px;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid rgba(43, 16, 85, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    z-index: 20;
+}
+
+[data-theme="dark"] .address-menu {
+    background: #1a2228;
+    border-color: rgba(120, 220, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.address-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #2b1055;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .address-menu button {
+    color: #cfeaf5;
+}
+
+.address-menu button:hover {
+    background: rgba(43, 16, 85, 0.05);
+}
+
+[data-theme="dark"] .address-menu button:hover {
+    background: rgba(120, 220, 255, 0.08);
+}
+
+.address-menu .delete-btn {
+    color: #dc2626;
+}
+
+[data-theme="dark"] .address-menu .delete-btn {
+    color: #f87171;
+}
+
+.namnum {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.namnum h4 {
+    margin: 0;
+    font-size: 13px;
+    color: #2b1055;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .namnum h4 {
+    color: #e0f2f7;
+}
+
+.namnum p {
+    margin: 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+[data-theme="dark"] .namnum p {
+    color: #9ca3af;
+}
+
+.address-card>p {
+    margin: 0;
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .address-card>p {
+    color: #d1d5db;
+}
+
+.delete-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 32, 39, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.delete-confirm-box {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .delete-confirm-box {
+    background: #16232b;
+    border-color: rgba(120, 220, 255, 0.25);
+}
+
+.delete-confirm-box h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .delete-confirm-box h3 {
+    color: #e0f2f7;
+}
+
+.delete-confirm-box p {
+    margin: 0 0 16px;
+    font-size: 12px;
+    color: rgba(43, 16, 85, 0.7);
+}
+
+[data-theme="dark"] .delete-confirm-box p {
+    color: rgba(207, 234, 245, 0.7);
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.delete-confirm-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(43, 16, 85, 0.08);
+    color: #4c1d95;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .delete-confirm-actions button {
+    background: rgba(120, 220, 255, 0.12);
+    color: #cfeaf5;
+}
+
+.delete-confirm-actions .confirm-delete-btn {
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(185, 28, 28, 0.35);
+}
+
+[data-theme="dark"] .delete-confirm-actions .confirm-delete-btn {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+}

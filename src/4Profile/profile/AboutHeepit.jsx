@@ -1,4 +1,4 @@
-import "./AboutAerodeck.css";
+import "../profilestyles/AboutHeepit.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,7 +9,7 @@ import {
     FiShield,
     FiHeart,
 } from "react-icons/fi";
-import { API } from "../../../services/api";
+import { API } from "../../services/api";
 
 const CONTACT_LINKS = [
     {
