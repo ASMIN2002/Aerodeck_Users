@@ -14,18 +14,15 @@ import BottomNav from "../../2Process/process/BottomNav";
 import Details from "../../components/Details/Details";
 import Profile from "../../4Profile/profile/Profile";
 import MyWishlist from "../../4Profile/profile/Wishlist";
-import MyCart from "../../components/MyProfileDetails/MyCart/MyCart";
+import MyCart from "../../5Cart/cart/MyCart";
 import MyOrders from "../../4Profile/profile/Orders";
-import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/HelpAndSupport";
 import AboutAerodeck from "../../4Profile/profile/AboutHeepit";
 import EditProfile from "../../4Profile/profileDetails/editprofile/EditProfile";
 import AddAddress from "../../4Profile/profileDetails/editaddress/AddAddress";
 import EditAddress from "../../4Profile/profileDetails/editaddress/EditAddress";
-import ProductOrder from "../../components/MyProfileDetails/PlaceOrder/ProductOrder";
-import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
-import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
-import OrderItemDetails from "../../components/MyProfileDetails/PlaceOrder/OrderItemDetails";
-import ItemInvoice from "../../components/MyProfileDetails/PlaceOrder/OrderItem/ItemInvoice";
+import ProductOrder from "../../6PlaceOrder/placeorder/ProductOrder";
+import OrderSuccess from "../../6PlaceOrder/placeorder/OrderSuccess";
+import OrderItemDetails from "../../6PlaceOrder/placeorder/OrderItemDetails";
 import ViewProfile from "../../4Profile/profileDetails/editprofile/ViewProfile";
 import AllReview from "../../components/Details/DetailsData/AllReview";
 import AllMedia from "../../components/Details/DetailsData/AllMedia";
@@ -720,18 +717,6 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         setSelectedInvoice={setSelectedInvoice}
                         navigateWithLoading={navigateWithLoading}
                     />
-                )}
-
-                {profilePage === "invoice" && (
-                    <ItemInvoice
-                        setProfilePage={setProfilePage}
-                        order_id={selectedInvoice?.order_id}
-                        product_id={selectedInvoice?.product_id}
-                    />
-                )}
-
-                {profilePage === "payment" && (
-                    <Payment setProfilePage={setProfilePage} orderData={orderData} />
                 )}
 
                 {profilePage === "ordersuccess" && (
