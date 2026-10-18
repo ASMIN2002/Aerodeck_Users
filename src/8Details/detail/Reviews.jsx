@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { API } from "../../../services/api";
-import "../DetailsDataStyle/Reviews.css";
+import { API } from "../../services/api";
+import "../detailStyle/Reviews.css";
 
 const MAX_STARS = 5;
 

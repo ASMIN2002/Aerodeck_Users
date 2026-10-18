@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
-import "../DetailsDataStyle/RelatedProducts.css";
-import { API } from "../../../services/api";
+import "../detailStyle/RelatedProducts.css";
+import { API } from "../../services/api";
 
 const MAX_RELATED = 20;
 

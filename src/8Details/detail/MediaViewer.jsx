@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { API } from "../../../services/api";
+import { API } from "../../services/api";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
-import "../DetailsDataStyle/MediaViewer.css";
+import "../detailStyle/MediaViewer.css";
 
 const MAX_STARS = 5;
 

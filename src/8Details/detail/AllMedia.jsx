@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import "../DetailsDataStyle/AllMedia.css";
+import "../detailStyle/AllMedia.css";
 import { useNavigate } from "react-router-dom";
 import MediaViewer from "./MediaViewer";
-import { API } from "../../../services/api";
+import { API } from "../../services/api";
 
 const SECONDS_PER_DAY = 86400;
 const DAYS_PER_MONTH = 30;
@@ -61,10 +61,15 @@ function AllMedia({ product_id, onBack }) {
 
     const handleCloseViewer = () => setShowViewer(false);
 
+    const handleBack = () => {
+        if (onBack) onBack();
+        else navigate(-1);
+    };
+
     return (
         <div className="all-media">
             <div className="all-media-header">
-                <button className="all-media-back" onClick={() => navigate(-1)}>
+                <button className="all-media-back" onClick={handleBack}>
                     <IoArrowBack />
                 </button>
                 <h2>Review Images</h2>

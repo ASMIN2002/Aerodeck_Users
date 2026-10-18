@@ -1,5 +1,5 @@
-import "../DetailsDataStyle/ProductSummary.css";
-import { API } from "../../../services/api";
+import "../detailStyle/ProductSummary.css";
+import { API } from "../../services/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -228,7 +228,7 @@ function ProductSummary({
                     {verifyError.action === "address" && (
                         <button
                             className="ps-verify-btn"
-                            onClick={() => navigate("/profile/address")}
+                            onClick={() => navigate("/profile/viewaddress")}
                         >
                             Address
                         </button>

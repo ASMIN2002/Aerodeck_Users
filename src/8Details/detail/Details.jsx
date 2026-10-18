@@ -1,6 +1,6 @@
-import "./Details.css";
+import "../detailStyle/Details.css";
 import { API } from "../../services/api";
-import DetailsData from "./DetailsData/DetailsData";
+import DetailsData from "./DetailsData";
 import toast from "react-hot-toast";
 import { FaShareAlt } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";

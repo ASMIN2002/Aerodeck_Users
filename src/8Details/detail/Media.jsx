@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import "../DetailsDataStyle/Media.css";
-import { API } from "../../../services/api";
+import "../detailStyle/Media.css";
+import { API } from "../../services/api";
 
 const MAX_VISIBLE_IMAGES = 5;
 

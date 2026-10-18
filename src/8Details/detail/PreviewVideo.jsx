@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import "../DetailsDataStyle/PreviewVideo.css";
+import "../detailStyle/PreviewVideo.css";
 
 const THUMBNAIL_QUALITY = 0.7;
 const THUMBNAIL_TIME = 1;

@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import "../DetailsDataStyle/AllReview.css";
-import { API } from "../../../services/api";
+import "../detailStyle/AllReview.css";
+import { API } from "../../services/api";
 
 const STAR_FILTERS = [
     { value: 5, key: "five", label: "five" },
@@ -19,7 +19,7 @@ function renderStars(rating) {
     return "⭐".repeat(Number(rating) || 0);
 }
 
-function AllReview({ product_id }) {
+function AllReview({ product_id, onBack }) {
     const navigate = useNavigate();
 
     const [summary, setSummary] = useState({});
@@ -56,12 +56,17 @@ function AllReview({ product_id }) {
         [reviews, selectedStar]
     );
 
+    const handleBack = () => {
+        if (onBack) onBack();
+        else navigate(-1);
+    };
+
     return (
         <div className="allreview-page">
             <div className="allreview-header">
                 <button
                     className="allreview-back"
-                    onClick={() => navigate(-1)}
+                    onClick={handleBack}
                 >
                     ←
                 </button>

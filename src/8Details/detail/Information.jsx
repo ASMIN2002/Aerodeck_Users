@@ -1,4 +1,4 @@
-import "../DetailsDataStyle/Information.css";
+import "../detailStyle/Information.css";
 
 const INFO_ROWS = [
     { labelKey: "material", valueKey: "material", field: "material" },

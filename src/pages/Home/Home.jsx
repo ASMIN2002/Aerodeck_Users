@@ -11,7 +11,7 @@ import Gift from "../../components/Gift/Gift";
 import Shop from "../../components/Shop/Shop";
 import Offer from "../../components/Offer/Offer";
 import BottomNav from "../../2Process/process/BottomNav";
-import Details from "../../components/Details/Details";
+import Details from "../../8Details/detail/Details";
 import Profile from "../../4Profile/profile/Profile";
 import MyWishlist from "../../4Profile/profile/Wishlist";
 import MyCart from "../../5Cart/cart/MyCart";
@@ -24,8 +24,6 @@ import ProductOrder from "../../6PlaceOrder/placeorder/ProductOrder";
 import OrderSuccess from "../../6PlaceOrder/placeorder/OrderSuccess";
 import OrderItemDetails from "../../6PlaceOrder/placeorder/OrderItemDetails";
 import ViewProfile from "../../4Profile/profileDetails/editprofile/ViewProfile";
-import AllReview from "../../components/Details/DetailsData/AllReview";
-import AllMedia from "../../components/Details/DetailsData/AllMedia";
 import Terms from "../../4Profile/profile/TandC";
 import Address from "../../2Process/process/Address";
 import Rewards from "../../4Profile/profile/Rewards";
@@ -33,6 +31,8 @@ import DemoRedeemRewards from "../../4Profile/profileDetails/DemoRedeemRewards";
 import MyLikes from "../../4Profile/profile/Likes";
 import MyReviews from "../../4Profile/profile/MyReviews";
 import Settings from "../../4Profile/profile/Settings";
+import AllReview from "../../8Details/detail/AllReview";
+import AllMedia from "../../8Details/detail/AllMedia";
 import TOPHEADER from "../../2Process/process/TopHeader";
 import useHomeRouting from "./useHomeRouting";
 import ViewAddress from "../../4Profile/profileDetails/editaddress/ViewAddress";
@@ -546,7 +546,14 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         )}
 
                         {detailsPage === "allmedia" && (
-                            <AllMedia onBack={() => setDetailsPage("details")} product_id={getProductId()} />
+                            <AllMedia
+                                onBack={() => {
+                                    const parentPath = location.pathname.replace(/\/media$/, "");
+                                    setDetailsPage("details");
+                                    goTo(parentPath);
+                                }}
+                                product_id={getProductId()}
+                            />
                         )}
                     </>
                 )}

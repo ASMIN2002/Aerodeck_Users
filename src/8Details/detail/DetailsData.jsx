@@ -1,5 +1,4 @@
-import "../DetailsDataStyle/DetailsData.css";
-
+import "../detailStyle/DetailsData.css";
 import PreviewVideo from "./PreviewVideo";
 import Features from "./Features";
 import Information from "./Information";

@@ -1,4 +1,4 @@
-import "../DetailsDataStyle/Features.css";
+import "../detailStyle/Features.css";
 
 const FEATURES = [
     { icon: "🎨", label: "Fully Customizable" },

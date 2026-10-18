@@ -1,4 +1,4 @@
-import "../DetailsDataStyle/WhyChoose.css";
+import "../detailStyle/WhyChoose.css";
 
 const WHY_CHOOSE = [
     { icon: "🛡️", title: "Certified Products" },
