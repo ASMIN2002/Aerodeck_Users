@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddAddress.css";
+import "./AddEdit.css";
 import { FiArrowLeft } from "react-icons/fi";
 import Toast from "../../../components/Toast/Toast";
 import Loading from "../../../components/Loading/Loading";
@@ -223,8 +223,8 @@ function AddAddress({ setProfilePage }) {
                     "addressSuccessMessage",
                     "Address added successfully."
                 );
-                setProfilePage("address");
-                navigate("/profile/address", { replace: true });
+                setProfilePage("viewaddress");
+                navigate("/profile/viewaddress", { replace: true });
             } else {
                 showToast(data.message, "error");
             }
@@ -236,6 +236,11 @@ function AddAddress({ setProfilePage }) {
         }
     };
 
+    const handleBack = () => {
+        setProfilePage("viewaddress");
+        navigate("/profile/viewaddress");
+    };
+    
     return (
         <>
             {loadingLocation && (
@@ -249,7 +254,7 @@ function AddAddress({ setProfilePage }) {
                 <div className="heep-add-addr-header">
                     <button
                         className="heep-add-addr-back-btn"
-                        onClick={() => navigate(-1)}
+                        onClick={handleBack}
                     >
                         <FiArrowLeft />
                     </button>

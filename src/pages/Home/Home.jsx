@@ -1,4 +1,3 @@
-// src/components/Home/Home.jsx
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
@@ -20,9 +19,8 @@ import MyOrders from "../../4Profile/profile/Orders";
 import HelpAndSupport from "../../components/MyProfileDetails/HelpAndSupport/HelpAndSupport";
 import AboutAerodeck from "../../4Profile/profile/AboutHeepit";
 import EditProfile from "../../4Profile/profileDetails/editprofile/EditProfile";
-import MyAddresses from "../../4Profile/profile/Addresses";
-import AddAddress from "../../components/MyProfileDetails/AddAddress/AddAddress";
-import EditAddress from "../../components/MyProfileDetails/EditAddress/EditAddress";
+import AddAddress from "../../4Profile/profileDetails/editaddress/AddAddress";
+import EditAddress from "../../4Profile/profileDetails/editaddress/EditAddress";
 import ProductOrder from "../../components/MyProfileDetails/PlaceOrder/ProductOrder";
 import Payment from "../../components/MyProfileDetails/PlaceOrder/Payment";
 import OrderSuccess from "../../components/MyProfileDetails/PlaceOrder/OrderSuccess";
@@ -40,6 +38,7 @@ import MyReviews from "../../4Profile/profile/MyReviews";
 import Settings from "../../4Profile/profile/Settings";
 import TOPHEADER from "../../2Process/process/TopHeader";
 import useHomeRouting from "./useHomeRouting";
+import ViewAddress from "../../4Profile/profileDetails/editaddress/ViewAddress";
 
 const TAB_KEY = "selectedBottomTab";
 const MENU_KEY = "selectedMenu";
@@ -209,6 +208,26 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
     useEffect(() => {
         const handleBackNavigation = () => {
             const path = window.location.pathname;
+
+            if (path.includes("/profile/")) {
+                const profilePath = path.replace("/profile/", "").split("/")[0];
+
+                if (!profilePath || profilePath === "profile") {
+                    setSelectedBottomTab("Profile");
+                    setProfilePage("profile");
+                    return;
+                }
+
+                setSelectedBottomTab("Profile");
+                setProfilePage(profilePath);
+                return;
+            }
+
+            if (path === "/profile") {
+                setSelectedBottomTab("Profile");
+                setProfilePage("profile");
+                return;
+            }
 
             if (path === "/cart") {
                 setIsDetailsOpen(false);
@@ -615,11 +634,9 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                     />
                 )}
 
-                {isProfilePage("address") && (
-                    <MyAddresses
+                {isProfilePage("viewaddress") && (
+                    <ViewAddress
                         setProfilePage={setProfilePage}
-                        selectedAddress={selectedAddress}
-                        setSelectedAddress={setSelectedAddress}
                         navigateWithLoading={navigateWithLoading}
                     />
                 )}
@@ -686,7 +703,11 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                 )}
 
                 {isProfilePage("settings") && (
-                    <Settings setProfilePage={setProfilePage} />
+                    <Settings
+                        setProfilePage={setProfilePage}
+                        userId={user?.user_id}
+                        navigateWithLoading={navigateWithLoading}
+                    />
                 )}
 
                 {!isDetailsOpen && profilePage === "order-details" && (

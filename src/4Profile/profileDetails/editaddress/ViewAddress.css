@@ -1,0 +1,316 @@
+.va-page {
+    padding: 16px;
+    background: #ffffff;
+    color: #2b1055;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+[data-theme="dark"] .va-page {
+    background: #0f2027;
+    color: #cfeaf5;
+}
+
+.va-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.va-back {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(43, 16, 85, 0.1);
+    background: rgba(43, 16, 85, 0.04);
+    color: #2b1055;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .va-back {
+    border-color: rgba(120, 220, 255, 0.15);
+    background: rgba(120, 220, 255, 0.08);
+    color: #cfeaf5;
+}
+
+.va-header h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .va-header h2 {
+    color: #e0f2f7;
+}
+
+.va-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.va-card {
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+[data-theme="dark"] .va-card {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.va-card.primary {
+    border-color: rgba(236, 72, 153, 0.5);
+    background: rgba(236, 72, 153, 0.05);
+}
+
+[data-theme="dark"] .va-card.primary {
+    background: rgba(236, 72, 153, 0.08);
+    border-color: rgba(236, 72, 153, 0.4);
+}
+
+.va-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.va-card-type h3 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2b1055;
+    text-transform: capitalize;
+}
+
+[data-theme="dark"] .va-card-type h3 {
+    color: #e0f2f7;
+}
+
+.va-primary-badge {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 6px;
+    border-radius: 5px;
+    background: rgba(236, 72, 153, 0.12);
+    color: #be185d;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+[data-theme="dark"] .va-primary-badge {
+    background: rgba(236, 72, 153, 0.18);
+    color: #f9a8d4;
+}
+
+.va-card-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.va-icon-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: none;
+    background: rgba(43, 16, 85, 0.06);
+    color: #2b1055;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+[data-theme="dark"] .va-icon-btn {
+    background: rgba(120, 220, 255, 0.1);
+    color: #cfeaf5;
+}
+
+.va-icon-btn.delete {
+    color: #dc2626;
+}
+
+[data-theme="dark"] .va-icon-btn.delete {
+    color: #f87171;
+}
+
+.va-icon-btn.edit {
+    color: #654ea3;
+}
+
+[data-theme="dark"] .va-icon-btn.edit {
+    color: #7fd4e8;
+}
+
+.va-namnum {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.va-namnum h4 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .va-namnum h4 {
+    color: #e0f2f7;
+}
+
+.va-namnum p {
+    margin: 0;
+    font-size: 11px;
+    color: rgba(43, 16, 85, 0.65);
+}
+
+[data-theme="dark"] .va-namnum p {
+    color: rgba(207, 234, 245, 0.65);
+}
+
+.va-address-line {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.4;
+    color: rgba(43, 16, 85, 0.75);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .va-address-line {
+    color: rgba(207, 234, 245, 0.75);
+}
+
+.va-empty-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 130px;
+    border-radius: 12px;
+    border: 2px dashed rgba(43, 16, 85, 0.2);
+    background: rgba(43, 16, 85, 0.02);
+    color: rgba(43, 16, 85, 0.4);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .va-empty-slot {
+    border-color: rgba(120, 220, 255, 0.2);
+    background: rgba(120, 220, 255, 0.03);
+    color: rgba(207, 234, 245, 0.4);
+}
+
+.va-empty-slot:hover {
+    border-color: rgba(101, 78, 163, 0.5);
+    color: #654ea3;
+    background: rgba(101, 78, 163, 0.05);
+}
+
+[data-theme="dark"] .va-empty-slot:hover {
+    border-color: rgba(127, 212, 232, 0.5);
+    color: #7fd4e8;
+    background: rgba(127, 212, 232, 0.05);
+}
+
+.va-plus-icon {
+    font-size: 28px;
+}
+
+.va-delete-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 32, 39, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.va-delete-box {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .va-delete-box {
+    background: #16232b;
+    border-color: rgba(120, 220, 255, 0.25);
+}
+
+.va-delete-box h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .va-delete-box h3 {
+    color: #e0f2f7;
+}
+
+.va-delete-box p {
+    margin: 0 0 16px;
+    font-size: 12px;
+    color: rgba(43, 16, 85, 0.7);
+}
+
+[data-theme="dark"] .va-delete-box p {
+    color: rgba(207, 234, 245, 0.7);
+}
+
+.va-delete-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.va-delete-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(43, 16, 85, 0.08);
+    color: #4c1d95;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .va-delete-actions button {
+    background: rgba(120, 220, 255, 0.12);
+    color: #cfeaf5;
+}
+
+.va-delete-actions .va-confirm-delete-btn {
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+    color: #fff;
+}
+
+[data-theme="dark"] .va-delete-actions .va-confirm-delete-btn {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+}

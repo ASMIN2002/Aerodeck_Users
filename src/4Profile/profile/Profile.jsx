@@ -5,7 +5,6 @@ import NODP from "../../assets/NODP.png";
 import Loading from "../../components/Loading/Loading";
 import { API } from "../../services/api";
 import {
-    FiMapPin,
     FiHeart,
     FiPackage,
     FiGift,
@@ -13,15 +12,13 @@ import {
     FiStar,
     FiSettings,
     FiInfo,
-    FiFileText,
-    FiChevronRight
+    FiFileText
 } from "react-icons/fi";
 
 const NAV_DELAY = 500;
 
 const MENU_ITEMS = [
     { page: "orders", Icon: FiPackage, label: "My Orders", loading: "Loading Orders..." },
-    { page: "address", Icon: FiMapPin, label: "My Addresses", loading: "Loading Addresses..." },
     { page: "wishlist", Icon: FiHeart, label: "Wishlist", loading: "Loading Wishlist..." },
     { page: "likes", Icon: FiThumbsUp, label: "My Likes", loading: "Loading My Likes..." },
     { page: "reviews", Icon: FiStar, label: "My Reviews", loading: "Loading My Reviews..." },

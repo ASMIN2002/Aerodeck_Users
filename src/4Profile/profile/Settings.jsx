@@ -47,15 +47,15 @@ function Settings({ setProfilePage, userId, navigateWithLoading }) {
         if (navigateWithLoading) {
             navigateWithLoading(
                 () => {
-                    setProfilePage("address");
-                    navigate("/profile/address");
+                    setProfilePage("viewaddress");
+                    navigate("/profile/viewaddress");
                 },
                 "Loading Addresses...",
                 NAV_DELAY
             );
         } else {
-            setProfilePage("address");
-            navigate("/profile/address");
+            setProfilePage("viewaddress");
+            navigate("/profile/viewaddress");
         }
     };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
-import "./EditAddress.css";
+import "./AddEdit.css";
 import { API } from "../../../services/api";
 import Loading from "../../../components/Loading/Loading";
 
@@ -135,8 +135,8 @@ function EditAddress({ setProfilePage }) {
                     "addressSuccessMessage",
                     "Address updated successfully."
                 );
-                setProfilePage("address");
-                navigate("/profile/address", { replace: true });
+                setProfilePage("viewaddress");
+                navigate("/profile/viewaddress", { replace: true });
             } else {
                 alert(data.message);
             }
@@ -148,8 +148,8 @@ function EditAddress({ setProfilePage }) {
     };
 
     const handleBack = () => {
-        setProfilePage("address");
-        navigate(-1);
+        setProfilePage("viewaddress");
+        navigate("/profile/viewaddress");
     };
 
     const handlePincodeChange = (e) => {
