@@ -1,0 +1,42 @@
+import "../levelstyle/4AllShopCategories.css";
+
+function ALLShopCategories({
+    categories,
+    onBack,
+    onCategoryClick
+}) {
+    const shopCategories = categories.filter(
+        item =>
+            String(item.catname).toUpperCase() === "SHOP"
+    );
+
+    return (
+        <section className="all-shop-categories">
+            <div className="all-shop-category-grid">
+                {shopCategories.map((item) => (
+                    <button
+                        key={item.catid}
+                        type="button"
+                        className="all-shop-category-box"
+                        onClick={() =>
+                            onCategoryClick(item.category)
+                        }
+                    >
+                        <div className="all-shop-category-image">
+                            <img
+                                src={item.image}
+                                alt={item.category}
+                            />
+                        </div>
+
+                        <span>
+                            {item.category}
+                        </span>
+                    </button>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+export default ALLShopCategories;

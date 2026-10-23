@@ -1,0 +1,313 @@
+.booknow-page {
+    padding: 16px;
+    background: #ffffff;
+    color: #2b1055;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+[data-theme="dark"] .booknow-page {
+    background: #0f2027;
+    color: #cfeaf5;
+}
+
+.booknow-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booknow-back {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid rgba(43, 16, 85, 0.1);
+    background: rgba(43, 16, 85, 0.04);
+    color: #2b1055;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+[data-theme="dark"] .booknow-back {
+    border-color: rgba(120, 220, 255, 0.15);
+    background: rgba(120, 220, 255, 0.08);
+    color: #cfeaf5;
+}
+
+.booknow-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.booknow-doctor-info {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    align-items: center;
+}
+
+[data-theme="dark"] .booknow-doctor-info {
+    background: #16232b;
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.booknow-doc-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .booknow-doc-image {
+    background: rgba(120, 220, 255, 0.1);
+}
+
+.booknow-doc-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.booknow-doc-details h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.booknow-doc-details p {
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+[data-theme="dark"] .booknow-doc-details p {
+    color: #9ca3af;
+}
+
+.booknow-doc-details .doc-fee {
+    font-weight: 600;
+    color: #111827;
+    margin-top: 4px;
+}
+
+[data-theme="dark"] .booknow-doc-details .doc-fee {
+    color: #f3f4f6;
+}
+
+.booknow-user-info {
+    padding: 16px;
+    background: #f0fdf4;
+    border-radius: 12px;
+    border: 1px solid #bbf7d0;
+}
+
+[data-theme="dark"] .booknow-user-info {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.25);
+}
+
+.booknow-user-info h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #15803d;
+}
+
+[data-theme="dark"] .booknow-user-info h4 {
+    color: #4ade80;
+}
+
+.booknow-user-info p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #1f2937;
+}
+
+[data-theme="dark"] .booknow-user-info p {
+    color: #e5e7eb;
+}
+
+.slot-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.slot-btn {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #1f2937;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .slot-btn {
+    background: #16232b;
+    border-color: rgba(120, 220, 255, 0.2);
+    color: #cfeaf5;
+}
+
+.slot-btn.selected {
+    background: #1b4332;
+    color: #fff;
+    border-color: #1b4332;
+}
+
+[data-theme="dark"] .slot-btn.selected {
+    background: #7fd4e8;
+    color: #0f2027;
+    border-color: #7fd4e8;
+}
+
+.slot-btn.disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+[data-theme="dark"] .slot-btn.disabled {
+    background: rgba(120, 220, 255, 0.05);
+    color: #4b5563;
+    border-color: rgba(120, 220, 255, 0.1);
+}
+
+.booknow-confirm-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: #1b4332;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+[data-theme="dark"] .booknow-confirm-btn {
+    background: #7fd4e8;
+    color: #0f2027;
+}
+
+.booknow-confirm-btn:disabled {
+    background: #d1d5db;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+[data-theme="dark"] .booknow-confirm-btn:disabled {
+    background: rgba(120, 220, 255, 0.2);
+    color: rgba(15, 32, 39, 0.5);
+}
+
+.clinic-status {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fee2e2;
+    border-radius: 12px;
+    border: 1px solid #fca5a5;
+}
+
+[data-theme="dark"] .clinic-status {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.clinic-status h2 {
+    margin: 0 0 8px;
+    color: #b91c1c;
+    font-size: 18px;
+}
+
+[data-theme="dark"] .clinic-status h2 {
+    color: #f87171;
+}
+
+.clinic-status p {
+    margin: 0;
+    color: #7f1d1d;
+    font-size: 14px;
+}
+
+[data-theme="dark"] .clinic-status p {
+    color: #fca5a5;
+}
+
+.slot-loading {
+    text-align: center;
+    padding: 20px;
+    color: #6b7280;
+}
+
+.processing-box {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fffbeb;
+    border-radius: 12px;
+    border: 1px solid #fde68a;
+    margin-top: 20px;
+}
+
+[data-theme="dark"] .processing-box {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.processing-box h2 {
+    margin: 0 0 10px;
+    color: #b45309;
+    font-size: 20px;
+}
+
+[data-theme="dark"] .processing-box h2 {
+    color: #fbbf24;
+}
+
+.processing-box p {
+    margin: 0 0 20px;
+    color: #92400e;
+    font-size: 14px;
+}
+
+[data-theme="dark"] .processing-box p {
+    color: #fcd34d;
+}
+
+.countdown {
+    font-size: 32px;
+    font-weight: 800;
+    color: #b45309;
+    font-family: monospace;
+}
+
+[data-theme="dark"] .countdown {
+    color: #fbbf24;
+}

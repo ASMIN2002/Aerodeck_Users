@@ -51,6 +51,33 @@ export default function useHomeRouting({
             setSelectedGiftCategory(null);
         };
 
+        if (path === "/offers") {
+            setSelectedBottomTab("Offers");
+            setProfilePage("profile");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/medicure") {
+            setSelectedBottomTab("Premium");
+            setProfilePage("profile");
+            closeDetails();
+            return;
+        }
+
+        if (path.startsWith("/medicure/ticket/")) {
+            setSelectedBottomTab("Premium");
+            setProfilePage("profile");
+            closeDetails();
+            return;
+        }
+        if (path.startsWith("/medicure/book/")) {
+            setSelectedBottomTab("Premium");
+            setProfilePage("profile");
+            closeDetails();
+            return;
+        }
+
         if (path === "/home") {
             goHome("Shop");
             resetShopPages();
@@ -395,9 +422,20 @@ export default function useHomeRouting({
             }
         }
 
+        if (
+            parts.length === 4 &&
+            parts[0] === "medicure" &&
+            parts[2] === "product"
+        ) {
+            type = "medicine";
+            id = parts[3];
+        }
+
         if (!type || !id) return;
 
         if (type === "premium") {
+            setSelectedBottomTab("Premium");
+        } else if (type === "medicine") {
             setSelectedBottomTab("Premium");
         } else if (path.startsWith("/profile/wishlist/")) {
             setSelectedBottomTab("Profile");
@@ -422,7 +460,8 @@ export default function useHomeRouting({
                     prev.data?.product_id ||
                     prev.data?.gift_id ||
                     prev.data?.shop_id ||
-                    prev.data?.premium_id;
+                    prev.data?.premium_id ||
+                    prev.data?.medicine_id;
 
                 if (String(prevId) === String(id)) return prev;
             }
@@ -435,6 +474,7 @@ export default function useHomeRouting({
                     shop_id:
                         type === "shop" || type === "cards" ? id : undefined,
                     premium_id: type === "premium" ? id : undefined,
+                    medicine_id: type === "medicine" ? id : undefined,
                 },
             };
         });

@@ -1,0 +1,20 @@
+.shop-home {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 12px 0 24px;
+    box-sizing: border-box;
+    background: #f4f1fa;
+}
+
+[data-theme="dark"] .shop-home {
+    background: #0f2027;
+}
+
+@media (max-width: 360px) {
+    .shop-home {
+        gap: 12px;
+        padding: 10px 0 20px;
+    }
+}

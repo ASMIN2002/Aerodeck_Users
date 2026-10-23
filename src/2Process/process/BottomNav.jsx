@@ -11,8 +11,8 @@ const KEYBOARD_THRESHOLD = 150;
 
 const NAV_ITEMS = [
     { key: "Home", label: "Home", icon: FiHome, path: "/home/shop", clearMenu: false },
-    { key: "Offers", label: "Offer", icon: FiGift, comingSoon: true },
-    { key: "Premium", label: "Medicure", icon: MdHealthAndSafety, comingSoon: true },
+    { key: "Offers", label: "Offer", icon: FiGift, path: "/offers", clearMenu: false },
+    { key: "Premium", label: "Medicure", icon: MdHealthAndSafety, path: "/medicure", clearMenu: false },
     { key: "Cart", label: "My Cart", icon: FiShoppingCart, path: "/cart", showCartCount: true, clearMenu: true },
     { key: "Profile", label: "Profile", icon: FiUser, path: "/profile", clearMenu: true },
 ];
@@ -119,6 +119,8 @@ function BottomNav({
 
             if (item.key === "Home") {
                 setProfilePage("profile");
+            } else if (item.key === "Offers") {
+                setProfilePage("profile");
             } else if (item.key === "Cart") {
                 setProfilePage("cart");
             } else if (item.key === "Profile") {
@@ -128,7 +130,7 @@ function BottomNav({
             setSelectedBottomTab(item.key);
             navigate(item.path);
 
-            if (item.key === "Home") {
+            if (item.key === "Home" || item.key === "Offers") {
                 setTimeout(scrollAllToTop, SCROLL_DELAY);
             }
         },

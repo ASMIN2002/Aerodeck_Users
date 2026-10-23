@@ -20,6 +20,7 @@ function getProductId(details, product) {
         source.gift_id ||
         source.shop_id ||
         source.premium_id ||
+        source.medicine_id || // ✅ Added
         source.card_id ||
         source.id ||
         null
@@ -30,11 +31,12 @@ function getApiType(type) {
     if (type === "products") return "shop";
     if (type === "cards") return "card";
     if (type === "gifts") return "gift";
+    if (type === "medicine") return "medicine"; // ✅ Added
     return type;
 }
 
 function getImageSource(source, index) {
-    const keys = ["product", "gift", "shop", "premium"];
+    const keys = ["product", "gift", "shop", "premium", "medicine"]; // ✅ Added medicine
     for (const key of keys) {
         const val = source[`${key}_image${index}`];
         if (val) return val;
@@ -115,6 +117,7 @@ function Details({
         details?.gift_image1,
         details?.shop_image1,
         details?.premium_image1,
+        details?.medicine_image1, // ✅ Added
     ]);
 
     useEffect(() => {
@@ -333,7 +336,8 @@ function Details({
                             item.product_id ||
                             item.gift_id ||
                             item.shop_id ||
-                            item.premium_id;
+                            item.premium_id ||
+                            item.medicine_id; // ✅ Added
                         return String(savedId) === String(productId);
                     })
                 );
@@ -366,6 +370,7 @@ function Details({
             gift_total_likes: totalLikes,
             shop_total_likes: totalLikes,
             premium_total_likes: totalLikes,
+            medicine_total_likes: totalLikes, // ✅ Added
         }));
     };
 
@@ -408,6 +413,8 @@ function Details({
                 next.shop_total_saves = Math.max(Number(prev.shop_total_saves || 0) + delta, 0);
             if (productId === prev.premium_id)
                 next.premium_total_saves = Math.max(Number(prev.premium_total_saves || 0) + delta, 0);
+            if (productId === prev.medicine_id) // ✅ Added
+                next.medicine_total_saves = Math.max(Number(prev.medicine_total_saves || 0) + delta, 0);
             return next;
         });
     };
@@ -457,7 +464,8 @@ function Details({
 
         if (quantity === 0) {
             quantity = String(productId).startsWith("G") ||
-                String(productId).startsWith("S") ? 1 : 50;
+                String(productId).startsWith("S") ||
+                String(productId).startsWith("M") ? 1 : 50; // ✅ Added M
 
             await fetch(`${API}/api/user/cart`, {
                 method: "POST",
@@ -491,7 +499,8 @@ function Details({
         const productId = getProductId(details);
         const quantity = cartQuantity - 1;
         const minQty = String(productId).startsWith("G") ||
-            String(productId).startsWith("S") ? 1 : 50;
+            String(productId).startsWith("S") ||
+            String(productId).startsWith("M") ? 1 : 50; // ✅ Added M
 
         if (quantity < minQty) {
             await fetch(`${API}/api/user/cart/${productId}`, {
@@ -521,7 +530,7 @@ function Details({
         const productId = getProductId(details);
 
         const id = String(productId);
-        const isProduct = id.startsWith("G") || id.startsWith("S");
+        const isProduct = id.startsWith("G") || id.startsWith("S") || id.startsWith("M"); // ✅ Added M
         const quantity = cartQuantity > 0 ? cartQuantity : isProduct ? 1 : 50;
 
         onBuyNow({ ...details, product_id: productId, quantity }, isProduct ? "products" : "cards");
@@ -673,7 +682,8 @@ function Details({
                             {details?.product_total_likes ??
                                 details?.gift_total_likes ??
                                 details?.shop_total_likes ??
-                                details?.premium_total_likes ?? 0}
+                                details?.premium_total_likes ??
+                                details?.medicine_total_likes ?? 0}
                         </span>
                     </button>
 
@@ -683,7 +693,8 @@ function Details({
                             {details?.product_total_saves ??
                                 details?.gift_total_saves ??
                                 details?.shop_total_saves ??
-                                details?.premium_total_saves ?? 0}
+                                details?.premium_total_saves ??
+                                details?.medicine_total_saves ?? 0}
                         </span>
                     </button>
 

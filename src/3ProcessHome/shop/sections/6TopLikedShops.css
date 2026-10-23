@@ -1,0 +1,217 @@
+.shop-top-liked-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.likeheader {
+    padding: 0 2px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: #2b1055;
+    line-height: 1.3;
+}
+
+[data-theme="dark"] .likeheader {
+    color: #e0f2f7;
+}
+
+.shop-liked-scroll {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 4px;
+}
+
+.shop-liked-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.shop-liked-grid {
+    display: flex;
+    gap: 10px;
+    width: max-content;
+}
+
+.shop-liked-card {
+    flex-shrink: 0;
+    width: 118px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    scroll-snap-align: start;
+    cursor: pointer;
+    min-width: 0;
+    animation: likedFadeIn 0.4s ease both;
+    transition: transform 0.2s ease;
+}
+
+.shop-liked-card:active {
+    transform: scale(0.97);
+}
+
+.shop-liked-card.out-of-stock {
+    opacity: 0.8;
+}
+
+.shop-liked-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f1f1f5;
+    box-shadow: 0 4px 12px rgba(101, 78, 163, 0.12);
+}
+
+[data-theme="dark"] .shop-liked-image {
+    background: #1a2228;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.shop-liked-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.shop-liked-oos {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 32, 39, 0.65);
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 2;
+}
+
+.shop-liked-count {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 1;
+}
+
+.shop-liked-icon {
+    font-size: 9px;
+    color: #ff2d55;
+}
+
+.shop-liked-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    padding: 0 2px;
+}
+
+.shop-liked-name {
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #2b1055;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+    min-height: 28px;
+}
+
+[data-theme="dark"] .shop-liked-name {
+    color: #cfeaf5;
+}
+
+.shop-liked-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.shop-liked-discount {
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #16a34a;
+}
+
+[data-theme="dark"] .shop-liked-discount {
+    color: #4ade80;
+}
+
+.shop-liked-price strong {
+    font-size: 11.5px;
+    font-weight: 900;
+    color: #654ea3;
+}
+
+[data-theme="dark"] .shop-liked-price strong {
+    color: #7fd4e8;
+}
+
+@keyframes likedFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 360px) {
+    .shop-top-liked-section {
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .likeheader {
+        font-size: 13px;
+    }
+
+    .shop-liked-grid {
+        gap: 8px;
+    }
+
+    .shop-liked-card {
+        width: 104px;
+    }
+
+    .shop-liked-name {
+        font-size: 10.5px;
+        min-height: 26px;
+    }
+
+    .shop-liked-price strong {
+        font-size: 11px;
+    }
+}

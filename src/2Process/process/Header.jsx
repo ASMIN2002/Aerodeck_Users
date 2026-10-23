@@ -10,6 +10,7 @@ function Header({
     setSelectedMenu,
     setIsMenuOpen,
     setSelectedBottomTab,
+    selectedBottomTab,
     isDetailsOpen,
     closeDetails,
     userId,
@@ -40,6 +41,13 @@ function Header({
         navigate(-1);
     };
 
+    const modeLabel =
+        selectedBottomTab === "Offers" ? "OFFERS" :
+            selectedBottomTab === "Premium" ? "MEDICURE" :
+                selectedBottomTab === "Cart" ? "CART" :
+                    selectedBottomTab === "Profile" ? "PROFILE" :
+                        null;
+
     return (
         <>
             <header className="hd-header">
@@ -59,11 +67,15 @@ function Header({
                     </div>
 
                     <div className="hd-actions">
-                        <Options
-                            selectedMenu={selectedMenu}
-                            onSelect={handleSelect}
-                            onComingSoon={handleComingSoon}
-                        />
+                        {selectedBottomTab === "Home" ? (
+                            <Options
+                                selectedMenu={selectedMenu}
+                                onSelect={handleSelect}
+                                onComingSoon={handleComingSoon}
+                            />
+                        ) : (
+                            <div className="hd-mode-label">{modeLabel}</div>
+                        )}
 
                         <button
                             className="hd-notif-btn"

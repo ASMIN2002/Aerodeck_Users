@@ -1,0 +1,15 @@
+.medicure-page {
+    padding: 16px;
+    background: #ffffff;
+    color: #2b1055;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+[data-theme="dark"] .medicure-page {
+    background: #0f2027;
+    color: #cfeaf5;
+}

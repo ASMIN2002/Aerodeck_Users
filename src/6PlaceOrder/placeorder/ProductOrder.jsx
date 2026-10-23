@@ -12,19 +12,21 @@ const HYPO_RUPEES_PER_BLOCK = 10;
 const ERROR_DURATION = 3000;
 const QUANTITY_OPTIONS = [1, 2, 3, 4, 5];
 
-const PRICE_KEYS = ["product_price", "shop_price", "gift_price", "premium_price"];
+const PRICE_KEYS = ["product_price", "shop_price", "gift_price", "premium_price", "medicine_price"];
 const DEMO_PRICE_KEYS = [
     "product_demo_price",
     "shop_demo_price",
     "gift_demo_price",
     "premium_demo_price",
+    "medicine_demo_price",
 ];
-const NAME_KEYS = ["product_name", "shop_name", "gift_name"];
+const NAME_KEYS = ["product_name", "shop_name", "gift_name", "premium_name", "medicine_name"];
 const IMAGE_KEYS = [
     "product_image1",
     "gift_image1",
     "shop_image1",
     "premium_image1",
+    "medicine_image1",
 ];
 
 function pickField(item, keys, fallback = 0) {
@@ -304,11 +306,9 @@ function ProductOrder({ setProfilePage, orderData, setOrderData }) {
                     {products.length > 0 ? (
                         products.map((product) => (
                             <div className="product-row" key={product.product_id}>
-                                <img
-                                    src={getImage(product)}
-                                    alt={getName(product)}
-                                    className="order-product-image"
-                                />
+                                {getImage(product) && (
+                                    <img src={getImage(product)} alt={getName(product)} className="order-product-image" />
+                                )}
                                 <div className="product-info">
                                     <h4>{getName(product)}</h4>
                                     <div

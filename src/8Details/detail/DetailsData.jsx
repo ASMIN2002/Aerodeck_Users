@@ -14,7 +14,7 @@ function getProductId(product) {
         product.product_id ||
         product.gift_id ||
         product.shop_id ||
-        product.premium_id ||
+        product.medicine_id ||
         null
     );
 }

@@ -1,0 +1,46 @@
+.heepit-related-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.heepit-related-head {
+    padding: 0 2px;
+}
+
+.heepit-related-head h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: #2b1055;
+    line-height: 1.3;
+}
+
+[data-theme="dark"] .heepit-related-head h3 {
+    color: #e0f2f7;
+}
+
+.heepit-related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+@media (max-width: 360px) {
+    .heepit-related-section {
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .heepit-related-head h3 {
+        font-size: 13px;
+    }
+
+    .heepit-related-grid {
+        gap: 8px;
+    }
+}

@@ -445,3 +445,20 @@
         font-size: 18px
     }
 }
+
+.hd-mode-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #2b1055;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .hd-mode-label {
+    color: #e0f2f7;
+    background: rgba(15, 32, 39, 0.5);
+    border-color: rgba(120, 220, 255, 0.2);
+}

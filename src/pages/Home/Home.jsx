@@ -6,10 +6,9 @@ import "../../styles/Home.css";
 
 import Header from "../../2Process/process/Header";
 import Search from "../../2Process/process/Search";
-import Cards from "../../components/Cards/Cards";
+import Cards from "../../3ProcessHome/cards/level/1Cards";
 import Gift from "../../components/Gift/Gift";
-import Shop from "../../components/Shop/Shop";
-import Offer from "../../components/Offer/Offer";
+import Shop from "../../3ProcessHome/shop/level/1Shop";
 import BottomNav from "../../2Process/process/BottomNav";
 import Details from "../../8Details/detail/Details";
 import Profile from "../../4Profile/profile/Profile";
@@ -36,6 +35,10 @@ import AllMedia from "../../8Details/detail/AllMedia";
 import TOPHEADER from "../../2Process/process/TopHeader";
 import useHomeRouting from "./useHomeRouting";
 import ViewAddress from "../../4Profile/profileDetails/editaddress/ViewAddress";
+import Offers from "../../9Offer/Offers";
+import Medicure from "../../3ProcessHome/medicure/1Medicure";
+import BookNow from "../../3ProcessHome/medicure/4BookNow";
+import ViewTicket from "../../3ProcessHome/medicure/5ViewTicket";
 
 const TAB_KEY = "selectedBottomTab";
 const MENU_KEY = "selectedMenu";
@@ -44,7 +47,7 @@ const REFRESH_DURATION = 600;
 
 function getInitialTab() {
     const saved = localStorage.getItem(TAB_KEY);
-    return ["Home", "Offers", "Cart", "Profile"].includes(saved) ? saved : "Home";
+    return ["Home", "Offers", "Cart", "Profile", "Premium"].includes(saved) ? saved : "Home";
 }
 
 function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCount }) {
@@ -206,6 +209,34 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
         const handleBackNavigation = () => {
             const path = window.location.pathname;
 
+            if (path === "/offers") {
+                setSelectedBottomTab("Offers");
+                setProfilePage("profile");
+                setIsDetailsOpen(false);
+                return;
+            }
+
+            if (path === "/medicure") {
+                setSelectedBottomTab("Premium");
+                setProfilePage("profile");
+                setIsDetailsOpen(false);
+                return;
+            }
+
+            if (path.includes("/medicure/ticket/")) {
+                setSelectedBottomTab("Premium");
+                setProfilePage("profile");
+                setIsDetailsOpen(false);
+                return;
+            }
+
+            if (path.includes("/medicure/book/")) {
+                setSelectedBottomTab("Premium");
+                setProfilePage("profile");
+                setIsDetailsOpen(false);
+                return;
+            }
+
             if (path.includes("/profile/")) {
                 const profilePath = path.replace("/profile/", "").split("/")[0];
 
@@ -311,7 +342,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
         setSelectedProduct({ type, data: product });
         setIsDetailsOpen(true);
 
-        const id = product.product_id || product.gift_id || product.shop_id || product.premium_id;
+        const id = product.product_id || product.gift_id || product.shop_id || product.premium_id || product.medicine_id;
         const inProduct = location.pathname.includes("/product/");
         const productUrl = inProduct
             ? `${location.pathname.split("/product/")[0]}/product/${id}`
@@ -357,7 +388,9 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
     const showMainHeader =
         !isDetailsOpen &&
-        selectedBottomTab === "Home" &&
+        (selectedBottomTab === "Home" ||
+            selectedBottomTab === "Premium" ||
+            selectedBottomTab === "Offers") &&
         !allShopCategoriesPage &&
         !allShopsPage &&
         !allGiftCategoriesPage &&
@@ -372,7 +405,8 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
         selectedProduct?.data?.product_id ||
         selectedProduct?.data?.gift_id ||
         selectedProduct?.data?.shop_id ||
-        selectedProduct?.data?.premium_id;
+        selectedProduct?.data?.premium_id ||
+        selectedProduct?.data?.medicine_id;
 
     const showBottomNav =
         !isDetailsOpen &&
@@ -380,8 +414,12 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
             selectedBottomTab === "Home" ||
             selectedBottomTab === "Cart" ||
             selectedBottomTab === "Offers" ||
+            selectedBottomTab === "Premium" ||
             (selectedBottomTab === "Profile" && profilePage === "profile")
         );
+
+    const isBookPage = location.pathname.includes("/book/");
+    const isTicketPage = location.pathname.includes("/ticket/");
 
     return (
         <div className="home-container">
@@ -470,6 +508,22 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                         premiums={premiumSuggestionsData}
                     />
                 </>
+            )}
+
+            {!isDetailsOpen && selectedBottomTab === "Premium" && !isBookPage && !isTicketPage && (
+                <Search
+                    selectedMenu="Shop"
+                    search={search}
+                    setSearch={setSearch}
+                    categoryName={null}
+                    filter={filter}
+                    setFilter={setFilter}
+                    categories={[]}
+                    cards={[]}
+                    gifts={[]}
+                    shops={[]}
+                    premiums={[]}
+                />
             )}
 
             <div
@@ -615,7 +669,32 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
                     </>
                 )}
 
-                {!isDetailsOpen && selectedBottomTab === "Offers" && <Offer />}
+                {!isDetailsOpen && selectedBottomTab === "Offers" && <Offers />}
+
+                {!isDetailsOpen && selectedBottomTab === "Premium" && !isBookPage && !isTicketPage && (
+                    <Medicure
+                        search={search}
+                        filter={filter}
+                        setCartCount={setCartCount}
+                        onOpenDetails={handleOpenDetails}
+                        onBuyNow={(buyNowItem, orderType) => {
+                            setBuyNowFromDetails(true);
+                            setOrderData({ items: [buyNowItem], orderType });
+                            setIsDetailsOpen(false);
+                            setSelectedProduct(null);
+                            setSelectedBottomTab("Profile");
+                            setProfilePage("productorder");
+                        }}
+                    />
+                )}
+
+                {!isDetailsOpen && selectedBottomTab === "Premium" && isBookPage && (
+                    <BookNow />
+                )}
+
+                {!isDetailsOpen && selectedBottomTab === "Premium" && isTicketPage && (
+                    <ViewTicket />
+                )}
 
                 {isProfilePage("profile") && (
                     <Profile

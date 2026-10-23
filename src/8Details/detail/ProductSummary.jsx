@@ -7,7 +7,7 @@ const WHATSAPP_NUMBER = "919583282886";
 const DESC_LIMIT = 120;
 const ERROR_DURATION = 3500;
 
-const FIELD_KEYS = ["product", "gift", "shop", "premium"];
+const FIELD_KEYS = ["product", "gift", "shop", "medicine"];
 
 function getField(product, suffix, fallback = undefined) {
     if (!product) return fallback;
@@ -42,7 +42,8 @@ function ProductSummary({
         product?.shop_name ||
         product?.gift_name ||
         product?.shop_description ||
-        product?.gift_description
+        product?.gift_description ||
+        product?.medicine_name
     );
 
     const [expanded, setExpanded] = useState(false);

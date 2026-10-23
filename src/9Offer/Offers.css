@@ -1,0 +1,223 @@
+.offers-page {
+    padding: 16px;
+    background: #ffffff;
+    color: #2b1055;
+    box-sizing: border-box;
+}
+
+[data-theme="dark"] .offers-page {
+    background: #0f2027;
+    color: #cfeaf5;
+}
+
+.offers-page h2 {
+    margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .offers-page h2 {
+    color: #e0f2f7;
+}
+
+.offers-loading,
+.offers-empty {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 13px;
+    color: rgba(43, 16, 85, 0.6);
+}
+
+[data-theme="dark"] .offers-loading,
+[data-theme="dark"] .offers-empty {
+    color: rgba(207, 234, 245, 0.6);
+}
+
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.offer-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+[data-theme="dark"] .offer-card {
+    background: rgba(15, 32, 39, 0.55);
+    border-color: rgba(120, 220, 255, 0.16);
+}
+
+.offer-card:active {
+    transform: scale(0.98);
+}
+
+.offer-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgba(101, 78, 163, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .offer-image {
+    background: rgba(120, 220, 255, 0.1);
+}
+
+.offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.offer-image-fallback {
+    font-size: 36px;
+    font-weight: 800;
+    color: #654ea3;
+}
+
+[data-theme="dark"] .offer-image-fallback {
+    color: #7fd4e8;
+}
+
+.offer-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.offer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.offer-shop {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2b1055;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+[data-theme="dark"] .offer-shop {
+    color: #e0f2f7;
+}
+
+.offer-percent {
+    font-size: 11px;
+    font-weight: 700;
+    color: #be185d;
+    background: rgba(236, 72, 153, 0.12);
+    padding: 2px 6px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .offer-percent {
+    color: #f9a8d4;
+    background: rgba(236, 72, 153, 0.18);
+}
+
+.offer-category {
+    margin: 0;
+    font-size: 10px;
+    color: rgba(43, 16, 85, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+[data-theme="dark"] .offer-category {
+    color: rgba(207, 234, 245, 0.6);
+}
+
+.offer-description {
+    margin: 0;
+    font-size: 11px;
+    color: rgba(43, 16, 85, 0.75);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .offer-description {
+    color: rgba(207, 234, 245, 0.75);
+}
+
+.offer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.offer-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2b1055;
+}
+
+[data-theme="dark"] .offer-price {
+    color: #e0f2f7;
+}
+
+.offer-rating {
+    font-size: 11px;
+    font-weight: 600;
+    color: #b45309;
+    background: rgba(245, 158, 11, 0.12);
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+[data-theme="dark"] .offer-rating {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.18);
+}
+
+.offer-wa-btn {
+    margin-top: 6px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+}
+
+.offer-wa-btn:active {
+    transform: scale(0.97);
+}
+
+.offers-error {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+[data-theme="dark"] .offers-error {
+    color: #f87171;
+}

@@ -1,0 +1,29 @@
+import { useMemo } from "react";
+import "./8RelatedProducts.css";
+import ShopCard from "../level/2ShopCard";
+
+function RelatedProducts({ shops, onOpenDetails }) {
+    const randomShops = useMemo(() => {
+        return [...shops].sort(() => Math.random() - 0.5);
+    }, [shops]);
+
+    return (
+        <section className="heepit-related-section">
+            <div className="heepit-related-head">
+                <h3>Related Products</h3>
+            </div>
+
+            <div className="heepit-related-grid">
+                {randomShops.map((shop) => (
+                    <ShopCard
+                        key={shop.shop_id}
+                        product={shop}
+                        onOpenDetails={() => onOpenDetails(shop, "shop")}
+                    />
+                ))}
+            </div>
+        </section>
+    );
+}
+
+export default RelatedProducts;

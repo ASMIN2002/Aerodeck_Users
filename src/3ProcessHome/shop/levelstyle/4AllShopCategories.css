@@ -1,0 +1,99 @@
+.all-shop-categories {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.all-shop-category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.all-shop-category-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 2px 8px rgba(101, 78, 163, 0.08);
+    cursor: pointer;
+    outline: none;
+    min-width: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.all-shop-category-box:active {
+    transform: scale(0.96);
+}
+
+[data-theme="dark"] .all-shop-category-box {
+    background: rgba(15, 32, 39, 0.6);
+    border-color: rgba(120, 220, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.all-shop-category-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f1f1f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-theme="dark"] .all-shop-category-image {
+    background: #1a2228;
+}
+
+.all-shop-category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.all-shop-category-box span {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    text-align: center;
+    color: #2b1055;
+    line-height: 1.3;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .all-shop-category-box span {
+    color: #cfeaf5;
+}
+
+@media (max-width: 360px) {
+    .all-shop-categories {
+        padding: 10px;
+    }
+
+    .all-shop-category-grid {
+        gap: 8px;
+    }
+
+    .all-shop-category-box {
+        padding: 6px;
+        gap: 4px;
+    }
+
+    .all-shop-category-box span {
+        font-size: 10px;
+    }
+}
