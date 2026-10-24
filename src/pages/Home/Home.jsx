@@ -550,6 +550,7 @@ function Home({ user, setPage, navigateWithLoading, goTo, cartCount, setCartCoun
 
                 {!isDetailsOpen && selectedBottomTab === "Premium" && !isBookPage && !isTicketPage && (
                     <Medicure
+                        key={navKey}
                         search={search}
                         filter={filter}
                         setCartCount={setCartCount}

@@ -1,38 +1,54 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiBriefcase, FiUser, FiClock } from "react-icons/fi";
+import { FaUserMd } from "react-icons/fa";
 import "./3MedDoct.css";
 import { API } from "../../services/api";
+
+const getSessionUser = () => {
+    try { return JSON.parse(localStorage.getItem("user") || "{}"); }
+    catch { return {}; }
+};
+
+const formatDate = (d) =>
+    d ? new Date(d).toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true }) : "N/A";
+
+const getRemainingTime = (createdAt) => {
+    if (!createdAt) return "0:00";
+    let diff = Date.now() - new Date(createdAt).getTime();
+    if (diff > 19800000) diff -= 19800000;
+    const remaining = 300 - Math.floor(diff / 1000);
+    if (remaining <= 0) return "0:00";
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+};
 
 function MedDoct() {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
     const [loading, setLoading] = useState(true);
     const [myBookings, setMyBookings] = useState({});
-    const [selectedTicket, setSelectedTicket] = useState(null);
-    const [now, setNow] = useState(Date.now());
+    const [, setTick] = useState(0);
 
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const user = getSessionUser();
     const user_id = user?.user_id;
 
     useEffect(() => {
-        const fetchDoctorsAndBookings = async () => {
+        const load = async () => {
             try {
-                const docRes = await fetch(`${API}/api/user/doctor`);
-                const docData = await docRes.json();
-                if (docData.success) setDoctors(docData.data || []);
+                const docRes = await fetch(`${API}/api/user/doctor`).then((r) => r.json());
+                if (docRes.success) setDoctors(docRes.data || []);
 
                 if (user_id) {
-                    const bookRes = await fetch(`${API}/api/user/doctor/my-bookings/${user_id}`);
-                    const bookData = await bookRes.json();
-
-                    if (bookData.success) {
+                    const bookRes = await fetch(`${API}/api/user/doctor/my-bookings/${user_id}`).then((r) => r.json());
+                    if (bookRes.success) {
                         const map = {};
-                        bookData.data.forEach(b => {
-                            // 👇 Yahan String() add kiya
+                        bookRes.data.forEach((b) => {
                             map[String(b.doctor_id)] = {
                                 time: b.time,
-                                is_booked: Number(b.is_booked), // 👈 Number() add kiya
-                                created_at: b.created_at
+                                is_booked: Number(b.is_booked),
+                                created_at: b.created_at,
                             };
                         });
                         setMyBookings(map);
@@ -44,21 +60,17 @@ function MedDoct() {
                 setLoading(false);
             }
         };
-        fetchDoctorsAndBookings();
+        load();
     }, [user_id]);
 
     useEffect(() => {
-        const hasProcessing = Object.values(myBookings).some(b => b.is_booked === 0);
-        let timer;
-        if (hasProcessing) {
-            timer = setInterval(() => setNow(Date.now()), 1000);
-        }
+        const hasProcessing = Object.values(myBookings).some((b) => b.is_booked === 0);
+        if (!hasProcessing) return;
+        const timer = setInterval(() => setTick((n) => n + 1), 1000);
         return () => clearInterval(timer);
     }, [myBookings]);
 
-    const handleBookNow = (doctor) => {
-        navigate(`/medicure/book/${doctor.doctor_id}`, { state: { doctor } });
-    };
+    const handleBookNow = (doctor) => navigate(`/medicure/book/${doctor.doctor_id}`, { state: { doctor } });
 
     const handleViewTicket = (doctor) => {
         const booking = myBookings[String(doctor.doctor_id)];
@@ -70,50 +82,13 @@ function MedDoct() {
                 doctor_name: doctor.doctor_name,
                 specialization: doctor.specialization,
                 time: booking.time,
-                fees: doctor.booking_price
-            }
+                fees: doctor.booking_price,
+            },
         });
     };
 
-    const formatDate = (dateString) => {
-        if (!dateString) return "N/A";
-        const d = new Date(dateString);
-        return d.toLocaleString("en-IN", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true
-        });
-    };
-    const getRemainingTime = (created_at) => {
-        if (!created_at) return "0:00";
-
-        const createdTime = new Date(created_at).getTime();
-        const currentNow = Date.now();
-
-        let diff = currentNow - createdTime;
-
-        if (diff > 19800000) {
-            diff = diff - 19800000;
-        }
-
-        const elapsed = Math.floor(diff / 1000);
-        const remaining = 300 - elapsed;
-
-        if (remaining <= 0) return "0:00";
-
-        const m = Math.floor(remaining / 60);
-        const s = remaining % 60;
-        return `${m}:${s < 10 ? "0" : ""}${s}`;
-    };
     if (loading) {
-        return (
-            <section className="med-doct">
-                <p className="med-data-loading">Loading doctors...</p>
-            </section>
-        );
+        return <section className="med-doct"><p className="med-data-loading">Loading doctors...</p></section>;
     }
 
     return (
@@ -125,60 +100,46 @@ function MedDoct() {
             ) : (
                 <div className="med-doct-grid">
                     {doctors.map((doctor) => {
-                        const booking = myBookings[String(doctor.doctor_id)]; // 👈 String() add kiya
-                        const isConfirmed = booking && booking.is_booked === 1;
-                        const isProcessing = booking && booking.is_booked === 0;
+                        const booking = myBookings[String(doctor.doctor_id)];
+                        const isConfirmed = booking?.is_booked === 1;
+                        const isProcessing = booking?.is_booked === 0;
 
                         return (
                             <div key={doctor.doctor_id} className="med-doct-card">
                                 <div className="med-doct-image">
                                     {doctor.profile_image ? (
-                                        <img src={doctor.profile_image} alt={doctor.doctor_name} />
+                                        <img src={doctor.profile_image} alt={doctor.doctor_name} loading="lazy" />
                                     ) : (
-                                        <span className="med-doct-fallback">👨‍⚕️</span>
+                                        <FaUserMd className="med-doct-fallback" />
                                     )}
                                 </div>
 
                                 <div className="med-doct-body">
-                                    <h3 className="med-doct-name">{doctor.doctor_name}</h3>
-                                    <p className="med-doct-specialist">
-                                        {doctor.specialization || "General Physician"}
-                                    </p>
+                                    <div className="med-doct-top">
+                                        <h3 className="med-doct-name">{doctor.doctor_name}</h3>
+                                        <span className="med-doct-price">₹{doctor.booking_price || 0}</span>
+                                    </div>
+                                    <p className="med-doct-specialist">{doctor.specialization || "General Physician"}</p>
 
                                     <div className="med-doct-info">
-                                        <span className="med-doct-exp">
-                                            💼 {doctor.experience || "N/A"} Exp
-                                        </span>
-                                        <span className="med-doct-seat">
-                                            🪑 {doctor.seat || 0} Seats Left
-                                        </span>
-                                        <span className="med-doct-price">
-                                            ₹{doctor.booking_price || 0}
-                                        </span>
+                                        <span className="med-doct-exp"><FiBriefcase /> {doctor.experience || "N/A"}</span>
+                                        <span className="med-doct-seat"><FiUser /> {doctor.seat || 0} seats</span>
                                     </div>
 
-                                    <p className="med-doct-time">
-                                        🕐 {formatDate(doctor.starting_at)}
-                                    </p>
+                                    <p className="med-doct-time"><FiClock /> {formatDate(doctor.starting_at)}</p>
 
                                     {booking ? (
                                         isConfirmed ? (
-                                            <button
-                                                className="med-doct-book-btn booked"
-                                                onClick={() => handleViewTicket(doctor)}
-                                            >
+                                            <button type="button" className="med-doct-book-btn booked" onClick={() => handleViewTicket(doctor)}>
                                                 View Ticket
                                             </button>
-                                        ) : (
-                                            <button className="med-doct-book-btn processing">
+                                        ) : isProcessing ? (
+                                            <button type="button" className="med-doct-book-btn processing" disabled>
                                                 Processing... {getRemainingTime(booking.created_at)}
                                             </button>
-                                        )
+                                        ) : null
                                     ) : (
-                                        <button
-                                            className="med-doct-book-btn"
-                                            onClick={() => handleBookNow(doctor)}
-                                        >
+                                        <button type="button" className="med-doct-book-btn" onClick={handleBookNow.bind(null, doctor)}>
                                             Book Now
                                         </button>
                                     )}
@@ -186,37 +147,6 @@ function MedDoct() {
                             </div>
                         );
                     })}
-                </div>
-            )}
-
-            {selectedTicket && (
-                <div className="medicine-modal-overlay" onClick={() => setSelectedTicket(null)}>
-                    <div className="medicine-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "350px" }}>
-                        <div className="medicine-modal-header">
-                            <h3>Appointment Ticket</h3>
-                            <button className="medicine-modal-close" onClick={() => setSelectedTicket(null)}>✕</button>
-                        </div>
-                        <div className="ticket-body">
-                            <div className="ticket-row">
-                                <span>Patient Name</span>
-                                <strong>{selectedTicket.user_name}</strong>
-                            </div>
-                            <div className="ticket-row">
-                                <span>Doctor Name</span>
-                                <strong>{selectedTicket.doctor_name}</strong>
-                            </div>
-                            <div className="ticket-row">
-                                <span>Time</span>
-                                <strong>{new Date(selectedTicket.time).toLocaleString("en-IN", {
-                                    day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true
-                                })}</strong>
-                            </div>
-                            <div className="ticket-row">
-                                <span>Fees</span>
-                                <strong>₹{selectedTicket.fees}</strong>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             )}
         </section>

@@ -3,8 +3,8 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 8px;
+    gap: 8px;
+    padding: 7px 10px;
     background: var(--bg);
     border-bottom: 1px solid var(--bd);
     flex-shrink: 0
@@ -14,13 +14,13 @@
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 5px 7px;
+    gap: 6px;
+    padding: 7px 9px;
     background: var(--bg2);
     border: 1px solid var(--bd);
-    border-radius: 6px;
+    border-radius: 8px;
     color: var(--fg);
-    min-height: 26px;
+    min-height: 32px;
     min-width: 0;
     transition: background var(--tr);
     text-align: left
@@ -31,14 +31,14 @@
 }
 
 .ad-icon {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--fg2);
     flex-shrink: 0
 }
 
 .ad-text {
     flex: 1;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--fg);
     white-space: nowrap;
@@ -54,7 +54,7 @@
 }
 
 .ad-arrow {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--fg3);
     flex-shrink: 0;
     line-height: 1;
@@ -64,13 +64,13 @@
 .ad-money-box {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 3px 7px 3px 3px;
+    gap: 5px;
+    padding: 4px 9px 4px 4px;
     background: var(--bg2);
     border: 1px solid var(--bd);
     border-radius: 999px;
     flex-shrink: 0;
-    min-height: 26px;
+    min-height: 32px;
     transition: background var(--tr), transform var(--tr)
 }
 
@@ -80,8 +80,8 @@
 }
 
 .money-icon-circle {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: linear-gradient(135deg, #f59e0b, #d97706);
     display: flex;
@@ -91,12 +91,12 @@
 }
 
 .money-icon {
-    font-size: 10px;
+    font-size: 12px;
     color: #fff
 }
 
 .money-amount {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--fg);
     line-height: 1
@@ -104,67 +104,76 @@
 
 @media(min-width:480px) {
     .ad-container {
-        padding: 6px 12px;
-        gap: 8px
+        padding: 9px 14px;
+        gap: 10px
     }
 
     .ad-button {
-        min-height: 30px;
-        padding: 6px 9px
+        min-height: 36px;
+        padding: 8px 11px
     }
 
     .ad-text,
     .money-amount {
-        font-size: 11px
+        font-size: 13px
     }
 
     .ad-icon {
-        font-size: 12px
-    }
-
-    .ad-arrow {
         font-size: 14px
     }
 
+    .ad-arrow {
+        font-size: 16px
+    }
+
     .money-icon-circle {
-        width: 22px;
-        height: 22px
+        width: 26px;
+        height: 26px
     }
 
     .money-icon {
-        font-size: 11px
+        font-size: 13px
+    }
+
+    .ad-money-box {
+        padding: 5px 10px 5px 5px
     }
 }
 
 @media(min-width:768px) {
     .ad-container {
-        padding: 8px 20px
+        padding: 11px 20px;
+        max-width: 720px;
+        margin: 0 auto;
+        width: 100%
     }
 
     .ad-button {
-        min-height: 34px;
-        border-radius: 8px
+        min-height: 40px;
+        border-radius: 9px
     }
 
     .ad-text,
     .money-amount {
-        font-size: 12px
+        font-size: 14px
     }
 
     .ad-icon {
-        font-size: 13px
+        font-size: 15px
     }
 
     .money-icon-circle {
-        width: 24px;
-        height: 24px
+        width: 28px;
+        height: 28px
     }
 
     .money-icon {
-        font-size: 12px
+        font-size: 14px
     }
+}
 
-    .ad-money-box {
-        padding: 4px 9px 4px 4px
+@media(min-width:1024px) {
+    .ad-container {
+        max-width: 960px
     }
 }

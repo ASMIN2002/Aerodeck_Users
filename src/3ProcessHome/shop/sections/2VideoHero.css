@@ -1,26 +1,181 @@
 .shop-video-section {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-    box-sizing: border-box;
+    gap: 8px;
+    width: 100%;
+    padding: 0
 }
 
 .heepit-intro {
-    padding: 0 2px;
+    padding: 0 2px
 }
 
 .heepit-intro h2 {
-    margin: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: 0.2px;
-    color: #2b1055;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2
 }
 
-[data-theme="dark"] .heepit-intro h2 {
-    color: #e0f2f7;
+.shop-video-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 2px;
+    font-size: 10px;
+    color: var(--fg2);
+    line-height: 1.2
+}
+
+.shop-video-info-name {
+    font-weight: 700;
+    color: var(--fg);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.shop-video-info-date {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--fg3);
+    flex-shrink: 0;
+    white-space: nowrap
+}
+
+.shop-video-info-frontview {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--fg3);
+    flex-shrink: 0;
+    white-space: nowrap;
+    background: var(--bg2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--bd)
+}
+
+.shop-video-scroll {
+    width: 100%;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg3);
+    box-shadow: var(--sh)
+}
+
+.shop-video-slide {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg3);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y
+}
+
+.shop-video-slide video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #000
+}
+
+.shop-video-controls {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2
+}
+
+.shop-video-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .55);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 13px;
+    pointer-events: auto;
+    transition: transform var(--tr), background var(--tr), opacity var(--tr);
+    z-index: 3
+}
+
+.shop-video-btn:active {
+    transform: scale(.9);
+    background: rgba(0, 0, 0, .75)
+}
+
+.shop-video-btn.active {
+    background: rgba(255, 255, 255, .95);
+    color: #111;
+    border-color: rgba(0, 0, 0, .1)
+}
+
+.shop-video-btn-tl {
+    top: 8px;
+    left: 8px
+}
+
+.shop-video-btn-tr {
+    top: 8px;
+    right: 8px
+}
+
+.shop-video-btn-bl {
+    bottom: 8px;
+    left: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1
+}
+
+.shop-video-btn-br {
+    bottom: 8px;
+    right: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1
+}
+
+.shop-video-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 2px 0
+}
+
+.shop-video-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fg3);
+    opacity: .4;
+    cursor: pointer;
+    transition: width var(--tr), background var(--tr), opacity var(--tr)
+}
+
+.shop-video-dot.active {
+    width: 18px;
+    border-radius: 3px;
+    background: var(--fg);
+    opacity: 1
 }
 
 .shop-video-empty {
@@ -28,261 +183,137 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 36px 16px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px dashed rgba(101, 78, 163, 0.3);
-    text-align: center;
-}
-
-[data-theme="dark"] .shop-video-empty {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.3);
+    gap: 6px;
+    aspect-ratio: 16/9;
+    background: var(--bg2);
+    border: 1px dashed var(--bd);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center
 }
 
 .shop-video-empty-icon {
     font-size: 32px;
-    line-height: 1;
-    margin-bottom: 4px;
+    opacity: .5;
+    line-height: 1
 }
 
 .shop-video-empty h3 {
-    margin: 0;
-    font-size: 13px;
-    font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .shop-video-empty h3 {
-    color: #e0f2f7;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--fg)
 }
 
 .shop-video-empty p {
-    margin: 0;
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(43, 16, 85, 0.6);
+    font-size: 10px;
+    color: var(--fg3)
 }
 
-[data-theme="dark"] .shop-video-empty p {
-    color: rgba(207, 234, 245, 0.6);
-}
-
-.shop-video-info-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 2px;
-    overflow: hidden;
-    animation: videoInfoFade 0.4s ease;
-}
-
-.infodtat {
-    font-size: 10.5px;
-    font-weight: 700;
-    color: rgba(43, 16, 85, 0.65);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: 0.2px;
-}
-
-[data-theme="dark"] .infodtat {
-    color: rgba(207, 234, 245, 0.65);
-}
-
-.shop-video-info-name {
-    flex: 1;
-    min-width: 0;
-    font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .shop-video-info-name {
-    color: #cfeaf5;
-}
-
-.shop-video-info-date {
-    flex-shrink: 0;
-}
-
-.shop-video-info-frontview {
-    flex-shrink: 0;
-    padding: 2px 7px;
-    border-radius: 6px;
-    background: rgba(101, 78, 163, 0.12);
-    color: #654ea3;
-    font-weight: 800;
-}
-
-[data-theme="dark"] .shop-video-info-frontview {
-    background: rgba(120, 220, 255, 0.12);
-    color: #7fd4e8;
-}
-
-.shop-video-scroll {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 14px;
-}
-
-.shop-video-slide {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 9 / 14;
-    max-height: 70vh;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #000000;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.shop-video-slide video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    cursor: pointer;
-    -webkit-user-drag: none;
-    user-select: none;
-}
-
-.shop-video-controls {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.shop-video-btn {
-    position: absolute;
-    pointer-events: auto;
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.55);
-    color: #ffffff;
-    font-size: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    outline: none;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.shop-video-btn:active {
-    transform: scale(0.9);
-}
-
-.shop-video-btn.active {
-    background: rgba(101, 78, 163, 0.85);
-}
-
-[data-theme="dark"] .shop-video-btn.active {
-    background: rgba(127, 212, 232, 0.85);
-    color: #0f2027;
-}
-
-.shop-video-btn-tl {
-    top: 10px;
-    left: 10px;
-}
-
-.shop-video-btn-tr {
-    top: 10px;
-    right: 10px;
-}
-
-.shop-video-btn-bl {
-    bottom: 10px;
-    left: 10px;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1;
-    padding-bottom: 4px;
-}
-
-.shop-video-btn-br {
-    bottom: 10px;
-    right: 10px;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1;
-    padding-bottom: 4px;
-}
-
-.shop-video-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 0;
-}
-
-.shop-video-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(101, 78, 163, 0.28);
-    cursor: pointer;
-    transition: width 0.25s ease, background 0.25s ease;
-}
-
-[data-theme="dark"] .shop-video-dot {
-    background: rgba(120, 220, 255, 0.28);
-}
-
-.shop-video-dot.active {
-    width: 18px;
-    border-radius: 4px;
-    background: #654ea3;
-}
-
-[data-theme="dark"] .shop-video-dot.active {
-    background: #7fd4e8;
-}
-
-@keyframes videoInfoFade {
-    from {
-        opacity: 0;
-        transform: translateY(-4px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 360px) {
+@media(min-width:480px) {
     .shop-video-section {
-        padding: 10px;
-        gap: 8px;
+        gap: 9px
     }
 
     .heepit-intro h2 {
-        font-size: 14px;
+        font-size: 15px
     }
 
-    .infodtat {
-        font-size: 10px;
+    .shop-video-info-row {
+        font-size: 11px
+    }
+
+    .shop-video-info-date,
+    .shop-video-info-frontview {
+        font-size: 10px
+    }
+
+    .shop-video-scroll {
+        border-radius: 12px
     }
 
     .shop-video-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
+        width: 36px;
+        height: 36px;
+        font-size: 14px
     }
 
     .shop-video-btn-bl,
     .shop-video-btn-br {
-        font-size: 20px;
+        font-size: 20px
+    }
+
+    .shop-video-btn-tl {
+        top: 10px;
+        left: 10px
+    }
+
+    .shop-video-btn-tr {
+        top: 10px;
+        right: 10px
+    }
+
+    .shop-video-btn-bl {
+        bottom: 10px;
+        left: 10px
+    }
+
+    .shop-video-btn-br {
+        bottom: 10px;
+        right: 10px
+    }
+
+    .shop-video-dot {
+        width: 7px;
+        height: 7px
+    }
+
+    .shop-video-dot.active {
+        width: 20px
+    }
+}
+
+@media(min-width:768px) {
+    .shop-video-section {
+        gap: 10px
+    }
+
+    .heepit-intro h2 {
+        font-size: 17px
+    }
+
+    .shop-video-info-row {
+        font-size: 12px
+    }
+
+    .shop-video-info-date,
+    .shop-video-info-frontview {
+        font-size: 11px
+    }
+
+    .shop-video-scroll {
+        border-radius: 14px
+    }
+
+    .shop-video-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px
+    }
+
+    .shop-video-btn-bl,
+    .shop-video-btn-br {
+        font-size: 22px
+    }
+
+    .shop-video-empty-icon {
+        font-size: 40px
+    }
+
+    .shop-video-empty h3 {
+        font-size: 14px
+    }
+
+    .shop-video-empty p {
+        font-size: 11px
     }
 }

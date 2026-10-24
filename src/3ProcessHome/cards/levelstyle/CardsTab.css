@@ -1,561 +1,544 @@
-.cardstab-wrap *,
-.cardstab-wrap *::before,
-.cardstab-wrap *::after {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
 .cardstab-wrap {
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    width: 100%;
-    padding: 5px 5px 5px 14px;
-    border-radius: 14px;
-    background: linear-gradient(180deg,
-            rgba(20, 22, 40, 0.94) 0%,
-            rgba(14, 16, 32, 0.94) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    box-shadow:
-        0 12px 28px -18px rgba(0, 0, 0, 0.85),
-        0 0 0 1px rgba(139, 92, 246, 0.08) inset;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #eff6ff 50%, #faf5ff 100%);
+    background-size: 200% 200%;
+    animation: cardstabBgFlow 14s ease infinite;
     overflow: hidden;
-    min-height: 46px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box
+}
+
+[data-theme="dark"] .cardstab-wrap {
+    background: linear-gradient(135deg, #0b1220 0%, #0f1626 50%, #1a0e2a 100%);
+    background-size: 200% 200%;
+    border-color: rgba(255, 255, 255, .06)
+}
+
+@keyframes cardstabBgFlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+}
+
+.cardstab-wrap::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+    opacity: .28;
+    filter: blur(26px);
+    pointer-events: none;
+    animation: cardstabGlow1 8s ease-in-out infinite
+}
+
+.cardstab-wrap::after {
+    content: "";
+    position: absolute;
+    bottom: -40px;
+    right: -40px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+    opacity: .28;
+    filter: blur(26px);
+    pointer-events: none;
+    animation: cardstabGlow2 8s ease-in-out infinite 2s
+}
+
+[data-theme="dark"] .cardstab-wrap::before {
+    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
+    opacity: .22
+}
+
+[data-theme="dark"] .cardstab-wrap::after {
+    background: radial-gradient(circle, #c084fc 0%, transparent 70%);
+    opacity: .22
+}
+
+@keyframes cardstabGlow1 {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: .28
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: .48
+    }
+}
+
+@keyframes cardstabGlow2 {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: .28
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: .48
+    }
 }
 
 .cardstab-slot {
     position: relative;
-    flex: 1;
-    min-width: 0;
-    height: 34px;
+    z-index: 1;
+    min-height: 52px;
+    width: 100%;
+    height: 52px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden
 }
 
-.cardstab-lion-wrap {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.cardstab-peek {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%) translateX(-130%);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    opacity: 0;
-    white-space: nowrap;
-    animation-duration: 15s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    animation-name: peek-cycle;
-    will-change: transform, opacity;
-}
-
-.cardstab-peek:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.cardstab-peek:nth-child(2) {
-    animation-delay: 3s;
-}
-
-.cardstab-peek:nth-child(3) {
-    animation-delay: 6s;
-}
-
-.cardstab-peek:nth-child(4) {
-    animation-delay: 9s;
-}
-
-.cardstab-peek:nth-child(5) {
-    animation-delay: 12s;
-}
-
-@keyframes peek-cycle {
-    0% {
-        transform: translateY(-50%) translateX(-130%);
-        opacity: 0;
-    }
-
-    4% {
-        transform: translateY(-50%) translateX(0);
-        opacity: 1;
-    }
-
-    8% {
-        transform: translateY(-50%) translateX(0) rotate(-4deg);
-        opacity: 1;
-    }
-
-    12% {
-        transform: translateY(-50%) translateX(0) rotate(4deg);
-        opacity: 1;
-    }
-
-    16% {
-        transform: translateY(-50%) translateX(0) rotate(0deg);
-        opacity: 1;
-    }
-
-    19% {
-        transform: translateY(-50%) translateX(130%);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(-50%) translateX(130%);
-        opacity: 0;
-    }
-}
-
-.cardstab-animal {
-    font-size: 22px;
-    line-height: 1;
-    flex-shrink: 0;
-    animation: animal-wiggle 2.5s ease-in-out infinite;
-}
-
-@keyframes animal-wiggle {
-
-    0%,
-    100% {
-        transform: rotate(-6deg) scale(1);
-    }
-
-    50% {
-        transform: rotate(6deg) scale(1.08);
-    }
-}
-
-.cardstab-msg {
-    display: inline-block;
-    font-size: 11.5px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    line-height: 1;
-    color: #00f5d4;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 140px;
-}
-
-/* ============================================
-   REGULAR — CATEGORY CHIPS (SCROLLABLE)
-   ============================================ */
 .cardstab-cat-scroll {
-    position: relative;
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
-    padding-right: 4px;
+    padding: 2px 0;
+    width: 100%
 }
 
 .cardstab-cat-scroll::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
+    display: none
 }
 
 .cardstab-cat-chip {
-    flex-shrink: 0;
-    display: inline-flex;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 3px 9px 3px 3px;
-    border-radius: 999px;
-    border: 1px solid rgba(139, 92, 246, 0.32);
-    background: linear-gradient(135deg,
-            rgba(139, 92, 246, 0.16) 0%,
-            rgba(236, 72, 153, 0.06) 100%);
-    color: #ddd6fe;
-    font-family: inherit;
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    line-height: 1;
-    text-transform: uppercase;
-    white-space: nowrap;
+    gap: 2px;
+    padding: 4px 6px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    width: 52px;
     cursor: pointer;
-    outline: none;
-    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-    scroll-snap-align: start;
+    transition: background var(--tr), border-color var(--tr), transform var(--tr)
 }
 
-.cardstab-cat-chip:focus-visible {
-    outline: 2px solid rgba(139, 92, 246, 0.9);
-    outline-offset: 2px;
+.cardstab-cat-chip:active {
+    transform: scale(.96);
+    background: var(--bg3)
 }
 
 .cardstab-cat-chip-icon {
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 22px;
     height: 22px;
     border-radius: 50%;
+    background: var(--bg2);
     overflow: hidden;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
-    box-shadow: 0 2px 8px -2px rgba(139, 92, 246, 0.7);
+    flex-shrink: 0
 }
 
 .cardstab-cat-chip-icon img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    display: block;
-    border-radius: 50%;
-    user-select: none;
-    -webkit-user-drag: none;
+    display: block
 }
 
 .cardstab-cat-chip-fallback {
-    color: #ffffff;
     font-size: 10px;
-    font-weight: 900;
-    line-height: 1;
-    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--fg2);
+    line-height: 1
 }
 
 .cardstab-cat-chip-name {
-    display: inline-block;
-    max-width: 70px;
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.1;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 100%;
+    text-align: center
 }
 
-/* ============================================
-   REGULAR — SELECTED CATEGORY
-   ============================================ */
 .cardstab-selected {
-    position: relative;
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 0 4px 0 0;
-    animation: selected-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    gap: 8px;
+    padding: 5px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    animation: cardstabSelectedIn .25s ease;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box
 }
 
-@keyframes selected-in {
+@keyframes cardstabSelectedIn {
     from {
         opacity: 0;
-        transform: translateX(-12px);
+        transform: translateY(-4px)
     }
 
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0)
     }
 }
 
 .cardstab-selected-image {
-    position: relative;
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 7px;
     overflow: hidden;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
-    box-shadow:
-        0 6px 16px -6px rgba(139, 92, 246, 0.85),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    background: var(--bg2);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 .cardstab-selected-image img {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    user-select: none;
-    -webkit-user-drag: none;
+    object-fit: cover
 }
 
 .cardstab-selected-fallback {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    color: #ffffff;
-    font-size: 12px;
-    font-weight: 900;
-    line-height: 1;
-    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--fg2);
+    line-height: 1
 }
 
 .cardstab-selected-name {
     flex: 1;
-    min-width: 0;
-    font-size: 11.5px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    line-height: 1;
-    text-transform: uppercase;
-    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0
 }
 
 .cardstab-selected-cancel {
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
-    display: grid;
-    place-items: center;
-    border-radius: 7px;
-    border: 1px solid rgba(239, 68, 68, 0.5);
-    background: linear-gradient(135deg,
-            rgba(239, 68, 68, 0.2) 0%,
-            rgba(220, 38, 38, 0.08) 100%);
-    color: #fecaca;
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 900;
-    line-height: 1;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 50%;
+    color: var(--fg2);
+    font-size: 12px;
+    flex-shrink: 0;
     cursor: pointer;
-    outline: none;
-    padding: 0;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.cardstab-selected-cancel:hover {
-    border-color: rgba(239, 68, 68, 0.85);
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: #ffffff;
-    transform: rotate(90deg) scale(1.06);
-    box-shadow: 0 6px 16px -6px rgba(239, 68, 68, 0.85);
+    transition: background var(--tr), transform var(--tr)
 }
 
 .cardstab-selected-cancel:active {
-    transform: rotate(90deg) scale(0.94);
+    transform: scale(.92);
+    background: var(--bg3)
 }
 
-.cardstab-selected-cancel:focus-visible {
-    outline: 2px solid rgba(239, 68, 68, 0.9);
-    outline-offset: 2px;
-}
-
-/* ============================================
-   AUTO SCROLL — SLIDE IMAGE (PING-PONG)
-   ============================================ */
-.cardstab-selected-image.auto-scroll img {
-    width: 130%;
-    height: 100%;
-    animation: img-slide-horizontal 4.5s ease-in-out infinite alternate;
-    will-change: transform;
-}
-
-.cardstab-selected-image.auto-scroll .cardstab-selected-fallback {
-    animation: img-slide-horizontal 4.5s ease-in-out infinite alternate;
-    will-change: transform;
-}
-
-.cardstab-selected-image.paused img,
-.cardstab-selected-image.paused .cardstab-selected-fallback {
-    animation-play-state: paused;
-}
-
-@keyframes img-slide-horizontal {
-    0% {
-        transform: translateX(0%);
-    }
-
-    100% {
-        transform: translateX(-23%);
-    }
-}
-
-/* ============================================
-   BUTTONS
-   ============================================ */
-.cardstab-buttons {
+.cardstab-lion-wrap {
     display: flex;
-    gap: 6px;
-    flex-shrink: 0;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 0;
+    width: 100%;
+    height: 100%
+}
+
+.cardstab-lion-wrap::-webkit-scrollbar {
+    display: none
+}
+
+.cardstab-peek {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 6px 8px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1px solid rgba(245, 158, 11, .25);
+    border-radius: 8px;
+    width: 58px;
+    animation: cardstabPeekIn .5s cubic-bezier(.34, 1.56, .64, 1) both, cardstabPeekFloat 3s ease-in-out infinite
+}
+
+[data-theme="dark"] .cardstab-peek {
+    background: linear-gradient(135deg, #2a1f0a, #3a2810);
+    border-color: rgba(251, 191, 36, .25)
+}
+
+.cardstab-peek:nth-child(1) {
+    animation-delay: 0s, 0s
+}
+
+.cardstab-peek:nth-child(2) {
+    animation-delay: .1s, .4s
+}
+
+.cardstab-peek:nth-child(3) {
+    animation-delay: .2s, .8s
+}
+
+.cardstab-peek:nth-child(4) {
+    animation-delay: .3s, 1.2s
+}
+
+.cardstab-peek:nth-child(5) {
+    animation-delay: .4s, 1.6s
+}
+
+@keyframes cardstabPeekIn {
+    from {
+        opacity: 0;
+        transform: scale(.6) translateY(8px)
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0)
+    }
+}
+
+@keyframes cardstabPeekFloat {
+
+    0%,
+    100% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(-3px)
+    }
+}
+
+.cardstab-peek-icon {
+    font-size: 14px;
+    color: #d97706;
+    line-height: 1;
+    animation: cardstabIconPulse 2s ease-in-out infinite
+}
+
+[data-theme="dark"] .cardstab-peek-icon {
+    color: #fbbf24
+}
+
+@keyframes cardstabIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1)
+    }
+
+    50% {
+        transform: scale(1.15)
+    }
+}
+
+.cardstab-msg {
+    font-size: 7px;
+    font-weight: 600;
+    color: #92400e;
+    line-height: 1.1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%
+}
+
+[data-theme="dark"] .cardstab-msg {
+    color: #fbbf24
+}
+
+.cardstab-buttons {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 4px;
+    padding: 2px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box
 }
 
 .cardstab-btn {
-    min-width: 86px;
-    height: 36px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 14px;
-    border-radius: 10px;
-    border: 1px solid aqua;
+    flex: 1;
+    padding: 5px 8px;
     background: transparent;
-    color: rgba(148, 163, 184, 0.85);
-    font-family: inherit;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    line-height: 1;
-    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    color: var(--fg2);
+    font-size: 9px;
+    font-weight: 700;
     cursor: pointer;
-    outline: none;
-    white-space: nowrap;
-    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.cardstab-btn:focus-visible {
-    outline: 2px solid rgba(139, 92, 246, 0.9);
-    outline-offset: 2px;
+    transition: background var(--tr), color var(--tr);
+    min-height: 24px;
+    line-height: 1;
+    min-width: 0
 }
 
 .cardstab-btn.active {
-    color: #ffffff;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, .3)
 }
 
-.cardstab-btn:last-child.active {
-    background: linear-gradient(135deg, #00f5d4 0%, #00c2e0 55%, #0096c7 100%);
-    color: #021014;
+[data-theme="dark"] .cardstab-btn.active {
+    background: linear-gradient(135deg, #60a5fa, #c084fc);
+    box-shadow: 0 2px 6px rgba(96, 165, 250, .35)
 }
 
-@media (max-width: 480px) {
+.cardstab-btn:active {
+    transform: scale(.97)
+}
+
+@media(min-width:480px) {
     .cardstab-wrap {
-        padding: 4px 4px 4px 12px;
-        gap: 8px;
-        min-height: 42px;
+        padding: 8px 10px;
+        gap: 7px;
+        border-radius: 13px
     }
 
     .cardstab-slot {
-        height: 30px;
+        height: 58px;
+        min-height: 58px
     }
 
-    .cardstab-animal {
-        font-size: 20px;
-    }
-
-    .cardstab-msg {
-        font-size: 10.5px;
-        max-width: 120px;
+    .cardstab-cat-scroll {
+        gap: 6px
     }
 
     .cardstab-cat-chip {
-        font-size: 10px;
-        padding: 2px 8px 2px 2px;
-        gap: 5px;
+        width: 60px;
+        padding: 5px 7px
     }
 
     .cardstab-cat-chip-icon {
-        width: 20px;
-        height: 20px;
-    }
-
-    .cardstab-cat-chip-name {
-        max-width: 60px;
-    }
-
-    .cardstab-selected-image {
         width: 26px;
-        height: 26px;
-        border-radius: 7px;
+        height: 26px
     }
 
-    .cardstab-selected-name {
-        font-size: 10.5px;
-    }
-
-    .cardstab-selected-cancel {
-        width: 22px;
-        height: 22px;
-        font-size: 10px;
-    }
-
-    .cardstab-btn {
-        min-width: 70px;
-        height: 34px;
-        padding: 0 12px;
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 360px) {
-    .cardstab-btn {
-        min-width: 62px;
-        height: 32px;
-        padding: 0 10px;
-        font-size: 10.5px;
-    }
-
-    .cardstab-animal {
-        font-size: 18px;
-    }
-
-    .cardstab-msg {
-        font-size: 10px;
-        max-width: 100px;
-    }
-
-    .cardstab-cat-chip {
-        font-size: 9.5px;
-        padding: 2px 7px 2px 2px;
-    }
-
-    .cardstab-cat-chip-icon {
-        width: 18px;
-        height: 18px;
+    .cardstab-cat-chip-fallback {
+        font-size: 11px
     }
 
     .cardstab-cat-chip-name {
-        max-width: 50px;
+        font-size: 9px
     }
 
     .cardstab-selected-image {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
+        width: 40px;
+        height: 40px
     }
 
     .cardstab-selected-name {
-        font-size: 10px;
+        font-size: 12px
     }
 
-    .cardstab-selected-cancel {
-        width: 20px;
-        height: 20px;
-        font-size: 9px;
+    .cardstab-peek {
+        width: 66px;
+        padding: 7px 9px
+    }
+
+    .cardstab-peek-icon {
+        font-size: 16px
+    }
+
+    .cardstab-msg {
+        font-size: 8px
+    }
+
+    .cardstab-btn {
+        font-size: 10px;
+        min-height: 28px
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media(min-width:768px) {
+    .cardstab-wrap {
+        padding: 10px 12px
+    }
 
-    .cardstab-wrap .cardstab-peek,
-    .cardstab-wrap .cardstab-animal {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .cardstab-slot {
+        height: 64px;
+        min-height: 64px
+    }
+
+    .cardstab-cat-chip {
+        width: 70px
+    }
+
+    .cardstab-cat-chip-icon {
+        width: 30px;
+        height: 30px
+    }
+
+    .cardstab-cat-chip-name {
+        font-size: 10px
+    }
+
+    .cardstab-selected-image {
+        width: 46px;
+        height: 46px
+    }
+
+    .cardstab-selected-name {
+        font-size: 13px
+    }
+
+    .cardstab-peek {
+        width: 74px
+    }
+
+    .cardstab-peek-icon {
+        font-size: 18px
+    }
+
+    .cardstab-btn {
+        font-size: 11px;
+        min-height: 32px
     }
 }

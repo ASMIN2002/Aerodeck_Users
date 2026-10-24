@@ -5,6 +5,7 @@ import { API } from "../../../services/api";
 import ShopHome from "./5ShopHome";
 import ShopCategory from "./3ShopCategory";
 import ALLShopCategories from "./4AllShopCategories";
+import "../levelstyle/1Shop.css";
 
 const TOAST_DURATION = 2000;
 const EMPTY_TOAST = { show: false, message: "", type: "success" };

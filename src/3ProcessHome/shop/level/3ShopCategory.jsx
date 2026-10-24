@@ -18,7 +18,7 @@ function ShopCategory({
     );
 
     return (
-        <section className="cds-section">
+        <section className="shp-section">
             <div className="cds-grid">
                 {
                     categoryShops.map((shop) => (

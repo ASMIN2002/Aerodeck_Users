@@ -1,183 +1,105 @@
 import { useEffect, useState } from "react";
+import { FiMinus, FiPlus, FiStar } from "react-icons/fi";
+import { FaPills } from "react-icons/fa";
 import "./2MedicureData.css";
 import { API } from "../../services/api";
-import { FiMinus, FiPlus } from "react-icons/fi";
 
-function MedicureData({
-    search = "",
-    filter = {},
-    setCartCount,
-    onOpenDetails,
-    onBuyNow,
-}) {
-    const sessionToken = localStorage.getItem("session_token");
+const getSession = () => localStorage.getItem("session_token");
+const idEq = (a, b) => String(a) === String(b);
+
+function MedicureData({ search = "", filter = {}, setCartCount, onOpenDetails }) {
+    const sessionToken = getSession();
 
     const [medicines, setMedicines] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cartProducts, setCartProducts] = useState([]);
 
-    const fetchMedicines = async () => {
-        try {
-            const res = await fetch(`${API}/api/user/medicine`);
-            const data = await res.json();
-            if (data.success) setMedicines(data.data || []);
-        } catch (err) {
-            console.error("Medicine fetch error:", err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchCart = async () => {
-        if (!sessionToken) return;
-        try {
-            const res = await fetch(
-                `${API}/api/user/cart?session_token=${sessionToken}`
-            );
-            const data = await res.json();
-            if (data.success) {
-                setCartProducts(data.data || []);
-                if (setCartCount) setCartCount(data.data.length);
-            }
-        } catch (err) {
-            console.error("Cart error:", err.message);
-        }
-    };
-
     useEffect(() => {
-        fetchMedicines();
-        fetchCart();
-    }, [sessionToken]);
+        fetch(`${API}/api/user/medicine`)
+            .then((r) => r.json())
+            .then((data) => { if (data.success) setMedicines(data.data || []); })
+            .catch((err) => console.error("Medicine fetch error:", err.message))
+            .finally(() => setLoading(false));
 
-    // Cart Operations
+        if (!sessionToken) return;
+        fetch(`${API}/api/user/cart?session_token=${sessionToken}`)
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.success) {
+                    setCartProducts(data.data || []);
+                    setCartCount?.(data.data.length);
+                }
+            })
+            .catch((err) => console.error("Cart error:", err.message));
+    }, [sessionToken, setCartCount]);
+
+    const syncCart = (next) => {
+        setCartProducts(next);
+        setCartCount?.(next.length);
+    };
+
     const handleAddToCart = async (productId) => {
         if (!sessionToken) return;
         const id = String(productId);
-        const exists = cartProducts.some((i) => String(i.product_id) === id);
-        if (exists) return;
+        if (cartProducts.some((i) => idEq(i.product_id, id))) return;
 
         try {
-            const res = await fetch(`${API}/api/user/cart`, {
+            const data = await fetch(`${API}/api/user/cart`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    product_id: id,
-                    quantity: 1,
-                }),
-            });
-            const data = await res.json();
+                body: JSON.stringify({ session_token: sessionToken, product_id: id, quantity: 1 }),
+            }).then((r) => r.json());
             if (!data.success) return;
-
-            const nextCart = [...cartProducts, { product_id: id, quantity: 1 }];
-            setCartProducts(nextCart);
-            if (setCartCount) setCartCount(nextCart.length);
-        } catch (err) {
-            console.error("Add to cart error:", err.message);
-        }
+            syncCart([...cartProducts, { product_id: id, quantity: 1 }]);
+        } catch (err) { console.error("Add to cart error:", err.message); }
     };
 
-    const handleIncreaseQty = async (productId) => {
+    const updateQty = async (productId, delta) => {
         const id = String(productId);
-        const item = cartProducts.find((i) => String(i.product_id) === id);
+        const item = cartProducts.find((i) => idEq(i.product_id, id));
         if (!item) return;
 
-        const newQty = item.quantity + 1;
-        try {
-            await fetch(`${API}/api/user/cart`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    product_id: id,
-                    quantity: newQty,
-                }),
-            });
-            setCartProducts((prev) =>
-                prev.map((i) =>
-                    String(i.product_id) === id ? { ...i, quantity: newQty } : i
-                )
-            );
-        } catch (err) {
-            console.error("Increase qty error:", err.message);
-        }
-    };
-
-    const handleDecreaseQty = async (productId) => {
-        const id = String(productId);
-        const item = cartProducts.find((i) => String(i.product_id) === id);
-        if (!item) return;
-
-        if (item.quantity <= 1) {
+        if (delta < 0 && item.quantity <= 1) {
             try {
                 await fetch(`${API}/api/user/cart/${id}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ session_token: sessionToken }),
                 });
-                const nextCart = cartProducts.filter(
-                    (i) => String(i.product_id) !== id
-                );
-                setCartProducts(nextCart);
-                if (setCartCount) setCartCount(nextCart.length);
-            } catch (err) {
-                console.error("Remove cart error:", err.message);
-            }
+                syncCart(cartProducts.filter((i) => !idEq(i.product_id, id)));
+            } catch (err) { console.error("Remove cart error:", err.message); }
             return;
         }
 
-        const newQty = item.quantity - 1;
+        const quantity = item.quantity + delta;
         try {
             await fetch(`${API}/api/user/cart`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    product_id: id,
-                    quantity: newQty,
-                }),
+                body: JSON.stringify({ session_token: sessionToken, product_id: id, quantity }),
             });
-            setCartProducts((prev) =>
-                prev.map((i) =>
-                    String(i.product_id) === id ? { ...i, quantity: newQty } : i
-                )
-            );
-        } catch (err) {
-            console.error("Decrease qty error:", err.message);
-        }
+            setCartProducts((prev) => prev.map((i) => (idEq(i.product_id, id) ? { ...i, quantity } : i)));
+        } catch (err) { console.error("Qty error:", err.message); }
     };
 
-    const handleBuyNow = (medicine) => {
-        if (!onBuyNow) return;
-        onBuyNow(
-            { ...medicine, product_id: medicine.medicine_id, quantity: 1 },
-            "products"
-        );
+    const handleOpenDetails = (medicine) => {
+        onOpenDetails?.({ medicine_id: medicine.medicine_id, ...medicine }, "medicine");
     };
 
     const filtered = medicines.filter((med) => {
-        const keyword = search.toLowerCase();
+        const kw = search.toLowerCase();
         const matchesSearch =
             !search ||
-            med.medicine_name?.toLowerCase().includes(keyword) ||
-            med.medicine_description?.toLowerCase().includes(keyword) ||
-            med.medicine_category?.toLowerCase().includes(keyword);
-
-        const matchesRating =
-            !filter.rating || Number(med.medicine_rating) >= filter.rating;
-
-        const matchesAvailable =
-            !filter.availableOnly || Number(med.medicine_status) === 1;
-
+            med.medicine_name?.toLowerCase().includes(kw) ||
+            med.medicine_description?.toLowerCase().includes(kw) ||
+            med.medicine_category?.toLowerCase().includes(kw);
+        const matchesRating = !filter.rating || Number(med.medicine_rating) >= filter.rating;
+        const matchesAvailable = !filter.availableOnly || Number(med.medicine_status) === 1;
         return matchesSearch && matchesRating && matchesAvailable;
     });
 
     if (loading) {
-        return (
-            <section className="med-data">
-                <p className="med-data-loading">Loading medicines...</p>
-            </section>
-        );
+        return <section className="med-data"><p className="med-data-loading">Loading medicines...</p></section>;
     }
 
     return (
@@ -190,110 +112,62 @@ function MedicureData({
                 <div className="med-data-grid">
                     {filtered.map((med) => {
                         const isAvailable = Number(med.medicine_status) === 1;
-                        const cartItem = cartProducts.find(
-                            (i) => String(i.product_id) === String(med.medicine_id)
-                        );
+                        const cartItem = cartProducts.find((i) => idEq(i.product_id, med.medicine_id));
                         const inCart = !!cartItem;
+                        const qty = cartItem?.quantity || 0;
                         const discount = Number(med.medicine_discount_percentage || 0);
                         const mrp = Number(med.medicine_demo_price || 0);
                         const price = Number(med.medicine_price || 0);
+                        const hasMrpCut = mrp > price;
 
                         return (
-                            <div
-                                key={med.medicine_id}
-                                className={`med-card ${!isAvailable ? "out-of-stock" : ""}`}
-                            >
-                                {/* IMAGE BOX */}
-                                <div className="med-card-image-box">
-                                    <div
-                                        className="med-image-wrapper"
-                                        onClick={() =>
-                                            onOpenDetails &&
-                                            onOpenDetails(
-                                                { medicine_id: med.medicine_id, ...med },
-                                                "medicine"
-                                            )
-                                        }
-                                    >
-                                        {med.medicine_image1 ? (
-                                            <img
-                                                src={med.medicine_image1}
-                                                alt={med.medicine_name}
-                                            />
-                                        ) : (
-                                            <span className="med-image-fallback">💊</span>
-                                        )}
+                            <div key={med.medicine_id} className={`med-card ${isAvailable ? "" : "out-of-stock"}`}>
+                                <div className="med-card-image-box" onClick={() => handleOpenDetails(med)}>
+                                    {med.medicine_image1 ? (
+                                        <img src={med.medicine_image1} alt={med.medicine_name} loading="lazy" />
+                                    ) : (
+                                        <FaPills className="med-image-fallback" />
+                                    )}
 
-                                        {!isAvailable && (
-                                            <div className="med-oos-overlay">OUT OF STOCK</div>
-                                        )}
+                                    {!isAvailable && <div className="med-oos-overlay">OUT OF STOCK</div>}
 
-                                        <div className="med-rating-badge">
-                                            ⭐ {med.medicine_rating || "4.0"}
-                                        </div>
+                                    <div className="med-rating-badge">
+                                        <FiStar /> {med.medicine_rating || "4.0"}
+                                    </div>
+
+                                    {discount > 0 && hasMrpCut && (
+                                        <span className="med-discount-badge">{discount}% OFF</span>
+                                    )}
+                                </div>
+
+                                <div className="med-card-body">
+                                    <span className="med-tag">{med.medicine_category || "Medicine"}</span>
+                                    <h3 className="med-card-name">{med.medicine_name}</h3>
+
+                                    <div className="med-price-row">
+                                        <span className="med-final-price">₹{price}</span>
+                                        {hasMrpCut && <span className="med-mrp-price">₹{mrp}</span>}
                                     </div>
 
                                     {isAvailable && (
-                                        <div className="med-cart-action">
+                                        <div className="med-card-actions">
                                             {inCart ? (
                                                 <div className="med-qty-box">
-                                                    <button onClick={() => handleDecreaseQty(med.medicine_id)}>
+                                                    <button type="button" onClick={() => updateQty(med.medicine_id, -1)} aria-label="Decrease">
                                                         <FiMinus />
                                                     </button>
-                                                    <span>{cartItem.quantity}</span>
-                                                    <button onClick={() => handleIncreaseQty(med.medicine_id)}>
+                                                    <span>{qty}</span>
+                                                    <button type="button" onClick={() => updateQty(med.medicine_id, 1)} aria-label="Increase">
                                                         <FiPlus />
                                                     </button>
                                                 </div>
                                             ) : (
-                                                <button
-                                                    className="med-add-btn"
-                                                    onClick={() => handleAddToCart(med.medicine_id)}
-                                                >
+                                                <button type="button" className="med-add-btn" onClick={() => handleAddToCart(med.medicine_id)}>
                                                     Add
                                                 </button>
                                             )}
                                         </div>
                                     )}
-                                </div>
-
-                                {/* BODY */}
-                                <div className="med-card-body">
-                                    <div className="med-tags-row">
-                                        <span className="med-tag">{med.medicine_category || "Medicine"}</span>
-                                        <span className="med-tag">Bottle</span>
-                                    </div>
-
-                                    <h3 className="med-card-name">{med.medicine_name}</h3>
-                                    <p className="med-card-desc">{med.medicine_description}</p>
-
-                                    <div className="med-offer-text">
-                                        Extra {discount}% Off
-                                    </div>
-
-                                    <div className="med-price-row">
-                                        {mrp > price && (
-                                            <div className="med-mrp-row">
-                                                <span>MRP ₹{mrp}</span>
-                                                <span className="med-discount-text">{discount}% off</span>
-                                            </div>
-                                        )}
-
-                                        <div className="med-final-price">
-                                            ₹{price}
-                                            <span className="med-unit-price">
-                                                (₹{(price / 10).toFixed(2)}/unit)
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <button
-                                        className="med-buy-now-btn"
-                                        onClick={() => handleBuyNow(med)}
-                                        disabled={!isAvailable}
-                                    >
-                                        Buy Now
-                                    </button>
                                 </div>
                             </div>
                         );

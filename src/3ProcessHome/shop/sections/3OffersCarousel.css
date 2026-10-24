@@ -1,17 +1,33 @@
 .shop-offer-carousel-section {
     position: relative;
-    width: 100%;
-    padding: 14px 12px 16px;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 10px 8px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 30%, #fbcfe8 70%, #fef3c7 100%);
+    background-size: 200% 200%;
+    animation: offerBgFlow 12s ease infinite;
     overflow: hidden;
-    background: linear-gradient(135deg, rgba(101, 78, 163, 0.08), rgba(160, 108, 213, 0.06));
-    border-radius: 16px;
-    margin: 0 12px;
-    width: calc(100% - 24px);
+    border: 1px solid rgba(0, 0, 0, .05)
 }
 
 [data-theme="dark"] .shop-offer-carousel-section {
-    background: linear-gradient(135deg, rgba(15, 32, 39, 0.7), rgba(120, 220, 255, 0.05));
+    background: linear-gradient(135deg, #1a1420 0%, #2a1a2e 30%, #1a1e2e 70%, #1a1420 100%);
+    background-size: 200% 200%;
+    border-color: rgba(255, 255, 255, .06)
+}
+
+@keyframes offerBgFlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
 }
 
 .shop-offer-bg {
@@ -19,309 +35,339 @@
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 0;
+    z-index: 0
 }
 
 .shop-offer-confetti {
     position: absolute;
-    width: 6px;
-    height: 10px;
-    border-radius: 2px;
-    opacity: 0.5;
-    animation: offerFloat 4s ease-in-out infinite;
+    width: 5px;
+    height: 5px;
+    border-radius: 1px;
+    background: linear-gradient(135deg, #f59e0b, #ec4899);
+    opacity: .7;
+    animation: confettiFloat 8s ease-in-out infinite
+}
+
+[data-theme="dark"] .shop-offer-confetti {
+    background: linear-gradient(135deg, #fbbf24, #a855f7);
+    opacity: .5
 }
 
 .shop-offer-confetti-1 {
-    top: 10%;
-    left: 8%;
-    background: #a29bfe;
+    top: 15%;
+    left: 10%;
     animation-delay: 0s;
+    transform: rotate(20deg)
 }
 
 .shop-offer-confetti-2 {
-    top: 30%;
+    top: 25%;
     left: 85%;
-    background: #ff2d55;
-    animation-delay: 0.6s;
+    animation-delay: 1.2s;
+    transform: rotate(-30deg);
+    width: 4px;
+    height: 4px
 }
 
 .shop-offer-confetti-3 {
-    top: 60%;
-    left: 5%;
-    background: #00cec9;
-    animation-delay: 1.2s;
+    top: 70%;
+    left: 20%;
+    animation-delay: 2.4s;
+    transform: rotate(45deg);
+    width: 6px;
+    height: 6px
 }
 
 .shop-offer-confetti-4 {
     top: 80%;
-    left: 90%;
-    background: #fdcb6e;
-    animation-delay: 1.8s;
+    left: 75%;
+    animation-delay: 3.6s;
+    transform: rotate(-15deg)
 }
 
 .shop-offer-confetti-5 {
-    top: 20%;
-    left: 45%;
-    background: #fd79a8;
-    animation-delay: 2.4s;
+    top: 45%;
+    left: 5%;
+    animation-delay: 4.8s;
+    transform: rotate(60deg);
+    width: 4px;
+    height: 4px
 }
 
 .shop-offer-confetti-6 {
-    top: 70%;
-    left: 50%;
-    background: #74b9ff;
-    animation-delay: 0.9s;
+    top: 55%;
+    left: 92%;
+    animation-delay: 6s;
+    transform: rotate(-45deg);
+    width: 6px;
+    height: 6px
 }
 
 .shop-offer-confetti-7 {
-    top: 45%;
-    left: 25%;
-    background: #a06cd5;
-    animation-delay: 1.5s;
+    top: 10%;
+    left: 50%;
+    animation-delay: 7.2s;
+    transform: rotate(30deg);
+    width: 4px;
+    height: 4px
 }
 
 .shop-offer-confetti-8 {
-    top: 15%;
-    left: 70%;
-    background: #7fd4e8;
-    animation-delay: 2.1s;
+    top: 90%;
+    left: 45%;
+    animation-delay: 8.4s;
+    transform: rotate(-60deg)
+}
+
+@keyframes confettiFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(var(--r, 20deg));
+        opacity: .3
+    }
+
+    50% {
+        transform: translateY(-15px) rotate(calc(var(--r, 20deg) + 180deg));
+        opacity: .9
+    }
 }
 
 .shop-offer-glow {
     position: absolute;
     border-radius: 50%;
     filter: blur(40px);
-    opacity: 0.3;
+    opacity: .5;
+    animation: glowPulse 6s ease-in-out infinite
 }
 
 .shop-offer-glow-1 {
-    width: 140px;
-    height: 140px;
-    top: -40px;
-    left: -40px;
-    background: #a06cd5;
+    width: 120px;
+    height: 120px;
+    background: #f59e0b;
+    top: -30px;
+    right: 10%
 }
 
 .shop-offer-glow-2 {
-    width: 120px;
-    height: 120px;
-    bottom: -40px;
-    right: -40px;
-    background: #7fd4e8;
+    width: 100px;
+    height: 100px;
+    background: #ec4899;
+    bottom: -20px;
+    left: 5%;
+    animation-delay: 3s
+}
+
+[data-theme="dark"] .shop-offer-glow-1 {
+    background: #a855f7;
+    opacity: .35
+}
+
+[data-theme="dark"] .shop-offer-glow-2 {
+    background: #22d3ee;
+    opacity: .35
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: .4
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: .7
+    }
 }
 
 .shop-offer-heading-row {
     position: relative;
     z-index: 1;
-    padding: 0 4px 10px;
+    padding: 0 2px
 }
 
 .shop-offer-heading {
-    margin: 0;
     font-size: 15px;
     font-weight: 800;
-    letter-spacing: 0.3px;
-    color: #2b1055;
+    color: #78350f;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0
 }
 
 .shop-offer-heading span {
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    background: linear-gradient(135deg, #f59e0b, #ec4899);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: 900
 }
 
 [data-theme="dark"] .shop-offer-heading {
-    color: #e0f2f7;
+    color: #fbbf24
 }
 
 [data-theme="dark"] .shop-offer-heading span {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
+    background: linear-gradient(135deg, #fbbf24, #a855f7);
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent
 }
 
 .shop-offer-carousel {
     position: relative;
     z-index: 1;
     display: flex;
+    gap: 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    gap: 10px;
-    padding-bottom: 4px;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    border-radius: 10px
 }
 
 .shop-offer-carousel::-webkit-scrollbar {
-    display: none;
+    display: none
 }
 
 .shop-offer-slide {
-    flex-shrink: 0;
-    width: 100%;
-    scroll-snap-align: center;
-    box-sizing: border-box;
+    flex: 0 0 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    padding: 0 1px
 }
 
 .shop-offer-card-btn {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 4px 14px rgba(101, 78, 163, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 10px;
+    overflow: hidden;
     cursor: pointer;
-    outline: none;
     text-align: left;
-    transition: transform 0.2s ease;
-    box-sizing: border-box;
-}
-
-.shop-offer-card-btn:active {
-    transform: scale(0.98);
+    transition: transform var(--tr), box-shadow var(--tr);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06)
 }
 
 [data-theme="dark"] .shop-offer-card-btn {
-    background: rgba(15, 32, 39, 0.7);
-    border-color: rgba(120, 220, 255, 0.22);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    background: rgba(255, 255, 255, .03);
+    border-color: rgba(255, 255, 255, .08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .3)
+}
+
+.shop-offer-card-btn:active {
+    transform: scale(.985)
 }
 
 .shop-offer-image-wrap {
+    position: relative;
     width: 100%;
+    aspect-ratio: 16/7;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f59e0b, #ec4899)
 }
 
 .shop-offer-image {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 10px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-}
-
-[data-theme="dark"] .shop-offer-image {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
+    justify-content: center
 }
 
 .shop-offer-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    display: block
 }
 
 .shop-offer-image-fallback {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
+    display: none;
+    font-size: 40px;
     font-weight: 900;
-    color: #ffffff;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.shop-offer-image-fallback-active .shop-offer-image-fallback,
-.shop-offer-image img+.shop-offer-image-fallback {
-    opacity: 0;
-}
-
-.shop-offer-image img[style*="display: none"]+.shop-offer-image-fallback {
-    opacity: 1;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .2)
 }
 
 .shop-offer-image-fallback-active .shop-offer-image-fallback {
-    opacity: 1;
-}
-
-[data-theme="dark"] .shop-offer-image-fallback {
-    color: #0f2027;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0
 }
 
 .shop-offer-details {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    min-width: 0;
+    gap: 5px;
+    padding: 8px 10px 10px;
+    position: relative
 }
 
 .shop-offer-top-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    min-width: 0;
+    gap: 8px
 }
 
 .shop-offer-name {
-    flex: 1;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
-    color: #2b1055;
+    color: var(--fg);
+    line-height: 1.2;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    min-width: 0;
-}
-
-[data-theme="dark"] .shop-offer-name {
-    color: #e0f2f7;
+    flex: 1;
+    min-width: 0
 }
 
 .shop-offer-percent {
-    flex-shrink: 0;
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    color: #ffffff;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 900;
-    letter-spacing: 0.2px;
+    color: #fff;
+    background: linear-gradient(135deg, #f59e0b, #ec4899);
+    padding: 2px 7px;
+    border-radius: 5px;
+    line-height: 1;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(236, 72, 153, .3)
 }
 
 [data-theme="dark"] .shop-offer-percent {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
+    background: linear-gradient(135deg, #fbbf24, #a855f7);
+    box-shadow: 0 2px 4px rgba(168, 85, 247, .4)
 }
 
 .shop-offer-category {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--fg3);
     text-transform: uppercase;
-    color: #654ea3;
-}
-
-[data-theme="dark"] .shop-offer-category {
-    color: #7fd4e8;
+    letter-spacing: .04em;
+    line-height: 1
 }
 
 .shop-offer-description {
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 10px;
+    color: var(--fg2);
     line-height: 1.35;
-    color: rgba(43, 16, 85, 0.65);
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-word;
-}
-
-[data-theme="dark"] .shop-offer-description {
-    color: rgba(207, 234, 245, 0.65);
+    overflow: hidden
 }
 
 .shop-offer-bottom-row {
@@ -329,168 +375,206 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-top: 2px;
+    padding-top: 2px
 }
 
 .shop-offer-price {
-    display: inline-flex;
+    display: flex;
     align-items: baseline;
-    gap: 4px;
+    gap: 3px;
+    line-height: 1
 }
 
 .shop-offer-price-label {
-    font-size: 9.5px;
-    font-weight: 600;
-    color: rgba(43, 16, 85, 0.5);
-}
-
-[data-theme="dark"] .shop-offer-price-label {
-    color: rgba(207, 234, 245, 0.5);
+    font-size: 9px;
+    color: var(--fg3);
+    font-weight: 500
 }
 
 .shop-offer-price-value {
     font-size: 13px;
-    font-weight: 900;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .shop-offer-price-value {
-    color: #cfeaf5;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1
 }
 
 .shop-offer-rating {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 3px;
-    padding: 2px 7px;
-    border-radius: 6px;
-    background: rgba(251, 191, 36, 0.15);
-    color: #b45309;
-    font-size: 10.5px;
-    font-weight: 800;
-}
-
-[data-theme="dark"] .shop-offer-rating {
-    background: rgba(251, 191, 36, 0.12);
-    color: #fbbf24;
+    gap: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--fg);
+    background: var(--bg2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--bd);
+    line-height: 1
 }
 
 .shop-offer-rating-star {
+    color: #f59e0b;
     font-size: 10px;
+    line-height: 1
 }
 
 .shop-offer-countdown {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 5px;
-    padding: 5px 9px;
-    border-radius: 8px;
-    background: rgba(101, 78, 163, 0.12);
-    color: #654ea3;
-    font-size: 10.5px;
-    font-weight: 800;
-    width: fit-content;
-    margin-top: 2px;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, .12), rgba(236, 72, 153, .12));
+    border: 1px solid rgba(245, 158, 11, .25);
+    border-radius: 6px;
+    margin-top: 2px
 }
 
 [data-theme="dark"] .shop-offer-countdown {
-    background: rgba(120, 220, 255, 0.12);
-    color: #7fd4e8;
+    background: linear-gradient(135deg, rgba(251, 191, 36, .1), rgba(168, 85, 247, .1));
+    border-color: rgba(251, 191, 36, .2)
 }
 
 .shop-offer-countdown.expired {
-    background: rgba(185, 28, 28, 0.12);
-    color: #b91c1c;
-}
-
-[data-theme="dark"] .shop-offer-countdown.expired {
-    background: rgba(248, 113, 113, 0.12);
-    color: #f87171;
+    background: rgba(239, 68, 68, .1);
+    border-color: rgba(239, 68, 68, .25)
 }
 
 .shop-offer-countdown-icon {
     font-size: 11px;
+    line-height: 1
+}
+
+.shop-offer-countdown-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: #92400e;
+    line-height: 1;
+    letter-spacing: .02em
+}
+
+[data-theme="dark"] .shop-offer-countdown-text {
+    color: #fbbf24
+}
+
+.shop-offer-countdown.expired .shop-offer-countdown-text {
+    color: #dc2626
 }
 
 .shop-offer-dots {
     position: relative;
     z-index: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 6px;
-    margin-top: 10px;
+    justify-content: center;
+    gap: 5px;
+    padding: 2px 0
 }
 
 .shop-offer-dot {
     width: 6px;
     height: 6px;
-    border: none;
     border-radius: 50%;
-    background: rgba(101, 78, 163, 0.28);
+    background: rgba(0, 0, 0, .2);
+    border: none;
     cursor: pointer;
     padding: 0;
-    outline: none;
-    transition: width 0.25s ease, background 0.25s ease;
+    transition: width .2s ease, background .2s ease
 }
 
 [data-theme="dark"] .shop-offer-dot {
-    background: rgba(120, 220, 255, 0.28);
+    background: rgba(255, 255, 255, .2)
 }
 
 .shop-offer-dot.active {
     width: 18px;
-    border-radius: 4px;
-    background: #654ea3;
+    border-radius: 3px;
+    background: linear-gradient(135deg, #f59e0b, #ec4899)
 }
 
 [data-theme="dark"] .shop-offer-dot.active {
-    background: #7fd4e8;
+    background: linear-gradient(135deg, #fbbf24, #a855f7)
 }
 
-@keyframes offerFloat {
-
-    0%,
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    50% {
-        transform: translateY(-8px) rotate(15deg);
-    }
-}
-
-@media (max-width: 360px) {
+@media(min-width:480px) {
     .shop-offer-carousel-section {
-        padding: 12px 10px 14px;
-        margin: 0 10px;
-        width: calc(100% - 20px);
+        padding: 12px 12px 10px;
+        border-radius: 14px;
+        gap: 9px
     }
 
     .shop-offer-heading {
-        font-size: 14px;
+        font-size: 17px
     }
 
-    .shop-offer-card-btn {
-        padding: 8px;
-        gap: 8px;
+    .shop-offer-image-wrap {
+        aspect-ratio: 16/6
     }
 
-    .shop-offer-name {
-        font-size: 12px;
+    .shop-offer-details {
+        padding: 10px 12px 12px;
+        gap: 6px
     }
 
+    .shop-offer-name,
     .shop-offer-percent {
-        font-size: 10px;
-        padding: 2px 7px;
+        font-size: 13px
+    }
+
+    .shop-offer-category {
+        font-size: 10px
+    }
+
+    .shop-offer-description {
+        font-size: 11px;
+        -webkit-line-clamp: 2
     }
 
     .shop-offer-price-value {
-        font-size: 12px;
+        font-size: 14px
     }
 
-    .shop-offer-countdown {
-        font-size: 10px;
-        padding: 4px 8px;
+    .shop-offer-rating {
+        font-size: 11px
+    }
+
+    .shop-offer-countdown-text {
+        font-size: 11px
+    }
+}
+
+@media(min-width:768px) {
+    .shop-offer-carousel-section {
+        padding: 14px 14px 12px;
+        border-radius: 16px
+    }
+
+    .shop-offer-heading {
+        font-size: 19px
+    }
+
+    .shop-offer-image-wrap {
+        aspect-ratio: 16/5
+    }
+
+    .shop-offer-details {
+        padding: 12px 14px 14px
+    }
+
+    .shop-offer-name,
+    .shop-offer-percent {
+        font-size: 14px
+    }
+
+    .shop-offer-price-value {
+        font-size: 15px
+    }
+
+    .shop-offer-dot {
+        width: 7px;
+        height: 7px
+    }
+
+    .shop-offer-dot.active {
+        width: 22px
     }
 }

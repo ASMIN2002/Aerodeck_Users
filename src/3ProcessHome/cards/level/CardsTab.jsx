@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { API } from "../../../services/api";
+import { FiX, FiStar, FiZap, FiSmile, FiHeart, FiAward, FiTrendingUp } from "react-icons/fi";
 import "../levelstyle/CardsTab.css";
 
 const MAX_RANDOM_CATEGORIES = 8;
@@ -8,24 +9,24 @@ const CARDS_CATNAME = "CARDS";
 const PREMIUM_CATEGORY = "PREMIUM";
 
 const PREMIUM_PEEKS = [
-    { animal: "🦁", msg: "Hi there!" },
-    { animal: "🐮", msg: "How are you?" },
-    { animal: "🐐", msg: "Check our brand!" },
-    { animal: "🦊", msg: "Something special!" },
-    { animal: "🐼", msg: "Have a nice day!" },
+    { Icon: FiStar, msg: "Hi there!" },
+    { Icon: FiSmile, msg: "How are you?" },
+    { Icon: FiHeart, msg: "Check our brand!" },
+    { Icon: FiZap, msg: "Something special!" },
+    { Icon: FiAward, msg: "Have a nice day!" },
 ];
 
-function shuffleAndSlice(arr, count) {
-    return [...arr]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, count);
-}
+const TABS = [
+    { key: "regular", label: "Regular" },
+    { key: "premium", label: "Premium" },
+];
 
-function isRegularCategory(item) {
+const shuffleAndSlice = (arr, count) => [...arr].sort(() => Math.random() - 0.5).slice(0, count);
+
+const isRegularCategory = (item) => {
     if (item.catname !== CARDS_CATNAME) return false;
-    const cat = String(item.category).trim().toUpperCase();
-    return cat !== PREMIUM_CATEGORY;
-}
+    return String(item.category).trim().toUpperCase() !== PREMIUM_CATEGORY;
+};
 
 function CardsTab({ onCategoryChange }) {
     const navigate = useNavigate();
@@ -35,39 +36,28 @@ function CardsTab({ onCategoryChange }) {
     const [categories, setCategories] = useState([]);
     const [randomEight, setRandomEight] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [isImageAutoScroll, setIsImageAutoScroll] = useState(true);
 
     useEffect(() => {
         setActiveTab(location.pathname.includes("/premium") ? "premium" : "regular");
     }, [location.pathname]);
 
     useEffect(() => {
-        async function loadCategories() {
-            try {
-                const res = await fetch(`${API}/api/category`);
-                const data = await res.json();
-
-                if (data.success) {
-                    setCategories((data.data || []).filter(isRegularCategory));
-                }
-            } catch (err) {
-                console.error("Category load error:", err.message);
-            }
-        }
-
-        loadCategories();
+        fetch(`${API}/api/category`)
+            .then((r) => r.json())
+            .then((data) => { if (data.success) setCategories((data.data || []).filter(isRegularCategory)); })
+            .catch((err) => console.error("Category load error:", err.message));
     }, []);
 
     useEffect(() => {
-        if (categories.length === 0) return;
-        setRandomEight(shuffleAndSlice(categories, MAX_RANDOM_CATEGORIES));
+        if (categories.length) setRandomEight(shuffleAndSlice(categories, MAX_RANDOM_CATEGORIES));
     }, [categories]);
 
     const handleTabClick = (tab) => {
-        const basePath = location.pathname
-            .replace(/\/premium$/, "")
-            .replace(/\/regular$/, "")
-            .replace(/\/product\/.*$/, "");
+        let basePath = "/home/cards";
+
+        if (location.pathname.includes("/cards")) {
+            basePath = "/home/cards";
+        }
 
         if (tab === "premium") {
             navigate(`${basePath}/premium`, { replace: true });
@@ -78,43 +68,30 @@ function CardsTab({ onCategoryChange }) {
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
-        setIsImageAutoScroll(true);
         onCategoryChange?.(category.category);
     };
 
     const handleCancel = () => {
         setSelectedCategory(null);
-        setIsImageAutoScroll(true);
         setRandomEight(shuffleAndSlice(categories, MAX_RANDOM_CATEGORIES));
         onCategoryChange?.("All");
     };
 
-    const renderCategoryImage = (category, className) => {
+    const renderImage = (category, fallbackClass) => {
         if (category.image) {
-            return (
-                <img
-                    src={category.image}
-                    alt={category.category}
-                    draggable={false}
-                />
-            );
+            return <img src={category.image} alt={category.category} draggable={false} loading="lazy" />;
         }
-
-        return (
-            <span className={className}>
-                {category.category?.charAt(0)?.toUpperCase() || "?"}
-            </span>
-        );
+        return <span className={fallbackClass}>{category.category?.charAt(0)?.toUpperCase() || "?"}</span>;
     };
 
     const renderSlot = () => {
         if (activeTab === "premium") {
             return (
                 <div className="cardstab-lion-wrap">
-                    {PREMIUM_PEEKS.map((peek, i) => (
+                    {PREMIUM_PEEKS.map(({ Icon, msg }, i) => (
                         <div className="cardstab-peek" key={i}>
-                            <span className="cardstab-animal">{peek.animal}</span>
-                            <span className="cardstab-msg">{peek.msg}</span>
+                            <Icon className="cardstab-peek-icon" />
+                            <span className="cardstab-msg">{msg}</span>
                         </div>
                     ))}
                 </div>
@@ -124,25 +101,12 @@ function CardsTab({ onCategoryChange }) {
         if (selectedCategory) {
             return (
                 <div className="cardstab-selected">
-                    <div
-                        className={`cardstab-selected-image ${isImageAutoScroll ? "auto-scroll" : "paused"}`}
-                        onClick={() => setIsImageAutoScroll(false)}
-                        onTouchStart={() => setIsImageAutoScroll(false)}
-                    >
-                        {renderCategoryImage(selectedCategory, "cardstab-selected-fallback")}
+                    <div className="cardstab-selected-image">
+                        {renderImage(selectedCategory, "cardstab-selected-fallback")}
                     </div>
-
-                    <span className="cardstab-selected-name">
-                        {selectedCategory.category}
-                    </span>
-
-                    <button
-                        type="button"
-                        className="cardstab-selected-cancel"
-                        onClick={handleCancel}
-                        aria-label="Cancel"
-                    >
-                        ✕
+                    <span className="cardstab-selected-name">{selectedCategory.category}</span>
+                    <button type="button" className="cardstab-selected-cancel" onClick={handleCancel} aria-label="Cancel">
+                        <FiX />
                     </button>
                 </div>
             );
@@ -151,33 +115,20 @@ function CardsTab({ onCategoryChange }) {
         return (
             <div className="cardstab-cat-scroll">
                 {randomEight.map((item) => (
-                    <button
-                        type="button"
-                        key={item.catid}
-                        className="cardstab-cat-chip"
-                        onClick={() => handleCategoryClick(item)}
-                    >
+                    <button type="button" key={item.catid} className="cardstab-cat-chip" onClick={() => handleCategoryClick(item)}>
                         <span className="cardstab-cat-chip-icon">
-                            {renderCategoryImage(item, "cardstab-cat-chip-fallback")}
+                            {renderImage(item, "cardstab-cat-chip-fallback")}
                         </span>
-                        <span className="cardstab-cat-chip-name">
-                            {item.category}
-                        </span>
+                        <span className="cardstab-cat-chip-name">{item.category}</span>
                     </button>
                 ))}
             </div>
         );
     };
 
-    const TABS = [
-        { key: "regular", label: "Regular" },
-        { key: "premium", label: "Premium" },
-    ];
-
     return (
         <div className="cardstab-wrap">
             <div className="cardstab-slot">{renderSlot()}</div>
-
             <div className="cardstab-buttons">
                 {TABS.map((tab) => (
                     <button
