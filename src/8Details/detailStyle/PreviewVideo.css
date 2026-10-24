@@ -1,86 +1,83 @@
 .dt-preview {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 14px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 14px rgba(101, 78, 163, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-sizing: border-box;
+    padding: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    width: 100%;
+    min-width: 0
 }
 
-[data-theme="dark"] .dt-preview {
-    background: rgba(15, 32, 39, 0.6);
-    border-color: rgba(120, 220, 255, 0.22);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-}
-
-.dt-preview h3 {
-    margin: 0;
-    font-size: 13px;
+.dt-preview>h3 {
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: 0.3px;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .dt-preview h3 {
-    color: #e0f2f7;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: -.01em;
+    line-height: 1.2
 }
 
 .dt-no-preview {
-    padding: 20px 12px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    background: var(--bg3);
+    border: 1px dashed var(--bd);
     border-radius: 10px;
-    background: rgba(101, 78, 163, 0.06);
-    border: 1px dashed rgba(101, 78, 163, 0.25);
-    font-size: 11.5px;
-    font-weight: 600;
-    color: rgba(43, 16, 85, 0.5);
-}
-
-[data-theme="dark"] .dt-no-preview {
-    background: rgba(120, 220, 255, 0.06);
-    border-color: rgba(120, 220, 255, 0.25);
-    color: rgba(207, 234, 245, 0.5);
+    font-size: 12px;
+    color: var(--fg3);
+    text-align: center
 }
 
 .dt-reels-container {
     display: flex;
-    gap: 10px;
+    align-items: stretch;
+    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 4px;
-    scroll-snap-type: x mandatory;
+    overflow-y: hidden;
     scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 2px 0 4px;
+    width: 100%
 }
 
 .dt-reels-container::-webkit-scrollbar {
-    display: none;
+    display: none
 }
 
 .dt-reel-card {
     position: relative;
-    flex-shrink: 0;
+    flex: 0 0 auto;
     width: 140px;
-    aspect-ratio: 9 / 16;
-    border-radius: 12px;
+    aspect-ratio: 9/16;
+    background: #000;
+    border-radius: 10px;
     overflow: hidden;
-    background: #000000;
-    scroll-snap-align: start;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+    transition: transform var(--tr)
+}
+
+[data-theme="dark"] .dt-reel-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5)
+}
+
+.dt-reel-card:active {
+    transform: scale(.98)
 }
 
 .dt-reel-video {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-drag: none;
+    display: block
 }
 
 .dt-reel-play-btn,
@@ -89,85 +86,92 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    outline: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .55);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    transition: transform 0.2s ease;
-    z-index: 3;
-}
-
-.dt-reel-pause-btn {
-    width: 34px;
-    height: 34px;
-    top: auto;
-    left: auto;
-    bottom: 30px;
-    right: 8px;
-    transform: none;
+    border: 1px solid rgba(255, 255, 255, .2);
+    color: #fff;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform var(--tr), background var(--tr)
 }
 
 .dt-reel-play-btn:active,
 .dt-reel-pause-btn:active {
-    transform: scale(0.92);
+    transform: translate(-50%, -50%) scale(.9);
+    background: rgba(0, 0, 0, .75)
 }
 
-.dt-reel-pause-btn:active {
-    transform: scale(0.92);
+.dt-reel-play-btn svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px
+}
+
+.dt-reel-pause-btn svg {
+    width: 14px;
+    height: 14px
 }
 
 .dt-reel-badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
+    top: 6px;
+    left: 6px;
+    padding: 3px 7px;
+    background: rgba(0, 0, 0, .7);
+    color: #fff;
     font-size: 9px;
     font-weight: 800;
-    letter-spacing: 0.4px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 3;
-    pointer-events: none;
+    border-radius: 5px;
+    line-height: 1;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 2;
+    letter-spacing: .02em
 }
 
 .dt-reel-progress {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.3);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 16px;
+    padding: 6px 6px 5px;
     cursor: pointer;
-    z-index: 3;
-    overflow: visible;
-    touch-action: none;
+    z-index: 2;
+    display: flex;
+    align-items: center
+}
+
+.dt-reel-progress::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    background: rgba(255, 255, 255, .25);
+    border-radius: 2px
 }
 
 .dt-reel-progress-fill {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #654ea3, #a06cd5);
-    transition: width 0.1s linear;
-}
-
-[data-theme="dark"] .dt-reel-progress-fill {
-    background: linear-gradient(90deg, #7fd4e8, #4a8ba8);
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    background: linear-gradient(90deg, #22d3ee, #a855f7);
+    border-radius: 2px;
+    transition: width .15s linear;
+    box-shadow: 0 0 6px rgba(34, 211, 238, .6);
+    z-index: 1
 }
 
 .dt-reel-progress-thumb {
@@ -176,35 +180,92 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #ffffff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    background: #fff;
     transform: translate(-50%, -50%);
-    pointer-events: none;
-    transition: left 0.1s linear;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .4);
+    transition: left .15s linear;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none
 }
 
-@media (max-width: 360px) {
+.dt-reel-progress:active .dt-reel-progress-thumb {
+    opacity: 1
+}
+
+@media(min-width:480px) {
     .dt-preview {
-        padding: 12px;
-        gap: 8px;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 14px
     }
 
-    .dt-preview h3 {
-        font-size: 12px;
+    .dt-preview>h3 {
+        font-size: 16px
+    }
+
+    .dt-reels-container {
+        gap: 10px
     }
 
     .dt-reel-card {
-        width: 120px;
+        width: 160px;
+        border-radius: 12px
     }
 
-    .dt-reel-play-btn {
-        width: 36px;
-        height: 36px;
-    }
-
+    .dt-reel-play-btn,
     .dt-reel-pause-btn {
-        width: 30px;
-        height: 30px;
-        bottom: 26px;
+        width: 40px;
+        height: 40px
+    }
+
+    .dt-reel-play-btn svg {
+        width: 18px;
+        height: 18px
+    }
+
+    .dt-reel-pause-btn svg {
+        width: 16px;
+        height: 16px
+    }
+
+    .dt-reel-badge {
+        font-size: 10px;
+        padding: 3px 8px
+    }
+}
+
+@media(min-width:768px) {
+    .dt-preview {
+        gap: 14px;
+        padding: 16px
+    }
+
+    .dt-preview>h3 {
+        font-size: 18px
+    }
+
+    .dt-reels-container {
+        gap: 12px
+    }
+
+    .dt-reel-card {
+        width: 180px
+    }
+
+    .dt-reel-play-btn,
+    .dt-reel-pause-btn {
+        width: 44px;
+        height: 44px
+    }
+
+    .dt-reel-play-btn svg {
+        width: 20px;
+        height: 20px
+    }
+
+    .dt-reel-pause-btn svg {
+        width: 18px;
+        height: 18px
     }
 }

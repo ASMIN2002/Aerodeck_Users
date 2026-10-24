@@ -1,46 +1,30 @@
-import "../placeorderstyle/OrderItemDetails.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiArrowLeft, FiPackage } from "react-icons/fi";
 import { API } from "../../services/api";
 import OrderItem from "../../7OrderItem/orderitem/OrderItem";
+import "../placeorderstyle/OrderItemDetails.css";
 
-function OrderItemDetails({
-    order,
-    setProfilePage,
-    onOpenDetails,
-    setSelectedInvoice,
-    navigateWithLoading
-}) {
+function OrderItemDetails({ order, setProfilePage, onOpenDetails, setSelectedInvoice, navigateWithLoading }) {
     const navigate = useNavigate();
-
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchItems = async () => {
+        if (!order?.order_id) {
+            setLoading(false);
+            return;
+        }
+
         try {
-            if (!order?.order_id) {
-                console.warn("No order_id provided");
-                setLoading(false);
-                return;
-            }
-
-            const response = await fetch(
-                `${API}/api/user/orders/${order.order_id}`
-            );
-
+            const response = await fetch(`${API}/api/user/orders/${order.order_id}`);
             const text = await response.text();
 
-            let data;
             try {
-                data = JSON.parse(text);
+                const data = JSON.parse(text);
+                if (data.success) setItems(data.data || []);
             } catch (parseErr) {
                 console.error("INVALID JSON RESPONSE:", text.slice(0, 200));
-                setLoading(false);
-                return;
-            }
-
-            if (data.success) {
-                setItems(data.data || []);
             }
         } catch (error) {
             console.error("ORDER FETCH ERROR:", error);
@@ -49,45 +33,43 @@ function OrderItemDetails({
         }
     };
 
-    useEffect(() => {
-        if (!order?.order_id) {
-            setLoading(false);
-            return;
-        }
-        fetchItems();
-    }, [order?.order_id]);
+    useEffect(() => { fetchItems(); }, [order?.order_id]);
 
     if (loading) {
         return (
             <div className="order-item-details">
-                Loading...
+                <div className="oid-loading">
+                    <div className="oid-spinner" />
+                    <p>Loading...</p>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="order-item-details">
-            <div className="order-details-header">
+            <div className="oid-header">
                 <button
-                    onClick={() => {
-                        setProfilePage("orders");
-                        navigate("/profile/orders", { replace: true });
-                    }}
+                    className="oid-back"
+                    onClick={() => { setProfilePage("orders"); navigate("/profile/orders", { replace: true }); }}
+                    aria-label="Back"
                 >
-                    ←
+                    <FiArrowLeft />
                 </button>
-
-                <h2>ORDER DETAILS</h2>
+                <h2 className="oid-title">Order Details</h2>
             </div>
 
             {items.length === 0 ? (
-                <div className="order-item-details-empty">
-                    No items found.
+                <div className="oid-empty">
+                    <FiPackage className="oid-empty-icon" />
+                    <h3>No items found</h3>
+                    <p>This order appears to be empty.</p>
                 </div>
             ) : (
-                items.map((item) => (
-                    <div key={item.product_id}>
+                <div className="oid-items">
+                    {items.map((item) => (
                         <OrderItem
+                            key={item.product_id}
                             item={item}
                             order={order}
                             order_id={order.order_id}
@@ -97,8 +79,8 @@ function OrderItemDetails({
                             fetchItems={fetchItems}
                             navigateWithLoading={navigateWithLoading}
                         />
-                    </div>
-                ))
+                    ))}
+                </div>
             )}
         </div>
     );

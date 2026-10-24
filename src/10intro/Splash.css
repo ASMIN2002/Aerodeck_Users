@@ -1,0 +1,348 @@
+.sp-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at top, #1a1a2e, #0b0d10 60%, #000);
+    overflow: hidden;
+    z-index: 9999;
+    padding: 20px
+}
+
+.sp-bg1,
+.sp-bg2,
+.sp-bg3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: spPulse 8s ease-in-out infinite
+}
+
+.sp-bg1 {
+    width: 280px;
+    height: 280px;
+    background: #3b82f6;
+    top: -80px;
+    left: -80px;
+    opacity: .5
+}
+
+.sp-bg2 {
+    width: 320px;
+    height: 320px;
+    background: #a855f7;
+    bottom: -100px;
+    right: -100px;
+    opacity: .45;
+    animation-direction: reverse
+}
+
+.sp-bg3 {
+    width: 240px;
+    height: 240px;
+    background: #22d3ee;
+    top: 50%;
+    left: 50%;
+    margin: -120px 0 0 -120px;
+    opacity: .25
+}
+
+@keyframes spPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: .3
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: .6
+    }
+}
+
+.sp-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse, black 20%, transparent 70%);
+    mask-image: radial-gradient(ellipse, black 20%, transparent 70%);
+    animation: spMove 20s linear infinite
+}
+
+@keyframes spMove {
+    to {
+        background-position: 40px 40px
+    }
+}
+
+.sp-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden
+}
+
+.sp-particles span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #22d3ee;
+    box-shadow: 0 0 8px #22d3ee;
+    animation: spFloat 8s linear infinite
+}
+
+.sp-particles span:nth-child(2) {
+    left: 15%;
+    animation-delay: 1s;
+    background: #a855f7;
+    box-shadow: 0 0 8px #a855f7
+}
+
+.sp-particles span:nth-child(3) {
+    left: 30%;
+    animation-delay: 2s;
+    animation-duration: 10s
+}
+
+.sp-particles span:nth-child(4) {
+    left: 45%;
+    animation-delay: .5s;
+    background: #3b82f6;
+    box-shadow: 0 0 8px #3b82f6
+}
+
+.sp-particles span:nth-child(5) {
+    left: 60%;
+    animation-delay: 3s;
+    animation-duration: 9s
+}
+
+.sp-particles span:nth-child(6) {
+    left: 75%;
+    animation-delay: 1.5s;
+    background: #a855f7;
+    box-shadow: 0 0 8px #a855f7
+}
+
+.sp-particles span:nth-child(7) {
+    left: 88%;
+    animation-delay: 4s;
+    animation-duration: 11s
+}
+
+.sp-particles span:nth-child(8) {
+    left: 52%;
+    animation-delay: 2.5s;
+    background: #3b82f6;
+    box-shadow: 0 0 8px #3b82f6
+}
+
+.sp-particles span:nth-child(9) {
+    left: 22%;
+    animation-delay: 5s;
+    animation-duration: 7s
+}
+
+.sp-particles span:nth-child(10) {
+    left: 68%;
+    animation-delay: 3.5s
+}
+
+@keyframes spFloat {
+    0% {
+        transform: translateY(110vh) scale(.5);
+        opacity: 0
+    }
+
+    10%,
+    90% {
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0
+    }
+}
+
+.sp-light {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+    height: 60vh;
+    background: radial-gradient(ellipse at top, rgba(34, 211, 238, .25), transparent 70%);
+    animation: spPulse 4s ease-in-out infinite
+}
+
+.sp-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    animation: spFadeIn 1s ease
+}
+
+@keyframes spFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+.sp-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(168, 85, 247, .15));
+    border: 2px solid rgba(34, 211, 238, .4);
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 20px #22d3ee;
+    animation: spLogoPulse 2.5s ease-in-out infinite
+}
+
+@keyframes spLogoPulse {
+
+    0%,
+    100% {
+        transform: scale(1)
+    }
+
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 60px rgba(34, 211, 238, .5)
+    }
+}
+
+.sp-title {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+    line-height: 1;
+    margin: 0;
+    background: linear-gradient(135deg, #fff, #22d3ee 50%, #a855f7);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: spShine 3s ease-in-out infinite
+}
+
+@keyframes spShine {
+
+    0%,
+    100% {
+        background-position: 0 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+}
+
+.sp-tagline {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, .6);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin: 0;
+    animation: spFade 2s ease-in-out infinite
+}
+
+@keyframes spFade {
+
+    0%,
+    100% {
+        opacity: .6
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+
+.sp-loader {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px
+}
+
+.sp-loader span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22d3ee;
+    box-shadow: 0 0 12px #22d3ee;
+    animation: spDot 1.4s ease-in-out infinite
+}
+
+.sp-loader span:nth-child(2) {
+    animation-delay: .2s;
+    background: #a855f7;
+    box-shadow: 0 0 12px #a855f7
+}
+
+.sp-loader span:nth-child(3) {
+    animation-delay: .4s;
+    background: #3b82f6;
+    box-shadow: 0 0 12px #3b82f6
+}
+
+@keyframes spDot {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(.6);
+        opacity: .4
+    }
+
+    40% {
+        transform: scale(1.2);
+        opacity: 1
+    }
+}
+
+@media(min-width:480px) {
+    .sp-logo {
+        width: 96px;
+        height: 96px;
+        font-size: 32px
+    }
+
+    .sp-title {
+        font-size: 52px
+    }
+}
+
+@media(min-width:768px) {
+    .sp-logo {
+        width: 110px;
+        height: 110px;
+        font-size: 38px
+    }
+
+    .sp-title {
+        font-size: 64px
+    }
+}

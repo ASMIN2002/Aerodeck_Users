@@ -1,120 +1,85 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../profilestyles/Profile.css";
+import {
+    FiHeart, FiPackage, FiGift, FiThumbsUp, FiStar,
+    FiSettings, FiInfo, FiFileText, FiLogOut, FiChevronRight, FiPhone,
+} from "react-icons/fi";
 import NODP from "../../assets/NODP.png";
 import { API } from "../../services/api";
-import {
-    FiHeart,
-    FiPackage,
-    FiGift,
-    FiThumbsUp,
-    FiStar,
-    FiSettings,
-    FiInfo,
-    FiFileText
-} from "react-icons/fi";
+import "../profilestyles/Profile.css";
 
 const NAV_DELAY = 500;
 
 const MENU_ITEMS = [
-    { page: "orders", Icon: FiPackage, label: "My Orders", loading: "Loading Orders..." },
-    { page: "wishlist", Icon: FiHeart, label: "Wishlist", loading: "Loading Wishlist..." },
-    { page: "likes", Icon: FiThumbsUp, label: "My Likes", loading: "Loading My Likes..." },
-    { page: "reviews", Icon: FiStar, label: "My Reviews", loading: "Loading My Reviews..." },
-    { page: "rewards", Icon: FiGift, label: "My Rewards", loading: "Loading My Rewards..." },
-    { page: "settings", Icon: FiSettings, label: "Settings", loading: "Loading Settings..." },
-    { page: "about", Icon: FiInfo, label: "About HEEPIT", loading: "Loading About HEEPIT..." },
-    { page: "terms", Icon: FiFileText, label: "Terms & Conditions", loading: "Loading Terms & Conditions..." },
+    { page: "orders", Icon: FiPackage, label: "My Orders", color: "blue" },
+    { page: "wishlist", Icon: FiHeart, label: "Wishlist", color: "rose" },
+    { page: "likes", Icon: FiThumbsUp, label: "My Likes", color: "pink" },
+    { page: "reviews", Icon: FiStar, label: "My Reviews", color: "amber" },
+    { page: "rewards", Icon: FiGift, label: "My Rewards", color: "purple" },
+    { page: "settings", Icon: FiSettings, label: "Settings", color: "slate" },
+    { page: "about", Icon: FiInfo, label: "About HEEPIT", color: "cyan" },
+    { page: "terms", Icon: FiFileText, label: "Terms & Conditions", color: "indigo" },
 ];
 
 function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading }) {
     const navigate = useNavigate();
-
     const [profile, setProfile] = useState(null);
     const [version, setVersion] = useState("");
     const [showLogoutBox, setShowLogoutBox] = useState(false);
 
     useEffect(() => {
-        async function loadVersion() {
-            if (!user?.user_id) return;
-
-            try {
-                const res = await fetch(`${API}/user/app-version/${user.user_id}`);
-                const data = await res.json();
-                if (data.success) setVersion(data.version);
-            } catch (err) {
-                console.error("Version load error:", err.message);
-            }
-        }
-
-        loadVersion();
+        if (!user?.user_id) return;
+        fetch(`${API}/user/app-version/${user.user_id}`)
+            .then((r) => r.json())
+            .then((data) => { if (data.success) setVersion(data.version); })
+            .catch((err) => console.error("Version load error:", err.message));
     }, [user]);
 
     useEffect(() => {
-        async function loadProfile() {
-            try {
-                const res = await fetch(`${API}/api/user/profile`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        session_token: localStorage.getItem("session_token"),
-                    }),
-                });
-                const data = await res.json();
-                if (data.success) setProfile(data.user);
-            } catch (err) {
-                console.error("Profile load error:", err.message);
-            }
-        }
-
-        loadProfile();
+        fetch(`${API}/api/user/profile`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session_token: localStorage.getItem("session_token") }),
+        })
+            .then((r) => r.json())
+            .then((data) => { if (data.success) setProfile(data.user); })
+            .catch((err) => console.error("Profile load error:", err.message));
     }, []);
 
-    const maskedMobile = profile?.mobile_number
-        ? `******${profile.mobile_number.slice(-4)}`
-        : "";
+    const maskedMobile = profile?.mobile_number ? `•••• ${profile.mobile_number.slice(-4)}` : "Not set";
+    const initials = profile?.full_name?.trim()?.charAt(0)?.toUpperCase() || "?";
 
     const handleProfileNavigation = (page, text = "Loading...") => {
         navigateWithLoading(
-            () => {
-                setProfilePage(page);
-                navigate(`/profile/${page}`);
-            },
+            () => { setProfilePage(page); navigate(`/profile/${page}`); },
             text,
             NAV_DELAY
         );
     };
 
-    // if (!profile) {
-    //     return <Loading manual={true} text="Loading Profile..." />;
-    // }
-
     return (
         <div className="profile">
             <div className="profile-header">
                 <div className="prohead1">
-                    <img
-                        src={profile?.profile_image || NODP}
-                        alt="Profile"
-                        className="profile-image1"
-                        onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = NODP;
-                        }}
-                    />
+                    {profile?.profile_image ? (
+                        <img
+                            src={profile.profile_image}
+                            alt="Profile"
+                            className="profile-image1"
+                            loading="lazy"
+                            onError={(e) => { e.target.onerror = null; e.target.src = NODP; }}
+                        />
+                    ) : (
+                        <div className="profile-image1 profile-initials">{initials}</div>
+                    )}
                 </div>
 
                 <div className="prohead2">
-                    <h2>{profile?.full_name || "Not Set"}</h2>
-                    <p>{maskedMobile || "Not Set"}</p>
+                    <h2>{profile?.full_name || "Set your name"}</h2>
+                    <p className="profile-phone"><FiPhone /> {maskedMobile}</p>
                     <button
                         className="edit-profile-btn-pro"
-                        onClick={() =>
-                            handleProfileNavigation(
-                                "viewprofile",
-                                "Loading Profile Details..."
-                            )
-                        }
+                        onClick={() => handleProfileNavigation("viewprofile", "Loading Profile Details...")}
                     >
                         View Profile
                     </button>
@@ -122,58 +87,37 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
             </div>
 
             <div className="profile-menu">
-                {MENU_ITEMS.map(({ page, Icon, label, loading }) => (
+                {MENU_ITEMS.map(({ page, Icon, label, color }) => (
                     <button
                         key={page}
-                        className="profile-item"
-                        onClick={() => handleProfileNavigation(page, loading)}
+                        className={`profile-item profile-item-${color}`}
+                        onClick={() => handleProfileNavigation(page, `Loading ${label}...`)}
                     >
-                        <span className="profile-item-icon">
-                            <Icon />
-                        </span>
+                        <span className="profile-item-icon"><Icon /></span>
                         <span className="profile-item-label">{label}</span>
+                        <FiChevronRight className="profile-item-arrow" />
                     </button>
                 ))}
             </div>
 
             <button
                 className="logout-btn"
-                onClick={() =>
-                    navigateWithLoading(
-                        () => setShowLogoutBox(true),
-                        "Preparing Logout...",
-                        NAV_DELAY
-                    )
-                }
+                onClick={() => navigateWithLoading(() => setShowLogoutBox(true), "Preparing Logout...", NAV_DELAY)}
             >
-                Logout
+                <FiLogOut /> Logout
             </button>
 
-            <p className="profile-version">HEEPIT {version}</p>
+            {version && <p className="profile-version">HEEPIT v{version}</p>}
 
             {showLogoutBox && (
-                <div className="logout-overlay">
-                    <div className="logout-message-box">
-                        <h3>Logout</h3>
-                        <p>Do you want to logout?</p>
-
+                <div className="logout-overlay" onClick={() => setShowLogoutBox(false)}>
+                    <div className="logout-message-box" onClick={(e) => e.stopPropagation()}>
+                        <div className="logout-icon-wrap"><FiLogOut /></div>
+                        <h3>Logout?</h3>
+                        <p>Are you sure you want to logout?</p>
                         <div className="logout-box-buttons">
-                            <button
-                                className="logout-cancel-btn"
-                                onClick={() => setShowLogoutBox(false)}
-                            >
-                                Cancel
-                            </button>
-
-                            <button
-                                className="logout-confirm-btn"
-                                onClick={() => {
-                                    setShowLogoutBox(false);
-                                    onLogout();
-                                }}
-                            >
-                                Logout
-                            </button>
+                            <button className="logout-cancel-btn" onClick={() => setShowLogoutBox(false)}>Cancel</button>
+                            <button className="logout-confirm-btn" onClick={() => { setShowLogoutBox(false); onLogout(); }}>Logout</button>
                         </div>
                     </div>
                 </div>

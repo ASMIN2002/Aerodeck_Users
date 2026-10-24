@@ -1,81 +1,162 @@
 .order-item-details {
-    width: 100%;
-    min-height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 14px 14px 24px;
-    box-sizing: border-box;
-    background: #f4f1fa;
+    gap: 8px;
+    padding: 4px 0 12px;
+    width: 100%;
+    min-width: 0
 }
 
-[data-theme="dark"] .order-item-details {
-    background: #0f2027;
+.oid-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 60px 16px;
+    text-align: center;
+    color: var(--fg3)
 }
 
-.order-details-header {
+.oid-loading p {
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0
+}
+
+.oid-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--bd);
+    border-top-color: var(--fg);
+    border-radius: 50%;
+    animation: oidSpin .7s linear infinite
+}
+
+@keyframes oidSpin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.oid-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    padding: 0 2px
 }
 
-.order-details-header button {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 10px;
-    background: rgba(101, 78, 163, 0.14);
-    color: #654ea3;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    outline: none;
+.oid-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    color: var(--fg);
+    font-size: 15px;
     flex-shrink: 0;
+    cursor: pointer;
+    transition: background var(--tr), transform var(--tr)
 }
 
-[data-theme="dark"] .order-details-header button {
-    background: rgba(120, 220, 255, 0.14);
-    color: #7fd4e8;
+.oid-back:active {
+    transform: scale(.94);
+    background: var(--bg3)
 }
 
-.order-details-header h2 {
-    margin: 0;
+.oid-title {
     font-size: 15px;
     font-weight: 800;
-    letter-spacing: 0.6px;
-    color: #2b1055;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0;
+    text-transform: none
 }
 
-[data-theme="dark"] .order-details-header h2 {
-    color: #e0f2f7;
+.oid-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 60px 16px;
+    text-align: center
 }
 
-.order-item-details-empty {
-    padding: 40px 16px;
-    text-align: center;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(43, 16, 85, 0.6);
+.oid-empty-icon {
+    font-size: 44px;
+    color: var(--fg3);
+    opacity: .5;
+    margin-bottom: 4px
 }
 
-[data-theme="dark"] .order-item-details-empty {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
-    color: rgba(207, 234, 245, 0.6);
+.oid-empty h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--fg);
+    margin: 0
 }
 
-@media (max-width: 360px) {
+.oid-empty p {
+    font-size: 11px;
+    color: var(--fg3);
+    margin: 0;
+    line-height: 1.4
+}
+
+.oid-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+@media(min-width:480px) {
     .order-item-details {
-        padding: 10px 10px 20px;
-        gap: 10px;
+        gap: 10px
     }
 
-    .order-details-header h2 {
-        font-size: 14px;
+    .oid-back {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
+    }
+
+    .oid-title {
+        font-size: 17px
+    }
+
+    .oid-empty-icon {
+        font-size: 52px
+    }
+
+    .oid-empty h3 {
+        font-size: 16px
+    }
+
+    .oid-empty p {
+        font-size: 12px
+    }
+
+    .oid-items {
+        gap: 10px
+    }
+}
+
+@media(min-width:768px) {
+    .oid-header {
+        padding: 0
+    }
+
+    .oid-title {
+        font-size: 19px
+    }
+
+    .order-item-details {
+        gap: 12px;
+        padding: 6px 0 16px
     }
 }

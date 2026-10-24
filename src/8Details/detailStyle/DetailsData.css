@@ -1,15 +1,48 @@
 .dt-data {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 0 12px;
-    box-sizing: border-box;
+    gap: 10px;
+    padding: 8px 0 12px;
+    width: 100%;
+    min-width: 0
 }
 
-@media (max-width: 360px) {
+.dt-data>* {
+    min-width: 0;
+    width: 100%
+}
+
+.dt-data section,
+.dt-data [class*="scroll"],
+.dt-data [class*="carousel"],
+.dt-data [class*="row"] {
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.dt-data section::-webkit-scrollbar,
+.dt-data [class*="scroll"]::-webkit-scrollbar,
+.dt-data [class*="carousel"]::-webkit-scrollbar,
+.dt-data [class*="row"]::-webkit-scrollbar {
+    display: none
+}
+
+@media(min-width:480px) {
     .dt-data {
         gap: 12px;
-        padding: 0 10px;
+        padding: 10px 0 14px
+    }
+}
+
+@media(min-width:768px) {
+    .dt-data {
+        gap: 14px;
+        padding: 12px 0 16px
+    }
+}
+
+@media(min-width:1024px) {
+    .dt-data {
+        gap: 16px
     }
 }

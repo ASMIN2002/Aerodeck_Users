@@ -1,10 +1,10 @@
-import "../detailStyle/Details.css";
 import { API } from "../../services/api";
 import DetailsData from "./DetailsData";
 import toast from "react-hot-toast";
-import { FaShareAlt } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaShareAlt, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FiArrowLeft, FiX } from "react-icons/fi";
+import "../detailStyle/Details.css";
 
 const TOAST_DURATION = 2500;
 const SWIPE_THRESHOLD = 80;
@@ -13,37 +13,22 @@ const THUMBNAIL_TIMEOUT = 3000;
 const MAX_ZOOM = 4;
 const MIN_QTY = 1;
 
-function getProductId(details, product) {
-    const source = details || product?.data;
-    if (!source) return null;
-    return (
-        source.product_id ||
-        source.gift_id ||
-        source.shop_id ||
-        source.premium_id ||
-        source.medicine_id ||
-        source.card_id ||
-        source.id ||
-        null
-    );
-}
+const getProductId = (details, product) => {
+    const s = details || product?.data;
+    if (!s) return null;
+    return s.product_id || s.gift_id || s.shop_id || s.premium_id || s.medicine_id || s.card_id || s.id || null;
+};
 
-function getApiType(type) {
-    if (type === "products") return "shop";
-    if (type === "cards") return "card";
-    if (type === "gifts") return "gift";
-    if (type === "medicine") return "medicine";
-    return type;
-}
+const getApiType = (type) =>
+    ({ products: "shop", cards: "card", gifts: "gift", medicine: "medicine" }[type] || type);
 
-function getImageSource(source, index) {
-    const keys = ["product", "gift", "shop", "premium", "medicine"];
-    for (const key of keys) {
+const getImageSource = (source, index) => {
+    for (const key of ["product", "gift", "shop", "premium", "medicine"]) {
         const val = source[`${key}_image${index}`];
         if (val) return val;
     }
     return null;
-}
+};
 
 function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onViewAllMedia, onBuyNow }) {
     const sessionToken = localStorage.getItem("session_token");
@@ -96,18 +81,10 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
     useEffect(() => {
         const source = details || product?.data;
         if (!source) return;
-
         const firstImage = getImageSource(source, 1) || source.productDetail?.vdo1 || null;
         setSelectedImage(firstImage);
         setCurrentIndex(0);
-    }, [
-        product,
-        details?.product_image1,
-        details?.gift_image1,
-        details?.shop_image1,
-        details?.premium_image1,
-        details?.medicine_image1,
-    ]);
+    }, [product, details?.product_image1, details?.gift_image1, details?.shop_image1, details?.premium_image1, details?.medicine_image1]);
 
     useEffect(() => {
         const videoSrc = details?.productDetail?.vdo1;
@@ -142,9 +119,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         videoEl.addEventListener("loadeddata", onLoadedData, { once: true });
         videoEl.addEventListener("seeked", onSeeked);
 
-        const timeout = setTimeout(() => {
-            if (!thumbnailSet) tryCapture(0.5);
-        }, THUMBNAIL_TIMEOUT);
+        const timeout = setTimeout(() => { if (!thumbnailSet) tryCapture(0.5); }, THUMBNAIL_TIMEOUT);
 
         return () => {
             clearTimeout(timeout);
@@ -163,13 +138,6 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             videoEl.muted = false;
             videoEl.play().then(() => setTopVideoPlaying(true)).catch((err) => console.error("Play error:", err.message));
         }
-    };
-
-    const handleTopVideoTimeUpdate = () => {
-        const videoEl = topVideoRef.current;
-        if (!videoEl || !videoEl.duration) return;
-        const val = (videoEl.currentTime / videoEl.duration) * 100;
-        if (val >= 0 && val <= 100) setTopVideoProgress(val);
     };
 
     const handleTopVideoEnded = () => {
@@ -216,26 +184,15 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
 
     useEffect(() => {
         if (!product?.data) return;
-
         const savedScroll = sessionStorage.getItem("detailsScrollPosition");
-        if (!savedScroll) {
-            document.querySelector(".home-content")?.scrollTo({ top: 0, behavior: "smooth" });
-        }
+        if (!savedScroll) document.querySelector(".home-content")?.scrollTo({ top: 0, behavior: "smooth" });
 
-        const fetchDetails = async () => {
-            try {
-                const id = getProductId(null, product);
-                if (!id) return;
-                const apiType = getApiType(product.type);
-                const response = await fetch(`${API}/api/user/details/${apiType}/${id}`);
-                const result = await response.json();
-                if (result.success) setDetails(result.data);
-            } catch (err) {
-                console.error("Details fetch error:", err.message);
-            }
-        };
-
-        fetchDetails();
+        const id = getProductId(null, product);
+        if (!id) return;
+        fetch(`${API}/api/user/details/${getApiType(product.type)}/${id}`)
+            .then((r) => r.json())
+            .then((result) => { if (result.success) setDetails(result.data); })
+            .catch((err) => console.error("Details fetch error:", err.message));
     }, [product]);
 
     useEffect(() => {
@@ -245,9 +202,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         fetch(`${API}/api/user/likes?session_token=${sessionToken}`)
             .then((r) => r.json())
             .then((data) => {
-                if (data.success) {
-                    setIsLiked(data.data.some((item) => String(item.product_id) === String(productId)));
-                }
+                if (data.success) setIsLiked(data.data.some((item) => String(item.product_id) === String(productId)));
             })
             .catch((err) => console.error("Like status error:", err.message));
     }, [details, sessionToken]);
@@ -260,12 +215,10 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             .then((r) => r.json())
             .then((data) => {
                 if (!data.success) return;
-                setIsSaved(
-                    data.data.some((item) => {
-                        const savedId = item.product_id || item.gift_id || item.shop_id || item.premium_id || item.medicine_id;
-                        return String(savedId) === String(productId);
-                    })
-                );
+                setIsSaved(data.data.some((item) => {
+                    const savedId = item.product_id || item.gift_id || item.shop_id || item.premium_id || item.medicine_id;
+                    return String(savedId) === String(productId);
+                }));
             })
             .catch((err) => console.error("Save status error:", err.message));
     }, [details, sessionToken]);
@@ -307,18 +260,16 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 ? { session_token: sessionToken }
                 : { session_token: sessionToken, product_id: productId };
 
-            const response = await fetch(url, {
+            const data = await fetch(url, {
                 method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
-            });
-            const data = await response.json();
+            }).then((r) => r.json());
+
             if (!data.success) return;
             setIsLiked(!isLiked);
             updateLikeCount(data.totalLikes);
-        } catch (err) {
-            console.error("Like error:", err.message);
-        }
+        } catch (err) { console.error("Like error:", err.message); }
     };
 
     const updateSaveCount = (productId, delta) => {
@@ -347,73 +298,61 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 ? { session_token: sessionToken }
                 : { session_token: sessionToken, product_id: productId };
 
-            const response = await fetch(url, {
+            const data = await fetch(url, {
                 method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
-            });
-            const data = await response.json();
-            if (!response.ok || !data.success) return;
+            }).then((r) => r.json());
+
+            if (!data.success) return;
             setIsSaved(!isSaved);
             updateSaveCount(productId, isSaved ? -1 : 1);
-        } catch (err) {
-            console.error("Save error:", err.message);
-        }
+        } catch (err) { console.error("Save error:", err.message); }
     };
 
     const fetchCartAndUpdateCount = async () => {
-        const response = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`);
-        const data = await response.json();
+        const data = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`).then((r) => r.json());
         if (data.success && setCartCount) setCartCount(data.data.length);
     };
 
     const handleIncreaseCart = async () => {
         const productId = getProductId(details);
-        let quantity = cartQuantity;
+        const quantity = cartQuantity === 0 ? MIN_QTY : cartQuantity + 1;
 
-        if (quantity === 0) {
-            quantity = MIN_QTY;
+        try {
             await fetch(`${API}/api/user/cart`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: sessionToken, product_id: productId, quantity }),
-            });
-        } else {
-            quantity++;
-            await fetch(`${API}/api/user/cart`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: sessionToken, product_id: productId, quantity }),
-            });
-        }
-
-        setCartQuantity(quantity);
-        await fetchCartAndUpdateCount();
-    };
-
-    const handleDecreaseCart = async () => {
-        if (cartQuantity === 0) return;
-
-        const productId = getProductId(details);
-        const quantity = cartQuantity - 1;
-
-        if (quantity < MIN_QTY) {
-            await fetch(`${API}/api/user/cart/${productId}`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: sessionToken }),
-            });
-            setCartQuantity(0);
-        } else {
-            await fetch(`${API}/api/user/cart`, {
-                method: "PUT",
+                method: cartQuantity === 0 ? "POST" : "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ session_token: sessionToken, product_id: productId, quantity }),
             });
             setCartQuantity(quantity);
-        }
+            await fetchCartAndUpdateCount();
+        } catch (err) { console.error("Cart update error:", err.message); }
+    };
 
-        await fetchCartAndUpdateCount();
+    const handleDecreaseCart = async () => {
+        if (cartQuantity === 0) return;
+        const productId = getProductId(details);
+        const quantity = cartQuantity - 1;
+
+        try {
+            if (quantity < MIN_QTY) {
+                await fetch(`${API}/api/user/cart/${productId}`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ session_token: sessionToken }),
+                });
+                setCartQuantity(0);
+            } else {
+                await fetch(`${API}/api/user/cart`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ session_token: sessionToken, product_id: productId, quantity }),
+                });
+                setCartQuantity(quantity);
+            }
+            await fetchCartAndUpdateCount();
+        } catch (err) { console.error("Cart update error:", err.message); }
     };
 
     const handleBuyNow = () => {
@@ -439,17 +378,13 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         });
     };
 
-    const handleViewAll = () => {
+    const saveScroll = () => {
         const homeContent = document.querySelector(".home-content");
         if (homeContent) sessionStorage.setItem("detailsScrollPosition", homeContent.scrollTop);
-        onViewAll();
     };
 
-    const handleViewAllMedia = () => {
-        const homeContent = document.querySelector(".home-content");
-        if (homeContent) sessionStorage.setItem("detailsScrollPosition", homeContent.scrollTop);
-        onViewAllMedia();
-    };
+    const handleViewAll = () => { saveScroll(); onViewAll(); };
+    const handleViewAllMedia = () => { saveScroll(); onViewAllMedia(); };
 
     useEffect(() => {
         const handlePopState = () => {
@@ -504,67 +439,41 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                                 playsInline
                                 preload="metadata"
                                 poster={topVideoThumbnail || undefined}
-                                onTimeUpdate={handleTopVideoTimeUpdate}
                                 onEnded={handleTopVideoEnded}
                                 onClick={handleTopVideoPlayPause}
                             />
-
                             {!topVideoPlaying && (
-                                <button
-                                    className="dt-top-video-play"
-                                    onClick={(e) => { e.stopPropagation(); handleTopVideoPlayPause(); }}
-                                    aria-label="Play"
-                                >
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
+                                <button className="dt-top-video-play" onClick={(e) => { e.stopPropagation(); handleTopVideoPlayPause(); }} aria-label="Play">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
                                 </button>
                             )}
-
                             {topVideoPlaying && (
-                                <button
-                                    className="dt-top-video-pause"
-                                    onClick={(e) => { e.stopPropagation(); handleTopVideoPlayPause(); }}
-                                    aria-label="Pause"
-                                >
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                                        <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
-                                    </svg>
+                                <button className="dt-top-video-pause" onClick={(e) => { e.stopPropagation(); handleTopVideoPlayPause(); }} aria-label="Pause">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>
                                 </button>
                             )}
                         </div>
                     ) : (
-                        <img
-                            src={activeImage}
-                            alt={product?.product_name}
-                            onClick={() => openFullscreenImage(activeImage)}
-                            style={{ cursor: "zoom-in" }}
-                        />
+                        <img src={activeImage} alt={product?.product_name} onClick={() => openFullscreenImage(activeImage)} style={{ cursor: "zoom-in" }} />
                     )}
                 </div>
 
                 <div className="dt-overlay">
-                    <button className="dt-back" onClick={onBack}>←</button>
+                    <button className="dt-back" onClick={onBack} aria-label="Back">
+                        <FiArrowLeft />
+                    </button>
 
                     <button className="dt-action-btn" onClick={handleLike}>
                         {isLiked ? <FaHeart style={{ color: "#ff2d55" }} /> : <FaRegHeart />}
                         <span>
-                            {details?.product_total_likes ??
-                                details?.gift_total_likes ??
-                                details?.shop_total_likes ??
-                                details?.premium_total_likes ??
-                                details?.medicine_total_likes ?? 0}
+                            {details?.product_total_likes ?? details?.gift_total_likes ?? details?.shop_total_likes ?? details?.premium_total_likes ?? details?.medicine_total_likes ?? 0}
                         </span>
                     </button>
 
                     <button className="dt-action-btn" onClick={handleSave}>
                         {isSaved ? <FaBookmark /> : <FaRegBookmark />}
                         <span>
-                            {details?.product_total_saves ??
-                                details?.gift_total_saves ??
-                                details?.shop_total_saves ??
-                                details?.premium_total_saves ??
-                                details?.medicine_total_saves ?? 0}
+                            {details?.product_total_saves ?? details?.gift_total_saves ?? details?.shop_total_saves ?? details?.premium_total_saves ?? details?.medicine_total_saves ?? 0}
                         </span>
                     </button>
 
@@ -573,9 +482,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                     </button>
                 </div>
 
-                <div className="dt-image-count">
-                    {(activeIndex === -1 ? 0 : activeIndex) + 1} / {images.length}
-                </div>
+                <div className="dt-image-count">{(activeIndex === -1 ? 0 : activeIndex) + 1} / {images.length}</div>
             </div>
 
             <div className="dt-images">
@@ -589,11 +496,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                             onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
                             className={`dt-thumb dt-thumb-video ${isActive ? "active" : ""}`}
                         >
-                            {topVideoThumbnail ? (
-                                <img src={topVideoThumbnail} alt="" />
-                            ) : (
-                                <video src={image} muted playsInline preload="metadata" className="dt-thumb-video-preview" />
-                            )}
+                            {topVideoThumbnail ? <img src={topVideoThumbnail} alt="" /> : <video src={image} muted playsInline preload="metadata" className="dt-thumb-video-preview" />}
                             <span className="dt-thumb-play">▶</span>
                         </div>
                     ) : (
@@ -614,7 +517,6 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 isLiked={isLiked}
                 isSaved={isSaved}
                 cartQuantity={cartQuantity}
-                onLike={handleLike}
                 onSave={handleSave}
                 onIncreaseCart={handleIncreaseCart}
                 onDecreaseCart={handleDecreaseCart}
@@ -626,7 +528,9 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
 
             {fullscreenImage && (
                 <div className="dt-fullscreen-overlay" onClick={closeFullscreenImage}>
-                    <button className="dt-fullscreen-close" onClick={(e) => { e.stopPropagation(); closeFullscreenImage(); }}>✕</button>
+                    <button className="dt-fullscreen-close" onClick={(e) => { e.stopPropagation(); closeFullscreenImage(); }} aria-label="Close">
+                        <FiX />
+                    </button>
 
                     <div
                         className="dt-fullscreen-image-box"
@@ -640,12 +544,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                             if (e.touches.length === 1) {
                                 setTouchStart(e.touches[0].clientX);
                                 if (imageZoom > 1) {
-                                    setPanStart({
-                                        x: e.touches[0].clientX,
-                                        y: e.touches[0].clientY,
-                                        offsetX: panOffset.x,
-                                        offsetY: panOffset.y,
-                                    });
+                                    setPanStart({ x: e.touches[0].clientX, y: e.touches[0].clientY, offsetX: panOffset.x, offsetY: panOffset.y });
                                 }
                             }
                         }}

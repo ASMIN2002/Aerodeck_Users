@@ -1,137 +1,111 @@
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import "../detailStyle/AllReview.css";
+import { FiArrowLeft, FiStar, FiMessageSquare } from "react-icons/fi";
 import { API } from "../../services/api";
+import "../detailStyle/AllReview.css";
 
-const STAR_FILTERS = [
-    { value: 5, key: "five", label: "five" },
-    { value: 4, key: "four", label: "four" },
-    { value: 3, key: "three", label: "three" },
-    { value: 2, key: "two", label: "two" },
-    { value: 1, key: "one", label: "one" },
-];
+const STAR_FILTERS = [5, 4, 3, 2, 1];
 
-function getSafeName(name) {
-    return name && name.trim() ? name.trim() : "Anonymous";
-}
+const getSafeName = (name) => (name?.trim() || "Anonymous");
+const getInitial = (name) => name.charAt(0).toUpperCase();
 
-function renderStars(rating) {
-    return "⭐".repeat(Number(rating) || 0);
+function Stars({ rating }) {
+    const count = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+    return (
+        <div className="allreview-stars">
+            {Array.from({ length: 5 }).map((_, i) => (
+                <FiStar key={i} className={i < count ? "ar-star filled" : "ar-star"} />
+            ))}
+        </div>
+    );
 }
 
 function AllReview({ product_id, onBack }) {
     const navigate = useNavigate();
-
-    const [summary, setSummary] = useState({});
     const [reviews, setReviews] = useState([]);
     const [selectedStar, setSelectedStar] = useState(5);
 
     useEffect(() => {
         if (!product_id) return;
-
-        async function loadReviews() {
-            try {
-                const res = await fetch(
-                    `${API}/api/user/review/all/${product_id}`
-                );
-                const data = await res.json();
-
-                if (data.success) {
-                    setSummary(data.summary || {});
-                    setReviews(data.reviews || []);
-                }
-            } catch (err) {
-                console.error("Reviews load error:", err.message);
-            }
-        }
-
-        loadReviews();
+        fetch(`${API}/api/user/review/all/${product_id}`)
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.success) setReviews(data.reviews || []);
+            })
+            .catch((err) => console.error("Reviews load error:", err.message));
     }, [product_id]);
 
+    const countsByStar = useMemo(() => {
+        const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+        reviews.forEach((r) => {
+            const star = Math.round(Number(r.rating) || 0);
+            if (star >= 1 && star <= 5) counts[star]++;
+        });
+        return counts;
+    }, [reviews]);
+
     const filteredReviews = useMemo(
-        () =>
-            reviews.filter(
-                (review) => Number(review.rating) === Number(selectedStar)
-            ),
+        () => reviews.filter((r) => Math.round(Number(r.rating)) === selectedStar),
         [reviews, selectedStar]
     );
 
-    const handleBack = () => {
-        if (onBack) onBack();
-        else navigate(-1);
-    };
+    const handleBack = () => (onBack ? onBack() : navigate(-1));
 
     return (
         <div className="allreview-page">
             <div className="allreview-header">
-                <button
-                    className="allreview-back"
-                    onClick={handleBack}
-                >
-                    ←
+                <button className="allreview-back" onClick={handleBack} aria-label="Back">
+                    <FiArrowLeft />
                 </button>
-
-                <div>
-                    <h2>Customer Reviews</h2>
-                </div>
+                <h2 className="allreview-title">Customer Reviews</h2>
             </div>
 
-            <div className="review-filter">
-                {STAR_FILTERS.map((star) => (
-                    <button
-                        key={star.value}
-                        className={`star-btn ${star.label} ${selectedStar === star.value ? "active" : ""}`}
-                        onClick={() => setSelectedStar(star.value)}
-                    >
-                        {star.value}⭐ ({summary[star.key] || 0})
-                    </button>
-                ))}
+            <div className="allreview-filters">
+                {STAR_FILTERS.map((star) => {
+                    const count = countsByStar[star];
+                    const isActive = selectedStar === star;
+                    return (
+                        <button
+                            key={star}
+                            type="button"
+                            className={`allreview-filter ${isActive ? "active" : ""}`}
+                            onClick={() => setSelectedStar(star)}
+                        >
+                            <span className="allreview-filter-star">
+                                {star} <FiStar />
+                            </span>
+                            <span className="allreview-filter-count">({count})</span>
+                        </button>
+                    );
+                })}
             </div>
 
             <div className="allreview-list">
                 {filteredReviews.length > 0 ? (
                     filteredReviews.map((review, index) => {
                         const safeName = getSafeName(review.full_name);
-
                         return (
-                            <div
-                                className="allreview-card"
-                                key={`${safeName}-${index}`}
-                            >
+                            <div className="allreview-card" key={`${safeName}-${index}`}>
                                 <div className="allreview-top">
                                     {review.profile_image ? (
-                                        <img
-                                            src={review.profile_image}
-                                            alt={safeName}
-                                            className="allreview-avatar-image"
-                                        />
+                                        <img src={review.profile_image} alt={safeName} className="allreview-avatar-img" loading="lazy" />
                                     ) : (
-                                        <div className="allreview-avatar">
-                                            {safeName.charAt(0).toUpperCase()}
-                                        </div>
+                                        <div className="allreview-avatar">{getInitial(safeName)}</div>
                                     )}
-
                                     <div className="allreview-user">
                                         <h3>{safeName}</h3>
-
-                                        <div className="allreview-rating">
-                                            {renderStars(review.rating)}
-                                        </div>
+                                        <Stars rating={review.rating} />
                                     </div>
                                 </div>
-
-                                <p className="allreview-message">
-                                    {review.review_message || "No message."}
-                                </p>
+                                <p className="allreview-message">{review.review_message || "No message."}</p>
                             </div>
                         );
                     })
                 ) : (
-                    <div className="no-review">
+                    <div className="allreview-empty">
+                        <FiMessageSquare className="allreview-empty-icon" />
                         <h3>No Reviews Yet</h3>
-                        <p>
-                            No customer has given a {selectedStar} star review.
-                        </p>
+                        <p>No customer has given a {selectedStar}-star review.</p>
                     </div>
                 )}
             </div>

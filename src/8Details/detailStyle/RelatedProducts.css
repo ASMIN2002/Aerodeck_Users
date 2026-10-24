@@ -1,147 +1,287 @@
 .dt-related {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 14px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 14px rgba(101, 78, 163, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-sizing: border-box;
+    padding: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    width: 100%;
+    min-width: 0
 }
 
-[data-theme="dark"] .dt-related {
-    background: rgba(15, 32, 39, 0.6);
-    border-color: rgba(120, 220, 255, 0.22);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-}
-
-.dt-section-header {
+.dt-related-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
+    min-width: 0
 }
 
-.dt-section-header h2 {
-    margin: 0;
-    font-size: 13px;
+.dt-related-header h3 {
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: 0.3px;
-    color: #2b1055;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: -.01em;
+    line-height: 1.2
 }
 
-[data-theme="dark"] .dt-section-header h2 {
-    color: #e0f2f7;
+.dt-related-count {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--fg3);
+    padding: 3px 8px;
+    background: var(--bg3);
+    border: 1px solid var(--bd);
+    border-radius: 999px;
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0
 }
 
 .dt-related-scroll {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 4px;
-    scroll-snap-type: x mandatory;
+    overflow-y: hidden;
     scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 2px 0 4px;
+    margin: 0 -12px;
+    padding-left: 12px;
+    padding-right: 12px
 }
 
 .dt-related-scroll::-webkit-scrollbar {
-    display: none;
+    display: none
 }
 
 .dt-related-card {
-    flex-shrink: 0;
-    width: 108px;
+    flex: 0 0 auto;
+    width: 130px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 6px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    scroll-snap-align: start;
+    overflow: hidden;
     cursor: pointer;
-    box-sizing: border-box;
-    min-width: 0;
-    transition: transform 0.2s ease;
+    transition: transform var(--tr), border-color var(--tr), box-shadow var(--tr);
+    min-width: 0
 }
 
 .dt-related-card:active {
-    transform: scale(0.97);
+    transform: scale(.97);
+    border-color: var(--fg3)
 }
 
-[data-theme="dark"] .dt-related-card {
-    background: rgba(15, 32, 39, 0.5);
-    border-color: rgba(120, 220, 255, 0.14);
-}
-
-.dt-related-card img {
+.dt-related-image-wrap {
+    position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1/1;
+    background: var(--bg3);
+    overflow: hidden
+}
+
+.dt-related-image-wrap img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
     display: block;
-    background: #f1f1f5;
+    transition: transform .35s ease
 }
 
-[data-theme="dark"] .dt-related-card img {
-    background: #1a2228;
+.dt-related-card:active .dt-related-image-wrap img {
+    transform: scale(1.05)
 }
 
-.dt-related-card h4 {
+.dt-related-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--fg3);
+    opacity: .5
+}
+
+.dt-related-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 2px 6px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+    border-radius: 4px;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, .35);
+    letter-spacing: .02em
+}
+
+.dt-related-rating {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 5px;
+    background: rgba(0, 0, 0, .72);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+    border-radius: 4px;
+    line-height: 1;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px)
+}
+
+.dt-related-rating svg {
+    font-size: 8px;
+    color: #fbbf24;
+    fill: #fbbf24
+}
+
+.dt-related-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 6px 7px 7px;
+    min-width: 0
+}
+
+.dt-related-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.25;
     margin: 0;
-    font-size: 10.5px;
-    font-weight: 700;
-    line-height: 1.3;
-    color: #2b1055;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
+    text-overflow: ellipsis
 }
 
-[data-theme="dark"] .dt-related-card h4 {
-    color: #cfeaf5;
+.dt-related-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    line-height: 1;
+    min-width: 0;
+    overflow: hidden
 }
 
-.dt-related-card p {
-    margin: 0;
+.dt-related-price {
     font-size: 11px;
     font-weight: 800;
-    color: #654ea3;
+    color: var(--fg);
+    white-space: nowrap;
+    flex-shrink: 0
 }
 
-[data-theme="dark"] .dt-related-card p {
-    color: #7fd4e8;
+.dt-related-mrp {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--fg3);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
-@media (max-width: 360px) {
+@media(min-width:480px) {
     .dt-related {
-        padding: 12px;
-        gap: 8px;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 14px
     }
 
-    .dt-section-header h2 {
-        font-size: 12px;
+    .dt-related-header h3 {
+        font-size: 16px
+    }
+
+    .dt-related-count {
+        font-size: 10px
     }
 
     .dt-related-scroll {
-        gap: 8px;
+        gap: 10px;
+        margin: 0 -14px;
+        padding-left: 14px;
+        padding-right: 14px
     }
 
     .dt-related-card {
-        width: 96px;
+        width: 150px;
+        border-radius: 11px
     }
 
-    .dt-related-card h4 {
-        font-size: 10px;
+    .dt-related-fallback {
+        font-size: 30px
     }
 
-    .dt-related-card p {
-        font-size: 10.5px;
+    .dt-related-badge,
+    .dt-related-rating {
+        font-size: 9px
+    }
+
+    .dt-related-rating svg {
+        font-size: 9px
+    }
+
+    .dt-related-body {
+        padding: 7px 8px 8px;
+        gap: 4px
+    }
+
+    .dt-related-name {
+        font-size: 11px
+    }
+
+    .dt-related-price {
+        font-size: 12px
+    }
+
+    .dt-related-mrp {
+        font-size: 10px
+    }
+}
+
+@media(min-width:768px) {
+    .dt-related {
+        gap: 14px;
+        padding: 16px
+    }
+
+    .dt-related-header h3 {
+        font-size: 18px
+    }
+
+    .dt-related-scroll {
+        gap: 12px
+    }
+
+    .dt-related-card {
+        width: 170px
+    }
+
+    .dt-related-name {
+        font-size: 12px
+    }
+
+    .dt-related-price {
+        font-size: 13px
+    }
+
+    .dt-related-mrp {
+        font-size: 11px
     }
 }

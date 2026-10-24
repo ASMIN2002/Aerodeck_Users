@@ -1,4 +1,3 @@
-import "../detailStyle/DetailsData.css";
 import PreviewVideo from "./PreviewVideo";
 import Features from "./Features";
 import Information from "./Information";
@@ -7,34 +6,18 @@ import RelatedProducts from "./RelatedProducts";
 import WhyChoose from "./WhyChoose";
 import Media from "./Media";
 import ProductSummary from "./ProductSummary";
+import "../detailStyle/DetailsData.css";
 
-function getProductId(product) {
-    if (!product) return null;
-    return (
-        product.product_id ||
-        product.gift_id ||
-        product.shop_id ||
-        product.medicine_id ||
-        null
-    );
-}
+const getProductId = (p) =>
+    p?.product_id || p?.gift_id || p?.shop_id || p?.medicine_id || null;
 
 function DetailsData({
-    product,
-    productDetail,
-    isLiked,
-    isSaved,
-    cartQuantity,
-    onLike,
-    onSave,
-    onIncreaseCart,
-    onDecreaseCart,
-    onBuyNow,
-    onOpenDetails,
-    onViewAll,
-    onViewAllMedia,
+    product, productDetail, isLiked, isSaved, cartQuantity,
+    onLike, onSave, onIncreaseCart, onDecreaseCart, onBuyNow,
+    onOpenDetails, onViewAll, onViewAllMedia,
 }) {
     const productId = getProductId(product);
+
     return (
         <div className="dt-data">
             <ProductSummary
@@ -53,11 +36,7 @@ function DetailsData({
             <Media product_id={productId} onViewAll={onViewAllMedia} />
             <Features />
             <WhyChoose />
-            <RelatedProducts
-                product={product}
-                onOpenDetails={onOpenDetails}
-                onViewAll={onViewAll}
-            />
+            <RelatedProducts product={product} onOpenDetails={onOpenDetails} onViewAll={onViewAll} />
         </div>
     );
 }

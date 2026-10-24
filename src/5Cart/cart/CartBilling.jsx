@@ -1,32 +1,23 @@
+import { FiArrowRight } from "react-icons/fi";
 import "../cartstyle/CartBilling.css";
+
+const getPrice = (item) =>
+    Number(item.product_price || item.gift_price || item.shop_price || item.premium_price || item.medicine_price || 0);
 
 function CartBilling({ items, onPlaceOrder }) {
     const totalItems = items.length;
-
-    const totalPrice = items.reduce((total, item) => {
-        const price = Number(
-            item.product_price ||
-            item.gift_price ||
-            item.shop_price ||
-            item.premium_price ||
-            0
-        );
-
-        return total + (price * item.quantity);
-    }, 0);
+    const totalPrice = items.reduce((sum, item) => sum + getPrice(item) * item.quantity, 0);
 
     return (
         <div className="cart-billing">
             <div className="cart-billing-left">
-                <h2>₹{totalPrice.toLocaleString()}</h2>
-                <p>{totalItems} Item{totalItems !== 1 ? "s" : ""}</p>
+                <span className="cart-billing-label">Total</span>
+                <h2 className="cart-billing-total">₹{totalPrice.toLocaleString("en-IN")}</h2>
+                <p className="cart-billing-count">{totalItems} Item{totalItems !== 1 ? "s" : ""}</p>
             </div>
 
-            <button
-                className="cart-place-order"
-                onClick={onPlaceOrder}
-            >
-                Place Order →
+            <button type="button" className="cart-place-order" onClick={onPlaceOrder}>
+                Place Order <FiArrowRight />
             </button>
         </div>
     );

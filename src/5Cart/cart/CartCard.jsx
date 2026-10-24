@@ -1,114 +1,70 @@
-import "../cartstyle/CartCard.css";
 import { FaTrash } from "react-icons/fa";
+import { FiTruck } from "react-icons/fi";
+import "../cartstyle/CartCard.css";
 
-function CartCard({
-    item,
-    onOpenDetails,
-    onDelete,
-    onIncrease,
-    onDecrease
-}) {
-    const image =
-        item.product_image1 ||
-        item.gift_image1 ||
-        item.premium_image1 ||
-        item.shop_image1;
+const PREFIXES = { G: "gift", S: "shop", P: "premium", M: "medicine" };
 
-    const name =
-        item.product_name ||
-        item.gift_name ||
-        item.premium_name ||
-        item.shop_name;
+const getField = (item, key) =>
+    item[`product_${key}`] ||
+    item[`gift_${key}`] ||
+    item[`shop_${key}`] ||
+    item[`premium_${key}`] ||
+    item[`medicine_${key}`] ||
+    item[`card_${key}`];
 
-    const demoPrice =
-        item.product_demo_price ||
-        item.gift_demo_price ||
-        item.premium_demo_price ||
-        item.shop_demo_price;
+const getType = (id) => PREFIXES[String(id).charAt(0).toUpperCase()] || "card";
 
-    const discount =
-        item.product_discount_percentage ||
-        item.gift_discount_percentage ||
-        item.premium_discount_percentage ||
-        item.shop_discount_percentage;
+const formatDelivery = (days) => {
+    if (!days) return "-";
+    const d = new Date();
+    d.setDate(d.getDate() + Number(days));
+    return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
+};
 
-    const price =
-        item.product_price ||
-        item.gift_price ||
-        item.premium_price ||
-        item.shop_price;
-
-    const getDeliveryDate = (days) => {
-        if (!days) return "-";
-
-        const date = new Date();
-        date.setDate(date.getDate() + Number(days));
-
-        return date.toLocaleDateString("en-IN", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        });
-    };
+function CartCard({ item, onOpenDetails, onDelete, onIncrease, onDecrease }) {
+    const image = getField(item, "image1");
+    const name = getField(item, "name");
+    const demoPrice = getField(item, "demo_price");
+    const discount = getField(item, "discount_percentage");
+    const price = getField(item, "price");
+    const type = getType(item.product_id);
 
     return (
         <div className="cart-card">
-            <button
-                className="delete-cart-btn"
-                onClick={() => onDelete(item.product_id)}
-            >
+            <button className="cart-delete-btn" onClick={() => onDelete(item.product_id)} aria-label="Remove">
                 <FaTrash />
             </button>
 
-            <div>
-                <img
-                    src={image}
-                    alt={name}
-                    className="cart-image"
-                />
+            <div className="cart-image-wrap" onClick={() => onOpenDetails(item, type)}>
+                {image ? (
+                    <img src={image} alt={name} className="cart-image" loading="lazy" />
+                ) : (
+                    <div className="cart-image-fallback">{name?.charAt(0)?.toUpperCase() || "?"}</div>
+                )}
             </div>
 
             <div className="cart-details">
-                <h3>{name}</h3>
+                <h3 className="cart-name">{name}</h3>
 
-                <div className="cartdipri">
-                    <p className="cart-discount">↓ {discount}%</p>
-                    <p className="cart-demo-price">₹ {demoPrice}</p>
-                    <h2>₹ {price}</h2>
+                <div className="cart-price-row">
+                    <span className="cart-price">₹{price}</span>
+                    {demoPrice && <span className="cart-demo-price">₹{demoPrice}</span>}
+                    {discount > 0 && <span className="cart-discount">{discount}% OFF</span>}
                 </div>
 
-                <p className="cart-delivery-date">
-                    Delivery by: {getDeliveryDate(item.delivery)}
+                <p className="cart-delivery">
+                    <FiTruck className="cart-delivery-icon" /> Delivery by {formatDelivery(item.delivery)}
                 </p>
 
-                <div className="qtyviewcart">
-                    <div className="cart-quantity">
-                        <button onClick={() => onDecrease(item)}>-</button>
+                <div className="cart-actions-row">
+                    <div className="cart-qty">
+                        <button type="button" onClick={() => onDecrease(item)} aria-label="Decrease">-</button>
                         <span>{item.quantity}</span>
-                        <button onClick={() => onIncrease(item)}>+</button>
+                        <button type="button" onClick={() => onIncrease(item)} aria-label="Increase">+</button>
                     </div>
 
-                    <button
-                        className="view-product-btn"
-                        onClick={() => {
-                            const productId = String(item.product_id);
-
-                            let type = "card";
-
-                            if (productId.startsWith("G")) {
-                                type = "gift";
-                            }
-                            else if (productId.startsWith("S")) {
-                                type = "shop";
-                            }
-                            else if (productId.startsWith("P")) {
-                                type = "premium";
-                            }
-
-                            onOpenDetails(item, type);
-                        }}
-                    >
-                        View Product
+                    <button type="button" className="cart-view-btn" onClick={() => onOpenDetails(item, type)}>
+                        View
                     </button>
                 </div>
             </div>
