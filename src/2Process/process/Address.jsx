@@ -47,7 +47,7 @@ function Address({ setProfilePage, setSelectedBottomTab }) {
 
     return (
         <div className="ad-container">
-            <button className="ad-button" type="button" onClick={() => goto("address", "/profile/address")}>
+            <button className="ad-button" type="button" onClick={() => goto("viewaddress", "/profile/viewaddress")}>
                 <FiMapPin className="ad-icon" />
                 {addressLabel ? (
                     <span className="ad-text">{addressLabel}</span>

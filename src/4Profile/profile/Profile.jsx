@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     FiHeart, FiPackage, FiGift, FiThumbsUp, FiStar,
-    FiSettings, FiInfo, FiFileText, FiLogOut, FiChevronRight, FiPhone,
+    FiSettings, FiInfo, FiFileText, FiLogOut, FiPhone,
 } from "react-icons/fi";
 import NODP from "../../assets/NODP.png";
 import { API } from "../../services/api";
 import "../profilestyles/Profile.css";
-
-const NAV_DELAY = 500;
 
 const MENU_ITEMS = [
     { page: "orders", Icon: FiPackage, label: "My Orders", color: "blue" },
@@ -21,7 +19,7 @@ const MENU_ITEMS = [
     { page: "terms", Icon: FiFileText, label: "Terms & Conditions", color: "indigo" },
 ];
 
-function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading }) {
+function Profile({ user, onLogout, setProfilePage }) {
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
     const [version, setVersion] = useState("");
@@ -49,12 +47,9 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
     const maskedMobile = profile?.mobile_number ? `•••• ${profile.mobile_number.slice(-4)}` : "Not set";
     const initials = profile?.full_name?.trim()?.charAt(0)?.toUpperCase() || "?";
 
-    const handleProfileNavigation = (page, text = "Loading...") => {
-        navigateWithLoading(
-            () => { setProfilePage(page); navigate(`/profile/${page}`); },
-            text,
-            NAV_DELAY
-        );
+    const handleNavigation = (page) => {
+        setProfilePage(page);
+        navigate(`/profile/${page}`);
     };
 
     return (
@@ -77,10 +72,7 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
                 <div className="prohead2">
                     <h2>{profile?.full_name || "Set your name"}</h2>
                     <p className="profile-phone"><FiPhone /> {maskedMobile}</p>
-                    <button
-                        className="edit-profile-btn-pro"
-                        onClick={() => handleProfileNavigation("viewprofile", "Loading Profile Details...")}
-                    >
+                    <button className="edit-profile-btn-pro" onClick={() => handleNavigation("viewprofile")}>
                         View Profile
                     </button>
                 </div>
@@ -91,19 +83,15 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
                     <button
                         key={page}
                         className={`profile-item profile-item-${color}`}
-                        onClick={() => handleProfileNavigation(page, `Loading ${label}...`)}
+                        onClick={() => handleNavigation(page)}
                     >
                         <span className="profile-item-icon"><Icon /></span>
                         <span className="profile-item-label">{label}</span>
-                        <FiChevronRight className="profile-item-arrow" />
                     </button>
                 ))}
             </div>
 
-            <button
-                className="logout-btn"
-                onClick={() => navigateWithLoading(() => setShowLogoutBox(true), "Preparing Logout...", NAV_DELAY)}
-            >
+            <button className="logout-btn" onClick={() => setShowLogoutBox(true)}>
                 <FiLogOut /> Logout
             </button>
 

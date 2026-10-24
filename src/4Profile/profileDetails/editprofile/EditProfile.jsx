@@ -2,25 +2,17 @@ import "./EditProfile.css";
 import TopEditSection from "./TopEditSection";
 import MediumEditSection from "./MediumEditSection";
 
-function EditProfile({
-    profile,
-    setProfile,
-    setProfilePage,
-    navigateWithLoading
-}) {
+function EditProfile({ profile, setProfile, setProfilePage }) {
     return (
         <div className="edit-profile">
             <TopEditSection
                 profile={profile}
                 setProfile={setProfile}
                 setProfilePage={setProfilePage}
-                navigateWithLoading={navigateWithLoading}
             />
-
             <MediumEditSection
                 profile={profile}
                 setProfile={setProfile}
-                navigateWithLoading={navigateWithLoading}
             />
         </div>
     );

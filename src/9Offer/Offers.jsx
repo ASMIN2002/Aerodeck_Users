@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { FiStar, FiMessageCircle, FiX } from "react-icons/fi";
+import { FiStar, FiMessageCircle, FiX, FiGift } from "react-icons/fi";
 import { API } from "../services/api";
 import "./Offers.css";
 
@@ -17,9 +17,6 @@ const Stars = ({ rating }) => {
     );
 };
 
-const FLOWERS = ["🌸", "🌺", "🌼", "🌷", "💮", "🏵️", "🌻", "🌹"];
-const CONFETTI = ["✨", "⭐", "🌟", "💫", "🎉", "🎊", "🎈", "💝"];
-
 function Offers() {
     const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,25 +26,16 @@ function Offers() {
 
     const sessionToken = localStorage.getItem("session_token");
 
-    const floatingItems = useMemo(() => {
-        const items = [];
-        for (let i = 0; i < 24; i++) {
-            const isFlower = i % 2 === 0;
-            const set = isFlower ? FLOWERS : CONFETTI;
-            items.push({
-                id: i,
-                emoji: set[i % set.length],
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                size: `${14 + Math.random() * 20}px`,
-                duration: `${15 + Math.random() * 20}s`,
-                delay: `${Math.random() * 10}s`,
-                sway: `${Math.random() * 40 - 20}px`,
-                rotate: `${Math.random() * 360}deg`,
-                opacity: 0.3 + Math.random() * 0.5,
-            });
-        }
-        return items;
+    const floatingIcons = useMemo(() => {
+        return Array.from({ length: 8 }).map((_, i) => ({
+            id: i,
+            left: `${10 + (i * 11) % 80}%`,
+            top: `${15 + (i * 17) % 65}%`,
+            size: `${12 + (i % 3) * 4}px`,
+            duration: `${22 + (i % 3) * 4}s`,
+            delay: `${i * 1.4}s`,
+            color: ["#f59e0b", "#ec4899", "#a855f7", "#22d3ee"][i % 4],
+        }));
     }, []);
 
     useEffect(() => {
@@ -112,30 +100,26 @@ function Offers() {
     return (
         <div className="offers-page">
             <div className="offers-bg" aria-hidden="true">
-                {floatingItems.map((item) => (
-                    <span
+                {floatingIcons.map((item) => (
+                    <FiGift
                         key={item.id}
-                        className="offers-floating"
+                        className="offers-float-icon"
                         style={{
                             left: item.left,
                             top: item.top,
                             fontSize: item.size,
                             animationDuration: item.duration,
                             animationDelay: item.delay,
-                            "--sway": item.sway,
-                            "--rotate": item.rotate,
-                            opacity: item.opacity,
+                            color: item.color,
                         }}
-                    >
-                        {item.emoji}
-                    </span>
+                    />
                 ))}
             </div>
 
             <div className="offers-content">
                 <div className="offers-header">
                     <h2 className="offers-title">Special Offers</h2>
-                    <span className="offers-subtitle">Celebrate & Save 🎉</span>
+                    <span className="offers-subtitle">Celebrate & Save</span>
                 </div>
 
                 {verifyError && <div className="offers-error"><span>{verifyError}</span></div>}

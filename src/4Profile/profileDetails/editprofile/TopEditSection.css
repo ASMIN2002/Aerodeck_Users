@@ -1,444 +1,628 @@
 .top-edit-card {
-    width: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 6px 18px rgba(101, 78, 163, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-sizing: border-box;
-}
-
-[data-theme="dark"] .top-edit-card {
-    background: rgba(15, 32, 39, 0.6);
-    border-color: rgba(120, 220, 255, 0.22);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    gap: 10px;
+    padding: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    width: 100%;
+    min-width: 0
 }
 
 .top-edit-header {
     display: flex;
     align-items: center;
+    gap: 8px;
+    min-width: 0
 }
 
 .back-button {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 10px;
-    background: rgba(101, 78, 163, 0.14);
-    color: #654ea3;
-    font-size: 12.5px;
-    font-weight: 800;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    color: var(--fg);
+    font-size: 15px;
+    flex-shrink: 0;
     cursor: pointer;
-    outline: none;
+    transition: background var(--tr), transform var(--tr)
 }
 
-.back-button svg {
-    width: 18px;
-    height: 18px;
+.back-button:active {
+    transform: scale(.94);
+    background: var(--bg3)
 }
 
-[data-theme="dark"] .back-button {
-    background: rgba(120, 220, 255, 0.14);
-    color: #7fd4e8;
+.top-edit-header h2 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0
 }
 
 .profile-upload-success {
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    text-align: center;
-    background: rgba(34, 197, 94, 0.14);
+    padding: 8px 10px;
+    background: rgba(22, 163, 74, .1);
+    border: 1px solid rgba(22, 163, 74, .25);
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
     color: #16a34a;
+    line-height: 1.35;
+    text-align: center;
+    animation: topEditMsgIn .25s ease
 }
 
 [data-theme="dark"] .profile-upload-success {
-    background: rgba(74, 222, 128, 0.14);
+    background: rgba(74, 222, 128, .12);
     color: #4ade80;
+    border-color: rgba(74, 222, 128, .3)
+}
+
+@keyframes topEditMsgIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
 }
 
 .profile-upload-screen {
     position: fixed;
     inset: 0;
-    z-index: 400;
+    background: rgba(0, 0, 0, .7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    background: rgba(15, 32, 39, 0.55);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    padding: 16px;
+    animation: topEditFadeIn .2s ease
+}
+
+@keyframes topEditFadeIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
 }
 
 .profile-upload-box {
-    width: 100%;
-    max-width: 300px;
-    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
     border-radius: 16px;
-    background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    padding: 20px;
+    max-width: 280px;
+    width: 100%;
     text-align: center;
-}
-
-[data-theme="dark"] .profile-upload-box {
-    background: #16232b;
-    border-color: rgba(120, 220, 255, 0.25);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .4)
 }
 
 .profile-upload-icon {
-    width: 44px;
-    height: 44px;
-    margin: 0 auto 10px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    font-weight: 900;
-    background: rgba(101, 78, 163, 0.14);
-    color: #654ea3;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 4px;
+    animation: topEditPulse 1.5s ease-in-out infinite
 }
 
-[data-theme="dark"] .profile-upload-icon {
-    background: rgba(120, 220, 255, 0.14);
-    color: #7fd4e8;
+@keyframes topEditPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, .4)
+    }
+
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0)
+    }
 }
 
 .profile-upload-box h2 {
-    margin: 0 0 4px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .profile-upload-box h2 {
-    color: #e0f2f7;
+    color: var(--fg);
+    margin: 0;
+    line-height: 1.2
 }
 
 .profile-upload-box p {
-    margin: 0 0 14px;
-    font-size: 11.5px;
-    font-weight: 500;
-    color: rgba(43, 16, 85, 0.6);
-}
-
-[data-theme="dark"] .profile-upload-box p {
-    color: rgba(207, 234, 245, 0.6);
+    font-size: 10px;
+    color: var(--fg3);
+    margin: 0;
+    line-height: 1.3
 }
 
 .profile-upload-progress {
     width: 100%;
-    height: 8px;
+    height: 6px;
+    background: var(--bg3);
     border-radius: 999px;
-    background: rgba(101, 78, 163, 0.14);
     overflow: hidden;
-}
-
-[data-theme="dark"] .profile-upload-progress {
-    background: rgba(120, 220, 255, 0.14);
+    margin-top: 4px
 }
 
 .profile-upload-progress-fill {
     height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #a855f7);
     border-radius: 999px;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    transition: width 0.2s ease;
-}
-
-[data-theme="dark"] .profile-upload-progress-fill {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
+    transition: width .3s ease
 }
 
 .profile-upload-percent {
-    margin-top: 8px;
     font-size: 12px;
     font-weight: 800;
-    color: #654ea3;
+    color: #3b82f6
 }
 
 [data-theme="dark"] .profile-upload-percent {
-    color: #7fd4e8;
+    color: #60a5fa
 }
 
 .mypropreview-section-pro {
     display: flex;
+    align-items: center;
     justify-content: center;
+    padding: 12px 0 6px
 }
 
 .mypropreview-box-pro {
     position: relative;
-    width: 84px;
-    height: 84px;
+    width: 110px;
+    height: 110px
 }
 
 .mypropreview-image-pro {
-    width: 84px;
-    height: 84px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     object-fit: cover;
-    display: block;
-    border: 2px solid rgba(101, 78, 163, 0.4);
-    box-shadow: 0 4px 12px rgba(101, 78, 163, 0.28);
-    background: #f1f1f5;
+    background: var(--bg3);
+    border: 3px solid var(--bg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .15);
+    display: block
 }
 
 [data-theme="dark"] .mypropreview-image-pro {
-    border-color: rgba(120, 220, 255, 0.5);
-    box-shadow: 0 4px 12px rgba(120, 220, 255, 0.25);
-    background: #1a2228;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .5)
 }
 
 .profile-edit-btn {
     position: absolute;
-    right: -2px;
-    bottom: -2px;
-    width: 28px;
-    height: 28px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    color: #ffffff;
-    font-size: 12px;
-    display: inline-flex;
+    bottom: 2px;
+    right: 2px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
+    border: 2px solid var(--bg);
+    font-size: 14px;
     cursor: pointer;
-    outline: none;
-    box-shadow: 0 4px 10px rgba(101, 78, 163, 0.35);
+    box-shadow: 0 3px 10px rgba(59, 130, 246, .4);
+    transition: transform var(--tr)
+}
+
+.profile-edit-btn:active {
+    transform: scale(.9)
 }
 
 .profile-edit-btn:disabled {
-    opacity: 0.6;
+    opacity: .5;
     cursor: not-allowed;
-}
-
-[data-theme="dark"] .profile-edit-btn {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
-    box-shadow: 0 4px 10px rgba(127, 212, 232, 0.35);
+    transform: none
 }
 
 .profile-popup-overlay {
     position: fixed;
     inset: 0;
-    z-index: 300;
+    background: rgba(0, 0, 0, .6);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    padding: 20px;
-    background: rgba(15, 32, 39, 0.55);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    animation: topEditFadeIn .2s ease
+}
+
+@media(min-width:480px) {
+    .profile-popup-overlay {
+        align-items: center;
+        padding: 16px
+    }
 }
 
 .profile-popup {
     width: 100%;
-    max-width: 320px;
-    padding: 18px;
-    border-radius: 16px;
-    background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    max-width: 400px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 16px 16px 0 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: topEditPopupIn .3s cubic-bezier(.34, 1.56, .64, 1);
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px))
 }
 
-[data-theme="dark"] .profile-popup {
-    background: #16232b;
-    border-color: rgba(120, 220, 255, 0.25);
+@media(min-width:480px) {
+    .profile-popup {
+        border-radius: 16px;
+        padding-bottom: 14px;
+        animation: topEditFadeScaleIn .25s ease
+    }
+}
+
+@keyframes topEditPopupIn {
+    from {
+        transform: translateY(100%)
+    }
+
+    to {
+        transform: translateY(0)
+    }
+}
+
+@keyframes topEditFadeScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(.94)
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1)
+    }
 }
 
 .profile-popup-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    gap: 8px
 }
 
 .profile-popup-header h3 {
-    margin: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .profile-popup-header h3 {
-    color: #e0f2f7;
+    color: var(--fg);
+    margin: 0;
+    line-height: 1.2
 }
 
 .profile-popup-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 28px;
     height: 28px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(43, 16, 85, 0.08);
-    color: #2b1055;
-    font-size: 16px;
-    font-weight: 800;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    color: var(--fg2);
+    font-size: 14px;
     cursor: pointer;
-    outline: none;
+    transition: background var(--tr)
 }
 
-[data-theme="dark"] .profile-popup-close {
-    background: rgba(120, 220, 255, 0.12);
-    color: #cfeaf5;
+.profile-popup-close:active {
+    background: var(--bg3)
 }
 
 .profile-popup-options {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px
 }
 
 .popup-option {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 12.5px;
-    font-weight: 800;
-    text-align: left;
-    cursor: pointer;
-    outline: none;
-}
-
-.popup-option.upload {
-    background: rgba(101, 78, 163, 0.12);
-    color: #654ea3;
-}
-
-[data-theme="dark"] .popup-option.upload {
-    background: rgba(120, 220, 255, 0.12);
-    color: #7fd4e8;
-}
-
-.popup-option.remove {
-    background: rgba(185, 28, 28, 0.1);
-    color: #b91c1c;
-}
-
-[data-theme="dark"] .popup-option.remove {
-    background: rgba(248, 113, 113, 0.14);
-    color: #f87171;
-}
-
-.popup-option.cancel {
     align-items: center;
-    background: rgba(43, 16, 85, 0.06);
-    color: rgba(43, 16, 85, 0.7);
+    gap: 10px;
+    padding: 11px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background var(--tr), border-color var(--tr), transform var(--tr);
+    text-align: left;
+    min-width: 0
 }
 
-[data-theme="dark"] .popup-option.cancel {
-    background: rgba(207, 234, 245, 0.08);
-    color: rgba(207, 234, 245, 0.7);
+.popup-option:active {
+    transform: scale(.98);
+    background: var(--bg3)
+}
+
+.popup-option>div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1
 }
 
 .popup-icon {
-    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    font-size: 15px
+}
+
+.popup-option.upload .popup-icon {
+    background: rgba(59, 130, 246, .12);
+    color: #3b82f6
+}
+
+[data-theme="dark"] .popup-option.upload .popup-icon {
+    background: rgba(96, 165, 250, .15);
+    color: #60a5fa
+}
+
+.popup-option.remove .popup-icon {
+    background: rgba(220, 38, 38, .12);
+    color: #dc2626
+}
+
+[data-theme="dark"] .popup-option.remove .popup-icon {
+    background: rgba(248, 113, 113, .15);
+    color: #f87171
+}
+
+.popup-option strong {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1.2
 }
 
 .popup-sub {
-    font-size: 10.5px;
-    font-weight: 600;
-    opacity: 0.75;
+    font-size: 10px;
+    color: var(--fg3);
+    line-height: 1.2
+}
+
+.popup-option.cancel {
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--fg2);
+    padding: 10px;
+    background: transparent;
+    border: none;
+    text-align: center
+}
+
+.popup-option.cancel:active {
+    background: var(--bg3)
 }
 
 .crop-modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 350;
+    background: rgba(0, 0, 0, .85);
+    z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    background: rgba(15, 32, 39, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    padding: 12px;
+    animation: topEditFadeIn .2s ease
 }
 
 .crop-modal {
-    width: 100%;
-    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    border: 1px solid var(--bd);
     border-radius: 16px;
-    background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    width: 100%;
+    max-width: 480px;
+    max-height: 92vh;
     overflow: hidden;
-}
-
-[data-theme="dark"] .crop-modal {
-    background: #16232b;
-    border-color: rgba(120, 220, 255, 0.25);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .5)
 }
 
 .crop-modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     padding: 12px 14px;
-    border-bottom: 1px solid rgba(101, 78, 163, 0.12);
-}
-
-[data-theme="dark"] .crop-modal-header {
-    border-bottom-color: rgba(120, 220, 255, 0.16);
+    border-bottom: 1px solid var(--bd);
+    flex-shrink: 0
 }
 
 .crop-modal-header h3 {
-    margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .crop-modal-header h3 {
-    color: #e0f2f7;
+    color: var(--fg);
+    margin: 0;
+    line-height: 1.2
 }
 
 .crop-modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 28px;
     height: 28px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(43, 16, 85, 0.08);
-    color: #2b1055;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    outline: none;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    color: var(--fg2);
+    font-size: 14px;
+    cursor: pointer
 }
 
-[data-theme="dark"] .crop-modal-close {
-    background: rgba(120, 220, 255, 0.12);
-    color: #cfeaf5;
+.crop-modal-close:active {
+    background: var(--bg3)
 }
 
 .crop-modal-body {
-    padding: 12px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    min-height: 0
 }
 
-@media (max-width: 360px) {
+@media(min-width:480px) {
     .top-edit-card {
-        padding: 12px;
-        gap: 10px;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 14px
+    }
+
+    .back-button {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
+    }
+
+    .top-edit-header h2 {
+        font-size: 16px
+    }
+
+    .profile-upload-success {
+        font-size: 12px;
+        padding: 9px 12px
+    }
+
+    .profile-upload-box {
+        padding: 24px;
+        max-width: 320px
+    }
+
+    .profile-upload-icon {
+        width: 54px;
+        height: 54px;
+        font-size: 24px
+    }
+
+    .profile-upload-box h2 {
+        font-size: 14px
+    }
+
+    .profile-upload-box p {
+        font-size: 11px
+    }
+
+    .profile-upload-percent {
+        font-size: 13px
     }
 
     .mypropreview-box-pro,
     .mypropreview-image-pro {
-        width: 72px;
-        height: 72px;
+        width: 130px;
+        height: 130px
+    }
+
+    .profile-edit-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px
     }
 
     .profile-popup {
-        padding: 14px;
+        padding: 16px
+    }
+
+    .profile-popup-header h3 {
+        font-size: 15px
+    }
+
+    .popup-option {
+        padding: 13px 14px
+    }
+
+    .popup-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
+    }
+
+    .popup-option strong {
+        font-size: 13px
+    }
+
+    .popup-sub {
+        font-size: 11px
+    }
+
+    .popup-option.cancel {
+        font-size: 13px
+    }
+
+    .crop-modal-header h3 {
+        font-size: 14px
+    }
+}
+
+@media(min-width:768px) {
+    .top-edit-card {
+        padding: 16px;
+        gap: 14px
+    }
+
+    .top-edit-header h2 {
+        font-size: 18px
+    }
+
+    .mypropreview-box-pro,
+    .mypropreview-image-pro {
+        width: 150px;
+        height: 150px
+    }
+
+    .profile-edit-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 18px
+    }
+
+    .profile-popup {
+        max-width: 440px;
+        padding: 18px
+    }
+
+    .crop-modal {
+        max-width: 560px
     }
 }

@@ -1,325 +1,304 @@
 .medium-edit-card {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 6px 18px rgba(101, 78, 163, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-sizing: border-box;
-}
-
-[data-theme="dark"] .medium-edit-card {
-    background: rgba(15, 32, 39, 0.6);
-    border-color: rgba(120, 220, 255, 0.22);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    gap: 10px;
+    padding: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    width: 100%;
+    min-width: 0
 }
 
 .email-message {
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 11.5px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.2px;
-    text-align: center;
-    line-height: 1.4;
+    line-height: 1.35;
+    animation: mediumMsgIn .25s ease;
+    word-break: break-word
 }
 
 .email-message.success {
-    background: rgba(34, 197, 94, 0.14);
+    background: rgba(22, 163, 74, .1);
     color: #16a34a;
-}
-
-[data-theme="dark"] .email-message.success {
-    background: rgba(74, 222, 128, 0.14);
-    color: #4ade80;
+    border: 1px solid rgba(22, 163, 74, .25)
 }
 
 .email-message.error {
-    background: rgba(185, 28, 28, 0.12);
-    color: #b91c1c;
+    background: rgba(220, 38, 38, .1);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, .25)
+}
+
+[data-theme="dark"] .email-message.success {
+    background: rgba(74, 222, 128, .12);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, .3)
 }
 
 [data-theme="dark"] .email-message.error {
-    background: rgba(248, 113, 113, 0.14);
-    color: #f87171;
+    background: rgba(248, 113, 113, .12);
+    color: #fca5a5;
+    border-color: rgba(248, 113, 113, .3)
+}
+
+@keyframes mediumMsgIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
 }
 
 .medium-field {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-width: 0;
+    min-width: 0
 }
 
-.medium-field>label {
+.medium-field label {
     font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    color: rgba(43, 16, 85, 0.6);
-}
-
-[data-theme="dark"] .medium-field>label {
-    color: rgba(207, 234, 245, 0.6);
+    font-weight: 700;
+    color: var(--fg2);
+    line-height: 1.2;
+    letter-spacing: .01em
 }
 
 .name-input-wrapper {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: 6px;
+    min-width: 0
 }
 
 .name-input-wrapper input {
     flex: 1;
-    min-width: 0;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(101, 78, 163, 0.2);
-    background: rgba(255, 255, 255, 0.7);
-    color: #2b1055;
-    font-size: 12.5px;
-    font-weight: 600;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
-}
-
-.name-input-wrapper input:focus {
-    border-color: #654ea3;
-}
-
-[data-theme="dark"] .name-input-wrapper input {
-    background: rgba(15, 32, 39, 0.7);
-    border-color: rgba(120, 220, 255, 0.2);
-    color: #cfeaf5;
-}
-
-[data-theme="dark"] .name-input-wrapper input:focus {
-    border-color: #7fd4e8;
-}
-
-.name-input-wrapper input::placeholder {
-    color: rgba(43, 16, 85, 0.4);
-    font-weight: 500;
-}
-
-[data-theme="dark"] .name-input-wrapper input::placeholder {
-    color: rgba(207, 234, 245, 0.4);
+    min-width: 0
 }
 
 .save-name-btn {
-    flex-shrink: 0;
-    padding: 10px 14px;
+    padding: 0 14px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    color: #ffffff;
-    font-size: 11.5px;
+    border-radius: 8px;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.3px;
     cursor: pointer;
-    outline: none;
-    box-shadow: 0 4px 10px rgba(101, 78, 163, 0.3);
-    transition: transform 0.2s ease;
+    transition: transform var(--tr), opacity var(--tr);
+    white-space: nowrap;
+    height: 40px;
+    flex-shrink: 0
+}
+
+.save-name-btn:active {
+    transform: scale(.96);
+    opacity: .9
 }
 
 .save-name-btn:disabled {
-    opacity: 0.55;
+    opacity: .4;
     cursor: not-allowed;
-    box-shadow: none;
-}
-
-.save-name-btn:active:not(:disabled) {
-    transform: scale(0.96);
-}
-
-[data-theme="dark"] .save-name-btn {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
-    box-shadow: 0 4px 10px rgba(127, 212, 232, 0.3);
+    transform: none
 }
 
 .mobile-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    min-width: 0;
-}
-
-[data-theme="dark"] .mobile-box {
-    background: rgba(15, 32, 39, 0.5);
-    border-color: rgba(120, 220, 255, 0.14);
+    gap: 8px;
+    padding: 9px 11px;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    min-height: 40px;
+    min-width: 0
 }
 
 .mobile-number {
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 700;
-    color: #2b1055;
-    min-width: 0;
+    color: var(--fg);
+    line-height: 1.2;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-[data-theme="dark"] .mobile-number {
-    color: #cfeaf5;
+    min-width: 0;
+    flex: 1
 }
 
 .verified {
-    flex-shrink: 0;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 9.5px;
-    font-weight: 900;
-    letter-spacing: 0.4px;
-    background: rgba(34, 197, 94, 0.14);
+    font-size: 9px;
+    font-weight: 800;
     color: #16a34a;
+    background: rgba(22, 163, 74, .12);
+    padding: 3px 7px;
+    border-radius: 4px;
+    line-height: 1;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    flex-shrink: 0
 }
 
 [data-theme="dark"] .verified {
-    background: rgba(74, 222, 128, 0.14);
     color: #4ade80;
+    background: rgba(74, 222, 128, .15)
 }
 
 .change-number-btn {
-    flex-shrink: 0;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(101, 78, 163, 0.14);
-    color: #654ea3;
+    padding: 4px 10px;
+    background: transparent;
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+    border-radius: 5px;
     font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.4px;
+    font-weight: 800;
     cursor: pointer;
-    outline: none;
+    line-height: 1;
+    height: 26px;
+    transition: background var(--tr);
+    flex-shrink: 0
 }
 
 [data-theme="dark"] .change-number-btn {
-    background: rgba(120, 220, 255, 0.14);
-    color: #7fd4e8;
+    color: #60a5fa;
+    border-color: #60a5fa
 }
 
-.verify-instruction {
-    font-size: 10.5px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: rgba(43, 16, 85, 0.55);
-    padding: 0 2px;
-}
-
-[data-theme="dark"] .verify-instruction {
-    color: rgba(207, 234, 245, 0.55);
+.change-number-btn:active {
+    background: rgba(59, 130, 246, .1)
 }
 
 .email-input-row {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: 6px;
+    min-width: 0
 }
 
 .email-input-row input {
     flex: 1;
-    min-width: 0;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(101, 78, 163, 0.2);
-    background: rgba(255, 255, 255, 0.7);
-    color: #2b1055;
-    font-size: 12.5px;
-    font-weight: 600;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
-}
-
-.email-input-row input:focus {
-    border-color: #654ea3;
-}
-
-[data-theme="dark"] .email-input-row input {
-    background: rgba(15, 32, 39, 0.7);
-    border-color: rgba(120, 220, 255, 0.2);
-    color: #cfeaf5;
-}
-
-[data-theme="dark"] .email-input-row input:focus {
-    border-color: #7fd4e8;
-}
-
-.email-input-row input::placeholder {
-    color: rgba(43, 16, 85, 0.4);
-    font-weight: 500;
-}
-
-[data-theme="dark"] .email-input-row input::placeholder {
-    color: rgba(207, 234, 245, 0.4);
+    min-width: 0
 }
 
 .send-otp-btn {
-    flex-shrink: 0;
-    padding: 10px 14px;
+    padding: 0 14px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    color: #ffffff;
-    font-size: 10.5px;
-    font-weight: 900;
-    letter-spacing: 0.4px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
     cursor: pointer;
-    outline: none;
-    box-shadow: 0 4px 10px rgba(101, 78, 163, 0.3);
-    transition: transform 0.2s ease;
+    transition: transform var(--tr), opacity var(--tr);
+    white-space: nowrap;
+    height: 40px;
+    flex-shrink: 0;
+    letter-spacing: .01em
+}
+
+.send-otp-btn:active {
+    transform: scale(.96);
+    opacity: .9
 }
 
 .send-otp-btn:disabled {
-    opacity: 0.55;
+    opacity: .45;
     cursor: not-allowed;
-    box-shadow: none;
+    transform: none
 }
 
-.send-otp-btn:active:not(:disabled) {
-    transform: scale(0.96);
+.verify-instruction {
+    font-size: 10px;
+    color: var(--fg3);
+    line-height: 1.4;
+    margin-top: 2px;
+    padding: 6px 8px;
+    background: var(--bg3);
+    border-radius: 6px;
+    border-left: 2px solid #3b82f6
 }
 
-[data-theme="dark"] .send-otp-btn {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
-    box-shadow: 0 4px 10px rgba(127, 212, 232, 0.3);
+[data-theme="dark"] .verify-instruction {
+    background: rgba(96, 165, 250, .08);
+    border-left-color: #60a5fa
 }
 
-@media (max-width: 360px) {
+@media(min-width:480px) {
     .medium-edit-card {
-        padding: 12px;
-        gap: 10px;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 14px
     }
 
-    .name-input-wrapper input,
-    .email-input-row input {
-        padding: 9px 10px;
+    .email-message {
         font-size: 12px;
+        padding: 9px 12px
+    }
+
+    .medium-field label {
+        font-size: 12px
     }
 
     .save-name-btn,
     .send-otp-btn {
-        padding: 9px 10px;
-        font-size: 10px;
+        font-size: 12px;
+        height: 44px;
+        padding: 0 18px
+    }
+
+    .mobile-box {
+        padding: 10px 12px;
+        min-height: 44px
     }
 
     .mobile-number {
-        font-size: 12px;
+        font-size: 13px
+    }
+
+    .verified {
+        font-size: 10px;
+        padding: 4px 8px
+    }
+
+    .change-number-btn {
+        font-size: 11px;
+        height: 28px;
+        padding: 5px 12px
     }
 
     .verify-instruction {
-        font-size: 10px;
+        font-size: 11px;
+        padding: 7px 10px
+    }
+}
+
+@media(min-width:768px) {
+    .medium-edit-card {
+        padding: 16px;
+        gap: 14px
+    }
+
+    .medium-field label {
+        font-size: 13px
+    }
+
+    .save-name-btn,
+    .send-otp-btn {
+        height: 48px;
+        font-size: 13px
+    }
+
+    .mobile-box {
+        min-height: 48px
+    }
+
+    .mobile-number {
+        font-size: 14px
     }
 }

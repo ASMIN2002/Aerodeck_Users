@@ -1,92 +1,78 @@
-import "../profilestyles/MyReviews.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiArrowLeft, FiStar, FiMessageSquare, FiPackage } from "react-icons/fi";
 import { API } from "../../services/api";
+import "../profilestyles/MyReviews.css";
 
-function renderStars(rating) {
-    const count = Math.max(0, Math.min(5, Number(rating) || 0));
-    return "⭐".repeat(count);
-}
+const TYPE_MAP = { gifts: "gift", shop: "shop", premium: "premium", products: "card", medicine: "medicine" };
+
+const getSession = () => localStorage.getItem("session_token");
+
+const Stars = ({ rating }) => {
+    const count = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+    return (
+        <div className="my-reviews-stars">
+            {Array.from({ length: 5 }).map((_, i) => (
+                <FiStar key={i} className={i < count ? "my-reviews-star filled" : "my-reviews-star"} />
+            ))}
+        </div>
+    );
+};
 
 function MyReviews({ setProfilePage, onOpenDetails }) {
     const navigate = useNavigate();
     const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function loadReviews() {
-            try {
-                const sessionToken = localStorage.getItem("session_token");
-                const res = await fetch(
-                    `${API}/api/user/review/my?session_token=${sessionToken}`
-                );
-                const data = await res.json();
-                if (data.success) setReviews(data.data || []);
-            } catch (err) {
-                console.error("Reviews fetch error:", err.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        loadReviews();
+        fetch(`${API}/api/user/review/my?session_token=${getSession()}`)
+            .then((r) => r.json())
+            .then((data) => { if (data.success) setReviews(data.data || []); })
+            .catch((err) => console.error("Reviews fetch error:", err.message));
     }, []);
 
-    const handleBack = () => {
-        setProfilePage("profile");
-        navigate("/profile", { replace: true });
-    };
+    const handleBack = () => { setProfilePage("profile"); navigate("/profile", { replace: true }); };
 
     const handleOpen = (review) => {
-        const typeMap = {
-            gifts: "gift",
-            shop: "shop",
-            premium: "premium",
-            products: "card",
-        };
-
         const productData = {
             product_id: review.product_id,
             product_name: review.product_name,
             product_price: review.product_price,
             product_image1: review.product_image,
         };
-
-        onOpenDetails?.(productData, typeMap[review.product_type] || "card");
+        onOpenDetails?.(productData, TYPE_MAP[review.product_type] || "card");
     };
-
-    if (loading) return <p style={{ padding: 20 }}>Loading...</p>;
 
     return (
         <div className="my-reviews">
             <div className="my-reviews-header">
-                <button className="my-reviews-back" onClick={handleBack}>←</button>
-                <h2>My Reviews</h2>
+                <button className="my-reviews-back" onClick={handleBack} aria-label="Back">
+                    <FiArrowLeft />
+                </button>
+                <h2 className="my-reviews-title">My Reviews</h2>
+                {reviews.length > 0 && <span className="my-reviews-count-badge">{reviews.length}</span>}
             </div>
 
             {reviews.length === 0 ? (
                 <div className="my-reviews-empty">
+                    <FiMessageSquare className="my-reviews-empty-icon" />
                     <h3>No Reviews Yet</h3>
                     <p>Reviews you write will appear here.</p>
                 </div>
             ) : (
                 <div className="my-reviews-grid">
                     {reviews.map((review) => (
-                        <div
-                            key={review.rating_id}
-                            className="my-reviews-card"
-                            onClick={() => handleOpen(review)}
-                        >
-                            <img
-                                src={review.product_image}
-                                alt={review.product_name}
-                                className="my-reviews-image"
-                            />
+                        <div key={review.rating_id} className="my-reviews-card" onClick={() => handleOpen(review)}>
+                            <div className="my-reviews-image-wrap">
+                                {review.product_image ? (
+                                    <img src={review.product_image} alt={review.product_name} className="my-reviews-image" loading="lazy" />
+                                ) : (
+                                    <FiPackage className="my-reviews-fallback" />
+                                )}
+                            </div>
 
                             <div className="my-reviews-info">
-                                <h4>{review.product_name}</h4>
-                                {/* <p className="my-reviews-price">₹{review.product_price}</p> */}
-                                {/* <p className="my-reviews-stars">{renderStars(review.rating)}</p> */}
+                                <h4 className="my-reviews-name">{review.product_name}</h4>
+                                <Stars rating={review.rating} />
                                 {review.review_message && (
                                     <p className="my-reviews-msg">{review.review_message}</p>
                                 )}

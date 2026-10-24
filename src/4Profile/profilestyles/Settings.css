@@ -1,105 +1,190 @@
 .settings-page {
-    min-height: 100vh;
-    background: #ffffff;
-    color: #2b1055;
-    box-sizing: border-box;
-}
-
-[data-theme="dark"] .settings-page {
-    background: #0f2027;
-    color: #cfeaf5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px;
+    width: 100%;
+    min-width: 0
 }
 
 .settings-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 16px;
-    border-bottom: 1px solid rgba(43, 16, 85, 0.08);
-}
-
-[data-theme="dark"] .settings-header {
-    border-bottom-color: rgba(120, 220, 255, 0.15);
+    gap: 8px;
+    padding: 0 2px
 }
 
 .settings-back {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: 1px solid rgba(43, 16, 85, 0.1);
-    background: rgba(43, 16, 85, 0.04);
-    color: #2b1055;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-[data-theme="dark"] .settings-back {
-    border-color: rgba(120, 220, 255, 0.15);
-    background: rgba(120, 220, 255, 0.08);
-    color: #cfeaf5;
-}
-
-.settings-header h2 {
-    margin: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    color: var(--fg);
     font-size: 15px;
-    font-weight: 600;
-    color: #2b1055;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background var(--tr), transform var(--tr)
 }
 
-[data-theme="dark"] .settings-header h2 {
-    color: #e0f2f7;
+.settings-back:active {
+    transform: scale(.94);
+    background: var(--bg3)
+}
+
+.settings-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0
 }
 
 .settings-content {
-    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
+    width: 100%
 }
 
 .settings-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 14px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    gap: 10px;
+    padding: 11px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    min-width: 0;
+    transition: border-color var(--tr), background var(--tr)
 }
 
-[data-theme="dark"] .settings-row {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
+.settings-row-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0
+}
+
+.settings-row-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    flex-shrink: 0;
+    font-size: 15px;
+    border: 1.5px solid
+}
+
+.settings-row-icon.theme-light {
+    background: rgba(245, 158, 11, .12);
+    border-color: rgba(245, 158, 11, .25);
+    color: #f59e0b
+}
+
+[data-theme="dark"] .settings-row-icon.theme-light {
+    background: rgba(251, 191, 36, .15);
+    border-color: rgba(251, 191, 36, .3);
+    color: #fbbf24
+}
+
+.settings-row-icon.theme-dark {
+    background: rgba(139, 92, 246, .12);
+    border-color: rgba(139, 92, 246, .25);
+    color: #8b5cf6
+}
+
+[data-theme="dark"] .settings-row-icon.theme-dark {
+    background: rgba(167, 139, 250, .15);
+    border-color: rgba(167, 139, 250, .3);
+    color: #a78bfa
+}
+
+.settings-row-icon.profile-icon {
+    background: rgba(59, 130, 246, .12);
+    border-color: rgba(59, 130, 246, .25);
+    color: #3b82f6
+}
+
+[data-theme="dark"] .settings-row-icon.profile-icon {
+    background: rgba(96, 165, 250, .15);
+    border-color: rgba(96, 165, 250, .3);
+    color: #60a5fa
+}
+
+.settings-row-icon.address-icon {
+    background: rgba(16, 185, 129, .12);
+    border-color: rgba(16, 185, 129, .25);
+    color: #10b981
+}
+
+[data-theme="dark"] .settings-row-icon.address-icon {
+    background: rgba(52, 211, 153, .15);
+    border-color: rgba(52, 211, 153, .3);
+    color: #34d399
 }
 
 .settings-row-text {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    flex: 1;
     min-width: 0;
+    flex: 1
 }
 
 .settings-row-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .settings-row-title {
-    color: #e0f2f7;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .settings-row-sub {
-    font-size: 11px;
-    color: rgba(43, 16, 85, 0.6);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--fg3);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
-[data-theme="dark"] .settings-row-sub {
-    color: rgba(207, 234, 245, 0.6);
+.settings-row-btn {
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    padding: 11px 12px
+}
+
+.settings-row-btn:active {
+    transform: scale(.99);
+    background: var(--bg3);
+    border-color: var(--fg3)
+}
+
+.settings-arrow {
+    font-size: 16px;
+    color: var(--fg3);
+    flex-shrink: 0;
+    transition: transform var(--tr)
+}
+
+.settings-row-btn:active .settings-arrow {
+    transform: translateX(2px)
 }
 
 .theme-toggle {
@@ -107,55 +192,130 @@
     width: 44px;
     height: 24px;
     border-radius: 999px;
-    border: none;
-    background: rgba(43, 16, 85, 0.15);
+    background: var(--bg3);
+    border: 1px solid var(--bd);
     cursor: pointer;
-    padding: 0;
     flex-shrink: 0;
-    transition: background 0.2s ease;
-}
-
-[data-theme="dark"] .theme-toggle {
-    background: rgba(120, 220, 255, 0.2);
+    transition: background var(--tr), border-color var(--tr)
 }
 
 .theme-toggle.on {
-    background: #654ea3;
-}
-
-[data-theme="dark"] .theme-toggle.on {
-    background: #7fd4e8;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    border-color: transparent
 }
 
 .theme-toggle-thumb {
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 2px;
+    left: 2px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #ffffff;
-    transition: transform 0.2s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+    transition: transform .3s cubic-bezier(.34, 1.56, .64, 1)
 }
 
 .theme-toggle.on .theme-toggle-thumb {
-    transform: translateX(20px);
+    transform: translateX(20px)
 }
 
-.settings-action-btn {
-    padding: 7px 14px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    flex-shrink: 0;
+@media(min-width:480px) {
+    .settings-page {
+        gap: 12px;
+        padding: 10px
+    }
+
+    .settings-back {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
+    }
+
+    .settings-title {
+        font-size: 17px
+    }
+
+    .settings-content {
+        gap: 8px
+    }
+
+    .settings-row {
+        padding: 13px 14px;
+        border-radius: 12px
+    }
+
+    .settings-row-left {
+        gap: 12px
+    }
+
+    .settings-row-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 17px
+    }
+
+    .settings-row-title {
+        font-size: 13px
+    }
+
+    .settings-row-sub {
+        font-size: 11px
+    }
+
+    .settings-arrow {
+        font-size: 18px
+    }
+
+    .theme-toggle {
+        width: 48px;
+        height: 26px
+    }
+
+    .theme-toggle-thumb {
+        width: 20px;
+        height: 20px
+    }
+
+    .theme-toggle.on .theme-toggle-thumb {
+        transform: translateX(22px)
+    }
 }
 
-[data-theme="dark"] .settings-action-btn {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
+@media(min-width:768px) {
+    .settings-title {
+        font-size: 19px
+    }
+
+    .settings-row {
+        padding: 14px 16px
+    }
+
+    .settings-row-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px
+    }
+
+    .settings-row-title {
+        font-size: 14px
+    }
+
+    .settings-row-sub {
+        font-size: 12px
+    }
+
+    .theme-toggle {
+        width: 52px;
+        height: 28px
+    }
+
+    .theme-toggle-thumb {
+        width: 22px;
+        height: 22px
+    }
+
+    .theme-toggle.on .theme-toggle-thumb {
+        transform: translateX(24px)
+    }
 }

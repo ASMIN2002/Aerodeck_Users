@@ -3,31 +3,16 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 12px;
+    padding: 8px;
     width: 100%;
     min-width: 0;
     overflow: hidden;
-    background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #ede9fe 100%);
-    background-size: 200% 200%;
-    animation: offerBgFlow 18s ease infinite;
     height: 100vh;
+    background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #ede9fe 100%)
 }
 
 [data-theme="dark"] .offers-page {
-    background: linear-gradient(135deg, #1a1208 0%, #1a0f18 50%, #150e2a 100%);
-    background-size: 200% 200%
-}
-
-@keyframes offerBgFlow {
-
-    0%,
-    100% {
-        background-position: 0% 50%
-    }
-
-    50% {
-        background-position: 100% 50%
-    }
+    background: linear-gradient(135deg, #1a1208 0%, #1a0f18 50%, #150e2a 100%)
 }
 
 .offers-bg {
@@ -38,31 +23,31 @@
     z-index: 0
 }
 
-.offers-floating {
+.offers-float-icon {
     position: absolute;
-    animation: offerFloatDrift linear infinite;
-    will-change: transform
+    opacity: .4;
+    animation: offersFloat linear infinite;
+    pointer-events: none
 }
 
-@keyframes offerFloatDrift {
-    0% {
-        transform: translate(0, 0) rotate(0);
-    }
+[data-theme="dark"] .offers-float-icon {
+    opacity: .25
+}
 
-    25% {
-        transform: translate(var(--sway, 20px), -30px) rotate(calc(var(--rotate, 180deg) * .33));
+@keyframes offersFloat {
+    0% {
+        transform: translate(0, 0);
+        opacity: .4
     }
 
     50% {
-        transform: translate(calc(var(--sway, 20px) * -.5), -60px) rotate(calc(var(--rotate, 180deg) * .66));
-    }
-
-    75% {
-        transform: translate(calc(var(--sway, 20px) * 1.2), -30px) rotate(var(--rotate, 180deg));
+        transform: translate(15px, -40px);
+        opacity: .7
     }
 
     100% {
-        transform: translate(0, 0) rotate(calc(var(--rotate, 180deg) * 1.33));
+        transform: translate(0, 0);
+        opacity: .4
     }
 }
 
@@ -87,27 +72,12 @@
     font-size: 18px;
     font-weight: 900;
     letter-spacing: -.02em;
-    color: var(--fg);
     line-height: 1.2;
     margin: 0;
     background: linear-gradient(135deg, #f59e0b, #ec4899 50%, #a855f7);
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 200%;
-    animation: offerTitleShine 4s ease-in-out infinite
-}
-
-@keyframes offerTitleShine {
-
-    0%,
-    100% {
-        background-position: 0% 50%
-    }
-
-    50% {
-        background-position: 100% 50%
-    }
+    -webkit-text-fill-color: transparent
 }
 
 .offers-subtitle {
@@ -139,7 +109,6 @@
     padding: 8px 10px;
     border-radius: 8px;
     line-height: 1.35;
-    animation: offerErrorIn .25s ease;
     position: relative;
     z-index: 1
 }
@@ -148,18 +117,6 @@
     background: rgba(248, 113, 113, .12);
     color: #fca5a5;
     border-color: rgba(248, 113, 113, .3)
-}
-
-@keyframes offerErrorIn {
-    from {
-        opacity: 0;
-        transform: translateY(-4px)
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0)
-    }
 }
 
 .offers-grid {
@@ -174,21 +131,13 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background: var(--bg);
+    background: var(--bg2);
     border: 1px solid var(--bd);
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform var(--tr), border-color var(--tr), box-shadow var(--tr);
-    min-width: 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px)
-}
-
-[data-theme="dark"] .offer-card {
-    background: rgba(20, 20, 30, .7);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .4)
+    transition: transform var(--tr), border-color var(--tr);
+    min-width: 0
 }
 
 .offer-card:active {
@@ -211,12 +160,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform .35s ease
-}
-
-.offer-card:active .offer-image img {
-    transform: scale(1.03)
+    display: block
 }
 
 .offer-image-fallback {
@@ -231,15 +175,14 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    background: linear-gradient(135deg, #f59e0b, #ec4899);
+    background: rgba(0, 0, 0, .75);
     color: #fff;
     font-size: 11px;
     font-weight: 900;
     padding: 4px 10px;
     border-radius: 6px;
     line-height: 1;
-    letter-spacing: .02em;
-    box-shadow: 0 3px 10px rgba(236, 72, 153, .4)
+    letter-spacing: .02em
 }
 
 .offer-body {
@@ -341,16 +284,14 @@
     font-size: 12px;
     font-weight: 800;
     cursor: pointer;
-    transition: transform var(--tr), opacity var(--tr);
+    transition: transform var(--tr);
     min-height: 40px;
     line-height: 1;
-    box-shadow: 0 3px 10px rgba(37, 211, 102, .3);
     letter-spacing: .01em
 }
 
 .offer-wa-btn:active {
-    transform: scale(.97);
-    opacity: .9
+    transform: scale(.97)
 }
 
 .offer-wa-btn svg {
@@ -361,26 +302,13 @@
 .offer-modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, .72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, .7);
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 12px;
-    animation: offerOverlayIn .25s ease;
     overflow-y: auto
-}
-
-@keyframes offerOverlayIn {
-    from {
-        opacity: 0
-    }
-
-    to {
-        opacity: 1
-    }
 }
 
 .offer-modal {
@@ -395,19 +323,19 @@
     max-height: 92vh;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
-    animation: offerModalIn .35s cubic-bezier(.34, 1.56, .64, 1);
+    animation: offerModalIn .25s ease;
     margin: auto
 }
 
 @keyframes offerModalIn {
     from {
         opacity: 0;
-        transform: scale(.85) translateY(20px)
+        transform: scale(.94)
     }
 
     to {
         opacity: 1;
-        transform: scale(1) translateY(0)
+        transform: scale(1)
     }
 }
 
@@ -423,18 +351,10 @@
     height: 36px;
     border-radius: 50%;
     background: rgba(0, 0, 0, .6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, .25);
     color: #fff;
     font-size: 17px;
-    cursor: pointer;
-    transition: transform var(--tr), background var(--tr)
-}
-
-.offer-modal-close:active {
-    transform: scale(.9);
-    background: rgba(0, 0, 0, .8)
+    cursor: pointer
 }
 
 .offer-modal-image {
@@ -515,15 +435,10 @@
     justify-content: space-between;
     gap: 8px;
     padding: 10px 12px;
-    background: linear-gradient(135deg, rgba(245, 158, 11, .1), rgba(236, 72, 153, .1));
-    border: 1px solid rgba(245, 158, 11, .25);
+    background: var(--bg2);
+    border: 1px solid var(--bd);
     border-radius: 10px;
     margin-top: 4px
-}
-
-[data-theme="dark"] .offer-modal-price-row {
-    background: linear-gradient(135deg, rgba(251, 191, 36, .1), rgba(236, 72, 153, .1));
-    border-color: rgba(251, 191, 36, .25)
 }
 
 .offer-modal-price-row>div {
@@ -557,7 +472,6 @@
     padding: 7px 14px;
     border-radius: 8px;
     line-height: 1;
-    box-shadow: 0 3px 10px rgba(236, 72, 153, .3);
     white-space: nowrap;
     flex-shrink: 0
 }
@@ -575,9 +489,7 @@
 
 @media(min-width:480px) {
     .offers-page {
-        gap: 12px;
-        padding: 8px 12px 16px;
-        border-radius: 0
+        gap: 12px
     }
 
     .offers-title {
@@ -594,10 +506,6 @@
 
     .offer-card {
         border-radius: 14px
-    }
-
-    .offer-image {
-        border-radius: 14px 14px 0 0
     }
 
     .offer-percent-badge {
@@ -655,7 +563,7 @@
 
 @media(min-width:768px) {
     .offers-page {
-        padding: 12px 16px 20px;
+        padding: 8px 0 16px;
         gap: 14px
     }
 

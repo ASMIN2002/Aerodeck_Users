@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiUser, FiMail, FiPhone, FiMessageCircle, FiGift, FiCalendar, FiEdit, FiCheckCircle, FiClock, FiXCircle } from "react-icons/fi";
 import { API } from "../../../services/api";
-import NODP from "../../../assets/NODP.png";
 import "./ViewProfile.css";
 
-function ViewProfile({ profile, setProfilePage, navigateWithLoading }) {
+function ViewProfile({ profile, setProfilePage }) {
     const navigate = useNavigate();
     const [promoCode, setPromoCode] = useState(null);
     const [isRedeemed, setIsRedeemed] = useState(false);
-    const [loadingPromo, setLoadingPromo] = useState(true);
 
     useEffect(() => {
         const sessionToken = localStorage.getItem("session_token");
@@ -21,8 +19,7 @@ function ViewProfile({ profile, setProfilePage, navigateWithLoading }) {
                     setIsRedeemed(Number(data.data.redeemed) === 1);
                 }
             })
-            .catch((err) => console.error(err))
-            .finally(() => setLoadingPromo(false));
+            .catch((err) => console.error(err));
     }, []);
 
     const formatJoinedDate = (date) => {
@@ -46,25 +43,26 @@ function ViewProfile({ profile, setProfilePage, navigateWithLoading }) {
         { Icon: FiUser, label: "Name", value: displayName },
         { Icon: FiMail, label: "Email", value: displayEmail },
         {
-            Icon: FiPhone, label: "Mobile", status: mobileIsVerified && mobileHasNumber ? "ok" : mobileHasNumber ? "pending" : "no",
+            Icon: FiPhone, label: "Mobile",
+            status: mobileIsVerified && mobileHasNumber ? "ok" : mobileHasNumber ? "pending" : "no",
             value: mobileIsVerified && mobileHasNumber ? profile.mobile_number : null,
         },
         {
-            Icon: FiMessageCircle, label: "WhatsApp", status: whatsappIsVerified && whatsappHasNumber ? "ok" : whatsappHasNumber ? "pending" : "no",
+            Icon: FiMessageCircle, label: "WhatsApp",
+            status: whatsappIsVerified && whatsappHasNumber ? "ok" : whatsappHasNumber ? "pending" : "no",
             value: whatsappIsVerified && whatsappHasNumber ? profile.whatsapp_number : null,
         },
         { Icon: FiCalendar, label: "Joined", value: formatJoinedDate(profile?.created_at) },
     ];
 
+    const goBack = () => { setProfilePage("profile"); navigate("/profile", { replace: true }); };
+    const goEdit = () => { setProfilePage("editprofile"); navigate("/profile/viewprofile/editprofile"); };
+
     return (
         <div className="viewprofile">
             <div className="view-card">
                 <div className="view-header">
-                    <button
-                        className="view-back"
-                        onClick={() => navigateWithLoading(() => { setProfilePage("profile"); navigate("/profile", { replace: true }); }, "Loading Profile...", 10)}
-                        aria-label="Back"
-                    >
+                    <button className="view-back" onClick={goBack} aria-label="Back">
                         <FiArrowLeft />
                     </button>
 
@@ -77,10 +75,7 @@ function ViewProfile({ profile, setProfilePage, navigateWithLoading }) {
                             )}
                         </div>
                         <span className="view-user-code">{getUserCode()}</span>
-                        <button
-                            className="view-edit-btn"
-                            onClick={() => navigateWithLoading(() => { setProfilePage("editprofile"); navigate("/profile/viewprofile/editprofile"); }, "Loading Edit Profile...", 500)}
-                        >
+                        <button className="view-edit-btn" onClick={goEdit}>
                             <FiEdit /> Edit Profile
                         </button>
                     </div>
@@ -108,9 +103,7 @@ function ViewProfile({ profile, setProfilePage, navigateWithLoading }) {
                             <span className="view-row-label">Promo Code</span>
                         </div>
                         <div className="view-row-value">
-                            {loadingPromo ? (
-                                <span className="view-promo-loading">...</span>
-                            ) : !promoCode ? (
+                            {!promoCode ? (
                                 <span className="view-promo-na">N/A</span>
                             ) : (
                                 <div className="view-promo-wrap">
