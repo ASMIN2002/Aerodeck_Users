@@ -42,6 +42,7 @@ function BottomNav({
     const navigate = useNavigate();
     const [showComingSoon, setShowComingSoon] = useState(false);
     const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+    const [isScrolledDown, setIsScrolledDown] = useState(false);
 
     useEffect(() => {
         const fetchCartCount = async () => {
@@ -97,6 +98,79 @@ function BottomNav({
         };
     }, []);
 
+    useEffect(() => {
+        let lastTop = 0;
+        let ticking = false;
+        let targetEl = null;
+
+        const readTop = () => {
+            if (targetEl) return targetEl.scrollTop;
+            return window.scrollY || document.documentElement.scrollTop || 0;
+        };
+
+        const onScroll = () => {
+            if (ticking) return;
+            ticking = true;
+
+            requestAnimationFrame(() => {
+                const current = readTop();
+                const delta = current - lastTop;
+
+                if (Math.abs(delta) > 4) {
+                    const atBottom = targetEl
+                        ? targetEl.scrollHeight - targetEl.scrollTop - targetEl.clientHeight < 24
+                        : window.innerHeight + current >=
+                        document.documentElement.scrollHeight - 24;
+
+                    if (delta > 0 && current > 40 && !atBottom) {
+                        setIsScrolledDown(true);
+                    } else {
+                        setIsScrolledDown(false);
+                    }
+                }
+
+                lastTop = current;
+                ticking = false;
+            });
+        };
+
+        const attach = () => {
+            targetEl = document.querySelector(".home-content");
+
+            window.addEventListener("scroll", onScroll, { passive: true });
+            if (targetEl) {
+                targetEl.addEventListener("scroll", onScroll, { passive: true });
+            }
+
+            lastTop = readTop();
+        };
+
+        const detach = () => {
+            window.removeEventListener("scroll", onScroll);
+            if (targetEl) {
+                targetEl.removeEventListener("scroll", onScroll);
+                targetEl = null;
+            }
+        };
+
+        attach();
+
+        const observer = new MutationObserver(() => {
+            const next = document.querySelector(".home-content");
+            if (next && next !== targetEl) {
+                detach();
+                attach();
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        return () => {
+            observer.disconnect();
+            detach();
+        };
+    }, []);
+
     const showComingSoonToast = useCallback(() => {
         setShowComingSoon(true);
         setTimeout(() => setShowComingSoon(false), TOAST_DURATION);
@@ -147,7 +221,9 @@ function BottomNav({
 
     return (
         <>
-            <nav className={`bn-nav ${isKeyboardOpen ? "bn-hidden" : ""}`}>
+            <nav
+                className={`bn-nav ${isKeyboardOpen ? "bn-hidden" : ""} ${isScrolledDown ? "bn-scrolled-down" : ""}`}
+            >
                 {NAV_ITEMS.map((item) => {
                     const Icon = item.icon;
                     const isActive = selectedBottomTab === item.key;

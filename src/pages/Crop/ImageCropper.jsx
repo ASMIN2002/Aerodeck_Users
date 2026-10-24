@@ -22,12 +22,6 @@ export default function ImageCropper({
 
     const [processing, setProcessing] =
         useState(false);
-
-
-    // ================================
-    // CROP COMPLETE
-    // ================================
-
     const onCropComplete = (
         croppedArea,
         croppedPixels
@@ -38,12 +32,6 @@ export default function ImageCropper({
         );
 
     };
-
-
-    // ================================
-    // HANDLE CROP
-    // ================================
-
     const handleCrop = async () => {
 
         if (!croppedAreaPixels) {

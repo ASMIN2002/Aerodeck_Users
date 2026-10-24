@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
-import Loading from "../../../components/Loading/Loading";
 import ShopCard from "./2ShopCard";
-import Toast from "../../../components/Toast/Toast";
+import Toast from "../../../1hook/hooks/Toast";
 import { API } from "../../../services/api";
 import ShopHome from "./5ShopHome";
 import ShopCategory from "./3ShopCategory";
@@ -70,7 +69,6 @@ function Shop({
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
-    const [showLoading, setShowLoading] = useState(true);
 
     const showToast = (message, type = "success") => {
         setToast({ show: true, message, type });
@@ -348,14 +346,6 @@ function Shop({
 
     return (
         <>
-            {showLoading && (
-                <Loading
-                    duration={500}
-                    text="Loading Shop Items..."
-                    onComplete={() => setShowLoading(false)}
-                />
-            )}
-
             {allShopCategoriesPage ? (
                 <ALLShopCategories
                     categories={categories}

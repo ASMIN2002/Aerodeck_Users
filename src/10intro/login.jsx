@@ -6,8 +6,8 @@ import {
     FiLoader
 } from "react-icons/fi";
 
-import "../../styles/Login.css";
-import { API } from "../../services/api";
+import "./login.css";
+import { API } from "../services/api";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const TOAST_DURATION = 3000;

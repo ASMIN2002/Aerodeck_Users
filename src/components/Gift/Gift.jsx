@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import Loading from "../../components/Loading/Loading";
+// import Loading from "../../components/Loading/Loading";
 import GiftCard from "../Gift/GiftCard";
 import GiftHome from "./GiftHome";
 import GiftCategory from "./GiftCategory";
 import AllGifts from "./AllGifts";
 import ALLGiftCategories from "./ALLGiftCategories";
-import Toast from "../Toast/Toast";
+// import Toast from "../Toast/Toast";
 import { API } from "../../services/api";
 
 function Gift({

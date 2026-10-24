@@ -1,195 +1,108 @@
 .home-container {
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
     display: flex;
     flex-direction: column;
-    overflow: visible;
-    position: relative;
-    background: linear-gradient(135deg, #d3959b 0%, #bfe6ba 100%);
-    transition: background .3s ease;
-}
-
-[data-theme="dark"] .home-container {
-    background: linear-gradient(135deg, #152331 0%, #000 100%);
-}
-
-.home-container::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-    background-image:
-        radial-gradient(2px 2px at 12% 18%, #fff 0%, transparent 100%),
-        radial-gradient(2px 2px at 28% 72%, #fffd 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 45% 32%, #fffe 0%, transparent 100%),
-        radial-gradient(2px 2px at 62% 68%, #fffd 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 78% 22%, #fff 0%, transparent 100%),
-        radial-gradient(2px 2px at 88% 82%, #fffe 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 8% 58%, #fffe 0%, transparent 100%),
-        radial-gradient(2px 2px at 92% 48%, #fffd 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 35% 8%, #fff 0%, transparent 100%),
-        radial-gradient(2px 2px at 55% 92%, #fffe 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 72% 55%, #fff 0%, transparent 100%),
-        radial-gradient(2px 2px at 22% 88%, #fffd 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 5% 35%, #fffe 0%, transparent 100%),
-        radial-gradient(2px 2px at 50% 5%, #fffd 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 95% 65%, #fffe 0%, transparent 100%),
-        radial-gradient(2px 2px at 40% 50%, #fffc 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 68% 12%, #fffe 0%, transparent 100%),
-        radial-gradient(2px 2px at 82% 60%, #fffd 0%, transparent 100%);
-    animation: homeStarsBlink 2.5s ease-in-out infinite;
-}
-
-[data-theme="dark"] .home-container::before {
-    background-image:
-        radial-gradient(2px 2px at 12% 18%, #b8f0ff 0%, transparent 100%),
-        radial-gradient(2px 2px at 28% 72%, #b8f0ffe6 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 45% 32%, #b8f0ff 0%, transparent 100%),
-        radial-gradient(2px 2px at 62% 68%, #b8f0ffe6 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 78% 22%, #b8f0ff 0%, transparent 100%),
-        radial-gradient(2px 2px at 88% 82%, #b8f0fff2 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 8% 58%, #b8f0fff2 0%, transparent 100%),
-        radial-gradient(2px 2px at 92% 48%, #b8f0ffe6 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 35% 8%, #b8f0ff 0%, transparent 100%),
-        radial-gradient(2px 2px at 55% 92%, #b8f0fff2 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 72% 55%, #b8f0ff 0%, transparent 100%),
-        radial-gradient(2px 2px at 22% 88%, #b8f0ffe6 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 5% 35%, #b8f0fff2 0%, transparent 100%),
-        radial-gradient(2px 2px at 50% 5%, #b8f0ffe6 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 95% 65%, #b8f0fff2 0%, transparent 100%),
-        radial-gradient(2px 2px at 40% 50%, #b8f0ffd9 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 68% 12%, #b8f0fff2 0%, transparent 100%),
-        radial-gradient(2px 2px at 82% 60%, #b8f0ffe6 0%, transparent 100%);
-}
-
-@keyframes homeStarsBlink {
-
-    0%,
-    100% {
-        opacity: .35;
-    }
-
-    25%,
-    75% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: .5;
-    }
+    height: 100dvh;
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    overflow: hidden;
+    position: relative
 }
 
 .home-content {
     flex: 1;
-    position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-    box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    padding: 0 var(--pad) var(--gap);
+    transition: padding var(--tr)
 }
 
 .home-content.has-bottom-nav {
-    padding-bottom: 76px;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px))
 }
 
-.home-content::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
+.home-address {
+    padding: 8px var(--pad);
+    border-bottom: 1px solid var(--bd);
+    background: var(--bg)
+}
+
+.home-address:empty {
+    display: none
 }
 
 .pull-refresh-indicator {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
+    justify-content: center;
+    gap: 4px;
     overflow: hidden;
-    padding: 0 20px 8px;
-    transition: height .15s ease-out, opacity .15s ease-out;
-    pointer-events: none;
-    z-index: 999;
+    transition: height .2s ease, opacity .2s ease;
+    pointer-events: none
 }
 
 .pull-refresh-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #ffffffd9;
-    border: 1px solid #ffffffe6;
-    color: #654ea3;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all .25s ease;
-    flex-shrink: 0;
-    backdrop-filter: blur(8px);
-}
-
-[data-theme="dark"] .pull-refresh-icon {
-    background: #0f2027d9;
-    border-color: #78dcff59;
-    color: #7fd4e8;
+    color: var(--fg2);
+    transition: transform .2s ease, color .2s ease
 }
 
 .pull-refresh-icon.ready {
-    color: #654ea3;
-    border-color: #654ea3;
-    box-shadow: 0 0 16px #654ea380;
-    transform: scale(1.05);
+    color: var(--fg);
+    transform: rotate(180deg)
 }
 
-[data-theme="dark"] .pull-refresh-icon.ready {
-    color: #7fd4e8;
-    border-color: #7fd4e8;
-    box-shadow: 0 0 16px #7fd4e880;
-}
-
-.pull-refresh-icon.spinning svg {
-    animation: pullSpin .8s linear infinite;
-}
-
-@keyframes pullSpin {
-    to {
-        transform: rotate(360deg);
-    }
+.pull-refresh-icon.spinning {
+    animation: spin 1s linear infinite
 }
 
 .pull-refresh-text {
-    font-size: 11px;
-    font-weight: 700;
-    color: #2b1055;
-    letter-spacing: .5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    text-shadow: 0 1px 2px #ffffff80;
+    font-size: var(--fs3);
+    color: var(--fg3);
+    font-weight: 500
 }
 
-[data-theme="dark"] .pull-refresh-text {
-    color: #cfeaf5;
-    text-shadow: 0 1px 2px #00000080;
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .home-container::before {
-        animation: none;
+@media(min-width:480px) {
+    .home-content {
+        padding: 0 var(--pad) var(--gap)
     }
 
-    .home-container *,
-    .home-container *::before,
-    .home-container *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
+    .home-content.has-bottom-nav {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px))
+    }
+}
+
+@media(min-width:768px) {
+    .home-container {
+        max-width: 720px;
+        margin: 0 auto;
+        border-left: 1px solid var(--bd);
+        border-right: 1px solid var(--bd)
+    }
+
+    .home-content.has-bottom-nav {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px))
+    }
+}
+
+@media(min-width:1024px) {
+    .home-container {
+        max-width: 960px
+    }
+
+    .home-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--gap)
     }
 }

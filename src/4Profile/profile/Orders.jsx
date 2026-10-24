@@ -2,7 +2,6 @@ import "../profilestyles/Orders.css";
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
-import Loading from "../../components/Loading/Loading";
 import {
     FiArrowLeft,
     FiPackage,
@@ -16,7 +15,6 @@ import {
 } from "react-icons/fi";
 
 const MIN_ORDER_FOR_REWARD = 250;
-const FAKE_LOADING_DELAY = 500;
 
 const CANCEL_REASONS = [
     "Changed my mind",
@@ -85,16 +83,10 @@ function canCancelOrder(status) {
     return !["DELIVERED", "CANCELLED", "REQUESTED"].includes(status);
 }
 
-function MyOrders({
-    setProfilePage,
-    selectedOrder,
-    setSelectedOrder,
-    navigateWithLoading,
-}) {
+function MyOrders({ setProfilePage, setSelectedOrder, navigateWithLoading }) {
     const navigate = useNavigate();
 
     const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [userRewardCount, setUserRewardCount] = useState(null);
 
     const [showCancelModal, setShowCancelModal] = useState(false);
@@ -119,8 +111,6 @@ function MyOrders({
             if (data.success) setOrders(data.data);
         } catch (err) {
             console.error("Orders fetch error:", err.message);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -144,14 +134,8 @@ function MyOrders({
 
     const handleOpenOrder = (order) => {
         setSelectedOrder(order);
-        navigateWithLoading(
-            () => {
-                setProfilePage("order-details");
-                navigate(`/profile/orders/order/${order.order_id}`);
-            },
-            "Loading Order Details...",
-            FAKE_LOADING_DELAY
-        );
+        setProfilePage("order-details");
+        navigate(`/profile/orders/order/${order.order_id}`);
     };
 
     const handleOpenCancelModal = (e, order) => {
@@ -190,12 +174,6 @@ function MyOrders({
             console.error("Cancel order error:", err.message);
         }
     };
-
-    if (loading) {
-        return (
-            <Loading type="order" count={5} text="Loading Orders..." manual={true} />
-        );
-    }
 
     return (
         <div className="myorders">

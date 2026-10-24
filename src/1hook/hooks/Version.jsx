@@ -38,13 +38,13 @@ function Version({ userId }) {
                 <span className="hd-version-text">v {version || "27.03.01"}</span>
             </div>
 
-            <button
+            {/* <button
                 className={`hd-version-toggle ${theme === "dark" ? "on" : ""}`}
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
             >
                 <span className="hd-version-toggle-thumb" />
-            </button>
+            </button> */}
         </div>
     );
 }

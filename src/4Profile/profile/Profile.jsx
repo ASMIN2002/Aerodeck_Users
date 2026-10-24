@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../profilestyles/Profile.css";
 import NODP from "../../assets/NODP.png";
-import Loading from "../../components/Loading/Loading";
 import { API } from "../../services/api";
 import {
     FiHeart,
@@ -86,9 +85,9 @@ function Profile({ user, setPage, onLogout, setProfilePage, navigateWithLoading 
         );
     };
 
-    if (!profile) {
-        return <Loading manual={true} text="Loading Profile..." />;
-    }
+    // if (!profile) {
+    //     return <Loading manual={true} text="Loading Profile..." />;
+    // }
 
     return (
         <div className="profile">

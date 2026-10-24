@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../levelstyle/1Cards.css";
 import ProductCard from "./2ProductCard";
-import Toast from "../../../components/Toast/Toast";
-import Loading from "../../../components/Loading/Loading";
+// import Toast from "../../../components/Toast/Toast";
 import CardsTab from "./CardsTab";
 import { API } from "../../../services/api";
 
@@ -69,7 +68,6 @@ function Cards({
     const [likedProducts, setLikedProducts] = useState(new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
-    const [showLoading, setShowLoading] = useState(true);
 
     useEffect(() => {
         window.history.pushState(null, "", window.location.href);
@@ -355,18 +353,6 @@ function Cards({
                     }
                 />
             </div>
-
-            {showLoading && (
-                <Loading
-                    duration={500}
-                    text={
-                        activeTab === "premium"
-                            ? "Loading Premium Cards..."
-                            : "Loading Cards..."
-                    }
-                    onComplete={() => setShowLoading(false)}
-                />
-            )}
 
             {finalProducts.length > 0 ? (
                 <div className="cds-grid">

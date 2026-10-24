@@ -4,15 +4,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { PushNotifications } from "@capacitor/push-notifications";
-import TermsAndCondition from "./pages/Login/TermsAndCondition";
-import Loading from "./components/Loading/Loading";
-import Splash from "./pages/Splash/Splash";
+import TermsAndCondition from "./10intro/Termsandcondition";
+import Loading from "./10intro/Loading";
+import Splash from "./10intro/Splash";
 import Home from "./pages/Home/Home";
 import Update from "./pages/Update/Update";
 import AppUpdate from "./pages/Update/AppUpdate";
 import Maintenance from "./pages/Home/Maintenance";
 import { Toaster, toast } from "react-hot-toast";
-import Login from "./pages/Login/Login";
+import Login from "./10intro/login";
 import { API } from "./services/api";
 
 const NAV_HISTORY_KEY = "heepit_navigation_history";
@@ -136,6 +136,12 @@ function App() {
             fcmSavedRef.current = false;
         }
     }, []);
+
+    useEffect(() => {
+        const themeKey = user?.user_id ? `theme_${user.user_id}` : "theme_guest";
+        const theme = localStorage.getItem(themeKey) || "light";
+        document.documentElement.setAttribute("data-theme", theme);
+    }, [user?.user_id]);
 
     useEffect(() => {
         const path = location.pathname;

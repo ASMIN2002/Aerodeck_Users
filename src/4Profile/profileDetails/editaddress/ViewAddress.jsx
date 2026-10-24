@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiPlus, FiEdit2, FiTrash2, FiArrowUp } from "react-icons/fi";
 import { API } from "../../../services/api";
-import Toast from "../../../components/Toast/Toast";
+// import Toast from "../../../components/Toast/Toast";
 
 const MAX_ADDRESSES = 4;
 const NAV_DELAY = 500;

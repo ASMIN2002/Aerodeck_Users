@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import "./AddEdit.css";
 import { API } from "../../../services/api";
-import Loading from "../../../components/Loading/Loading";
+// import Loading from "../../../components/Loading/Loading";
 
 const ADDRESS_TYPES = [
     { value: "Home", label: "🏠 Home" },

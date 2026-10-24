@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddEdit.css";
 import { FiArrowLeft } from "react-icons/fi";
-import Toast from "../../../components/Toast/Toast";
-import Loading from "../../../components/Loading/Loading";
+// import Toast from "../../../components/Toast/Toast";
+// import Loading from "../../../components/Loading/Loading";
 import { API } from "../../../services/api";
 
 const TOAST_DURATION = 3000;
