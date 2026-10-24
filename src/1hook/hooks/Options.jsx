@@ -1,80 +1,78 @@
 import { useEffect, useRef, useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiShoppingBag, FiCreditCard, FiCoffee } from "react-icons/fi";
 import "../hooksstyle/Options.css";
 
 export const MENU_OPTIONS = [
-    { key: "Shop", label: "Products", icon: "🛍️", route: "/home/shop", comingSoon: false },
-    { key: "Cards", label: "Cards", icon: "💳", route: "/home/cards", comingSoon: false },
-    { key: "Gifts", label: "Gifts", icon: "🎁", route: "/home/gifts", comingSoon: true },
+    { key: "Shop", label: "Products", Icon: FiShoppingBag, route: "/home/shop" },
+    { key: "Cards", label: "Cards", Icon: FiCreditCard, route: "/home/cards" },
+    { key: "Food", label: "Food", Icon: FiCoffee, route: "/home/food", comingSoon: true },
 ];
 
 const DEFAULT_OPTION = MENU_OPTIONS[0];
 const CLOSE_ANIM_MS = 220;
+const ESCAPE = "Escape";
 
 function Options({ selectedMenu, onSelect, onComingSoon }) {
-    const [mounted, setMounted] = useState(false);
     const [open, setOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const wrapRef = useRef(null);
-    const closeTimerRef = useRef(null);
+    const timerRef = useRef(null);
 
-    const current =
-        MENU_OPTIONS.find((o) => o.key === selectedMenu) || DEFAULT_OPTION;
+    const current = MENU_OPTIONS.find((o) => o.key === selectedMenu) || DEFAULT_OPTION;
+    const CurrentIcon = current.Icon;
+
+    const clearTimer = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+    };
 
     const openMenu = () => {
-        if (closeTimerRef.current) {
-            clearTimeout(closeTimerRef.current);
-            closeTimerRef.current = null;
-        }
+        clearTimer();
         setMounted(true);
-        requestAnimationFrame(() => setOpen(true));
+        setOpen(true);
     };
 
     const closeMenu = () => {
         setOpen(false);
-        closeTimerRef.current = setTimeout(() => {
+        timerRef.current = setTimeout(() => {
             setMounted(false);
-            closeTimerRef.current = null;
+            timerRef.current = null;
         }, CLOSE_ANIM_MS);
     };
 
-    const toggleMenu = () => (open ? closeMenu() : openMenu());
+    const toggle = () => (open ? closeMenu() : openMenu());
 
     useEffect(() => {
         if (!mounted) return;
 
-        function handleClickOutside(e) {
-            if (wrapRef.current && !wrapRef.current.contains(e.target)) {
-                closeMenu();
-            }
-        }
+        const onOutside = (e) => {
+            if (wrapRef.current && !wrapRef.current.contains(e.target)) closeMenu();
+        };
+        const onEscape = (e) => {
+            if (e.key === ESCAPE) closeMenu();
+        };
 
-        function handleEscape(e) {
-            if (e.key === "Escape") closeMenu();
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        document.addEventListener("touchstart", handleClickOutside);
-        document.addEventListener("keydown", handleEscape);
+        const attachTimer = setTimeout(() => {
+            document.addEventListener("mousedown", onOutside);
+            document.addEventListener("touchstart", onOutside);
+            document.addEventListener("keydown", onEscape);
+        }, 0);
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-            document.removeEventListener("touchstart", handleClickOutside);
-            document.removeEventListener("keydown", handleEscape);
+            clearTimeout(attachTimer);
+            document.removeEventListener("mousedown", onOutside);
+            document.removeEventListener("touchstart", onOutside);
+            document.removeEventListener("keydown", onEscape);
         };
     }, [mounted]);
 
-    useEffect(() => {
-        return () => {
-            if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-        };
-    }, []);
+    useEffect(() => clearTimer, []);
 
     const handleClick = (option) => {
         closeMenu();
-        if (option.comingSoon) {
-            onComingSoon(option.label);
-            return;
-        }
+        if (option.comingSoon) return onComingSoon(option.label);
         onSelect(option);
     };
 
@@ -83,50 +81,31 @@ function Options({ selectedMenu, onSelect, onComingSoon }) {
             <button
                 type="button"
                 className={`hd-menu-trigger ${open ? "open" : ""}`}
-                onClick={toggleMenu}
+                onClick={toggle}
                 aria-haspopup="menu"
                 aria-expanded={open}
             >
-                <span className="hd-menu-icon">{current.icon}</span>
+                <CurrentIcon className="hd-menu-icon" />
                 <span className="hd-menu-label">{current.label}</span>
-                <span className={`hd-menu-chevron ${open ? "rotate" : ""}`}>
-                    <FiChevronDown />
-                </span>
+                <FiChevronDown className={`hd-menu-chevron ${open ? "rotate" : ""}`} />
             </button>
 
             {mounted && (
-                <div
-                    className={`hd-menu-dropdown ${open ? "show" : "hide"}`}
-                    role="menu"
-                >
-                    {MENU_OPTIONS.map((option) => {
-                        const isActive = selectedMenu === option.key;
-                        const isSoon = option.comingSoon;
-
+                <div className={`hd-menu-dropdown ${open ? "show" : "hide"}`} role="menu">
+                    {MENU_OPTIONS.map(({ key, label, Icon, comingSoon }) => {
+                        const isActive = selectedMenu === key;
                         return (
                             <button
-                                key={option.key}
+                                key={key}
                                 type="button"
                                 role="menuitem"
-                                className={`hd-menu-option ${isActive ? "active" : ""} ${isSoon ? "soon" : ""}`}
-                                onClick={() => handleClick(option)}
+                                className={`hd-menu-option ${isActive ? "active" : ""} ${comingSoon ? "soon" : ""}`}
+                                onClick={() => handleClick({ key, label, comingSoon })}
                             >
-                                <span className="hd-menu-option-icon">
-                                    {option.icon}
-                                </span>
-                                <span className="hd-menu-option-label">
-                                    {option.label}
-                                </span>
-
-                                {isSoon && (
-                                    <span className="hd-menu-option-badge">
-                                        Soon
-                                    </span>
-                                )}
-
-                                {isActive && !isSoon && (
-                                    <span className="hd-menu-option-dot" />
-                                )}
+                                <Icon className="hd-menu-option-icon" />
+                                <span className="hd-menu-option-label">{label}</span>
+                                {comingSoon && <span className="hd-menu-option-badge">Soon</span>}
+                                {isActive && !comingSoon && <span className="hd-menu-option-dot" />}
                             </button>
                         );
                     })}

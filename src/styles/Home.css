@@ -14,7 +14,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    padding: 0 var(--pad) var(--gap);
     transition: padding var(--tr)
 }
 
@@ -23,7 +22,6 @@
 }
 
 .home-address {
-    padding: 8px var(--pad);
     border-bottom: 1px solid var(--bd);
     background: var(--bg)
 }

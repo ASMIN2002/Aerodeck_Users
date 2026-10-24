@@ -1,20 +1,59 @@
 .shop-home {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 12px 0 24px;
-    box-sizing: border-box;
-    background: #f4f1fa;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
 }
 
-[data-theme="dark"] .shop-home {
-    background: #0f2027;
+.shop-home>* {
+    min-width: 0;
+    width: 100%
 }
 
-@media (max-width: 360px) {
+.shop-home section,
+.shop-home .heep-cat-sticky-wrap {
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.shop-home section::-webkit-scrollbar,
+.shop-home .heep-cat-sticky-wrap::-webkit-scrollbar {
+    display: none
+}
+
+.shop-home [class*="scroll"],
+.shop-home [class*="carousel"],
+.shop-home [class*="row"],
+.shop-home [class*="track"],
+.shop-home [class*="wrap"] {
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.shop-home [class*="scroll"]::-webkit-scrollbar,
+.shop-home [class*="carousel"]::-webkit-scrollbar,
+.shop-home [class*="row"]::-webkit-scrollbar,
+.shop-home [class*="track"]::-webkit-scrollbar,
+.shop-home [class*="wrap"]::-webkit-scrollbar {
+    display: none
+}
+
+@media(min-width:480px) {
     .shop-home {
-        gap: 12px;
-        padding: 10px 0 20px;
+        gap: 12px
+    }
+}
+
+@media(min-width:768px) {
+    .shop-home {
+        gap: 16px;
+        padding: 8px 0 16px
+    }
+}
+
+@media(min-width:1024px) {
+    .shop-home {
+        gap: 18px
     }
 }

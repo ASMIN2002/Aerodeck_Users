@@ -7,6 +7,7 @@ import { API } from "../../services/api";
 const PLACEHOLDER_INTERVAL = 2200;
 const FILTER_TIP_DURATION = 5000;
 const MAX_SUGGESTIONS = 6;
+const EMPTY_FILTER = { category: "All", sort: "", rating: 0, availableOnly: false };
 
 const MENU_CONFIG = {
     Cards: { data: "cards", name: "product_name", category: "product_category" },
@@ -15,211 +16,99 @@ const MENU_CONFIG = {
     Premium: { data: "premiums", name: "premium_name", category: "premium_category" },
 };
 
-const EMPTY_FILTER = {
-    category: "All",
-    sort: "",
-    rating: 0,
-    availableOnly: false,
-};
+const MENU_CATNAME = { Shop: "SHOP", Gifts: "GIFT", Cards: "CARDS" };
 
-function matchCatname(item, value) {
-    return item.catname?.trim().toUpperCase() === value;
-}
+const matchCatname = (item, v) => item.catname?.trim().toUpperCase() === v;
+const matchCategory = (item, v) => item.category?.trim().toUpperCase() === v;
+const isPremiumCat = (item) => matchCategory(item, "PREMIUM");
+const dedupeByLower = (arr) => arr.filter((x, i, self) => i === self.findIndex((y) => y.value.toLowerCase() === x.value.toLowerCase()));
 
-function matchCategory(item, value) {
-    return item.category?.trim().toUpperCase() === value;
-}
-
-function Search({
-    selectedMenu,
-    search,
-    setSearch,
-    filter,
-    setFilter,
-    cards,
-    gifts,
-    shops,
-    premiums,
-    categoryName,
-}) {
-    const [categories, setCategories] = useState([]);
+function Search({ selectedMenu, search, setSearch, filter, setFilter, cards, gifts, shops, premiums, categoryName }) {
     const [allCategories, setAllCategories] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
     const [hideSuggestions, setHideSuggestions] = useState(false);
     const [showFilterTip, setShowFilterTip] = useState(false);
-
     const srRef = useRef(null);
 
-    const isPremium =
-        typeof window !== "undefined" &&
-        window.location.pathname.includes("/premium");
-
-    const hasActiveFilter =
-        filter &&
-        ((filter.sort && filter.sort !== "") ||
-            (filter.rating && Number(filter.rating) > 0) ||
-            filter.availableOnly === true);
+    const isPremium = window.location.pathname.includes("/premium");
+    const hasActiveFilter = filter && ((filter.sort && filter.sort !== "") || (filter.rating && Number(filter.rating) > 0) || filter.availableOnly === true);
 
     useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const res = await fetch(`${API}/api/category`);
-                const data = await res.json();
-
-                if (data.success) {
-                    setAllCategories(
-                        (data.data || []).filter((item) => item.category?.trim())
-                    );
-                }
-            } catch (err) {
-                console.error("Category fetch error:", err.message);
-            }
-        };
-
-        loadCategories();
+        fetch(`${API}/api/category`)
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.success) setAllCategories((data.data || []).filter((item) => item.category?.trim()));
+            })
+            .catch((err) => console.error("Category fetch error:", err.message));
     }, []);
 
-    useEffect(() => {
-        let filtered = [];
-
-        if (selectedMenu === "Shop") {
-            filtered = allCategories.filter((item) => matchCatname(item, "SHOP"));
-        } else if (selectedMenu === "Gifts") {
-            filtered = allCategories.filter((item) => matchCatname(item, "GIFT"));
-        } else if (selectedMenu === "Cards") {
-            filtered = allCategories.filter(
-                (item) =>
-                    matchCatname(item, "CARDS") &&
-                    (isPremium
-                        ? matchCategory(item, "PREMIUM")
-                        : !matchCategory(item, "PREMIUM"))
-            );
-        }
-
-        setCategories([...filtered].sort(() => Math.random() - 0.5));
-        setPlaceholderIndex(0);
+    const categories = useMemo(() => {
+        const tag = MENU_CATNAME[selectedMenu];
+        let list = tag ? allCategories.filter((item) => matchCatname(item, tag)) : [];
+        if (selectedMenu === "Cards") list = list.filter((item) => (isPremium ? isPremiumCat(item) : !isPremiumCat(item)));
+        return [...list].sort(() => Math.random() - 0.5);
     }, [allCategories, selectedMenu, isPremium]);
 
-    useEffect(() => {
-        if (!hasActiveFilter) {
-            setShowFilterTip(false);
-            return;
-        }
+    useEffect(() => setPlaceholderIndex(0), [categories]);
 
+    useEffect(() => {
+        if (!hasActiveFilter) return setShowFilterTip(false);
         setShowFilterTip(true);
-        const timer = setTimeout(() => setShowFilterTip(false), FILTER_TIP_DURATION);
-        return () => clearTimeout(timer);
+        const t = setTimeout(() => setShowFilterTip(false), FILTER_TIP_DURATION);
+        return () => clearTimeout(t);
     }, [hasActiveFilter]);
 
-    const shopCategories = useMemo(
-        () =>
-            (categories || [])
-                .map((item) => item.category?.trim())
-                .filter(Boolean),
-        [categories]
-    );
+    const shopCategories = useMemo(() => categories.map((item) => item.category?.trim()).filter(Boolean), [categories]);
 
     useEffect(() => {
-        if (categoryName || search.trim() || shopCategories.length === 0) return;
-
-        const interval = setInterval(() => {
-            setPlaceholderIndex((prev) => (prev + 1) % shopCategories.length);
-        }, PLACEHOLDER_INTERVAL);
-
-        return () => clearInterval(interval);
+        if (categoryName || search.trim() || !shopCategories.length) return;
+        const id = setInterval(() => setPlaceholderIndex((p) => (p + 1) % shopCategories.length), PLACEHOLDER_INTERVAL);
+        return () => clearInterval(id);
     }, [search, shopCategories.length, categoryName]);
 
     useEffect(() => {
-        const handleOutsideClick = (event) => {
-            if (srRef.current && !srRef.current.contains(event.target)) {
+        const onOutside = (e) => {
+            if (srRef.current && !srRef.current.contains(e.target)) {
                 setShowFilter(false);
                 setHideSuggestions(true);
             }
         };
-
-        document.addEventListener("click", handleOutsideClick);
-        return () => document.removeEventListener("click", handleOutsideClick);
+        document.addEventListener("click", onOutside);
+        return () => document.removeEventListener("click", onOutside);
     }, []);
 
-    const searchSuggestions = useMemo(() => {
+    const suggestions = useMemo(() => {
         if (hideSuggestions || !search.trim()) return [];
-
         const config = MENU_CONFIG[selectedMenu];
         if (!config) return [];
 
         const sourceMap = { cards, gifts, shops, premiums };
         let data = sourceMap[config.data] || [];
+        if (selectedMenu === "Cards") data = data.filter((item) => {
+            const cat = String(item.product_category || "").trim().toUpperCase();
+            return isPremium ? cat === "PREMIUM" : cat !== "PREMIUM";
+        });
 
-        if (selectedMenu === "Cards") {
-            data = data.filter((item) => {
-                const cat = String(item.product_category || "").trim().toUpperCase();
-                return isPremium ? cat === "PREMIUM" : cat !== "PREMIUM";
-            });
-        }
+        const kw = search.toLowerCase().trim();
+        const names = data.filter((i) => i[config.name]?.toLowerCase().includes(kw)).map((i) => ({ type: "name", value: i[config.name] }));
+        const catValues = [...new Set(data.filter((i) => i[config.category]?.toLowerCase().includes(kw)).map((i) => i[config.category]).filter(Boolean))].map((v) => ({ type: "category", value: v }));
 
-        const keyword = search.toLowerCase().trim();
-
-        const names = data
-            .filter((item) => item[config.name]?.toLowerCase().includes(keyword))
-            .map((item) => ({ type: "name", value: item[config.name] }));
-
-        const categoryValues = [
-            ...new Set(
-                data
-                    .filter((item) =>
-                        item[config.category]?.toLowerCase().includes(keyword)
-                    )
-                    .map((item) => item[config.category])
-                    .filter(Boolean)
-            ),
-        ];
-
-        const categorySuggestions = categoryValues.map((category) => ({
-            type: "category",
-            value: category,
-        }));
-
-        const combined = [...names, ...categorySuggestions];
-
-        return combined
-            .filter(
-                (item, index, self) =>
-                    index ===
-                    self.findIndex(
-                        (x) => x.value.toLowerCase() === item.value.toLowerCase()
-                    )
-            )
-            .slice(0, MAX_SUGGESTIONS);
+        return dedupeByLower([...names, ...catValues]).slice(0, MAX_SUGGESTIONS);
     }, [search, selectedMenu, cards, gifts, shops, premiums, hideSuggestions, isPremium]);
 
-    const hasSuggestions = searchSuggestions.length > 0;
-
-    const handleClearFilter = () => {
+    const clearFilter = () => {
         setFilter(EMPTY_FILTER);
-
-        try {
-            sessionStorage.removeItem("heep_filter");
-        } catch (err) {
-            console.error("Clear filter error:", err.message);
-        }
-
+        try { sessionStorage.removeItem("heep_filter"); } catch (err) { console.error(err.message); }
         setShowFilterTip(false);
     };
 
-    const handleFilterButtonClick = () => {
-        if (hasActiveFilter) handleClearFilter();
-        else setShowFilter(!showFilter);
-    };
+    const onFilterClick = () => (hasActiveFilter ? clearFilter() : setShowFilter(!showFilter));
+    const onSuggestionClick = (value) => { setSearch(value); setHideSuggestions(true); };
 
-    const handleSuggestionClick = (value) => {
-        setSearch(value);
-        setHideSuggestions(true);
-    };
-
-    const currentPlaceholder = categoryName
+    const placeholder = categoryName
         ? `Search ${categoryName}...`
-        : shopCategories.length > 0
+        : shopCategories.length
             ? `${shopCategories[placeholderIndex]}...`
             : "";
 
@@ -227,49 +116,28 @@ function Search({
         <div className="sr-container" ref={srRef}>
             <div className="sr-top-row">
                 <div className="sr-search-box">
-                    {!search.trim() && currentPlaceholder && (
-                        <span
-                            key={categoryName || shopCategories[placeholderIndex]}
-                            className={
-                                categoryName
-                                    ? "sr-static-placeholder"
-                                    : "sr-animated-placeholder"
-                            }
-                        >
-                            {currentPlaceholder}
+                    {!search.trim() && placeholder && (
+                        <span key={categoryName || shopCategories[placeholderIndex]} className={categoryName ? "sr-static-placeholder" : "sr-animated-placeholder"}>
+                            {placeholder}
                         </span>
                     )}
-
                     <input
                         type="text"
                         className="sr-input"
                         value={search}
-                        onChange={(e) => {
-                            setSearch(e.target.value);
-                            setHideSuggestions(false);
-                        }}
+                        onChange={(e) => { setSearch(e.target.value); setHideSuggestions(false); }}
                     />
-
-                    <button
-                        type="button"
-                        className="sr-search-icon-btn"
-                        aria-label="Search"
-                    >
+                    <button type="button" className="sr-search-icon-btn" aria-label="Search">
                         <FaSearch />
                     </button>
                 </div>
 
                 <div className="sr-filter-wrap">
-                    {showFilterTip && (
-                        <div className="sr-filter-tip">
-                            Click here to remove filter
-                        </div>
-                    )}
-
+                    {showFilterTip && <div className="sr-filter-tip">Click here to remove filter</div>}
                     <button
                         className={`sr-filter-btn ${hasActiveFilter ? "active" : ""}`}
                         type="button"
-                        onClick={handleFilterButtonClick}
+                        onClick={onFilterClick}
                         aria-label={hasActiveFilter ? "Clear filter" : "Filter"}
                     >
                         {hasActiveFilter ? "✕" : "⚙"}
@@ -277,20 +145,16 @@ function Search({
                 </div>
             </div>
 
-            <div
-                className={`sr-suggestions ${hasSuggestions ? "sr-suggestions-show" : ""}`}
-            >
-                {searchSuggestions.map((item, index) => (
+            <div className={`sr-suggestions ${suggestions.length ? "sr-suggestions-show" : ""}`}>
+                {suggestions.map((item, i) => (
                     <button
-                        key={`${item.type}-${item.value}-${index}`}
+                        key={`${item.type}-${item.value}-${i}`}
                         type="button"
                         className="sr-suggestion"
                         onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => handleSuggestionClick(item.value)}
+                        onClick={() => onSuggestionClick(item.value)}
                     >
-                        <span className="sr-suggestion-icon">
-                            {item.type === "category" ? "●" : "⌕"}
-                        </span>
+                        <span className="sr-suggestion-icon">{item.type === "category" ? "●" : "⌕"}</span>
                         <span>{item.value}</span>
                     </button>
                 ))}

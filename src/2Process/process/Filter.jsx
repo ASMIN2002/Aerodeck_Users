@@ -1,63 +1,47 @@
 import { useEffect, useState } from "react";
 import "./../processstyle/Filter.css";
 
-function Filter({
-    selectedMenu,
-    filter,
-    setFilter,
-    onClose,
-    onApply,
-    onClear
-}) {
+const ALLOWED_MENUS = ["Cards", "Premium", "Gifts", "Shop"];
+const EMPTY_FILTER = { category: "All", sort: "", rating: 0, availableOnly: false };
+const STORAGE_KEY = "heep_filter";
 
+const SORT_OPTIONS = [
+    { value: "low", label: "Low → High" },
+    { value: "high", label: "High → Low" },
+];
+
+const RATING_OPTIONS = [
+    { value: 4, label: "4★ & Above" },
+    { value: 3, label: "3★ & Above" },
+];
+
+function Filter({ selectedMenu, filter, setFilter, onClose, onApply, onClear }) {
     const [draft, setDraft] = useState(filter);
 
-    useEffect(() => {
-        setDraft(filter);
-    }, [filter]);
+    useEffect(() => setDraft(filter), [filter]);
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = "";
-        };
+        return () => { document.body.style.overflow = ""; };
     }, []);
 
-    if (
-        selectedMenu !== "Cards" &&
-        selectedMenu !== "Premium" &&
-        selectedMenu !== "Gifts" &&
-        selectedMenu !== "Shop"
-    ) {
-        return null;
-    }
+    if (!ALLOWED_MENUS.includes(selectedMenu)) return null;
+
+    const toggle = (field, value) => setDraft((d) => ({ ...d, [field]: d[field] === value ? (field === "sort" ? "" : 0) : value }));
+    const toggleBool = (field) => setDraft((d) => ({ ...d, [field]: !d[field] }));
 
     const handleApply = () => {
         setFilter(draft);
-        try {
-            sessionStorage.setItem("heep_filter", JSON.stringify(draft));
-        } catch (e) {
-            console.error("Filter save error:", e);
-        }
-        if (onApply) onApply();
+        try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draft)); } catch (e) { console.error("Filter save error:", e); }
+        onApply?.();
         onClose();
     };
 
     const handleReset = () => {
-        const empty = {
-            category: "All",
-            sort: "",
-            rating: 0,
-            availableOnly: false
-        };
-        setDraft(empty);
-        setFilter(empty);
-        try {
-            sessionStorage.removeItem("heep_filter");
-        } catch (e) {
-            console.error("Filter reset error:", e);
-        }
-        if (onClear) onClear();
+        setDraft(EMPTY_FILTER);
+        setFilter(EMPTY_FILTER);
+        try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { console.error("Filter reset error:", e); }
+        onClear?.();
     };
 
     return (
@@ -65,97 +49,44 @@ function Filter({
             <div className="fl-overlay" onClick={onClose} />
 
             <div className="fl-dropdown" onClick={(e) => e.stopPropagation()}>
-
                 <div className="fl-content">
-
                     <h4 className="fl-title">Price</h4>
-
-                    <button
-                        className={`fl-item ${draft.sort === "low" ? "active" : ""}`}
-                        onClick={() =>
-                            setDraft({
-                                ...draft,
-                                sort: draft.sort === "low" ? "" : "low"
-                            })
-                        }
-                    >
-                        Low → High
-                    </button>
-
-                    <button
-                        className={`fl-item ${draft.sort === "high" ? "active" : ""}`}
-                        onClick={() =>
-                            setDraft({
-                                ...draft,
-                                sort: draft.sort === "high" ? "" : "high"
-                            })
-                        }
-                    >
-                        High → Low
-                    </button>
+                    {SORT_OPTIONS.map(({ value, label }) => (
+                        <button
+                            key={value}
+                            className={`fl-item ${draft.sort === value ? "active" : ""}`}
+                            onClick={() => toggle("sort", value)}
+                        >
+                            {label}
+                        </button>
+                    ))}
 
                     <hr className="fl-divider" />
                     <h4 className="fl-title">Rating</h4>
-
-                    <button
-                        className={`fl-item ${draft.rating === 4 ? "active" : ""}`}
-                        onClick={() =>
-                            setDraft({
-                                ...draft,
-                                rating: draft.rating === 4 ? 0 : 4
-                            })
-                        }
-                    >
-                        4★ & Above
-                    </button>
-
-                    <button
-                        className={`fl-item ${draft.rating === 3 ? "active" : ""}`}
-                        onClick={() =>
-                            setDraft({
-                                ...draft,
-                                rating: draft.rating === 3 ? 0 : 3
-                            })
-                        }
-                    >
-                        3★ & Above
-                    </button>
+                    {RATING_OPTIONS.map(({ value, label }) => (
+                        <button
+                            key={value}
+                            className={`fl-item ${draft.rating === value ? "active" : ""}`}
+                            onClick={() => toggle("rating", value)}
+                        >
+                            {label}
+                        </button>
+                    ))}
 
                     <hr className="fl-divider" />
                     <h4 className="fl-title">Availability</h4>
-
                     <button
                         className={`fl-item ${draft.availableOnly ? "active" : ""}`}
-                        onClick={() =>
-                            setDraft({
-                                ...draft,
-                                availableOnly: !draft.availableOnly
-                            })
-                        }
+                        onClick={() => toggleBool("availableOnly")}
                     >
                         Available Only
                     </button>
-
                 </div>
 
                 <div className="fl-actions">
-                    <button
-                        type="button"
-                        className="fl-reset-btn"
-                        onClick={handleReset}
-                    >
-                        Reset
-                    </button>
-
-                    <button
-                        type="button"
-                        className="fl-apply-btn"
-                        onClick={handleApply}
-                    >
-                        Apply
-                    </button>
+                    <button type="button" className="fl-reset-btn" onClick={handleReset}>Reset</button>
+                    <button type="button" className="fl-apply-btn" onClick={handleApply}>Apply</button>
                 </div>
-
             </div>
         </>
     );

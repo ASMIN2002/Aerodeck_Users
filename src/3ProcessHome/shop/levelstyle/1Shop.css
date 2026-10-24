@@ -1,13 +1,30 @@
+.heepit-shop-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px 0 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.heepit-shop-section::-webkit-scrollbar {
+    display: none
+}
+
 .heepit-shop-search-results {
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
+    padding: 6px 0
 }
 
 .heepit-shop-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.heepit-shop-grid::-webkit-scrollbar {
+    display: none
 }
 
 .shop-empty {
@@ -16,68 +33,240 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 40px 16px;
-    text-align: center;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px dashed rgba(101, 78, 163, 0.3);
-}
-
-[data-theme="dark"] .shop-empty {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.3);
+    padding: 50px 16px;
+    text-align: center
 }
 
 .shop-empty-icon {
     font-size: 32px;
-    line-height: 1;
-    margin-bottom: 4px;
+    opacity: .5;
+    line-height: 1
 }
 
 .shop-empty-title {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .shop-empty-title {
-    color: #e0f2f7;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--fg)
 }
 
 .shop-empty-text {
-    margin: 0;
-    font-size: 11.5px;
-    font-weight: 500;
-    color: rgba(43, 16, 85, 0.6);
+    font-size: 10px;
+    color: var(--fg3);
+    max-width: 200px;
+    line-height: 1.4
 }
 
-[data-theme="dark"] .shop-empty-text {
-    color: rgba(207, 234, 245, 0.6);
+.heepit-shop-home {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 6px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none
 }
 
-@media (max-width: 360px) {
-    .heepit-shop-search-results {
-        padding: 10px;
-    }
+.heepit-shop-home::-webkit-scrollbar {
+    display: none
+}
 
+.heepit-shop-home-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.heepit-shop-home-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 0 2px
+}
+
+.heepit-shop-home-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.2
+}
+
+.heepit-shop-home-viewall {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--fg2);
+    background: transparent;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background var(--tr), color var(--tr)
+}
+
+.heepit-shop-home-viewall:active {
+    background: var(--bg3);
+    color: var(--fg)
+}
+
+.heepit-shop-categories-row {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 2px 0 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.heepit-shop-categories-row::-webkit-scrollbar {
+    display: none
+}
+
+.heepit-shop-category-chip {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 8px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    color: var(--fg);
+    font-size: 9px;
+    font-weight: 600;
+    min-width: 64px;
+    max-width: 80px;
+    transition: background var(--tr), border-color var(--tr), transform var(--tr)
+}
+
+.heepit-shop-category-chip:active {
+    transform: scale(.96);
+    background: var(--bg3)
+}
+
+.heepit-shop-category-chip-icon {
+    font-size: 16px;
+    line-height: 1
+}
+
+.heepit-shop-category-chip-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    line-height: 1.1;
+    text-align: center
+}
+
+.heepit-shop-categories-scroll {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 2px 0 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.heepit-shop-categories-scroll::-webkit-scrollbar {
+    display: none
+}
+
+.heepit-shop-allcat-card {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    min-width: 100px;
+    color: var(--fg);
+    transition: background var(--tr), transform var(--tr)
+}
+
+.heepit-shop-allcat-card:active {
+    transform: scale(.97);
+    background: var(--bg3)
+}
+
+.heepit-shop-allcat-icon {
+    font-size: 18px;
+    line-height: 1;
+    opacity: .7
+}
+
+.heepit-shop-allcat-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2
+}
+
+@media(min-width:480px) {
     .heepit-shop-grid {
-        gap: 8px;
+        gap: 8px
     }
 
-    .shop-empty {
-        padding: 30px 12px;
+    .heepit-shop-home {
+        gap: 12px
     }
 
-    .shop-empty-icon {
-        font-size: 28px;
+    .heepit-shop-home-title {
+        font-size: 12px
+    }
+
+    .heepit-shop-home-viewall {
+        font-size: 10px
+    }
+
+    .heepit-shop-category-chip {
+        min-width: 72px;
+        max-width: 90px;
+        padding: 8px 10px;
+        font-size: 10px
+    }
+
+    .heepit-shop-category-chip-icon {
+        font-size: 18px
     }
 
     .shop-empty-title {
-        font-size: 13px;
+        font-size: 13px
     }
 
     .shop-empty-text {
-        font-size: 11px;
+        font-size: 11px
+    }
+}
+
+@media(min-width:768px) {
+    .heepit-shop-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px
+    }
+
+    .heepit-shop-home {
+        gap: 14px
+    }
+
+    .heepit-shop-home-title {
+        font-size: 13px
+    }
+
+    .heepit-shop-category-chip {
+        min-width: 80px;
+        max-width: 100px;
+        font-size: 11px
+    }
+
+    .heepit-shop-category-chip-icon {
+        font-size: 20px
+    }
+}
+
+@media(min-width:1024px) {
+    .heepit-shop-grid {
+        grid-template-columns: repeat(4, 1fr)
     }
 }

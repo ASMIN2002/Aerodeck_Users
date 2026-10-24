@@ -5,6 +5,16 @@ import Options from "../../1hook/hooks/Options";
 import Notification from "../../1hook/hooks/Notification";
 import "../processstyle/Header.css";
 
+const TAB_LABELS = {
+    Offers: "OFFERS",
+    Premium: "MEDICURE",
+    Cart: "CART",
+    Profile: "PROFILE",
+};
+
+const STAR_COUNT = 28;
+const STARS = Array.from({ length: STAR_COUNT }, (_, i) => i + 1);
+
 function Header({
     selectedMenu,
     setSelectedMenu,
@@ -17,44 +27,29 @@ function Header({
     onReloadHome,
 }) {
     const navigate = useNavigate();
-    const location = useLocation();
+    const { pathname } = useLocation();
 
-    const showNotifOverlay = location.pathname === "/notification";
+    const showNotifOverlay = pathname === "/notification";
+    const isHomeTab = selectedBottomTab === "Home";
+    const modeLabel = TAB_LABELS[selectedBottomTab] || null;
 
     const handleSelect = (option) => {
         if (isDetailsOpen) closeDetails();
         setSelectedBottomTab("Home");
         setSelectedMenu(option.key);
         setIsMenuOpen(false);
-        if (onReloadHome) onReloadHome();
+        onReloadHome?.();
     };
 
-    const handleComingSoon = (label) => {
-        console.log(`${label} Coming Soon!`);
-    };
-
-    const handleOpenNotif = () => {
-        navigate("/notification");
-    };
-
-    const handleCloseNotif = () => {
-        navigate(-1);
-    };
-
-    const modeLabel =
-        selectedBottomTab === "Offers" ? "OFFERS" :
-            selectedBottomTab === "Premium" ? "MEDICURE" :
-                selectedBottomTab === "Cart" ? "CART" :
-                    selectedBottomTab === "Profile" ? "PROFILE" :
-                        null;
+    const handleComingSoon = (label) => console.log(`${label} Coming Soon!`);
+    const handleOpenNotif = () => navigate("/notification");
+    const handleCloseNotif = () => navigate(-1);
 
     return (
         <>
             <header className="hd-header">
                 <div className="hd-stars" aria-hidden="true">
-                    {Array.from({ length: 28 }).map((_, i) => (
-                        <span key={i} className={`hd-star hd-star-${i + 1}`} />
-                    ))}
+                    {STARS.map((n) => <span key={n} className={`hd-star hd-star-${n}`} />)}
                     <span className="hd-shine" />
                 </div>
 
@@ -67,7 +62,7 @@ function Header({
                     </div>
 
                     <div className="hd-actions">
-                        {selectedBottomTab === "Home" ? (
+                        {isHomeTab ? (
                             <Options
                                 selectedMenu={selectedMenu}
                                 onSelect={handleSelect}
@@ -88,9 +83,7 @@ function Header({
                 </div>
             </header>
 
-            {showNotifOverlay && (
-                <Notification onClose={handleCloseNotif} />
-            )}
+            {showNotifOverlay && <Notification onClose={handleCloseNotif} />}
         </>
     );
 }

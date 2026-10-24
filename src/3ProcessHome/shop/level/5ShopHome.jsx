@@ -8,15 +8,7 @@ import TopLikedShops from "../sections/6TopLikedShops";
 import ValueDeals from "../sections/7ValueDeals";
 import RelatedProducts from "../sections/8RelatedProducts";
 
-function ShopHome({
-    user,
-    categories,
-    shops,
-    onCategoryClick,
-    onOpenDetails,
-    onOpenAllShops,
-    onOpenAllShopCategories,
-}) {
+function ShopHome({ user, categories, shops, onCategoryClick, onOpenDetails, onOpenAllShops, onOpenAllShopCategories }) {
     return (
         <div className="shop-home">
             <CategoriesSection
@@ -26,30 +18,11 @@ function ShopHome({
             />
             <VideoHero />
             <OffersCarousel />
-            <FinestDeals
-                user={user}
-                shops={shops}
-                onOpenDetails={onOpenDetails}
-            />
-            <SuggestedShops
-                shops={shops}
-                onOpenDetails={onOpenDetails}
-                onOpenAllShops={onOpenAllShops}
-            />
-            <TopLikedShops
-                shops={shops}
-                onOpenDetails={onOpenDetails}
-            />
-
-            <ValueDeals
-                shops={shops}
-                onOpenDetails={onOpenDetails}
-            />
-
-            <RelatedProducts
-                shops={shops}
-                onOpenDetails={onOpenDetails}
-            />
+            <FinestDeals user={user} shops={shops} onOpenDetails={onOpenDetails} />
+            <SuggestedShops shops={shops} onOpenDetails={onOpenDetails} onOpenAllShops={onOpenAllShops} />
+            <TopLikedShops shops={shops} onOpenDetails={onOpenDetails} />
+            <ValueDeals shops={shops} onOpenDetails={onOpenDetails} />
+            <RelatedProducts shops={shops} onOpenDetails={onOpenDetails} />
         </div>
     );
 }
