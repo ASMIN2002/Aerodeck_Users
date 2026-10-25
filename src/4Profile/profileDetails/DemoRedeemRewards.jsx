@@ -1,74 +1,112 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import "../profileDetailsStyle/DemoRedeemRewards.css";
+import {
+    FiArrowLeft, FiGift, FiClock, FiCheckCircle, FiZap,
+    FiStar, FiSend, FiLoader,
+} from "react-icons/fi";
 import { API } from "../../services/api";
+import "./DemoRedeemRewards.css";
+
 const BOX_COUNT = 6;
 const COUNTDOWN_HOURS = 24;
-const RESET_DELAY = 2800;
-const CONGRATS_DELAY = 2500;
-const FAKE_LOADING_DELAY = 1800;
+const RESET_DELAY = 2200;
+const CONGRATS_DELAY = 2200;
 const MSG_DURATION = 2500;
-const SCRATCH_DELAY = 900;
+const SCRATCH_ANIM = 1200;
 
-function getSessionToken() {
-    return localStorage.getItem("session_token");
-}
+const getSession = () => localStorage.getItem("session_token");
 
-function maskEmail(email) {
-    if (!email || !email.includes("@")) return email || "";
+const maskEmail = (email) => {
+    if (!email?.includes("@")) return email || "";
     const [local, domain] = email.split("@");
-    const visibleCount = Math.max(1, Math.floor(local.length / 2));
-    const starsCount = local.length - visibleCount;
-    return `${local.slice(0, visibleCount)}${"*".repeat(starsCount)}@${domain}`;
-}
+    const visible = Math.max(1, Math.floor(local.length / 2));
+    return `${local.slice(0, visible)}${"*".repeat(local.length - visible)}@${domain}`;
+};
 
-function generateBoxes() {
+const generateBoxes = () => {
     const values = Array.from({ length: BOX_COUNT }, (_, i) => i + 1);
     for (let i = values.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [values[i], values[j]] = [values[j], values[i]];
     }
     return values;
+};
+
+const formatCountdown = (ms) => {
+    if (ms <= 0) return "Expired";
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+};
+
+function ScratchBox({ number, onScratch, disabled }) {
+    return (
+        <button
+            type="button"
+            className="scratch-box demo-scratch-box"
+            onClick={() => onScratch(number)}
+            disabled={disabled}
+            aria-label={`Scratch box ${number}`}
+        >
+            <div className="scratch-cover">
+                <div className="scratch-cover-shine" />
+                <div className="scratch-cover-text">
+                    <FiGift />
+                    <span>SCRATCH</span>
+                </div>
+            </div>
+        </button>
+    );
 }
 
-function ScratchBox({ number, onReveal, disabled }) {
-    const [isRevealed, setIsRevealed] = useState(false);
-    const [isScratching, setIsScratching] = useState(false);
+function ScratchModal({ number, onComplete }) {
+    const [progress, setProgress] = useState(0);
 
-    const handleTouch = () => {
-        if (isRevealed || isScratching || disabled) return;
-        setIsScratching(true);
-        setTimeout(() => {
-            setIsRevealed(true);
-            onReveal(number);
-        }, SCRATCH_DELAY);
-    };
+    useEffect(() => {
+        const start = Date.now();
+        const interval = setInterval(() => {
+            const p = Math.min(100, ((Date.now() - start) / SCRATCH_ANIM) * 100);
+            setProgress(p);
+            if (p >= 100) {
+                clearInterval(interval);
+                setTimeout(onComplete, 900);
+            }
+        }, 30);
+        return () => clearInterval(interval);
+    }, [onComplete]);
 
     return (
-        <div
-            className={`scratch-box ${isRevealed ? "revealed" : ""} ${isScratching ? "scratching" : ""}`}
-            onClick={handleTouch}
-            onTouchStart={handleTouch}
-        >
-            <div className="scratch-number-layer">
-                <span className="scratch-number">{number}</span>
-            </div>
-            {!isRevealed && (
-                <div className="scratch-cover">
-                    <div className="scratch-cover-text">SCRATCH</div>
+        <div className="scratch-modal-overlay">
+            <div className="scratch-modal-card">
+                <div className="scratch-modal-inner demo-modal-inner">
+                    <div className="scratch-reveal-number">
+                        <FiStar className="scratch-reveal-star" />
+                        <span className="scratch-reveal-value">{number}</span>
+                        <span className="scratch-reveal-label">points</span>
+                    </div>
+                    {progress < 100 && (
+                        <div className="scratch-modal-cover demo-modal-cover" style={{ width: `${100 - progress}%` }}>
+                            <div className="scratch-modal-cover-shine" />
+                            <div className="scratch-modal-cover-text">
+                                <FiGift />
+                                <span>Scratching...</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 }
 
 function DemoRedeemRewards({ setProfilePage }) {
     const navigate = useNavigate();
-
     const [activeTab, setActiveTab] = useState("demo");
 
-    const [demoBoxes, setDemoBoxes] = useState([]);
-    const [demoRevealed, setDemoRevealed] = useState({});
+    const [demoBoxes, setDemoBoxes] = useState(generateBoxes);
+    const [activeScratch, setActiveScratch] = useState(null);
+    const [isDemoScratching, setIsDemoScratching] = useState(false);
     const [demoPoints, setDemoPoints] = useState(0);
     const [demoShowCongrats, setDemoShowCongrats] = useState(null);
     const [demoResetKey, setDemoResetKey] = useState(0);
@@ -85,10 +123,9 @@ function DemoRedeemRewards({ setProfilePage }) {
     const [countdown, setCountdown] = useState("");
 
     useEffect(() => {
-        const sessionToken = getSessionToken();
-        if (!sessionToken) return;
-
-        fetch(`${API}/api/user/rewards?session_token=${sessionToken}`)
+        const token = getSession();
+        if (!token) return;
+        fetch(`${API}/api/user/rewards?session_token=${token}`)
             .then((r) => r.json())
             .then((data) => {
                 if (data.success && data.data) {
@@ -102,64 +139,40 @@ function DemoRedeemRewards({ setProfilePage }) {
     }, []);
 
     useEffect(() => {
-        setDemoBoxes(generateBoxes());
-    }, []);
-
-    useEffect(() => {
         if (usedOwnerId <= 0 || usedRedeemed === 1 || !usedUpdatedAt) {
             setCountdown("");
             return;
         }
-
-        const expiry =
-            new Date(usedUpdatedAt).getTime() + COUNTDOWN_HOURS * 60 * 60 * 1000;
-
-        const tick = () => {
-            const diff = expiry - Date.now();
-            if (diff <= 0) {
-                setCountdown("Expired");
-                return;
-            }
-            const h = Math.floor(diff / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            setCountdown(
-                `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`
-            );
-        };
-
+        const expiry = new Date(usedUpdatedAt).getTime() + COUNTDOWN_HOURS * 3600000;
+        const tick = () => setCountdown(formatCountdown(expiry - Date.now()));
         tick();
         const interval = setInterval(tick, 1000);
         return () => clearInterval(interval);
     }, [usedOwnerId, usedRedeemed, usedUpdatedAt]);
 
-    useEffect(() => {
-        if (Object.keys(demoRevealed).length === 0) return;
-        const timer = setTimeout(() => {
-            setDemoRevealed({});
+    const handleDemoScratch = (number) => {
+        if (isDemoScratching) return;
+        setIsDemoScratching(true);
+        setActiveScratch({ number });
+    };
+
+    const handleScratchComplete = () => {
+        setDemoPoints((prev) => prev + activeScratch.number);
+        setDemoShowCongrats({ points: activeScratch.number });
+        setActiveScratch(null);
+        setTimeout(() => {
+            setDemoShowCongrats(null);
             setDemoBoxes(generateBoxes());
             setDemoResetKey((k) => k + 1);
-        }, RESET_DELAY);
-        return () => clearTimeout(timer);
-    }, [demoRevealed]);
-
-    const handleDemoScratch = (index, number) => {
-        if (demoRevealed[index]) return;
-        if (Object.keys(demoRevealed).length > 0) return;
-
-        const pointsToAdd = Number(number) || 0;
-        setDemoRevealed({ [index]: true });
-        setDemoPoints((prev) => prev + pointsToAdd);
-        setDemoShowCongrats({ number, points: pointsToAdd });
-        setTimeout(() => setDemoShowCongrats(null), CONGRATS_DELAY);
+            setIsDemoScratching(false);
+        }, CONGRATS_DELAY);
     };
 
     const handleSendRequest = async () => {
         if (!promoInput.trim()) {
             setSendMsg("Enter a promo code.");
             setSendMsgType("error");
-            setTimeout(() => setSendMsg(""), MSG_DURATION);
-            return;
+            return setTimeout(() => setSendMsg(""), MSG_DURATION);
         }
 
         setIsChecking(true);
@@ -167,28 +180,16 @@ function DemoRedeemRewards({ setProfilePage }) {
         setSendMsgType("");
 
         try {
-            const sessionToken = getSessionToken();
-
-            await new Promise((resolve) => setTimeout(resolve, FAKE_LOADING_DELAY));
-
-            const res = await fetch(`${API}/api/user/rewards/redeem/send`, {
+            const token = getSession();
+            const data = await fetch(`${API}/api/user/rewards/redeem/send`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    promo_code: promoInput.trim(),
-                }),
-            });
-            const data = await res.json();
+                body: JSON.stringify({ session_token: token, promo_code: promoInput.trim() }),
+            }).then((r) => r.json());
 
             if (data.success) {
                 setPromoInput("");
-
-                const rewardRes = await fetch(
-                    `${API}/api/user/rewards?session_token=${sessionToken}`
-                );
-                const rewardData = await rewardRes.json();
-
+                const rewardData = await fetch(`${API}/api/user/rewards?session_token=${token}`).then((r) => r.json());
                 if (rewardData.success && rewardData.data) {
                     setUsedOwnerId(rewardData.data.used_owner_id || 0);
                     setUsedOwnerEmail(rewardData.data.used_owner_email || "");
@@ -210,24 +211,19 @@ function DemoRedeemRewards({ setProfilePage }) {
         }
     };
 
-    const handleBack = () => {
-        setProfilePage("profile");
-        navigate(-1);
-    };
-
+    const handleBack = () => { setProfilePage("profile"); navigate(-1); };
     const handleTabClick = (tab) => {
-        if (tab === "rewards") {
-            setProfilePage("rewards");
-            return;
-        }
+        if (tab === "rewards") { setProfilePage("rewards"); return; }
         setActiveTab(tab);
     };
 
     return (
         <div className={`my-rewards ${activeTab === "demo" ? "demo-mode" : ""}`}>
             <div className="my-rewards-header">
-                <button className="my-rewards-back" onClick={handleBack}>←</button>
-                <h2>HYPO REWARD</h2>
+                <button className="my-rewards-back" onClick={handleBack} aria-label="Back">
+                    <FiArrowLeft />
+                </button>
+                <h2 className="my-rewards-title">HYPO Reward</h2>
             </div>
 
             <div className="my-rewards-tabs">
@@ -244,16 +240,17 @@ function DemoRedeemRewards({ setProfilePage }) {
 
             {activeTab === "demo" && (
                 <div className="demo-section">
-                    <div className="rewards-topbar">
-                        <div className="rewards-stat">
-                            <span className="rewards-label">Demo Points</span>
-                            <span className="rewards-value demo-points">{demoPoints}</span>
+                    <div className="demo-stats-card">
+                        <span className="demo-stats-icon"><FiZap /></span>
+                        <div className="demo-stats-info">
+                            <span className="demo-stats-label">Demo Points</span>
+                            <span className="demo-stats-value">{demoPoints}</span>
                         </div>
                     </div>
 
                     <div className="scratch-notice demo-notice">
                         <span className="notice-dot" />
-                        Just touch to scratch — Demo
+                        <span>Tap any box — auto scratch & reveal!</span>
                     </div>
 
                     <div className="scratch-card demo-scratch">
@@ -262,8 +259,8 @@ function DemoRedeemRewards({ setProfilePage }) {
                                 <ScratchBox
                                     key={`${demoResetKey}-${index}`}
                                     number={num}
-                                    disabled={Object.keys(demoRevealed).length > 0}
-                                    onReveal={() => handleDemoScratch(index, num)}
+                                    disabled={isDemoScratching}
+                                    onScratch={handleDemoScratch}
                                 />
                             ))}
                         </div>
@@ -271,31 +268,16 @@ function DemoRedeemRewards({ setProfilePage }) {
 
                     <div className="demo-notice-box">
                         <div className="demo-notice-title">
-                            <span className="demo-notice-icon">🎮</span>
+                            <FiGift className="demo-notice-icon" />
                             <span>Demo Mode</span>
                         </div>
-
                         <p>
-                            This is just for <strong>entertainment</strong>. Points earned
-                            here are <strong>not saved</strong> to your real HYPO account.
+                            This is just for <strong>entertainment</strong>. Points earned here are <strong>not saved</strong> to your real HYPO account.
                         </p>
-
                         <div className="demo-notice-footer">
-                            Thank you for using <strong>HEEPIT</strong> ❤️
+                            Thank you for using <strong>HEEPIT</strong>
                         </div>
                     </div>
-
-                    {demoShowCongrats && (
-                        <div className="rewards-congrats demo-congrats">
-                            <div className="rewards-congrats-inner">
-                                <div className="rewards-congrats-emoji">🎉</div>
-                                <h3>Nice!</h3>
-                                <p className="rewards-congrats-points">
-                                    +{demoShowCongrats.points}
-                                </p>
-                            </div>
-                        </div>
-                    )}
                 </div>
             )}
 
@@ -304,30 +286,20 @@ function DemoRedeemRewards({ setProfilePage }) {
                     {usedOwnerId > 0 ? (
                         usedRedeemed === 1 ? (
                             <div className="redeem-approved-box">
-                                <div className="redeem-approved-icon">🎉</div>
+                                <div className="redeem-approved-icon"><FiCheckCircle /></div>
                                 <p className="redeem-approved-text">
-                                    <strong>{maskEmail(usedOwnerEmail)}</strong> approved your
-                                    request.
-                                    <br />
-                                    You Got 10 Hypo Points Flat.
+                                    <strong>{maskEmail(usedOwnerEmail)}</strong> approved your request.
+                                    <br />You got 10 HYPO Points flat.
                                 </p>
-                                <p className="redeem-approved-footer">
-                                    Thank you for using HEEPIT ❤️
-                                </p>
+                                <p className="redeem-approved-footer">Thank you for using HEEPIT</p>
                             </div>
                         ) : (
                             <div className="redeem-pending-box">
-                                <div className="redeem-pending-icon">⏳</div>
-                                <h3 className="redeem-pending-title">
-                                    You used the promocode of
-                                </h3>
-                                <p className="redeem-pending-email">
-                                    {maskEmail(usedOwnerEmail)}
-                                </p>
+                                <div className="redeem-pending-icon"><FiClock /></div>
+                                <h3 className="redeem-pending-title">You used the promo code of</h3>
+                                <p className="redeem-pending-email">{maskEmail(usedOwnerEmail)}</p>
                                 <p className="redeem-pending-text">Waiting for response...</p>
-                                {countdown && (
-                                    <div className="redeem-countdown">{countdown}</div>
-                                )}
+                                {countdown && <div className="redeem-countdown">{countdown}</div>}
                             </div>
                         )
                     ) : (
@@ -348,17 +320,32 @@ function DemoRedeemRewards({ setProfilePage }) {
                                 disabled={isChecking}
                             >
                                 {isChecking ? (
-                                    <>
-                                        <span className="btn-spinner" />
-                                        Checking...
-                                    </>
+                                    <><FiLoader className="btn-spin" /> Checking...</>
                                 ) : (
-                                    "Send Request"
+                                    <><FiSend /> Send Request</>
                                 )}
                             </button>
                             {sendMsg && <p className={`redeem-msg ${sendMsgType}`}>{sendMsg}</p>}
                         </div>
                     )}
+                </div>
+            )}
+
+            {activeScratch && (
+                <ScratchModal
+                    number={activeScratch.number}
+                    onComplete={handleScratchComplete}
+                />
+            )}
+
+            {demoShowCongrats && (
+                <div className="rewards-congrats demo-congrats">
+                    <div className="rewards-congrats-inner">
+                        <div className="rewards-congrats-emoji"><FiCheckCircle /></div>
+                        <h3>Nice!</h3>
+                        <p className="rewards-congrats-points">+{demoShowCongrats.points}</p>
+                        <span className="rewards-congrats-sub">demo points added</span>
+                    </div>
                 </div>
             )}
         </div>

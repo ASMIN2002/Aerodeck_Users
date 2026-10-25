@@ -1,253 +1,447 @@
 .heep-add-addr-page,
 .heep-edit-addr-page {
-    min-height: 100vh;
-    padding: 16px;
-    background: #ffffff;
-    color: #2b1055;
-    box-sizing: border-box;
-}
-
-[data-theme="dark"] .heep-add-addr-page,
-[data-theme="dark"] .heep-edit-addr-page {
-    background: #0f2027;
-    color: #cfeaf5;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+    width: 100%;
+    min-width: 0;
+    position: relative
 }
 
 .heep-add-addr-header,
 .heep-edit-addr-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 2px
 }
 
 .heep-add-addr-back-btn,
 .heep-edit-addr-back-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    border: 1px solid rgba(43, 16, 85, 0.1);
-    background: rgba(43, 16, 85, 0.04);
-    color: #2b1055;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-}
-
-[data-theme="dark"] .heep-add-addr-back-btn,
-[data-theme="dark"] .heep-edit-addr-back-btn {
-    border-color: rgba(120, 220, 255, 0.15);
-    background: rgba(120, 220, 255, 0.08);
-    color: #cfeaf5;
-}
-
-.heep-add-addr-header h2,
-.heep-edit-addr-title {
-    margin: 0;
+    width: 34px;
+    height: 34px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 9px;
+    color: var(--fg);
     font-size: 15px;
-    font-weight: 600;
-    color: #2b1055;
-    flex: 1;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background var(--tr), transform var(--tr)
 }
 
-[data-theme="dark"] .heep-add-addr-header h2,
-[data-theme="dark"] .heep-edit-addr-title {
-    color: #e0f2f7;
+.heep-add-addr-back-btn:active,
+.heep-edit-addr-back-btn:active {
+    transform: scale(.94);
+    background: var(--bg3)
+}
+
+.heep-add-addr-title,
+.heep-edit-addr-title {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0
 }
 
 .heep-add-addr-location-btn {
-    padding: 7px 12px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 10px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
     color: #fff;
-    font-size: 11px;
-    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 800;
     cursor: pointer;
+    line-height: 1;
+    transition: transform var(--tr), opacity var(--tr);
+    flex-shrink: 0;
     white-space: nowrap;
+    height: 34px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, .3)
 }
 
-[data-theme="dark"] .heep-add-addr-location-btn {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
+.heep-add-addr-location-btn:active:not(:disabled) {
+    transform: scale(.95);
+    opacity: .9
 }
 
-.heep-add-addr-location-btn:active {
-    transform: scale(0.97);
+.heep-add-addr-location-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed
+}
+
+.heep-add-addr-location-btn svg {
+    font-size: 12px
 }
 
 .heep-add-addr-form,
 .heep-edit-addr-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.heep-add-addr-form input,
-.heep-edit-addr-form input,
-.heep-add-addr-form select,
-.heep-edit-addr-form select {
+    gap: 14px;
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(43, 16, 85, 0.1);
-    background: rgba(255, 255, 255, 0.65);
-    color: #2b1055;
-    font-size: 13px;
+    min-width: 0
+}
+
+.heep-add-addr-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px
+}
+
+.heep-add-addr-section-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--fg2);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    line-height: 1;
+    margin: 0 0 4px
+}
+
+.heep-add-addr-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    background: var(--bg);
+    border: 1.5px solid var(--bd);
+    border-radius: 9px;
+    transition: border-color var(--tr)
+}
+
+.heep-add-addr-input-wrap:focus-within {
+    border-color: #3b82f6
+}
+
+[data-theme="dark"] .heep-add-addr-input-wrap:focus-within {
+    border-color: #60a5fa
+}
+
+.heep-add-addr-input-icon {
+    font-size: 14px;
+    color: var(--fg3);
+    flex-shrink: 0
+}
+
+.heep-add-addr-input-wrap input {
+    flex: 1;
+    background: transparent;
+    border: none;
     outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
+    padding: 11px 0;
+    font-size: 12px;
+    color: var(--fg);
+    min-width: 0
 }
 
-[data-theme="dark"] .heep-add-addr-form input,
-[data-theme="dark"] .heep-edit-addr-form input,
-[data-theme="dark"] .heep-add-addr-form select,
-[data-theme="dark"] .heep-edit-addr-form select {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
-    color: #cfeaf5;
+.heep-add-addr-input-wrap input::placeholder {
+    color: var(--fg3)
 }
 
-.heep-add-addr-form input:focus,
-.heep-edit-addr-form input:focus,
-.heep-add-addr-form select:focus,
-.heep-edit-addr-form select:focus {
-    border-color: #654ea3;
+.heep-add-addr-input-wrap input:read-only {
+    color: var(--fg2);
+    cursor: default
 }
 
-[data-theme="dark"] .heep-add-addr-form input:focus,
-[data-theme="dark"] .heep-edit-addr-form input:focus,
-[data-theme="dark"] .heep-add-addr-form select:focus,
-[data-theme="dark"] .heep-edit-addr-form select:focus {
-    border-color: #7fd4e8;
+.heep-add-addr-select {
+    width: 100%;
+    padding: 11px 12px;
+    background: var(--bg);
+    border: 1.5px solid var(--bd);
+    border-radius: 9px;
+    color: var(--fg);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color var(--tr)
 }
 
-.heep-add-addr-form input::placeholder,
-.heep-edit-addr-form input::placeholder {
-    color: rgba(43, 16, 85, 0.4);
+.heep-add-addr-select:focus {
+    border-color: #3b82f6
 }
 
-[data-theme="dark"] .heep-add-addr-form input::placeholder,
-[data-theme="dark"] .heep-edit-addr-form input::placeholder {
-    color: rgba(207, 234, 245, 0.4);
+[data-theme="dark"] .heep-add-addr-select:focus {
+    border-color: #60a5fa
 }
 
-.heep-add-addr-form input[readonly],
-.heep-edit-addr-form input[readonly] {
-    background: rgba(43, 16, 85, 0.03);
-    cursor: not-allowed;
-    color: rgba(43, 16, 85, 0.7);
+.heep-add-addr-select.disabled {
+    opacity: .6;
+    cursor: not-allowed
 }
 
-[data-theme="dark"] .heep-add-addr-form input[readonly],
-[data-theme="dark"] .heep-edit-addr-form input[readonly] {
-    background: rgba(120, 220, 255, 0.04);
-    color: rgba(207, 234, 245, 0.7);
+.heep-add-addr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px
 }
 
-.heep-add-addr-empty-select {
-    opacity: 0.6;
+.heep-add-addr-row input,
+.heep-add-addr-form>input[readonly],
+.heep-edit-addr-form>input[readonly] {
+    padding: 11px 12px;
+    background: var(--bg);
+    border: 1.5px solid var(--bd);
+    border-radius: 9px;
+    color: var(--fg2);
+    font-size: 12px;
+    outline: none;
+    cursor: default;
+    min-width: 0;
+    width: 100%
+}
+
+.heep-add-addr-loading {
+    font-size: 10px;
+    font-weight: 700;
+    color: #3b82f6;
+    text-align: center;
+    line-height: 1;
+    padding: 4px 0;
+    animation: addrPulse 1.2s ease-in-out infinite
+}
+
+[data-theme="dark"] .heep-add-addr-loading {
+    color: #60a5fa
+}
+
+@keyframes addrPulse {
+
+    0%,
+    100% {
+        opacity: .6
+    }
+
+    50% {
+        opacity: 1
+    }
 }
 
 .heep-add-addr-type,
 .heep-edit-addr-type {
-    display: flex;
-    gap: 8px;
-    margin-top: 4px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px
 }
 
-.heep-add-addr-type label,
-.heep-edit-addr-type label {
-    flex: 1;
+.heep-add-addr-type-option {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 4px;
     padding: 10px 8px;
-    border-radius: 10px;
-    border: 1px solid rgba(43, 16, 85, 0.1);
-    background: rgba(255, 255, 255, 0.65);
-    font-size: 12px;
-    font-weight: 600;
+    background: var(--bg);
+    border: 1.5px solid var(--bd);
+    border-radius: 9px;
     cursor: pointer;
-    color: #2b1055;
+    transition: all var(--tr);
     text-align: center;
+    min-width: 0
 }
 
-[data-theme="dark"] .heep-add-addr-type label,
-[data-theme="dark"] .heep-edit-addr-type label {
-    border-color: rgba(120, 220, 255, 0.16);
-    background: rgba(15, 32, 39, 0.55);
-    color: #cfeaf5;
+.heep-add-addr-type-option:active {
+    transform: scale(.97)
 }
 
-.heep-add-addr-type input,
-.heep-edit-addr-type input {
-    width: auto;
-    padding: 0;
-    margin: 0;
-    accent-color: #654ea3;
-    cursor: pointer;
+.heep-add-addr-type-option svg {
+    font-size: 16px;
+    color: var(--fg3);
+    transition: color var(--tr)
 }
 
-[data-theme="dark"] .heep-add-addr-type input,
-[data-theme="dark"] .heep-edit-addr-type input {
-    accent-color: #7fd4e8;
+.heep-add-addr-type-option span {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--fg2);
+    line-height: 1;
+    transition: color var(--tr)
+}
+
+.heep-add-addr-type-option.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, .1), rgba(168, 85, 247, .1));
+    border-color: #3b82f6
+}
+
+[data-theme="dark"] .heep-add-addr-type-option.active {
+    background: linear-gradient(135deg, rgba(96, 165, 250, .12), rgba(192, 132, 252, .12));
+    border-color: #60a5fa
+}
+
+.heep-add-addr-type-option.active svg {
+    color: #3b82f6
+}
+
+[data-theme="dark"] .heep-add-addr-type-option.active svg {
+    color: #60a5fa
+}
+
+.heep-add-addr-type-option.active span {
+    color: var(--fg);
+    font-weight: 800
 }
 
 .heep-add-addr-save-btn,
 .heep-edit-addr-save-btn {
     width: 100%;
-    padding: 13px;
-    margin-top: 6px;
-    border-radius: 10px;
-    border: none;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
+    padding: 13px 16px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
     color: #fff;
+    border: none;
+    border-radius: 10px;
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-weight: 800;
     cursor: pointer;
-    transition: opacity 0.2s ease;
+    transition: transform var(--tr), opacity var(--tr);
+    min-height: 46px;
+    line-height: 1;
+    letter-spacing: .01em;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, .35);
+    margin-top: 4px
 }
 
-[data-theme="dark"] .heep-add-addr-save-btn,
-[data-theme="dark"] .heep-edit-addr-save-btn {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
+.heep-add-addr-save-btn:active:not(:disabled),
+.heep-edit-addr-save-btn:active:not(:disabled) {
+    transform: scale(.97);
+    opacity: .9
 }
 
-.heep-add-addr-save-btn:active,
-.heep-edit-addr-save-btn:active {
-    transform: scale(0.98);
-}
-
+.heep-add-addr-save-btn:disabled,
 .heep-edit-addr-save-btn:disabled {
-    opacity: 0.4;
+    opacity: .5;
     cursor: not-allowed;
+    box-shadow: none;
+    background: var(--bg3);
+    color: var(--fg3);
+    border: 1px solid var(--bd)
 }
 
-@media (max-width: 480px) {
+@media(min-width:480px) {
 
     .heep-add-addr-page,
     .heep-edit-addr-page {
-        padding: 12px;
+        gap: 14px;
+        padding: 12px
     }
 
-    .heep-add-addr-form input,
-    .heep-edit-addr-form input,
-    .heep-add-addr-form select,
-    .heep-edit-addr-form select {
-        padding: 11px 12px;
-        font-size: 12.5px;
+    .heep-add-addr-back-btn,
+    .heep-edit-addr-back-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px
     }
 
-    .heep-add-addr-type label,
-    .heep-edit-addr-type label {
+    .heep-add-addr-title,
+    .heep-edit-addr-title {
+        font-size: 18px
+    }
+
+    .heep-add-addr-location-btn {
         font-size: 11px;
-        padding: 9px 6px;
+        height: 38px;
+        padding: 8px 12px
+    }
+
+    .heep-add-addr-form,
+    .heep-edit-addr-form {
+        gap: 16px
+    }
+
+    .heep-add-addr-section {
+        padding: 14px;
+        gap: 10px;
+        border-radius: 14px
+    }
+
+    .heep-add-addr-section-title {
+        font-size: 12px
+    }
+
+    .heep-add-addr-input-wrap input {
+        padding: 12px 0;
+        font-size: 13px
+    }
+
+    .heep-add-addr-input-icon {
+        font-size: 15px
+    }
+
+    .heep-add-addr-select {
+        padding: 12px 14px;
+        font-size: 13px
+    }
+
+    .heep-add-addr-row input,
+    .heep-add-addr-form>input[readonly],
+    .heep-edit-addr-form>input[readonly] {
+        padding: 12px 14px;
+        font-size: 13px
+    }
+
+    .heep-add-addr-type-option {
+        padding: 12px 10px
+    }
+
+    .heep-add-addr-type-option svg {
+        font-size: 18px
+    }
+
+    .heep-add-addr-type-option span {
+        font-size: 11px
+    }
+
+    .heep-add-addr-save-btn,
+    .heep-edit-addr-save-btn {
+        font-size: 14px;
+        min-height: 50px
+    }
+}
+
+@media(min-width:768px) {
+
+    .heep-add-addr-page,
+    .heep-edit-addr-page {
+        padding: 16px
+    }
+
+    .heep-add-addr-title,
+    .heep-edit-addr-title {
+        font-size: 20px
+    }
+
+    .heep-add-addr-form,
+    .heep-edit-addr-form {
+        gap: 18px
+    }
+
+    .heep-add-addr-section {
+        padding: 16px
+    }
+
+    .heep-add-addr-input-wrap input {
+        padding: 13px 0;
+        font-size: 14px
+    }
+
+    .heep-add-addr-save-btn,
+    .heep-edit-addr-save-btn {
+        min-height: 54px;
+        font-size: 15px
     }
 }

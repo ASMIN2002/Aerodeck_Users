@@ -1,394 +1,551 @@
 .about-heepit {
-    width: 100%;
-    min-height: 100%;
-    padding: 14px 14px 24px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    box-sizing: border-box;
-    background: #f4f1fa;
-}
-
-[data-theme="dark"] .about-heepit {
-    background: #0f2027;
+    gap: 10px;
+    padding: 8px;
+    width: 100%;
+    min-width: 0
 }
 
 .heepit-about-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    padding: 0 2px
 }
 
 .heepit-about-back {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 10px;
-    background: rgba(101, 78, 163, 0.14);
-    color: #654ea3;
-    font-size: 16px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    outline: none;
+    width: 32px;
+    height: 32px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    color: var(--fg);
+    font-size: 15px;
     flex-shrink: 0;
+    cursor: pointer;
+    transition: background var(--tr), transform var(--tr)
 }
 
-[data-theme="dark"] .heepit-about-back {
-    background: rgba(120, 220, 255, 0.14);
-    color: #7fd4e8;
+.heepit-about-back:active {
+    transform: scale(.94);
+    background: var(--bg3)
 }
 
-.heepit-about-title-wrap h2 {
-    margin: 0;
+.heepit-about-title {
     font-size: 15px;
     font-weight: 800;
-    letter-spacing: 0.6px;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .heepit-about-title-wrap h2 {
-    color: #e0f2f7;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0;
+    text-transform: uppercase
 }
 
 .heepit-about-content {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    width: 100%;
+    min-width: 0
 }
 
 .heepit-about-hero {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 6px;
-    padding: 20px 16px;
+    gap: 8px;
+    padding: 24px 16px;
+    background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 6px 18px rgba(101, 78, 163, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, .3)
 }
 
-[data-theme="dark"] .heepit-about-hero {
-    background: rgba(15, 32, 39, 0.6);
-    border-color: rgba(120, 220, 255, 0.22);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+.heepit-about-hero::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .12);
+    pointer-events: none
+}
+
+.heepit-about-hero::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    left: -40px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .08);
+    pointer-events: none
 }
 
 .heepit-about-logo {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, .5);
+    color: #fff;
+    font-size: 32px;
     font-weight: 900;
-    color: #ffffff;
-    background: linear-gradient(135deg, #654ea3, #a06cd5);
-    box-shadow: 0 6px 16px rgba(101, 78, 163, 0.3);
-    margin-bottom: 4px;
-}
-
-[data-theme="dark"] .heepit-about-logo {
-    background: linear-gradient(135deg, #7fd4e8, #4a8ba8);
-    color: #0f2027;
-    box-shadow: 0 6px 16px rgba(127, 212, 232, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .2)
 }
 
 .heepit-about-eyebrow {
-    font-size: 10px;
+    position: relative;
+    z-index: 1;
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: 1px;
-    color: #654ea3;
-}
-
-[data-theme="dark"] .heepit-about-eyebrow {
-    color: #7fd4e8;
+    color: rgba(255, 255, 255, .85);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 4px 10px;
+    background: rgba(0, 0, 0, .2);
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px)
 }
 
 .heepit-about-hero h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: -.02em;
     margin: 0;
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1.25;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .heepit-about-hero h1 {
-    color: #e0f2f7;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .15)
 }
 
 .heepit-about-hero p {
-    margin: 0;
-    max-width: 320px;
-    font-size: 12.5px;
-    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    color: rgba(255, 255, 255, .9);
     line-height: 1.5;
-    color: rgba(43, 16, 85, 0.65);
-}
-
-[data-theme="dark"] .heepit-about-hero p {
-    color: rgba(207, 234, 245, 0.65);
+    margin: 0;
+    max-width: 320px
 }
 
 .heepit-about-stats {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px
 }
 
 .heepit-about-stat {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 3px;
-    padding: 12px 8px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    padding: 12px 6px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
     text-align: center;
-    min-width: 0;
-}
-
-[data-theme="dark"] .heepit-about-stat {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    min-width: 0
 }
 
 .heepit-about-stat strong {
-    font-size: 13px;
-    font-weight: 800;
-    color: #2b1055;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--fg);
     line-height: 1.2;
-    max-width: 100%;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-[data-theme="dark"] .heepit-about-stat strong {
-    color: #cfeaf5;
+    max-width: 100%
 }
 
 .heepit-about-stat span {
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 600;
-    color: rgba(43, 16, 85, 0.55);
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: .04em;
     line-height: 1.2;
+    text-align: center
 }
 
-[data-theme="dark"] .heepit-about-stat span {
-    color: rgba(207, 234, 245, 0.55);
+.heepit-about-section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 2px
+}
+
+.heepit-about-section-heading span {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    line-height: 1
+}
+
+.heepit-about-section-heading h2 {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--fg);
+    line-height: 1.25;
+    margin: 0;
+    letter-spacing: -.01em
+}
+
+.heepit-highlights-section,
+.heepit-pillars-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.heepit-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px
+}
+
+.heepit-highlight-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 8px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    text-align: center;
+    min-width: 0
+}
+
+.heepit-highlight-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, .12), rgba(168, 85, 247, .12));
+    border: 1.5px solid rgba(59, 130, 246, .25);
+    color: #3b82f6;
+    font-size: 15px;
+    flex-shrink: 0
+}
+
+[data-theme="dark"] .heepit-highlight-icon {
+    background: linear-gradient(135deg, rgba(96, 165, 250, .15), rgba(192, 132, 252, .15));
+    border-color: rgba(96, 165, 250, .3);
+    color: #60a5fa
+}
+
+.heepit-highlight-value {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--fg);
+    line-height: 1;
+    letter-spacing: -.02em
+}
+
+.heepit-highlight-label {
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    text-align: center
 }
 
 .heepit-about-card {
     display: flex;
-    gap: 12px;
-    padding: 16px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-[data-theme="dark"] .heepit-about-card {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    min-width: 0
 }
 
 .heepit-about-card-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(101, 78, 163, 0.14);
-    color: #654ea3;
-    font-size: 16px;
-    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, .15), rgba(168, 85, 247, .15));
+    border: 1.5px solid rgba(59, 130, 246, .25);
+    color: #3b82f6;
+    font-size: 18px;
+    flex-shrink: 0
 }
 
 [data-theme="dark"] .heepit-about-card-icon {
-    background: rgba(120, 220, 255, 0.14);
-    color: #7fd4e8;
+    background: linear-gradient(135deg, rgba(96, 165, 250, .18), rgba(168, 85, 247, .18));
+    border-color: rgba(96, 165, 250, .35);
+    color: #60a5fa
 }
 
 .heepit-about-label {
-    display: block;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: 0.8px;
-    color: #654ea3;
-    margin-bottom: 4px;
-}
-
-[data-theme="dark"] .heepit-about-label {
-    color: #7fd4e8;
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    line-height: 1;
+    display: block;
+    margin-bottom: 4px
 }
 
 .heepit-about-card h3 {
-    margin: 0 0 6px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
-    color: #2b1055;
+    color: var(--fg);
     line-height: 1.3;
-}
-
-[data-theme="dark"] .heepit-about-card h3 {
-    color: #e0f2f7;
+    margin: 0 0 4px
 }
 
 .heepit-about-card p {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.5;
-    color: rgba(43, 16, 85, 0.65);
-}
-
-[data-theme="dark"] .heepit-about-card p {
-    color: rgba(207, 234, 245, 0.65);
+    font-size: 11px;
+    color: var(--fg2);
+    line-height: 1.55;
+    margin: 0
 }
 
 .heepit-about-values {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.heepit-about-section-heading span {
-    display: block;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
-    color: #654ea3;
-    margin-bottom: 3px;
-}
-
-[data-theme="dark"] .heepit-about-section-heading span {
-    color: #7fd4e8;
-}
-
-.heepit-about-section-heading h2 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .heepit-about-section-heading h2 {
-    color: #e0f2f7;
+    gap: 8px
 }
 
 .heepit-value-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px
 }
 
 .heepit-value-item {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     padding: 12px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    min-width: 0;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    min-width: 0
 }
 
-[data-theme="dark"] .heepit-value-item {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+.heepit-value-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    font-size: 15px;
+    border: 1.5px solid
 }
 
-.heepit-value-item svg {
-    font-size: 16px;
-    color: #654ea3;
+.heepit-value-rose .heepit-value-icon {
+    background: rgba(244, 63, 94, .12);
+    border-color: rgba(244, 63, 94, .25);
+    color: #f43f5e
 }
 
-[data-theme="dark"] .heepit-value-item svg {
-    color: #7fd4e8;
+.heepit-value-blue .heepit-value-icon {
+    background: rgba(59, 130, 246, .12);
+    border-color: rgba(59, 130, 246, .25);
+    color: #3b82f6
+}
+
+.heepit-value-amber .heepit-value-icon {
+    background: rgba(245, 158, 11, .12);
+    border-color: rgba(245, 158, 11, .25);
+    color: #f59e0b
+}
+
+[data-theme="dark"] .heepit-value-rose .heepit-value-icon {
+    background: rgba(248, 113, 113, .15);
+    border-color: rgba(248, 113, 113, .3);
+    color: #f87171
+}
+
+[data-theme="dark"] .heepit-value-blue .heepit-value-icon {
+    background: rgba(96, 165, 250, .15);
+    border-color: rgba(96, 165, 250, .3);
+    color: #60a5fa
+}
+
+[data-theme="dark"] .heepit-value-amber .heepit-value-icon {
+    background: rgba(251, 191, 36, .15);
+    border-color: rgba(251, 191, 36, .3);
+    color: #fbbf24
 }
 
 .heepit-value-item h3 {
-    margin: 0;
     font-size: 12px;
     font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .heepit-value-item h3 {
-    color: #cfeaf5;
+    color: var(--fg);
+    line-height: 1.25;
+    margin: 0
 }
 
 .heepit-value-item p {
-    margin: 0;
-    font-size: 11px;
-    font-weight: 500;
-    line-height: 1.4;
-    color: rgba(43, 16, 85, 0.6);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 10px;
+    color: var(--fg2);
+    line-height: 1.5;
+    margin: 0
 }
 
-[data-theme="dark"] .heepit-value-item p {
-    color: rgba(207, 234, 245, 0.6);
+.heepit-pillars-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.heepit-pillar-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    min-width: 0;
+    transition: border-color var(--tr)
+}
+
+.heepit-pillar-card:active {
+    border-color: var(--fg3)
+}
+
+.heepit-pillar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    flex-shrink: 0;
+    font-size: 16px;
+    border: 1.5px solid
+}
+
+.heepit-pillar-amber .heepit-pillar-icon {
+    background: rgba(245, 158, 11, .12);
+    border-color: rgba(245, 158, 11, .25);
+    color: #f59e0b
+}
+
+.heepit-pillar-green .heepit-pillar-icon {
+    background: rgba(22, 163, 74, .12);
+    border-color: rgba(22, 163, 74, .25);
+    color: #16a34a
+}
+
+.heepit-pillar-purple .heepit-pillar-icon {
+    background: rgba(168, 85, 247, .12);
+    border-color: rgba(168, 85, 247, .25);
+    color: #a855f7
+}
+
+[data-theme="dark"] .heepit-pillar-amber .heepit-pillar-icon {
+    background: rgba(251, 191, 36, .15);
+    border-color: rgba(251, 191, 36, .3);
+    color: #fbbf24
+}
+
+[data-theme="dark"] .heepit-pillar-green .heepit-pillar-icon {
+    background: rgba(74, 222, 128, .15);
+    border-color: rgba(74, 222, 128, .3);
+    color: #4ade80
+}
+
+[data-theme="dark"] .heepit-pillar-purple .heepit-pillar-icon {
+    background: rgba(192, 132, 252, .15);
+    border-color: rgba(192, 132, 252, .3);
+    color: #c084fc
+}
+
+.heepit-pillar-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1
+}
+
+.heepit-pillar-text h3 {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.heepit-pillar-text p {
+    font-size: 10px;
+    color: var(--fg2);
+    line-height: 1.4;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden
 }
 
 .heepit-about-contact {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 16px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-[data-theme="dark"] .heepit-about-contact {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    gap: 8px;
+    padding: 14px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    min-width: 0
 }
 
 .heepit-about-contact h2 {
-    margin: 0;
     font-size: 14px;
-    font-weight: 800;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .heepit-about-contact h2 {
-    color: #e0f2f7;
+    font-weight: 900;
+    color: var(--fg);
+    line-height: 1.25;
+    margin: 0;
+    letter-spacing: -.01em
 }
 
 .heepit-contact-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px
 }
 
 .heepit-contact-list a {
@@ -396,111 +553,324 @@
     align-items: center;
     gap: 8px;
     padding: 10px 12px;
-    border-radius: 10px;
-    background: rgba(101, 78, 163, 0.1);
-    color: #2b1055;
-    font-size: 12px;
-    font-weight: 700;
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 9px;
+    color: var(--fg);
     text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: border-color var(--tr), background var(--tr);
     min-width: 0;
+    overflow: hidden
 }
 
-[data-theme="dark"] .heepit-contact-list a {
-    background: rgba(120, 220, 255, 0.1);
-    color: #cfeaf5;
+.heepit-contact-list a:active {
+    border-color: var(--fg3);
+    background: var(--bg3)
 }
 
-.heepit-contact-list a svg {
-    flex-shrink: 0;
-    color: #654ea3;
+.heepit-contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: rgba(59, 130, 246, .12);
+    border: 1px solid rgba(59, 130, 246, .25);
+    color: #3b82f6;
+    font-size: 12px;
+    flex-shrink: 0
 }
 
-[data-theme="dark"] .heepit-contact-list a svg {
-    color: #7fd4e8;
+[data-theme="dark"] .heepit-contact-icon {
+    background: rgba(96, 165, 250, .15);
+    border-color: rgba(96, 165, 250, .3);
+    color: #60a5fa
 }
 
-.heepit-contact-list a span {
+.heepit-contact-list a span:last-child {
+    flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .heepit-about-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    padding: 14px 8px 4px;
+    gap: 2px;
+    padding: 16px 8px 4px;
     text-align: center;
+    border-top: 1px solid var(--bd);
+    margin-top: 4px
 }
 
 .heepit-about-footer strong {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 900;
-    letter-spacing: 1px;
-    color: #654ea3;
-}
-
-[data-theme="dark"] .heepit-about-footer strong {
-    color: #7fd4e8;
+    color: var(--fg);
+    letter-spacing: .04em;
+    line-height: 1
 }
 
 .heepit-about-footer span {
-    font-size: 10.5px;
-    font-weight: 500;
-    color: rgba(43, 16, 85, 0.5);
+    font-size: 9px;
+    color: var(--fg3);
+    line-height: 1.3;
+    letter-spacing: .02em
 }
 
-[data-theme="dark"] .heepit-about-footer span {
-    color: rgba(207, 234, 245, 0.5);
-}
-
-@media (max-width: 360px) {
+@media(min-width:480px) {
     .about-heepit {
-        padding: 10px 10px 20px;
-        gap: 10px;
+        gap: 12px;
+        padding: 10px
+    }
+
+    .heepit-about-back {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
+    }
+
+    .heepit-about-title {
+        font-size: 17px
     }
 
     .heepit-about-content {
-        gap: 10px;
+        gap: 14px
     }
 
     .heepit-about-hero {
-        padding: 16px 12px;
+        padding: 32px 20px;
+        border-radius: 18px;
+        gap: 10px
+    }
+
+    .heepit-about-logo {
+        width: 76px;
+        height: 76px;
+        font-size: 38px
+    }
+
+    .heepit-about-eyebrow {
+        font-size: 10px;
+        padding: 5px 12px
     }
 
     .heepit-about-hero h1 {
-        font-size: 17px;
+        font-size: 26px
     }
 
-    .heepit-about-stats,
-    .heepit-value-grid {
-        gap: 8px;
+    .heepit-about-hero p {
+        font-size: 12px;
+        max-width: 380px
     }
 
     .heepit-about-stat {
-        padding: 10px 6px;
+        padding: 14px 8px;
+        border-radius: 12px
     }
 
     .heepit-about-stat strong {
-        font-size: 11px;
+        font-size: 14px
+    }
+
+    .heepit-about-stat span {
+        font-size: 9px
+    }
+
+    .heepit-about-section-heading h2 {
+        font-size: 16px
+    }
+
+    .heepit-about-section-heading span {
+        font-size: 10px
+    }
+
+    .heepit-highlights-grid {
+        gap: 8px
+    }
+
+    .heepit-highlight-card {
+        padding: 14px 10px;
+        border-radius: 12px
+    }
+
+    .heepit-highlight-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
+    }
+
+    .heepit-highlight-value {
+        font-size: 18px
+    }
+
+    .heepit-highlight-label {
+        font-size: 9px
+    }
+
+    .heepit-about-card {
+        padding: 16px;
+        gap: 10px;
+        border-radius: 14px
+    }
+
+    .heepit-about-card-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 20px
+    }
+
+    .heepit-about-label {
+        font-size: 10px
+    }
+
+    .heepit-about-card h3 {
+        font-size: 14px
+    }
+
+    .heepit-about-card p {
+        font-size: 12px
     }
 
     .heepit-value-item {
-        padding: 10px;
+        padding: 14px;
+        gap: 5px;
+        border-radius: 12px
+    }
+
+    .heepit-value-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px
     }
 
     .heepit-value-item h3 {
-        font-size: 11px;
+        font-size: 13px
     }
 
     .heepit-value-item p {
-        font-size: 10px;
+        font-size: 11px
     }
 
-    .heepit-about-card,
+    .heepit-pillar-card {
+        padding: 13px 14px;
+        gap: 12px;
+        border-radius: 12px
+    }
+
+    .heepit-pillar-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 18px
+    }
+
+    .heepit-pillar-text h3 {
+        font-size: 13px
+    }
+
+    .heepit-pillar-text p {
+        font-size: 11px
+    }
+
     .heepit-about-contact {
-        padding: 12px;
+        padding: 16px;
+        gap: 10px;
+        border-radius: 14px
+    }
+
+    .heepit-about-contact h2 {
+        font-size: 16px
+    }
+
+    .heepit-contact-list a {
+        padding: 11px 14px;
+        font-size: 12px;
+        border-radius: 10px
+    }
+
+    .heepit-contact-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 13px
+    }
+
+    .heepit-about-footer strong {
+        font-size: 13px
+    }
+
+    .heepit-about-footer span {
+        font-size: 10px
+    }
+}
+
+@media(min-width:768px) {
+    .heepit-about-title {
+        font-size: 19px
+    }
+
+    .heepit-about-hero h1 {
+        font-size: 30px
+    }
+
+    .heepit-about-hero p {
+        font-size: 13px
+    }
+
+    .heepit-highlights-grid {
+        grid-template-columns: repeat(4, 1fr)
+    }
+
+    .heepit-value-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px
+    }
+
+    .heepit-pillars-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px
+    }
+
+    .heepit-pillar-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px
+    }
+
+    .heepit-pillar-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 20px
+    }
+
+    .heepit-pillar-text h3,
+    .heepit-pillar-text p {
+        white-space: normal
+    }
+
+    .heepit-pillar-text p {
+        -webkit-line-clamp: unset;
+        display: block
+    }
+
+    .heepit-about-card h3 {
+        font-size: 15px
+    }
+
+    .heepit-about-card p {
+        font-size: 13px
+    }
+
+    .heepit-about-section-heading h2,
+    .heepit-about-contact h2 {
+        font-size: 18px
     }
 }

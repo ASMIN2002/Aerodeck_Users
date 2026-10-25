@@ -3,6 +3,9 @@ import "./7ValueDeals.css";
 function ValueDeals({ shops, onOpenDetails }) {
     const valueDeals = shops.slice(0, 6);
 
+    const cleanHighlight = (text) =>
+        (text || "").replace(/~cloth(e)?s\s*$/i, "").trim();
+
     return (
         <section className="shop-value-deals-section">
             <div className="likeheader">
@@ -13,6 +16,7 @@ function ValueDeals({ shops, onOpenDetails }) {
                 <div className="shop-value-deals-grid">
                     {valueDeals.map((shop, index) => {
                         const isAvailable = Number(shop.shop_status) === 1;
+                        const highlight = cleanHighlight(shop.shop_highlight_text);
 
                         return (
                             <div
@@ -33,9 +37,9 @@ function ValueDeals({ shops, onOpenDetails }) {
                                         </span>
                                     )}
 
-                                    {isAvailable && shop.shop_highlight_text && (
+                                    {isAvailable && highlight && (
                                         <span className="shop-value-highlight">
-                                            {shop.shop_highlight_text}
+                                            {highlight}
                                         </span>
                                     )}
                                 </div>

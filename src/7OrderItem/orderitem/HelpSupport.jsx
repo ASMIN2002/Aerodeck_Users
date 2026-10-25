@@ -1,40 +1,46 @@
 import { useRef, useState, useEffect } from "react";
+import { FiRefreshCw, FiX, FiAlertCircle, FiPackage, FiCheckCircle, FiClock } from "react-icons/fi";
 import { API } from "../../services/api";
 import "../orderitemstyle/HelpSupport.css";
 
-const MAX_REASON_LENGTH = 20;
-const NAV_DELAY = 500;
+const MAX_REASON_LENGTH = 100;
 const RETURNABLE_TYPES = ["GIFT", "SHOP"];
 
-function getReturnState(returnDate) {
+const getReturnState = (returnDate) => {
     if (!returnDate) return "no-return";
+    return new Date(returnDate) >= new Date() ? "can-return" : "expired";
+};
 
-    const today = new Date();
-    const date = new Date(returnDate);
-
-    if (date >= today) return "can-return";
-    return "expired";
-}
-
-function HelpSupport({
-    item,
-    order,
-    onReturnSuccess,
-    setProfilePage,
-    navigateWithLoading,
-}) {
+function HelpSupport({ item, order, onReturnSuccess, setProfilePage }) {
     const [showReturnBox, setShowReturnBox] = useState(false);
     const [returnReason, setReturnReason] = useState("");
-
+    const [submitting, setSubmitting] = useState(false);
     const returnBoxRef = useRef(null);
 
     const returnState = getReturnState(item.return_date);
+    const isReturnable = RETURNABLE_TYPES.includes(item.product_type);
+
+    useEffect(() => {
+        if (!showReturnBox) return;
+        const handler = (e) => {
+            if (returnBoxRef.current && !returnBoxRef.current.contains(e.target)) {
+                setShowReturnBox(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        document.addEventListener("touchstart", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+            document.removeEventListener("touchstart", handler);
+        };
+    }, [showReturnBox]);
 
     const handleReturnProduct = async () => {
-        if (!RETURNABLE_TYPES.includes(item.product_type)) return;
+        if (!isReturnable || !returnReason.trim() || submitting) return;
+        setSubmitting(true);
 
         try {
-            const res = await fetch(`${API}/api/user/orders/return-product`, {
+            const data = await fetch(`${API}/api/user/orders/return-product`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -43,93 +49,111 @@ function HelpSupport({
                     order_id: item.order_id,
                     product_id: item.product_id,
                     quantity: item.quantity,
-                    return_reason: returnReason,
+                    return_reason: returnReason.trim(),
                     order_date: item.order_date,
                 }),
-            });
-            const data = await res.json();
+            }).then((r) => r.json());
 
             if (data.success) {
                 onReturnSuccess();
                 setShowReturnBox(false);
-                navigateWithLoading(
-                    () => setProfilePage("orders"),
-                    "Loading My Orders...",
-                    NAV_DELAY
-                );
+                setProfilePage("orders");
             }
         } catch (err) {
             console.error("Return product error:", err.message);
+        } finally {
+            setSubmitting(false);
         }
     };
 
-    useEffect(() => {
-        function handleOutsideClick(e) {
-            if (
-                returnBoxRef.current &&
-                !returnBoxRef.current.contains(e.target)
-            ) {
-                setShowReturnBox(false);
-            }
-        }
+    const handleOpenReturn = () => {
+        setReturnReason("");
+        setShowReturnBox(true);
+    };
 
-        document.addEventListener("mousedown", handleOutsideClick);
-        return () => document.removeEventListener("mousedown", handleOutsideClick);
-    }, []);
-
-    const renderReturnButton = () => {
-        if (returnState === "no-return") {
+    const renderButton = () => {
+        if (!isReturnable) {
             return (
-                <button className="support-btn" disabled>
-                    Open Box (No Return Available)
+                <button className="support-btn support-btn-disabled" disabled>
+                    <FiPackage /> No Return Available
                 </button>
             );
         }
 
-        if (returnState === "can-return") {
+        if (returnState === "no-return") {
             return (
-                <button
-                    className="support-btn"
-                    onClick={() => setShowReturnBox(true)}
-                >
-                    Return Product
+                <button className="support-btn support-btn-disabled" disabled>
+                    <FiPackage /> Open Box (No Return)
+                </button>
+            );
+        }
+
+        if (returnState === "expired") {
+            return (
+                <button className="support-btn support-btn-disabled" disabled>
+                    <FiClock /> Return Expired
                 </button>
             );
         }
 
         return (
-            <button className="support-btn" disabled>
-                Return Expired
+            <button className="support-btn support-btn-active" onClick={handleOpenReturn}>
+                <FiRefreshCw /> Return Product
             </button>
         );
     };
 
     return (
         <div className="help-support">
-            <h3>Help & Support</h3>
+            <div className="support-header">
+                <span className="support-header-icon"><FiAlertCircle /></span>
+                <h3 className="support-title">Help & Support</h3>
+            </div>
 
-            <div className="support-options">{renderReturnButton()}</div>
+            <div className="support-options">{renderButton()}</div>
 
             {showReturnBox && (
-                <div className="return-popup-overlay">
-                    <div className="return-popup" ref={returnBoxRef}>
-                        <h3>Return Product</h3>
-                        <p>Why are you returning this product?</p>
+                <div className="return-popup-overlay" onClick={() => setShowReturnBox(false)}>
+                    <div className="return-popup" ref={returnBoxRef} onClick={(e) => e.stopPropagation()}>
+                        <button className="return-popup-close" onClick={() => setShowReturnBox(false)} aria-label="Close">
+                            <FiX />
+                        </button>
+
+                        <div className="return-popup-icon"><FiRefreshCw /></div>
+                        <h3 className="return-popup-title">Return Product</h3>
+                        <p className="return-popup-subtitle">Why are you returning this product?</p>
 
                         <textarea
+                            className="return-reason-input"
                             maxLength={MAX_REASON_LENGTH}
                             value={returnReason}
                             onChange={(e) => setReturnReason(e.target.value)}
-                            placeholder={`Maximum ${MAX_REASON_LENGTH} letters`}
+                            placeholder="Write your reason..."
+                            disabled={submitting}
                         />
 
+                        <div className="return-reason-counter">{returnReason.length}/{MAX_REASON_LENGTH}</div>
+
                         <div className="return-popup-buttons">
-                            <button onClick={() => setShowReturnBox(false)}>
+                            <button
+                                type="button"
+                                className="return-cancel-btn"
+                                onClick={() => setShowReturnBox(false)}
+                                disabled={submitting}
+                            >
                                 Cancel
                             </button>
-
-                            <button onClick={handleReturnProduct}>
-                                Confirm Return
+                            <button
+                                type="button"
+                                className="return-confirm-btn"
+                                onClick={handleReturnProduct}
+                                disabled={!returnReason.trim() || submitting}
+                            >
+                                {submitting ? (
+                                    <><span className="return-spinner" /> Submitting...</>
+                                ) : (
+                                    <><FiCheckCircle /> Confirm Return</>
+                                )}
                             </button>
                         </div>
                     </div>

@@ -1,316 +1,671 @@
 .va-page {
-    padding: 16px;
-    background: #ffffff;
-    color: #2b1055;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-
-[data-theme="dark"] .va-page {
-    background: #0f2027;
-    color: #cfeaf5;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+    width: 100%;
+    min-width: 0
 }
 
 .va-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    padding: 0 2px
 }
 
 .va-back {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: 1px solid rgba(43, 16, 85, 0.1);
-    background: rgba(43, 16, 85, 0.04);
-    color: #2b1055;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-[data-theme="dark"] .va-back {
-    border-color: rgba(120, 220, 255, 0.15);
-    background: rgba(120, 220, 255, 0.08);
-    color: #cfeaf5;
-}
-
-.va-header h2 {
-    margin: 0;
+    width: 34px;
+    height: 34px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 9px;
+    color: var(--fg);
     font-size: 15px;
-    font-weight: 600;
-    color: #2b1055;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background var(--tr), transform var(--tr)
 }
 
-[data-theme="dark"] .va-header h2 {
-    color: #e0f2f7;
+.va-back:active {
+    transform: scale(.94);
+    background: var(--bg3)
+}
+
+.va-title {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--fg);
+    letter-spacing: -.01em;
+    line-height: 1.2;
+    margin: 0
+}
+
+.va-count {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--fg2);
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    padding: 3px 8px;
+    border-radius: 999px;
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0
+}
+
+.va-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 30px 16px;
+    text-align: center;
+    background: var(--bg2);
+    border: 1px dashed var(--bd);
+    border-radius: 12px
+}
+
+.va-empty-icon {
+    font-size: 32px;
+    color: var(--fg3);
+    opacity: .5;
+    margin-bottom: 2px
+}
+
+.va-empty-state h3 {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--fg);
+    margin: 0;
+    line-height: 1.2
+}
+
+.va-empty-state p {
+    font-size: 11px;
+    color: var(--fg3);
+    margin: 0;
+    line-height: 1.4
 }
 
 .va-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px
 }
 
 .va-card {
-    padding: 12px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    position: relative;
+    gap: 8px;
+    padding: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    transition: border-color var(--tr), transform var(--tr);
+    min-width: 0
 }
 
-[data-theme="dark"] .va-card {
-    background: rgba(15, 32, 39, 0.55);
-    border-color: rgba(120, 220, 255, 0.16);
+.va-card:active {
+    transform: scale(.99)
 }
 
 .va-card.primary {
-    border-color: rgba(236, 72, 153, 0.5);
-    background: rgba(236, 72, 153, 0.05);
+    background: linear-gradient(135deg, rgba(59, 130, 246, .06), rgba(168, 85, 247, .06));
+    border-color: rgba(59, 130, 246, .3)
 }
 
 [data-theme="dark"] .va-card.primary {
-    background: rgba(236, 72, 153, 0.08);
-    border-color: rgba(236, 72, 153, 0.4);
+    background: linear-gradient(135deg, rgba(96, 165, 250, .08), rgba(192, 132, 252, .08));
+    border-color: rgba(96, 165, 250, .35)
 }
 
 .va-card-top {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
     gap: 8px;
+    min-width: 0
 }
 
-.va-card-type h3 {
-    margin: 0;
+.va-card-type {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+    flex-wrap: wrap
+}
+
+.va-type-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(59, 130, 246, .12);
+    border: 1px solid rgba(59, 130, 246, .25);
+    color: #3b82f6;
+    font-size: 13px;
+    flex-shrink: 0
+}
+
+[data-theme="dark"] .va-type-icon {
+    background: rgba(96, 165, 250, .15);
+    border-color: rgba(96, 165, 250, .3);
+    color: #60a5fa
+}
+
+.va-type-name {
     font-size: 12px;
-    font-weight: 600;
-    color: #2b1055;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1.2;
+    margin: 0;
     text-transform: capitalize;
-}
-
-[data-theme="dark"] .va-card-type h3 {
-    color: #e0f2f7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .va-primary-badge {
-    display: inline-block;
-    margin-top: 4px;
-    padding: 2px 6px;
-    border-radius: 5px;
-    background: rgba(236, 72, 153, 0.12);
-    color: #be185d;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
     font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
+    font-weight: 800;
+    border-radius: 4px;
+    line-height: 1;
+    letter-spacing: .04em;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, .3)
 }
 
-[data-theme="dark"] .va-primary-badge {
-    background: rgba(236, 72, 153, 0.18);
-    color: #f9a8d4;
+.va-primary-badge svg {
+    font-size: 8px;
+    fill: currentColor
 }
 
 .va-card-actions {
     display: flex;
+    align-items: center;
     gap: 4px;
-    flex-shrink: 0;
+    flex-shrink: 0
 }
 
 .va-icon-btn {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    border: none;
-    background: rgba(43, 16, 85, 0.06);
-    color: #2b1055;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    font-size: 13px;
     cursor: pointer;
-    font-size: 12px;
+    transition: transform var(--tr), background var(--tr);
+    border: 1px solid
 }
 
-[data-theme="dark"] .va-icon-btn {
-    background: rgba(120, 220, 255, 0.1);
-    color: #cfeaf5;
+.va-icon-btn:active {
+    transform: scale(.9)
 }
 
-.va-icon-btn.delete {
-    color: #dc2626;
+.va-icon-btn.primary {
+    background: rgba(59, 130, 246, .1);
+    color: #3b82f6;
+    border-color: rgba(59, 130, 246, .25)
 }
 
-[data-theme="dark"] .va-icon-btn.delete {
-    color: #f87171;
+[data-theme="dark"] .va-icon-btn.primary {
+    background: rgba(96, 165, 250, .15);
+    color: #60a5fa;
+    border-color: rgba(96, 165, 250, .3)
 }
 
 .va-icon-btn.edit {
-    color: #654ea3;
+    background: rgba(245, 158, 11, .1);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, .25)
 }
 
 [data-theme="dark"] .va-icon-btn.edit {
-    color: #7fd4e8;
+    background: rgba(251, 191, 36, .15);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, .3)
+}
+
+.va-icon-btn.delete {
+    background: rgba(220, 38, 38, .1);
+    color: #dc2626;
+    border-color: rgba(220, 38, 38, .25)
+}
+
+[data-theme="dark"] .va-icon-btn.delete {
+    background: rgba(248, 113, 113, .15);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, .3)
 }
 
 .va-namnum {
     display: flex;
-    flex-direction: column;
-    gap: 1px;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap
 }
 
 .va-namnum h4 {
-    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-size: 12px;
-    font-weight: 600;
-    color: #2b1055;
+    font-weight: 800;
+    color: var(--fg);
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0
 }
 
-[data-theme="dark"] .va-namnum h4 {
-    color: #e0f2f7;
+.va-namnum h4 svg {
+    font-size: 11px;
+    color: var(--fg3);
+    flex-shrink: 0
 }
 
 .va-namnum p {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--fg2);
+    line-height: 1;
     margin: 0;
-    font-size: 11px;
-    color: rgba(43, 16, 85, 0.65);
+    background: var(--bg3);
+    padding: 3px 7px;
+    border-radius: 5px;
+    white-space: nowrap
 }
 
-[data-theme="dark"] .va-namnum p {
-    color: rgba(207, 234, 245, 0.65);
+.va-namnum p svg {
+    font-size: 10px;
+    color: var(--fg3);
+    flex-shrink: 0
 }
 
 .va-address-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--fg2);
+    line-height: 1.45;
     margin: 0;
-    font-size: 11px;
-    line-height: 1.4;
-    color: rgba(43, 16, 85, 0.75);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    word-break: break-word
 }
 
-[data-theme="dark"] .va-address-line {
-    color: rgba(207, 234, 245, 0.75);
+.va-address-line svg {
+    font-size: 11px;
+    color: var(--fg3);
+    flex-shrink: 0;
+    margin-top: 2px
 }
 
 .va-empty-slot {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 130px;
+    gap: 5px;
+    padding: 20px 12px;
+    background: var(--bg);
+    border: 1.5px dashed var(--bd);
     border-radius: 12px;
-    border: 2px dashed rgba(43, 16, 85, 0.2);
-    background: rgba(43, 16, 85, 0.02);
-    color: rgba(43, 16, 85, 0.4);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: border-color var(--tr), background var(--tr);
+    min-height: 100px
 }
 
-[data-theme="dark"] .va-empty-slot {
-    border-color: rgba(120, 220, 255, 0.2);
-    background: rgba(120, 220, 255, 0.03);
-    color: rgba(207, 234, 245, 0.4);
-}
-
-.va-empty-slot:hover {
-    border-color: rgba(101, 78, 163, 0.5);
-    color: #654ea3;
-    background: rgba(101, 78, 163, 0.05);
-}
-
-[data-theme="dark"] .va-empty-slot:hover {
-    border-color: rgba(127, 212, 232, 0.5);
-    color: #7fd4e8;
-    background: rgba(127, 212, 232, 0.05);
+.va-empty-slot:active {
+    border-color: #3b82f6;
+    background: var(--bg2)
 }
 
 .va-plus-icon {
-    font-size: 28px;
+    font-size: 22px;
+    color: var(--fg3);
+    transition: color var(--tr)
+}
+
+.va-empty-slot:active .va-plus-icon {
+    color: #3b82f6
+}
+
+.va-empty-slot span {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1;
+    transition: color var(--tr)
+}
+
+.va-empty-slot:active span {
+    color: #3b82f6
 }
 
 .va-delete-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 32, 39, 0.55);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 999;
+    background: rgba(0, 0, 0, .7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 16px;
+    animation: vaFadeIn .2s ease
+}
+
+[data-theme="dark"] .va-delete-overlay {
+    background: rgba(0, 0, 0, .8)
+}
+
+@keyframes vaFadeIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
 }
 
 .va-delete-box {
-    width: 100%;
-    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
     padding: 20px;
-    border-radius: 14px;
-    background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    background: var(--bg);
+    border: 1px solid var(--bd);
+    border-radius: 16px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+    animation: vaModalIn .3s cubic-bezier(.34, 1.56, .64, 1)
 }
 
-[data-theme="dark"] .va-delete-box {
-    background: #16232b;
-    border-color: rgba(120, 220, 255, 0.25);
+@keyframes vaModalIn {
+    from {
+        opacity: 0;
+        transform: scale(.9) translateY(10px)
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0)
+    }
+}
+
+.va-modal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-bottom: 2px;
+    font-size: 22px;
+    border: 1.5px solid
+}
+
+.va-modal-icon.delete-icon {
+    background: rgba(220, 38, 38, .12);
+    border-color: rgba(220, 38, 38, .25);
+    color: #dc2626
+}
+
+[data-theme="dark"] .va-modal-icon.delete-icon {
+    background: rgba(248, 113, 113, .15);
+    border-color: rgba(248, 113, 113, .3);
+    color: #f87171
+}
+
+.va-modal-icon.primary-icon {
+    background: rgba(59, 130, 246, .12);
+    border-color: rgba(59, 130, 246, .25);
+    color: #3b82f6
+}
+
+[data-theme="dark"] .va-modal-icon.primary-icon {
+    background: rgba(96, 165, 250, .15);
+    border-color: rgba(96, 165, 250, .3);
+    color: #60a5fa
 }
 
 .va-delete-box h3 {
-    margin: 0 0 8px;
     font-size: 14px;
-    font-weight: 600;
-    color: #2b1055;
-}
-
-[data-theme="dark"] .va-delete-box h3 {
-    color: #e0f2f7;
+    font-weight: 800;
+    color: var(--fg);
+    margin: 0;
+    line-height: 1.25
 }
 
 .va-delete-box p {
-    margin: 0 0 16px;
-    font-size: 12px;
-    color: rgba(43, 16, 85, 0.7);
-}
-
-[data-theme="dark"] .va-delete-box p {
-    color: rgba(207, 234, 245, 0.7);
+    font-size: 11px;
+    color: var(--fg2);
+    margin: 0;
+    line-height: 1.4
 }
 
 .va-delete-actions {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    width: 100%;
+    margin-top: 8px
 }
 
-.va-delete-actions button {
+.va-cancel-btn,
+.va-confirm-delete-btn,
+.va-confirm-primary-btn {
     flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    background: rgba(43, 16, 85, 0.08);
-    color: #4c1d95;
-    font-size: 12px;
-    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 800;
     cursor: pointer;
+    transition: transform var(--tr), opacity var(--tr);
+    min-height: 40px;
+    line-height: 1;
+    border: none
 }
 
-[data-theme="dark"] .va-delete-actions button {
-    background: rgba(120, 220, 255, 0.12);
-    color: #cfeaf5;
+.va-cancel-btn {
+    background: var(--bg2);
+    color: var(--fg);
+    border: 1px solid var(--bd)
 }
 
-.va-delete-actions .va-confirm-delete-btn {
-    background: linear-gradient(135deg, #b91c1c, #dc2626);
+.va-confirm-delete-btn {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
     color: #fff;
+    box-shadow: 0 3px 10px rgba(220, 38, 38, .3)
 }
 
-[data-theme="dark"] .va-delete-actions .va-confirm-delete-btn {
-    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+.va-confirm-primary-btn {
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(59, 130, 246, .3)
+}
+
+.va-cancel-btn:active,
+.va-confirm-delete-btn:active,
+.va-confirm-primary-btn:active {
+    transform: scale(.96);
+    opacity: .9
+}
+
+@media(min-width:480px) {
+    .va-page {
+        gap: 14px;
+        padding: 12px
+    }
+
+    .va-back {
+        width: 38px;
+        height: 38px;
+        font-size: 16px
+    }
+
+    .va-title {
+        font-size: 18px
+    }
+
+    .va-count {
+        font-size: 11px;
+        padding: 4px 10px
+    }
+
+    .va-grid {
+        gap: 10px
+    }
+
+    .va-card {
+        padding: 14px;
+        gap: 10px;
+        border-radius: 14px
+    }
+
+    .va-type-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px
+    }
+
+    .va-type-name {
+        font-size: 13px
+    }
+
+    .va-primary-badge {
+        font-size: 9px;
+        padding: 3px 8px
+    }
+
+    .va-icon-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px
+    }
+
+    .va-namnum h4 {
+        font-size: 13px
+    }
+
+    .va-namnum p {
+        font-size: 11px
+    }
+
+    .va-address-line {
+        font-size: 11px
+    }
+
+    .va-empty-slot {
+        min-height: 120px;
+        padding: 24px
+    }
+
+    .va-plus-icon {
+        font-size: 26px
+    }
+
+    .va-empty-slot span {
+        font-size: 11px
+    }
+
+    .va-empty-state {
+        padding: 36px 20px
+    }
+
+    .va-empty-icon {
+        font-size: 40px
+    }
+
+    .va-empty-state h3 {
+        font-size: 14px
+    }
+
+    .va-empty-state p {
+        font-size: 12px
+    }
+
+    .va-delete-box {
+        padding: 24px;
+        max-width: 380px
+    }
+
+    .va-modal-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 26px
+    }
+
+    .va-delete-box h3 {
+        font-size: 16px
+    }
+
+    .va-delete-box p {
+        font-size: 12px
+    }
+
+    .va-cancel-btn,
+    .va-confirm-delete-btn,
+    .va-confirm-primary-btn {
+        font-size: 12px;
+        min-height: 44px
+    }
+}
+
+@media(min-width:768px) {
+    .va-page {
+        padding: 16px
+    }
+
+    .va-title {
+        font-size: 20px
+    }
+
+    .va-card {
+        padding: 16px
+    }
+
+    .va-type-name {
+        font-size: 14px
+    }
+
+    .va-namnum h4 {
+        font-size: 14px
+    }
+
+    .va-address-line {
+        font-size: 12px
+    }
+
+    .va-delete-box {
+        max-width: 420px
+    }
 }

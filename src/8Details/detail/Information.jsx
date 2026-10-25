@@ -1,11 +1,5 @@
 import "../detailStyle/Information.css";
 
-const INFO_ROWS = [
-    { labelKey: "material", valueKey: "material", field: "material" },
-    { labelKey: "size", valueKey: "size", field: "size" },
-    { labelKey: "printing", valueKey: "printing", field: "printing" },
-];
-
 function getDeliveryDate(days) {
     if (!days) return "-";
     const date = new Date();
@@ -19,8 +13,9 @@ function getDeliveryDate(days) {
 
 function splitField(field) {
     if (!field) return ["-", "-"];
-    const parts = String(field).split("~");
-    if (parts.length < 2) return [field.trim(), "-"];
+    const clean = String(field).split("@")[0].trim();
+    const parts = clean.split("~");
+    if (parts.length < 2) return [clean, "-"];
     return [parts[0].trim(), parts.slice(1).join("~").trim()];
 }
 

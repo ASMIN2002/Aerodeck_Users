@@ -1,101 +1,69 @@
-import "../orderitemstyle/OrderItem.css";
 import { useState } from "react";
+import { FiExternalLink } from "react-icons/fi";
 import { API } from "../../services/api";
 import TrackOrder from "./TrackOrder";
 import UploadImages from "./UploadImages";
 import Rating from "./Rating";
 import HelpSupport from "./HelpSupport";
+import "../orderitemstyle/OrderItem.css";
 
-function OrderItem({
-    item,
-    order,
-    order_id,
-    onOpenDetails,
-    setProfilePage,
-    setSelectedInvoice,
-    fetchItems,
-    navigateWithLoading
-}) {
+const PREFIX_TYPE = { G: "gift", S: "shop", M: "medicine" };
+
+const getType = (id) => PREFIX_TYPE[String(id).charAt(0).toUpperCase()] || "card";
+
+const getProductData = (id, type) => {
+    if (type === "gift") return { gift_id: id };
+    if (type === "shop") return { shop_id: id };
+    if (type === "medicine") return { medicine_id: id };
+    return { product_id: id };
+};
+
+const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase().replace(/ /g, "-");
+
+function OrderItem({ item, order, order_id, onOpenDetails, setProfilePage, setSelectedInvoice, fetchItems, navigateWithLoading }) {
     const session_token = localStorage.getItem("session_token");
-
-    const [isReturned, setIsReturned] = useState(
-        !!item.return_status
-    );
+    const [isReturned, setIsReturned] = useState(!!item.return_status);
     const [reviewImages, setReviewImages] = useState([]);
 
-    const images = [
-        item.product_image1,
-        item.product_image2,
-        item.product_image3,
-        item.product_image4,
-    ].filter(Boolean);
+    const image = item.product_image1;
+    const isDelivered = item.order_status === "DELIVERED";
+    const isReturnTimeout = item.return_date && new Date(item.return_date) < new Date();
+    const productType = getType(item.product_id);
+
+    const handleViewProduct = () => {
+        onOpenDetails(getProductData(item.product_id, productType), productType);
+    };
 
     return (
         <div className="order-item-card">
-            <div className="order-item-images">
-                <div>
-                    {images[0] && (
-                        <img
-                            src={images[0]}
-                            alt={item.product_name}
-                            className="order-item-image"
-                        />
-                    )}
-                </div>
-                <div className="numtot">
-                    <div className="numtot1">
-                        <p><strong>Number :</strong> #{item.product_id}#</p>
-                        <p>
-                            <strong>MRP :</strong> {item.total_price}
-                        </p>
+            <div className="order-item-top">
+                {image && (
+                    <div className="order-item-image-wrap">
+                        <img src={image} alt={item.product_name} className="order-item-image" loading="lazy" />
+                    </div>
+                )}
+
+                <div className="order-item-info">
+                    <div className="order-item-header">
+                        <p className="order-item-number">#{item.product_id}</p>
+                        <p className="order-item-price">₹{Number(item.total_price || 0).toLocaleString("en-IN")}</p>
                     </div>
 
-                    <div className="numtot2">
-                        <h3>{item.product_name}</h3>
-                        <p>
-                            <strong>Qty :</strong> {item.quantity}
-                        </p>
+                    <h3 className="order-item-name">{item.product_name}</h3>
+
+                    <div className="order-item-meta">
+                        <span className="order-item-chip">Qty: {item.quantity}</span>
+                        <span className="order-item-chip">₹{Number(item.unit_price || 0).toFixed(2)}/pc</span>
                     </div>
 
-                    <span className="per-piece-rate">
-                        ₹{Number(item.unit_price || 0).toFixed(2)} / piece
-                    </span>
-
-                    <div className="numtot3">
-                        <p>
-                            <strong>Order :</strong>{" "}
-                            {new Date(item.order_date)
-                                .toLocaleDateString("en-GB", {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric"
-                                })
-                                .toUpperCase()
-                                .replace(/ /g, "-")}
+                    <div className="order-item-dates">
+                        <p className="order-item-date">
+                            <strong>Ordered:</strong> {formatDate(item.order_date)}
                         </p>
-
-                        {item.order_status === "DELIVERED" && item.return_date && (
-                            <p
-                                className={
-                                    new Date(item.return_date) < new Date()
-                                        ? "return-timeout-date"
-                                        : ""
-                                }
-                            >
-                                <strong>
-                                    {new Date(item.return_date) < new Date()
-                                        ? "Return Timeout :"
-                                        : "Return Until :"}
-                                </strong>{" "}
-
-                                {new Date(item.return_date)
-                                    .toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric"
-                                    })
-                                    .toUpperCase()
-                                    .replace(/ /g, "-")}
+                        {isDelivered && item.return_date && (
+                            <p className={`order-item-date ${isReturnTimeout ? "timeout" : ""}`}>
+                                <strong>{isReturnTimeout ? "Return Timeout:" : "Return Until:"}</strong> {formatDate(item.return_date)}
                             </p>
                         )}
                     </div>
@@ -111,65 +79,29 @@ function OrderItem({
                 orderItemId={item.order_item_id}
             />
 
-            {item.order_status === "DELIVERED" && (
+            {isDelivered && !isReturned && (
                 <>
-                    {!isReturned && (
-                        <>
-                            <Rating
-                                product_id={item.product_id}
-                                order_item_id={item.order_item_id}
-                            />
-
-                            <UploadImages
-                                reviewImages={reviewImages}
-                                setReviewImages={setReviewImages}
-                                session_token={session_token}
-                                product_id={item.product_id}
-                                order_item_id={item.order_item_id}
-                            />
-
-                            <HelpSupport
-                                item={item}
-                                order={order}
-                                onReturnSuccess={() => {
-                                    setIsReturned(true);
-                                }}
-                                setProfilePage={setProfilePage}
-                                navigateWithLoading={navigateWithLoading}
-                            />
-                        </>
-                    )}
+                    <Rating product_id={item.product_id} order_item_id={item.order_item_id} />
+                    <UploadImages
+                        reviewImages={reviewImages}
+                        setReviewImages={setReviewImages}
+                        session_token={session_token}
+                        product_id={item.product_id}
+                        order_item_id={item.order_item_id}
+                    />
+                    <HelpSupport
+                        item={item}
+                        order={order}
+                        onReturnSuccess={() => setIsReturned(true)}
+                        setProfilePage={setProfilePage}
+                        navigateWithLoading={navigateWithLoading}
+                    />
                 </>
             )}
 
-            <div className="order-item-actions">
-                <button
-                    className="down-btn1"
-                    onClick={() => {
-                        const type =
-                            item.product_id.startsWith("G")
-                                ? "gift"
-                                : item.product_id.startsWith("S")
-                                    ? "shop"
-                                    : item.product_id.startsWith("P")
-                                        ? "premium"
-                                        : "card";
-
-                        const data =
-                            type === "gift"
-                                ? { gift_id: item.product_id }
-                                : type === "shop"
-                                    ? { shop_id: item.product_id }
-                                    : type === "premium"
-                                        ? { premium_id: item.product_id }
-                                        : { product_id: item.product_id };
-
-                        onOpenDetails(data, type);
-                    }}
-                >
-                    View Product
-                </button>
-            </div>
+            <button className="order-item-view-btn" onClick={handleViewProduct}>
+                <FiExternalLink /> View Product
+            </button>
         </div>
     );
 }

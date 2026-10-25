@@ -1,237 +1,111 @@
-import "../orderitemstyle/TrackOrder.css";
 import { useEffect, useState } from "react";
+import { FiPackage, FiTruck, FiCheckCircle, FiXCircle, FiRefreshCw, FiMapPin } from "react-icons/fi";
 import { API } from "../../services/api";
+import "../orderitemstyle/TrackOrder.css";
 
-function TrackOrder({
-    orderStatus,
-    returnStatus,
-    paymentStatus,
-    orderId,
-    cancelStatus,
-    orderItemId
-}) {
-    const steps = [
-        "PLACED",
-        "PACKED",
-        "SHIPPED",
-        "OUT_FOR_DELIVERY",
-        "DELIVERED"
-    ];
+const DELIVERY_STEPS = ["PLACED", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"];
+const RETURN_STEPS = ["REQUESTED", "CONFIRMED", "PICKUP", "REFUND"];
+const CANCEL_STEPS = ["REQUESTED", "PROCESSING", "CANCELLED"];
 
-    const currentStep = steps.indexOf(orderStatus);
+const STATUS_ICONS = {
+    PLACED: FiPackage,
+    PACKED: FiPackage,
+    SHIPPED: FiTruck,
+    OUT_FOR_DELIVERY: FiMapPin,
+    DELIVERED: FiCheckCircle,
+    REQUESTED: FiRefreshCw,
+    PROCESSING: FiRefreshCw,
+    CONFIRMED: FiCheckCircle,
+    PICKUP: FiTruck,
+    REFUND: FiCheckCircle,
+    CANCELLED: FiXCircle,
+};
 
-    const isCancelled =
-        ["REQUESTED", "PROCESSING", "CANCELLED"].includes(cancelStatus);
+const STATUS_LABELS = {
+    OUT_FOR_DELIVERY: "OOD",
+    OUT_FOR_DELIVERY_FULL: "Out for Delivery",
+};
 
-    const returnSteps = [
-        "REQUESTED",
-        "CONFIRMED",
-        "PICKUP",
-        "REFUND"
-    ];
-
-    const returnCurrentStep = returnSteps.indexOf(returnStatus);
-
-    const cancelSteps = ["REQUESTED", "PROCESSING", "CANCELLED"];
-    const cancelCurrentStep = cancelSteps.indexOf(cancelStatus);
-
-    const [animate, setAnimate] = useState(false);
+function TrackOrder({ orderStatus, returnStatus, paymentStatus, orderId, cancelStatus, orderItemId }) {
     const [processingMap, setProcessingMap] = useState({});
+    const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
-        async function loadProcessing() {
-            if (!orderItemId) return;
-
-            try {
-                const res = await fetch(
-                    `${API}/api/user/processing/${orderItemId}`
-                );
-                const data = await res.json();
-
+        if (!orderItemId) return;
+        fetch(`${API}/api/user/processing/${orderItemId}`)
+            .then((r) => r.json())
+            .then((data) => {
                 if (data.success && data.data) {
                     const map = {};
-                    const raw = data.data.processing_update || "";
-
-                    raw.split(",").forEach((entry) => {
+                    (data.data.processing_update || "").split(",").forEach((entry) => {
                         const [status, date] = entry.split("~");
-                        if (status && date) {
-                            map[status.trim()] = date.trim();
-                        }
+                        if (status && date) map[status.trim()] = date.trim();
                     });
-
                     setProcessingMap(map);
                 }
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        loadProcessing();
+            })
+            .catch((err) => console.error(err));
     }, [orderItemId]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setAnimate(true);
-        }, 100);
-
+        const timer = setTimeout(() => setAnimate(true), 100);
         return () => clearTimeout(timer);
     }, [orderStatus, returnStatus, paymentStatus, orderId]);
 
-    const getDate = (status) => {
-        if (status === "OUT_FOR_DELIVERY") {
-            return processingMap["OUT_FOR_DELIVERY"] || "N/A";
-        }
-        return processingMap[status] || "N/A";
-    };
+    const isCancelled = CANCEL_STEPS.includes(cancelStatus);
+    const isReturn = !!returnStatus;
+
+    const steps = isCancelled ? CANCEL_STEPS : isReturn ? RETURN_STEPS : DELIVERY_STEPS;
+    const activeStatus = isCancelled ? cancelStatus : isReturn ? returnStatus : orderStatus;
+    const currentStep = steps.indexOf(activeStatus);
+    const progressPercent = currentStep <= 0 ? 0 : (currentStep / (steps.length - 1)) * 100;
+
+    const title = isCancelled
+        ? { icon: FiXCircle, text: "Order Cancelled", cls: "cancel" }
+        : isReturn
+            ? { icon: FiRefreshCw, text: `Return - ${returnStatus}`, cls: "return" }
+            : { icon: FiTruck, text: `Track Order - ${orderStatus}`, cls: "delivery" };
+
+    const TitleIcon = title.icon;
 
     return (
         <div className="track-order">
-            <h3 className="track-title">
-                {
-                    isCancelled
-                        ? "❌ Order Cancelled"
-                        : returnStatus
-                            ? `🔄 Return Tracking - ${returnStatus}`
-                            : `🚚 Track Order - ${orderStatus}`
-                }
+            <h3 className={`track-title track-title-${title.cls}`}>
+                <TitleIcon /> {title.text}
             </h3>
 
-            {
-                isCancelled ? (
-                    <div className="track-line cancel-track">
-                        <div
-                            className={`cancel-progress-red ${animate ? "animate-cancel-red" : ""}`}
-                            style={{
-                                "--cancel-progress":
-                                    cancelCurrentStep === 0
-                                        ? "16%"
-                                        : cancelCurrentStep === 1
-                                            ? "50%"
-                                            : "83%"
-                            }}
-                        ></div>
+            <div className={`track-line track-line-${title.cls}`}>
+                <div className="track-bar">
+                    <div
+                        className={`track-progress ${animate ? "animate" : ""}`}
+                        style={{ "--progress": `${progressPercent}%` }}
+                    />
+                </div>
 
-                        <div
-                            className={`cancel-step ${["REQUESTED", "PROCESSING", "CANCELLED"].includes(cancelStatus)
-                                ? "completed"
-                                : ""}`}
-                        >
-                            <div className="track-circle cancel-dot"></div>
-                            <span>REQUESTED</span>
-                        </div>
+                <div className="track-steps">
+                    {steps.map((step, index) => {
+                        const isCompleted = currentStep >= index;
+                        const isActive = currentStep === index;
+                        const date = processingMap[step];
+                        const StepIcon = STATUS_ICONS[step] || FiPackage;
+                        const label = STATUS_LABELS[step] || step;
 
-                        <div
-                            className={`cancel-step ${["PROCESSING", "CANCELLED"].includes(cancelStatus)
-                                ? "completed"
-                                : ""}`}
-                        >
-                            <div className="track-circle cancel-dot"></div>
-                            <span>PROCESSING</span>
-                        </div>
-
-                        <div
-                            className={`cancel-step ${cancelStatus === "CANCELLED"
-                                ? "completed"
-                                : ""}`}
-                        >
-                            <div className="track-circle cancel-dot"></div>
-                            <span>CANCELLED</span>
-                        </div>
-                    </div>
-                ) : returnStatus ? (
-                    <div className="track-line">
-                        <div
-                            className={`track-progress-line ${animate ? "animate-progress" : ""}`}
-                            style={{
-                                "--progress":
-                                    returnCurrentStep <= 0
-                                        ? "0%"
-                                        : `${(returnCurrentStep / (returnSteps.length - 1)) * 100}%`
-                            }}
-                        ></div>
-
-                        <div className={`track-step ${returnCurrentStep >= 0 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>REQUESTED</span>
-                        </div>
-
-                        <div className={`track-step ${returnCurrentStep >= 1 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>CONFIRMED</span>
-                        </div>
-
-                        <div className={`track-step ${returnCurrentStep >= 2 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>PICKUP</span>
-                        </div>
-
-                        <div className={`track-step ${returnCurrentStep >= 3 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>REFUND</span>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="track-line">
-                        <div
-                            className={`track-progress-line ${animate ? "animate-progress" : ""}`}
-                            style={{
-                                "--progress":
-                                    currentStep === 0
-                                        ? "0%"
-                                        : currentStep === 1
-                                            ? "30%"
-                                            : currentStep === 2
-                                                ? "50%"
-                                                : currentStep === 3
-                                                    ? "75%"
-                                                    : currentStep === 4
-                                                        ? "100%"
-                                                        : "0%"
-                            }}
-                        ></div>
-
-                        <div className={`track-step ${currentStep >= 0 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>PLACED</span>
-                            <small className="track-date">
-                                {getDate("PLACED")}
-                            </small>
-                        </div>
-
-                        <div className={`track-step ${currentStep >= 1 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>PACKED</span>
-                            <small className="track-date">
-                                {getDate("PACKED")}
-                            </small>
-                        </div>
-
-                        <div className={`track-step ${currentStep >= 2 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>SHIPPED</span>
-                            <small className="track-date">
-                                {getDate("SHIPPED")}
-                            </small>
-                        </div>
-
-                        <div className={`track-step ${currentStep >= 3 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>OOD</span>
-                            <small className="track-date">
-                                {getDate("OUT_FOR_DELIVERY")}
-                            </small>
-                        </div>
-
-                        <div className={`track-step ${currentStep >= 4 ? "completed" : ""}`}>
-                            <div className="track-circle"></div>
-                            <span>DELIVERED</span>
-                            <small className="track-date">
-                                {getDate("DELIVERED")}
-                            </small>
-                        </div>
-                    </div>
-                )
-            }
+                        return (
+                            <div
+                                key={step}
+                                className={`track-step ${isCompleted ? "completed" : ""} ${isActive ? "active" : ""}`}
+                                style={{ "--delay": `${index * 0.08}s` }}
+                            >
+                                <div className="track-dot">
+                                    <StepIcon className="track-dot-icon" />
+                                </div>
+                                <span className="track-label">{label}</span>
+                                {date && isCompleted && <small className="track-date">{date}</small>}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 }

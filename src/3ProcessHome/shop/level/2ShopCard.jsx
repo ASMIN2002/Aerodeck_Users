@@ -1,6 +1,9 @@
 import { FiHeart, FiBookmark } from "react-icons/fi";
 import "../levelstyle/2ShopCard.css";
 
+const cleanHighlight = (text) =>
+    (text || "").replace(/~cloth(e)?s\s*$/i, "").trim();
+
 function ProductShop({ product, onOpenDetails = () => { } }) {
     const {
         shop_status,
@@ -16,6 +19,7 @@ function ProductShop({ product, onOpenDetails = () => { } }) {
     } = product;
 
     const isAvailable = Number(shop_status) === 1;
+    const highlight = cleanHighlight(shop_highlight_text);
 
     return (
         <div
@@ -33,8 +37,8 @@ function ProductShop({ product, onOpenDetails = () => { } }) {
             <div className="heepit-shop-body">
                 <h3 className="heepit-shop-name">{shop_name}</h3>
 
-                {shop_highlight_text && (
-                    <div className="heepit-shop-highlight">{shop_highlight_text}</div>
+                {highlight && (
+                    <div className="heepit-shop-highlight">{highlight}</div>
                 )}
 
                 <div className="heepit-shop-price-row">

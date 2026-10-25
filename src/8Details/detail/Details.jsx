@@ -3,7 +3,7 @@ import DetailsData from "./DetailsData";
 import toast from "react-hot-toast";
 import { useEffect, useRef, useState } from "react";
 import { FaShareAlt, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { FiArrowLeft, FiX } from "react-icons/fi";
+import { FiArrowLeft, FiX, FiEye } from "react-icons/fi";
 import "../detailStyle/Details.css";
 
 const TOAST_DURATION = 2500;
@@ -16,19 +16,22 @@ const MIN_QTY = 1;
 const getProductId = (details, product) => {
     const s = details || product?.data;
     if (!s) return null;
-    return s.product_id || s.gift_id || s.shop_id || s.premium_id || s.medicine_id || s.card_id || s.id || null;
+    return s.product_id || s.gift_id || s.shop_id || s.medicine_id || s.card_id || s.id || null;
 };
 
 const getApiType = (type) =>
     ({ products: "shop", cards: "card", gifts: "gift", medicine: "medicine" }[type] || type);
 
 const getImageSource = (source, index) => {
-    for (const key of ["product", "gift", "shop", "premium", "medicine"]) {
+    for (const key of ["product", "gift", "shop", "medicine"]) {
         const val = source[`${key}_image${index}`];
         if (val) return val;
     }
     return null;
 };
+
+const isModel3D = (url) =>
+    typeof url === "string" && /\.(glb|gltf)(\?|$)/i.test(url);
 
 function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onViewAllMedia, onBuyNow }) {
     const sessionToken = localStorage.getItem("session_token");
@@ -37,6 +40,9 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [cartQuantity, setCartQuantity] = useState(0);
+
+    const [selectedColor, setSelectedColor] = useState(null);
+    const [appliedColor, setAppliedColor] = useState(null);
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState(0);
@@ -65,6 +71,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
     ].filter(Boolean);
 
     const openFullscreenImage = (image) => {
+        if (isModel3D(image)) return;
         setFullscreenImage(image);
         setImageZoom(1);
         setPanOffset({ x: 0, y: 0 });
@@ -84,7 +91,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         const firstImage = getImageSource(source, 1) || source.productDetail?.vdo1 || null;
         setSelectedImage(firstImage);
         setCurrentIndex(0);
-    }, [product, details?.product_image1, details?.gift_image1, details?.shop_image1, details?.premium_image1, details?.medicine_image1]);
+    }, [product, details?.product_image1, details?.gift_image1, details?.shop_image1, details?.medicine_image1]);
 
     useEffect(() => {
         const videoSrc = details?.productDetail?.vdo1;
@@ -216,7 +223,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             .then((data) => {
                 if (!data.success) return;
                 setIsSaved(data.data.some((item) => {
-                    const savedId = item.product_id || item.gift_id || item.shop_id || item.premium_id || item.medicine_id;
+                    const savedId = item.product_id || item.gift_id || item.shop_id || item.medicine_id;
                     return String(savedId) === String(productId);
                 }));
             })
@@ -244,7 +251,6 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             product_total_likes: totalLikes,
             gift_total_likes: totalLikes,
             shop_total_likes: totalLikes,
-            premium_total_likes: totalLikes,
             medicine_total_likes: totalLikes,
         }));
     };
@@ -278,7 +284,6 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             if (productId === prev.product_id) next.product_total_saves = Math.max(Number(prev.product_total_saves || 0) + delta, 0);
             if (productId === prev.gift_id) next.gift_total_saves = Math.max(Number(prev.gift_total_saves || 0) + delta, 0);
             if (productId === prev.shop_id) next.shop_total_saves = Math.max(Number(prev.shop_total_saves || 0) + delta, 0);
-            if (productId === prev.premium_id) next.premium_total_saves = Math.max(Number(prev.premium_total_saves || 0) + delta, 0);
             if (productId === prev.medicine_id) next.medicine_total_saves = Math.max(Number(prev.medicine_total_saves || 0) + delta, 0);
             return next;
         });
@@ -405,17 +410,34 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
     const activeImage = selectedImage || images[0] || null;
     const activeIndex = images.indexOf(activeImage);
 
+    const isClothProduct = details?.shop_highlight_text?.trim().toLowerCase().endsWith("~clothes");
+
+    const handleColorSelect = (hex) => {
+        setSelectedColor(hex);
+    };
+
+    const handleApplyToSkeleton = () => {
+        if (selectedColor) setAppliedColor(selectedColor);
+    };
+
+    const getColoredImageStyle = (img) => {
+        if (!selectedColor || isVideo(img)) return {};
+        return {
+            "--cloth-color": selectedColor,
+        };
+    };
+
     return (
         <div className="dt-page">
             <div className="dt-image-wrapper" ref={topVideoCardRef}>
                 <div
                     className="dt-image-box"
                     onTouchStart={(e) => {
-                        if (isVideo(activeImage)) return;
+                        if (isVideo(activeImage) || isModel3D(activeImage)) return;
                         setTouchStart(e.touches[0].clientX);
                     }}
                     onTouchEnd={(e) => {
-                        if (isVideo(activeImage)) return;
+                        if (isVideo(activeImage) || isModel3D(activeImage)) return;
                         const distance = e.changedTouches[0].clientX - touchStart;
                         if (Math.abs(distance) < SWIPE_THRESHOLD) return;
 
@@ -430,7 +452,14 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                         }
                     }}
                 >
-                    {isVideo(activeImage) ? (
+                    {isModel3D(activeImage) ? (
+                        <model-viewer
+                            src={activeImage}
+                            camera-controls
+                            auto-rotate
+                            style={{ width: "100%", height: "100%", background: "#0f0f1a" }}
+                        ></model-viewer>
+                    ) : isVideo(activeImage) ? (
                         <div className="dt-top-video-container">
                             <video
                                 ref={topVideoRef}
@@ -454,7 +483,36 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                             )}
                         </div>
                     ) : (
-                        <img src={activeImage} alt={product?.product_name} onClick={() => openFullscreenImage(activeImage)} style={{ cursor: "zoom-in" }} />
+                        <div className="dt-colored-image-wrap" style={getColoredImageStyle(activeImage)}>
+                            <img
+                                src={activeImage}
+                                alt={product?.product_name}
+                                className={selectedColor ? "dt-cloth-masked" : ""}
+                                onClick={() => openFullscreenImage(activeImage)}
+                                style={{ cursor: "zoom-in" }}
+                            />
+                            {selectedColor && (
+                                <div
+                                    className="dt-cloth-color-layer"
+                                    style={{
+                                        WebkitMaskImage: `url(${activeImage})`,
+                                        maskImage: `url(${activeImage})`,
+                                        backgroundColor: selectedColor,
+                                    }}
+                                />
+                            )}
+                        </div>
+                    )}
+
+                    {isClothProduct && !isVideo(activeImage) && !isModel3D(activeImage) && (
+                        <button
+                            className="dt-image-eye-btn"
+                            onClick={handleApplyToSkeleton}
+                            aria-label="Apply to 3D"
+                            title="Apply to 3D"
+                        >
+                            <FiEye />
+                        </button>
                     )}
                 </div>
 
@@ -466,14 +524,14 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                     <button className="dt-action-btn" onClick={handleLike}>
                         {isLiked ? <FaHeart style={{ color: "#ff2d55" }} /> : <FaRegHeart />}
                         <span>
-                            {details?.product_total_likes ?? details?.gift_total_likes ?? details?.shop_total_likes ?? details?.premium_total_likes ?? details?.medicine_total_likes ?? 0}
+                            {details?.product_total_likes ?? details?.gift_total_likes ?? details?.shop_total_likes ?? details?.medicine_total_likes ?? 0}
                         </span>
                     </button>
 
                     <button className="dt-action-btn" onClick={handleSave}>
                         {isSaved ? <FaBookmark /> : <FaRegBookmark />}
                         <span>
-                            {details?.product_total_saves ?? details?.gift_total_saves ?? details?.shop_total_saves ?? details?.premium_total_saves ?? details?.medicine_total_saves ?? 0}
+                            {details?.product_total_saves ?? details?.gift_total_saves ?? details?.shop_total_saves ?? details?.medicine_total_saves ?? 0}
                         </span>
                     </button>
 
@@ -488,25 +546,53 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             <div className="dt-images">
                 {images.map((image, index) => {
                     const isVid = isVideo(image);
+                    const isModel = isModel3D(image);
                     const isActive = activeImage === image;
 
-                    return isVid ? (
-                        <div
-                            key={index}
-                            onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
-                            className={`dt-thumb dt-thumb-video ${isActive ? "active" : ""}`}
-                        >
-                            {topVideoThumbnail ? <img src={topVideoThumbnail} alt="" /> : <video src={image} muted playsInline preload="metadata" className="dt-thumb-video-preview" />}
-                            <span className="dt-thumb-play">▶</span>
+                    if (isModel) {
+                        return (
+                            <div
+                                key={index}
+                                onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
+                                className={`dt-thumb dt-thumb-model3d ${isActive ? "active" : ""}`}
+                            >
+                                <span>3D</span>
+                            </div>
+                        );
+                    }
+
+                    if (isVid) {
+                        return (
+                            <div
+                                key={index}
+                                onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
+                                className={`dt-thumb dt-thumb-video ${isActive ? "active" : ""}`}
+                            >
+                                {topVideoThumbnail ? <img src={topVideoThumbnail} alt="" /> : <video src={image} muted playsInline preload="metadata" className="dt-thumb-video-preview" />}
+                                <span className="dt-thumb-play">▶</span>
+                            </div>
+                        );
+                    }
+
+                    return (
+                        <div key={index} className={`dt-thumb-wrap ${isActive ? "active" : ""}`}>
+                            <img
+                                src={image}
+                                alt={`Image ${index + 1}`}
+                                className={`dt-thumb ${isActive ? "active" : ""} ${selectedColor ? "dt-cloth-masked" : ""}`}
+                                onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
+                            />
+                            {selectedColor && (
+                                <div
+                                    className="dt-cloth-color-layer dt-thumb-color-layer"
+                                    style={{
+                                        WebkitMaskImage: `url(${image})`,
+                                        maskImage: `url(${image})`,
+                                        backgroundColor: selectedColor,
+                                    }}
+                                />
+                            )}
                         </div>
-                    ) : (
-                        <img
-                            key={index}
-                            src={image}
-                            alt={`Image ${index + 1}`}
-                            onClick={() => { setSelectedImage(image); setCurrentIndex(index); }}
-                            className={isActive ? "dt-thumb active" : "dt-thumb"}
-                        />
                     );
                 })}
             </div>
@@ -524,6 +610,10 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 onOpenDetails={onOpenDetails}
                 onViewAll={handleViewAll}
                 onViewAllMedia={handleViewAllMedia}
+                selectedColor={selectedColor}
+                onSelectColor={handleColorSelect}
+                appliedColor={appliedColor}
+                isClothProduct={isClothProduct}
             />
 
             {fullscreenImage && (

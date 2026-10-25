@@ -1,17 +1,17 @@
-import "../orderitemstyle/Rating.css";
 import { useEffect, useState } from "react";
+import { FiStar, FiCheckCircle, FiCheck } from "react-icons/fi";
 import { API } from "../../services/api";
+import "../orderitemstyle/Rating.css";
 
 const STARS = [1, 2, 3, 4, 5];
-const MAX_REVIEW_LENGTH = 20;
+const MAX_REVIEW_LENGTH = 100;
 const SUBMIT_FEEDBACK_DURATION = 1200;
 
-function getSessionToken() {
-    return localStorage.getItem("session_token");
-}
+const getSession = () => localStorage.getItem("session_token");
 
 function Rating({ product_id, order_item_id }) {
     const [rating, setRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
     const [message, setMessage] = useState("");
     const [rated, setRated] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -19,51 +19,38 @@ function Rating({ product_id, order_item_id }) {
     const [submitMessage, setSubmitMessage] = useState("");
 
     useEffect(() => {
-        loadReview();
-    }, [product_id]);
-
-    const loadReview = async () => {
-        try {
-            const res = await fetch(
-                `${API}/api/user/review/${order_item_id}?session_token=${getSessionToken()}`
-            );
-            const data = await res.json();
-
-            if (data.success && data.rated) {
-                setRating(data.rating);
-                setMessage(data.review_message);
-                setRated(true);
-            }
-        } catch (err) {
-            console.error("Load review error:", err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+        fetch(`${API}/api/user/review/${order_item_id}?session_token=${getSession()}`)
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.success && data.rated) {
+                    setRating(data.rating);
+                    setMessage(data.review_message);
+                    setRated(true);
+                }
+            })
+            .catch((err) => console.error("Load review error:", err.message))
+            .finally(() => setLoading(false));
+    }, [order_item_id]);
 
     const handleSubmit = async () => {
-        if (rating === 0) return;
-        if (!message.trim()) return;
-
+        if (rating === 0 || !message.trim()) return;
         setSubmitting(true);
 
         try {
-            const res = await fetch(`${API}/api/user/review`, {
+            const data = await fetch(`${API}/api/user/review`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    session_token: getSessionToken(),
+                    session_token: getSession(),
                     order_item_id,
                     product_id,
                     rating,
                     review_message: message,
                 }),
-            });
-            const data = await res.json();
+            }).then((r) => r.json());
 
             if (data.success) {
-                setSubmitMessage("✓ Review submitted successfully");
-
+                setSubmitMessage("Review submitted successfully");
                 setTimeout(() => {
                     setRated(true);
                     setSubmitMessage("");
@@ -83,75 +70,85 @@ function Rating({ product_id, order_item_id }) {
     if (rated && !submitting) {
         return (
             <div className="order-rating">
-                <div className="submitted-review">
-                    <div className="submitted-stars">
+                <div className="rating-submitted">
+                    <div className="rating-submitted-header">
+                        <span className="rating-verified-badge">
+                            <FiCheckCircle /> Verified Purchase
+                        </span>
+                    </div>
+
+                    <div className="rating-stars-display">
                         {STARS.map((star) => (
-                            <span
+                            <FiStar
                                 key={star}
-                                className={star <= rating ? "filled-star" : "empty-star"}
-                            >
-                                ★
-                            </span>
+                                className={star <= rating ? "rating-star filled" : "rating-star"}
+                            />
                         ))}
                     </div>
 
-                    {message && (
-                        <p className="submitted-message">{message}</p>
-                    )}
-
-                    <div className="submitted-badge">✓ Verified Purchase</div>
+                    {message && <p className="rating-submitted-text">{message}</p>}
                 </div>
             </div>
         );
     }
 
+    const displayRating = hoverRating || rating;
+
     return (
         <div className="order-rating">
-            {submitMessage && <div className="review-toast">{submitMessage}</div>}
+            {submitMessage && (
+                <div className="rating-toast">
+                    <FiCheckCircle /> {submitMessage}
+                </div>
+            )}
 
             {submitting && (
-                <div className="review-progress-wrap">
-                    <div className="review-progress-bar">
-                        <div className="review-progress-fill" />
+                <div className="rating-submitting">
+                    <div className="rating-progress-bar">
+                        <div className="rating-progress-fill" />
                     </div>
-                    <p className="review-progress-text">Submitting your review...</p>
+                    <p className="rating-progress-text">Submitting your review...</p>
                 </div>
             )}
 
             {!submitting && (
                 <>
-                    <h3>Rate this Product</h3>
+                    <h3 className="rating-title">Rate this Product</h3>
 
-                    <div className="rating-stars">
+                    <div className="rating-stars-input" onMouseLeave={() => setHoverRating(0)}>
                         {STARS.map((star) => (
-                            <span
+                            <button
                                 key={star}
-                                className={star <= rating ? "active-star" : ""}
+                                type="button"
+                                className={`rating-star-btn ${star <= displayRating ? "active" : ""}`}
                                 onClick={() => setRating(star)}
+                                onMouseEnter={() => setHoverRating(star)}
+                                aria-label={`Rate ${star} star`}
                             >
-                                ★
-                            </span>
+                                <FiStar />
+                            </button>
                         ))}
                     </div>
 
                     <textarea
-                        className="review-box"
+                        className="rating-textarea"
                         maxLength={MAX_REVIEW_LENGTH}
                         placeholder="Write your review..."
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
 
-                    <div className="review-count">
+                    <div className="rating-counter">
                         {message.length}/{MAX_REVIEW_LENGTH}
                     </div>
 
                     <button
-                        className="submit-rating"
+                        type="button"
+                        className="rating-submit-btn"
                         onClick={handleSubmit}
                         disabled={!message.trim() || rating === 0}
                     >
-                        Submit Rating
+                        <FiCheck /> Submit Rating
                     </button>
                 </>
             )}

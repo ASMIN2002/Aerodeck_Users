@@ -1,38 +1,26 @@
 import { useState, useEffect } from "react";
-import { FiUploadCloud } from "react-icons/fi";
-import "../orderitemstyle/UploadImages.css";
+import { FiUploadCloud, FiX, FiTrash2, FiImage } from "react-icons/fi";
 import { API } from "../../services/api";
+import "../orderitemstyle/UploadImages.css";
 
 const MAX_IMAGES = 2;
-const UPLOAD_SLOTS = [0, 1];
+const SLOTS = [0, 1];
 const MESSAGE_DURATION = 3000;
 
-function UploadImages({
-    reviewImages = [],
-    setReviewImages = () => { },
-    session_token,
-    product_id,
-    order_item_id,
-}) {
+function UploadImages({ reviewImages = [], setReviewImages = () => { }, session_token, product_id, order_item_id }) {
     const [uploading, setUploading] = useState(false);
     const [loadingText, setLoadingText] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
     const [showDeleteBox, setShowDeleteBox] = useState(false);
-    const [deleteImage, setDeleteImage] = useState(null);
     const [uploadMessage, setUploadMessage] = useState("");
 
     useEffect(() => {
         if (!session_token || !product_id) return;
-
-        fetch(
-            `${API}/api/user/review/my-images/${order_item_id}?session_token=${session_token}`
-        )
+        fetch(`${API}/api/user/review/my-images/${order_item_id}?session_token=${session_token}`)
             .then((r) => r.json())
             .then((data) => {
-                if (data.success) {
-                    setReviewImages([data.images[0] || null, data.images[1] || null]);
-                }
+                if (data.success) setReviewImages([data.images[0] || null, data.images[1] || null]);
             })
             .catch((err) => console.error("Load images error:", err.message));
     }, [product_id, session_token, order_item_id, setReviewImages]);
@@ -46,7 +34,7 @@ function UploadImages({
         const file = e.target.files[0];
         if (!file) return;
 
-        setLoadingText("Uploading Image...");
+        setLoadingText("Uploading image...");
         setUploading(true);
 
         const formData = new FormData();
@@ -56,23 +44,13 @@ function UploadImages({
         formData.append("order_item_id", order_item_id);
 
         try {
-            const res = await fetch(`${API}/api/upload/review`, {
-                method: "POST",
-                body: formData,
-            });
-            const data = await res.json();
+            const data = await fetch(`${API}/api/upload/review`, { method: "POST", body: formData }).then((r) => r.json());
 
             if (data.success) {
-                const updated = [
-                    ...(reviewImages.length ? reviewImages : [null, null]),
-                ];
-                updated[slot] = {
-                    media_id: data.media_id,
-                    image_url: data.image_url,
-                    public_id: data.public_id,
-                };
+                const updated = reviewImages.length ? [...reviewImages] : [null, null];
+                updated[slot] = { media_id: data.media_id, image_url: data.image_url, public_id: data.public_id };
                 setReviewImages(updated);
-                showMessage("✓ Image uploaded successfully.");
+                showMessage("Image uploaded successfully");
             }
         } catch (err) {
             console.error("Upload error:", err.message);
@@ -81,39 +59,25 @@ function UploadImages({
         }
     };
 
-    const handleDeleteClick = (e) => {
-        e.stopPropagation();
-        setDeleteImage(selectedImage);
-        setShowDeleteBox(true);
-    };
-
     const handleConfirmDelete = async () => {
-        setLoadingText("Deleting Image...");
+        setLoadingText("Deleting image...");
         setUploading(true);
 
         try {
-            const res = await fetch(
-                `${API}/api/upload/review/${deleteImage.media_id}`,
-                {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ session_token }),
-                }
-            );
-            const data = await res.json();
+            const data = await fetch(`${API}/api/upload/review/${selectedImage.media_id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_token }),
+            }).then((r) => r.json());
 
             if (data.success) {
-                const updated = [...reviewImages];
-                const index = updated.findIndex(
-                    (img) => img && img.media_id === deleteImage.media_id
+                const updated = reviewImages.map((img) =>
+                    img && img.media_id === selectedImage.media_id ? null : img
                 );
-                if (index !== -1) updated[index] = null;
-
                 setReviewImages(updated);
                 setShowDeleteBox(false);
                 setShowPreview(false);
                 setSelectedImage(null);
-                setDeleteImage(null);
             }
         } catch (err) {
             console.error("Delete error:", err.message);
@@ -124,38 +88,56 @@ function UploadImages({
 
     return (
         <div className="upload-images">
-            {uploadMessage && (
-                <div className="upload-success-toast">{uploadMessage}</div>
+            {uploadMessage && <div className="upload-toast">{uploadMessage}</div>}
+
+            {uploading && (
+                <div className="upload-loading-overlay">
+                    <div className="upload-loading-card">
+                        <div className="upload-loading-spinner" />
+                        <span>{loadingText}</span>
+                    </div>
+                </div>
             )}
 
-            {uploading && <div className="upload-loading">{loadingText}</div>}
+            <div className="upload-header">
+                <h3 className="upload-title">Upload Images</h3>
+                <span className="upload-count">{reviewImages.filter(Boolean).length}/{MAX_IMAGES}</span>
+            </div>
 
-            <h3>Upload Images</h3>
+            <p className="upload-note">Add up to {MAX_IMAGES} images of your product.</p>
 
-            <p className="upload-note">
-                You can upload a maximum of {MAX_IMAGES} images.
-            </p>
-
-            <div className="image-preview">
-                {UPLOAD_SLOTS.map((index) => {
+            <div className="upload-grid">
+                {SLOTS.map((index) => {
                     const image = reviewImages[index];
 
                     return (
-                        <div className="preview-card" key={index}>
+                        <div className="upload-slot" key={index}>
                             {image ? (
-                                <img
-                                    src={image.image_url}
-                                    alt={`Image ${index + 1}`}
-                                    className="preview-image"
-                                    onClick={() => {
-                                        setSelectedImage(image);
-                                        setShowPreview(true);
-                                    }}
-                                />
+                                <div className="upload-image-wrap">
+                                    <img
+                                        src={image.image_url}
+                                        alt={`Image ${index + 1}`}
+                                        className="upload-image"
+                                        onClick={() => { setSelectedImage(image); setShowPreview(true); }}
+                                        loading="lazy"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="upload-image-delete"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSelectedImage(image);
+                                            setShowDeleteBox(true);
+                                        }}
+                                        aria-label="Delete image"
+                                    >
+                                        <FiTrash2 />
+                                    </button>
+                                </div>
                             ) : (
                                 <label className="upload-box">
-                                    <FiUploadCloud className="upload-icon" />
-                                    <span>Image {index + 1}</span>
+                                    <FiUploadCloud className="upload-box-icon" />
+                                    <span className="upload-box-text">Add Image</span>
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -170,56 +152,41 @@ function UploadImages({
             </div>
 
             {showPreview && selectedImage && (
-                <div
-                    className="review-preview-overlay"
-                    onClick={() => setShowPreview(false)}
-                >
+                <div className="preview-overlay" onClick={() => setShowPreview(false)}>
                     <button
-                        className="review-preview-close"
+                        type="button"
+                        className="preview-close"
                         onClick={() => setShowPreview(false)}
+                        aria-label="Close"
                     >
-                        ✕
+                        <FiX />
                     </button>
-
-                    <button className="review-preview-delete" onClick={handleDeleteClick}>
-                        🗑️
+                    <button
+                        type="button"
+                        className="preview-delete"
+                        onClick={(e) => { e.stopPropagation(); setShowDeleteBox(true); }}
+                        aria-label="Delete"
+                    >
+                        <FiTrash2 />
                     </button>
-
                     <img
                         src={selectedImage.image_url}
                         alt="Preview"
-                        className="review-preview-image"
+                        className="preview-image-large"
                         onClick={(e) => e.stopPropagation()}
                     />
                 </div>
             )}
 
             {showDeleteBox && (
-                <div
-                    className="delete-popup-overlay"
-                    onClick={() => setShowDeleteBox(false)}
-                >
-                    <div
-                        className="delete-popup"
-                        onClick={(e) => e.stopPropagation()}
-                    >
+                <div className="delete-overlay" onClick={() => setShowDeleteBox(false)}>
+                    <div className="delete-box" onClick={(e) => e.stopPropagation()}>
+                        <div className="delete-box-icon"><FiTrash2 /></div>
                         <h3>Delete Image?</h3>
-                        <p>Are you sure you want to delete this image?</p>
-
-                        <div className="delete-popup-buttons">
-                            <button
-                                className="delete-cancel-btn"
-                                onClick={() => setShowDeleteBox(false)}
-                            >
-                                Cancel
-                            </button>
-
-                            <button
-                                className="delete-confirm-btn"
-                                onClick={handleConfirmDelete}
-                            >
-                                Delete
-                            </button>
+                        <p>This action cannot be undone.</p>
+                        <div className="delete-box-actions">
+                            <button type="button" className="delete-cancel" onClick={() => setShowDeleteBox(false)}>Cancel</button>
+                            <button type="button" className="delete-confirm" onClick={handleConfirmDelete}>Delete</button>
                         </div>
                     </div>
                 </div>

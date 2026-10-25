@@ -1,83 +1,114 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../profilestyles/Rewards.css";
+import {
+    FiArrowLeft, FiHelpCircle, FiGift, FiZap, FiTarget, FiInfo,
+    FiLock, FiAward, FiStar, FiHeart, FiX, FiCheckCircle,
+} from "react-icons/fi";
 import { API } from "../../services/api";
+import "../profilestyles/Rewards.css";
 
 const BOX_COUNT = 6;
-const RESET_DELAY = 2800;
-const CONGRATS_DELAY = 2500;
-const SCRATCH_DELAY = 900;
+const RESET_DELAY = 2200;
+const CONGRATS_DELAY = 2200;
+const SCRATCH_ANIM = 1200;
 
 const HELP_ROWS = [
-    { num: 1, text: "30% chance — 1 point" },
-    { num: 2, text: "25% chance — 2 points" },
-    { num: 3, text: "20% chance — 3 points" },
-    { num: 4, text: "12% chance — 4 points" },
-    { num: 5, text: "8% chance — 5 points" },
-    { num: 6, text: "5% chance — 6 points" },
+    { num: 1, chance: "30%", points: 1 },
+    { num: 2, chance: "25%", points: 2 },
+    { num: 3, chance: "20%", points: 3 },
+    { num: 4, chance: "12%", points: 4 },
+    { num: 5, chance: "8%", points: 5 },
+    { num: 6, chance: "5%", points: 6 },
 ];
 
 const TERMS = [
-    <>Chances are earned only when your order is <strong> above ₹250</strong> —<strong> 1 chance for every ₹250</strong>.</>,
+    <>Chances are earned only when your order is <strong>above ₹250</strong> — <strong>1 chance for every ₹250</strong>.</>,
     <><strong>Every 10 points</strong> converts to <strong>₹1</strong> (100 points = ₹10).</>,
-    <>You can redeem only when you have a <strong>minimum of 100 points</strong>.</>,
+    <>Redeem only when you have a <strong>minimum of 100 points</strong>.</>,
     <><strong>Every referral</strong> gives you <strong>40 points</strong>.</>,
     <><strong>New users</strong> get <strong>10 points free</strong>.</>,
-    <>Chances are <strong>activated only after</strong> your <strong>return date is completed</strong> — until then, <strong>stay happy</strong> 😊</>,
+    <>Chances are <strong>activated only after</strong> your <strong>return date is completed</strong>.</>,
 ];
 
-function getSessionToken() {
-    return localStorage.getItem("session_token");
-}
+const getSession = () => localStorage.getItem("session_token");
 
-function generateBoxes() {
-    const values = Array.from({ length: BOX_COUNT }, (_, i) => i + 1);
-    for (let i = values.length - 1; i > 0; i--) {
+const generateBoxes = () => {
+    const v = Array.from({ length: BOX_COUNT }, (_, i) => i + 1);
+    for (let i = v.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [values[i], values[j]] = [values[j], values[i]];
+        [v[i], v[j]] = [v[j], v[i]];
     }
-    return values;
+    return v;
+};
+
+function ScratchBox({ number, onScratch, disabled }) {
+    return (
+        <button
+            type="button"
+            className="scratch-box"
+            onClick={() => onScratch(number)}
+            disabled={disabled}
+            aria-label={`Scratch box ${number}`}
+        >
+            <div className="scratch-cover">
+                <div className="scratch-cover-shine" />
+                <div className="scratch-cover-text">
+                    <FiGift />
+                    <span>SCRATCH</span>
+                </div>
+            </div>
+        </button>
+    );
 }
 
-function ScratchBox({ number, onReveal, disabled }) {
-    const [isRevealed, setIsRevealed] = useState(false);
-    const [isScratching, setIsScratching] = useState(false);
+function ScratchModal({ number, points, onComplete }) {
+    const [progress, setProgress] = useState(0);
 
-    const handleTouch = () => {
-        if (isRevealed || isScratching || disabled) return;
-        setIsScratching(true);
-        setTimeout(() => {
-            setIsRevealed(true);
-            onReveal(number);
-        }, SCRATCH_DELAY);
-    };
+    useEffect(() => {
+        const start = Date.now();
+        const interval = setInterval(() => {
+            const p = Math.min(100, ((Date.now() - start) / SCRATCH_ANIM) * 100);
+            setProgress(p);
+            if (p >= 100) {
+                clearInterval(interval);
+                setTimeout(onComplete, 900);
+            }
+        }, 30);
+        return () => clearInterval(interval);
+    }, [onComplete]);
 
     return (
-        <div
-            className={`scratch-box ${isRevealed ? "revealed" : ""} ${isScratching ? "scratching" : ""}`}
-            onClick={handleTouch}
-            onTouchStart={handleTouch}
-        >
-            <div className="scratch-number-layer">
-                <span className="scratch-number">{number}</span>
-            </div>
-            {!isRevealed && (
-                <div className="scratch-cover">
-                    <div className="scratch-cover-text">SCRATCH</div>
+        <div className="scratch-modal-overlay">
+            <div className="scratch-modal-card">
+                <div className="scratch-modal-inner">
+                    <div className="scratch-reveal-number">
+                        <FiStar className="scratch-reveal-star" />
+                        <span className="scratch-reveal-value">{number}</span>
+                        <span className="scratch-reveal-label">points</span>
+                    </div>
+
+                    {progress < 100 && (
+                        <div className="scratch-modal-cover" style={{ width: `${100 - progress}%` }}>
+                            <div className="scratch-modal-cover-shine" />
+                            <div className="scratch-modal-cover-text">
+                                <FiGift />
+                                <span>Scratching...</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 }
 
 function Rewards({ setProfilePage }) {
     const navigate = useNavigate();
-
     const [hypoPoints, setHypoPoints] = useState(0);
     const [count, setCount] = useState(0);
-
-    const [boxes, setBoxes] = useState([]);
-    const [revealed, setRevealed] = useState({});
+    const [boxes, setBoxes] = useState(generateBoxes);
+    const [activeScratch, setActiveScratch] = useState(null);
+    const [isScratching, setIsScratching] = useState(false);
     const [showCongrats, setShowCongrats] = useState(null);
     const [showHelp, setShowHelp] = useState(false);
     const [resetKey, setResetKey] = useState(0);
@@ -85,10 +116,9 @@ function Rewards({ setProfilePage }) {
     const helpBoxRef = useRef(null);
 
     useEffect(() => {
-        const sessionToken = getSessionToken();
-        if (!sessionToken) return;
-
-        fetch(`${API}/api/user/rewards?session_token=${sessionToken}`)
+        const token = getSession();
+        if (!token) return;
+        fetch(`${API}/api/user/rewards?session_token=${token}`)
             .then((r) => r.json())
             .then((data) => {
                 if (data.success && data.data) {
@@ -100,82 +130,60 @@ function Rewards({ setProfilePage }) {
     }, []);
 
     useEffect(() => {
-        setBoxes(generateBoxes());
-    }, []);
-
-    useEffect(() => {
         if (!showHelp) return;
-
-        function handleClickOutside(e) {
-            if (helpBoxRef.current && !helpBoxRef.current.contains(e.target)) {
-                setShowHelp(false);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        document.addEventListener("touchstart", handleClickOutside);
-
+        const handler = (e) => {
+            if (helpBoxRef.current && !helpBoxRef.current.contains(e.target)) setShowHelp(false);
+        };
+        document.addEventListener("mousedown", handler);
+        document.addEventListener("touchstart", handler);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-            document.removeEventListener("touchstart", handleClickOutside);
+            document.removeEventListener("mousedown", handler);
+            document.removeEventListener("touchstart", handler);
         };
     }, [showHelp]);
 
-    useEffect(() => {
-        if (Object.keys(revealed).length === 0) return;
-        const timer = setTimeout(() => {
-            setRevealed({});
-            setBoxes(generateBoxes());
-            setResetKey((k) => k + 1);
-        }, RESET_DELAY);
-        return () => clearTimeout(timer);
-    }, [revealed]);
-
-    const handleScratch = async (index, number) => {
-        if (revealed[index]) return;
-        if (count <= 0) return;
-        if (Object.keys(revealed).length > 0) return;
-
-        const pointsToAdd = Number(number) || 0;
-        setRevealed({ [index]: true });
+    const handleScratch = async (number) => {
+        if (count <= 0 || isScratching) return;
+        setIsScratching(true);
+        setActiveScratch({ number, points: number });
 
         try {
-            const sessionToken = getSessionToken();
-            const res = await fetch(`${API}/api/user/rewards/scratch`, {
+            const data = await fetch(`${API}/api/user/rewards/scratch`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    number: pointsToAdd,
-                }),
-            });
-            const data = await res.json();
-            if (!data.success) return;
+                body: JSON.stringify({ session_token: getSession(), number }),
+            }).then((r) => r.json());
 
-            setHypoPoints(data.total_points);
-            setCount(data.remaining_count);
-            setShowCongrats({ number, points: pointsToAdd });
-            setTimeout(() => setShowCongrats(null), CONGRATS_DELAY);
+            if (data.success) {
+                setHypoPoints(data.total_points);
+                setCount(data.remaining_count);
+            }
         } catch (err) {
             console.error("Scratch error:", err.message);
         }
     };
 
-    const handleBack = () => {
-        setProfilePage("profile");
-        navigate(-1);
+    const handleScratchComplete = () => {
+        setShowCongrats({ points: activeScratch?.points || 0 });
+        setActiveScratch(null);
+        setTimeout(() => {
+            setShowCongrats(null);
+            setBoxes(generateBoxes());
+            setResetKey((k) => k + 1);
+            setIsScratching(false);
+        }, CONGRATS_DELAY);
     };
 
-    const handleTabClick = (tab) => {
-        if (tab === "rewards") return;
-        setProfilePage("demoredeem");
-    };
+    const handleBack = () => { setProfilePage("profile"); navigate(-1); };
+    const handleTabClick = (tab) => { if (tab !== "rewards") setProfilePage("demoredeem"); };
 
     return (
         <div className="my-rewards">
             <div className="my-rewards-header">
-                <button className="my-rewards-back" onClick={handleBack}>←</button>
-                <h2>HYPO REWARD</h2>
+                <button className="my-rewards-back" onClick={handleBack} aria-label="Back">
+                    <FiArrowLeft />
+                </button>
+                <h2 className="my-rewards-title">HYPO Rewards</h2>
             </div>
 
             <div className="my-rewards-tabs">
@@ -191,31 +199,40 @@ function Rewards({ setProfilePage }) {
             </div>
 
             <div className="rewards-section">
-                <div className="rewards-topbar">
+                <div className="rewards-stats-card">
                     <div className="rewards-stat">
-                        <span className="rewards-label">Chances</span>
-                        <span className="rewards-value chances">{count}</span>
+                        <span className="rewards-stat-icon chances"><FiTarget /></span>
+                        <div className="rewards-stat-info">
+                            <span className="rewards-stat-label">Chances</span>
+                            <span className="rewards-stat-value chances">{count}</span>
+                        </div>
                     </div>
 
-                    <div className="rewards-stat right">
-                        <span className="rewards-label">Points</span>
-                        <span className="rewards-value points">{hypoPoints}</span>
-                        <button
-                            className="rewards-help-btn"
-                            onClick={() => setShowHelp(!showHelp)}
-                        >
-                            ?
-                        </button>
+                    <div className="rewards-stat">
+                        <span className="rewards-stat-icon points"><FiAward /></span>
+                        <div className="rewards-stat-info">
+                            <span className="rewards-stat-label">Points</span>
+                            <span className="rewards-stat-value points">{hypoPoints}</span>
+                        </div>
                     </div>
+
+                    <button
+                        className="rewards-help-btn"
+                        onClick={() => setShowHelp(!showHelp)}
+                        aria-label="Help"
+                    >
+                        {showHelp ? <FiX /> : <FiHelpCircle />}
+                    </button>
                 </div>
 
                 {showHelp && (
                     <div className="rewards-help-box" ref={helpBoxRef}>
-                        <div className="rewards-help-title">🎯 Reward Chances</div>
+                        <div className="rewards-help-title"><FiTarget /> Reward Chances</div>
                         {HELP_ROWS.map((row) => (
                             <div className="rewards-help-row" key={row.num}>
                                 <span className="help-num">{row.num}</span>
-                                <span>{row.text}</span>
+                                <span className="help-chance">{row.chance}</span>
+                                <span className="help-points"><FiStar /> {row.points} pt</span>
                             </div>
                         ))}
                     </div>
@@ -223,7 +240,7 @@ function Rewards({ setProfilePage }) {
 
                 <div className="scratch-notice">
                     <span className="notice-dot" />
-                    Just touch to scratch
+                    <span>Tap any box — auto scratch & reveal!</span>
                 </div>
 
                 <div className={`scratch-card ${count <= 0 ? "locked" : ""}`}>
@@ -232,8 +249,8 @@ function Rewards({ setProfilePage }) {
                             <ScratchBox
                                 key={`${resetKey}-${index}`}
                                 number={num}
-                                disabled={count <= 0 || Object.keys(revealed).length > 0}
-                                onReveal={() => handleScratch(index, num)}
+                                disabled={count <= 0 || isScratching}
+                                onScratch={handleScratch}
                             />
                         ))}
                     </div>
@@ -241,7 +258,7 @@ function Rewards({ setProfilePage }) {
                     {count <= 0 && (
                         <div className="scratch-locked-overlay">
                             <div className="lock-content">
-                                <span className="lock-icon">🔒</span>
+                                <FiLock className="lock-icon" />
                                 <span className="lock-text">No Chances Left</span>
                                 <span className="lock-sub">Shop more to earn chances</span>
                             </div>
@@ -250,11 +267,7 @@ function Rewards({ setProfilePage }) {
                 </div>
 
                 <div className="rewards-terms">
-                    <div className="rewards-terms-title">
-                        <span className="terms-icon">ℹ️</span>
-                        <span>Reward Rules</span>
-                    </div>
-
+                    <div className="rewards-terms-title"><FiInfo /> Reward Rules</div>
                     <div className="rewards-terms-list">
                         {TERMS.map((term, i) => (
                             <div className="terms-item" key={i}>
@@ -263,22 +276,30 @@ function Rewards({ setProfilePage }) {
                             </div>
                         ))}
                     </div>
-
                     <div className="rewards-terms-footer">
-                        Thank you for using <strong>HEEPIT</strong> ❤️
+                        Thank you for using <strong>HEEPIT</strong> <FiHeart className="terms-heart" />
                     </div>
                 </div>
-
-                {showCongrats && (
-                    <div className="rewards-congrats">
-                        <div className="rewards-congrats-inner">
-                            <div className="rewards-congrats-emoji">🎉</div>
-                            <h3>Congratulations!</h3>
-                            <p className="rewards-congrats-points">+{showCongrats.points}</p>
-                        </div>
-                    </div>
-                )}
             </div>
+
+            {activeScratch && (
+                <ScratchModal
+                    number={activeScratch.number}
+                    points={activeScratch.points}
+                    onComplete={handleScratchComplete}
+                />
+            )}
+
+            {showCongrats && (
+                <div className="rewards-congrats">
+                    <div className="rewards-congrats-inner">
+                        <div className="rewards-congrats-emoji"><FiCheckCircle /></div>
+                        <h3>Congratulations!</h3>
+                        <p className="rewards-congrats-points">+{showCongrats.points}</p>
+                        <span className="rewards-congrats-sub">points added</span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

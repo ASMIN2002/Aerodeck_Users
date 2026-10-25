@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { PushNotifications } from "@capacitor/push-notifications";
-import TermsAndCondition from "./10intro/Termsandcondition";
 import Loading from "./10intro/Loading";
 import Splash from "./10intro/Splash";
 import Home from "./pages/Home/Home";
@@ -444,8 +443,6 @@ function App() {
                     onLoginSuccess={saveFcmTokenToBackend}
                 />
             )}
-
-            {page === "terms" && <TermsAndCondition setPage={setPage} />}
 
             {page === "home" && (
                 <Home

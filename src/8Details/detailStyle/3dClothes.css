@@ -1,0 +1,196 @@
+/* Inline box */
+.c3d-inline-box {
+    background: #0f0f1a;
+    border-radius: 16px;
+    padding: 14px;
+    margin: 12px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    color: #fff;
+    min-height: 220px;
+}
+
+/* Left — colours */
+.c3d-inline-left {
+    flex: 0 0 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.c3d-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin: 0;
+}
+
+.c3d-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.c3d-color {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+}
+
+.c3d-color.active {
+    border-color: #a29bfe;
+    box-shadow: 0 0 10px rgba(162, 155, 254, 0.8);
+    transform: scale(1.1);
+}
+
+/* Right — model */
+.c3d-inline-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.c3d-stage {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+    touch-action: pan-y;
+}
+
+.c3d-hint {
+    font-size: 10px;
+    opacity: 0.5;
+    margin: 2px 0 0;
+}
+
+/* Skeleton model */
+.c3d-model {
+    position: relative;
+    width: 70px;
+    height: 160px;
+    transition: transform 0.1s linear;
+    transform-style: preserve-3d;
+}
+
+.c3d-head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    background: #d4d4d8;
+    border-radius: 50%;
+}
+
+.c3d-neck {
+    position: absolute;
+    top: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: #b8b8bf;
+    border-radius: 3px;
+}
+
+.c3d-torso {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 68px;
+    background: #d4d4d8;
+    border-radius: 8px;
+}
+
+.c3d-arm {
+    position: absolute;
+    top: 36px;
+    width: 10px;
+    height: 60px;
+    background: #d4d4d8;
+    border-radius: 6px;
+}
+
+.c3d-arm-left {
+    left: 6px;
+}
+
+.c3d-arm-right {
+    right: 6px;
+}
+
+.c3d-leg {
+    position: absolute;
+    bottom: 0;
+    width: 16px;
+    height: 62px;
+    background: #d4d4d8;
+    border-radius: 5px;
+}
+
+.c3d-leg-left {
+    left: 16px;
+}
+
+.c3d-leg-right {
+    right: 16px;
+}
+
+/* Cloth overlay on skeleton — animated fit */
+.c3d-shirt {
+    position: absolute;
+    animation: clothFit 0.6s ease-out forwards;
+    transition: background 0.3s ease;
+}
+
+.c3d-shirt-body {
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 68px;
+    border-radius: 8px 8px 4px 4px;
+}
+
+.c3d-shirt-arm-left {
+    top: 36px;
+    left: 6px;
+    width: 10px;
+    height: 50px;
+    border-radius: 6px;
+}
+
+.c3d-shirt-arm-right {
+    top: 36px;
+    right: 6px;
+    width: 10px;
+    height: 50px;
+    border-radius: 6px;
+}
+
+@keyframes clothFit {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.85);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

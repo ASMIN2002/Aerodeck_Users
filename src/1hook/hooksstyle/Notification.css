@@ -5,7 +5,7 @@
   background: var(--bg);
   color: var(--fg);
   overflow: hidden;
-  animation: hdFade .2s ease
+  animation: hdFade .2s
 }
 
 .hd-notif-bg {
@@ -45,7 +45,7 @@
   left: 40%
 }
 
-[data-theme="dark"] .hd-notif-blob {
+[data-theme=dark] .hd-notif-blob {
   opacity: .12
 }
 
@@ -56,7 +56,7 @@
   height: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 12px env(safe-area-inset-bottom, 0px)
+  padding: 0 12px env(safe-area-inset-bottom, 0)
 }
 
 .hd-notif-header {
@@ -179,7 +179,7 @@
 }
 
 .hd-notif-ignore {
-  background: transparent;
+  background: 0 0;
   color: var(--fg2);
   border: 1px solid var(--bd)
 }
