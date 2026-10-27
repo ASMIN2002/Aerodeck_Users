@@ -1,10 +1,11 @@
+import { memo, useCallback } from "react";
 import { FiHeart, FiBookmark } from "react-icons/fi";
 import "../levelstyle/2ShopCard.css";
 
 const cleanHighlight = (text) =>
     (text || "").replace(/~cloth(e)?s\s*$/i, "").trim();
 
-function ProductShop({ product, onOpenDetails = () => { } }) {
+function ProductShop({ product, onOpenDetails }) {
     const {
         shop_status,
         shop_image1,
@@ -21,14 +22,24 @@ function ProductShop({ product, onOpenDetails = () => { } }) {
     const isAvailable = Number(shop_status) === 1;
     const highlight = cleanHighlight(shop_highlight_text);
 
+    const handleClick = useCallback(() => {
+        onOpenDetails?.(product);
+    }, [onOpenDetails, product]);
+
     return (
         <div
             className={`heepit-shop-card ${isAvailable ? "" : "out-of-stock"}`}
-            onClick={onOpenDetails}
+            onClick={handleClick}
         >
             <div className="heepit-shop-image-box">
                 <div className="heepit-shop-image-grid">
-                    <img src={shop_image1} alt="" className="heepit-shop-image" loading="lazy" />
+                    <img
+                        src={shop_image1}
+                        alt={shop_name}
+                        className="heepit-shop-image"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     <span className="heepit-shop-rating-badge">⭐ {shop_rating || "4.3"}</span>
                     {!isAvailable && <span className="heepit-shop-oos-overlay">OUT OF STOCK</span>}
                 </div>
@@ -37,9 +48,7 @@ function ProductShop({ product, onOpenDetails = () => { } }) {
             <div className="heepit-shop-body">
                 <h3 className="heepit-shop-name">{shop_name}</h3>
 
-                {highlight && (
-                    <div className="heepit-shop-highlight">{highlight}</div>
-                )}
+                {highlight && <div className="heepit-shop-highlight">{highlight}</div>}
 
                 <div className="heepit-shop-price-row">
                     <span className="heepit-shop-price">₹{shop_price}</span>
@@ -62,4 +71,15 @@ function ProductShop({ product, onOpenDetails = () => { } }) {
     );
 }
 
-export default ProductShop;
+export default memo(ProductShop, (prev, next) => {
+    const a = prev.product;
+    const b = next.product;
+    return (
+        a.shop_id === b.shop_id &&
+        a.shop_total_likes === b.shop_total_likes &&
+        a.shop_total_saves === b.shop_total_saves &&
+        a.shop_status === b.shop_status &&
+        a.shop_price === b.shop_price &&
+        prev.onOpenDetails === next.onOpenDetails
+    );
+});

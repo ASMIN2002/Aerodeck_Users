@@ -1,3 +1,4 @@
+import { useMemo, memo } from "react";
 import "../levelstyle/5ShopHome.css";
 import VideoHero from "../sections/2VideoHero";
 import CategoriesSection from "../sections/1CategoriesSection";
@@ -8,7 +9,35 @@ import TopLikedShops from "../sections/6TopLikedShops";
 import ValueDeals from "../sections/7ValueDeals";
 import RelatedProducts from "../sections/8RelatedProducts";
 
+const LIMIT = 10;
+
 function ShopHome({ user, categories, shops, onCategoryClick, onOpenDetails, onOpenAllShops, onOpenAllShopCategories }) {
+    const finestDeals = useMemo(() => {
+        return [...shops]
+            .sort((a, b) => Number(b.shop_rating || 0) - Number(a.shop_rating || 0))
+            .slice(0, LIMIT);
+    }, [shops]);
+
+    const suggested = useMemo(() => {
+        return shops.slice(0, LIMIT);
+    }, [shops]);
+
+    const topLiked = useMemo(() => {
+        return [...shops]
+            .sort((a, b) => Number(b.shop_total_likes || 0) - Number(a.shop_total_likes || 0))
+            .slice(0, LIMIT);
+    }, [shops]);
+
+    const valueDeals = useMemo(() => {
+        return [...shops]
+            .sort((a, b) => Number(b.shop_discount_percentage || 0) - Number(a.shop_discount_percentage || 0))
+            .slice(0, LIMIT);
+    }, [shops]);
+
+    const relatedProducts = useMemo(() => {
+        return shops.slice(LIMIT, LIMIT * 2);
+    }, [shops]);
+
     return (
         <div className="shop-home">
             <CategoriesSection
@@ -18,13 +47,13 @@ function ShopHome({ user, categories, shops, onCategoryClick, onOpenDetails, onO
             />
             <VideoHero />
             <OffersCarousel />
-            <FinestDeals user={user} shops={shops} onOpenDetails={onOpenDetails} />
-            <SuggestedShops shops={shops} onOpenDetails={onOpenDetails} onOpenAllShops={onOpenAllShops} />
-            <TopLikedShops shops={shops} onOpenDetails={onOpenDetails} />
-            <ValueDeals shops={shops} onOpenDetails={onOpenDetails} />
-            <RelatedProducts shops={shops} onOpenDetails={onOpenDetails} />
+            <FinestDeals user={user} shops={finestDeals} onOpenDetails={onOpenDetails} />
+            <SuggestedShops shops={suggested} onOpenDetails={onOpenDetails} onOpenAllShops={onOpenAllShops} />
+            <TopLikedShops shops={topLiked} onOpenDetails={onOpenDetails} />
+            <ValueDeals shops={valueDeals} onOpenDetails={onOpenDetails} />
+            <RelatedProducts shops={relatedProducts} onOpenDetails={onOpenDetails} />
         </div>
     );
 }
 
-export default ShopHome;
+export default memo(ShopHome);

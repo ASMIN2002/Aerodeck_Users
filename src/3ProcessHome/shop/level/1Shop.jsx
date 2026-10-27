@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef, memo } from "react";
 import ShopCard from "./2ShopCard";
 import Toast from "../../../1hook/hooks/Toast";
 import { API } from "../../../services/api";
@@ -41,48 +41,57 @@ function Shop({
 }) {
     const sessionToken = getSession();
 
-    const [shops, setProducts] = useState([]);
+    const [shops, setShops] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [savedProducts, setSavedProducts] = useState(new Set());
-    const [likedProducts, setLikedProducts] = useState(new Set());
+    const [savedProducts, setSavedProducts] = useState(() => new Set());
+    const [likedProducts, setLikedProducts] = useState(() => new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState(EMPTY_TOAST);
 
-    const showToast = (message, type = "success") => {
-        setToast({ show: true, message, type });
-        setTimeout(() => setToast(EMPTY_TOAST), TOAST_DURATION);
-    };
+    const toastTimerRef = useRef(null);
 
-    const syncCart = (next) => {
+    const showToast = useCallback((message, type = "success") => {
+        if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+        setToast({ show: true, message, type });
+        toastTimerRef.current = setTimeout(() => setToast(EMPTY_TOAST), TOAST_DURATION);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+        };
+    }, []);
+
+    const syncCart = useCallback((next) => {
         setCartProducts(next);
         setCartCount(next.length);
-    };
+    }, [setCartCount]);
 
-    const handleSave = async (productId) => {
+    const handleSave = useCallback(async (productId) => {
         const id = String(productId);
         const wasSaved = savedProducts.has(id);
         try {
             const data = await toggleUserItem("wishlist", id, wasSaved, sessionToken);
             if (!data.success) return;
             setSavedProducts((prev) => toggleSet(prev, id, !wasSaved));
-            setProducts((prev) => bumpField(prev, id, "shop_total_saves", wasSaved ? -1 : 1));
+            setShops((prev) => bumpField(prev, id, "shop_total_saves", wasSaved ? -1 : 1));
             showToast(wasSaved ? "Removed from Wishlist" : "Saved to Wishlist", wasSaved ? "info" : "success");
         } catch (err) { console.error("Save error:", err.message); }
-    };
+    }, [savedProducts, sessionToken, showToast]);
 
-    const handleLike = async (productId) => {
+    const handleLike = useCallback(async (productId) => {
         const id = String(productId);
         const wasLiked = likedProducts.has(id);
         try {
             const data = await toggleUserItem("likes", id, wasLiked, sessionToken);
             if (!data.success) return;
             setLikedProducts((prev) => toggleSet(prev, id, !wasLiked));
-            setProducts((prev) => bumpField(prev, id, "shop_total_likes", wasLiked ? -1 : 1));
+            setShops((prev) => bumpField(prev, id, "shop_total_likes", wasLiked ? -1 : 1));
             showToast(wasLiked ? "Like Removed" : "Product Liked", wasLiked ? "info" : "success");
         } catch (err) { console.error("Like error:", err.message); }
-    };
+    }, [likedProducts, sessionToken, showToast]);
 
-    const handleAddToCart = async (productId) => {
+    const handleAddToCart = useCallback(async (productId) => {
         const id = String(productId);
         if (inCart(cartProducts, id)) return showToast("Already in Cart", "info");
         try {
@@ -95,9 +104,9 @@ function Shop({
             syncCart([...cartProducts, { product_id: id, quantity: 1 }]);
             showToast("Added To Cart", "success");
         } catch (err) { console.error("Add to cart error:", err.message); }
-    };
+    }, [cartProducts, sessionToken, syncCart, showToast]);
 
-    const updateQty = async (productId, delta) => {
+    const updateQty = useCallback(async (productId, delta) => {
         const id = String(productId);
         const item = cartProducts.find((i) => String(i.product_id) === id);
         if (!item) return;
@@ -123,88 +132,84 @@ function Shop({
             if (!data.success) return;
             setCartProducts((prev) => prev.map((i) => (String(i.product_id) === id ? { ...i, quantity } : i)));
         } catch (err) { console.error("Qty error:", err.message); }
-    };
+    }, [cartProducts, sessionToken, syncCart]);
 
-    const handleIncreaseQuantity = (id) => updateQty(id, 1);
-    const handleDecreaseQuantity = (id) => updateQty(id, -1);
+    const handleIncreaseQuantity = useCallback((id) => updateQty(id, 1), [updateQty]);
+    const handleDecreaseQuantity = useCallback((id) => updateQty(id, -1), [updateQty]);
 
     useEffect(() => {
-        fetchJSON(`${API}/api/category`)
-            .then((data) => {
-                if (data.success) {
-                    setCategories(data.data.filter((item) => item?.catid && item?.category && String(item.catname).toUpperCase() === "SHOP"));
-                }
-            })
-            .catch((err) => console.error("Categories error:", err.message));
+        let cancelled = false;
 
-        fetchJSON(`${API}/api/user/shop`)
-            .then((data) => {
-                if (data.success) { setProducts(data.data); setSuggestionData(data.data); }
-            })
-            .catch((err) => console.error("Products error:", err.message));
+        Promise.all([
+            fetchJSON(`${API}/api/category`).catch((e) => { console.error("Categories:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/shop`).catch((e) => { console.error("Products:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/wishlist?session_token=${sessionToken}`).catch((e) => { console.error("Wishlist:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/likes?session_token=${sessionToken}`).catch((e) => { console.error("Likes:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/cart?session_token=${sessionToken}`).catch((e) => { console.error("Cart:", e.message); return null; }),
+        ]).then(([catData, shopData, wishData, likeData, cartData]) => {
+            if (cancelled) return;
+            if (catData?.success) {
+                setCategories(catData.data.filter((item) => item?.catid && item?.category && String(item.catname).toUpperCase() === "SHOP"));
+            }
+            if (shopData?.success) {
+                setShops(shopData.data);
+                setSuggestionData(shopData.data);
+            }
+            if (wishData?.success) setSavedProducts(new Set(wishData.data.map((i) => String(i.product_id))));
+            if (likeData?.success) setLikedProducts(new Set(likeData.data.map((i) => i.product_id)));
+            if (cartData?.success) syncCart(cartData.data);
+        });
 
-        fetchJSON(`${API}/api/user/wishlist?session_token=${sessionToken}`)
-            .then((data) => {
-                if (data.success) setSavedProducts(new Set(data.data.map((i) => String(i.product_id))));
-            })
-            .catch((err) => console.error("Wishlist error:", err.message));
-
-        fetchJSON(`${API}/api/user/likes?session_token=${sessionToken}`)
-            .then((data) => {
-                if (data.success) setLikedProducts(new Set(data.data.map((i) => i.product_id)));
-            })
-            .catch((err) => console.error("Likes error:", err.message));
-
-        fetchJSON(`${API}/api/user/cart?session_token=${sessionToken}`)
-            .then((data) => {
-                if (data.success) syncCart(data.data);
-            })
-            .catch((err) => console.error("Cart error:", err.message));
-    }, [sessionToken, setCartCount, setSuggestionData]);
-
-    const filteredShops = useMemo(() => {
-        const kw = search.toLowerCase();
-        if (!search) return shops;
-        return shops.filter((s) =>
-            s.shop_name?.toLowerCase().includes(kw) ||
-            s.shop_description?.toLowerCase().includes(kw) ||
-            s.shop_category?.toLowerCase().includes(kw)
-        );
-    }, [shops, search]);
+        return () => { cancelled = true; };
+    }, [sessionToken, setSuggestionData, syncCart]);
 
     const finalShops = useMemo(() => {
-        let list = [...filteredShops];
-        if (filter.sort === "low") list.sort((a, b) => Number(a.shop_price) - Number(b.shop_price));
-        if (filter.sort === "high") list.sort((a, b) => Number(b.shop_price) - Number(a.shop_price));
+        let list = shops;
+        if (search) {
+            const kw = search.toLowerCase();
+            list = list.filter((s) =>
+                s.shop_name?.toLowerCase().includes(kw) ||
+                s.shop_description?.toLowerCase().includes(kw) ||
+                s.shop_category?.toLowerCase().includes(kw)
+            );
+        }
+        if (filter.sort === "low") list = [...list].sort((a, b) => Number(a.shop_price) - Number(b.shop_price));
+        if (filter.sort === "high") list = [...list].sort((a, b) => Number(b.shop_price) - Number(a.shop_price));
         if (filter.rating > 0) list = list.filter((s) => Number(s.shop_rating) >= filter.rating);
         if (filter.availableOnly) list = list.filter((s) => Number(s.shop_status) === 1);
         return list;
-    }, [filteredShops, filter]);
+    }, [shops, search, filter]);
 
     const isSearching = search.trim().length > 0;
     const isFilterActive = Boolean(filter.sort) || Number(filter.rating) > 0 || filter.availableOnly === true;
 
-    const goAllCategories = () => {
+    const goAllCategories = useCallback(() => {
         setAllShopCategoriesPage(true);
         goTo("/home/shop/allcategory");
-    };
+    }, [setAllShopCategoriesPage, goTo]);
 
-    const goCategory = (category, fromAll = false) => {
+    const goCategory = useCallback((category, fromAll = false) => {
         setSelectedShopCategory(category);
         if (fromAll) setAllShopCategoriesPage(false);
         setShopCategoryPage(true);
         goTo(`/home/shop/${fromAll ? "allcategory" : "category"}/${encodeURIComponent(category)}`);
-    };
+    }, [setSelectedShopCategory, setAllShopCategoriesPage, setShopCategoryPage, goTo]);
 
-    const backFromCategory = () => {
+    const backFromCategory = useCallback(() => {
         setSelectedShopCategory(null);
         setShopCategoryPage(false);
-    };
+    }, [setSelectedShopCategory, setShopCategoryPage]);
+
+    const handleOpenDetails = useCallback((shop) => onOpenDetails(shop, "shop"), [onOpenDetails]);
+
+    const onCategoryClick = useCallback((c) => goCategory(c), [goCategory]);
+    const onCategoryClickFromAll = useCallback((c) => goCategory(c, true), [goCategory]);
+    const onBackAllCategories = useCallback(() => setAllShopCategoriesPage(false), [setAllShopCategoriesPage]);
 
     if (allShopCategoriesPage) {
         return (
             <>
-                <ALLShopCategories categories={categories} onBack={() => setAllShopCategoriesPage(false)} onCategoryClick={(c) => goCategory(c, true)} />
+                <ALLShopCategories categories={categories} onBack={onBackAllCategories} onCategoryClick={onCategoryClickFromAll} />
                 <Toast {...toast} />
             </>
         );
@@ -253,7 +258,7 @@ function Shop({
                                         onAddToCart={handleAddToCart}
                                         onIncreaseQuantity={handleIncreaseQuantity}
                                         onDecreaseQuantity={handleDecreaseQuantity}
-                                        onOpenDetails={() => onOpenDetails(shop, "shop")}
+                                        onOpenDetails={handleOpenDetails}
                                     />
                                 );
                             })}
@@ -277,7 +282,7 @@ function Shop({
                 user={user}
                 categories={categories}
                 shops={shops}
-                onCategoryClick={(c) => goCategory(c)}
+                onCategoryClick={onCategoryClick}
                 onOpenAllShopCategories={goAllCategories}
                 onOpenDetails={onOpenDetails}
             />
@@ -286,4 +291,4 @@ function Shop({
     );
 }
 
-export default Shop;
+export default memo(Shop);

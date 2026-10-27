@@ -1,3 +1,4 @@
+import { useMemo, useCallback } from "react";
 import ShopCard from "./2ShopCard";
 
 function ShopCategory({
@@ -11,63 +12,49 @@ function ShopCategory({
     onDecreaseQuantity,
     savedProducts,
     likedProducts,
-    cartProducts
+    cartProducts,
 }) {
-    const categoryShops = shops.filter(
-        shop => shop.shop_category === category
+    const categoryShops = useMemo(
+        () => shops.filter((shop) => shop.shop_category === category),
+        [shops, category]
+    );
+
+    const cartMap = useMemo(() => {
+        const map = new Map();
+        for (const item of cartProducts) {
+            map.set(String(item.product_id), item.quantity || 0);
+        }
+        return map;
+    }, [cartProducts]);
+
+    const handleOpen = useCallback(
+        (shop) => onOpenDetails(shop, "shop"),
+        [onOpenDetails]
     );
 
     return (
         <section className="shp-section">
             <div className="cds-grid">
-                {
-                    categoryShops.map((shop) => (
+                {categoryShops.map((shop) => {
+                    const id = String(shop.shop_id);
+                    const qty = cartMap.get(id) || 0;
+                    return (
                         <ShopCard
                             key={shop.shop_id}
                             product={shop}
-
-                            isSaved={savedProducts.has(
-                                String(shop.shop_id)
-                            )}
-
-                            isLiked={likedProducts.has(
-                                String(shop.shop_id)
-                            )}
-
-                            isAddedToCart={
-                                cartProducts.some(
-                                    item =>
-                                        String(item.product_id) ===
-                                        String(shop.shop_id)
-                                )
-                            }
-
-                            cartQuantity={
-                                cartProducts.find(
-                                    item =>
-                                        String(item.product_id) ===
-                                        String(shop.shop_id)
-                                )?.quantity || 0
-                            }
-
+                            isSaved={savedProducts.has(id)}
+                            isLiked={likedProducts.has(id)}
+                            isAddedToCart={qty > 0}
+                            cartQuantity={qty}
                             onSave={onSave}
                             onLike={onLike}
                             onAddToCart={onAddToCart}
-
-                            onIncreaseQuantity={
-                                onIncreaseQuantity
-                            }
-
-                            onDecreaseQuantity={
-                                onDecreaseQuantity
-                            }
-
-                            onOpenDetails={() =>
-                                onOpenDetails(shop, "shop")
-                            }
+                            onIncreaseQuantity={onIncreaseQuantity}
+                            onDecreaseQuantity={onDecreaseQuantity}
+                            onOpenDetails={handleOpen}
                         />
-                    ))
-                }
+                    );
+                })}
             </div>
         </section>
     );

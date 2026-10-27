@@ -1,36 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 import useHomeRouting from "./useHomeRouting";
 
 const TAB_KEY = "selectedBottomTab";
 const MENU_KEY = "selectedMenu";
+const VALID_TABS = ["Home", "Offers", "Cart", "Profile"];
 
 function getInitialTab() {
     const saved = localStorage.getItem(TAB_KEY);
-    return ["Home", "Offers", "Cart", "Profile"].includes(saved) ? saved : "Home";
+    return VALID_TABS.includes(saved) ? saved : "Home";
 }
 
-export default function useHomeBackend({
-    user,
-    setPage,
-    cartCount,
-    setCartCount,
-    goTo,
-}) {
+const getSession = () => localStorage.getItem("session_token");
+
+export default function useHomeBackend({ user, setPage, cartCount, setCartCount, goTo }) {
     const location = useLocation();
     const navigate = useNavigate();
 
     const [selectedMenu, setSelectedMenu] = useState("Shop");
     const [selectedBottomTab, setSelectedBottomTab] = useState(getInitialTab);
     const [search, setSearch] = useState("");
-    const [filter, setFilter] = useState({
-        category: "All",
-        sort: "",
-        rating: 0,
-        availableOnly: false,
-    });
-
+    const [filter, setFilter] = useState({ category: "All", sort: "", rating: 0, availableOnly: false });
     const [categories, setCategories] = useState([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profilePage, setProfilePage] = useState("profile");
@@ -41,13 +32,10 @@ export default function useHomeBackend({
     const [detailsPage, setDetailsPage] = useState("details");
     const [shopCategoryPage, setShopCategoryPage] = useState(false);
     const [selectedShopCategory, setSelectedShopCategory] = useState(null);
-
     const [cardSuggestionsData, setCardSuggestionsData] = useState([]);
     const [giftSuggestionsData, setGiftSuggestionsData] = useState([]);
     const [shopSuggestionsData, setShopSuggestionsData] = useState([]);
     const [premiumSuggestionsData, setPremiumSuggestionsData] = useState([]);
-    const [profileImageRefresh, setProfileImageRefresh] = useState(0);
-
     const [navKey, setNavKey] = useState(0);
     const [orderData, setOrderData] = useState({ items: [], orderType: "" });
     const [buyNowFromDetails, setBuyNowFromDetails] = useState(false);
@@ -58,7 +46,6 @@ export default function useHomeBackend({
     const [selectedInvoice, setSelectedInvoice] = useState(null);
     const [allShopCategoriesPage, setAllShopCategoriesPage] = useState(false);
     const [allGiftCategoriesPage, setAllGiftCategoriesPage] = useState(false);
-    const [allShopsPage, setAllShopsPage] = useState(false);
     const [allGiftsPage, setAllGiftsPage] = useState(false);
     const [profile, setProfile] = useState(null);
 
@@ -74,7 +61,6 @@ export default function useHomeBackend({
         setShopCategoryPage,
         setGiftCategoryPage,
         setAllShopCategoriesPage,
-        setAllShopsPage,
         setAllGiftCategoriesPage,
         setAllGiftsPage,
         setSelectedOrder,
@@ -93,22 +79,22 @@ export default function useHomeBackend({
     }, [selectedBottomTab]);
 
     useEffect(() => {
+        let cancelled = false;
         async function loadProfile() {
             try {
                 const response = await fetch(`${API}/api/user/profile`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        session_token: localStorage.getItem("session_token"),
-                    }),
+                    body: JSON.stringify({ session_token: getSession() }),
                 });
                 const data = await response.json();
-                if (data.success) setProfile(data.user);
+                if (!cancelled && data.success) setProfile(data.user);
             } catch (err) {
                 console.error("Profile load error:", err.message);
             }
         }
         loadProfile();
+        return () => { cancelled = true; };
     }, []);
 
     useEffect(() => {
@@ -136,11 +122,7 @@ export default function useHomeBackend({
                 return;
             }
 
-            if (
-                path.includes("/product/") &&
-                !path.endsWith("/reviews") &&
-                !path.endsWith("/media")
-            ) {
+            if (path.includes("/product/") && !path.endsWith("/reviews") && !path.endsWith("/media")) {
                 setDetailsPage("details");
                 setIsDetailsOpen(true);
                 return;
@@ -172,23 +154,21 @@ export default function useHomeBackend({
         });
     }, [detailsPage]);
 
-    const handleLogout = async () => {
+    const handleLogout = useCallback(async () => {
         try {
             await fetch(`${API}/api/auth/logout`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: localStorage.getItem("session_token"),
-                }),
+                body: JSON.stringify({ session_token: getSession() }),
             });
         } catch (err) {
             console.error("Logout error:", err.message);
         }
         localStorage.removeItem("session_token");
         setPage("login");
-    };
+    }, [setPage]);
 
-    const handleOpenDetails = (product, type) => {
+    const handleOpenDetails = useCallback((product, type) => {
         setDetailsBackPage({
             selectedBottomTab,
             profilePage,
@@ -200,7 +180,15 @@ export default function useHomeBackend({
         setSelectedProduct({ type, data: product });
         setIsDetailsOpen(true);
 
-        const id = product.product_id || product.gift_id || product.shop_id || product.premium_id;
+        const id =
+            product?.product_id ||
+            product?.gift_id ||
+            product?.shop_id ||
+            product?.premium_id ||
+            product?.medicine_id;
+
+        if (!id) return;
+
         const inProduct = location.pathname.includes("/product/");
         const productUrl = inProduct
             ? `${location.pathname.split("/product/")[0]}/product/${id}`
@@ -212,9 +200,9 @@ export default function useHomeBackend({
         } else {
             goTo(productUrl);
         }
-    };
+    }, [selectedBottomTab, profilePage, selectedMenu, location.pathname, goTo]);
 
-    const handleCloseDetails = () => {
+    const handleCloseDetails = useCallback(() => {
         const currentPath = location.pathname;
 
         if (currentPath.endsWith("/reviews") || currentPath.endsWith("/media")) {
@@ -242,22 +230,25 @@ export default function useHomeBackend({
         setSelectedProduct(null);
         setIsDetailsOpen(false);
         if (detailsBackPage?.pathname) goTo(detailsBackPage.pathname);
-    };
+    }, [location.pathname, detailsBackPage, goTo]);
 
-    const handleReloadHome = () => setNavKey((p) => p + 1);
+    const handleReloadHome = useCallback(() => setNavKey((p) => p + 1), []);
 
-    const showMainHeader =
-        !isDetailsOpen &&
-        selectedBottomTab === "Home" &&
-        !allShopCategoriesPage &&
-        !allShopsPage &&
-        !allGiftCategoriesPage &&
-        !allGiftsPage &&
-        !shopCategoryPage &&
-        !giftCategoryPage;
+    const showMainHeader = useMemo(
+        () =>
+            !isDetailsOpen &&
+            selectedBottomTab === "Home" &&
+            !allShopCategoriesPage &&
+            !allGiftCategoriesPage &&
+            !allGiftsPage &&
+            !shopCategoryPage &&
+            !giftCategoryPage,
+        [isDetailsOpen, selectedBottomTab, allShopCategoriesPage, allGiftCategoriesPage, allGiftsPage, shopCategoryPage, giftCategoryPage]
+    );
 
     return {
-        location, navigate,
+        location,
+        navigate,
         selectedMenu, setSelectedMenu,
         selectedBottomTab, setSelectedBottomTab,
         search, setSearch,
@@ -276,7 +267,6 @@ export default function useHomeBackend({
         giftSuggestionsData, setGiftSuggestionsData,
         shopSuggestionsData, setShopSuggestionsData,
         premiumSuggestionsData, setPremiumSuggestionsData,
-        profileImageRefresh, setProfileImageRefresh,
         navKey, setNavKey,
         orderData, setOrderData,
         buyNowFromDetails, setBuyNowFromDetails,
@@ -287,7 +277,6 @@ export default function useHomeBackend({
         selectedInvoice, setSelectedInvoice,
         allShopCategoriesPage, setAllShopCategoriesPage,
         allGiftCategoriesPage, setAllGiftCategoriesPage,
-        allShopsPage, setAllShopsPage,
         allGiftsPage, setAllGiftsPage,
         profile, setProfile,
         handleLogout,

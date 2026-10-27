@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 import "./2VideoHero.css";
 import { FiVolume2, FiVolumeX, FiPlay, FiPause } from "react-icons/fi";
 import { API } from "../../../services/api";
@@ -11,13 +11,8 @@ function getInitialMuted() {
     return saved === null ? true : saved === "true";
 }
 
-function getNextIndex(current, total) {
-    return (current + 1) % total;
-}
-
-function getPrevIndex(current, total) {
-    return current === 0 ? total - 1 : current - 1;
-}
+const getNextIndex = (current, total) => (current + 1) % total;
+const getPrevIndex = (current, total) => (current === 0 ? total - 1 : current - 1);
 
 function VideoHero() {
     const [videos, setVideos] = useState([]);
@@ -30,43 +25,59 @@ function VideoHero() {
     const videoRef = useRef(null);
     const slideRef = useRef(null);
     const wasPlayingBeforeScrollRef = useRef(false);
+    const isMutedRef = useRef(isMuted);
+    const hasEndedRef = useRef(hasEnded);
 
     const dragRef = useRef({
         active: false,
         startX: 0,
         startTime: 0,
         duration: 0,
+        raf: null,
     });
 
     useEffect(() => {
+        let cancelled = false;
         const fetchVideos = async () => {
             try {
                 setLoading(true);
                 const res = await fetch(`${API}/api/videohero/active`);
                 const data = await res.json();
-                if (data.success) setVideos(data.data || []);
+                if (!cancelled && data.success) setVideos(data.data || []);
             } catch (err) {
                 console.error("Video fetch error:", err.message);
             } finally {
-                setLoading(false);
+                if (!cancelled) setLoading(false);
             }
         };
         fetchVideos();
+        return () => { cancelled = true; };
     }, []);
 
     useEffect(() => {
+        isMutedRef.current = isMuted;
         localStorage.setItem(MUTE_STORAGE_KEY, String(isMuted));
         if (videoRef.current) videoRef.current.muted = isMuted;
     }, [isMuted]);
 
     useEffect(() => {
-        if (videos.length === 0) return;
+        hasEndedRef.current = hasEnded;
+    }, [hasEnded]);
+
+    useEffect(() => {
         const video = videoRef.current;
-        if (!video) return;
-        video.muted = isMuted;
-        if (isPlaying && !hasEnded) video.play().catch(() => { });
-        else video.pause();
-    }, [currentIndex, videos, isPlaying, isMuted, hasEnded]);
+        if (!video || videos.length === 0) return;
+        if (hasEnded) {
+            video.pause();
+            return;
+        }
+        if (isPlaying) {
+            video.muted = isMutedRef.current;
+            video.play().catch(() => { });
+        } else {
+            video.pause();
+        }
+    }, [currentIndex, isPlaying, videos, hasEnded]);
 
     useEffect(() => {
         const slide = slideRef.current;
@@ -77,8 +88,8 @@ function VideoHero() {
                     const video = videoRef.current;
                     if (!video) return;
                     if (entry.isIntersecting) {
-                        if (wasPlayingBeforeScrollRef.current && !hasEnded) {
-                            video.muted = isMuted;
+                        if (wasPlayingBeforeScrollRef.current && !hasEndedRef.current) {
+                            video.muted = isMutedRef.current;
                             video.play()
                                 .then(() => {
                                     setIsPlaying(true);
@@ -86,12 +97,10 @@ function VideoHero() {
                                 })
                                 .catch(() => { });
                         }
-                    } else {
-                        if (!video.paused) {
-                            video.pause();
-                            setIsPlaying(false);
-                            wasPlayingBeforeScrollRef.current = true;
-                        }
+                    } else if (!video.paused) {
+                        video.pause();
+                        setIsPlaying(false);
+                        wasPlayingBeforeScrollRef.current = true;
                     }
                 });
             },
@@ -99,9 +108,9 @@ function VideoHero() {
         );
         observer.observe(slide);
         return () => observer.disconnect();
-    }, [isMuted, hasEnded]);
+    }, []);
 
-    const handlePlayPause = () => {
+    const handlePlayPause = useCallback(() => {
         const video = videoRef.current;
         if (!video) return;
         if (isPlaying && !video.paused) {
@@ -112,25 +121,25 @@ function VideoHero() {
                 video.currentTime = 0;
                 setHasEnded(false);
             }
-            video.muted = isMuted;
+            video.muted = isMutedRef.current;
             video.play()
                 .then(() => setIsPlaying(true))
                 .catch(() => { });
         }
-    };
+    }, [isPlaying, hasEnded]);
 
-    const toggleMute = () => setIsMuted((prev) => !prev);
+    const toggleMute = useCallback(() => setIsMuted((prev) => !prev), []);
 
-    const handleVideoEnd = () => {
+    const handleVideoEnd = useCallback(() => {
         setIsPlaying(false);
         setHasEnded(true);
-    };
+    }, []);
 
-    const goToVideo = (index) => {
+    const goToVideo = useCallback((index) => {
         setCurrentIndex(index);
         setIsPlaying(false);
         setHasEnded(false);
-    };
+    }, []);
 
     const getDeltaTime = (clientX) => {
         const slide = slideRef.current;
@@ -148,23 +157,33 @@ function VideoHero() {
             startX: clientX,
             startTime: video.currentTime,
             duration: video.duration,
+            raf: null,
         };
     };
 
     const handleDragMove = (clientX) => {
-        const video = videoRef.current;
-        if (!video || !dragRef.current.active) return;
-        const deltaTime = getDeltaTime(clientX);
-        const newTime = dragRef.current.startTime + deltaTime;
-        if (newTime >= video.duration || newTime <= 0) {
-            dragRef.current.active = false;
-            return;
-        }
-        video.currentTime = newTime;
+        if (!dragRef.current.active) return;
+        if (dragRef.current.raf) return;
+        dragRef.current.raf = requestAnimationFrame(() => {
+            const video = videoRef.current;
+            if (!video) { dragRef.current.raf = null; return; }
+            const deltaTime = getDeltaTime(clientX);
+            const newTime = dragRef.current.startTime + deltaTime;
+            if (newTime >= video.duration || newTime <= 0) {
+                dragRef.current.active = false;
+            } else {
+                video.currentTime = newTime;
+            }
+            dragRef.current.raf = null;
+        });
     };
 
     const handleDragEnd = () => {
         dragRef.current.active = false;
+        if (dragRef.current.raf) {
+            cancelAnimationFrame(dragRef.current.raf);
+            dragRef.current.raf = null;
+        }
     };
 
     const isInsideControls = (target) => target.closest(CONTROLS_SELECTOR);
@@ -181,8 +200,6 @@ function VideoHero() {
         handleDragMove(e.touches[0].clientX);
     };
 
-    const onTouchEnd = handleDragEnd;
-
     const onMouseDown = (e) => {
         if (isInsideControls(e.target)) return;
         e.preventDefault();
@@ -196,6 +213,12 @@ function VideoHero() {
         document.addEventListener("mousemove", moveHandler);
         document.addEventListener("mouseup", upHandler);
     };
+
+    useEffect(() => {
+        return () => {
+            if (dragRef.current.raf) cancelAnimationFrame(dragRef.current.raf);
+        };
+    }, []);
 
     if (loading) return null;
 
@@ -216,22 +239,15 @@ function VideoHero() {
             ) : (
                 <>
                     <div className="shop-video-info-row" key={currentIndex}>
-                        <span className="shop-video-info-name infodtat">
-                            {currentVideo?.name}
-                        </span>
+                        <span className="shop-video-info-name infodtat">{currentVideo?.name}</span>
                         <span className="shop-video-info-date infodtat">
-                            {new Date(currentVideo?.created_at).toLocaleDateString(
-                                "en-IN",
-                                {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                }
-                            )}
+                            {new Date(currentVideo?.created_at).toLocaleDateString("en-IN", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                            })}
                         </span>
-                        <span className="shop-video-info-frontview infodtat">
-                            {currentVideo?.frontview}
-                        </span>
+                        <span className="shop-video-info-frontview infodtat">{currentVideo?.frontview}</span>
                     </div>
                     <div className="shop-video-scroll">
                         <div
@@ -239,15 +255,17 @@ function VideoHero() {
                             ref={slideRef}
                             onTouchStart={onTouchStart}
                             onTouchMove={onTouchMove}
-                            onTouchEnd={onTouchEnd}
+                            onTouchEnd={handleDragEnd}
                             onMouseDown={onMouseDown}
                         >
                             <video
+                                key={currentVideo?.id || currentIndex}
                                 ref={videoRef}
                                 src={currentVideo?.video_url}
                                 muted
                                 playsInline
-                                preload="metadata"
+                                preload="none"
+                                poster={currentVideo?.thumbnail_url || currentVideo?.poster_url}
                                 onEnded={handleVideoEnd}
                                 onClick={handlePlayPause}
                             />
@@ -275,9 +293,7 @@ function VideoHero() {
                                     <button
                                         type="button"
                                         className="shop-video-btn shop-video-btn-bl"
-                                        onClick={() =>
-                                            goToVideo(getPrevIndex(currentIndex, videos.length))
-                                        }
+                                        onClick={() => goToVideo(getPrevIndex(currentIndex, videos.length))}
                                         aria-label="Previous"
                                     >
                                         ‹
@@ -288,9 +304,7 @@ function VideoHero() {
                                     <button
                                         type="button"
                                         className="shop-video-btn shop-video-btn-br"
-                                        onClick={() =>
-                                            goToVideo(getNextIndex(currentIndex, videos.length))
-                                        }
+                                        onClick={() => goToVideo(getNextIndex(currentIndex, videos.length))}
                                         aria-label="Next"
                                     >
                                         ›
@@ -317,4 +331,4 @@ function VideoHero() {
     );
 }
 
-export default VideoHero;
+export default memo(VideoHero);

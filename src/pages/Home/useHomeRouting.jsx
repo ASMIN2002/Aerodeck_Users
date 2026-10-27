@@ -58,37 +58,17 @@ export default function useHomeRouting({
             return;
         }
 
-        if (path === "/medicure") {
+        if (path === "/medicure" || path.startsWith("/medicure/ticket/") || path.startsWith("/medicure/book/")) {
             setSelectedBottomTab("Premium");
             setProfilePage("profile");
             closeDetails();
             return;
         }
 
-        if (path.startsWith("/medicure/ticket/")) {
-            setSelectedBottomTab("Premium");
-            setProfilePage("profile");
-            closeDetails();
-            return;
-        }
-        if (path.startsWith("/medicure/book/")) {
-            setSelectedBottomTab("Premium");
-            setProfilePage("profile");
-            closeDetails();
-            return;
-        }
-
-        if (path === "/home") {
+        if (path === "/home" || path === "/home/shop") {
             goHome("Shop");
             resetShopPages();
-            resetGiftPages();
-            closeDetails();
-            return;
-        }
-
-        if (path === "/home/shop") {
-            goHome("Shop");
-            resetShopPages();
+            if (path === "/home") resetGiftPages();
             closeDetails();
             return;
         }
@@ -102,14 +82,12 @@ export default function useHomeRouting({
         }
 
         if (
-            (path.startsWith("/home/shop/allcategory/") ||
-                path.startsWith("/home/shop/category/")) &&
+            (path.startsWith("/home/shop/allcategory/") || path.startsWith("/home/shop/category/")) &&
             !path.includes("/product/")
         ) {
             const prefix = path.startsWith("/home/shop/allcategory/")
                 ? "/home/shop/allcategory/"
                 : "/home/shop/category/";
-
             goHome("Shop");
             setSelectedShopCategory(decodeCategory(path, prefix));
             setAllShopCategoriesPage(false);
@@ -144,14 +122,12 @@ export default function useHomeRouting({
         }
 
         if (
-            (path.startsWith("/home/gifts/allcategory/") ||
-                path.startsWith("/home/gifts/category/")) &&
+            (path.startsWith("/home/gifts/allcategory/") || path.startsWith("/home/gifts/category/")) &&
             !path.includes("/product/")
         ) {
             const prefix = path.startsWith("/home/gifts/allcategory/")
                 ? "/home/gifts/allcategory/"
                 : "/home/gifts/category/";
-
             goHome("Gifts");
             setSelectedGiftCategory(decodeCategory(path, prefix));
             setAllGiftCategoriesPage(false);
@@ -173,139 +149,129 @@ export default function useHomeRouting({
             closeDetails();
             return;
         }
-    }, [location.pathname]);
 
-    useEffect(() => {
-        const path = location.pathname;
-
-        if (path.startsWith("/profile/wishlist/product/")) {
+        if (path === "/profile" || path === "/profile/") {
             setSelectedBottomTab("Profile");
-            setProfilePage("wishlist");
-            return;
-        }
-
-        if (path.startsWith("/profile/reviews/product/")) {
-            setSelectedBottomTab("Profile");
-            setProfilePage("reviews");
-            return;
-        }
-
-        if (path.startsWith("/profile/likes/product/")) {
-            setSelectedBottomTab("Profile");
-            setProfilePage("likes");
-            return;
-        }
-
-        if (
-            path.startsWith("/profile/orders/order/") &&
-            path.includes("/product/")
-        ) {
-            setSelectedBottomTab("Profile");
-            return;
-        }
-
-        if (!path.startsWith("/profile")) return;
-
-        setSelectedBottomTab("Profile");
-        setIsDetailsOpen(false);
-        setSelectedProduct(null);
-        setDetailsPage("details");
-
-        if (path === "/profile") {
             setProfilePage("profile");
+            closeDetails();
             return;
         }
 
         if (path === "/profile/address") {
+            setSelectedBottomTab("Profile");
             setProfilePage("address");
+            closeDetails();
             return;
         }
 
         if (path === "/profile/address/addaddress") {
+            setSelectedBottomTab("Profile");
             setProfilePage("addaddress");
+            closeDetails();
             return;
         }
 
         if (path === "/profile/address/editaddress") {
+            setSelectedBottomTab("Profile");
             setProfilePage("editaddress");
+            closeDetails();
             return;
         }
 
         if (path === "/profile/wishlist") {
+            setSelectedBottomTab("Profile");
             setProfilePage("wishlist");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/orders") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("orders");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/rewards") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("rewards");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/likes") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("likes");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/reviews") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("reviews");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/settings") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("settings");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/help") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("help");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/about") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("about");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/terms") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("terms");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/viewprofile") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("viewprofile");
+            closeDetails();
+            return;
+        }
+
+        if (path === "/profile/viewprofile/editprofile") {
+            setSelectedBottomTab("Profile");
+            setProfilePage("editprofile");
+            closeDetails();
             return;
         }
 
         if (path.startsWith("/profile/orders/order/")) {
             const orderId = path.split("/profile/orders/order/")[1].split("/")[0];
-
+            setSelectedBottomTab("Profile");
             setProfilePage("order-details");
             setSelectedOrder((prev) => {
-                if (prev && String(prev.order_id) === String(orderId)) {
-                    return prev;
-                }
+                if (prev && String(prev.order_id) === String(orderId)) return prev;
                 return { order_id: orderId };
             });
+            closeDetails();
             return;
         }
 
-        if (path === "/profile/orders") {
-            setProfilePage("orders");
-            return;
-        }
-
-        if (path === "/profile/rewards") {
-            setProfilePage("rewards");
-            return;
-        }
-
-        if (path === "/profile/likes") {
-            setProfilePage("likes");
-            return;
-        }
-
-        if (path === "/profile/reviews") {
-            setProfilePage("reviews");
-            return;
-        }
-
-        if (path === "/profile/settings") {
-            setProfilePage("settings");
-            return;
-        }
-
-        if (path === "/profile/help") {
-            setProfilePage("help");
-            return;
-        }
-
-        if (path === "/profile/about") {
-            setProfilePage("about");
-            return;
-        }
-
-        if (path === "/profile/terms") {
-            setProfilePage("terms");
-            return;
-        }
-
-        if (path === "/profile/viewprofile/editprofile") {
-            setProfilePage("editprofile");
-            return;
-        }
-
-        if (path === "/profile/viewprofile") {
-            setProfilePage("viewprofile");
-            return;
-        }
-    }, [location.pathname]);
-
-    useEffect(() => {
-        const path = location.pathname;
         const parts = path.split("/").filter(Boolean);
-
         let type = "";
         let id = "";
+        let bottomTab = null;
+        let page = null;
 
         if (
             parts.length === 6 &&
@@ -316,65 +282,32 @@ export default function useHomeRouting({
         ) {
             type = "shop";
             id = parts[5];
-            setSelectedBottomTab("Profile");
-            setProfilePage("order-details");
-        }
-
-        if (
+            bottomTab = "Profile";
+            page = "order-details";
+        } else if (
             parts.length === 4 &&
             parts[0] === "profile" &&
-            parts[1] === "wishlist" &&
             parts[2] === "product"
         ) {
             type = "shop";
             id = parts[3];
-            setSelectedBottomTab("Profile");
-            setProfilePage("wishlist");
-        }
-
-        if (
-            parts.length === 4 &&
-            parts[0] === "profile" &&
-            parts[1] === "reviews" &&
-            parts[2] === "product"
-        ) {
-            type = "shop";
-            id = parts[3];
-            setSelectedBottomTab("Profile");
-            setProfilePage("reviews");
-        }
-        if (
-            parts.length === 4 &&
-            parts[0] === "profile" &&
-            parts[1] === "likes" &&
-            parts[2] === "product"
-        ) {
-            type = "shop";
-            id = parts[3];
-            setSelectedBottomTab("Profile");
-            setProfilePage("likes");
-        }
-
-        if (parts[0] === "home" && (parts.length === 4 || parts.length === 5)) {
+            bottomTab = "Profile";
+            page = parts[1];
+        } else if (parts[0] === "home" && (parts.length === 4 || parts.length === 5)) {
             if (parts[1] === "shop" && parts[2] === "product") {
                 type = "products";
                 id = parts[3];
-            }
-            if (parts[1] === "gifts" && parts[2] === "product") {
+            } else if (parts[1] === "gifts" && parts[2] === "product") {
                 type = "gifts";
                 id = parts[3];
-            }
-            if (parts[1] === "cards" && parts[2] === "product") {
+            } else if (parts[1] === "cards" && parts[2] === "product") {
                 type = "cards";
                 id = parts[3];
-            }
-            if (parts[1] === "premium" && parts[2] === "product") {
+            } else if (parts[1] === "premium" && parts[2] === "product") {
                 type = "premium";
                 id = parts[3];
             }
-        }
-
-        if (
+        } else if (
             parts.length === 5 &&
             parts[0] === "home" &&
             parts[1] === "cards" &&
@@ -383,9 +316,7 @@ export default function useHomeRouting({
         ) {
             type = "cards";
             id = parts[4];
-        }
-
-        if (
+        } else if (
             parts.length === 6 &&
             parts[0] === "home" &&
             parts[1] === "shop" &&
@@ -398,9 +329,7 @@ export default function useHomeRouting({
             setSelectedShopCategory(decodeURIComponent(parts[3]));
             setShopCategoryPage(true);
             setAllShopCategoriesPage(false);
-        }
-
-        if (
+        } else if (
             parts.length === 6 &&
             parts[0] === "home" &&
             parts[2] === "category" &&
@@ -412,17 +341,14 @@ export default function useHomeRouting({
                 setSelectedMenu("Gifts");
                 setSelectedGiftCategory(decodeURIComponent(parts[3]));
                 setGiftCategoryPage(true);
-            }
-            if (parts[1] === "shop") {
+            } else if (parts[1] === "shop") {
                 type = "products";
                 id = parts[5];
                 setSelectedMenu("Shop");
                 setSelectedShopCategory(decodeURIComponent(parts[3]));
                 setShopCategoryPage(true);
             }
-        }
-
-        if (
+        } else if (
             parts.length === 4 &&
             parts[0] === "medicure" &&
             parts[2] === "product"
@@ -433,26 +359,18 @@ export default function useHomeRouting({
 
         if (!type || !id) return;
 
-        if (type === "premium") {
+        if (type === "premium" || type === "medicine") {
             setSelectedBottomTab("Premium");
-        } else if (type === "medicine") {
-            setSelectedBottomTab("Premium");
-        } else if (path.startsWith("/profile/wishlist/")) {
-            setSelectedBottomTab("Profile");
-        } else if (path.startsWith("/profile/reviews/")) {
-            setSelectedBottomTab("Profile");
-        } else if (path.startsWith("/profile/likes/")) {
+        } else if (path.startsWith("/profile/")) {
             setSelectedBottomTab("Profile");
         } else {
             setSelectedBottomTab("Home");
         }
-        if (path.startsWith("/profile/wishlist/")) {
-            setProfilePage("wishlist");
-        } else if (path.startsWith("/profile/reviews/")) {
-            setProfilePage("reviews");
-        } else {
-            setProfilePage("profile");
-        }
+
+        if (path.startsWith("/profile/wishlist/")) setProfilePage("wishlist");
+        else if (path.startsWith("/profile/reviews/")) setProfilePage("reviews");
+        else if (path.startsWith("/profile/likes/")) setProfilePage("likes");
+        else if (page) setProfilePage(page);
 
         setSelectedProduct((prev) => {
             if (prev && prev.type === type) {
@@ -462,30 +380,23 @@ export default function useHomeRouting({
                     prev.data?.shop_id ||
                     prev.data?.premium_id ||
                     prev.data?.medicine_id;
-
                 if (String(prevId) === String(id)) return prev;
             }
-
             return {
                 type,
                 data: {
                     product_id: type === "products" ? id : undefined,
                     gift_id: type === "gifts" ? id : undefined,
-                    shop_id:
-                        type === "shop" || type === "cards" ? id : undefined,
+                    shop_id: type === "shop" || type === "cards" ? id : undefined,
                     premium_id: type === "premium" ? id : undefined,
                     medicine_id: type === "medicine" ? id : undefined,
                 },
             };
         });
 
-        if (path.endsWith("/reviews")) {
-            setDetailsPage("allreview");
-        } else if (path.endsWith("/media")) {
-            setDetailsPage("allmedia");
-        } else {
-            setDetailsPage("details");
-        }
+        if (path.endsWith("/reviews")) setDetailsPage("allreview");
+        else if (path.endsWith("/media")) setDetailsPage("allmedia");
+        else setDetailsPage("details");
 
         setIsDetailsOpen(true);
     }, [location.pathname]);

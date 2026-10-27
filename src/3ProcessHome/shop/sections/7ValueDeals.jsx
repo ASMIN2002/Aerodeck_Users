@@ -1,10 +1,23 @@
+import { useMemo, useCallback, memo } from "react";
 import "./7ValueDeals.css";
 
-function ValueDeals({ shops, onOpenDetails }) {
-    const valueDeals = shops.slice(0, 6);
+const cleanHighlight = (text) =>
+    (text || "").replace(/~cloth(e)?s\s*$/i, "").trim();
 
-    const cleanHighlight = (text) =>
-        (text || "").replace(/~cloth(e)?s\s*$/i, "").trim();
+function ValueDeals({ shops, onOpenDetails }) {
+    const valueDeals = useMemo(() => shops.slice(0, 6), [shops]);
+
+    const handleOpen = useCallback(
+        (shop) => onOpenDetails(shop, "shop"),
+        [onOpenDetails]
+    );
+
+    const animationDelays = useMemo(
+        () => valueDeals.map((_, i) => ({ animationDelay: `${i * 0.05}s` })),
+        [valueDeals.length]
+    );
+
+    if (valueDeals.length === 0) return null;
 
     return (
         <section className="shop-value-deals-section">
@@ -22,31 +35,24 @@ function ValueDeals({ shops, onOpenDetails }) {
                             <div
                                 key={shop.shop_id}
                                 className={`shop-value-card ${!isAvailable ? "out-of-stock" : ""}`}
-                                onClick={() => onOpenDetails(shop, "shop")}
-                                style={{ animationDelay: `${index * 0.05}s` }}
+                                onClick={() => handleOpen(shop)}
+                                style={animationDelays[index]}
                             >
                                 <div className="shop-value-image">
                                     <img
                                         src={shop.shop_image1}
                                         alt={shop.shop_name}
+                                        loading="lazy"
+                                        decoding="async"
                                     />
-
                                     {!isAvailable && (
-                                        <span className="shop-value-oos">
-                                            OUT OF STOCK
-                                        </span>
+                                        <span className="shop-value-oos">OUT OF STOCK</span>
                                     )}
-
                                     {isAvailable && highlight && (
-                                        <span className="shop-value-highlight">
-                                            {highlight}
-                                        </span>
+                                        <span className="shop-value-highlight">{highlight}</span>
                                     )}
                                 </div>
-
-                                <span className="shop-value-name">
-                                    {shop.shop_name}
-                                </span>
+                                <span className="shop-value-name">{shop.shop_name}</span>
                             </div>
                         );
                     })}
@@ -56,4 +62,4 @@ function ValueDeals({ shops, onOpenDetails }) {
     );
 }
 
-export default ValueDeals;
+export default memo(ValueDeals);
