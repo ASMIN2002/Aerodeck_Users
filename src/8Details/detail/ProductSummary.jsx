@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiStar, FiShoppingCart, FiExternalLink, FiMapPin, FiShield, FiCheckCircle } from "react-icons/fi";
+import { FiStar, FiShoppingCart, FiExternalLink, FiMapPin, FiShield } from "react-icons/fi";
 import { API } from "../../services/api";
 import "../detailStyle/ProductSummary.css";
 
@@ -20,7 +20,7 @@ const getField = (product, suffix, fallback) => {
 
 const getSession = () => localStorage.getItem("session_token");
 
-function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart, onBuyNow }) {
+function ProductSummary({ product, cartQuantity, showCart = true, onIncreaseCart, onDecreaseCart, onBuyNow }) {
     const navigate = useNavigate();
     const sessionToken = getSession();
 
@@ -44,20 +44,21 @@ function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart,
 
     useEffect(() => {
         if (!sessionToken) return;
-        fetch(`${API}/api/user/details?session_token=${sessionToken}`)
-            .then((r) => r.json())
-            .then((data) => { if (data.success && data.data) setUserDetails(data.data); })
-            .catch((err) => console.error("User details error:", err.message));
-    }, [sessionToken]);
 
-    useEffect(() => {
-        if (!sessionToken) return;
-        fetch(`${API}/api/user/address?session_token=${sessionToken}`)
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) setPrimaryAddress(data.data.find((i) => i.is_primary === 1) || null);
-            })
-            .catch((err) => console.error("Address fetch error:", err.message));
+        Promise.all([
+            fetch(`${API}/api/user/details?session_token=${sessionToken}`)
+                .then((r) => r.json())
+                .catch((err) => { console.error("User details error:", err.message); return null; }),
+            fetch(`${API}/api/user/address?session_token=${sessionToken}`)
+                .then((r) => r.json())
+                .catch((err) => { console.error("Address fetch error:", err.message); return null; }),
+        ]).then(([detailsData, addressData]) => {
+            if (detailsData?.success && detailsData.data) setUserDetails(detailsData.data);
+            if (addressData?.success) {
+                const primary = (addressData.data || []).find((i) => Number(i.is_primary) === 1);
+                setPrimaryAddress(primary || null);
+            }
+        });
     }, [sessionToken]);
 
     useEffect(() => {
@@ -66,15 +67,15 @@ function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart,
         return () => clearTimeout(timer);
     }, [verifyError]);
 
-    const validateOrder = () => {
+    const validateOrder = useCallback(() => {
         if (!userDetails?.full_name?.trim()) return { text: "First give your name to continue.", action: "verify" };
-        if (!userDetails?.mobile_number || userDetails.is_mobile_verified !== 1) return { text: "Please verify your mobile number first.", action: "verify" };
-        if (!userDetails?.whatsapp_number || userDetails.is_whatsapp_verified !== 1) return { text: "Please verify your WhatsApp number first.", action: "verify" };
+        if (!userDetails?.mobile_number || Number(userDetails.is_mobile_verified) !== 1) return { text: "Please verify your mobile number first.", action: "verify" };
+        if (!userDetails?.whatsapp_number || Number(userDetails.is_whatsapp_verified) !== 1) return { text: "Please verify your WhatsApp number first.", action: "verify" };
         if (!primaryAddress) return { text: "Please select the address.", action: "address" };
         return null;
-    };
+    }, [userDetails, primaryAddress]);
 
-    const handleOrderNow = async () => {
+    const handleOrderNow = useCallback(async () => {
         const error = validateOrder();
         if (error) return setVerifyError(error);
 
@@ -93,12 +94,13 @@ function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart,
             const message = `USER = #${data.user_id}HEEPITUSER\nPRODUCT = #${data.product_id}HEEPITPRODUCT\n\nJust press Send to know more.`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
         } catch (err) { console.error("WhatsApp order error:", err.message); }
-    };
+    }, [validateOrder, product, sessionToken]);
 
-    const handleBuyNowClick = () => {
-        navigate("/buy");
+    const handleBuyNowClick = useCallback(() => {
         onBuyNow?.();
-    };
+    }, [onBuyNow]);
+
+    const toggleExpanded = useCallback(() => setExpanded((prev) => !prev), []);
 
     return (
         <section className="ps-section">
@@ -122,7 +124,7 @@ function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart,
                     {expanded || !isLong ? description : `${description?.slice(0, DESC_LIMIT)}...`}
                 </p>
                 {isLong && (
-                    <button type="button" className="ps-more" onClick={() => setExpanded(!expanded)}>
+                    <button type="button" className="ps-more" onClick={toggleExpanded}>
                         {expanded ? "Show Less" : "Read More"}
                     </button>
                 )}
@@ -137,6 +139,10 @@ function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart,
                             <p>This product is currently unavailable.</p>
                         </div>
                     </div>
+                ) : !showCart ? (
+                    <button type="button" className="ps-order-btn" onClick={handleOrderNow}>
+                        <FiExternalLink /> Order Now on WhatsApp
+                    </button>
                 ) : isShopOrGift ? (
                     <div className="ps-shop-actions">
                         {cartQuantity > 0 ? (
@@ -177,4 +183,4 @@ function ProductSummary({ product, cartQuantity, onIncreaseCart, onDecreaseCart,
     );
 }
 
-export default ProductSummary;
+export default memo(ProductSummary);

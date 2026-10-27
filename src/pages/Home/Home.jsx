@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef, useCallback, useMemo, Suspense } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { API } from "../../services/api";
+import { Suspense, memo } from "react";
 import "../../styles/Home.css";
-import useHomeRouting from "./useHomeRouting";
+import useHomeBackend from "./homeBackend";
 import {
     Header, Search, Cards, Gift, Shop, BottomNav, Details, Profile, MyWishlist,
     MyCart, MyOrders, AboutAerodeck, EditProfile, AddAddress, EditAddress,
@@ -10,408 +8,83 @@ import {
     Rewards, DemoRedeemRewards, MyLikes, MyReviews, Settings, AllReview, AllMedia,
     TOPHEADER, ViewAddress, Offers, Medicure, BookNow, ViewTicket
 } from "./lazyImports";
-
-const TAB_KEY = "selectedBottomTab";
-const MENU_KEY = "selectedMenu";
-const REFRESH_THRESHOLD = 80;
-const REFRESH_DURATION = 600;
-const SCROLL_DELTA = 4;
-const VALID_TABS = ["Home", "Offers", "Cart", "Profile", "Premium"];
-
-const getInitialTab = () => {
-    const saved = localStorage.getItem(TAB_KEY);
-    return VALID_TABS.includes(saved) ? saved : "Home";
-};
-
-const getProductId = (p) =>
-    p?.data?.product_id || p?.data?.gift_id || p?.data?.shop_id || p?.data?.premium_id || p?.data?.medicine_id;
-
-const getSession = () => localStorage.getItem("session_token");
-
+const Loader = () => <div className="home-loader"><div className="spinner" /></div>;
+const AddressBar = memo(({ setProfilePage, setSelectedBottomTab }) => (
+    <div className="home-address">
+        <Address setProfilePage={setProfilePage} setSelectedBottomTab={setSelectedBottomTab} />
+    </div>
+));
 function Home({ user, setPage, goTo, cartCount, setCartCount }) {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    const [selectedMenu, setSelectedMenu] = useState("Shop");
-    const [selectedBottomTab, setSelectedBottomTab] = useState(getInitialTab);
-    const [search, setSearch] = useState("");
-    const [filter, setFilter] = useState({ category: "All", sort: "", rating: 0, availableOnly: false });
-    const [categories, setCategories] = useState([]);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [profilePage, setProfilePage] = useState("profile");
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-    const [giftCategoryPage, setGiftCategoryPage] = useState(false);
-    const [selectedGiftCategory, setSelectedGiftCategory] = useState(null);
-    const [detailsPage, setDetailsPage] = useState("details");
-    const [shopCategoryPage, setShopCategoryPage] = useState(false);
-    const [selectedShopCategory, setSelectedShopCategory] = useState(null);
-    const [cardSuggestionsData, setCardSuggestionsData] = useState([]);
-    const [giftSuggestionsData, setGiftSuggestionsData] = useState([]);
-    const [shopSuggestionsData, setShopSuggestionsData] = useState([]);
-    const [premiumSuggestionsData, setPremiumSuggestionsData] = useState([]);
-    const [navKey, setNavKey] = useState(0);
-    const [orderData, setOrderData] = useState({ items: [], orderType: "" });
-    const [buyNowFromDetails, setBuyNowFromDetails] = useState(false);
-    const [detailsBackPage, setDetailsBackPage] = useState(null);
-    const [selectedAddress, setSelectedAddress] = useState(null);
-    const [selectedOrder, setSelectedOrder] = useState(null);
-    const [selectedTrackingOrder, setSelectedTrackingOrder] = useState(null);
-    const [selectedInvoice, setSelectedInvoice] = useState(null);
-    const [allShopCategoriesPage, setAllShopCategoriesPage] = useState(false);
-    const [allGiftCategoriesPage, setAllGiftCategoriesPage] = useState(false);
-    const [allShopsPage, setAllShopsPage] = useState(false);
-    const [allGiftsPage, setAllGiftsPage] = useState(false);
-    const [profile, setProfile] = useState(null);
-    const [pullDistance, setPullDistance] = useState(0);
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [hideCategories, setHideCategories] = useState(false);
-
-    const touchStartYRef = useRef(0);
-    const homeContentRef = useRef(null);
-    const lastScrollTopRef = useRef(0);
-    const rafRef = useRef(null);
-    const isDetailsOpenRef = useRef(isDetailsOpen);
-
-    useEffect(() => {
-        isDetailsOpenRef.current = isDetailsOpen;
-    }, [isDetailsOpen]);
-
-    const handleTouchStart = useCallback((e) => {
-        const container = homeContentRef.current;
-        if (!container || isRefreshing) return;
-        touchStartYRef.current = container.scrollTop <= 0 ? e.touches[0].clientY : null;
-    }, [isRefreshing]);
-
-    const handleTouchMove = useCallback((e) => {
-        if (touchStartYRef.current === null || isRefreshing) return;
-        const container = homeContentRef.current;
-        if (!container || container.scrollTop > 0) {
-            touchStartYRef.current = null;
-            setPullDistance(0);
-            return;
-        }
-        const diff = e.touches[0].clientY - touchStartYRef.current;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.5, 120));
-    }, [isRefreshing]);
-
-    const handleTouchEnd = useCallback(() => {
-        const container = homeContentRef.current;
-        if (!container) return;
-        if (pullDistance >= REFRESH_THRESHOLD && !isRefreshing) {
-            setIsRefreshing(true);
-            const savedScroll = container.scrollTop;
-            setTimeout(() => {
-                setNavKey((prev) => prev + 1);
-                setIsRefreshing(false);
-                setPullDistance(0);
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    if (container) container.scrollTop = savedScroll;
-                }));
-            }, REFRESH_DURATION);
-        } else {
-            setPullDistance(0);
-        }
-        touchStartYRef.current = null;
-    }, [pullDistance, isRefreshing]);
-
-    const handleContentScroll = useCallback((e) => {
-        if (rafRef.current) return;
-        const top = e.currentTarget.scrollTop;
-        rafRef.current = requestAnimationFrame(() => {
-            const dTop = top - lastScrollTopRef.current;
-            if (dTop > SCROLL_DELTA && top > 20) {
-                setHideCategories((prev) => (prev ? prev : true));
-            } else if (dTop < -SCROLL_DELTA || top <= 0) {
-                setHideCategories((prev) => (prev ? false : prev));
-            }
-            lastScrollTopRef.current = top;
-            rafRef.current = null;
-        });
-    }, []);
-
-    const handleRefresh = useCallback(() => setNavKey((prev) => prev + 1), []);
-
-    useHomeRouting({
-        setSelectedBottomTab, setSelectedMenu, setProfilePage, setSelectedProduct,
-        setIsDetailsOpen, setDetailsPage, setSelectedShopCategory, setSelectedGiftCategory,
-        setShopCategoryPage, setGiftCategoryPage, setAllShopCategoriesPage,
-        setAllGiftCategoriesPage, setAllGiftsPage, setSelectedOrder,
-    });
-
-    useEffect(() => {
-        localStorage.setItem(MENU_KEY, selectedMenu);
-    }, [selectedMenu]);
-
-    useEffect(() => {
-        if (selectedBottomTab === null) return localStorage.removeItem(TAB_KEY);
-        localStorage.setItem(TAB_KEY, selectedBottomTab);
-    }, [selectedBottomTab]);
-
-    const fetchProfile = useCallback(() => {
-        fetch(`${API}/api/user/profile`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ session_token: getSession() }),
-        })
-            .then((r) => r.json())
-            .then((data) => { if (data.success) setProfile(data.user); })
-            .catch((err) => console.error("Profile load error:", err.message));
-    }, []);
-
-    useEffect(() => { fetchProfile(); }, [fetchProfile]);
-
-    useEffect(() => {
-        const handleBackNavigation = () => {
-            const path = window.location.pathname;
-            if (path === "/offers" || path === "/medicure" || path.includes("/medicure/ticket/") || path.includes("/medicure/book/")) {
-                setSelectedBottomTab(path === "/offers" ? "Offers" : "Premium");
-                setProfilePage("profile");
-                setIsDetailsOpen(false);
-                return;
-            }
-            if (path.includes("/profile/")) {
-                const profilePath = path.replace("/profile/", "").split("/")[0];
-                setSelectedBottomTab("Profile");
-                setProfilePage(!profilePath || profilePath === "profile" ? "profile" : profilePath);
-                return;
-            }
-            if (path === "/profile") {
-                setSelectedBottomTab("Profile");
-                setProfilePage("profile");
-                return;
-            }
-            if (path === "/cart") {
-                setIsDetailsOpen(false);
-                setSelectedProduct(null);
-                setDetailsPage("details");
-                setSelectedBottomTab("Cart");
-                setProfilePage("cart");
-                return;
-            }
-            if (path.endsWith("/reviews")) {
-                setDetailsPage("allreview");
-                setIsDetailsOpen(true);
-                return;
-            }
-            if (path.endsWith("/media")) {
-                setDetailsPage("allmedia");
-                setIsDetailsOpen(true);
-                return;
-            }
-            if (path.includes("/product/")) {
-                setDetailsPage("details");
-                setIsDetailsOpen(true);
-                return;
-            }
-            if (isDetailsOpenRef.current) {
-                setIsDetailsOpen(false);
-                setSelectedProduct(null);
-                setDetailsPage("details");
-            }
-        };
-        window.addEventListener("popstate", handleBackNavigation);
-        return () => window.removeEventListener("popstate", handleBackNavigation);
-    }, []);
-
-    useEffect(() => {
-        if (detailsPage !== "details") return;
-        const savedScroll = sessionStorage.getItem("detailsScrollPosition");
-        if (!savedScroll) return;
-        const container = homeContentRef.current;
-        if (!container) return;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-            container.scrollTop = Number(savedScroll);
-            sessionStorage.removeItem("detailsScrollPosition");
-        }));
-    }, [detailsPage]);
-
-    const handleLogout = useCallback(async () => {
-        try {
-            await fetch(`${API}/api/auth/logout`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ session_token: getSession() }),
-            });
-        } catch (err) {
-            console.error("Logout error:", err.message);
-        }
-        localStorage.removeItem("session_token");
-        setPage("login");
-    }, [setPage]);
-
-    const handleOpenDetails = useCallback((product, type) => {
-        setDetailsBackPage({ selectedBottomTab, profilePage, selectedMenu, pathname: location.pathname });
-        setDetailsPage("details");
-        setSelectedProduct({ type, data: product });
-        setIsDetailsOpen(true);
-        const id = getProductId({ data: product });
-        const inProduct = location.pathname.includes("/product/");
-        const productUrl = inProduct
-            ? `${location.pathname.split("/product/")[0]}/product/${id}`
-            : `${location.pathname}/product/${id}`;
-        if (inProduct) {
-            window.history.replaceState({}, "", productUrl);
-            window.dispatchEvent(new PopStateEvent("popstate"));
-        } else {
-            goTo(productUrl);
-        }
-    }, [selectedBottomTab, profilePage, selectedMenu, location.pathname, goTo]);
-
-    const handleCloseDetails = useCallback(() => {
-        const currentPath = location.pathname;
-        if (currentPath.endsWith("/reviews") || currentPath.endsWith("/media")) {
-            setDetailsPage("details");
-            goTo(currentPath.replace(/\/reviews$/, "").replace(/\/media$/, ""));
-            return;
-        }
-        if (currentPath.includes("/product/")) {
-            if (detailsBackPage) {
-                setSelectedBottomTab(detailsBackPage.selectedBottomTab);
-                setProfilePage(detailsBackPage.profilePage);
-                setSelectedMenu(detailsBackPage.selectedMenu);
-            }
-            setDetailsPage("details");
-            setSelectedProduct(null);
-            setIsDetailsOpen(false);
-            goTo(currentPath.split("/product/")[0]);
-            return;
-        }
-        setDetailsPage("details");
-        setSelectedProduct(null);
-        setIsDetailsOpen(false);
-        if (detailsBackPage?.pathname) goTo(detailsBackPage.pathname);
-    }, [location.pathname, detailsBackPage, goTo]);
-
-    const showMainHeader = useMemo(() =>
-        !isDetailsOpen &&
-        ["Home", "Premium", "Offers"].includes(selectedBottomTab) &&
-        !allShopCategoriesPage && !allShopsPage && !allGiftCategoriesPage &&
-        !allGiftsPage && !shopCategoryPage && !giftCategoryPage,
-        [isDetailsOpen, selectedBottomTab, allShopCategoriesPage, allShopsPage,
-            allGiftCategoriesPage, allGiftsPage, shopCategoryPage, giftCategoryPage]
-    );
-
-    const isProfilePage = useCallback(
-        (page) => !isDetailsOpen && selectedBottomTab === "Profile" && profilePage === page,
-        [isDetailsOpen, selectedBottomTab, profilePage]
-    );
-
-    const showBottomNav = useMemo(() =>
-        !isDetailsOpen &&
-        (["Home", "Cart", "Offers", "Premium"].includes(selectedBottomTab) ||
-            (selectedBottomTab === "Profile" && profilePage === "profile")),
-        [isDetailsOpen, selectedBottomTab, profilePage]
-    );
-
-    const isBookPage = useMemo(() => location.pathname.includes("/book/"), [location.pathname]);
-    const isTicketPage = useMemo(() => location.pathname.includes("/ticket/"), [location.pathname]);
-
-    const onOpenCart = useCallback(() => {
-        setIsDetailsOpen(false);
-        setSelectedProduct(null);
-        setDetailsPage("details");
-        setSelectedBottomTab("Cart");
-        setProfilePage("cart");
-        navigate("/cart");
-    }, [navigate]);
-
-    const onBuyNow = useCallback((buyNowItem, orderType) => {
-        setBuyNowFromDetails(true);
-        setOrderData({ items: [buyNowItem], orderType });
-        setIsDetailsOpen(false);
-        setSelectedProduct(null);
-        setSelectedBottomTab("Profile");
-        setProfilePage(orderType === "products" ? "productorder" : "cardorder");
-    }, []);
-
-    const onViewAllReviews = useCallback(() => {
-        setDetailsPage("allreview");
-        navigate(`${location.pathname}/reviews`);
-    }, [navigate, location.pathname]);
-
-    const onViewAllMedia = useCallback(() => {
-        setDetailsPage("allmedia");
-        navigate(`${location.pathname}/media`);
-    }, [navigate, location.pathname]);
-
-    const renderAddressBar = () => (
-        <div className="home-address">
-            <Address setProfilePage={setProfilePage} setSelectedBottomTab={setSelectedBottomTab} />
-        </div>
-    );
-
+    const b = useHomeBackend({ user, setPage, cartCount, setCartCount, goTo });
     return (
         <div className="home-container">
-            <Suspense fallback={null}>
-                {showMainHeader && (
+            <Suspense fallback={<Loader />}>
+                {b.view.showMainHeader && (
                     <>
                         <Header
-                            selectedMenu={selectedMenu}
-                            setSelectedMenu={setSelectedMenu}
-                            isMenuOpen={isMenuOpen}
-                            setSelectedBottomTab={setSelectedBottomTab}
-                            setIsMenuOpen={setIsMenuOpen}
-                            selectedBottomTab={selectedBottomTab}
+                            selectedMenu={b.selectedMenu}
+                            setSelectedMenu={b.setSelectedMenu}
+                            isMenuOpen={b.isMenuOpen}
+                            setSelectedBottomTab={b.setSelectedBottomTab}
+                            setIsMenuOpen={b.setIsMenuOpen}
+                            selectedBottomTab={b.selectedBottomTab}
                             cartCount={cartCount}
-                            isDetailsOpen={isDetailsOpen}
-                            closeDetails={handleCloseDetails}
+                            isDetailsOpen={b.isDetailsOpen}
+                            closeDetails={b.handleCloseDetails}
                             userId={user?.user_id}
-                            onReloadHome={handleRefresh}
-                            onOpenCart={onOpenCart}
+                            onReloadHome={b.handleRefresh}
+                            onOpenCart={b.onOpenCart}
                         />
-                        {renderAddressBar()}
+                        <AddressBar setProfilePage={b.setProfilePage} setSelectedBottomTab={b.setSelectedBottomTab} />
                     </>
                 )}
-
-                {!isDetailsOpen && selectedBottomTab === "Home" && (
+                {!b.isDetailsOpen && b.view.isHome && (
                     <>
-                        {allShopCategoriesPage && (
+                        {b.allShopCategoriesPage && (
                             <>
                                 <TOPHEADER
                                     title="All Categories"
-                                    onBack={() => { setAllShopCategoriesPage(false); goTo("/home/shop", { replace: true }); }}
+                                    onBack={() => { b.setAllShopCategoriesPage(false); b.navigate("/home/shop", { replace: true }); }}
                                 />
-                                {renderAddressBar()}
+                                <AddressBar setProfilePage={b.setProfilePage} setSelectedBottomTab={b.setSelectedBottomTab} />
                             </>
                         )}
-                        {shopCategoryPage && (
+                        {b.shopCategoryPage && (
                             <>
                                 <TOPHEADER
-                                    title={selectedShopCategory}
+                                    title={b.selectedShopCategory}
                                     onBack={() => {
-                                        setSelectedShopCategory(null);
-                                        setShopCategoryPage(false);
-                                        goTo("/home/shop", { replace: true });
+                                        b.setSelectedShopCategory(null);
+                                        b.setShopCategoryPage(false);
+                                        b.navigate("/home/shop", { replace: true });
                                     }}
                                 />
-                                {renderAddressBar()}
+                                <AddressBar setProfilePage={b.setProfilePage} setSelectedBottomTab={b.setSelectedBottomTab} />
                             </>
                         )}
                         <Search
-                            selectedMenu={selectedMenu}
-                            search={search}
-                            setSearch={setSearch}
-                            categoryName={shopCategoryPage ? selectedShopCategory : null}
-                            filter={filter}
-                            setFilter={setFilter}
-                            categories={categories}
-                            cards={cardSuggestionsData}
-                            gifts={giftSuggestionsData}
-                            shops={shopSuggestionsData}
-                            premiums={premiumSuggestionsData}
+                            selectedMenu={b.selectedMenu}
+                            search={b.search}
+                            setSearch={b.setSearch}
+                            categoryName={b.shopCategoryPage ? b.selectedShopCategory : null}
+                            filter={b.filter}
+                            setFilter={b.setFilter}
+                            categories={b.categories}
+                            cards={b.cardSuggestionsData}
+                            gifts={b.giftSuggestionsData}
+                            shops={b.shopSuggestionsData}
+                            premiums={b.premiumSuggestionsData}
                         />
                     </>
                 )}
-
-                {!isDetailsOpen && selectedBottomTab === "Premium" && !isBookPage && !isTicketPage && (
+                {!b.isDetailsOpen && b.selectedBottomTab === "Premium" && !b.isBookPage && !b.isTicketPage && (
                     <Search
                         selectedMenu="Shop"
-                        search={search}
-                        setSearch={setSearch}
+                        search={b.search}
+                        setSearch={b.setSearch}
                         categoryName={null}
-                        filter={filter}
-                        setFilter={setFilter}
+                        filter={b.filter}
+                        setFilter={b.setFilter}
                         categories={[]}
                         cards={[]}
                         gifts={[]}
@@ -419,227 +92,194 @@ function Home({ user, setPage, goTo, cartCount, setCartCount }) {
                         premiums={[]}
                     />
                 )}
-
                 <div
-                    className={`home-content ${showBottomNav ? "has-bottom-nav" : ""}`}
-                    ref={homeContentRef}
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                    onScroll={handleContentScroll}
+                    className={`home-content ${b.view.showBottomNav ? "has-bottom-nav" : ""}`}
+                    ref={b.homeContentRef}
+                    onTouchStart={b.handleTouchStart}
+                    onTouchMove={b.handleTouchMove}
+                    onTouchEnd={b.handleTouchEnd}
+                    onScroll={b.handleContentScroll}
                 >
                     <div
                         className="pull-refresh-indicator"
-                        style={{ height: `${pullDistance}px`, opacity: pullDistance > 0 ? 1 : 0 }}
+                        style={{ height: `${b.pullDistance}px`, opacity: b.pullDistance > 0 ? 1 : 0 }}
                     >
-                        <div className={`pull-refresh-icon ${pullDistance >= REFRESH_THRESHOLD ? "ready" : ""} ${isRefreshing ? "spinning" : ""}`}>
+                        <div className={`pull-refresh-icon ${b.pullDistance >= 80 ? "ready" : ""} ${b.isRefreshing ? "spinning" : ""}`}>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M21 2v6h-6" />
-                                <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
-                                <path d="M3 22v-6h6" />
-                                <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+                                <path d="M21 2v6h-6" /><path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+                                <path d="M3 22v-6h6" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
                             </svg>
                         </div>
                         <span className="pull-refresh-text">
-                            {isRefreshing ? "Refreshing..." : pullDistance >= REFRESH_THRESHOLD ? "Release to refresh" : "Pull down to refresh"}
+                            {b.isRefreshing ? "Refreshing..." : b.pullDistance >= 80 ? "Release to refresh" : "Pull down to refresh"}
                         </span>
                     </div>
-
-                    {isDetailsOpen && (
+                    {b.isDetailsOpen && (
                         <>
-                            <div style={{ display: detailsPage === "details" ? "block" : "none" }}>
+                            <div style={{ display: b.detailsPage === "details" ? "block" : "none" }}>
                                 <Details
-                                    product={selectedProduct}
-                                    onBack={handleCloseDetails}
+                                    product={b.selectedProduct}
+                                    onBack={b.handleCloseDetails}
                                     setCartCount={setCartCount}
-                                    onOpenDetails={handleOpenDetails}
-                                    onViewAll={onViewAllReviews}
-                                    onViewAllMedia={onViewAllMedia}
-                                    onBuyNow={onBuyNow}
+                                    onOpenDetails={b.handleOpenDetails}
+                                    onViewAll={b.onViewAllReviews}
+                                    onViewAllMedia={b.onViewAllMedia}
+                                    onBuyNow={b.onBuyNow}
                                 />
                             </div>
-                            {detailsPage === "allreview" && <AllReview product_id={getProductId(selectedProduct)} />}
-                            {detailsPage === "allmedia" && (
+                            {b.detailsPage === "allreview" && <AllReview product_id={b.selectedProduct?.data?.product_id || b.selectedProduct?.data?.gift_id || b.selectedProduct?.data?.shop_id || b.selectedProduct?.data?.premium_id || b.selectedProduct?.data?.medicine_id} />}
+                            {b.detailsPage === "allmedia" && (
                                 <AllMedia
-                                    onBack={() => { setDetailsPage("details"); goTo(location.pathname.replace(/\/media$/, "")); }}
-                                    product_id={getProductId(selectedProduct)}
+                                    onBack={() => { b.setDetailsPage("details"); b.navigate(b.location.pathname.replace(/\/media$/, "")); }}
+                                    product_id={b.selectedProduct?.data?.product_id || b.selectedProduct?.data?.gift_id || b.selectedProduct?.data?.shop_id || b.selectedProduct?.data?.premium_id || b.selectedProduct?.data?.medicine_id}
                                 />
                             )}
                         </>
                     )}
-
-                    {!isDetailsOpen && selectedBottomTab === "Home" && (
+                    {!b.isDetailsOpen && b.view.isHome && (
                         <>
-                            {selectedMenu === "Cards" && (
+                            {b.selectedMenu === "Cards" && (
                                 <Cards
-                                    key={`cards-${navKey}`}
+                                    key={`cards-${b.navKey}`}
                                     setCartCount={setCartCount}
-                                    onOpenDetails={handleOpenDetails}
-                                    search={search}
-                                    filter={filter}
-                                    setFilter={setFilter}
-                                    setCategories={setCategories}
-                                    setSuggestionData={setCardSuggestionsData}
+                                    onOpenDetails={b.handleOpenDetails}
+                                    search={b.search}
+                                    filter={b.filter}
+                                    setFilter={b.setFilter}
+                                    setCategories={b.setCategories}
+                                    setSuggestionData={b.setCardSuggestionsData}
                                 />
                             )}
-                            {selectedMenu === "Gifts" && (
+                            {b.selectedMenu === "Gifts" && (
                                 <Gift
-                                    key={`gift-${navKey}`}
+                                    key={`gift-${b.navKey}`}
                                     user={user}
                                     setCartCount={setCartCount}
-                                    onOpenDetails={handleOpenDetails}
-                                    search={search}
-                                    filter={filter}
-                                    giftCategoryPage={giftCategoryPage}
-                                    setGiftCategoryPage={setGiftCategoryPage}
-                                    selectedGiftCategory={selectedGiftCategory}
-                                    setSelectedGiftCategory={setSelectedGiftCategory}
-                                    allGiftCategoriesPage={allGiftCategoriesPage}
-                                    setAllGiftCategoriesPage={setAllGiftCategoriesPage}
-                                    allGiftsPage={allGiftsPage}
-                                    setAllGiftsPage={setAllGiftsPage}
-                                    setSuggestionData={setGiftSuggestionsData}
+                                    onOpenDetails={b.handleOpenDetails}
+                                    search={b.search}
+                                    filter={b.filter}
+                                    giftCategoryPage={b.giftCategoryPage}
+                                    setGiftCategoryPage={b.setGiftCategoryPage}
+                                    selectedGiftCategory={b.selectedGiftCategory}
+                                    setSelectedGiftCategory={b.setSelectedGiftCategory}
+                                    allGiftCategoriesPage={b.allGiftCategoriesPage}
+                                    setAllGiftCategoriesPage={b.setAllGiftCategoriesPage}
+                                    allGiftsPage={b.allGiftsPage}
+                                    setAllGiftsPage={b.setAllGiftsPage}
+                                    setSuggestionData={b.setGiftSuggestionsData}
                                     goTo={goTo}
                                 />
                             )}
-                            {selectedMenu === "Shop" && (
+                            {b.selectedMenu === "Shop" && (
                                 <Shop
-                                    key={`shop-${navKey}`}
+                                    key={`shop-${b.navKey}`}
                                     user={user}
                                     setCartCount={setCartCount}
-                                    onOpenDetails={handleOpenDetails}
-                                    search={search}
-                                    filter={filter}
-                                    shopCategoryPage={shopCategoryPage}
-                                    setShopCategoryPage={setShopCategoryPage}
-                                    selectedShopCategory={selectedShopCategory}
-                                    setSelectedShopCategory={setSelectedShopCategory}
-                                    allShopCategoriesPage={allShopCategoriesPage}
-                                    setAllShopCategoriesPage={setAllShopCategoriesPage}
-                                    setSuggestionData={setShopSuggestionsData}
+                                    onOpenDetails={b.handleOpenDetails}
+                                    search={b.search}
+                                    filter={b.filter}
+                                    shopCategoryPage={b.shopCategoryPage}
+                                    setShopCategoryPage={b.setShopCategoryPage}
+                                    selectedShopCategory={b.selectedShopCategory}
+                                    setSelectedShopCategory={b.setSelectedShopCategory}
+                                    allShopCategoriesPage={b.allShopCategoriesPage}
+                                    setAllShopCategoriesPage={b.setAllShopCategoriesPage}
+                                    setSuggestionData={b.setShopSuggestionsData}
                                     goTo={goTo}
-                                    hideCategories={hideCategories}
-                                    onShowCategories={() => setHideCategories(false)}
+                                    hideCategories={b.hideCategories}
+                                    onShowCategories={() => b.setHideCategories(false)}
                                 />
                             )}
                         </>
                     )}
-
-                    {!isDetailsOpen && selectedBottomTab === "Offers" && <Offers />}
-
-                    {!isDetailsOpen && selectedBottomTab === "Premium" && !isBookPage && !isTicketPage && (
+                    {!b.isDetailsOpen && b.selectedBottomTab === "Offers" && <Offers />}
+                    {!b.isDetailsOpen && b.selectedBottomTab === "Premium" && !b.isBookPage && !b.isTicketPage && (
                         <Medicure
-                            key={navKey}
-                            search={search}
-                            filter={filter}
+                            key={b.navKey}
+                            search={b.search}
+                            filter={b.filter}
                             setCartCount={setCartCount}
-                            onOpenDetails={handleOpenDetails}
-                            onBuyNow={onBuyNow}
+                            onOpenDetails={b.handleOpenDetails}
+                            onBuyNow={b.onBuyNow}
                         />
                     )}
-
-                    {!isDetailsOpen && selectedBottomTab === "Premium" && isBookPage && <BookNow />}
-                    {!isDetailsOpen && selectedBottomTab === "Premium" && isTicketPage && <ViewTicket />}
-
-                    {isProfilePage("profile") && (
+                    {!b.isDetailsOpen && b.selectedBottomTab === "Premium" && b.isBookPage && <BookNow />}
+                    {!b.isDetailsOpen && b.selectedBottomTab === "Premium" && b.isTicketPage && <ViewTicket />}
+                    {b.view.isProfile("profile") && (
                         <Profile
-                            key={profilePage + "-" + (user?.user_id || "")}
+                            key={b.profilePage + "-" + (user?.user_id || "")}
                             user={user}
-                            profile={profile}
-                            setProfile={setProfile}
+                            profile={b.profile}
+                            setProfile={b.setProfile}
                             setPage={setPage}
-                            onLogout={handleLogout}
-                            setProfilePage={setProfilePage}
+                            onLogout={b.handleLogout}
+                            setProfilePage={b.setProfilePage}
                         />
                     )}
-
-                    {isProfilePage("viewprofile") && <ViewProfile profile={profile} setProfilePage={setProfilePage} />}
-                    {isProfilePage("viewaddress") && <ViewAddress setProfilePage={setProfilePage} />}
-                    {isProfilePage("wishlist") && <MyWishlist key={`wishlist-${navKey}`} setProfilePage={setProfilePage} onOpenDetails={handleOpenDetails} />}
-
-                    {!isDetailsOpen && selectedBottomTab === "Cart" && profilePage === "cart" && (
+                    {b.view.isProfile("viewprofile") && <ViewProfile profile={b.profile} setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("viewaddress") && <ViewAddress setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("wishlist") && <MyWishlist key={`wishlist-${b.navKey}`} setProfilePage={b.setProfilePage} onOpenDetails={b.handleOpenDetails} />}
+                    {!b.isDetailsOpen && b.selectedBottomTab === "Cart" && b.profilePage === "cart" && (
                         <MyCart
-                            key={`cart-${navKey}`}
-                            setProfilePage={setProfilePage}
-                            setOrderData={setOrderData}
-                            setBuyNowFromDetails={setBuyNowFromDetails}
-                            onOpenDetails={handleOpenDetails}
-                            setSelectedBottomTab={setSelectedBottomTab}
+                            key={`cart-${b.navKey}`}
+                            setProfilePage={b.setProfilePage}
+                            setOrderData={b.setOrderData}
+                            setBuyNowFromDetails={b.setBuyNowFromDetails}
+                            onOpenDetails={b.handleOpenDetails}
+                            setSelectedBottomTab={b.setSelectedBottomTab}
                             setCartCount={setCartCount}
                         />
                     )}
-
-                    {isProfilePage("productorder") && (
+                    {b.view.isProfile("productorder") && (
                         <ProductOrder
-                            setProfilePage={setProfilePage}
-                            orderData={orderData}
-                            setOrderData={setOrderData}
-                            selectedAddress={selectedAddress}
-                            buyNowFromDetails={buyNowFromDetails}
+                            setProfilePage={b.setProfilePage}
+                            orderData={b.orderData}
+                            setOrderData={b.setOrderData}
+                            selectedAddress={b.selectedAddress}
+                            buyNowFromDetails={b.buyNowFromDetails}
                             onBackToDetails={() => {
-                                setBuyNowFromDetails(false);
-                                setIsDetailsOpen(true);
-                                setDetailsPage("details");
+                                b.setBuyNowFromDetails(false);
+                                b.setIsDetailsOpen(true);
+                                b.setDetailsPage("details");
                             }}
                         />
                     )}
-
-                    {isProfilePage("orders") && (
-                        <MyOrders
-                            key={`orders-${navKey}`}
-                            setProfilePage={setProfilePage}
-                            setSelectedOrder={setSelectedOrder}
-                        />
+                    {b.view.isProfile("orders") && (
+                        <MyOrders key={`orders-${b.navKey}`} setProfilePage={b.setProfilePage} setSelectedOrder={b.setSelectedOrder} />
                     )}
-
-                    {isProfilePage("rewards") && <Rewards setProfilePage={setProfilePage} />}
-                    {isProfilePage("demoredeem") && <DemoRedeemRewards setProfilePage={setProfilePage} />}
-                    {isProfilePage("likes") && (
-                        <MyLikes key={`likes-${navKey}`} setProfilePage={setProfilePage} onOpenDetails={handleOpenDetails} />
-                    )}
-                    {isProfilePage("reviews") && (
-                        <MyReviews key={`reviews-${navKey}`} setProfilePage={setProfilePage} onOpenDetails={handleOpenDetails} />
-                    )}
-                    {isProfilePage("settings") && (
-                        <Settings setProfilePage={setProfilePage} userId={user?.user_id} />
-                    )}
-
-                    {!isDetailsOpen && profilePage === "order-details" && (
+                    {b.view.isProfile("rewards") && <Rewards setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("demoredeem") && <DemoRedeemRewards setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("likes") && <MyLikes key={`likes-${b.navKey}`} setProfilePage={b.setProfilePage} onOpenDetails={b.handleOpenDetails} />}
+                    {b.view.isProfile("reviews") && <MyReviews key={`reviews-${b.navKey}`} setProfilePage={b.setProfilePage} onOpenDetails={b.handleOpenDetails} />}
+                    {b.view.isProfile("settings") && <Settings setProfilePage={b.setProfilePage} userId={user?.user_id} />}
+                    {!b.isDetailsOpen && b.profilePage === "order-details" && (
                         <OrderItemDetails
-                            key={`order-${navKey}`}
-                            order={selectedOrder}
-                            setProfilePage={setProfilePage}
-                            onOpenDetails={handleOpenDetails}
-                            setSelectedTrackingOrder={setSelectedTrackingOrder}
-                            setSelectedInvoice={setSelectedInvoice}
+                            key={`order-${b.navKey}`}
+                            order={b.selectedOrder}
+                            setProfilePage={b.setProfilePage}
+                            onOpenDetails={b.handleOpenDetails}
+                            setSelectedTrackingOrder={b.setSelectedTrackingOrder}
+                            setSelectedInvoice={b.setSelectedInvoice}
                         />
                     )}
-
-                    {profilePage === "ordersuccess" && <OrderSuccess setProfilePage={setProfilePage} />}
-                    {isProfilePage("about") && <AboutAerodeck setProfilePage={setProfilePage} />}
-                    {isProfilePage("terms") && <Terms setProfilePage={setProfilePage} />}
-
-                    {isProfilePage("editprofile") && (
-                        <EditProfile
-                            profile={profile}
-                            setProfile={setProfile}
-                            setProfilePage={setProfilePage}
-                        />
+                    {b.profilePage === "ordersuccess" && <OrderSuccess setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("about") && <AboutAerodeck setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("terms") && <Terms setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("editprofile") && (
+                        <EditProfile profile={b.profile} setProfile={b.setProfile} setProfilePage={b.setProfilePage} />
                     )}
-
-                    {isProfilePage("addaddress") && <AddAddress setProfilePage={setProfilePage} />}
-                    {isProfilePage("editaddress") && <EditAddress setProfilePage={setProfilePage} />}
+                    {b.view.isProfile("addaddress") && <AddAddress setProfilePage={b.setProfilePage} />}
+                    {b.view.isProfile("editaddress") && <EditAddress setProfilePage={b.setProfilePage} />}
                 </div>
-
-                {showBottomNav && (
+                {b.view.showBottomNav && (
                     <BottomNav
                         user={user}
-                        selectedBottomTab={selectedBottomTab}
-                        setSelectedBottomTab={setSelectedBottomTab}
-                        setSelectedMenu={setSelectedMenu}
-                        isDetailsOpen={isDetailsOpen}
-                        closeDetails={handleCloseDetails}
-                        setProfilePage={setProfilePage}
+                        selectedBottomTab={b.selectedBottomTab}
+                        setSelectedBottomTab={b.setSelectedBottomTab}
+                        setSelectedMenu={b.setSelectedMenu}
+                        isDetailsOpen={b.isDetailsOpen}
+                        closeDetails={b.handleCloseDetails}
+                        setProfilePage={b.setProfilePage}
                         cartCount={cartCount}
                         setCartCount={setCartCount}
                     />
@@ -648,5 +288,4 @@ function Home({ user, setPage, goTo, cartCount, setCartCount }) {
         </div>
     );
 }
-
-export default Home;
+export default memo(Home);

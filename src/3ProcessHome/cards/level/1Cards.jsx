@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState, useCallback, useMemo, useRef, memo } from "react";
+import { useLocation } from "react-router-dom";
 import "../levelstyle/1Cards.css";
 import ProductCard from "./2ProductCard";
 import Toast from "../../../1hook/hooks/Toast";
@@ -7,7 +7,7 @@ import CardsTab from "./CardsTab";
 import { API } from "../../../services/api";
 
 const TOAST_DURATION = 2000;
-const MIN_CARD_QUANTITY = 50;
+const CARD_QUANTITY = 50;
 
 function productIdOf(product) {
     return String(product.product_id);
@@ -48,6 +48,8 @@ function isPremiumProduct(item) {
     return String(item.product_category || "").trim().toUpperCase() === "PREMIUM";
 }
 
+const fetchJSON = (url) => fetch(url).then((r) => r.json());
+
 function Cards({
     setCartCount,
     onOpenDetails,
@@ -57,31 +59,40 @@ function Cards({
     setCategories,
     setSuggestionData,
 }) {
-    const navigate = useNavigate();
     const location = useLocation();
     const sessionToken = localStorage.getItem("session_token");
 
     const activeTab = location.pathname.includes("/premium") ? "premium" : "regular";
 
     const [products, setProducts] = useState([]);
-    const [savedProducts, setSavedProducts] = useState(new Set());
-    const [likedProducts, setLikedProducts] = useState(new Set());
+    const [savedProducts, setSavedProducts] = useState(() => new Set());
+    const [likedProducts, setLikedProducts] = useState(() => new Set());
     const [cartProducts, setCartProducts] = useState([]);
     const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
-    useEffect(() => {
-        window.history.pushState(null, "", window.location.href);
-        const handlePopState = () => navigate(-1);
-        window.addEventListener("popstate", handlePopState);
-        return () => window.removeEventListener("popstate", handlePopState);
-    }, [navigate]);
+    const toastTimerRef = useRef(null);
 
-    const showToast = (message, type = "success") => {
+    const showToast = useCallback((message, type = "success") => {
+        if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
         setToast({ show: true, message, type });
-        setTimeout(() => setToast({ show: false, message: "", type }), TOAST_DURATION);
-    };
+        toastTimerRef.current = setTimeout(
+            () => setToast({ show: false, message: "", type: "success" }),
+            TOAST_DURATION
+        );
+    }, []);
 
-    const handleSave = async (productId) => {
+    useEffect(() => {
+        return () => {
+            if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+        };
+    }, []);
+
+    const syncCart = useCallback((next) => {
+        setCartProducts(next);
+        setCartCount(next.length);
+    }, [setCartCount]);
+
+    const handleSave = useCallback(async (productId) => {
         const id = String(productId);
         const isSaved = savedProducts.has(id);
 
@@ -101,9 +112,9 @@ function Cards({
         } catch (err) {
             console.error("Save error:", err.message);
         }
-    };
+    }, [savedProducts, sessionToken, showToast]);
 
-    const handleLike = async (productId) => {
+    const handleLike = useCallback(async (productId) => {
         const id = String(productId);
         const isLiked = likedProducts.has(id);
 
@@ -123,9 +134,9 @@ function Cards({
         } catch (err) {
             console.error("Like error:", err.message);
         }
-    };
+    }, [likedProducts, sessionToken, showToast]);
 
-    const handleAddToCart = async (productId) => {
+    const handleAddToCart = useCallback(async (productId) => {
         const id = String(productId);
         const exists = cartProducts.some((i) => String(i.product_id) === id);
 
@@ -135,184 +146,98 @@ function Cards({
         }
 
         try {
-            const res = await fetch(`${API}/api/user/cart`, {
+            const data = await fetch(`${API}/api/user/cart`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     session_token: sessionToken,
                     product_id: id,
-                    quantity: MIN_CARD_QUANTITY,
+                    quantity: CARD_QUANTITY,
                 }),
-            });
-            const data = await res.json();
+            }).then((r) => r.json());
+
             if (!data.success) return;
 
-            const nextCart = [
+            syncCart([
                 ...cartProducts,
-                { product_id: id, quantity: MIN_CARD_QUANTITY },
-            ];
-            setCartProducts(nextCart);
-            setCartCount(nextCart.length);
+                { product_id: id, quantity: CARD_QUANTITY },
+            ]);
             showToast("Added To Cart", "success");
         } catch (err) {
             console.error("Add to cart error:", err.message);
         }
-    };
+    }, [cartProducts, sessionToken, syncCart, showToast]);
 
-    const handleIncreaseQuantity = async (productId) => {
+    const handleRemoveFromCart = useCallback(async (productId) => {
         const id = String(productId);
-        const item = cartProducts.find((i) => String(i.product_id) === id);
-        if (!item) return;
-
-        const newQty = item.quantity + 1;
 
         try {
-            const res = await fetch(`${API}/api/user/cart`, {
-                method: "PUT",
+            const data = await fetch(`${API}/api/user/cart/${id}`, {
+                method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    product_id: id,
-                    quantity: newQty,
-                }),
-            });
-            const data = await res.json();
+                body: JSON.stringify({ session_token: sessionToken }),
+            }).then((r) => r.json());
+
             if (!data.success) return;
 
-            setCartProducts((prev) =>
-                prev.map((i) =>
-                    String(i.product_id) === id ? { ...i, quantity: newQty } : i
-                )
-            );
+            syncCart(cartProducts.filter((i) => String(i.product_id) !== id));
+            showToast("Removed from Cart", "info");
         } catch (err) {
-            console.error("Increase qty error:", err.message);
+            console.error("Remove from cart error:", err.message);
         }
-    };
-
-    const handleDecreaseQuantity = async (productId) => {
-        const id = String(productId);
-        const item = cartProducts.find((i) => String(i.product_id) === id);
-        if (!item) return;
-
-        try {
-            if (item.quantity <= MIN_CARD_QUANTITY) {
-                const res = await fetch(`${API}/api/user/cart/${id}`, {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ session_token: sessionToken }),
-                });
-                const data = await res.json();
-                if (!data.success) return;
-
-                const nextCart = cartProducts.filter(
-                    (i) => String(i.product_id) !== id
-                );
-                setCartProducts(nextCart);
-                setCartCount(nextCart.length);
-                return;
-            }
-
-            const newQty = item.quantity - 1;
-            const res = await fetch(`${API}/api/user/cart`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    session_token: sessionToken,
-                    product_id: id,
-                    quantity: newQty,
-                }),
-            });
-            const data = await res.json();
-            if (!data.success) return;
-
-            setCartProducts((prev) =>
-                prev.map((i) =>
-                    String(i.product_id) === id ? { ...i, quantity: newQty } : i
-                )
-            );
-        } catch (err) {
-            console.error("Decrease qty error:", err.message);
-        }
-    };
+    }, [cartProducts, sessionToken, syncCart, showToast]);
 
     useEffect(() => {
-        async function loadProducts() {
-            try {
-                const res = await fetch(`${API}/api/user/products`);
-                const data = await res.json();
-                if (data.success) {
-                    setProducts(data.data);
-                    setCategories([
-                        "All",
-                        ...new Set(data.data.map((item) => item.product_category)),
-                    ]);
-                    setSuggestionData?.(data.data);
-                }
-            } catch (err) {
-                console.error("Products error:", err.message);
-            }
-        }
+        let cancelled = false;
 
-        async function loadWishlist() {
-            try {
-                const res = await fetch(
-                    `${API}/api/user/wishlist?session_token=${sessionToken}`
-                );
-                const data = await res.json();
-                if (data.success) {
-                    setSavedProducts(
-                        new Set(data.data.map((i) => String(i.product_id)))
-                    );
-                }
-            } catch (err) {
-                console.error("Wishlist error:", err.message);
-            }
-        }
+        Promise.all([
+            fetchJSON(`${API}/api/user/products`).catch((e) => { console.error("Products:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/wishlist?session_token=${sessionToken}`).catch((e) => { console.error("Wishlist:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/likes?session_token=${sessionToken}`).catch((e) => { console.error("Likes:", e.message); return null; }),
+            fetchJSON(`${API}/api/user/cart?session_token=${sessionToken}`).catch((e) => { console.error("Cart:", e.message); return null; }),
+        ]).then(([productsData, wishlistData, likesData, cartData]) => {
+            if (cancelled) return;
 
-        async function loadLikes() {
-            try {
-                const res = await fetch(
-                    `${API}/api/user/likes?session_token=${sessionToken}`
-                );
-                const data = await res.json();
-                if (data.success) {
-                    setLikedProducts(new Set(data.data.map((i) => i.product_id)));
-                }
-            } catch (err) {
-                console.error("Likes error:", err.message);
+            if (productsData?.success) {
+                setProducts(productsData.data);
+                setCategories?.([
+                    "All",
+                    ...new Set(productsData.data.map((item) => item.product_category)),
+                ]);
+                setSuggestionData?.(productsData.data);
             }
-        }
 
-        async function loadCart() {
-            try {
-                const res = await fetch(
-                    `${API}/api/user/cart?session_token=${sessionToken}`
-                );
-                const data = await res.json();
-                if (data.success) {
-                    setCartProducts(data.data);
-                    setCartCount(data.data.length);
-                }
-            } catch (err) {
-                console.error("Cart error:", err.message);
+            if (wishlistData?.success)
+                setSavedProducts(new Set(wishlistData.data.map((i) => String(i.product_id))));
+
+            if (likesData?.success)
+                setLikedProducts(new Set(likesData.data.map((i) => i.product_id)));
+
+            if (cartData?.success) {
+                setCartProducts(cartData.data);
+                setCartCount(cartData.data.length);
             }
-        }
+        });
 
-        loadProducts();
-        loadWishlist();
-        loadLikes();
-        loadCart();
+        return () => { cancelled = true; };
     }, [sessionToken, setCartCount, setCategories, setSuggestionData]);
 
-    const visibleProducts =
-        activeTab === "premium"
+    const cartIdSet = useMemo(() => {
+        const set = new Set();
+        for (const item of cartProducts) {
+            set.add(String(item.product_id));
+        }
+        return set;
+    }, [cartProducts]);
+
+    const finalProducts = useMemo(() => {
+        const keyword = search.toLowerCase();
+
+        const visible = activeTab === "premium"
             ? products.filter(isPremiumProduct)
             : products.filter((item) => !isPremiumProduct(item));
 
-    const finalProducts = (() => {
-        const keyword = search.toLowerCase();
-
-        let list = visibleProducts.filter((product) => {
+        let list = visible.filter((product) => {
             const matchesSearch =
                 !search ||
                 product.product_name?.toLowerCase().includes(keyword) ||
@@ -333,54 +258,53 @@ function Cards({
             list = list.filter((p) => Number(p.product_status) === 1);
         }
         if (filter.sort === "low") {
-            list.sort((a, b) => Number(a.product_price) - Number(b.product_price));
+            list = [...list].sort((a, b) => Number(a.product_price) - Number(b.product_price));
         }
         if (filter.sort === "high") {
-            list.sort((a, b) => Number(b.product_price) - Number(a.product_price));
+            list = [...list].sort((a, b) => Number(b.product_price) - Number(a.product_price));
         }
 
         return list;
-    })();
+    }, [products, activeTab, search, filter]);
+
+    const handleOpenDetails = useCallback(
+        (product) => onOpenDetails(product, "card"),
+        [onOpenDetails]
+    );
+
+    const handleCategoryChange = useCallback(
+        (cat) => setFilter((prev) => ({ ...prev, category: cat })),
+        [setFilter]
+    );
 
     return (
         <section
             className={`cds-section ${activeTab === "premium" ? "cards-premium" : "cards-regular"}`}
         >
             <div className="cds-top-row">
-                <CardsTab
-                    onCategoryChange={(cat) =>
-                        setFilter((prev) => ({ ...prev, category: cat }))
-                    }
-                />
+                <CardsTab onCategoryChange={handleCategoryChange} />
             </div>
 
             {finalProducts.length > 0 ? (
                 <div className="cds-grid">
-                    {finalProducts.map((product) => (
-                        <ProductCard
-                            key={product.product_id}
-                            product={product}
-                            isSaved={savedProducts.has(String(product.product_id))}
-                            isLiked={likedProducts.has(String(product.product_id))}
-                            isAddedToCart={cartProducts.some(
-                                (item) =>
-                                    String(item.product_id) === String(product.product_id)
-                            )}
-                            cartQuantity={
-                                cartProducts.find(
-                                    (item) =>
-                                        String(item.product_id) ===
-                                        String(product.product_id)
-                                )?.quantity || 0
-                            }
-                            onSave={handleSave}
-                            onLike={handleLike}
-                            onAddToCart={handleAddToCart}
-                            onIncreaseQuantity={handleIncreaseQuantity}
-                            onDecreaseQuantity={handleDecreaseQuantity}
-                            onOpenDetails={() => onOpenDetails(product, "card")}
-                        />
-                    ))}
+                    {finalProducts.map((product) => {
+                        const id = String(product.product_id);
+                        const inCart = cartIdSet.has(id);
+                        return (
+                            <ProductCard
+                                key={product.product_id}
+                                product={product}
+                                isSaved={savedProducts.has(id)}
+                                isLiked={likedProducts.has(id)}
+                                isAddedToCart={inCart}
+                                onSave={handleSave}
+                                onLike={handleLike}
+                                onAddToCart={handleAddToCart}
+                                onRemoveFromCart={handleRemoveFromCart}
+                                onOpenDetails={handleOpenDetails}
+                            />
+                        );
+                    })}
                 </div>
             ) : (
                 <div className="cds-empty">
@@ -395,4 +319,4 @@ function Cards({
     );
 }
 
-export default Cards;
+export default memo(Cards);

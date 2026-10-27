@@ -1,4 +1,9 @@
-import { FiSliders, FiAward, FiTruck, FiShield, FiZap, FiCheckCircle, FiStar, FiLock, FiRefreshCw, FiClock, FiGift, FiHeadphones, FiPackage, FiHeart } from "react-icons/fi";
+import { memo } from "react";
+import {
+    FiSliders, FiAward, FiTruck, FiShield, FiZap, FiCheckCircle,
+    FiStar, FiLock, FiRefreshCw, FiClock, FiGift, FiHeadphones,
+    FiPackage, FiHeart,
+} from "react-icons/fi";
 import "../detailStyle/Features.css";
 
 const FEATURES = [
@@ -42,4 +47,4 @@ function Features() {
     );
 }
 
-export default Features;
+export default memo(Features);

@@ -1,7 +1,7 @@
 import { API } from "../../services/api";
 import DetailsData from "./DetailsData";
 import toast from "react-hot-toast";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback, memo } from "react";
 import { FaShareAlt, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { FiArrowLeft, FiX, FiEye } from "react-icons/fi";
 import "../detailStyle/Details.css";
@@ -36,7 +36,13 @@ const isModel3D = (url) =>
 function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onViewAllMedia, onBuyNow }) {
     const sessionToken = localStorage.getItem("session_token");
 
-    const [details, setDetails] = useState(null);
+    const isCard = product?.type === "cards" || product?.type === "card";
+    const isMedicine = product?.type === "medicine";
+    const showLike = !isMedicine;
+    const showSave = true;
+    const showCart = !isCard;
+
+    const [details, setDetails] = useState(() => product?.data || null);
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [cartQuantity, setCartQuantity] = useState(0);
@@ -60,30 +66,61 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
     const [topVideoWasPlaying, setTopVideoWasPlaying] = useState(false);
     const [topVideoThumbnail, setTopVideoThumbnail] = useState(null);
 
-    const isVideo = (img) => img === details?.productDetail?.vdo1;
+    const isVideo = useCallback((img) => img === details?.productDetail?.vdo1, [details?.productDetail?.vdo1]);
 
-    const images = [
-        getImageSource(details || {}, 1),
-        getImageSource(details || {}, 2),
-        getImageSource(details || {}, 3),
-        getImageSource(details || {}, 4),
+    const images = useMemo(() => {
+        return [
+            getImageSource(details || {}, 1),
+            getImageSource(details || {}, 2),
+            getImageSource(details || {}, 3),
+            getImageSource(details || {}, 4),
+            details?.productDetail?.vdo1,
+        ].filter(Boolean);
+    }, [
+        details?.product_image1,
+        details?.gift_image1,
+        details?.shop_image1,
+        details?.medicine_image1,
+        details?.product_image2,
+        details?.gift_image2,
+        details?.shop_image2,
+        details?.medicine_image2,
+        details?.product_image3,
+        details?.gift_image3,
+        details?.shop_image3,
+        details?.medicine_image3,
+        details?.product_image4,
+        details?.gift_image4,
+        details?.shop_image4,
+        details?.medicine_image4,
         details?.productDetail?.vdo1,
-    ].filter(Boolean);
+    ]);
 
-    const openFullscreenImage = (image) => {
+    const openFullscreenImage = useCallback((image) => {
         if (isModel3D(image)) return;
         setFullscreenImage(image);
         setImageZoom(1);
         setPanOffset({ x: 0, y: 0 });
-    };
+    }, []);
 
-    const closeFullscreenImage = () => {
+    const closeFullscreenImage = useCallback(() => {
         setFullscreenImage(null);
         setImageZoom(1);
         setPanOffset({ x: 0, y: 0 });
         setPinchDistance(null);
         setPanStart(null);
-    };
+    }, []);
+
+    useEffect(() => {
+        if (!product?.data) return;
+        const id = getProductId(null, product);
+        if (!id) return;
+
+        fetch(`${API}/api/user/details/${getApiType(product.type)}/${id}`)
+            .then((r) => r.json())
+            .then((result) => { if (result.success) setDetails(result.data); })
+            .catch((err) => console.error("Details fetch error:", err.message));
+    }, [product?.data, product?.type]);
 
     useEffect(() => {
         const source = details || product?.data;
@@ -91,7 +128,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         const firstImage = getImageSource(source, 1) || source.productDetail?.vdo1 || null;
         setSelectedImage(firstImage);
         setCurrentIndex(0);
-    }, [product, details?.product_image1, details?.gift_image1, details?.shop_image1, details?.medicine_image1]);
+    }, [product?.data, details?.product_image1, details?.gift_image1, details?.shop_image1, details?.medicine_image1]);
 
     useEffect(() => {
         const videoSrc = details?.productDetail?.vdo1;
@@ -135,7 +172,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         };
     }, [details?.productDetail?.vdo1]);
 
-    const handleTopVideoPlayPause = () => {
+    const handleTopVideoPlayPause = useCallback(() => {
         const videoEl = topVideoRef.current;
         if (!videoEl) return;
         if (topVideoPlaying) {
@@ -145,13 +182,13 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             videoEl.muted = false;
             videoEl.play().then(() => setTopVideoPlaying(true)).catch((err) => console.error("Play error:", err.message));
         }
-    };
+    }, [topVideoPlaying]);
 
-    const handleTopVideoEnded = () => {
+    const handleTopVideoEnded = useCallback(() => {
         const videoEl = topVideoRef.current;
         if (videoEl) videoEl.currentTime = 0;
         setTopVideoPlaying(false);
-    };
+    }, []);
 
     useEffect(() => {
         if (!topVideoCardRef.current) return;
@@ -187,76 +224,68 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             videoEl.pause();
             setTopVideoPlaying(false);
         }
-    }, [selectedImage]);
-
-    useEffect(() => {
-        if (!product?.data) return;
-        const savedScroll = sessionStorage.getItem("detailsScrollPosition");
-        if (!savedScroll) document.querySelector(".home-content")?.scrollTo({ top: 0, behavior: "smooth" });
-
-        const id = getProductId(null, product);
-        if (!id) return;
-        fetch(`${API}/api/user/details/${getApiType(product.type)}/${id}`)
-            .then((r) => r.json())
-            .then((result) => { if (result.success) setDetails(result.data); })
-            .catch((err) => console.error("Details fetch error:", err.message));
-    }, [product]);
+    }, [selectedImage, isVideo, topVideoPlaying]);
 
     useEffect(() => {
         if (!details || !sessionToken) return;
+
         const productId = getProductId(details);
+        const fetches = [];
 
-        fetch(`${API}/api/user/likes?session_token=${sessionToken}`)
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) setIsLiked(data.data.some((item) => String(item.product_id) === String(productId)));
-            })
-            .catch((err) => console.error("Like status error:", err.message));
-    }, [details, sessionToken]);
+        if (showLike) {
+            fetches.push(
+                fetch(`${API}/api/user/likes?session_token=${sessionToken}`)
+                    .then((r) => r.json())
+                    .then((data) => {
+                        if (data.success) setIsLiked(data.data.some((item) => String(item.product_id) === String(productId)));
+                    })
+                    .catch((err) => console.error("Like status error:", err.message))
+            );
+        }
 
-    useEffect(() => {
-        if (!details || !sessionToken) return;
-        const productId = getProductId(details);
+        if (showSave) {
+            fetches.push(
+                fetch(`${API}/api/user/wishlist?session_token=${encodeURIComponent(sessionToken)}`)
+                    .then((r) => r.json())
+                    .then((data) => {
+                        if (!data.success) return;
+                        setIsSaved(data.data.some((item) => {
+                            const savedId = item.product_id || item.gift_id || item.shop_id || item.medicine_id;
+                            return String(savedId) === String(productId);
+                        }));
+                    })
+                    .catch((err) => console.error("Save status error:", err.message))
+            );
+        }
 
-        fetch(`${API}/api/user/wishlist?session_token=${encodeURIComponent(sessionToken)}`)
-            .then((r) => r.json())
-            .then((data) => {
-                if (!data.success) return;
-                setIsSaved(data.data.some((item) => {
-                    const savedId = item.product_id || item.gift_id || item.shop_id || item.medicine_id;
-                    return String(savedId) === String(productId);
-                }));
-            })
-            .catch((err) => console.error("Save status error:", err.message));
-    }, [details, sessionToken]);
+        if (showCart) {
+            fetches.push(
+                fetch(`${API}/api/user/cart?session_token=${sessionToken}`)
+                    .then((r) => r.json())
+                    .then((data) => {
+                        if (data.success) {
+                            const item = data.data.find((x) => String(x.product_id) === String(productId));
+                            setCartQuantity(item ? item.quantity : 0);
+                        }
+                    })
+                    .catch((err) => console.error("Cart status error:", err.message))
+            );
+        }
 
-    useEffect(() => {
-        if (!details || !sessionToken) return;
-        const productId = getProductId(details);
+        Promise.all(fetches);
+    }, [details, sessionToken, showLike, showSave, showCart]);
 
-        fetch(`${API}/api/user/cart?session_token=${sessionToken}`)
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) {
-                    const item = data.data.find((x) => String(x.product_id) === String(productId));
-                    setCartQuantity(item ? item.quantity : 0);
-                }
-            })
-            .catch((err) => console.error("Cart status error:", err.message));
-    }, [details, sessionToken]);
-
-    const updateLikeCount = (totalLikes) => {
+    const updateLikeCount = useCallback((totalLikes) => {
         setDetails((prev) => ({
             ...prev,
             product_total_likes: totalLikes,
             gift_total_likes: totalLikes,
             shop_total_likes: totalLikes,
-            medicine_total_likes: totalLikes,
         }));
-    };
+    }, []);
 
-    const handleLike = async () => {
-        if (!details) return;
+    const handleLike = useCallback(async () => {
+        if (!details || !showLike) return;
         const productId = getProductId(details);
 
         try {
@@ -276,9 +305,9 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             setIsLiked(!isLiked);
             updateLikeCount(data.totalLikes);
         } catch (err) { console.error("Like error:", err.message); }
-    };
+    }, [details, showLike, isLiked, sessionToken, updateLikeCount]);
 
-    const updateSaveCount = (productId, delta) => {
+    const updateSaveCount = useCallback((productId, delta) => {
         setDetails((prev) => {
             const next = { ...prev };
             if (productId === prev.product_id) next.product_total_saves = Math.max(Number(prev.product_total_saves || 0) + delta, 0);
@@ -287,10 +316,10 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             if (productId === prev.medicine_id) next.medicine_total_saves = Math.max(Number(prev.medicine_total_saves || 0) + delta, 0);
             return next;
         });
-    };
+    }, []);
 
-    const handleSave = async () => {
-        if (!details || !sessionToken) return;
+    const handleSave = useCallback(async () => {
+        if (!details || !sessionToken || !showSave) return;
         const productId = getProductId(details);
         if (!productId) return;
 
@@ -313,14 +342,15 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             setIsSaved(!isSaved);
             updateSaveCount(productId, isSaved ? -1 : 1);
         } catch (err) { console.error("Save error:", err.message); }
-    };
+    }, [details, sessionToken, showSave, isSaved, updateSaveCount]);
 
-    const fetchCartAndUpdateCount = async () => {
+    const fetchCartAndUpdateCount = useCallback(async () => {
         const data = await fetch(`${API}/api/user/cart?session_token=${sessionToken}`).then((r) => r.json());
         if (data.success && setCartCount) setCartCount(data.data.length);
-    };
+    }, [sessionToken, setCartCount]);
 
-    const handleIncreaseCart = async () => {
+    const handleIncreaseCart = useCallback(async () => {
+        if (!showCart) return;
         const productId = getProductId(details);
         const quantity = cartQuantity === 0 ? MIN_QTY : cartQuantity + 1;
 
@@ -333,10 +363,10 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             setCartQuantity(quantity);
             await fetchCartAndUpdateCount();
         } catch (err) { console.error("Cart update error:", err.message); }
-    };
+    }, [showCart, details, cartQuantity, sessionToken, fetchCartAndUpdateCount]);
 
-    const handleDecreaseCart = async () => {
-        if (cartQuantity === 0) return;
+    const handleDecreaseCart = useCallback(async () => {
+        if (!showCart || cartQuantity === 0) return;
         const productId = getProductId(details);
         const quantity = cartQuantity - 1;
 
@@ -358,16 +388,16 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             }
             await fetchCartAndUpdateCount();
         } catch (err) { console.error("Cart update error:", err.message); }
-    };
+    }, [showCart, details, cartQuantity, sessionToken, fetchCartAndUpdateCount]);
 
-    const handleBuyNow = () => {
-        if (!details) return;
+    const handleBuyNow = useCallback(() => {
+        if (!details || !showCart) return;
         const productId = getProductId(details);
         const quantity = cartQuantity > 0 ? cartQuantity : MIN_QTY;
         onBuyNow({ ...details, product_id: productId, quantity }, "products");
-    };
+    }, [details, showCart, cartQuantity, onBuyNow]);
 
-    const handleShare = () => {
+    const handleShare = useCallback(() => {
         toast("Feature Coming Soon 🚀", {
             duration: TOAST_DURATION,
             style: {
@@ -381,51 +411,31 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 boxShadow: "0 8px 24px rgba(162, 155, 254, 0.3)",
             },
         });
-    };
+    }, []);
 
-    const saveScroll = () => {
+    const saveScroll = useCallback(() => {
         const homeContent = document.querySelector(".home-content");
         if (homeContent) sessionStorage.setItem("detailsScrollPosition", homeContent.scrollTop);
-    };
+    }, []);
 
-    const handleViewAll = () => { saveScroll(); onViewAll(); };
-    const handleViewAllMedia = () => { saveScroll(); onViewAllMedia(); };
-
-    useEffect(() => {
-        const handlePopState = () => {
-            if (fullscreenImage) {
-                closeFullscreenImage();
-                window.history.pushState(null, "", window.location.href);
-            }
-        };
-
-        if (fullscreenImage) {
-            window.history.pushState(null, "", window.location.href);
-            window.addEventListener("popstate", handlePopState);
-        }
-
-        return () => window.removeEventListener("popstate", handlePopState);
-    }, [fullscreenImage]);
+    const handleViewAll = useCallback(() => { saveScroll(); onViewAll(); }, [saveScroll, onViewAll]);
+    const handleViewAllMedia = useCallback(() => { saveScroll(); onViewAllMedia(); }, [saveScroll, onViewAllMedia]);
 
     const activeImage = selectedImage || images[0] || null;
     const activeIndex = images.indexOf(activeImage);
 
     const isClothProduct = details?.shop_highlight_text?.trim().toLowerCase().endsWith("~clothes");
 
-    const handleColorSelect = (hex) => {
-        setSelectedColor(hex);
-    };
+    const handleColorSelect = useCallback((hex) => setSelectedColor(hex), []);
 
-    const handleApplyToSkeleton = () => {
+    const handleApplyToSkeleton = useCallback(() => {
         if (selectedColor) setAppliedColor(selectedColor);
-    };
+    }, [selectedColor]);
 
-    const getColoredImageStyle = (img) => {
+    const getColoredImageStyle = useCallback((img) => {
         if (!selectedColor || isVideo(img)) return {};
-        return {
-            "--cloth-color": selectedColor,
-        };
-    };
+        return { "--cloth-color": selectedColor };
+    }, [selectedColor, isVideo]);
 
     return (
         <div className="dt-page">
@@ -521,19 +531,23 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                         <FiArrowLeft />
                     </button>
 
-                    <button className="dt-action-btn" onClick={handleLike}>
-                        {isLiked ? <FaHeart style={{ color: "#ff2d55" }} /> : <FaRegHeart />}
-                        <span>
-                            {details?.product_total_likes ?? details?.gift_total_likes ?? details?.shop_total_likes ?? details?.medicine_total_likes ?? 0}
-                        </span>
-                    </button>
+                    {showLike && (
+                        <button className="dt-action-btn" onClick={handleLike}>
+                            {isLiked ? <FaHeart style={{ color: "#ff2d55" }} /> : <FaRegHeart />}
+                            <span>
+                                {details?.product_total_likes ?? details?.gift_total_likes ?? details?.shop_total_likes ?? 0}
+                            </span>
+                        </button>
+                    )}
 
-                    <button className="dt-action-btn" onClick={handleSave}>
-                        {isSaved ? <FaBookmark /> : <FaRegBookmark />}
-                        <span>
-                            {details?.product_total_saves ?? details?.gift_total_saves ?? details?.shop_total_saves ?? details?.medicine_total_saves ?? 0}
-                        </span>
-                    </button>
+                    {showSave && (
+                        <button className="dt-action-btn" onClick={handleSave}>
+                            {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                            <span>
+                                {details?.product_total_saves ?? details?.gift_total_saves ?? details?.shop_total_saves ?? details?.medicine_total_saves ?? 0}
+                            </span>
+                        </button>
+                    )}
 
                     <button className="dt-action-btn" onClick={handleShare}>
                         <FaShareAlt />
@@ -603,6 +617,9 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 isLiked={isLiked}
                 isSaved={isSaved}
                 cartQuantity={cartQuantity}
+                showLike={showLike}
+                showSave={showSave}
+                showCart={showCart}
                 onSave={handleSave}
                 onIncreaseCart={handleIncreaseCart}
                 onDecreaseCart={handleDecreaseCart}
@@ -697,4 +714,4 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
     );
 }
 
-export default Details;
+export default memo(Details);

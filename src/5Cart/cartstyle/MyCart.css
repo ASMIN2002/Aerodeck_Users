@@ -77,3 +77,51 @@
         gap: 10px
     }
 }
+
+.mycart-skeleton-card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.mycart-skeleton-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background: #e5e7eb;
+    flex-shrink: 0;
+}
+
+.mycart-skeleton-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+}
+
+.mycart-skeleton-line {
+    height: 12px;
+    border-radius: 6px;
+    background: #e5e7eb;
+}
+
+.mycart-skeleton-line.short {
+    width: 60%;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}

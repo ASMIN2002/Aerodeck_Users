@@ -1,11 +1,17 @@
-import { FiHeart, FiBookmark, FiStar } from "react-icons/fi";
+import { memo, useCallback } from "react";
+import { FiStar } from "react-icons/fi";
 import "../levelstyle/2ProductCard.css";
 
-function ProductCard({ product, onOpenDetails = () => { } }) {
+function ProductCard({ product, onOpenDetails }) {
     const {
-        product_status, product_discount_percentage, product_demo_price,
-        product_price, product_image1, product_name, product_category,
-        product_total_likes, product_total_saves, product_description,
+        product_status,
+        product_discount_percentage,
+        product_demo_price,
+        product_price,
+        product_image1,
+        product_name,
+        product_category,
+        product_description,
         product_rating,
     } = product;
 
@@ -15,11 +21,24 @@ function ProductCard({ product, onOpenDetails = () => { } }) {
     const finalPrice = Number(product_price || 0);
     const hasDiscount = discountPercent > 0 && demoPrice > finalPrice;
 
+    const handleClick = useCallback(() => {
+        onOpenDetails?.(product);
+    }, [onOpenDetails, product]);
+
     return (
-        <div className={`pc-card ${isAvailable ? "" : "out-of-stock"}`} onClick={onOpenDetails}>
+        <div
+            className={`pc-card ${isAvailable ? "" : "out-of-stock"}`}
+            onClick={handleClick}
+        >
             <div className="pc-image-box">
                 <div className="pc-image-grid">
-                    <img src={product_image1} alt={product_name} className="pc-image" loading="lazy" />
+                    <img
+                        src={product_image1}
+                        alt={product_name}
+                        className="pc-image"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     {!isAvailable && <span className="pc-oos-overlay">OUT OF STOCK</span>}
                 </div>
                 {isAvailable && hasDiscount && (
@@ -30,10 +49,6 @@ function ProductCard({ product, onOpenDetails = () => { } }) {
             <div className="pc-body">
                 <div className="pc-category-row-information">
                     <span className="pc-category">{product_category}</span>
-                    <div className="pc-stats-row">
-                        <span className="pc-stat likes"><FiHeart /> {product_total_likes || 0}</span>
-                        <span className="pc-stat saves"><FiBookmark /> {product_total_saves || 0}</span>
-                    </div>
                 </div>
 
                 <h3 className="pc-name">{product_name}</h3>
@@ -53,4 +68,11 @@ function ProductCard({ product, onOpenDetails = () => { } }) {
     );
 }
 
-export default ProductCard;
+export default memo(ProductCard, (prev, next) => {
+    return (
+        prev.product.product_id === next.product.product_id &&
+        prev.product.product_status === next.product.product_status &&
+        prev.product.product_price === next.product.product_price &&
+        prev.product.product_discount_percentage === next.product.product_discount_percentage
+    );
+});

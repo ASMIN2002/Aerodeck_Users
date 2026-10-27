@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { FiImage } from "react-icons/fi";
@@ -10,7 +10,7 @@ const SECONDS_PER_DAY = 86400;
 const DAYS_PER_MONTH = 30;
 const MONTHS_PER_YEAR = 12;
 
-function getTimeAgo(uploadDate) {
+const getTimeAgo = (uploadDate) => {
     const diff = Math.floor((Date.now() - new Date(uploadDate)) / 1000);
     if (diff < SECONDS_PER_DAY) return "Today";
     if (diff < SECONDS_PER_DAY * 2) return "Yesterday";
@@ -23,7 +23,7 @@ function getTimeAgo(uploadDate) {
 
     const years = Math.floor(months / MONTHS_PER_YEAR);
     return `${years} year${years > 1 ? "s" : ""} ago`;
-}
+};
 
 function AllMedia({ product_id, onBack }) {
     const navigate = useNavigate();
@@ -33,19 +33,32 @@ function AllMedia({ product_id, onBack }) {
 
     useEffect(() => {
         if (!product_id) return;
+
+        let cancelled = false;
+
         fetch(`${API}/api/user/review/media/${product_id}`)
             .then((r) => r.json())
-            .then((data) => { if (data.success) setImages(data.images || []); })
+            .then((data) => {
+                if (!cancelled && data.success) setImages(data.images || []);
+            })
             .catch((err) => console.error("All media load error:", err.message));
+
+        return () => { cancelled = true; };
     }, [product_id]);
 
-    const handleOpenViewer = (index) => {
+    const handleOpenViewer = useCallback((index) => {
         setSelectedIndex(index);
         setShowViewer(true);
-    };
+    }, []);
 
-    const handleCloseViewer = () => setShowViewer(false);
-    const handleBack = () => (onBack ? onBack() : navigate(-1));
+    const handleCloseViewer = useCallback(() => {
+        setShowViewer(false);
+    }, []);
+
+    const handleBack = useCallback(() => {
+        if (onBack) onBack();
+        else navigate(-1);
+    }, [onBack, navigate]);
 
     return (
         <div className="all-media">
@@ -70,7 +83,13 @@ function AllMedia({ product_id, onBack }) {
                             key={image.media_id}
                             onClick={() => handleOpenViewer(index)}
                         >
-                            <img src={image.image_url} alt="Customer Media" className="all-media-image" loading="lazy" />
+                            <img
+                                src={image.image_url}
+                                alt={image.full_name || "Customer Media"}
+                                className="all-media-image"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         </div>
                     ))}
                 </div>
@@ -88,4 +107,4 @@ function AllMedia({ product_id, onBack }) {
     );
 }
 
-export default AllMedia;
+export default memo(AllMedia);

@@ -1,24 +1,39 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback, memo } from "react";
 import "../detailStyle/3dClothes.css";
 
 function Clothes3D({ colors = [], selectedColor, onSelectColor, appliedColor }) {
     const [rotation, setRotation] = useState(0);
     const dragStart = useRef(null);
+    const rafRef = useRef(null);
 
-    const onTouchStart = (e) => {
+    const onTouchStart = useCallback((e) => {
         dragStart.current = e.touches[0].clientX;
-    };
+    }, []);
 
-    const onTouchMove = (e) => {
+    const onTouchMove = useCallback((e) => {
         if (dragStart.current === null) return;
-        const dx = e.touches[0].clientX - dragStart.current;
-        setRotation((prev) => prev + dx * 0.5);
-        dragStart.current = e.touches[0].clientX;
-    };
+        const clientX = e.touches[0].clientX;
+        if (rafRef.current) return;
 
-    const onTouchEnd = () => {
+        rafRef.current = requestAnimationFrame(() => {
+            const dx = clientX - dragStart.current;
+            setRotation((prev) => prev + dx * 0.5);
+            dragStart.current = clientX;
+            rafRef.current = null;
+        });
+    }, []);
+
+    const onTouchEnd = useCallback(() => {
         dragStart.current = null;
-    };
+        if (rafRef.current) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = null;
+        }
+    }, []);
+
+    const handleColorClick = useCallback((hex) => {
+        onSelectColor?.(hex);
+    }, [onSelectColor]);
 
     return (
         <div className="c3d-inline-box">
@@ -30,7 +45,7 @@ function Clothes3D({ colors = [], selectedColor, onSelectColor, appliedColor }) 
                             key={hex}
                             className={`c3d-color ${selectedColor === hex ? "active" : ""}`}
                             style={{ background: hex }}
-                            onClick={() => onSelectColor && onSelectColor(hex)}
+                            onClick={() => handleColorClick(hex)}
                             aria-label={hex}
                         />
                     ))}
@@ -58,18 +73,9 @@ function Clothes3D({ colors = [], selectedColor, onSelectColor, appliedColor }) 
 
                         {appliedColor && (
                             <>
-                                <div
-                                    className="c3d-shirt c3d-shirt-body"
-                                    style={{ background: appliedColor }}
-                                />
-                                <div
-                                    className="c3d-shirt c3d-shirt-arm-left"
-                                    style={{ background: appliedColor }}
-                                />
-                                <div
-                                    className="c3d-shirt c3d-shirt-arm-right"
-                                    style={{ background: appliedColor }}
-                                />
+                                <div className="c3d-shirt c3d-shirt-body" style={{ background: appliedColor }} />
+                                <div className="c3d-shirt c3d-shirt-arm-left" style={{ background: appliedColor }} />
+                                <div className="c3d-shirt c3d-shirt-arm-right" style={{ background: appliedColor }} />
                             </>
                         )}
                     </div>
@@ -80,4 +86,4 @@ function Clothes3D({ colors = [], selectedColor, onSelectColor, appliedColor }) 
     );
 }
 
-export default Clothes3D;
+export default memo(Clothes3D);

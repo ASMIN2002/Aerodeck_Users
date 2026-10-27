@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import { FiStar, FiMessageSquare } from "react-icons/fi";
 import { API } from "../../services/api";
 import "../detailStyle/Reviews.css";
 
 const MAX_STARS = 5;
 
-function Stars({ rating }) {
+const Stars = memo(function Stars({ rating }) {
     const count = Math.max(0, Math.min(MAX_STARS, Math.round(Number(rating) || 0)));
     return (
         <div className="dt-review-stars">
@@ -14,9 +14,9 @@ function Stars({ rating }) {
             ))}
         </div>
     );
-}
+});
 
-function Avatar({ profile_image, full_name }) {
+const Avatar = memo(function Avatar({ profile_image, full_name }) {
     const [imageError, setImageError] = useState(false);
     const showImage = profile_image && !imageError;
     const initial = full_name?.charAt(0)?.toUpperCase() || "?";
@@ -24,15 +24,22 @@ function Avatar({ profile_image, full_name }) {
     return (
         <div className="dt-review-avatar-wrap">
             {showImage ? (
-                <img src={profile_image} alt={full_name} className="dt-review-avatar-img" onError={() => setImageError(true)} loading="lazy" />
+                <img
+                    src={profile_image}
+                    alt={full_name}
+                    className="dt-review-avatar-img"
+                    onError={() => setImageError(true)}
+                    loading="lazy"
+                    decoding="async"
+                />
             ) : (
                 <div className="dt-review-avatar">{initial}</div>
             )}
         </div>
     );
-}
+});
 
-function EmptyState() {
+const EmptyState = memo(function EmptyState() {
     return (
         <div className="dt-review-card dt-review-empty">
             <FiMessageSquare className="dt-empty-icon" />
@@ -40,24 +47,36 @@ function EmptyState() {
             <p>Be the first to review this product.</p>
         </div>
     );
-}
+});
 
 function Reviews({ onViewAll, product_id }) {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
+        if (!product_id) return;
+
+        let cancelled = false;
+
         fetch(`${API}/api/user/review/top/${product_id}`)
             .then((r) => r.json())
-            .then((data) => { if (data.success) setReviews(data.reviews || []); })
+            .then((data) => {
+                if (!cancelled && data.success) setReviews(data.reviews || []);
+            })
             .catch((err) => console.error("Reviews fetch error:", err.message));
+
+        return () => { cancelled = true; };
     }, [product_id]);
+
+    const handleViewAll = useCallback(() => {
+        if (onViewAll) onViewAll();
+    }, [onViewAll]);
 
     return (
         <div className="dt-reviews">
             <div className="dt-reviews-header">
                 <h4>Ratings & Reviews</h4>
                 {reviews.length > 0 && (
-                    <button type="button" className="dt-view-all" onClick={onViewAll}>
+                    <button type="button" className="dt-view-all" onClick={handleViewAll}>
                         View All
                     </button>
                 )}
@@ -68,8 +87,8 @@ function Reviews({ onViewAll, product_id }) {
                     reviews.map((review, index) => (
                         <div
                             className="dt-review-card"
-                            key={`${review.full_name}-${index}`}
-                            onClick={onViewAll}
+                            key={review.rating_id || `${review.full_name}-${index}`}
+                            onClick={handleViewAll}
                         >
                             <div className="dt-review-top">
                                 <Avatar profile_image={review.profile_image} full_name={review.full_name} />
@@ -89,4 +108,4 @@ function Reviews({ onViewAll, product_id }) {
     );
 }
 
-export default Reviews;
+export default memo(Reviews);

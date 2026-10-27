@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo, useCallback, memo } from "react";
 import { FiPlay, FiPause } from "react-icons/fi";
 import "../detailStyle/PreviewVideo.css";
 
@@ -6,23 +6,26 @@ const THUMBNAIL_QUALITY = 0.7;
 const THUMBNAIL_TIME = 1;
 const SCROLL_THRESHOLD = 0.5;
 
-const toggleSet = (set, value, add) => {
-    const next = new Set(set);
-    add ? next.add(value) : next.delete(value);
-    return next;
-};
-
 const getClientX = (e) => e.touches?.[0]?.clientX ?? e.changedTouches?.[0]?.clientX ?? e.clientX;
 
 function PreviewVideo({ productDetail }) {
-    const videos = [productDetail?.vdo1 || "", productDetail?.vdo2 || "", productDetail?.vdo3 || ""].filter(Boolean);
+    const videos = useMemo(
+        () => [productDetail?.vdo1 || "", productDetail?.vdo2 || "", productDetail?.vdo3 || ""].filter(Boolean),
+        [productDetail?.vdo1, productDetail?.vdo2, productDetail?.vdo3]
+    );
+
     const videoRefs = useRef([]);
     const cardRefs = useRef([]);
+    const wasPlayingBeforeScrollRef = useRef({});
+    const playingIndexRef = useRef(null);
 
     const [playingIndex, setPlayingIndex] = useState(null);
     const [thumbnails, setThumbnails] = useState({});
     const [progress, setProgress] = useState({});
-    const [wasPlayingBeforeScroll, setWasPlayingBeforeScroll] = useState({});
+
+    useEffect(() => {
+        playingIndexRef.current = playingIndex;
+    }, [playingIndex]);
 
     useEffect(() => {
         videos.forEach((video, index) => {
@@ -48,7 +51,7 @@ function PreviewVideo({ productDetail }) {
                 }
             }, { once: true });
         });
-    }, [videos.join(",")]);
+    }, [videos]);
 
     useEffect(() => {
         const observers = [];
@@ -61,18 +64,18 @@ function PreviewVideo({ productDetail }) {
                         if (!videoEl) return;
 
                         if (entry.isIntersecting) {
-                            if (wasPlayingBeforeScroll[index]) {
+                            if (wasPlayingBeforeScrollRef.current[index]) {
                                 videoEl.muted = false;
                                 videoEl.play()
                                     .then(() => {
                                         setPlayingIndex(index);
-                                        setWasPlayingBeforeScroll((p) => ({ ...p, [index]: false }));
+                                        wasPlayingBeforeScrollRef.current[index] = false;
                                     })
                                     .catch(() => { });
                             }
-                        } else if (playingIndex === index && !videoEl.paused) {
+                        } else if (playingIndexRef.current === index && !videoEl.paused) {
                             videoEl.pause();
-                            setWasPlayingBeforeScroll((p) => ({ ...p, [index]: true }));
+                            wasPlayingBeforeScrollRef.current[index] = true;
                             setPlayingIndex(null);
                         }
                     });
@@ -83,24 +86,24 @@ function PreviewVideo({ productDetail }) {
             observers.push(observer);
         });
         return () => observers.forEach((o) => o.disconnect());
-    }, [playingIndex, wasPlayingBeforeScroll, videos.length]);
+    }, [videos.length]);
 
     useEffect(() => {
         return () => videoRefs.current.forEach((v) => { if (v) v.pause(); });
     }, []);
 
-    const handlePlayPause = (index) => {
+    const handlePlayPause = useCallback((index) => {
         const videoEl = videoRefs.current[index];
         if (!videoEl) return;
 
-        if (playingIndex === index) {
+        if (playingIndexRef.current === index) {
             videoEl.pause();
             setPlayingIndex(null);
             return;
         }
 
-        if (playingIndex !== null) {
-            const prevVideo = videoRefs.current[playingIndex];
+        if (playingIndexRef.current !== null) {
+            const prevVideo = videoRefs.current[playingIndexRef.current];
             if (prevVideo) {
                 prevVideo.pause();
                 prevVideo.currentTime = 0;
@@ -111,33 +114,33 @@ function PreviewVideo({ productDetail }) {
         videoEl.play()
             .then(() => setPlayingIndex(index))
             .catch((err) => console.error("Play error:", err.message));
-    };
+    }, []);
 
-    const handleEnded = (index) => {
+    const handleEnded = useCallback((index) => {
         const videoEl = videoRefs.current[index];
         if (videoEl) videoEl.currentTime = 0;
         setPlayingIndex(null);
-    };
+    }, []);
 
-    const handlePause = (index) => {
-        if (playingIndex === index) setPlayingIndex(null);
-    };
+    const handlePause = useCallback((index) => {
+        if (playingIndexRef.current === index) setPlayingIndex(null);
+    }, []);
 
-    const handleTimeUpdate = (index) => {
+    const handleTimeUpdate = useCallback((index) => {
         const videoEl = videoRefs.current[index];
         if (!videoEl || !videoEl.duration) return;
         const percent = (videoEl.currentTime / videoEl.duration) * 100;
         setProgress((prev) => ({ ...prev, [index]: percent || 0 }));
-    };
+    }, []);
 
-    const handleSeek = (index, e) => {
+    const handleSeek = useCallback((index, e) => {
         const videoEl = videoRefs.current[index];
         if (!videoEl) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const x = getClientX(e) - rect.left;
         const percent = Math.max(0, Math.min(1, x / rect.width));
         videoEl.currentTime = percent * videoEl.duration;
-    };
+    }, []);
 
     return (
         <div className="dt-preview">
@@ -163,7 +166,7 @@ function PreviewVideo({ productDetail }) {
                                     className="dt-reel-video"
                                     src={video}
                                     playsInline
-                                    preload="metadata"
+                                    preload="none"
                                     poster={thumbnail}
                                     onPlay={() => setPlayingIndex(index)}
                                     onPause={() => handlePause(index)}
@@ -202,4 +205,4 @@ function PreviewVideo({ productDetail }) {
     );
 }
 
-export default PreviewVideo;
+export default memo(PreviewVideo);

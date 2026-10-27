@@ -1,4 +1,8 @@
-import { FiShield, FiTruck, FiCreditCard, FiGift, FiAward, FiHeart, FiUsers, FiGlobe, FiClock, FiThumbsUp } from "react-icons/fi";
+import { memo } from "react";
+import {
+    FiShield, FiTruck, FiCreditCard, FiGift, FiAward,
+    FiHeart, FiUsers, FiGlobe, FiClock, FiThumbsUp,
+} from "react-icons/fi";
 import "../detailStyle/WhyChoose.css";
 
 const WHY_CHOOSE = [
@@ -39,4 +43,4 @@ function WhyChoose() {
     );
 }
 
-export default WhyChoose;
+export default memo(WhyChoose);

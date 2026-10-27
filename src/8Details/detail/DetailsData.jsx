@@ -1,3 +1,4 @@
+import { useMemo, memo } from "react";
 import PreviewVideo from "./PreviewVideo";
 import Features from "./Features";
 import Information from "./Information";
@@ -15,20 +16,25 @@ const getProductId = (p) =>
 const parseClothColors = (material) => {
     if (!material || !String(material).includes("@")) return [];
     const afterAt = String(material).split("@")[1] || "";
-    return afterAt
-        .split(",")
-        .map((c) => c.trim())
-        .filter(Boolean);
+    return afterAt.split(",").map((c) => c.trim()).filter(Boolean);
 };
 
 function DetailsData({
     product, productDetail, isLiked, isSaved, cartQuantity,
+    showLike, showSave, showCart,
     onLike, onSave, onIncreaseCart, onDecreaseCart, onBuyNow,
     onOpenDetails, onViewAll, onViewAllMedia,
     selectedColor, onSelectColor, appliedColor, isClothProduct,
 }) {
-    const productId = getProductId(product);
-    const clothColors = parseClothColors(productDetail?.material);
+    const productId = useMemo(
+        () => getProductId(product),
+        [product?.product_id, product?.gift_id, product?.shop_id, product?.medicine_id]
+    );
+
+    const clothColors = useMemo(
+        () => parseClothColors(productDetail?.material),
+        [productDetail?.material]
+    );
 
     return (
         <div className="dt-data">
@@ -47,6 +53,10 @@ function DetailsData({
                 product={product}
                 isLiked={isLiked}
                 isSaved={isSaved}
+                showLike={showLike}
+                showSave={showSave}
+                showCart={showCart}
+                onLike={onLike}
                 onSave={onSave}
                 cartQuantity={cartQuantity}
                 onIncreaseCart={onIncreaseCart}
@@ -64,4 +74,4 @@ function DetailsData({
     );
 }
 
-export default DetailsData;
+export default memo(DetailsData);

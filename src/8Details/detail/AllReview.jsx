@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiStar, FiMessageSquare } from "react-icons/fi";
 import { API } from "../../services/api";
@@ -9,7 +9,7 @@ const STAR_FILTERS = [5, 4, 3, 2, 1];
 const getSafeName = (name) => (name?.trim() || "Anonymous");
 const getInitial = (name) => name.charAt(0).toUpperCase();
 
-function Stars({ rating }) {
+const Stars = memo(function Stars({ rating }) {
     const count = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
     return (
         <div className="allreview-stars">
@@ -18,7 +18,7 @@ function Stars({ rating }) {
             ))}
         </div>
     );
-}
+});
 
 function AllReview({ product_id, onBack }) {
     const navigate = useNavigate();
@@ -27,12 +27,17 @@ function AllReview({ product_id, onBack }) {
 
     useEffect(() => {
         if (!product_id) return;
+
+        let cancelled = false;
+
         fetch(`${API}/api/user/review/all/${product_id}`)
             .then((r) => r.json())
             .then((data) => {
-                if (data.success) setReviews(data.reviews || []);
+                if (!cancelled && data.success) setReviews(data.reviews || []);
             })
             .catch((err) => console.error("Reviews load error:", err.message));
+
+        return () => { cancelled = true; };
     }, [product_id]);
 
     const countsByStar = useMemo(() => {
@@ -49,7 +54,12 @@ function AllReview({ product_id, onBack }) {
         [reviews, selectedStar]
     );
 
-    const handleBack = () => (onBack ? onBack() : navigate(-1));
+    const handleBack = useCallback(() => {
+        if (onBack) onBack();
+        else navigate(-1);
+    }, [onBack, navigate]);
+
+    const handleStarFilter = useCallback((star) => setSelectedStar(star), []);
 
     return (
         <div className="allreview-page">
@@ -69,7 +79,7 @@ function AllReview({ product_id, onBack }) {
                             key={star}
                             type="button"
                             className={`allreview-filter ${isActive ? "active" : ""}`}
-                            onClick={() => setSelectedStar(star)}
+                            onClick={() => handleStarFilter(star)}
                         >
                             <span className="allreview-filter-star">
                                 {star} <FiStar />
@@ -85,10 +95,19 @@ function AllReview({ product_id, onBack }) {
                     filteredReviews.map((review, index) => {
                         const safeName = getSafeName(review.full_name);
                         return (
-                            <div className="allreview-card" key={`${safeName}-${index}`}>
+                            <div
+                                className="allreview-card"
+                                key={review.rating_id || `${safeName}-${index}`}
+                            >
                                 <div className="allreview-top">
                                     {review.profile_image ? (
-                                        <img src={review.profile_image} alt={safeName} className="allreview-avatar-img" loading="lazy" />
+                                        <img
+                                            src={review.profile_image}
+                                            alt={safeName}
+                                            className="allreview-avatar-img"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
                                     ) : (
                                         <div className="allreview-avatar">{getInitial(safeName)}</div>
                                     )}
@@ -113,4 +132,4 @@ function AllReview({ product_id, onBack }) {
     );
 }
 
-export default AllReview;
+export default memo(AllReview);

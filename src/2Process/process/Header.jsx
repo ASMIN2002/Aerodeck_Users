@@ -12,6 +12,12 @@ const TAB_LABELS = {
     Profile: "PROFILE",
 };
 
+const MENU_ROUTES = {
+    Shop: "/home/shop",
+    Cards: "/home/cards",
+    Gifts: "/home/gifts",
+};
+
 const STAR_COUNT = 28;
 const STARS = Array.from({ length: STAR_COUNT }, (_, i) => i + 1);
 
@@ -38,7 +44,13 @@ function Header({
         setSelectedBottomTab("Home");
         setSelectedMenu(option.key);
         setIsMenuOpen(false);
-        onReloadHome?.();
+
+        const targetUrl = MENU_ROUTES[option.key];
+        if (targetUrl && pathname !== targetUrl) {
+            navigate(targetUrl);
+        } else {
+            onReloadHome?.();
+        }
     };
 
     const handleComingSoon = (label) => console.log(`${label} Coming Soon!`);
