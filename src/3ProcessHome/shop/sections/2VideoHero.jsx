@@ -3,233 +3,176 @@ import "./2VideoHero.css";
 import { FiVolume2, FiVolumeX, FiPlay, FiPause } from "react-icons/fi";
 import { API } from "../../../services/api";
 
-const MUTE_STORAGE_KEY = "shopVideosMuted";
-const CONTROLS_SELECTOR = ".shop-video-controls";
-
-function getInitialMuted() {
-    const saved = localStorage.getItem(MUTE_STORAGE_KEY);
-    return saved === null ? true : saved === "true";
-}
-
-const getNextIndex = (current, total) => (current + 1) % total;
-const getPrevIndex = (current, total) => (current === 0 ? total - 1 : current - 1);
+const MUTE_KEY = "shopVideosMuted";
+const CTRL = ".shop-video-controls";
+const getMuted = () => {
+    const s = localStorage.getItem(MUTE_KEY);
+    return s === null ? true : s === "true";
+};
+const nextIdx = (c, t) => (c + 1) % t;
+const prevIdx = (c, t) => (c === 0 ? t - 1 : c - 1);
+const isInside = (t) => t.closest(CTRL);
+const poster = (v) => v?.thumbnail_url || v?.poster_url || "";
 
 function VideoHero() {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [isMuted, setIsMuted] = useState(getInitialMuted);
-    const [hasEnded, setHasEnded] = useState(false);
-
+    const [idx, setIdx] = useState(0);
+    const [playing, setPlaying] = useState(false);
+    const [muted, setMuted] = useState(getMuted);
+    const [ended, setEnded] = useState(false);
+    const [showPoster, setShowPoster] = useState(true);
     const videoRef = useRef(null);
     const slideRef = useRef(null);
-    const wasPlayingBeforeScrollRef = useRef(false);
-    const isMutedRef = useRef(isMuted);
-    const hasEndedRef = useRef(hasEnded);
-
-    const dragRef = useRef({
-        active: false,
-        startX: 0,
-        startTime: 0,
-        duration: 0,
-        raf: null,
-    });
+    const resumeRef = useRef(false);
+    const mutedRef = useRef(muted);
+    const endedRef = useRef(ended);
+    const drag = useRef({ active: false, x: 0, t: 0, d: 0, raf: null });
 
     useEffect(() => {
-        let cancelled = false;
-        const fetchVideos = async () => {
+        let cancel = false;
+        (async () => {
             try {
-                setLoading(true);
-                const res = await fetch(`${API}/api/videohero/active`);
-                const data = await res.json();
-                if (!cancelled && data.success) setVideos(data.data || []);
-            } catch (err) {
-                console.error("Video fetch error:", err.message);
-            } finally {
-                if (!cancelled) setLoading(false);
-            }
-        };
-        fetchVideos();
-        return () => { cancelled = true; };
+                const r = await fetch(`${API}/api/videohero/active`);
+                const j = await r.json();
+                if (!cancel && j.success) setVideos(j.data || []);
+            } catch (e) { console.error(e.message); }
+            finally { if (!cancel) setLoading(false); }
+        })();
+        return () => { cancel = true; };
     }, []);
 
     useEffect(() => {
-        isMutedRef.current = isMuted;
-        localStorage.setItem(MUTE_STORAGE_KEY, String(isMuted));
-        if (videoRef.current) videoRef.current.muted = isMuted;
-    }, [isMuted]);
+        mutedRef.current = muted;
+        localStorage.setItem(MUTE_KEY, String(muted));
+        if (videoRef.current) videoRef.current.muted = muted;
+    }, [muted]);
+
+    useEffect(() => { endedRef.current = ended; }, [ended]);
 
     useEffect(() => {
-        hasEndedRef.current = hasEnded;
-    }, [hasEnded]);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video || videos.length === 0) return;
-        if (hasEnded) {
-            video.pause();
-            return;
-        }
-        if (isPlaying) {
-            video.muted = isMutedRef.current;
-            video.play().catch(() => { });
+        const v = videoRef.current;
+        if (!v || !videos.length) return;
+        if (ended) { v.pause(); setShowPoster(true); return; }
+        if (playing) {
+            v.muted = mutedRef.current;
+            v.play().then(() => setShowPoster(false)).catch(() => { });
         } else {
-            video.pause();
+            v.pause();
         }
-    }, [currentIndex, isPlaying, videos, hasEnded]);
+    }, [idx, playing, videos, ended]);
 
     useEffect(() => {
-        const slide = slideRef.current;
-        if (!slide) return;
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    const video = videoRef.current;
-                    if (!video) return;
-                    if (entry.isIntersecting) {
-                        if (wasPlayingBeforeScrollRef.current && !hasEndedRef.current) {
-                            video.muted = isMutedRef.current;
-                            video.play()
-                                .then(() => {
-                                    setIsPlaying(true);
-                                    wasPlayingBeforeScrollRef.current = false;
-                                })
-                                .catch(() => { });
-                        }
-                    } else if (!video.paused) {
-                        video.pause();
-                        setIsPlaying(false);
-                        wasPlayingBeforeScrollRef.current = true;
+        const s = slideRef.current;
+        if (!s) return;
+        const io = new IntersectionObserver((es) => {
+            es.forEach((e) => {
+                const v = videoRef.current;
+                if (!v) return;
+                if (e.isIntersecting) {
+                    if (resumeRef.current && !endedRef.current) {
+                        v.muted = mutedRef.current;
+                        v.play().then(() => { setPlaying(true); setShowPoster(false); resumeRef.current = false; }).catch(() => { });
                     }
-                });
-            },
-            { threshold: 0.5 }
-        );
-        observer.observe(slide);
-        return () => observer.disconnect();
+                } else if (!v.paused) {
+                    v.pause(); setPlaying(false); setShowPoster(true); resumeRef.current = true;
+                }
+            });
+        }, { threshold: 0.5 });
+        io.observe(s);
+        return () => io.disconnect();
     }, []);
 
-    const handlePlayPause = useCallback(() => {
-        const video = videoRef.current;
-        if (!video) return;
-        if (isPlaying && !video.paused) {
-            video.pause();
-            setIsPlaying(false);
-        } else {
-            if (hasEnded) {
-                video.currentTime = 0;
-                setHasEnded(false);
+    useEffect(() => {
+        const onScroll = () => {
+            const v = videoRef.current;
+            if (v && !v.paused) {
+                v.pause();
+                setPlaying(false);
+                setShowPoster(true);
+                resumeRef.current = false;
             }
-            video.muted = isMutedRef.current;
-            video.play()
-                .then(() => setIsPlaying(true))
-                .catch(() => { });
-        }
-    }, [isPlaying, hasEnded]);
-
-    const toggleMute = useCallback(() => setIsMuted((prev) => !prev), []);
-
-    const handleVideoEnd = useCallback(() => {
-        setIsPlaying(false);
-        setHasEnded(true);
-    }, []);
-
-    const goToVideo = useCallback((index) => {
-        setCurrentIndex(index);
-        setIsPlaying(false);
-        setHasEnded(false);
-    }, []);
-
-    const getDeltaTime = (clientX) => {
-        const slide = slideRef.current;
-        if (!slide) return 0;
-        const rect = slide.getBoundingClientRect();
-        const deltaX = clientX - dragRef.current.startX;
-        return (deltaX / rect.width) * dragRef.current.duration;
-    };
-
-    const handleDragStart = (clientX) => {
-        const video = videoRef.current;
-        if (!video || !video.duration) return;
-        dragRef.current = {
-            active: true,
-            startX: clientX,
-            startTime: video.currentTime,
-            duration: video.duration,
-            raf: null,
         };
-    };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
 
-    const handleDragMove = (clientX) => {
-        if (!dragRef.current.active) return;
-        if (dragRef.current.raf) return;
-        dragRef.current.raf = requestAnimationFrame(() => {
-            const video = videoRef.current;
-            if (!video) { dragRef.current.raf = null; return; }
-            const deltaTime = getDeltaTime(clientX);
-            const newTime = dragRef.current.startTime + deltaTime;
-            if (newTime >= video.duration || newTime <= 0) {
-                dragRef.current.active = false;
-            } else {
-                video.currentTime = newTime;
-            }
-            dragRef.current.raf = null;
+    const togglePlay = useCallback(() => {
+        const v = videoRef.current;
+        if (!v) return;
+        if (playing && !v.paused) {
+            v.pause(); setPlaying(false); setShowPoster(true);
+        } else {
+            if (ended) { v.currentTime = 0; setEnded(false); }
+            v.muted = mutedRef.current;
+            setShowPoster(false);
+            v.play().then(() => setPlaying(true)).catch(() => { setShowPoster(true); });
+        }
+    }, [playing, ended]);
+
+    const toggleMute = useCallback(() => setMuted((p) => !p), []);
+    const onEnd = useCallback(() => { setPlaying(false); setEnded(true); setShowPoster(true); }, []);
+    const goTo = useCallback((i) => {
+        const v = videoRef.current;
+        if (v) { v.pause(); v.currentTime = 0; }
+        setIdx(i);
+        setPlaying(false);
+        setEnded(false);
+        setShowPoster(true);
+    }, []);
+
+    const delta = (cx) => {
+        const s = slideRef.current;
+        if (!s) return 0;
+        return ((cx - drag.current.x) / s.getBoundingClientRect().width) * drag.current.d;
+    };
+    const dragStart = (cx) => {
+        const v = videoRef.current;
+        if (!v || !v.duration) return;
+        drag.current = { active: true, x: cx, t: v.currentTime, d: v.duration, raf: null };
+    };
+    const dragMove = (cx) => {
+        if (!drag.current.active || drag.current.raf) return;
+        drag.current.raf = requestAnimationFrame(() => {
+            const v = videoRef.current;
+            if (!v) { drag.current.raf = null; return; }
+            const nt = drag.current.t + delta(cx);
+            if (nt >= v.duration || nt <= 0) drag.current.active = false;
+            else v.currentTime = nt;
+            drag.current.raf = null;
         });
     };
-
-    const handleDragEnd = () => {
-        dragRef.current.active = false;
-        if (dragRef.current.raf) {
-            cancelAnimationFrame(dragRef.current.raf);
-            dragRef.current.raf = null;
-        }
+    const dragEnd = () => {
+        drag.current.active = false;
+        if (drag.current.raf) { cancelAnimationFrame(drag.current.raf); drag.current.raf = null; }
     };
-
-    const isInsideControls = (target) => target.closest(CONTROLS_SELECTOR);
-
     const onTouchStart = (e) => {
-        if (e.touches.length !== 1) return;
-        if (isInsideControls(e.target)) return;
-        handleDragStart(e.touches[0].clientX);
+        if (e.touches.length !== 1 || isInside(e.target)) return;
+        dragStart(e.touches[0].clientX);
     };
-
     const onTouchMove = (e) => {
-        if (e.touches.length !== 1) return;
-        if (!dragRef.current.active) return;
-        handleDragMove(e.touches[0].clientX);
+        if (e.touches.length !== 1 || !drag.current.active) return;
+        dragMove(e.touches[0].clientX);
     };
-
     const onMouseDown = (e) => {
-        if (isInsideControls(e.target)) return;
+        if (isInside(e.target)) return;
         e.preventDefault();
-        handleDragStart(e.clientX);
-        const moveHandler = (ev) => handleDragMove(ev.clientX);
-        const upHandler = () => {
-            handleDragEnd();
-            document.removeEventListener("mousemove", moveHandler);
-            document.removeEventListener("mouseup", upHandler);
-        };
-        document.addEventListener("mousemove", moveHandler);
-        document.addEventListener("mouseup", upHandler);
+        dragStart(e.clientX);
+        const mv = (ev) => dragMove(ev.clientX);
+        const up = () => { dragEnd(); document.removeEventListener("mousemove", mv); document.removeEventListener("mouseup", up); };
+        document.addEventListener("mousemove", mv);
+        document.addEventListener("mouseup", up);
     };
 
-    useEffect(() => {
-        return () => {
-            if (dragRef.current.raf) cancelAnimationFrame(dragRef.current.raf);
-        };
-    }, []);
+    useEffect(() => () => { if (drag.current.raf) cancelAnimationFrame(drag.current.raf); }, []);
 
     if (loading) return null;
-
-    const currentVideo = videos[currentIndex];
+    const cur = videos[idx];
+    const p = poster(cur);
 
     return (
         <section className="shop-video-section">
-            <div className="heepit-intro">
-                <h2>Hey! Welcome to Heepit</h2>
-            </div>
-
+            <div className="heepit-intro"><h2>Hey! Welcome to Heepit</h2></div>
             {videos.length === 0 ? (
                 <div className="shop-video-empty">
                     <div className="shop-video-empty-icon">🎬</div>
@@ -238,90 +181,56 @@ function VideoHero() {
                 </div>
             ) : (
                 <>
-                    <div className="shop-video-info-row" key={currentIndex}>
-                        <span className="shop-video-info-name infodtat">{currentVideo?.name}</span>
+                    <div className="shop-video-info-row" key={idx}>
+                        <span className="shop-video-info-name infodtat">{cur?.name}</span>
                         <span className="shop-video-info-date infodtat">
-                            {new Date(currentVideo?.created_at).toLocaleDateString("en-IN", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                            })}
+                            {new Date(cur?.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
                         </span>
-                        <span className="shop-video-info-frontview infodtat">{currentVideo?.frontview}</span>
+                        <span className="shop-video-info-frontview infodtat">{cur?.frontview}</span>
                     </div>
                     <div className="shop-video-scroll">
-                        <div
-                            className="shop-video-slide"
-                            ref={slideRef}
-                            onTouchStart={onTouchStart}
-                            onTouchMove={onTouchMove}
-                            onTouchEnd={handleDragEnd}
-                            onMouseDown={onMouseDown}
-                        >
-                            <video
-                                key={currentVideo?.id || currentIndex}
-                                ref={videoRef}
-                                src={currentVideo?.video_url}
-                                muted
-                                playsInline
-                                preload="none"
-                                poster={currentVideo?.thumbnail_url || currentVideo?.poster_url}
-                                onEnded={handleVideoEnd}
-                                onClick={handlePlayPause}
-                            />
-
+                        <div className="shop-video-slide" ref={slideRef}
+                            onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={dragEnd}
+                            onMouseDown={onMouseDown}>
+                            <video key={cur?.id || idx} ref={videoRef}
+                                src={cur?.video_url} muted playsInline preload="none"
+                                poster={p}
+                                onEnded={onEnd} onClick={togglePlay}
+                                onCanPlay={() => { if (playing) setShowPoster(false); }} />
+                            {showPoster && (
+                                <div className="shop-video-thumb" onClick={togglePlay}>
+                                    {p ? <img className="shop-video-thumb-img" src={p} alt={cur?.name || ""} loading="lazy" /> : null}
+                                    <div className="shop-video-thumb-overlay">
+                                        <span className="shop-video-thumb-play">▶</span>
+                                        <span className="shop-video-thumb-text">Click to watch</span>
+                                    </div>
+                                </div>
+                            )}
                             <div className="shop-video-controls">
-                                <button
-                                    type="button"
-                                    className={`shop-video-btn shop-video-btn-tl ${isPlaying ? "active" : ""}`}
-                                    onClick={handlePlayPause}
-                                    aria-label={isPlaying ? "Pause" : "Play"}
-                                >
-                                    {isPlaying ? <FiPause /> : <FiPlay />}
+                                <button type="button" className={`shop-video-btn shop-video-btn-tl ${playing ? "active" : ""}`}
+                                    onClick={togglePlay} aria-label={playing ? "Pause" : "Play"}>
+                                    {playing ? <FiPause /> : <FiPlay />}
                                 </button>
-
-                                <button
-                                    type="button"
-                                    className={`shop-video-btn shop-video-btn-tr ${!isMuted ? "active" : ""}`}
-                                    onClick={toggleMute}
-                                    aria-label={isMuted ? "Unmute" : "Mute"}
-                                >
-                                    {isMuted ? <FiVolumeX /> : <FiVolume2 />}
+                                <button type="button" className={`shop-video-btn shop-video-btn-tr ${!muted ? "active" : ""}`}
+                                    onClick={toggleMute} aria-label={muted ? "Unmute" : "Mute"}>
+                                    {muted ? <FiVolumeX /> : <FiVolume2 />}
                                 </button>
-
                                 {videos.length > 1 && (
-                                    <button
-                                        type="button"
-                                        className="shop-video-btn shop-video-btn-bl"
-                                        onClick={() => goToVideo(getPrevIndex(currentIndex, videos.length))}
-                                        aria-label="Previous"
-                                    >
-                                        ‹
-                                    </button>
+                                    <button type="button" className="shop-video-btn shop-video-btn-bl"
+                                        onClick={() => goTo(prevIdx(idx, videos.length))} aria-label="Previous">‹</button>
                                 )}
-
                                 {videos.length > 1 && (
-                                    <button
-                                        type="button"
-                                        className="shop-video-btn shop-video-btn-br"
-                                        onClick={() => goToVideo(getNextIndex(currentIndex, videos.length))}
-                                        aria-label="Next"
-                                    >
-                                        ›
-                                    </button>
+                                    <button type="button" className="shop-video-btn shop-video-btn-br"
+                                        onClick={() => goTo(nextIdx(idx, videos.length))} aria-label="Next">›</button>
                                 )}
                             </div>
                         </div>
                     </div>
-
                     {videos.length > 1 && (
                         <div className="shop-video-dots">
-                            {videos.map((video, i) => (
-                                <span
-                                    key={video.id}
-                                    className={`shop-video-dot ${currentIndex === i ? "active" : ""}`}
-                                    onClick={() => goToVideo(i)}
-                                />
+                            {videos.map((v, i) => (
+                                <span key={v.id} className={`shop-video-dot ${idx === i ? "active" : ""}`}
+                                    onClick={() => goTo(i)} />
                             ))}
                         </div>
                     )}

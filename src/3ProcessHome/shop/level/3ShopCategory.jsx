@@ -1,4 +1,5 @@
 import { useMemo, useCallback } from "react";
+import "../levelstyle/3ShopCategory.css";
 import ShopCard from "./2ShopCard";
 
 function ShopCategory({

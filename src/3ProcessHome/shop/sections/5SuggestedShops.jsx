@@ -1,7 +1,6 @@
 import { useMemo, useCallback, useState, useEffect, memo } from "react";
-import { FiArrowRight } from "react-icons/fi";
 import "./5SuggestedShops.css";
-
+const MAX_SUGGESTED = 15;
 function shuffleInPlace(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -9,31 +8,25 @@ function shuffleInPlace(arr) {
     }
     return arr;
 }
-
 function buildSuggestions(shops) {
     const good = [];
     const medium = [];
     const veryLow = [];
-
     for (const shop of shops) {
         const rating = Number(shop.shop_rating || 0);
         if (rating > 3.5) good.push(shop);
         else if (rating > 1) medium.push(shop);
         else veryLow.push(shop);
     }
-
     const selected = [
-        ...shuffleInPlace(good).slice(0, 15),
-        ...shuffleInPlace(medium).slice(0, 2),
+        ...shuffleInPlace(good).slice(0, 9),
+        ...shuffleInPlace(medium).slice(0, 3),
         ...shuffleInPlace(veryLow).slice(0, 3),
     ];
-
-    return shuffleInPlace(selected);
+    return shuffleInPlace(selected).slice(0, MAX_SUGGESTED);
 }
-
 function SuggestedShops({ shops, onOpenDetails, onOpenAllShops }) {
     const [suggestedShops, setSuggestedShops] = useState([]);
-
     useEffect(() => {
         if (!shops || shops.length === 0) {
             setSuggestedShops([]);
@@ -41,25 +34,20 @@ function SuggestedShops({ shops, onOpenDetails, onOpenAllShops }) {
         }
         setSuggestedShops(buildSuggestions(shops));
     }, [shops]);
-
     const handleOpen = useCallback(
         (shop) => onOpenDetails(shop, "shop"),
         [onOpenDetails]
     );
-
     const animationDelays = useMemo(
         () => suggestedShops.map((_, i) => ({ animationDelay: `${i * 0.04}s` })),
         [suggestedShops.length]
     );
-
     if (suggestedShops.length === 0) return null;
-
     return (
         <section className="shop-suggested-section">
             <div className="shop-section-title">
                 <h4>Suggested For You</h4>
             </div>
-
             <div className="shop-suggested-scroll">
                 <div className="shop-suggested-grid">
                     {suggestedShops.map((shop, index) => {
@@ -89,7 +77,6 @@ function SuggestedShops({ shops, onOpenDetails, onOpenAllShops }) {
                                         </span>
                                     )}
                                 </div>
-
                                 <div className="shop-suggested-info">
                                     <span className="shop-suggested-name">{shop.shop_name}</span>
                                     <div className="shop-suggested-price">
@@ -105,5 +92,4 @@ function SuggestedShops({ shops, onOpenDetails, onOpenAllShops }) {
         </section>
     );
 }
-
 export default memo(SuggestedShops);

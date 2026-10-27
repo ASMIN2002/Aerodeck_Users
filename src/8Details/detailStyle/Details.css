@@ -517,3 +517,70 @@
 .dt-thumb-model3d.active {
     border-color: #3b82f6;
 }
+
+.dt-related-skeleton {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.dt-related-skeleton-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #e5e7eb;
+    border-radius: 8px;
+}
+
+.dt-related-skeleton-body {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dt-related-skeleton-line {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 4px;
+}
+
+.dt-related-skeleton-line.short {
+    width: 60%;
+}
+
+.dt-related-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.dt-related-empty-icon {
+    font-size: 48px;
+    color: #ccc;
+    margin-bottom: 12px;
+}
+
+.dt-related-empty h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.dt-related-empty p {
+    font-size: 13px;
+    color: #999;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}

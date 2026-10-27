@@ -9,18 +9,16 @@ import Media from "./Media";
 import ProductSummary from "./ProductSummary";
 import Clothes3D from "./3dClothes";
 import "../detailStyle/DetailsData.css";
-
 const getProductId = (p) =>
     p?.product_id || p?.gift_id || p?.shop_id || p?.medicine_id || null;
-
 const parseClothColors = (material) => {
     if (!material || !String(material).includes("@")) return [];
     const afterAt = String(material).split("@")[1] || "";
     return afterAt.split(",").map((c) => c.trim()).filter(Boolean);
 };
-
 function DetailsData({
-    product, productDetail, isLiked, isSaved, cartQuantity,
+    product, productDetail, productType,
+    isLiked, isSaved, cartQuantity,
     showLike, showSave, showCart,
     onLike, onSave, onIncreaseCart, onDecreaseCart, onBuyNow,
     onOpenDetails, onViewAll, onViewAllMedia,
@@ -30,12 +28,10 @@ function DetailsData({
         () => getProductId(product),
         [product?.product_id, product?.gift_id, product?.shop_id, product?.medicine_id]
     );
-
     const clothColors = useMemo(
         () => parseClothColors(productDetail?.material),
         [productDetail?.material]
     );
-
     return (
         <div className="dt-data">
             {isClothProduct && clothColors.length > 0 && (
@@ -48,7 +44,6 @@ function DetailsData({
                     />
                 </div>
             )}
-
             <ProductSummary
                 product={product}
                 isLiked={isLiked}
@@ -69,9 +64,8 @@ function DetailsData({
             <Media product_id={productId} onViewAll={onViewAllMedia} />
             <Features />
             <WhyChoose />
-            <RelatedProducts product={product} onOpenDetails={onOpenDetails} onViewAll={onViewAll} />
+            <RelatedProducts product={product} productType={productType} onOpenDetails={onOpenDetails} />
         </div>
     );
 }
-
 export default memo(DetailsData);
