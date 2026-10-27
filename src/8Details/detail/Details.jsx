@@ -68,6 +68,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
 
     const isVideo = useCallback((img) => img === details?.productDetail?.vdo1, [details?.productDetail?.vdo1]);
 
+    // ✅ FIX: useMemo deps [details] — images 4 + video 1
     const images = useMemo(() => {
         return [
             getImageSource(details || {}, 1),
@@ -76,25 +77,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
             getImageSource(details || {}, 4),
             details?.productDetail?.vdo1,
         ].filter(Boolean);
-    }, [
-        details?.product_image1,
-        details?.gift_image1,
-        details?.shop_image1,
-        details?.medicine_image1,
-        details?.product_image2,
-        details?.gift_image2,
-        details?.shop_image2,
-        details?.medicine_image2,
-        details?.product_image3,
-        details?.gift_image3,
-        details?.shop_image3,
-        details?.medicine_image3,
-        details?.product_image4,
-        details?.gift_image4,
-        details?.shop_image4,
-        details?.medicine_image4,
-        details?.productDetail?.vdo1,
-    ]);
+    }, [details]);
 
     const openFullscreenImage = useCallback((image) => {
         if (isModel3D(image)) return;
@@ -128,7 +111,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
         const firstImage = getImageSource(source, 1) || source.productDetail?.vdo1 || null;
         setSelectedImage(firstImage);
         setCurrentIndex(0);
-    }, [product?.data, details?.product_image1, details?.gift_image1, details?.shop_image1, details?.medicine_image1]);
+    }, [details?.product_image1, details?.gift_image1, details?.shop_image1, details?.medicine_image1, details?.productDetail?.vdo1]);
 
     useEffect(() => {
         const videoSrc = details?.productDetail?.vdo1;
@@ -620,6 +603,7 @@ function Details({ product, onBack, setCartCount, onOpenDetails, onViewAll, onVi
                 showLike={showLike}
                 showSave={showSave}
                 showCart={showCart}
+                onLike={handleLike}
                 onSave={handleSave}
                 onIncreaseCart={handleIncreaseCart}
                 onDecreaseCart={handleDecreaseCart}
