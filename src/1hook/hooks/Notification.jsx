@@ -22,11 +22,18 @@ function Notification({ onClose, onRedeemHandled }) {
     const [expandedId, setExpandedId] = useState(null);
 
     useEffect(() => {
-        const loadRewards = async () => {
+        const loadAll = async () => {
             try {
-                const res = await fetch(`${API}/api/user/rewards?session_token=${getSession()}`);
-                const { success, data } = await res.json();
-                if (success && data) {
+                const [rewardsRes, notifRes] = await Promise.all([
+                    fetch(`${API}/api/user/rewards?session_token=${getSession()}`),
+                    fetch(`${API}/api/user/notification/all`)
+                ]);
+
+                const rewardsJson = await rewardsRes.json();
+                const notifJson = await notifRes.json();
+
+                if (rewardsJson.success && rewardsJson.data) {
+                    const data = rewardsJson.data;
                     setRewards({
                         reqUserId: data.req_userid || 0,
                         redeemed: data.redeemed === 1,
@@ -36,20 +43,18 @@ function Notification({ onClose, onRedeemHandled }) {
                         usedRedeemed: data.used_redeemed || 0,
                     });
                 }
-            } catch (err) { console.error(err); }
+
+                if (notifJson.success) {
+                    setNotifications((notifJson.data || []).filter((n) => Number(n.status) === ACTIVE_STATUS));
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
         };
 
-        const loadNotifications = async () => {
-            try {
-                const res = await fetch(`${API}/api/user/notification/all`);
-                const { success, data } = await res.json();
-                if (success) setNotifications((data || []).filter((n) => Number(n.status) === ACTIVE_STATUS));
-            } catch (err) { console.error(err); }
-            finally { setLoading(false); }
-        };
-
-        loadRewards();
-        loadNotifications();
+        loadAll();
     }, []);
 
     const handleRedeemAction = async (action) => {
@@ -85,11 +90,23 @@ function Notification({ onClose, onRedeemHandled }) {
                             <span className="hd-notif-count-label">Total</span>
                             <span className="hd-notif-count-value">{notifications.length}</span>
                         </div>
-                        <button className="hd-notif-close" onClick={onClose}>✕</button>
+                        <button className="hd-notif-close" onClick={onClose} aria-label="Close">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
-                {reqUserId > 0 && (
+                {loading && (
+                    <div className="hd-notif-pinned hd-notif-pinned-skeleton" aria-hidden="true">
+                        <div className="hd-notif-skel-line" />
+                        <div className="hd-notif-skel-line short" />
+                    </div>
+                )}
+
+                {!loading && reqUserId > 0 && (
                     <div className="hd-notif-pinned">
                         {!redeemed ? (
                             <div className="hd-notif-action-box">
@@ -97,8 +114,19 @@ function Notification({ onClose, onRedeemHandled }) {
                                     <strong>{requesterEmail ? maskEmail(requesterEmail) : "Someone"}</strong> wants to redeem your promo code.
                                 </div>
                                 <div className="hd-notif-actions">
-                                    <button className="hd-notif-accept" onClick={() => handleRedeemAction(APPROVED)}>✓ Accept</button>
-                                    <button className="hd-notif-ignore" onClick={() => handleRedeemAction(REJECTED)}>✕ Ignore</button>
+                                    <button className="hd-notif-accept" onClick={() => handleRedeemAction(APPROVED)}>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                        <span>Accept</span>
+                                    </button>
+                                    <button className="hd-notif-ignore" onClick={() => handleRedeemAction(REJECTED)}>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                        <span>Ignore</span>
+                                    </button>
                                 </div>
                             </div>
                         ) : (
@@ -110,7 +138,7 @@ function Notification({ onClose, onRedeemHandled }) {
                     </div>
                 )}
 
-                {usedOwnerId > 0 && (
+                {!loading && usedOwnerId > 0 && (
                     <div className="hd-notif-pinned hd-notif-pinned-used">
                         {usedRedeemed === 1 ? (
                             <div className="hd-notif-line hd-notif-line-approved">
@@ -125,7 +153,13 @@ function Notification({ onClose, onRedeemHandled }) {
                 )}
 
                 <div className="hd-notif-list-wrap">
-                    {loading && <div className="hd-notif-empty"><p>Loading...</p></div>}
+                    {loading && (
+                        <div className="hd-notif-list">
+                            <div className="hd-notif-item hd-notif-item-skeleton"><div className="hd-notif-skel-line" /><div className="hd-notif-skel-line short" /></div>
+                            <div className="hd-notif-item hd-notif-item-skeleton"><div className="hd-notif-skel-line" /><div className="hd-notif-skel-line short" /></div>
+                            <div className="hd-notif-item hd-notif-item-skeleton"><div className="hd-notif-skel-line" /><div className="hd-notif-skel-line short" /></div>
+                        </div>
+                    )}
 
                     {!loading && notifications.length > 0 && (
                         <div className="hd-notif-list">
@@ -144,7 +178,13 @@ function Notification({ onClose, onRedeemHandled }) {
 
                     {isEmpty && (
                         <div className="hd-notif-empty">
-                            <span>🔕</span>
+                            <span>
+                                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                                    <line x1="1" y1="1" x2="23" y2="23" />
+                                </svg>
+                            </span>
                             <p>No Notifications</p>
                         </div>
                     )}

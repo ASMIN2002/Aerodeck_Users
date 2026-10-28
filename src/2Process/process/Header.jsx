@@ -81,10 +81,13 @@ function Header({
                                 onComingSoon={handleComingSoon}
                             />
                         ) : (
-                            <div className="hd-mode-label">{modeLabel}</div>
+                            <div className="hd-mode-label">
+                                <span className="hd-mode-label-text">{modeLabel}</span>
+                            </div>
                         )}
 
                         <button
+                            type="button"
                             className="hd-notif-btn"
                             onClick={handleOpenNotif}
                             aria-label="Notifications"

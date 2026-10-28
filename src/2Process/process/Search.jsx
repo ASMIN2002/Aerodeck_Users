@@ -116,6 +116,9 @@ function Search({ selectedMenu, search, setSearch, filter, setFilter, cards, gif
         <div className="sr-container" ref={srRef}>
             <div className="sr-top-row">
                 <div className="sr-search-box">
+                    <span className="sr-search-leading" aria-hidden="true">
+                        <FaSearch />
+                    </span>
                     {!search.trim() && placeholder && (
                         <span key={categoryName || shopCategories[placeholderIndex]} className={categoryName ? "sr-static-placeholder" : "sr-animated-placeholder"}>
                             {placeholder}
@@ -127,9 +130,20 @@ function Search({ selectedMenu, search, setSearch, filter, setFilter, cards, gif
                         value={search}
                         onChange={(e) => { setSearch(e.target.value); setHideSuggestions(false); }}
                     />
-                    <button type="button" className="sr-search-icon-btn" aria-label="Search">
-                        <FaSearch />
-                    </button>
+                    {search.trim() && (
+                        <button
+                            type="button"
+                            className="sr-clear-btn"
+                            aria-label="Clear search"
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => { setSearch(""); setHideSuggestions(false); }}
+                        >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
+                    )}
                 </div>
 
                 <div className="sr-filter-wrap">
@@ -140,7 +154,18 @@ function Search({ selectedMenu, search, setSearch, filter, setFilter, cards, gif
                         onClick={onFilterClick}
                         aria-label={hasActiveFilter ? "Clear filter" : "Filter"}
                     >
-                        {hasActiveFilter ? "✕" : "⚙"}
+                        {hasActiveFilter ? (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        ) : (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="4" y1="6" x2="20" y2="6" />
+                                <line x1="4" y1="12" x2="14" y2="12" />
+                                <line x1="4" y1="18" x2="10" y2="18" />
+                            </svg>
+                        )}
                     </button>
                 </div>
             </div>
@@ -154,8 +179,19 @@ function Search({ selectedMenu, search, setSearch, filter, setFilter, cards, gif
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => onSuggestionClick(item.value)}
                     >
-                        <span className="sr-suggestion-icon">{item.type === "category" ? "●" : "⌕"}</span>
-                        <span>{item.value}</span>
+                        <span className="sr-suggestion-icon">
+                            {item.type === "category" ? (
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
+                                </svg>
+                            ) : (
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="11" cy="11" r="7" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                            )}
+                        </span>
+                        <span className="sr-suggestion-text">{item.value}</span>
                     </button>
                 ))}
             </div>

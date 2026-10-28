@@ -75,7 +75,6 @@ function Options({ selectedMenu, onSelect, onComingSoon }) {
         if (option.comingSoon) return onComingSoon(option.label);
         onSelect(option);
     };
-
     return (
         <div className="hd-menu-wrap" ref={wrapRef}>
             <button
@@ -85,9 +84,13 @@ function Options({ selectedMenu, onSelect, onComingSoon }) {
                 aria-haspopup="menu"
                 aria-expanded={open}
             >
-                <CurrentIcon className="hd-menu-icon" />
+                <span className="hd-menu-trigger-icon">
+                    <CurrentIcon className="hd-menu-icon" />
+                </span>
                 <span className="hd-menu-label">{current.label}</span>
-                <FiChevronDown className={`hd-menu-chevron ${open ? "rotate" : ""}`} />
+                <span className={`hd-menu-chevron ${open ? "rotate" : ""}`}>
+                    <FiChevronDown />
+                </span>
             </button>
 
             {mounted && (
@@ -102,7 +105,9 @@ function Options({ selectedMenu, onSelect, onComingSoon }) {
                                 className={`hd-menu-option ${isActive ? "active" : ""} ${comingSoon ? "soon" : ""}`}
                                 onClick={() => handleClick({ key, label, comingSoon })}
                             >
-                                <Icon className="hd-menu-option-icon" />
+                                <span className="hd-menu-option-icon">
+                                    <Icon />
+                                </span>
                                 <span className="hd-menu-option-label">{label}</span>
                                 {comingSoon && <span className="hd-menu-option-badge">Soon</span>}
                                 {isActive && !comingSoon && <span className="hd-menu-option-dot" />}

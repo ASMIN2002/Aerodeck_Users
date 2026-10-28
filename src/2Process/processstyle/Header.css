@@ -133,7 +133,15 @@
     background: var(--bg2);
     border: 1px solid var(--bd);
     border-radius: 5px;
-    white-space: nowrap
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1
+}
+
+.hd-mode-label-text {
+    display: block;
+    line-height: 1
 }
 
 .hd-notif-btn {
@@ -146,7 +154,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background var(--tr), transform var(--tr)
+    padding: 0;
+    cursor: pointer;
+    color: var(--fg2);
+    transition: background var(--tr), transform var(--tr), color var(--tr), border-color var(--tr)
+}
+
+.hd-notif-btn:hover {
+    background: var(--bg3);
+    color: var(--fg)
+}
+
+.hd-notif-btn:focus-visible {
+    outline: none;
+    border-color: var(--fg3);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .05)
+}
+
+[data-theme="dark"] .hd-notif-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0, 255, 224, .15)
 }
 
 .hd-notif-btn:active {
@@ -155,8 +181,11 @@
 }
 
 .hd-notif-icon {
-    font-size: 14px;
-    color: var(--fg2)
+    display: block;
+    width: 14px;
+    height: 14px;
+    color: currentColor;
+    stroke: currentColor
 }
 
 @media(min-width:480px) {
@@ -175,7 +204,8 @@
     }
 
     .hd-notif-icon {
-        font-size: 15px
+        width: 15px;
+        height: 15px
     }
 
     .hd-mode-label {
@@ -206,7 +236,8 @@
     }
 
     .hd-notif-icon {
-        font-size: 17px
+        width: 17px;
+        height: 17px
     }
 
     .hd-mode-label {

@@ -143,6 +143,9 @@ export default function useHomeBackend({ user, setPage, cartCount, setCartCount,
         setDetailsPage("details");
         setSelectedProduct({ type: normalizedType, data: product });
         setIsDetailsOpen(true);
+        if (homeContentRef.current) {
+            homeContentRef.current.scrollTop = 0;
+        }
         const id = getProductId(product);
         if (!id) return;
         const inProduct = location.pathname.includes("/product/");

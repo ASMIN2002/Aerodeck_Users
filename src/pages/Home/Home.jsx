@@ -8,14 +8,32 @@ import {
     Rewards, DemoRedeemRewards, MyLikes, MyReviews, Settings, AllReview, AllMedia,
     TOPHEADER, ViewAddress, Offers, Medicure, BookNow, ViewTicket
 } from "./lazyImports";
+
 const Loader = () => <div className="home-loader"><div className="spinner" /></div>;
-const AddressBar = memo(({ setProfilePage, setSelectedBottomTab }) => (
+
+const AddressBar = memo(({
+    setProfilePage,
+    setSelectedBottomTab,
+    setSelectedMenu,
+    setShopCategoryPage,
+    setSelectedShopCategory,
+    setAllShopCategoriesPage
+}) => (
     <div className="home-address">
-        <Address setProfilePage={setProfilePage} setSelectedBottomTab={setSelectedBottomTab} />
+        <Address
+            setProfilePage={setProfilePage}
+            setSelectedBottomTab={setSelectedBottomTab}
+            setSelectedMenu={setSelectedMenu}
+            setShopCategoryPage={setShopCategoryPage}
+            setSelectedShopCategory={setSelectedShopCategory}
+            setAllShopCategoriesPage={setAllShopCategoriesPage}
+        />
     </div>
 ));
+
 function Home({ user, setPage, goTo, cartCount, setCartCount }) {
     const b = useHomeBackend({ user, setPage, cartCount, setCartCount, goTo });
+
     return (
         <div className="home-container">
             <Suspense fallback={<Loader />}>
@@ -35,7 +53,14 @@ function Home({ user, setPage, goTo, cartCount, setCartCount }) {
                             onReloadHome={b.handleRefresh}
                             onOpenCart={b.onOpenCart}
                         />
-                        <AddressBar setProfilePage={b.setProfilePage} setSelectedBottomTab={b.setSelectedBottomTab} />
+                        <AddressBar
+                            setProfilePage={b.setProfilePage}
+                            setSelectedBottomTab={b.setSelectedBottomTab}
+                            setSelectedMenu={b.setSelectedMenu}
+                            setShopCategoryPage={b.setShopCategoryPage}
+                            setSelectedShopCategory={b.setSelectedShopCategory}
+                            setAllShopCategoriesPage={b.setAllShopCategoriesPage}
+                        />
                     </>
                 )}
                 {!b.isDetailsOpen && b.view.isHome && (
@@ -46,7 +71,14 @@ function Home({ user, setPage, goTo, cartCount, setCartCount }) {
                                     title="All Categories"
                                     onBack={() => { b.setAllShopCategoriesPage(false); b.navigate("/home/shop", { replace: true }); }}
                                 />
-                                <AddressBar setProfilePage={b.setProfilePage} setSelectedBottomTab={b.setSelectedBottomTab} />
+                                <AddressBar
+                                    setProfilePage={b.setProfilePage}
+                                    setSelectedBottomTab={b.setSelectedBottomTab}
+                                    setSelectedMenu={b.setSelectedMenu}
+                                    setShopCategoryPage={b.setShopCategoryPage}
+                                    setSelectedShopCategory={b.setSelectedShopCategory}
+                                    setAllShopCategoriesPage={b.setAllShopCategoriesPage}
+                                />
                             </>
                         )}
                         {b.shopCategoryPage && (
@@ -59,7 +91,14 @@ function Home({ user, setPage, goTo, cartCount, setCartCount }) {
                                         b.navigate("/home/shop", { replace: true });
                                     }}
                                 />
-                                <AddressBar setProfilePage={b.setProfilePage} setSelectedBottomTab={b.setSelectedBottomTab} />
+                                <AddressBar
+                                    setProfilePage={b.setProfilePage}
+                                    setSelectedBottomTab={b.setSelectedBottomTab}
+                                    setSelectedMenu={b.setSelectedMenu}
+                                    setShopCategoryPage={b.setShopCategoryPage}
+                                    setSelectedShopCategory={b.setSelectedShopCategory}
+                                    setAllShopCategoriesPage={b.setAllShopCategoriesPage}
+                                />
                             </>
                         )}
                         <Search
@@ -288,4 +327,5 @@ function Home({ user, setPage, goTo, cartCount, setCartCount }) {
         </div>
     );
 }
+
 export default memo(Home);

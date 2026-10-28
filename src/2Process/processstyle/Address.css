@@ -1,179 +1,402 @@
 .ad-container {
-    position: relative;
-    z-index: 1;
+    --bg: #ffffff;
+    --bg-2: #f4f5f7;
+    --bg-3: #e5e7eb;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+    --gold: #d97706;
+    --gold-soft: #fef3c7;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --tr: 0.16s ease;
+
+    width: 100%;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 8px;
-    padding: 7px 10px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--bd);
-    flex-shrink: 0
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.ad-container *,
+.ad-container *::before,
+.ad-container *::after {
+    box-sizing: border-box;
+}
+
+[data-theme="dark"] .ad-container {
+    --bg: #16181d;
+    --bg-2: #1d2027;
+    --bg-3: #232730;
+    --border: #2a2e37;
+    --text: #e5e7eb;
+    --text-muted: #9ca3af;
+    --accent: #3b82f6;
+    --accent-soft: rgba(59, 130, 246, 0.15);
+    --gold: #f59e0b;
+    --gold-soft: rgba(245, 158, 11, 0.15);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .ad-button {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 9px;
-    background: var(--bg2);
-    border: 1px solid var(--bd);
-    border-radius: 8px;
-    color: var(--fg);
-    min-height: 32px;
-    min-width: 0;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-align: left;
     transition: background var(--tr);
-    text-align: left
 }
 
-.ad-button:active {
-    background: var(--bg3)
+.ad-button:hover {
+    background: var(--bg-2);
 }
 
-.ad-icon {
-    font-size: 13px;
-    color: var(--fg2);
-    flex-shrink: 0
-}
-
-.ad-text {
-    flex: 1;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--fg);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-    line-height: 1.2
-}
-
-.ad-no-address {
-    color: var(--fg3);
-    font-style: italic
-}
-
-.ad-arrow {
-    font-size: 15px;
-    color: var(--fg3);
-    flex-shrink: 0;
-    line-height: 1;
-    margin-left: 2px
-}
-
-.ad-money-box {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 9px 4px 4px;
-    background: var(--bg2);
-    border: 1px solid var(--bd);
-    border-radius: 999px;
-    flex-shrink: 0;
-    min-height: 32px;
-    transition: background var(--tr), transform var(--tr)
-}
-
-.ad-money-box:active {
-    background: var(--bg3);
-    transform: scale(.96)
-}
-
-.money-icon-circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+.ad-icon-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0
+    width: 28px;
+    height: 28px;
+    background: var(--accent-soft);
+    border-radius: 8px;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.ad-icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+}
+
+.ad-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.ad-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    line-height: 1.1;
+}
+
+.ad-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.ad-no-address {
+    color: var(--text-muted);
+}
+
+.ad-arrow {
+    color: var(--text-muted);
+    display: flex;
+    flex-shrink: 0;
+}
+
+.ad-arrow svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+}
+
+.ad-money-box {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: background var(--tr);
+}
+
+.ad-money-box:hover {
+    background: var(--bg-2);
+}
+
+.money-icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--gold-soft);
+    color: var(--gold);
+    flex-shrink: 0;
 }
 
 .money-icon {
-    font-size: 12px;
-    color: #fff
+    width: 12px;
+    height: 12px;
+}
+
+.money-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.money-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1;
 }
 
 .money-amount {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--fg);
-    line-height: 1
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
 }
 
-@media(min-width:480px) {
+.ad-cat-wrap {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+}
+
+.ad-cat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    height: 100%;
+    padding: 8px 10px;
+    background: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 11px;
+    transition: background var(--tr);
+}
+
+.ad-cat-btn:hover,
+.ad-cat-btn.open {
+    background: var(--bg-2);
+}
+
+.ad-cat-chevron {
+    transition: transform 0.2s ease;
+    display: flex;
+}
+
+.ad-cat-chevron svg {
+    width: 12px;
+    height: 12px;
+}
+
+.ad-cat-chevron.rotate {
+    transform: rotate(180deg);
+}
+
+.ad-cat-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 220px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+    padding: 6px;
+    height: 260px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+[data-theme="dark"] .ad-cat-dropdown {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.ad-cat-dropdown .heep-cat-sticky-wrap {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.ad-cat-dropdown .heep-cat-sticky-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+.ad-cat-dropdown .heep-cat-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.ad-cat-dropdown .heep-cat-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+}
+
+.ad-cat-dropdown .heep-cat-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px 10px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    transition: background 0.15s ease, color 0.15s ease;
+    cursor: pointer;
+}
+
+.ad-cat-dropdown .heep-cat-card:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.ad-cat-dropdown .heep-cat-viewall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    padding: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ad-cat-dropdown .heep-cat-viewall:hover {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+.ad-cat-dropdown .heep-cat-viewall-icon {
+    width: 12px;
+    height: 12px;
+}
+
+@media (min-width: 480px) {
     .ad-container {
-        padding: 9px 14px;
-        gap: 10px
+        gap: 10px;
     }
 
     .ad-button {
-        min-height: 36px;
-        padding: 8px 11px
+        gap: 10px;
+        padding: 10px 12px;
     }
 
-    .ad-text,
-    .money-amount {
-        font-size: 13px
+    .ad-icon-wrap {
+        width: 32px;
+        height: 32px;
     }
 
     .ad-icon {
-        font-size: 14px
+        width: 16px;
+        height: 16px;
     }
 
-    .ad-arrow {
-        font-size: 16px
+    .ad-label {
+        font-size: 10px;
     }
 
-    .money-icon-circle {
-        width: 26px;
-        height: 26px
-    }
-
-    .money-icon {
-        font-size: 13px
+    .ad-text {
+        font-size: 13px;
     }
 
     .ad-money-box {
-        padding: 5px 10px 5px 5px
-    }
-}
-
-@media(min-width:768px) {
-    .ad-container {
-        padding: 11px 20px;
-        max-width: 720px;
-        margin: 0 auto;
-        width: 100%
-    }
-
-    .ad-button {
-        min-height: 40px;
-        border-radius: 9px
-    }
-
-    .ad-text,
-    .money-amount {
-        font-size: 14px
-    }
-
-    .ad-icon {
-        font-size: 15px
+        gap: 10px;
+        padding: 10px 14px;
     }
 
     .money-icon-circle {
         width: 28px;
-        height: 28px
+        height: 28px;
     }
 
     .money-icon {
-        font-size: 14px
+        width: 14px;
+        height: 14px;
     }
-}
 
-@media(min-width:1024px) {
-    .ad-container {
-        max-width: 960px
+    .money-label {
+        font-size: 10px;
+    }
+
+    .money-amount {
+        font-size: 15px;
+    }
+
+    .ad-cat-btn {
+        padding: 0 14px;
+        font-size: 13px;
+        gap: 8px;
+    }
+
+    .ad-cat-chevron svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .ad-cat-dropdown {
+        width: 250px;
+        padding: 8px;
+        height: 300px;
+    }
+
+    .ad-cat-dropdown .heep-cat-card {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .ad-cat-dropdown .heep-cat-viewall {
+        padding: 10px;
+        font-size: 12px;
     }
 }

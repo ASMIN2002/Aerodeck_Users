@@ -71,7 +71,9 @@
 
 .hd-notif-header h3 {
   font-size: 14px;
-  font-weight: 700
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0
 }
 
 .hd-notif-header-right {
@@ -115,14 +117,26 @@
   border: 1px solid var(--bd);
   color: var(--fg2);
   font-size: 13px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--tr)
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--tr), color var(--tr)
+}
+
+.hd-notif-close svg {
+  display: block;
+  stroke: currentColor;
+  fill: none
 }
 
 .hd-notif-close:active {
   background: var(--bg3);
+  color: var(--fg)
+}
+
+.hd-notif-close:hover {
   color: var(--fg)
 }
 
@@ -149,7 +163,8 @@
 }
 
 .hd-notif-message strong {
-  font-weight: 700
+  font-weight: 700;
+  color: var(--fg)
 }
 
 .hd-notif-actions {
@@ -165,11 +180,20 @@
   font-size: 11px;
   font-weight: 600;
   border-radius: 8px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  transition: opacity var(--tr), transform var(--tr)
+  cursor: pointer;
+  transition: opacity var(--tr), transform var(--tr), background var(--tr), color var(--tr)
+}
+
+.hd-notif-accept svg,
+.hd-notif-ignore svg {
+  display: block;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0
 }
 
 .hd-notif-accept {
@@ -182,6 +206,11 @@
   background: 0 0;
   color: var(--fg2);
   border: 1px solid var(--bd)
+}
+
+.hd-notif-ignore:hover {
+  color: var(--fg);
+  border-color: var(--fg3)
 }
 
 .hd-notif-accept:active,
@@ -230,6 +259,10 @@
   transition: background var(--tr), transform var(--tr)
 }
 
+.hd-notif-item:hover {
+  background: var(--bg3)
+}
+
 .hd-notif-item:active {
   transform: scale(.985);
   background: var(--bg3)
@@ -269,13 +302,61 @@
 }
 
 .hd-notif-empty span {
-  font-size: 30px;
-  opacity: .6
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .6;
+  color: var(--fg3)
+}
+
+.hd-notif-empty span svg {
+  display: block;
+  stroke: currentColor;
+  fill: none
 }
 
 .hd-notif-empty p {
   font-size: 11px;
-  font-weight: 500
+  font-weight: 500;
+  margin: 0
+}
+
+.hd-notif-pinned-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 42px;
+  justify-content: center
+}
+
+.hd-notif-skel-line {
+  height: 9px;
+  width: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
+  background-size: 200% 100%;
+  animation: hdNotifShimmer 1.2s ease-in-out infinite
+}
+
+.hd-notif-skel-line.short {
+  width: 60%
+}
+
+.hd-notif-item-skeleton {
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px
+}
+
+@keyframes hdNotifShimmer {
+  0% {
+    background-position: 200% 0
+  }
+
+  100% {
+    background-position: -200% 0
+  }
 }
 
 @keyframes hdFade {

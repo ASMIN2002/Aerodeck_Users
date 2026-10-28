@@ -1,7 +1,7 @@
 import { useMemo, memo } from "react";
 import "../levelstyle/5ShopHome.css";
 import VideoHero from "../sections/2VideoHero";
-import CategoriesSection from "../sections/1CategoriesSection";
+// import CategoriesSection from "../sections/1CategoriesSection";
 import OffersCarousel from "../sections/3OffersCarousel";
 import FinestDeals from "../sections/4FinestDeals";
 import SuggestedShops from "../sections/5SuggestedShops";
@@ -9,7 +9,7 @@ import TopLikedShops from "../sections/6TopLikedShops";
 import ValueDeals from "../sections/7ValueDeals";
 import RelatedProducts from "../sections/8RelatedProducts";
 const LIMIT = 10;
-function ShopHome({ user, categories, shops, onCategoryClick, onOpenDetails, onOpenAllShops, onOpenAllShopCategories }) {
+function ShopHome({ user, shops, onOpenDetails, onOpenAllShops}) {
     const finestDeals = useMemo(() => {
         return [...shops]
             .sort((a, b) => Number(b.shop_rating || 0) - Number(a.shop_rating || 0))
@@ -27,12 +27,12 @@ function ShopHome({ user, categories, shops, onCategoryClick, onOpenDetails, onO
     }, [shops]);
     return (
         <div className="shop-home">
-            <CategoriesSection
+            {/* <CategoriesSection
                 categories={categories}
                 onCategoryClick={onCategoryClick}
                 onOpenAllShopCategories={onOpenAllShopCategories}
-            />
-            <VideoHero />
+            /> */}
+            {/* <VideoHero /> */}
             <OffersCarousel />
             <FinestDeals user={user} shops={finestDeals} onOpenDetails={onOpenDetails} />
             <SuggestedShops shops={shops} onOpenDetails={onOpenDetails} onOpenAllShops={onOpenAllShops} />
